@@ -1,0 +1,86 @@
+{
+  "base_rev": null,
+  "content_sha256": "7a5a766eda5d8d22ceb4e6e6116ab7fb502e77b39c29f09a262676f90042a18f",
+  "created_at": "2026-10-09T11:03:00Z",
+  "key": {
+    "mode": "major",
+    "tonic": "C"
+  },
+  "kind": "melody-spec",
+  "melody_id": "mel_venture_asm",
+  "notes": [
+    {
+      "confidence": null,
+      "duration_ticks": 960,
+      "id": "n1",
+      "origin": "assembled",
+      "pitch": 67,
+      "start_tick": 0,
+      "velocity": 90
+    },
+    {
+      "confidence": null,
+      "duration_ticks": 960,
+      "id": "n2",
+      "origin": "assembled",
+      "pitch": 69,
+      "start_tick": 960,
+      "velocity": 90
+    },
+    {
+      "confidence": null,
+      "duration_ticks": 1920,
+      "id": "n3",
+      "origin": "assembled",
+      "pitch": 71,
+      "start_tick": 1920,
+      "velocity": 90
+    }
+  ],
+  "phrases": [
+    {
+      "end_tick": 3840,
+      "id": "ph1",
+      "name": "hook",
+      "start_tick": 0
+    }
+  ],
+  "ppq": 960,
+  "project_id": "prj_venture",
+  "quantize": null,
+  "rev": 1,
+  "schemaVersion": "1.0.0",
+  "source": {
+    "assembled_from": {
+      "melody": {
+        "melody_id": "mel_venture",
+        "rev": 1,
+        "tempo_map_rev": 1
+      },
+      "song": {
+        "rev": 1,
+        "song_id": "song_venture"
+      }
+    },
+    "capture_sha256": null,
+    "seed_kind": "assembled",
+    "transcription": null
+  },
+  "spec_kind": "assembled",
+  "tempo_map": {
+    "meter": [
+      {
+        "denominator": 4,
+        "numerator": 4,
+        "tick": 0
+      }
+    ],
+    "rev": 1,
+    "tempo": [
+      {
+        "tick": 0,
+        "us_per_quarter": 500000
+      }
+    ]
+  }
+}

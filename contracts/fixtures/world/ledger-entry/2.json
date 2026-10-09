@@ -1,0 +1,12 @@
+{
+  "act": null,
+  "at": "2026-10-09T10:31:30Z",
+  "entry_type": "settle",
+  "kind": "ledger-entry",
+  "month": "2026-10",
+  "note": "provider-reported cost",
+  "run_id": "br_hymn",
+  "schemaVersion": "1.0.0",
+  "seq": 2,
+  "usd": "0.21"
+}

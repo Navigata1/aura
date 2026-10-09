@@ -1,0 +1,22 @@
+{
+  "description": "The product name on disk.",
+  "error_contains": "$.volume.name",
+  "id": "IR-STORE-VOLUME-NAME",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "band_size_sectors": null,
+    "created_at": "2026-10-09T08:00:00Z",
+    "kind": "store",
+    "last_clean_detach": null,
+    "layout_version": 1,
+    "schemaVersion": "1.0.0",
+    "store_id": "sto_main",
+    "volume": {
+      "adapter": "macos_sparsebundle",
+      "name": "MYSONGS"
+    }
+  },
+  "record_kind": "store",
+  "rule": "ADR-0035: neutral volume name",
+  "schemaVersion": "1.0.0"
+}

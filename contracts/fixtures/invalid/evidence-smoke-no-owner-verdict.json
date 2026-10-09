@@ -1,0 +1,49 @@
+{
+  "description": "A smoke record that claims 'not garbled' passed without naming the owner verdict that answered it.",
+  "error_contains": "$.checks[0].verdict_id",
+  "id": "IR-EVIDENCE-SMOKE-NO-OWNER-VERDICT",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "attachments": [
+      {
+        "name": "smoke-log.json",
+        "sha256": "e6e6ca52f31c4ed4f8ed330fbd5f022cc30f3bde8c6c664d3302c9046a8fadbf"
+      }
+    ],
+    "check": "smoke",
+    "checks": [
+      {
+        "check": "owner_not_garbled",
+        "measured": [],
+        "result": "pass",
+        "verdict_id": null
+      }
+    ],
+    "gate_id": "smoke.fake-route-a",
+    "host_class": "fake/local",
+    "id": "ev_fra_smoke",
+    "kind": "evidence",
+    "measured": [
+      {
+        "label": "MEASURED-LOCAL",
+        "metric": "total_wall_ms",
+        "unit": "ms",
+        "value": "1200"
+      }
+    ],
+    "prereg_sha256": null,
+    "profile_revision": "f1a45b61325bc9f8d89598ae620e16d601aeb44188758ff87dfa8a237f114185",
+    "recorded_at": "2026-10-09T09:02:00Z",
+    "result": "pass",
+    "schemaVersion": "1.0.0",
+    "subject": {
+      "subject_id": "fake-route-a",
+      "subject_type": "profile"
+    },
+    "synthetic": true,
+    "verdict_ids": []
+  },
+  "record_kind": "evidence",
+  "rule": "An owner_not_garbled check is answered only by Jon's verdict",
+  "schemaVersion": "1.0.0"
+}

@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "burst-run/1",
+  "description": "One paid lease of rented GPU time for one request's burst jobs, from reservation to settlement (GLOSSARY: Burst run, Settlement; ADR-0030). reserved_at precedes provisioned_at (budget.reserve_before_provision). A run with no billing data settles at the ceiling. Only the lease token's hash is stored.",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "id", "quote_id", "approval_id", "provider", "pod_tag", "lease_token_sha256", "hard_max_minutes",
+               "image_digest", "reserved_at", "provisioned_at", "terminated_at", "termination_confirmed", "settlement", "state", "synthetic_test"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "burst-run"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "id": {"$ref": "common.schema.json#/$defs/id"},
+    "quote_id": {"$ref": "common.schema.json#/$defs/id"},
+    "approval_id": {"$ref": "common.schema.json#/$defs/id"},
+    "provider": {"enum": ["runpod", "fake"]},
+    "pod_tag": {"const": "studio-burst"},
+    "lease_token_sha256": {"$ref": "common.schema.json#/$defs/sha256"},
+    "hard_max_minutes": {"type": "integer", "minimum": 1, "maximum": 240},
+    "image_digest": {"$ref": "common.schema.json#/$defs/imageDigest"},
+    "reserved_at": {"$ref": "common.schema.json#/$defs/dateTime"},
+    "provisioned_at": {"oneOf": [{"$ref": "common.schema.json#/$defs/dateTime"}, {"type": "null"}]},
+    "terminated_at": {"oneOf": [{"$ref": "common.schema.json#/$defs/dateTime"}, {"type": "null"}]},
+    "termination_confirmed": {"type": "boolean"},
+    "settlement": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["basis", "usd", "settled_at"],
+          "additionalProperties": false,
+          "properties": {
+            "basis": {"enum": ["provider_reported", "settled_at_ceiling"]},
+            "usd": {"$ref": "common.schema.json#/$defs/usd"},
+            "settled_at": {"$ref": "common.schema.json#/$defs/dateTime"}
+          }
+        }
+      ]
+    },
+    "state": {"enum": ["reserved", "provisioning", "running", "terminated", "settled", "reaped"]},
+    "synthetic_test": {"type": "boolean"}
+  },
+  "allOf": [
+    {"if": {"properties": {"state": {"enum": ["settled", "reaped"]}}}, "then": {"properties": {"settlement": {"type": "object"}, "termination_confirmed": {"const": true}}}},
+    {"if": {"properties": {"provider": {"const": "fake"}}}, "then": {"properties": {"synthetic_test": {"const": true}}}}
+  ]
+}

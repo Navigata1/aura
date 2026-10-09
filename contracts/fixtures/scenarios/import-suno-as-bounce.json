@@ -1,0 +1,50 @@
+{
+  "description": "A Suno download is declared as Jon's own DAW bounce; its embedded Suno mark gives it away, and its license chain still names Suno.",
+  "expect_rules": [
+    "license.chain_complete",
+    "use.import_terms"
+  ],
+  "id": "SC-IMPORT-SUNO-AS-BOUNCE",
+  "kind": "fixture.scenario",
+  "overlay": [
+    {
+      "account_holder": null,
+      "act": {
+        "act": "attest_import",
+        "at": "2026-10-09T10:55:00Z",
+        "scope": "owner-ui"
+      },
+      "artifact_sha256": "6bddb7311b9df81220ddfedbcd18c099b6229e9c3e220bbadc2bb2595d1f9260",
+      "base_allowed_uses": [
+        "listen",
+        "loudness_measure",
+        "dsp_finish"
+      ],
+      "contains_studio_exports": [],
+      "contains_third_party_or_suno": false,
+      "detected_marks": [
+        {
+          "export_id": null,
+          "mark": "suno_provenance"
+        }
+      ],
+      "eligible_lanes": [
+        "individual",
+        "research"
+      ],
+      "id": "it_suno",
+      "imported_at": "2026-10-09T10:55:00Z",
+      "kind": "import-terms",
+      "license_grant": null,
+      "plan": null,
+      "provenance_marks_preserved": true,
+      "rights_assignment": "Pro plan: Suno assigns its rights in the output, with no warranty that copyright vests",
+      "schemaVersion": "1.0.0",
+      "source_service": "daw_bounce",
+      "terms_date": "2026-09-03",
+      "terms_url": "https://suno.com/terms-september-2026"
+    }
+  ],
+  "remove": [],
+  "schemaVersion": "1.0.0"
+}

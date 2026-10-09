@@ -1,0 +1,46 @@
+{
+  "act": {
+    "act": "accept_model_license",
+    "at": "2026-10-09T09:20:00Z",
+    "scope": "owner-ui"
+  },
+  "allowed_lanes": [
+    "individual",
+    "research"
+  ],
+  "component_id": "yue2-3b",
+  "documents": [
+    {
+      "commit_or_revision": null,
+      "role": "weights_license",
+      "sha256": "1c4fac7710bd3a0cf0690024f7ef6d8c5b02ad554427462f66b00842eb4ff727",
+      "url": "https://huggingface.co/m-a-p/YuE2-3B/blob/main/LICENSE"
+    },
+    {
+      "commit_or_revision": null,
+      "role": "permission",
+      "sha256": "a3ca9c7e314791c7c0f915ebb333767c83f69158a674718a151fdc0c5e06c745",
+      "url": "https://github.com/multimodal-art-projection/YuE/blob/main/MODEL_LICENSE"
+    }
+  ],
+  "id": "la_yue2",
+  "kind": "license-acceptance",
+  "obligations": [],
+  "profile_id": "yue2-3b-score",
+  "release_permission": {
+    "document_sha256": "a3ca9c7e314791c7c0f915ebb333767c83f69158a674718a151fdc0c5e06c745",
+    "lanes": [
+      "individual"
+    ],
+    "note": "Fixture stand-in: individual creators may release and monetize outputs."
+  },
+  "schemaVersion": "1.0.0",
+  "voided": null,
+  "weights_source": {
+    "allow_patterns": [],
+    "license_acceptance_required": true,
+    "repo": "m-a-p/YuE2-3B",
+    "revision": null,
+    "source": "hf"
+  }
+}

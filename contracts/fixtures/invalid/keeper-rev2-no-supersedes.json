@@ -1,0 +1,21 @@
+{
+  "description": "A second keeper revision superseding nothing.",
+  "error_contains": "$.supersedes_keeper_id",
+  "id": "IR-KEEPER-REV2-NO-SUPERSEDES",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "artifact_sha256": "2789a942c9533e6ecec15d6b9e0942389ba2f1e3f6fc664356f54291a9f0e884",
+    "candidate_id": "cand_a",
+    "id": "kp_hymn",
+    "keeper_rev": 2,
+    "kept_at": "2026-10-09T10:41:00Z",
+    "kind": "keeper",
+    "project_id": "prj_hymn",
+    "schemaVersion": "1.0.0",
+    "supersedes_keeper_id": null,
+    "verdict_id": "vd_hymn"
+  },
+  "record_kind": "keeper",
+  "rule": "A later keeper revision supersedes one",
+  "schemaVersion": "1.0.0"
+}

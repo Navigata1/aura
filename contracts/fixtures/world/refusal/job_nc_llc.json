@@ -1,0 +1,8 @@
+{
+  "code": "lane_forbidden",
+  "detail": "fake-nc declares a non-commercial component: individual and research lanes only",
+  "job_id": "job_nc_llc",
+  "kind": "refusal",
+  "loaded_nothing": true,
+  "schemaVersion": "1.0.0"
+}

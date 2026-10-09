@@ -1,0 +1,238 @@
+{
+  "description": "Only three tiers.",
+  "error_contains": "$.tiers",
+  "id": "IR-TIERS-THREE",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "kind": "compute-tiers",
+    "schemaVersion": "1.0.0",
+    "thresholds": {
+      "blackwell_bad_cuda_runtime": "12.6",
+      "blackwell_min_compute_capability": "10.0",
+      "min_driver_linux": "570.26",
+      "min_driver_windows": "570.65",
+      "nvidia_tier12_min_vram_gib": "23.5",
+      "nvidia_tier3_min_vram_gib": "11.5",
+      "tier1_min_compute_capability": "8.9",
+      "tier2_min_compute_capability": "8.0",
+      "wsl2_min_memory_gib": "24",
+      "yue2_min_host_ram_gib": "24"
+    },
+    "tiers": [
+      {
+        "accelerator": "nvidia",
+        "placements": [
+          {
+            "condition": null,
+            "placement": "worker_host",
+            "profile_id": "ace-xl-sft-cuda"
+          },
+          {
+            "condition": null,
+            "placement": "worker_host",
+            "profile_id": "ace-2b-sft-cuda"
+          },
+          {
+            "condition": null,
+            "placement": "worker_host",
+            "profile_id": "yue2-3b-score"
+          },
+          {
+            "condition": "P6 LLC smoke",
+            "placement": "worker_host",
+            "profile_id": "heartmula-3b-cuda"
+          },
+          {
+            "condition": "P6 LLC smoke",
+            "placement": "worker_host",
+            "profile_id": "minimax-music3-cuda"
+          },
+          {
+            "condition": "Mac studio host (option A); a CUDA separator profile is added when needed",
+            "placement": "local",
+            "profile_id": "separate-demucs"
+          },
+          {
+            "condition": null,
+            "placement": "local",
+            "profile_id": "analysis-transcribe-pyin-hmm"
+          },
+          {
+            "condition": null,
+            "placement": "local",
+            "profile_id": "analysis-measure"
+          },
+          {
+            "condition": null,
+            "placement": "local",
+            "profile_id": "analysis-guide-neutralvoice"
+          },
+          {
+            "condition": null,
+            "placement": "local",
+            "profile_id": "analysis-assemble-audio"
+          },
+          {
+            "condition": null,
+            "placement": "local",
+            "profile_id": "analysis-export"
+          },
+          {
+            "condition": null,
+            "placement": "local",
+            "profile_id": "analysis-adherence-pyin"
+          },
+          {
+            "condition": null,
+            "placement": "local",
+            "profile_id": "analysis-adherence-swiftf0"
+          }
+        ],
+        "tier": 1,
+        "title": "NVIDIA 24-32 GB (4090/5090 class)"
+      },
+      {
+        "accelerator": "nvidia",
+        "placements": [
+          {
+            "condition": null,
+            "placement": "worker_host",
+            "profile_id": "ace-2b-sft-cuda"
+          },
+          {
+            "condition": "with offload, after a smoke run on that card",
+            "placement": "worker_host",
+            "profile_id": "ace-xl-sft-cuda"
+          },
+          {
+            "condition": null,
+            "placement": "worker_host",
+            "profile_id": "yue2-3b-score"
+          },
+          {
+            "condition": "P6 LLC smoke",
+            "placement": "worker_host",
+            "profile_id": "heartmula-3b-cuda"
+          },
+          {
+            "condition": "P6 LLC smoke",
+            "placement": "worker_host",
+            "profile_id": "minimax-music3-cuda"
+          },
+          {
+            "condition": null,
+            "placement": "local",
+            "profile_id": "analysis-transcribe-pyin-hmm"
+          },
+          {
+            "condition": null,
+            "placement": "local",
+            "profile_id": "analysis-measure"
+          },
+          {
+            "condition": null,
+            "placement": "local",
+            "profile_id": "analysis-guide-neutralvoice"
+          },
+          {
+            "condition": null,
+            "placement": "local",
+            "profile_id": "analysis-assemble-audio"
+          },
+          {
+            "condition": null,
+            "placement": "local",
+            "profile_id": "analysis-export"
+          },
+          {
+            "condition": null,
+            "placement": "local",
+            "profile_id": "analysis-adherence-pyin"
+          },
+          {
+            "condition": null,
+            "placement": "local",
+            "profile_id": "analysis-adherence-swiftf0"
+          }
+        ],
+        "tier": 2,
+        "title": "NVIDIA 24 GB (3090 class)"
+      },
+      {
+        "accelerator": "nvidia",
+        "placements": [
+          {
+            "condition": null,
+            "placement": "worker_host",
+            "profile_id": "ace-2b-sft-cuda"
+          },
+          {
+            "condition": "16 GB with offload only, after a smoke run",
+            "placement": "worker_host",
+            "profile_id": "ace-xl-sft-cuda"
+          },
+          {
+            "condition": "only after a smoke record on that exact card (A4 open)",
+            "placement": "worker_host",
+            "profile_id": "yue2-3b-score"
+          },
+          {
+            "condition": "until that smoke record exists: every run quoted, approved by Jon and reserved under the monthly cap",
+            "placement": "burst",
+            "profile_id": "yue2-3b-score"
+          },
+          {
+            "condition": "P6",
+            "placement": "burst",
+            "profile_id": "heartmula-3b-cuda"
+          },
+          {
+            "condition": "P6",
+            "placement": "burst",
+            "profile_id": "minimax-music3-cuda"
+          },
+          {
+            "condition": null,
+            "placement": "local",
+            "profile_id": "analysis-transcribe-pyin-hmm"
+          },
+          {
+            "condition": null,
+            "placement": "local",
+            "profile_id": "analysis-measure"
+          },
+          {
+            "condition": null,
+            "placement": "local",
+            "profile_id": "analysis-guide-neutralvoice"
+          },
+          {
+            "condition": null,
+            "placement": "local",
+            "profile_id": "analysis-assemble-audio"
+          },
+          {
+            "condition": null,
+            "placement": "local",
+            "profile_id": "analysis-export"
+          },
+          {
+            "condition": null,
+            "placement": "local",
+            "profile_id": "analysis-adherence-pyin"
+          },
+          {
+            "condition": null,
+            "placement": "local",
+            "profile_id": "analysis-adherence-swiftf0"
+          }
+        ],
+        "tier": 3,
+        "title": "NVIDIA 12-16 GB with offload or burst"
+      }
+    ]
+  },
+  "record_kind": "compute-tiers",
+  "rule": "O-02: four tiers",
+  "schemaVersion": "1.0.0"
+}

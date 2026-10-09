@@ -1,0 +1,12 @@
+{
+  "artifact_sha256": "f7af17cbfb64026585e4f1049aa82da4ec1b5562d34f15f1b880834e8a5b64cb",
+  "candidate_id": "cand_vb",
+  "id": "kp_venture",
+  "keeper_rev": 1,
+  "kept_at": "2026-10-09T11:11:00Z",
+  "kind": "keeper",
+  "project_id": "prj_venture",
+  "schemaVersion": "1.0.0",
+  "supersedes_keeper_id": null,
+  "verdict_id": "vd_venture"
+}

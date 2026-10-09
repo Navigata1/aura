@@ -1,0 +1,62 @@
+{
+  "description": "Internal separation with the Demucs stand-in in the llc project: analysis is still lane-admitted, so it cannot run.",
+  "expect_rules": [
+    "lane.admission"
+  ],
+  "id": "SC-LANE-ADMIT-SEPARATE-LLC",
+  "kind": "fixture.scenario",
+  "overlay": [
+    {
+      "approval_id": null,
+      "compute_profile_id": "cp_tier4",
+      "cost": {
+        "basis": "local_zero",
+        "usd": "0.00"
+      },
+      "created_at": "2026-10-09T12:00:00Z",
+      "egress": [],
+      "error": null,
+      "history": [
+        {
+          "at": "2026-10-09T12:00:00Z",
+          "state": "queued"
+        }
+      ],
+      "id": "job_sep_llc",
+      "inputs": [
+        {
+          "role": "candidate",
+          "sha256": "f7af17cbfb64026585e4f1049aa82da4ec1b5562d34f15f1b880834e8a5b64cb"
+        }
+      ],
+      "job_kind": "separate",
+      "kind": "job",
+      "lane": "llc",
+      "outputs": [],
+      "params": {
+        "actual": {},
+        "intent": {}
+      },
+      "parent_job_id": null,
+      "placement": {
+        "host_class": "fake/local",
+        "kind": "local"
+      },
+      "profile_id": "fake-separate",
+      "profile_revision": "d50db0285f468c8dd33a4697a23b5625f6e07e3bd8a1cfa3bf09dfe7698b8bfc",
+      "project_id": "prj_venture",
+      "quote_id": null,
+      "record_inputs": [],
+      "request_id": null,
+      "retry": null,
+      "schemaVersion": "1.0.0",
+      "seed": null,
+      "session_id": "ses_1",
+      "state": "queued",
+      "steps": [],
+      "task": "separate"
+    }
+  ],
+  "remove": [],
+  "schemaVersion": "1.0.0"
+}

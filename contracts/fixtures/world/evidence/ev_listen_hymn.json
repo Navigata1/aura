@@ -1,0 +1,28 @@
+{
+  "attachments": [
+    {
+      "name": "listening-unregistered-log.json",
+      "sha256": "af5a0e67ebe7e96a5b573d604ddc88bfd7d0c27f02d9d57e69d7c83ae2a58259"
+    }
+  ],
+  "check": "listening-unregistered",
+  "checks": [],
+  "gate_id": null,
+  "host_class": null,
+  "id": "ev_listen_hymn",
+  "kind": "evidence",
+  "measured": [],
+  "prereg_sha256": null,
+  "profile_revision": null,
+  "recorded_at": "2026-10-09T10:40:10Z",
+  "result": "pass",
+  "schemaVersion": "1.0.0",
+  "subject": {
+    "subject_id": "r2-synth",
+    "subject_type": "route"
+  },
+  "synthetic": true,
+  "verdict_ids": [
+    "vd_hymn"
+  ]
+}

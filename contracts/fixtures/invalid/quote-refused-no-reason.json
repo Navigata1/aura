@@ -1,0 +1,89 @@
+{
+  "description": "A refused quote without a reason.",
+  "error_contains": "$.refusal_reason",
+  "id": "IR-QUOTE-REFUSED-NO-REASON",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "id": "q_hymn",
+    "kind": "quote",
+    "quote_sha256": "6b53072c77cf995ce8efbd3fc34eb78033c0758aebdd70930ddbcf71f9a5c345",
+    "refusal_reason": null,
+    "schemaVersion": "1.0.0",
+    "status": "refused",
+    "terms": {
+      "cap_usd": "25.00",
+      "ceiling_usd": "0.38",
+      "cloud": "secure",
+      "created_at": "2026-10-09T10:20:00Z",
+      "egress": [
+        {
+          "role": "abc_score",
+          "sha256": "999e5c1aed368edc9a91c2384775a501fc50e8e1806b5affdaa7cf3dab878276"
+        },
+        {
+          "role": "lyrics_plan",
+          "sha256": "ad8f8b5a3ada85a1743b8022acf3f4f7ee0e190cf06bb494a9161ae89f98f15e"
+        }
+      ],
+      "expires_at": "2026-10-09T10:35:00Z",
+      "fixed_lines": [],
+      "gpu_class": "FAKE-24GB",
+      "jobs": [
+        {
+          "estimate_basis": "fake",
+          "estimate_minutes": "6",
+          "job_id": "job_cb",
+          "label": "UNVERIFIED",
+          "profile_id": "fake-burst"
+        }
+      ],
+      "lane": "individual",
+      "lane_check": {
+        "profiles": [
+          {
+            "allowed_lanes": [
+              "individual",
+              "research"
+            ],
+            "profile_id": "fake-burst"
+          }
+        ],
+        "result": "pass"
+      },
+      "max_minutes": {
+        "boot": "3",
+        "jobs_total": "6",
+        "teardown_margin": "2",
+        "total": "15",
+        "weights_download": "4"
+      },
+      "month": "2026-10",
+      "month_to_date_usd": "0.00",
+      "project_id": "prj_hymn",
+      "provider": "fake",
+      "rates": [
+        {
+          "gpu_class": "FAKE-24GB",
+          "label": "UNVERIFIED",
+          "read_at": "2026-10-09T10:20:00Z",
+          "snapshot_date": null,
+          "source": "fake",
+          "usd_per_hour": "1.10"
+        },
+        {
+          "gpu_class": "FAKE-24GB-ALT",
+          "label": "UNVERIFIED",
+          "read_at": "2026-10-09T10:20:00Z",
+          "snapshot_date": null,
+          "source": "fake",
+          "usd_per_hour": "1.50"
+        }
+      ],
+      "request_id": "gr_hymn",
+      "synthetic_test": true
+    }
+  },
+  "record_kind": "quote",
+  "rule": "A refusal names its reason",
+  "schemaVersion": "1.0.0"
+}

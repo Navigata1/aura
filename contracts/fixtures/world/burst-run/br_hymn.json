@@ -1,0 +1,23 @@
+{
+  "approval_id": "ap_hymn",
+  "hard_max_minutes": 15,
+  "id": "br_hymn",
+  "image_digest": "sha256:ade85f1ffbfbb9fc152ecbae8afa21ea5603a111f8cd24ef252a5a0f84a4b0f3",
+  "kind": "burst-run",
+  "lease_token_sha256": "9459e6f94364534532a0357f36a1883b8930def13538c69a48ab279774ee6da6",
+  "pod_tag": "studio-burst",
+  "provider": "fake",
+  "provisioned_at": "2026-10-09T10:22:05Z",
+  "quote_id": "q_hymn",
+  "reserved_at": "2026-10-09T10:22:01Z",
+  "schemaVersion": "1.0.0",
+  "settlement": {
+    "basis": "provider_reported",
+    "settled_at": "2026-10-09T10:31:30Z",
+    "usd": "0.21"
+  },
+  "state": "settled",
+  "synthetic_test": true,
+  "terminated_at": "2026-10-09T10:31:00Z",
+  "termination_confirmed": true
+}

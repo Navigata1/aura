@@ -1,0 +1,59 @@
+{
+  "description": "The plan dropped 'unbenchmarked routes' with no benchmark record.",
+  "expect_rules": [
+    "request.plan_consistent"
+  ],
+  "id": "SC-REQUEST-LABEL",
+  "kind": "fixture.scenario",
+  "overlay": [
+    {
+      "candidate_ids": [
+        "cand_a",
+        "cand_b"
+      ],
+      "compute_profile_id": "cp_tier4",
+      "created_at": "2026-10-09T10:10:00Z",
+      "declined": [],
+      "id": "gr_hymn",
+      "job_ids": [
+        "job_ca",
+        "job_cb"
+      ],
+      "kind": "generation-request",
+      "labels": [
+        "Synthetic test output"
+      ],
+      "mode": "explicit",
+      "plan": [
+        {
+          "ordinal": 1,
+          "placement": "local",
+          "profile_id": "fake-route-a",
+          "reason": "Mac route: cover of the NeutralVoice guide",
+          "route": "R2-synth",
+          "seed": 11
+        },
+        {
+          "ordinal": 2,
+          "placement": "burst",
+          "profile_id": "fake-burst",
+          "reason": "score route on an approved burst (individual lane)",
+          "route": "R1",
+          "seed": 7
+        }
+      ],
+      "project_id": "prj_hymn",
+      "quote_ids": [
+        "q_hymn"
+      ],
+      "schemaVersion": "1.0.0",
+      "session_id": "ses_1",
+      "song": {
+        "rev": 1,
+        "song_id": "song_hymn"
+      }
+    }
+  ],
+  "remove": [],
+  "schemaVersion": "1.0.0"
+}

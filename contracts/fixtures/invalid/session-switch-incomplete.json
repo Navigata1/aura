@@ -1,0 +1,28 @@
+{
+  "description": "An unlogged switch.",
+  "error_contains": "missing required property 'replanned_job_ids'",
+  "id": "IR-SESSION-SWITCH-INCOMPLETE",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "changes_since_last": [],
+    "compute_profile_id": "cp_tier4",
+    "ended_at": null,
+    "id": "ses_1",
+    "kind": "session",
+    "schemaVersion": "1.0.0",
+    "snapshot_ids": [
+      "hw_mac"
+    ],
+    "started_at": "2026-10-09T10:00:00Z",
+    "switches": [
+      {
+        "at": "2026-10-09T12:00:00Z",
+        "from_compute_profile_id": "cp_tier4",
+        "to_compute_profile_id": "cp_tier1"
+      }
+    ]
+  },
+  "record_kind": "session",
+  "rule": "A switch logs re-planned jobs and re-quoted approvals",
+  "schemaVersion": "1.0.0"
+}

@@ -1,0 +1,49 @@
+{
+  "artifacts": [
+    "1ddb4a6c6c3c67c5637936e76c5642ce0981b773cb4febf9674fd295d7a47c84",
+    "248cebebf990bcf02b2df4ba0dc4b3aaaa1bf7fa1b6003d90761ceffd39174da",
+    "49dc0401afa40ab995c2d1c0a905a9587eb775ab9b36ad0819137d896db94eac",
+    "99446b40ff4614f7515e834e9c2bf248db36fbf949c66662fe23db7e0a32e118",
+    "b61b656f22a8eb761b34046a716bc8b0a569c94fc6b4506708dc2e3eaa939356",
+    "d7a8c786255865a2feea62fcb6b94d6d3199d14df310cfd0c54b6831d366cb96",
+    "e7bf134c89dd4bad03f6082130b74267e24e4d089adaec8d8c2b710dfd4cc8d9",
+    "f7af17cbfb64026585e4f1049aa82da4ec1b5562d34f15f1b880834e8a5b64cb"
+  ],
+  "created_at": "2026-10-09T10:59:00Z",
+  "edit_operation_ids": [],
+  "export_ids": [
+    "ex_venture"
+  ],
+  "generation_request_ids": [
+    "gr_venture"
+  ],
+  "heads": {
+    "melody": {
+      "melody_id": "mel_venture",
+      "rev": 1
+    },
+    "song": {
+      "rev": 1,
+      "song_id": "song_venture"
+    }
+  },
+  "id": "prj_venture",
+  "keeper_ids": [
+    "kp_venture"
+  ],
+  "kind": "project",
+  "lane_changes": [],
+  "melody_ids": [
+    "mel_venture",
+    "mel_venture_asm"
+  ],
+  "name": "Venture hook (fixture)",
+  "operator_lane": "llc",
+  "project_kind": "song",
+  "reference_ids": [],
+  "schemaVersion": "1.0.0",
+  "song_ids": [
+    "song_venture"
+  ],
+  "timeline_ids": []
+}

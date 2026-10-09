@@ -1,0 +1,101 @@
+{
+  "description": "Candidate B points at the guide, which is never a candidate.",
+  "expect_rules": [
+    "candidate.artifact_origin"
+  ],
+  "id": "SC-CANDIDATE-IS-GUIDE",
+  "kind": "fixture.scenario",
+  "overlay": [
+    {
+      "adherence": {
+        "reason": "not_yet_validated",
+        "state": "unmeasured"
+      },
+      "artifact_sha256": "b3e0de98dce4bf8a946860ff0439f9b771c19af51359558ec7a87fb7f59f06bf",
+      "badges": [
+        "Synthetic test output",
+        "adherence unmeasured",
+        "lyric errors unmeasured",
+        "unbenchmarked route"
+      ],
+      "created_at": "2026-10-09T10:30:40Z",
+      "diagnostics": [],
+      "hard_constraints": [
+        {
+          "check": "decodes",
+          "result": "pass"
+        },
+        {
+          "check": "non_silent",
+          "result": "pass"
+        },
+        {
+          "check": "duration_fit",
+          "result": "pass"
+        },
+        {
+          "check": "no_clipping",
+          "result": "pass"
+        },
+        {
+          "check": "no_true_peak_over",
+          "result": "pass"
+        },
+        {
+          "check": "melody_adherence",
+          "result": "unmeasured"
+        },
+        {
+          "check": "lyric_per",
+          "result": "unmeasured"
+        }
+      ],
+      "id": "cand_b",
+      "job_id": "job_cb",
+      "kind": "candidate",
+      "measures": {
+        "analysis_sha256": "6b9fe57c2c7a132ee77637ca22f20e82da6669489d249ed93426f401da3b1516",
+        "duration_ms": 120000,
+        "integrated_lufs": "-15.40",
+        "label": "MEASURED-LOCAL",
+        "loudness_standard": "BS.1770-4 (pyloudnorm)",
+        "true_peak_dbtp": "-1.60",
+        "true_peak_meter": "studio-truepeak-4x"
+      },
+      "ordinal": 2,
+      "placement": {
+        "host_class": "fake/burst",
+        "kind": "burst"
+      },
+      "preview_sha256": "0e405f49a5e4b42ddb453d002715c76a629b347cab691bc51a6f6624b704fa79",
+      "profile_id": "fake-burst",
+      "profile_revision": "05a94a98a2f35c694d4fdf383290120d74fb6dd572fa20cc95847ea54a0017ef",
+      "project_id": "prj_hymn",
+      "route": "R1",
+      "schemaVersion": "1.0.0",
+      "seed": 7,
+      "source": {
+        "generation_request_id": "gr_hymn"
+      },
+      "synthetic_test": true,
+      "withheld_during_blind": [
+        "route",
+        "profile_id",
+        "profile_revision",
+        "seed",
+        "placement",
+        "job_id",
+        "artifact_sha256",
+        "preview_sha256",
+        "measures",
+        "adherence",
+        "hard_constraints",
+        "badges",
+        "diagnostics",
+        "source"
+      ]
+    }
+  ],
+  "remove": [],
+  "schemaVersion": "1.0.0"
+}

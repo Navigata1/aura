@@ -1,0 +1,72 @@
+{
+  "description": "NeutralVoice output is offered as ACE's smoke evidence; that gate forbids synthetic records.",
+  "expect_rules": [
+    "evidence.gates"
+  ],
+  "id": "SC-EVIDENCE-SYNTHETIC-SMOKE",
+  "kind": "fixture.scenario",
+  "overlay": [
+    {
+      "attachments": [],
+      "check": "smoke",
+      "checks": [
+        {
+          "check": "install_bytes_match_manifest",
+          "measured": [],
+          "result": "pass",
+          "verdict_id": null
+        },
+        {
+          "check": "conformance",
+          "measured": [],
+          "result": "pass",
+          "verdict_id": null
+        },
+        {
+          "check": "decodes",
+          "measured": [],
+          "result": "pass",
+          "verdict_id": null
+        },
+        {
+          "check": "non_silent",
+          "measured": [],
+          "result": "pass",
+          "verdict_id": null
+        },
+        {
+          "check": "duration_within_tolerance",
+          "measured": [],
+          "result": "pass",
+          "verdict_id": null
+        },
+        {
+          "check": "owner_not_garbled",
+          "measured": [],
+          "result": "pass",
+          "verdict_id": "vd_hymn"
+        }
+      ],
+      "gate_id": "smoke.ace-2b-turbo-mlx",
+      "host_class": "mlx/m5pro",
+      "id": "ev_bad_smoke",
+      "kind": "evidence",
+      "measured": [],
+      "prereg_sha256": null,
+      "profile_revision": "bd97299ab4bf41820dedaa934492c272268ceb9b3f9bacbb236bd6d64b1a78b5",
+      "recorded_at": "2026-10-09T12:00:00Z",
+      "result": "pass",
+      "schemaVersion": "1.0.0",
+      "subject": {
+        "subject_id": "ace-2b-turbo-mlx",
+        "subject_type": "profile"
+      },
+      "synthetic": true,
+      "verdict_ids": [
+        "vd_hymn"
+      ]
+    }
+  ],
+  "remove": [],
+  "schemaVersion": "1.0.0"
+}

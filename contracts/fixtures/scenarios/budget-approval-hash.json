@@ -1,0 +1,29 @@
+{
+  "description": "The approval is bound to a different quote hash.",
+  "expect_rules": [
+    "budget.approval_binds_quote"
+  ],
+  "id": "SC-BUDGET-APPROVAL-HASH",
+  "kind": "fixture.scenario",
+  "overlay": [
+    {
+      "act": {
+        "act": "approve_quote",
+        "at": "2026-10-09T10:22:00Z",
+        "scope": "owner-ui"
+      },
+      "expires_at": "2026-10-09T10:35:00Z",
+      "id": "ap_hymn",
+      "kind": "approval",
+      "nonce_sha256": "6f673440b83aebee8f026a1a05a586a3d84316ebb2c1bfe39e5847b51fb583e6",
+      "quote_id": "q_hymn",
+      "quote_sha256": "76d337649cffb33ada64bf8f94cff44f8f32ac965c1be701f9245198bd71e95f",
+      "schemaVersion": "1.0.0",
+      "single_use": true,
+      "state": "used",
+      "used_by_run_id": "br_hymn"
+    }
+  ],
+  "remove": [],
+  "schemaVersion": "1.0.0"
+}

@@ -1,0 +1,20 @@
+{
+  "description": "Busy with no resident profile.",
+  "error_contains": "$.resident_profile",
+  "id": "IR-WORKER-HEALTH-BUSY-NO-RESIDENT",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "kind": "worker-health",
+    "mem": {
+      "device_bytes": null,
+      "rss_bytes": 134217728
+    },
+    "resident_profile": null,
+    "schemaVersion": "1.0.0",
+    "state": "busy",
+    "worker_id": "wkr_fake"
+  },
+  "record_kind": "worker-health",
+  "rule": "A busy worker names its resident profile",
+  "schemaVersion": "1.0.0"
+}

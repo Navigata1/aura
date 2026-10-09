@@ -1,0 +1,20 @@
+{
+  "description": "A permitted request was refused with lane_forbidden.",
+  "expect_rules": [
+    "worker.refuse_before_load"
+  ],
+  "id": "SC-WORKER-REFUSED-PERMITTED",
+  "kind": "fixture.scenario",
+  "overlay": [
+    {
+      "code": "lane_forbidden",
+      "detail": "wrongly refused",
+      "job_id": "job_ca",
+      "kind": "refusal",
+      "loaded_nothing": true,
+      "schemaVersion": "1.0.0"
+    }
+  ],
+  "remove": [],
+  "schemaVersion": "1.0.0"
+}

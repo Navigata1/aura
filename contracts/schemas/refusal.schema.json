@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "refusal/1 (422 from POST /v1/jobs)",
+  "description": "Refuse before load (ADR-0026): an unsupported task, a forbidden lane, an over-limit request, an unsupported language, missing weights, insufficient memory or disk, or busy. Nothing has been imported or loaded when this is sent.",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "job_id", "code", "detail", "loaded_nothing"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "refusal"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "job_id": {"$ref": "common.schema.json#/$defs/id"},
+    "code": {"$ref": "common.schema.json#/$defs/refusalCode"},
+    "detail": {"$ref": "common.schema.json#/$defs/shortText"},
+    "loaded_nothing": {"const": true}
+  }
+}

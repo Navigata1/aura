@@ -1,0 +1,109 @@
+{
+  "description": "A DAW bounce's lanes are computed from the studio exports it contains, never declared: this bounce of the hymn export (eligible in all three lanes) claims a different set. The same check refuses a bounce of an individual-only export that claims llc.",
+  "expect_rules": [
+    "use.import_terms"
+  ],
+  "id": "SC-IMPORT-BOUNCE-LANES-DECLARED",
+  "kind": "fixture.scenario",
+  "overlay": [
+    {
+      "audio": {
+        "channels": 2,
+        "frames": 1440000,
+        "sample_format": "pcm_f32",
+        "sample_rate": 48000
+      },
+      "bytes": 1024,
+      "created_at": "2026-10-09T13:00:00Z",
+      "kind": "artifact",
+      "media_type": "audio/wav",
+      "origin": "imported_mix",
+      "project_id": null,
+      "provenance": {
+        "allowed_uses": [
+          "listen",
+          "loudness_measure",
+          "dsp_finish",
+          "conditioning"
+        ],
+        "capture": null,
+        "compute": null,
+        "eligible_lanes": [
+          "individual",
+          "research"
+        ],
+        "engine": null,
+        "host": null,
+        "import_terms_id": "it_bounce",
+        "license_chain": [
+          {
+            "code_license": "Own code (all rights reserved until Q5)",
+            "component_id": "neutralvoice",
+            "obligations": [],
+            "weights_license": "n/a (no weights)"
+          },
+          {
+            "code_license": "Own code (all rights reserved until Q5)",
+            "component_id": "studio-own-code",
+            "obligations": [],
+            "weights_license": "n/a (no weights)"
+          }
+        ],
+        "operator_lane": "individual",
+        "parents": [],
+        "producing_job_id": null,
+        "record_inputs": [],
+        "timings": null
+      },
+      "retention_class": "irreplaceable",
+      "schemaVersion": "1.0.0",
+      "sha256": "35669108dafdf5b0869a2bdffe0ff810ea5f9535c33d299c1d306347c7ef2dfb",
+      "synthetic_test": true
+    },
+    {
+      "account_holder": null,
+      "act": {
+        "act": "attest_import",
+        "at": "2026-10-09T13:00:00Z",
+        "scope": "owner-ui"
+      },
+      "artifact_sha256": "35669108dafdf5b0869a2bdffe0ff810ea5f9535c33d299c1d306347c7ef2dfb",
+      "base_allowed_uses": [
+        "listen",
+        "loudness_measure",
+        "dsp_finish",
+        "conditioning"
+      ],
+      "contains_studio_exports": [
+        {
+          "closure_sha256": "c8d71c163de91df64892dbc9b247dc6e656f0eba89172735bf9b3f87e955a03e",
+          "export_id": "ex_hymn"
+        }
+      ],
+      "contains_third_party_or_suno": false,
+      "detected_marks": [
+        {
+          "export_id": "ex_hymn",
+          "mark": "studio_export_tag"
+        }
+      ],
+      "eligible_lanes": [
+        "individual",
+        "research"
+      ],
+      "id": "it_bounce",
+      "imported_at": "2026-10-09T13:00:00Z",
+      "kind": "import-terms",
+      "license_grant": null,
+      "plan": null,
+      "provenance_marks_preserved": true,
+      "rights_assignment": null,
+      "schemaVersion": "1.0.0",
+      "source_service": "daw_bounce",
+      "terms_date": null,
+      "terms_url": null
+    }
+  ],
+  "remove": [],
+  "schemaVersion": "1.0.0"
+}

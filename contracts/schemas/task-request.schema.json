@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "task-request/1 (POST /v1/jobs)",
+  "description": "Submit one task to a worker (ADR-0026). Inputs travel by sha256 (HEAD first, PUT only if missing), never as paths or URLs; params are validated per task and never interpolated into a command line (worker.no_paths_or_urls). Idempotent on job_id. The worker answers 202 or 422 refusal/1 before anything loads.",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "job_id", "profile_id", "task", "lane", "inputs", "params", "seed", "deadline_s"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "task-request"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "job_id": {"$ref": "common.schema.json#/$defs/id"},
+    "profile_id": {"$ref": "common.schema.json#/$defs/slug"},
+    "task": {"$ref": "common.schema.json#/$defs/workerTask"},
+    "lane": {"$ref": "common.schema.json#/$defs/operatorLane"},
+    "inputs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["role", "sha256", "media_type", "bytes"],
+        "additionalProperties": false,
+        "properties": {
+          "role": {"type": "string", "pattern": "^[a-z][a-z0-9_]{0,31}$"},
+          "sha256": {"$ref": "common.schema.json#/$defs/sha256"},
+          "media_type": {"$ref": "common.schema.json#/$defs/mediaType"},
+          "bytes": {"type": "integer", "minimum": 0}
+        }
+      }
+    },
+    "params": {"type": "object"},
+    "seed": {"type": ["integer", "null"], "minimum": 0},
+    "deadline_s": {"type": "integer", "minimum": 1, "maximum": 14400}
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "audio": null,
+  "bytes": 1024,
+  "created_at": "2026-10-09T11:00:00Z",
+  "kind": "artifact",
+  "media_type": "audio/midi",
+  "origin": "human_recording",
+  "project_id": "prj_venture",
+  "provenance": {
+    "allowed_uses": [
+      "listen",
+      "analysis",
+      "engine_input",
+      "export"
+    ],
+    "capture": {
+      "captured_via": "midi_file",
+      "client_sha256": "1ddb4a6c6c3c67c5637936e76c5642ce0981b773cb4febf9674fd295d7a47c84",
+      "processing_off_verified": null
+    },
+    "compute": null,
+    "eligible_lanes": [
+      "individual",
+      "llc",
+      "research"
+    ],
+    "engine": null,
+    "host": {
+      "arch": "arm64",
+      "backend": "cpu",
+      "host_class": "cpu/m5pro",
+      "host_id": "host_mac",
+      "os": "darwin"
+    },
+    "import_terms_id": null,
+    "license_chain": [],
+    "operator_lane": "llc",
+    "parents": [],
+    "producing_job_id": null,
+    "record_inputs": [],
+    "timings": null
+  },
+  "retention_class": "irreplaceable",
+  "schemaVersion": "1.0.0",
+  "sha256": "1ddb4a6c6c3c67c5637936e76c5642ce0981b773cb4febf9674fd295d7a47c84",
+  "synthetic_test": true
+}

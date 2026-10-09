@@ -1,0 +1,60 @@
+{
+  "description": "Fractional bytes.",
+  "error_contains": "$.accelerators[1].vram_bytes",
+  "id": "IR-HARDWARE-VRAM-FLOAT",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "accelerators": [
+      {
+        "compute_capability": null,
+        "cuda_runtime": null,
+        "driver_version": null,
+        "metal_recommended_max_working_set_bytes": null,
+        "name": "Apple M5 Pro GPU",
+        "unified_memory": true,
+        "vendor": "apple",
+        "vram_bytes": null
+      },
+      {
+        "compute_capability": "8.9",
+        "cuda_runtime": "12.8",
+        "driver_version": "570.86",
+        "metal_recommended_max_working_set_bytes": null,
+        "name": "RTX 4090",
+        "unified_memory": false,
+        "vendor": "nvidia",
+        "vram_bytes": 25757220864.5
+      }
+    ],
+    "cpu": "Apple M5 Pro",
+    "host_id": "host_mac",
+    "id": "hw_mac",
+    "kind": "hardware-snapshot",
+    "memory_bytes": 51539607552,
+    "os": {
+      "arch": "arm64",
+      "family": "darwin",
+      "version": "26.6.2"
+    },
+    "raw_outputs": [
+      {
+        "command": "sysctl -n hw.memsize machdep.cpu.brand_string",
+        "sha256": "303b731972606ddfa4dc0a4e588b489012549eb25f3c3fa5b35cf6269d6a605f"
+      }
+    ],
+    "schemaVersion": "1.0.0",
+    "taken_at": "2026-10-09T09:59:00Z",
+    "volumes": [
+      {
+        "filesystem": "apfs",
+        "free_bytes": 966367641600,
+        "mount": "/Volumes/STUDIO",
+        "role": "studio_volume"
+      }
+    ],
+    "wsl2": null
+  },
+  "record_kind": "hardware-snapshot",
+  "rule": "Sizes are integer bytes",
+  "schemaVersion": "1.0.0"
+}

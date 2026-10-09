@@ -1,0 +1,126 @@
+{
+  "closures": [
+    {
+      "closure": [
+        "2789a942c9533e6ecec15d6b9e0942389ba2f1e3f6fc664356f54291a9f0e884",
+        "b3e0de98dce4bf8a946860ff0439f9b771c19af51359558ec7a87fb7f59f06bf"
+      ],
+      "closure_labels": [
+        "cand_a",
+        "guide"
+      ],
+      "keeper_id": "kp_hymn"
+    },
+    {
+      "closure": [
+        "b61b656f22a8eb761b34046a716bc8b0a569c94fc6b4506708dc2e3eaa939356",
+        "f7af17cbfb64026585e4f1049aa82da4ec1b5562d34f15f1b880834e8a5b64cb"
+      ],
+      "closure_labels": [
+        "venture_b",
+        "vguide"
+      ],
+      "keeper_id": "kp_venture"
+    }
+  ],
+  "eligible_lanes": [
+    {
+      "label": "hum",
+      "lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "sha256": "dc777e3766c902a35936fea39ee9ceecee87a562e63e9fb42a090dc80205d7e7",
+      "why": "A human recording has no components and no parents."
+    },
+    {
+      "label": "guide",
+      "lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "sha256": "b3e0de98dce4bf8a946860ff0439f9b771c19af51359558ec7a87fb7f59f06bf",
+      "why": "NeutralVoice and the studio's own code allow every lane."
+    },
+    {
+      "label": "cand_a",
+      "lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "sha256": "2789a942c9533e6ecec15d6b9e0942389ba2f1e3f6fc664356f54291a9f0e884",
+      "why": "fake-route-a (own code + NeutralVoice) derived from the guide."
+    },
+    {
+      "label": "cand_b",
+      "lanes": [
+        "individual",
+        "research"
+      ],
+      "sha256": "e72def8d0b533962c620f88ab7da2d60d497a000c199d8ae80d6ff8fbf9d01fa",
+      "why": "fake-burst declares fake-nc-weights (non-commercial)."
+    },
+    {
+      "label": "preview_b",
+      "lanes": [
+        "individual",
+        "research"
+      ],
+      "sha256": "0e405f49a5e4b42ddb453d002715c76a629b347cab691bc51a6f6624b704fa79",
+      "why": "converted_from candidate B carries its lanes."
+    },
+    {
+      "label": "measure_a",
+      "lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "sha256": "fdf30e2a1588e08a02a0205ca7b65f683d57d280383e3687da974c41ea77294f",
+      "why": "analyzed_by never propagates; pyloudnorm and own code allow every lane."
+    },
+    {
+      "label": "vocal_a",
+      "lanes": [
+        "individual",
+        "research"
+      ],
+      "sha256": "c88ebc5ab2432984349930e6cc358dccf486ce4fd359016800eafbc716caa376",
+      "why": "fake-separate declares non-commercial-by-author separator weights."
+    },
+    {
+      "label": "adherence_a",
+      "lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "sha256": "6ca121e5fbd59675f0e20b2467e792a8530b997b1817e29356c0b4585297d7e1",
+      "why": "analyzed_by the individual-only vocal does not propagate."
+    },
+    {
+      "label": "deliverable_a",
+      "lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "sha256": "32c41d14b799a8e1f844e84f11fe694a8804a31a75749f59c1639ec541465e09",
+      "why": "converted_from candidate A."
+    },
+    {
+      "label": "suno",
+      "lanes": [
+        "individual",
+        "research"
+      ],
+      "sha256": "6bddb7311b9df81220ddfedbcd18c099b6229e9c3e220bbadc2bb2595d1f9260",
+      "why": "The suno-v6 row allows every lane, but Jon's own Pro account holds this output and the LLC has no written license to it, so its import terms narrow it to individual and research."
+    }
+  ],
+  "kind": "fixture.world-assertions",
+  "schemaVersion": "1.0.0"
+}

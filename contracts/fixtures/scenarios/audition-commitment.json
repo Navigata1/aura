@@ -1,0 +1,31 @@
+{
+  "description": "The reveal's nonce does not reproduce the published commitment.",
+  "expect_rules": [
+    "audition.reveal_commitment"
+  ],
+  "id": "SC-AUDITION-COMMITMENT",
+  "kind": "fixture.scenario",
+  "overlay": [
+    {
+      "audition_id": "aud_hymn",
+      "id": "rv_hymn",
+      "kind": "reveal",
+      "mapping": [
+        {
+          "candidate_id": "cand_b",
+          "label": "A"
+        },
+        {
+          "candidate_id": "cand_a",
+          "label": "B"
+        }
+      ],
+      "nonce": "196ffea632199c615c89e6737f3d4226797c2cf4880128ee5b81273395a6fa0e",
+      "revealed_at": "2026-10-09T10:40:05Z",
+      "schemaVersion": "1.0.0",
+      "verdict_id": "vd_hymn"
+    }
+  ],
+  "remove": [],
+  "schemaVersion": "1.0.0"
+}

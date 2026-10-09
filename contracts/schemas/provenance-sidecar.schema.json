@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "provenance-sidecar/1",
+  "description": "The <sha>.prov.json sidecar beside each blob: the artifact truth from which reindex rebuilds SQLite rows (ADR-0028). blob_sha256 must equal artifact.sha256 (provenance.sidecar_matches).",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "blob_sha256", "written_at", "artifact"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "provenance-sidecar"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "blob_sha256": {"$ref": "common.schema.json#/$defs/sha256"},
+    "written_at": {"$ref": "common.schema.json#/$defs/dateTime"},
+    "artifact": {"$ref": "artifact.schema.json"}
+  }
+}

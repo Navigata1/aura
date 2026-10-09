@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "prereg/1",
+  "description": "The hashed, committed plan of an evaluation, made before anything is rendered for it (GLOSSARY: Preregistration). prereg_sha256 is the sha256 of the canonical JSON of body (record.content_hash). Results without one promote nothing. Thresholds are fixed here, so the ambition can fail; the preferred choice is allowed to lose.",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "id", "eval_set_id", "prereg_sha256", "body"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "prereg"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "id": {"$ref": "common.schema.json#/$defs/id"},
+    "eval_set_id": {"$ref": "common.schema.json#/$defs/id"},
+    "prereg_sha256": {"$ref": "common.schema.json#/$defs/sha256"},
+    "body": {
+      "type": "object",
+      "required": ["briefs", "asset_hashes", "pins", "budgets", "listening_quota", "thresholds", "gate_owner", "committed_at"],
+      "additionalProperties": false,
+      "properties": {
+        "briefs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["brief_id", "lane"],
+            "additionalProperties": false,
+            "properties": {"brief_id": {"$ref": "common.schema.json#/$defs/id"}, "lane": {"$ref": "common.schema.json#/$defs/operatorLane"}}
+          }
+        },
+        "asset_hashes": {"type": "array", "uniqueItems": true, "items": {"$ref": "common.schema.json#/$defs/sha256"}},
+        "pins": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["profile_id", "profile_revision"],
+            "additionalProperties": false,
+            "properties": {"profile_id": {"$ref": "common.schema.json#/$defs/slug"}, "profile_revision": {"$ref": "common.schema.json#/$defs/sha256"}}
+          }
+        },
+        "budgets": {
+          "type": "object",
+          "required": ["candidates_per_brief", "compute_usd_cap", "listening_minutes"],
+          "additionalProperties": false,
+          "properties": {
+            "candidates_per_brief": {"type": "integer", "minimum": 1},
+            "compute_usd_cap": {"$ref": "common.schema.json#/$defs/usd"},
+            "listening_minutes": {"type": "integer", "minimum": 1}
+          }
+        },
+        "listening_quota": {
+          "type": "object",
+          "required": ["sessions_min", "repeat_pair_fraction", "short_quota_outcome"],
+          "additionalProperties": false,
+          "properties": {
+            "sessions_min": {"type": "integer", "minimum": 1},
+            "repeat_pair_fraction": {"$ref": "common.schema.json#/$defs/unitInterval"},
+            "short_quota_outcome": {"const": "inconclusive"}
+          }
+        },
+        "thresholds": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["metric", "comparator", "value"],
+            "additionalProperties": false,
+            "properties": {
+              "metric": {"type": "string", "pattern": "^[a-z][a-z0-9_.-]{0,63}$"},
+              "comparator": {"enum": ["gte", "lte"]},
+              "value": {"$ref": "common.schema.json#/$defs/decimal"}
+            }
+          }
+        },
+        "gate_owner": {"const": "jon"},
+        "committed_at": {"$ref": "common.schema.json#/$defs/dateTime"}
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "brief_ids": [
+    "brief_smoke_01",
+    "brief_smoke_02",
+    "brief_smoke_03",
+    "brief_smoke_04",
+    "brief_smoke_05",
+    "brief_smoke_06",
+    "brief_smoke_07",
+    "brief_smoke_08",
+    "brief_smoke_09",
+    "brief_smoke_10",
+    "brief_smoke_11",
+    "brief_smoke_12"
+  ],
+  "id": "es_smoke",
+  "kind": "eval-set",
+  "schemaVersion": "1.0.0",
+  "set": "smoke"
+}

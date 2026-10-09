@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "store/1 (store.json)",
+  "description": "Store identity at the volume root. A future reader opens a store from this file plus docs/FORMAT.md (architecture.md §8.2). The band size stays null until P0 measures it.",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "store_id", "layout_version", "volume", "band_size_sectors", "created_at", "last_clean_detach"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "store"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "store_id": {"$ref": "common.schema.json#/$defs/id"},
+    "layout_version": {"const": 1},
+    "volume": {
+      "type": "object",
+      "required": ["adapter", "name"],
+      "additionalProperties": false,
+      "properties": {
+        "adapter": {"enum": ["macos_sparsebundle", "plain_dir"]},
+        "name": {"const": "STUDIO", "description": "Neutral volume name (ADR-0035)."}
+      }
+    },
+    "band_size_sectors": {"type": ["integer", "null"], "enum": [16384, 131072, null], "description": "8 MiB or 64 MiB bands; null until measured (UNVERIFIED)."},
+    "created_at": {"$ref": "common.schema.json#/$defs/dateTime"},
+    "last_clean_detach": {"oneOf": [{"$ref": "common.schema.json#/$defs/dateTime"}, {"type": "null"}]}
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "approval_id": null,
+  "compute_profile_id": "cp_tier4",
+  "cost": {
+    "basis": "local_zero",
+    "usd": "0.00"
+  },
+  "created_at": "2026-10-09T10:01:05Z",
+  "egress": [],
+  "error": null,
+  "history": [
+    {
+      "at": "2026-10-09T10:01:05Z",
+      "state": "queued"
+    },
+    {
+      "at": "2026-10-09T10:01:06Z",
+      "state": "preparing"
+    },
+    {
+      "at": "2026-10-09T10:01:07Z",
+      "state": "loading"
+    },
+    {
+      "at": "2026-10-09T10:01:08Z",
+      "state": "generating"
+    },
+    {
+      "at": "2026-10-09T10:01:20Z",
+      "state": "ready"
+    }
+  ],
+  "id": "job_tr1",
+  "inputs": [
+    {
+      "role": "hum",
+      "sha256": "dc777e3766c902a35936fea39ee9ceecee87a562e63e9fb42a090dc80205d7e7"
+    }
+  ],
+  "job_kind": "transcribe",
+  "kind": "job",
+  "lane": "individual",
+  "outputs": [
+    {
+      "role": "melody_spec",
+      "sha256": "4d63cd759a3b381d73d9bec75ea8a2adea2249911b467413972bb162e18e8791"
+    }
+  ],
+  "params": {
+    "actual": {},
+    "intent": {}
+  },
+  "parent_job_id": null,
+  "placement": {
+    "host_class": "cpu/m5pro",
+    "kind": "local"
+  },
+  "profile_id": "analysis-transcribe-pyin-hmm",
+  "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa",
+  "project_id": "prj_hymn",
+  "quote_id": null,
+  "record_inputs": [],
+  "request_id": null,
+  "retry": null,
+  "schemaVersion": "1.0.0",
+  "seed": null,
+  "session_id": "ses_1",
+  "state": "ready",
+  "steps": [
+    {
+      "name": "pyin"
+    },
+    {
+      "name": "hmm-segmentation"
+    }
+  ],
+  "task": "transcribe"
+}

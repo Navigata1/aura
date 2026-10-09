@@ -1,0 +1,96 @@
+{
+  "ai_disclosure": {
+    "reasons": [
+      "generated_audio_in_closure"
+    ],
+    "required": true
+  },
+  "closure": [
+    "b61b656f22a8eb761b34046a716bc8b0a569c94fc6b4506708dc2e3eaa939356",
+    "f7af17cbfb64026585e4f1049aa82da4ec1b5562d34f15f1b880834e8a5b64cb"
+  ],
+  "closure_sha256": "324683c27570cd12285a0fd3190a932054a7a85d16df38c0dc9cccc7238ae311",
+  "converted_vocal": false,
+  "dither": null,
+  "eligible_lanes": [
+    "individual",
+    "llc",
+    "research"
+  ],
+  "files": [
+    {
+      "audio": {
+        "channels": 2,
+        "frames": 1440000,
+        "sample_format": "pcm_f32",
+        "sample_rate": 48000
+      },
+      "bytes": 1024,
+      "media_type": "audio/wav",
+      "path": "mix-native.wav",
+      "role": "mix_native",
+      "sha256": "f7af17cbfb64026585e4f1049aa82da4ec1b5562d34f15f1b880834e8a5b64cb"
+    },
+    {
+      "audio": null,
+      "bytes": 1024,
+      "media_type": "application/json",
+      "path": "melody-spec.json",
+      "role": "melody_spec",
+      "sha256": "cad0299db8773d6efd8f2b899dbd7775f8812d98ae616766bd45ce96e0457089"
+    }
+  ],
+  "human_contributions": [
+    {
+      "contribution": "melody",
+      "detail": "Played the MIDI melody",
+      "refs": [
+        "1ddb4a6c6c3c67c5637936e76c5642ce0981b773cb4febf9674fd295d7a47c84"
+      ]
+    },
+    {
+      "contribution": "choices",
+      "detail": "Kept this candidate in a blind audition",
+      "refs": []
+    }
+  ],
+  "id": "ex_venture",
+  "imported_sources": [],
+  "keeper_id": "kp_venture",
+  "kind": "export-manifest",
+  "license_chain": [
+    {
+      "code_license": "Own code (all rights reserved until Q5)",
+      "component_id": "neutralvoice",
+      "obligations": [],
+      "weights_license": "n/a (no weights)"
+    },
+    {
+      "code_license": "Own code (all rights reserved until Q5)",
+      "component_id": "studio-own-code",
+      "obligations": [],
+      "weights_license": "n/a (no weights)"
+    }
+  ],
+  "loudness": {
+    "integrated_lufs": "-13.80",
+    "label": "MEASURED-LOCAL",
+    "meter": "pyloudnorm 0.1.1",
+    "standard": "BS.1770-4",
+    "true_peak_dbtp": "-1.30",
+    "true_peak_meter": "studio-truepeak-4x"
+  },
+  "model_chain": [
+    {
+      "profile_id": "fake-route-b",
+      "profile_revision": "89622a813cfe4f1ce6842dcc59c7d49f44dffd58a3fcf7added6d94c0c867eca"
+    }
+  ],
+  "operator_lane": "llc",
+  "project_id": "prj_venture",
+  "release_blockers": [],
+  "release_clear": true,
+  "schemaVersion": "1.0.0",
+  "synthetic_test": true,
+  "verified_at": "2026-10-09T11:12:00Z"
+}

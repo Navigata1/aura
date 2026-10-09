@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-09T10:31:00Z",
+  "data": {
+    "run_id": "br_hymn"
+  },
+  "kind": "event",
+  "schemaVersion": "1.0.0",
+  "seq": 4,
+  "subject_id": "br_hymn",
+  "type": "burst.terminated"
+}

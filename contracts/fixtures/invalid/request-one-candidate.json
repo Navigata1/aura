@@ -1,0 +1,49 @@
+{
+  "description": "A single-candidate plan.",
+  "error_contains": "$.plan",
+  "id": "IR-REQUEST-ONE-CANDIDATE",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "candidate_ids": [
+      "cand_a",
+      "cand_b"
+    ],
+    "compute_profile_id": "cp_tier4",
+    "created_at": "2026-10-09T10:10:00Z",
+    "declined": [],
+    "id": "gr_hymn",
+    "job_ids": [
+      "job_ca",
+      "job_cb"
+    ],
+    "kind": "generation-request",
+    "labels": [
+      "unbenchmarked routes",
+      "Synthetic test output"
+    ],
+    "mode": "explicit",
+    "plan": [
+      {
+        "ordinal": 1,
+        "placement": "local",
+        "profile_id": "fake-route-a",
+        "reason": "Mac route: cover of the NeutralVoice guide",
+        "route": "R2-synth",
+        "seed": 11
+      }
+    ],
+    "project_id": "prj_hymn",
+    "quote_ids": [
+      "q_hymn"
+    ],
+    "schemaVersion": "1.0.0",
+    "session_id": "ses_1",
+    "song": {
+      "rev": 1,
+      "song_id": "song_hymn"
+    }
+  },
+  "record_kind": "generation-request",
+  "rule": "Two candidates per request",
+  "schemaVersion": "1.0.0"
+}

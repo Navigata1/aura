@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "audition/1",
+  "description": "A blind, level-matched A/B of two or more ready candidates (GLOSSARY: Audition, Blind label, Level matching, Preview; ADR-0010). It opens only when every arm is ready, labels are drawn with a CSPRNG at open time, and only commitment_sha256 is published until the reveal (audition.reveal_commitment). candidate_ids are sorted so their order cannot leak the mapping. Arms expose only $defs/blindView. Gains are attenuation-only, previews share 48 kHz / 24-bit, and the residual mismatch is at most 0.10 LU. A product audition has no anchors and no preregistration; an eval audition may add a reference standard as an anchor, acknowledged as recognizable. Duration and sonic character are a residual leak, acknowledged.",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "id", "project_id", "mode", "request_ids", "brief_id", "opened_at", "all_arms_ready_at",
+               "candidate_ids", "arms", "anchors", "repeat_pairs", "commitment_sha256", "preview", "gains", "loudness_standard",
+               "true_peak_meter", "residual_mismatch_lu", "prereg_sha256", "state", "residual_leak_acknowledged"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "audition"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "id": {"$ref": "common.schema.json#/$defs/id"},
+    "project_id": {"oneOf": [{"$ref": "common.schema.json#/$defs/id"}, {"type": "null"}]},
+    "mode": {"enum": ["product", "eval"]},
+    "request_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "common.schema.json#/$defs/id"}, "description": "Product mode: the generation requests or edit operations its candidates come from (one or more, so a re-roll can be heard beside an earlier candidate of the same project). Eval mode: empty."},
+    "brief_id": {"oneOf": [{"$ref": "common.schema.json#/$defs/id"}, {"type": "null"}]},
+    "opened_at": {"$ref": "common.schema.json#/$defs/dateTime"},
+    "all_arms_ready_at": {"$ref": "common.schema.json#/$defs/dateTime"},
+    "candidate_ids": {"type": "array", "minItems": 2, "uniqueItems": true, "items": {"$ref": "common.schema.json#/$defs/id"}},
+    "arms": {"type": "array", "minItems": 2, "items": {"$ref": "candidate.schema.json#/$defs/blindView"}},
+    "anchors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["label", "reference_id", "acknowledged_recognizable"],
+        "additionalProperties": false,
+        "properties": {
+          "label": {"$ref": "common.schema.json#/$defs/label"},
+          "reference_id": {"$ref": "common.schema.json#/$defs/id"},
+          "acknowledged_recognizable": {"const": true}
+        }
+      }
+    },
+    "repeat_pairs": {
+      "description": "About 10% hidden repeat pairs in eval mode to measure listener consistency.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["first_label", "second_label"],
+        "additionalProperties": false,
+        "properties": {"first_label": {"$ref": "common.schema.json#/$defs/label"}, "second_label": {"$ref": "common.schema.json#/$defs/label"}}
+      }
+    },
+    "commitment_sha256": {"$ref": "common.schema.json#/$defs/sha256"},
+    "preview": {
+      "type": "object",
+      "required": ["sample_rate", "bit_depth"],
+      "additionalProperties": false,
+      "properties": {"sample_rate": {"const": 48000}, "bit_depth": {"const": 24}}
+    },
+    "gains": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["label", "gain_db"],
+        "additionalProperties": false,
+        "properties": {"label": {"$ref": "common.schema.json#/$defs/label"}, "gain_db": {"$ref": "common.schema.json#/$defs/gainDb"}}
+      },
+      "contains": {"properties": {"gain_db": {"const": "0.00"}}}
+    },
+    "loudness_standard": {"const": "BS.1770-4 (pyloudnorm)"},
+    "true_peak_meter": {"const": "studio-truepeak-4x"},
+    "residual_mismatch_lu": {"type": "string", "pattern": "^0\\.(0[0-9]|10)$", "description": "At most 0.10 LU."},
+    "prereg_sha256": {"oneOf": [{"$ref": "common.schema.json#/$defs/sha256"}, {"type": "null"}]},
+    "state": {"enum": ["open", "verdict_given", "revealed", "inconclusive"]},
+    "residual_leak_acknowledged": {"const": ["duration", "sonic_character"]}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"mode": {"const": "product"}}},
+      "then": {"properties": {"anchors": {"maxItems": 0}, "repeat_pairs": {"maxItems": 0}, "prereg_sha256": {"type": "null"}, "request_ids": {"minItems": 1}, "project_id": {"type": "string"}}},
+      "else": {"properties": {"prereg_sha256": {"type": "string"}, "brief_id": {"type": "string"}}}
+    }
+  ]
+}

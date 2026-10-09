@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "import-terms/1",
+  "description": "The source service, terms and owner attestation of an imported_mix (GLOSSARY: Imported mix, Suno boundary; ADR-0021, ADR-0029, ADR-0036). Every import is an owner act (attest_import): an automation token cannot record one. Allowed uses are fixed by the source: a Suno import gets at most listen, loudness_measure and dsp_finish (only an owner-signed risk acceptance can add a named use, and never an audition arm, a reference, an evaluation anchor or training); an owned purchase gets at most listen, loudness_measure and eval_anchor; a licensed import gets only the uses its license grant names; nothing is ever imported for training. eligible_lanes narrows the artifact's lanes (lane.artifact_eligible): a DAW bounce that contains studio exports inherits the intersection of those exports' eligible lanes, and a Suno import is llc-eligible only when the LLC holds the account or a written license to the output. Ingest detects embedded marks: a Suno provenance mark forces source_service suno, and a studio export tag must name its export (use.import_terms). A bounce that contains third-party or Suno audio is not a daw_bounce; it is imported as suno or licensed. Embedded provenance marks are preserved.",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "id", "artifact_sha256", "source_service", "plan", "account_holder", "terms_url", "terms_date",
+               "rights_assignment", "license_grant", "contains_studio_exports", "contains_third_party_or_suno", "detected_marks",
+               "base_allowed_uses", "eligible_lanes", "provenance_marks_preserved", "act", "imported_at"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "import-terms"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "id": {"$ref": "common.schema.json#/$defs/id"},
+    "artifact_sha256": {"$ref": "common.schema.json#/$defs/sha256"},
+    "source_service": {"enum": ["suno", "daw_bounce", "owned_purchase", "licensed"]},
+    "plan": {"oneOf": [{"enum": ["pro", "premier"]}, {"type": "null"}], "description": "Suno plan. Free-plan output is not commercially usable, so it is not importable."},
+    "account_holder": {
+      "oneOf": [
+        {"type": "null"},
+        {"type": "object", "required": ["holder", "llc_license_in_writing"], "additionalProperties": false,
+         "properties": {"holder": {"enum": ["jon", "llc"]}, "llc_license_in_writing": {"type": "boolean"}}}
+      ],
+      "description": "Who holds the Suno account the output came from, and whether Jon has licensed it to the LLC in writing."
+    },
+    "terms_url": {"oneOf": [{"$ref": "common.schema.json#/$defs/uri"}, {"type": "null"}]},
+    "terms_date": {"oneOf": [{"$ref": "common.schema.json#/$defs/date"}, {"type": "null"}]},
+    "rights_assignment": {"oneOf": [{"$ref": "common.schema.json#/$defs/shortText"}, {"type": "null"}]},
+    "license_grant": {
+      "oneOf": [
+        {"type": "null"},
+        {"type": "object", "required": ["document_url", "document_sha256", "granted_uses"], "additionalProperties": false,
+         "properties": {"document_url": {"$ref": "common.schema.json#/$defs/uri"}, "document_sha256": {"$ref": "common.schema.json#/$defs/sha256"},
+                        "granted_uses": {"$ref": "common.schema.json#/$defs/allowedUses"}}}
+      ],
+      "description": "The license record of a licensed import; its uses bound base_allowed_uses (use.import_terms)."
+    },
+    "contains_studio_exports": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "required": ["export_id", "closure_sha256"],
+        "additionalProperties": false,
+        "properties": {"export_id": {"$ref": "common.schema.json#/$defs/id"}, "closure_sha256": {"$ref": "common.schema.json#/$defs/sha256"}}
+      },
+      "description": "The studio exports a DAW bounce was made from. Their eligible lanes bound the bounce's (use.import_terms)."
+    },
+    "contains_third_party_or_suno": {"type": "boolean"},
+    "detected_marks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["mark", "export_id"],
+        "additionalProperties": false,
+        "properties": {
+          "mark": {"enum": ["suno_provenance", "studio_export_tag"]},
+          "export_id": {"oneOf": [{"$ref": "common.schema.json#/$defs/id"}, {"type": "null"}]}
+        }
+      },
+      "description": "Marks found at ingest: Suno's embedded provenance metadata, or the studio's own export tag or closure hash."
+    },
+    "base_allowed_uses": {"allOf": [{"$ref": "common.schema.json#/$defs/allowedUses"}, {"not": {"contains": {"const": "training"}}}]},
+    "eligible_lanes": {"allOf": [{"$ref": "common.schema.json#/$defs/laneSet"}, {"minItems": 1}]},
+    "provenance_marks_preserved": {"const": true},
+    "act": {"allOf": [{"$ref": "common.schema.json#/$defs/ownerAct"}, {"properties": {"act": {"const": "attest_import"}}}]},
+    "imported_at": {"$ref": "common.schema.json#/$defs/dateTime"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"source_service": {"const": "suno"}}},
+      "then": {
+        "properties": {
+          "base_allowed_uses": {"items": {"enum": ["listen", "loudness_measure", "dsp_finish"]}},
+          "terms_url": {"type": "string"},
+          "terms_date": {"type": "string"},
+          "plan": {"enum": ["pro", "premier"]},
+          "account_holder": {"type": "object"},
+          "contains_studio_exports": {"maxItems": 0}
+        }
+      },
+      "else": {"properties": {"plan": {"type": "null"}, "account_holder": {"type": "null"}}}
+    },
+    {
+      "if": {"properties": {"source_service": {"const": "owned_purchase"}}},
+      "then": {"properties": {"base_allowed_uses": {"items": {"enum": ["listen", "loudness_measure", "eval_anchor"]}},
+                              "contains_studio_exports": {"maxItems": 0}}}
+    },
+    {
+      "if": {"properties": {"source_service": {"const": "licensed"}}},
+      "then": {"properties": {"license_grant": {"type": "object"}, "contains_studio_exports": {"maxItems": 0}}},
+      "else": {"properties": {"license_grant": {"type": "null"}}}
+    },
+    {
+      "if": {"properties": {"source_service": {"const": "daw_bounce"}}},
+      "then": {"properties": {"contains_third_party_or_suno": {"const": false}}}
+    }
+  ]
+}

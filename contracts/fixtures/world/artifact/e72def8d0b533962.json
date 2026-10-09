@@ -1,0 +1,105 @@
+{
+  "audio": {
+    "channels": 2,
+    "frames": 5760000,
+    "sample_format": "pcm_f32",
+    "sample_rate": 48000
+  },
+  "bytes": 1024,
+  "created_at": "2026-10-09T10:30:00Z",
+  "kind": "artifact",
+  "media_type": "audio/wav",
+  "origin": "generated_mix",
+  "project_id": "prj_hymn",
+  "provenance": {
+    "allowed_uses": [
+      "listen",
+      "loudness_measure",
+      "dsp_finish",
+      "analysis",
+      "engine_input",
+      "conditioning",
+      "separation_input",
+      "edit_source",
+      "audition_arm",
+      "export"
+    ],
+    "capture": null,
+    "compute": {
+      "compute_profile_id": "cp_tier4",
+      "placement": "burst",
+      "tier": 4
+    },
+    "eligible_lanes": [
+      "individual",
+      "research"
+    ],
+    "engine": {
+      "code_commit": "0000000",
+      "env": {
+        "lock_sha256": "4f253d1dee58eb9d7ffe83870be7249835e1a361715cb1aef7e2b3ed5eeda2b4"
+      },
+      "params": {
+        "actual": {
+          "cot": "melody"
+        },
+        "intent": {
+          "cot": "melody"
+        }
+      },
+      "profile_id": "fake-burst",
+      "profile_revision": "05a94a98a2f35c694d4fdf383290120d74fb6dd572fa20cc95847ea54a0017ef",
+      "sdk_version": "0.1.0",
+      "seed": 7,
+      "weights": null
+    },
+    "host": {
+      "arch": "x86_64",
+      "backend": "fake",
+      "host_class": "fake/burst",
+      "host_id": "host_fakepod",
+      "os": "linux"
+    },
+    "import_terms_id": null,
+    "license_chain": [
+      {
+        "code_license": "Own code (all rights reserved until Q5)",
+        "component_id": "studio-own-code",
+        "obligations": [],
+        "weights_license": "n/a (no weights)"
+      },
+      {
+        "code_license": "Own test code",
+        "component_id": "fake-nc-weights",
+        "obligations": [],
+        "weights_license": "Fixture stand-in for a non-commercial or research-only license"
+      }
+    ],
+    "operator_lane": "individual",
+    "parents": [],
+    "producing_job_id": "job_cb",
+    "record_inputs": [
+      {
+        "kind": "abc-score",
+        "sha256": "999e5c1aed368edc9a91c2384775a501fc50e8e1806b5affdaa7cf3dab878276"
+      },
+      {
+        "kind": "lyrics-plan",
+        "sha256": "ad8f8b5a3ada85a1743b8022acf3f4f7ee0e190cf06bb494a9161ae89f98f15e"
+      }
+    ],
+    "timings": {
+      "cold": true,
+      "label": "MEASURED-LOCAL",
+      "load_wall_ms": 50,
+      "measured_by": "worker-sdk",
+      "peak_rss_bytes": 268435456,
+      "run_wall_ms": 900,
+      "total_wall_ms": 950
+    }
+  },
+  "retention_class": "derived",
+  "schemaVersion": "1.0.0",
+  "sha256": "e72def8d0b533962c620f88ab7da2d60d497a000c199d8ae80d6ff8fbf9d01fa",
+  "synthetic_test": true
+}

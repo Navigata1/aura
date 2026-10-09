@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "verdict/1",
+  "description": "Jon's immutable judgment of one audition, an owner act (GLOSSARY: Verdict; ADR-0010). A, B (any drawn label), tie or neither, with optional axes, problem intervals and seconds listened per label. 'Neither' re-rolls new candidates. Everyday verdicts are listening-unregistered evidence and never change a status.",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "id", "audition_id", "preferred", "axes", "problem_intervals", "seconds_listened", "act", "evidence_kind"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "verdict"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "id": {"$ref": "common.schema.json#/$defs/id"},
+    "audition_id": {"$ref": "common.schema.json#/$defs/id"},
+    "preferred": {"oneOf": [{"$ref": "common.schema.json#/$defs/label"}, {"enum": ["tie", "neither"]}]},
+    "axes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["axis", "preferred"],
+        "additionalProperties": false,
+        "properties": {
+          "axis": {"enum": ["melody", "vocal", "lyrics", "arrangement", "mix", "overall"]},
+          "preferred": {"oneOf": [{"$ref": "common.schema.json#/$defs/label"}, {"enum": ["tie", "neither"]}]}
+        }
+      }
+    },
+    "problem_intervals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["label", "start_ms", "end_ms", "note"],
+        "additionalProperties": false,
+        "properties": {
+          "label": {"$ref": "common.schema.json#/$defs/label"},
+          "start_ms": {"type": "integer", "minimum": 0},
+          "end_ms": {"type": "integer", "minimum": 1},
+          "note": {"type": "string", "maxLength": 400}
+        }
+      }
+    },
+    "seconds_listened": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["label", "seconds"],
+        "additionalProperties": false,
+        "properties": {"label": {"$ref": "common.schema.json#/$defs/label"}, "seconds": {"type": "integer", "minimum": 0}}
+      }
+    },
+    "act": {"allOf": [{"$ref": "common.schema.json#/$defs/ownerAct"}, {"properties": {"act": {"const": "give_verdict"}}}]},
+    "evidence_kind": {"enum": ["listening-unregistered", "listening-preregistered"]}
+  }
+}

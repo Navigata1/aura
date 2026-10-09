@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-09T10:22:01Z",
+  "data": {
+    "run_id": "br_hymn"
+  },
+  "kind": "event",
+  "schemaVersion": "1.0.0",
+  "seq": 1,
+  "subject_id": "br_hymn",
+  "type": "ledger.reserve"
+}

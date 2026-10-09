@@ -1,0 +1,93 @@
+{
+  "adherence": {
+    "analysis_sha256": "6ca121e5fbd59675f0e20b2467e792a8530b997b1817e29356c0b4585297d7e1",
+    "contour_correlation": "0.93",
+    "label": "MEASURED-LOCAL",
+    "median_cents_error": "18.5",
+    "octave_error_rate": "0.02",
+    "onset_f1": "0.81",
+    "state": "measured"
+  },
+  "artifact_sha256": "2789a942c9533e6ecec15d6b9e0942389ba2f1e3f6fc664356f54291a9f0e884",
+  "badges": [
+    "Synthetic test output",
+    "lyric errors unmeasured",
+    "unbenchmarked route"
+  ],
+  "created_at": "2026-10-09T10:10:40Z",
+  "diagnostics": [],
+  "hard_constraints": [
+    {
+      "check": "decodes",
+      "result": "pass"
+    },
+    {
+      "check": "non_silent",
+      "result": "pass"
+    },
+    {
+      "check": "duration_fit",
+      "result": "pass"
+    },
+    {
+      "check": "no_clipping",
+      "result": "pass"
+    },
+    {
+      "check": "no_true_peak_over",
+      "result": "pass"
+    },
+    {
+      "check": "melody_adherence",
+      "result": "pass"
+    },
+    {
+      "check": "lyric_per",
+      "result": "unmeasured"
+    }
+  ],
+  "id": "cand_a",
+  "job_id": "job_ca",
+  "kind": "candidate",
+  "measures": {
+    "analysis_sha256": "fdf30e2a1588e08a02a0205ca7b65f683d57d280383e3687da974c41ea77294f",
+    "duration_ms": 120000,
+    "integrated_lufs": "-14.20",
+    "label": "MEASURED-LOCAL",
+    "loudness_standard": "BS.1770-4 (pyloudnorm)",
+    "true_peak_dbtp": "-1.10",
+    "true_peak_meter": "studio-truepeak-4x"
+  },
+  "ordinal": 1,
+  "placement": {
+    "host_class": "fake/local",
+    "kind": "local"
+  },
+  "preview_sha256": "77596a47feb5e00cf1cd4991a1a4ecebbd777f1a5aa76ea9e9a6d4247b3d3515",
+  "profile_id": "fake-route-a",
+  "profile_revision": "f1a45b61325bc9f8d89598ae620e16d601aeb44188758ff87dfa8a237f114185",
+  "project_id": "prj_hymn",
+  "route": "R2-synth",
+  "schemaVersion": "1.0.0",
+  "seed": 11,
+  "source": {
+    "generation_request_id": "gr_hymn"
+  },
+  "synthetic_test": true,
+  "withheld_during_blind": [
+    "route",
+    "profile_id",
+    "profile_revision",
+    "seed",
+    "placement",
+    "job_id",
+    "artifact_sha256",
+    "preview_sha256",
+    "measures",
+    "adherence",
+    "hard_constraints",
+    "badges",
+    "diagnostics",
+    "source"
+  ]
+}

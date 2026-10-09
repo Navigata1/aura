@@ -1,0 +1,41 @@
+{
+  "description": "A smoke brief outside the 12 cases.",
+  "error_contains": "$.case",
+  "id": "IR-EVAL-BRIEF-CASE",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "candidates_per_arm": 1,
+    "case": "vibes",
+    "compared": [
+      {
+        "profile_id": "fake-route-a",
+        "route": "R2-synth"
+      },
+      {
+        "profile_id": "fake-burst",
+        "route": "R1"
+      }
+    ],
+    "feel": "broad_mix",
+    "id": "brief_smoke_01",
+    "kind": "eval-brief",
+    "lane": "individual",
+    "notes": "Fixture brief; each brief runs in its own lane.",
+    "reference_ids": [
+      "ref_worship"
+    ],
+    "schemaVersion": "1.0.0",
+    "seed": {
+      "seed_kind": "hum",
+      "sha256": "dc777e3766c902a35936fea39ee9ceecee87a562e63e9fb42a090dc80205d7e7"
+    },
+    "set": "smoke",
+    "song": {
+      "rev": 1,
+      "song_id": "song_hymn"
+    }
+  },
+  "record_kind": "eval-brief",
+  "rule": "The 12 smoke cases (ADR-0010)",
+  "schemaVersion": "1.0.0"
+}

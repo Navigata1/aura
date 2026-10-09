@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "timeline/1 (v1-studio)",
+  "description": "The Studio's time axis (GLOSSARY: Timeline, Track, Clip, Tempo map): tracks of clips placed in project frames, artifacts referenced at their native rate, MIDI clips in ticks against a named MelodySpec and tempo-map revision (tempo.ref_resolves), section markers in ticks. A clip refers to audio and holds none of its own.",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "id", "project_id", "rev", "melody", "sample_rate", "tracks", "markers"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "timeline"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "id": {"$ref": "common.schema.json#/$defs/id"},
+    "project_id": {"$ref": "common.schema.json#/$defs/id"},
+    "rev": {"type": "integer", "minimum": 1},
+    "melody": {"$ref": "common.schema.json#/$defs/melodyRef"},
+    "sample_rate": {"type": "integer", "minimum": 8000, "maximum": 384000},
+    "tracks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "part", "main", "clips"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string", "pattern": "^t[0-9]{1,3}$"},
+          "name": {"type": "string", "minLength": 1, "maxLength": 60},
+          "part": {"type": "string", "pattern": "^[a-z][a-z0-9-]{0,31}$"},
+          "main": {"type": "boolean", "description": "A replacement part sits on its own track until copied to the main track, which rebuilds the mix."},
+          "clips": {"type": "array", "items": {"oneOf": [{"$ref": "#/$defs/audioClip"}, {"$ref": "#/$defs/midiClip"}]}}
+        }
+      }
+    },
+    "markers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "tick"],
+        "additionalProperties": false,
+        "properties": {"name": {"type": "string", "pattern": "^[a-z][a-z0-9-]{0,31}$"}, "tick": {"type": "integer", "minimum": 0}}
+      }
+    }
+  },
+  "$defs": {
+    "audioClip": {
+      "type": "object",
+      "required": ["id", "clip_kind", "artifact_sha256", "source_rate", "source_start_frame", "source_end_frame", "project_start_frame", "gain_db", "fade_in_frames", "fade_out_frames"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {"type": "string", "pattern": "^c[0-9]{1,4}$"},
+        "clip_kind": {"const": "audio"},
+        "artifact_sha256": {"$ref": "common.schema.json#/$defs/sha256"},
+        "source_rate": {"type": "integer", "minimum": 8000, "maximum": 384000},
+        "source_start_frame": {"type": "integer", "minimum": 0},
+        "source_end_frame": {"type": "integer", "minimum": 1},
+        "project_start_frame": {"type": "integer", "minimum": 0},
+        "gain_db": {"$ref": "common.schema.json#/$defs/loudness"},
+        "fade_in_frames": {"type": "integer", "minimum": 0},
+        "fade_out_frames": {"type": "integer", "minimum": 0}
+      }
+    },
+    "midiClip": {
+      "type": "object",
+      "required": ["id", "clip_kind", "melody", "start_tick", "end_tick", "project_start_tick"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {"type": "string", "pattern": "^c[0-9]{1,4}$"},
+        "clip_kind": {"const": "midi"},
+        "melody": {"$ref": "common.schema.json#/$defs/melodyRef"},
+        "start_tick": {"type": "integer", "minimum": 0},
+        "end_tick": {"type": "integer", "minimum": 1},
+        "project_start_tick": {"type": "integer", "minimum": 0}
+      }
+    }
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "description": "The same widening is valid once Jon signs a risk acceptance naming that use (an owner act).",
+  "expect_rules": [],
+  "id": "SC-USE-SUNO-WIDENED-WITH-RISK-ACCEPTANCE",
+  "kind": "fixture.scenario",
+  "overlay": [
+    {
+      "audio": {
+        "channels": 2,
+        "frames": 7938000,
+        "sample_format": "pcm_f32",
+        "sample_rate": 44100
+      },
+      "bytes": 1024,
+      "created_at": "2026-10-09T10:55:00Z",
+      "kind": "artifact",
+      "media_type": "audio/wav",
+      "origin": "imported_mix",
+      "project_id": "prj_hymn",
+      "provenance": {
+        "allowed_uses": [
+          "listen",
+          "loudness_measure",
+          "dsp_finish",
+          "conditioning"
+        ],
+        "capture": null,
+        "compute": null,
+        "eligible_lanes": [
+          "individual",
+          "research"
+        ],
+        "engine": null,
+        "host": null,
+        "import_terms_id": "it_suno",
+        "license_chain": [
+          {
+            "code_license": "closed",
+            "component_id": "suno-v6",
+            "obligations": [
+              "keep_provenance_marks"
+            ],
+            "weights_license": "closed"
+          }
+        ],
+        "operator_lane": "individual",
+        "parents": [],
+        "producing_job_id": null,
+        "record_inputs": [],
+        "timings": null
+      },
+      "retention_class": "irreplaceable",
+      "schemaVersion": "1.0.0",
+      "sha256": "6bddb7311b9df81220ddfedbcd18c099b6229e9c3e220bbadc2bb2595d1f9260",
+      "synthetic_test": true
+    },
+    {
+      "act": {
+        "act": "accept_risk",
+        "at": "2026-10-09T12:00:00Z",
+        "scope": "owner-ui"
+      },
+      "id": "ra_suno",
+      "kind": "risk-acceptance",
+      "risk": "suno_further_use",
+      "schemaVersion": "1.0.0",
+      "statement": "Fixture: accepts one named further use of this Suno import.",
+      "subject_sha256": "6bddb7311b9df81220ddfedbcd18c099b6229e9c3e220bbadc2bb2595d1f9260",
+      "uses_added": [
+        "conditioning"
+      ]
+    }
+  ],
+  "remove": [],
+  "schemaVersion": "1.0.0"
+}

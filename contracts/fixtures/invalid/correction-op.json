@@ -1,0 +1,37 @@
+{
+  "description": "A generative op logged as a correction.",
+  "error_contains": "$.entries[0].ops[0].op",
+  "id": "IR-CORRECTION-OP",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "entries": [
+      {
+        "at": "2026-10-09T10:05:00Z",
+        "base_rev": 1,
+        "new_rev": 2,
+        "ops": [
+          {
+            "delta_semitones": 1,
+            "note_ids": [
+              "n2"
+            ],
+            "op": "regenerate"
+          },
+          {
+            "note_ids": [],
+            "op": "set_tempo",
+            "us_per_quarter": 600000
+          }
+        ],
+        "seq": 1
+      }
+    ],
+    "kind": "correction-log",
+    "melody_id": "mel_hymn",
+    "project_id": "prj_hymn",
+    "schemaVersion": "1.0.0"
+  },
+  "record_kind": "correction-log",
+  "rule": "Corrections are piano-roll edits",
+  "schemaVersion": "1.0.0"
+}

@@ -1,0 +1,118 @@
+{
+  "description": "Automatic paid retries enabled.",
+  "error_contains": "$.burst.automatic_paid_retry",
+  "id": "IR-COMPUTE-AUTO-PAID-RETRY",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "burst": {
+      "approval_expiry_minutes": 15,
+      "automatic_paid_retry": true,
+      "cloud": "secure",
+      "gpu_class_fallback": [
+        "FAKE-24GB",
+        "FAKE-24GB-ALT"
+      ],
+      "monthly_cap_usd": "25.00",
+      "per_run_approval": true,
+      "provider": "fake"
+    },
+    "chosen_by": "recommendation",
+    "created_at": "2026-10-09T09:59:30Z",
+    "id": "cp_tier4",
+    "kind": "compute-profile",
+    "placements": [
+      {
+        "placement": "burst",
+        "profile_id": "fake-burst",
+        "reason": "fake profile under the test overlay",
+        "remedy": null,
+        "worker_host_id": null
+      },
+      {
+        "placement": "local",
+        "profile_id": "fake-nc",
+        "reason": "fake profile under the test overlay",
+        "remedy": null,
+        "worker_host_id": null
+      },
+      {
+        "placement": "local",
+        "profile_id": "fake-route-a",
+        "reason": "fake profile under the test overlay",
+        "remedy": null,
+        "worker_host_id": null
+      },
+      {
+        "placement": "local",
+        "profile_id": "fake-route-b",
+        "reason": "fake profile under the test overlay",
+        "remedy": null,
+        "worker_host_id": null
+      },
+      {
+        "placement": "local",
+        "profile_id": "fake-separate",
+        "reason": "fake profile under the test overlay",
+        "remedy": null,
+        "worker_host_id": null
+      },
+      {
+        "placement": "local",
+        "profile_id": "analysis-adherence-pyin",
+        "reason": "analysis runs on the studio host",
+        "remedy": null,
+        "worker_host_id": null
+      },
+      {
+        "placement": "local",
+        "profile_id": "analysis-export",
+        "reason": "analysis runs on the studio host",
+        "remedy": null,
+        "worker_host_id": null
+      },
+      {
+        "placement": "local",
+        "profile_id": "analysis-guide-neutralvoice",
+        "reason": "analysis runs on the studio host",
+        "remedy": null,
+        "worker_host_id": null
+      },
+      {
+        "placement": "local",
+        "profile_id": "analysis-measure",
+        "reason": "analysis runs on the studio host",
+        "remedy": null,
+        "worker_host_id": null
+      },
+      {
+        "placement": "local",
+        "profile_id": "analysis-transcribe-pyin-hmm",
+        "reason": "analysis runs on the studio host",
+        "remedy": null,
+        "worker_host_id": null
+      },
+      {
+        "placement": "burst",
+        "profile_id": "yue2-3b-score",
+        "reason": "tier 4: CUDA-only profiles run on an approved burst",
+        "remedy": null,
+        "worker_host_id": null
+      }
+    ],
+    "recommendation": {
+      "reasons": [
+        "apple_silicon"
+      ],
+      "snapshot_ids": [
+        "hw_mac"
+      ],
+      "tier": 4,
+      "warnings": []
+    },
+    "schemaVersion": "1.0.0",
+    "tier": 4
+  },
+  "record_kind": "compute-profile",
+  "rule": "ADR-0030: no automatic paid retry",
+  "schemaVersion": "1.0.0"
+}

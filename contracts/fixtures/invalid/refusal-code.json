@@ -1,0 +1,17 @@
+{
+  "description": "An undeclared refusal code.",
+  "error_contains": "$.code",
+  "id": "IR-REFUSAL-CODE",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "code": "out_of_memory",
+    "detail": "fake-nc declares a non-commercial component: individual and research lanes only",
+    "job_id": "job_nc_llc",
+    "kind": "refusal",
+    "loaded_nothing": true,
+    "schemaVersion": "1.0.0"
+  },
+  "record_kind": "refusal",
+  "rule": "ADR-0026 refusal codes",
+  "schemaVersion": "1.0.0"
+}

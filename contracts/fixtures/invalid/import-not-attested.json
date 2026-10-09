@@ -1,0 +1,37 @@
+{
+  "description": "An import recorded without Jon's attestation (an automation token cannot import).",
+  "error_contains": "missing required property 'act'",
+  "id": "IR-IMPORT-NOT-ATTESTED",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "account_holder": null,
+    "artifact_sha256": "4e405787b44e6d1f57af53cd02b5596bdf3adb33077151a720da8586b66eec7f",
+    "base_allowed_uses": [
+      "listen",
+      "loudness_measure",
+      "eval_anchor"
+    ],
+    "contains_studio_exports": [],
+    "contains_third_party_or_suno": true,
+    "detected_marks": [],
+    "eligible_lanes": [
+      "individual",
+      "llc",
+      "research"
+    ],
+    "id": "it_ref",
+    "imported_at": "2026-10-09T09:30:00Z",
+    "kind": "import-terms",
+    "license_grant": null,
+    "plan": null,
+    "provenance_marks_preserved": true,
+    "rights_assignment": null,
+    "schemaVersion": "1.0.0",
+    "source_service": "owned_purchase",
+    "terms_date": null,
+    "terms_url": null
+  },
+  "record_kind": "import-terms",
+  "rule": "Every import is an owner act (attest_import)",
+  "schemaVersion": "1.0.0"
+}

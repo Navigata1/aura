@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "approval/1",
+  "description": "Jon's single-use yes to one quote, given in the Studio UI (GLOSSARY: Approval; ADR-0030, ADR-0031). Bound to quote_sha256 and to a challenge nonce (only its hash is stored), expiring 15 minutes after the quote (budget.approval_binds_quote). An automation token can never create one.",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "id", "quote_id", "quote_sha256", "nonce_sha256", "act", "expires_at", "single_use", "state", "used_by_run_id"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "approval"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "id": {"$ref": "common.schema.json#/$defs/id"},
+    "quote_id": {"$ref": "common.schema.json#/$defs/id"},
+    "quote_sha256": {"$ref": "common.schema.json#/$defs/sha256"},
+    "nonce_sha256": {"$ref": "common.schema.json#/$defs/sha256"},
+    "act": {"allOf": [{"$ref": "common.schema.json#/$defs/ownerAct"}, {"properties": {"act": {"const": "approve_quote"}}}]},
+    "expires_at": {"$ref": "common.schema.json#/$defs/dateTime"},
+    "single_use": {"const": true},
+    "state": {"enum": ["valid", "used", "expired", "invalidated"]},
+    "used_by_run_id": {"oneOf": [{"$ref": "common.schema.json#/$defs/id"}, {"type": "null"}]}
+  },
+  "if": {"properties": {"state": {"const": "used"}}},
+  "then": {"properties": {"used_by_run_id": {"type": "string"}}},
+  "else": {"properties": {"used_by_run_id": {"type": "null"}}}
+}

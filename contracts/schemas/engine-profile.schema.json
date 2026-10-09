@@ -1,0 +1,203 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "engine-profile/1 (registry document)",
+  "description": "Declarations only (ADR-0001, ADR-0027): tasks, limits, languages, backend, host OS, components, allowed lanes, license record, pins, gates, test_only, published claims and local results. There is NO status field: status (declared, installed, smoke-passed, benchmarked, disabled) is a pure fold over evidence records per (profile_revision, host_class) and is never stored. claims_published may not hold MEASURED-LOCAL; every results_local entry cites an evidence record. allowed_lanes must equal the intersection of the components' allowed lanes (lane.profile_components), and license_record must copy the component register (license.profile_record).",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "registry_id", "overlay", "updated_at", "profiles"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "engine-profile-registry"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "registry_id": {"type": "string", "pattern": "^[a-z0-9.-]{1,64}$"},
+    "overlay": {"type": "boolean", "description": "True for the test overlay that enables fake-* profiles; every overlay profile is test_only (registry.overlay_test_only)."},
+    "updated_at": {"$ref": "common.schema.json#/$defs/dateTime"},
+    "profiles": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/profile"}}
+  },
+  "$defs": {
+    "profile": {
+      "type": "object",
+      "required": ["id", "engine", "title", "checkpoint", "tasks", "limits", "backend", "host_os", "heavy", "components",
+                   "allowed_lanes", "license_record", "pins", "gates", "test_only", "claims_published", "results_local", "notes"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {"$ref": "common.schema.json#/$defs/slug"},
+        "engine": {"enum": ["ace-step-1.5", "yue2", "heartmula", "minimax-music3", "stable-audio-3", "studio-analysis", "demucs", "basic-pitch", "fake"]},
+        "title": {"$ref": "common.schema.json#/$defs/shortText"},
+        "checkpoint": {"type": "string", "minLength": 1, "maxLength": 120},
+        "tasks": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "common.schema.json#/$defs/workerTask"}},
+        "limits": {
+          "type": "object",
+          "required": ["max_duration_s", "sample_rate", "channels", "lyric_languages", "instrumental_only"],
+          "additionalProperties": false,
+          "properties": {
+            "max_duration_s": {"type": ["integer", "null"], "minimum": 1},
+            "sample_rate": {"type": ["integer", "null"], "minimum": 8000},
+            "channels": {"type": ["integer", "null"], "minimum": 1},
+            "lyric_languages": {"oneOf": [{"type": "null"}, {"type": "array", "uniqueItems": true, "minItems": 1, "items": {"$ref": "common.schema.json#/$defs/bcp47"}}]},
+            "instrumental_only": {"type": "boolean"}
+          }
+        },
+        "backend": {"$ref": "common.schema.json#/$defs/backend"},
+        "host_os": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "common.schema.json#/$defs/hostOs"}},
+        "heavy": {"type": "boolean", "description": "One heavy model resident per device (architecture.md §9.1)."},
+        "components": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "common.schema.json#/$defs/slug"}},
+        "allowed_lanes": {"$ref": "common.schema.json#/$defs/laneSet"},
+        "license_record": {"type": "array", "minItems": 1, "items": {"$ref": "common.schema.json#/$defs/licenseEntry"}},
+        "pins": {
+          "type": "object",
+          "required": ["code", "weights", "env"],
+          "additionalProperties": false,
+          "properties": {
+            "code": {
+              "type": "object",
+              "required": ["repo", "commit", "min_commit"],
+              "additionalProperties": false,
+              "properties": {
+                "repo": {"type": "string", "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"},
+                "commit": {"oneOf": [{"$ref": "common.schema.json#/$defs/gitCommit"}, {"type": "null"}], "description": "null = not pinned yet (no install has happened)."},
+                "min_commit": {"oneOf": [{"$ref": "common.schema.json#/$defs/gitCommit"}, {"type": "null"}]}
+              }
+            },
+            "weights": {
+              "description": "Where the profile's weights come from. null only when no component carries weights or a release blocker (license.weights_pin). Every weights download, gated or not, waits for Jon's license acceptance record (license-acceptance/1).",
+              "oneOf": [{"type": "null"}, {"$ref": "#/$defs/weightsSource"}]
+            },
+            "env": {
+              "type": "object",
+              "required": ["kind", "ref"],
+              "additionalProperties": false,
+              "properties": {
+                "kind": {"enum": ["uv_lock", "oci_image"]},
+                "ref": {"oneOf": [{"$ref": "common.schema.json#/$defs/sha256"}, {"$ref": "common.schema.json#/$defs/imageDigest"}, {"type": "null"}]}
+              }
+            }
+          }
+        },
+        "gates": {
+          "type": "object",
+          "required": ["smoke", "benchmark"],
+          "additionalProperties": false,
+          "properties": {
+            "smoke": {
+              "type": "object",
+              "required": ["gate_id", "checks", "synthetic_allowed", "owner"],
+              "additionalProperties": false,
+              "properties": {
+                "gate_id": {"type": "string", "pattern": "^smoke\\.[a-z0-9.-]+$"},
+                "checks": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/gateCheck"}},
+                "synthetic_allowed": {"type": "boolean", "description": "Only the transcriber's synthetic floor and test_only profiles allow synthetic evidence (ADR-0027)."},
+                "owner": {"const": "jon"}
+              }
+            },
+            "benchmark": {
+              "oneOf": [
+                {"type": "null"},
+                {
+                  "type": "object",
+                  "required": ["gate_id", "set", "requires_preregistration", "synthetic_allowed", "owner"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "gate_id": {"type": "string", "pattern": "^benchmark\\.[a-z0-9.-]+$"},
+                    "set": {"enum": ["benchmark-48", "hum-benchmark"]},
+                    "requires_preregistration": {"const": true},
+                    "synthetic_allowed": {"const": false, "description": "Synthetic evidence never satisfies a benchmark gate."},
+                    "owner": {"const": "jon"}
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "test_only": {"type": "boolean"},
+        "claims_published": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["metric", "value", "unit", "label", "source", "note"],
+            "additionalProperties": false,
+            "properties": {
+              "metric": {"type": "string", "pattern": "^[a-z][a-z0-9_.-]{0,63}$"},
+              "value": {"type": "string", "minLength": 1, "maxLength": 40},
+              "unit": {"type": "string", "minLength": 1, "maxLength": 40},
+              "label": {"$ref": "common.schema.json#/$defs/publishedClaimLabel"},
+              "source": {"$ref": "common.schema.json#/$defs/uri"},
+              "note": {"type": "string", "maxLength": 400}
+            }
+          }
+        },
+        "results_local": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["evidence_id", "metric", "value", "unit", "label", "host_class"],
+            "additionalProperties": false,
+            "properties": {
+              "evidence_id": {"$ref": "common.schema.json#/$defs/id"},
+              "metric": {"type": "string", "pattern": "^[a-z][a-z0-9_.-]{0,63}$"},
+              "value": {"$ref": "common.schema.json#/$defs/decimal"},
+              "unit": {"type": "string", "minLength": 1, "maxLength": 32},
+              "label": {"const": "MEASURED-LOCAL"},
+              "host_class": {"$ref": "common.schema.json#/$defs/hostClass"}
+            }
+          }
+        },
+        "notes": {"oneOf": [{"$ref": "common.schema.json#/$defs/text"}, {"type": "null"}]}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"test_only": {"const": true}}},
+          "then": {"properties": {"engine": {"const": "fake"}, "backend": {"const": "fake"}}},
+          "else": {"properties": {"engine": {"not": {"const": "fake"}}, "backend": {"not": {"const": "fake"}}}}
+        }
+      ]
+    },
+    "weightsSource": {
+      "description": "Weights from a Hugging Face repo and revision, a pinned URL (for example a torch.hub checkpoint) or a file inside a pinned package (for example an ONNX model a pip package ships). Fields still null are pinned by the install ticket before any download; license_acceptance_required is always true.",
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["source", "repo", "revision", "allow_patterns", "license_acceptance_required"],
+          "additionalProperties": false,
+          "properties": {
+            "source": {"const": "hf"},
+            "repo": {"type": "string", "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"},
+            "revision": {"oneOf": [{"$ref": "common.schema.json#/$defs/gitCommit"}, {"type": "null"}]},
+            "allow_patterns": {"type": "array", "items": {"type": "string", "minLength": 1, "maxLength": 120}},
+            "license_acceptance_required": {"const": true, "description": "Weights download at runtime only after Jon accepts the license as an owner act. Never vendored."}
+          }
+        },
+        {
+          "type": "object",
+          "required": ["source", "url", "sha256", "bytes", "license_acceptance_required"],
+          "additionalProperties": false,
+          "properties": {
+            "source": {"const": "url"},
+            "url": {"oneOf": [{"$ref": "common.schema.json#/$defs/uri"}, {"type": "null"}]},
+            "sha256": {"oneOf": [{"$ref": "common.schema.json#/$defs/sha256"}, {"type": "null"}]},
+            "bytes": {"oneOf": [{"type": "integer", "minimum": 1}, {"type": "null"}]},
+            "license_acceptance_required": {"const": true}
+          }
+        },
+        {
+          "type": "object",
+          "required": ["source", "package", "version", "file_path", "sha256", "license_acceptance_required"],
+          "additionalProperties": false,
+          "properties": {
+            "source": {"const": "package"},
+            "package": {"type": "string", "pattern": "^[A-Za-z0-9_.-]{1,64}$"},
+            "version": {"oneOf": [{"type": "string", "pattern": "^[0-9][0-9A-Za-z.+-]{0,31}$"}, {"type": "null"}]},
+            "file_path": {"oneOf": [{"type": "string", "pattern": "^[A-Za-z0-9_][A-Za-z0-9_./-]{0,200}$"}, {"type": "null"}]},
+            "sha256": {"oneOf": [{"$ref": "common.schema.json#/$defs/sha256"}, {"type": "null"}]},
+            "license_acceptance_required": {"const": true}
+          }
+        }
+      ]
+    },
+    "gateCheck": {
+      "enum": ["install_bytes_match_manifest", "conformance", "decodes", "non_silent", "duration_within_tolerance",
+               "owner_not_garbled", "transcription_floor_synthetic", "adherence_golden", "playback_underruns_zero",
+               "ui_p95_under_100ms", "getsettings_processing_off", "preregistered_listening", "midi_events_hash_match",
+               "midi_reference_phrase_match", "weights_match_pinned_manifest", "adherence_golden_real_separator"]
+    }
+  }
+}

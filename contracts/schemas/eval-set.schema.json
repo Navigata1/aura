@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "eval-set/1 (smoke set and benchmark set)",
+  "description": "The smoke set (12 preregistered briefs, hummed and MIDI seeds included) and the benchmark set (48 briefs, 6 in each of 8 categories). Only the benchmark set can make a profile benchmarked (GLOSSARY: Smoke set, Benchmark set; ADR-0010).",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "id", "set", "brief_ids"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "eval-set"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "id": {"$ref": "common.schema.json#/$defs/id"},
+    "set": {"enum": ["smoke", "benchmark"]},
+    "brief_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "common.schema.json#/$defs/id"}}
+  },
+  "if": {"properties": {"set": {"const": "smoke"}}},
+  "then": {"properties": {"brief_ids": {"minItems": 12, "maxItems": 12}}},
+  "else": {"properties": {"brief_ids": {"minItems": 48, "maxItems": 48}}}
+}

@@ -1,0 +1,71 @@
+{
+  "approval_id": null,
+  "compute_profile_id": "cp_tier4",
+  "cost": {
+    "basis": "local_zero",
+    "usd": "0.00"
+  },
+  "created_at": "2026-10-09T10:10:21Z",
+  "egress": [],
+  "error": null,
+  "history": [
+    {
+      "at": "2026-10-09T10:10:21Z",
+      "state": "queued"
+    },
+    {
+      "at": "2026-10-09T10:10:22Z",
+      "state": "preparing"
+    },
+    {
+      "at": "2026-10-09T10:10:23Z",
+      "state": "loading"
+    },
+    {
+      "at": "2026-10-09T10:10:24Z",
+      "state": "generating"
+    },
+    {
+      "at": "2026-10-09T10:10:32Z",
+      "state": "ready"
+    }
+  ],
+  "id": "job_sep",
+  "inputs": [
+    {
+      "role": "candidate",
+      "sha256": "2789a942c9533e6ecec15d6b9e0942389ba2f1e3f6fc664356f54291a9f0e884"
+    }
+  ],
+  "job_kind": "separate",
+  "kind": "job",
+  "lane": "individual",
+  "outputs": [
+    {
+      "role": "vocal",
+      "sha256": "c88ebc5ab2432984349930e6cc358dccf486ce4fd359016800eafbc716caa376"
+    }
+  ],
+  "params": {
+    "actual": {},
+    "intent": {}
+  },
+  "parent_job_id": "job_ca",
+  "placement": {
+    "host_class": "fake/local",
+    "kind": "local"
+  },
+  "profile_id": "fake-separate",
+  "profile_revision": "d50db0285f468c8dd33a4697a23b5625f6e07e3bd8a1cfa3bf09dfe7698b8bfc",
+  "project_id": "prj_hymn",
+  "quote_id": null,
+  "record_inputs": [],
+  "request_id": null,
+  "retry": null,
+  "schemaVersion": "1.0.0",
+  "seed": null,
+  "session_id": "ses_1",
+  "state": "ready",
+  "steps": [],
+  "task": "separate"
+}

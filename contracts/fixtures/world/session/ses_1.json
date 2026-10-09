@@ -1,0 +1,13 @@
+{
+  "changes_since_last": [],
+  "compute_profile_id": "cp_tier4",
+  "ended_at": null,
+  "id": "ses_1",
+  "kind": "session",
+  "schemaVersion": "1.0.0",
+  "snapshot_ids": [
+    "hw_mac"
+  ],
+  "started_at": "2026-10-09T10:00:00Z",
+  "switches": []
+}

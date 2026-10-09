@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "fixture.world-assertions",
+  "description": "Hand-derived expectations about the valid fixture world, worked out from ADR-0029 and architecture.md §10 before the rules ran, so the world cannot be tautological: the eligible lanes of named artifacts and the closures of keepers.",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "eligible_lanes", "closures"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "fixture.world-assertions"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "eligible_lanes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["label", "sha256", "lanes", "why"],
+        "additionalProperties": false,
+        "properties": {
+          "label": {"type": "string", "minLength": 1, "maxLength": 40},
+          "sha256": {"$ref": "common.schema.json#/$defs/sha256"},
+          "lanes": {"$ref": "common.schema.json#/$defs/laneSet"},
+          "why": {"type": "string", "minLength": 1, "maxLength": 300}
+        }
+      }
+    },
+    "closures": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["keeper_id", "closure_labels", "closure"],
+        "additionalProperties": false,
+        "properties": {
+          "keeper_id": {"$ref": "common.schema.json#/$defs/id"},
+          "closure_labels": {"type": "array", "items": {"type": "string"}},
+          "closure": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/sha256"}}
+        }
+      }
+    }
+  }
+}

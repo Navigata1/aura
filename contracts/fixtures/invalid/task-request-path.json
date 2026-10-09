@@ -1,0 +1,31 @@
+{
+  "description": "An input passed by path.",
+  "error_contains": "$.inputs[0].path",
+  "id": "IR-TASK-REQUEST-PATH",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "deadline_s": 600,
+    "inputs": [
+      {
+        "bytes": 1024,
+        "media_type": "audio/wav",
+        "path": "/tmp/guide.wav",
+        "role": "guide",
+        "sha256": "b3e0de98dce4bf8a946860ff0439f9b771c19af51359558ec7a87fb7f59f06bf"
+      }
+    ],
+    "job_id": "job_ca",
+    "kind": "task-request",
+    "lane": "individual",
+    "params": {
+      "audio_cover_strength": "0.9"
+    },
+    "profile_id": "fake-route-a",
+    "schemaVersion": "1.0.0",
+    "seed": 11,
+    "task": "cover"
+  },
+  "record_kind": "task-request",
+  "rule": "Assets move by sha256, never by path",
+  "schemaVersion": "1.0.0"
+}

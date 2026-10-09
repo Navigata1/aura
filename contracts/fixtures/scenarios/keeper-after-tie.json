@@ -1,0 +1,51 @@
+{
+  "description": "After a tie Jon may keep either arm: the same keeper is valid when the verdict was a tie (screens S09).",
+  "expect_rules": [],
+  "id": "SC-KEEPER-AFTER-TIE",
+  "kind": "fixture.scenario",
+  "overlay": [
+    {
+      "act": {
+        "act": "give_verdict",
+        "at": "2026-10-09T10:40:00Z",
+        "scope": "owner-ui"
+      },
+      "audition_id": "aud_hymn",
+      "axes": [
+        {
+          "axis": "melody",
+          "preferred": "B"
+        },
+        {
+          "axis": "overall",
+          "preferred": "B"
+        }
+      ],
+      "evidence_kind": "listening-unregistered",
+      "id": "vd_hymn",
+      "kind": "verdict",
+      "preferred": "tie",
+      "problem_intervals": [
+        {
+          "end_ms": 34000,
+          "label": "A",
+          "note": "breath noise over the chorus entry",
+          "start_ms": 30000
+        }
+      ],
+      "schemaVersion": "1.0.0",
+      "seconds_listened": [
+        {
+          "label": "A",
+          "seconds": 95
+        },
+        {
+          "label": "B",
+          "seconds": 140
+        }
+      ]
+    }
+  ],
+  "remove": [],
+  "schemaVersion": "1.0.0"
+}

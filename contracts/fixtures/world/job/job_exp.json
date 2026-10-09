@@ -1,0 +1,71 @@
+{
+  "approval_id": null,
+  "compute_profile_id": "cp_tier4",
+  "cost": {
+    "basis": "local_zero",
+    "usd": "0.00"
+  },
+  "created_at": "2026-10-09T10:42:00Z",
+  "egress": [],
+  "error": null,
+  "history": [
+    {
+      "at": "2026-10-09T10:42:00Z",
+      "state": "queued"
+    },
+    {
+      "at": "2026-10-09T10:42:01Z",
+      "state": "preparing"
+    },
+    {
+      "at": "2026-10-09T10:42:02Z",
+      "state": "loading"
+    },
+    {
+      "at": "2026-10-09T10:42:03Z",
+      "state": "generating"
+    },
+    {
+      "at": "2026-10-09T10:42:30Z",
+      "state": "ready"
+    }
+  ],
+  "id": "job_exp",
+  "inputs": [
+    {
+      "role": "keeper_mix",
+      "sha256": "2789a942c9533e6ecec15d6b9e0942389ba2f1e3f6fc664356f54291a9f0e884"
+    }
+  ],
+  "job_kind": "export",
+  "kind": "job",
+  "lane": "individual",
+  "outputs": [
+    {
+      "role": "deliverable_48k_24",
+      "sha256": "32c41d14b799a8e1f844e84f11fe694a8804a31a75749f59c1639ec541465e09"
+    }
+  ],
+  "params": {
+    "actual": {},
+    "intent": {}
+  },
+  "parent_job_id": null,
+  "placement": {
+    "host_class": "cpu/m5pro",
+    "kind": "local"
+  },
+  "profile_id": "analysis-export",
+  "profile_revision": "935f07b19fef9e19c282e15884472197409c540436d5acba6d1565ab135c9a65",
+  "project_id": "prj_hymn",
+  "quote_id": null,
+  "record_inputs": [],
+  "request_id": null,
+  "retry": null,
+  "schemaVersion": "1.0.0",
+  "seed": null,
+  "session_id": "ses_1",
+  "state": "ready",
+  "steps": [],
+  "task": "export"
+}

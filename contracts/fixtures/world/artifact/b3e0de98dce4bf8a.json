@@ -1,0 +1,93 @@
+{
+  "audio": {
+    "channels": 1,
+    "frames": 5760000,
+    "sample_format": "pcm_f32",
+    "sample_rate": 48000
+  },
+  "bytes": 1024,
+  "created_at": "2026-10-09T10:09:45Z",
+  "kind": "artifact",
+  "media_type": "audio/wav",
+  "origin": "rendered_guide",
+  "project_id": "prj_hymn",
+  "provenance": {
+    "allowed_uses": [
+      "listen",
+      "analysis",
+      "conditioning",
+      "engine_input",
+      "export"
+    ],
+    "capture": null,
+    "compute": {
+      "compute_profile_id": "cp_tier4",
+      "placement": "local",
+      "tier": 4
+    },
+    "eligible_lanes": [
+      "individual",
+      "llc",
+      "research"
+    ],
+    "engine": {
+      "code_commit": "0000000",
+      "env": {
+        "lock_sha256": "9e907430e4c485e169a36eedff1b556ec02cd8ed21e82e23a077bf426132b2a6"
+      },
+      "params": {
+        "actual": {},
+        "intent": {}
+      },
+      "profile_id": "analysis-guide-neutralvoice",
+      "profile_revision": "a4979994a03c31f42466b0f3150589dbbedd064480f48862298b111ad620dc26",
+      "sdk_version": "0.1.0",
+      "seed": null,
+      "weights": null
+    },
+    "host": {
+      "arch": "arm64",
+      "backend": "cpu",
+      "host_class": "cpu/m5pro",
+      "host_id": "host_mac",
+      "os": "darwin"
+    },
+    "import_terms_id": null,
+    "license_chain": [
+      {
+        "code_license": "Own code (all rights reserved until Q5)",
+        "component_id": "neutralvoice",
+        "obligations": [],
+        "weights_license": "n/a (no weights)"
+      },
+      {
+        "code_license": "Own code (all rights reserved until Q5)",
+        "component_id": "studio-own-code",
+        "obligations": [],
+        "weights_license": "n/a (no weights)"
+      }
+    ],
+    "operator_lane": "individual",
+    "parents": [],
+    "producing_job_id": "job_guide",
+    "record_inputs": [
+      {
+        "kind": "melody-spec",
+        "sha256": "5f95189409f6472dfd46fefb5a3eebbf3c2b2b6c6b7846f0a962107a15dbaf6f"
+      }
+    ],
+    "timings": {
+      "cold": true,
+      "label": "MEASURED-LOCAL",
+      "load_wall_ms": 50,
+      "measured_by": "worker-sdk",
+      "peak_rss_bytes": 268435456,
+      "run_wall_ms": 900,
+      "total_wall_ms": 950
+    }
+  },
+  "retention_class": "irreplaceable",
+  "schemaVersion": "1.0.0",
+  "sha256": "b3e0de98dce4bf8a946860ff0439f9b771c19af51359558ec7a87fb7f59f06bf",
+  "synthetic_test": false
+}

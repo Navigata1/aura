@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "fixture vectors (tempo, status, recommend, ledger, audition)",
+  "description": "Golden vectors for the pure reference functions. Expected values are hand-derived (each case says how); the validator re-runs contracts/reference/studio_ref and requires exact equality. Inputs embedded here (evidence, snapshots, ledger entries) are hypothetical inputs to pure functions, not evidence of anything.",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "cases"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"enum": ["fixture.tempo", "fixture.status", "fixture.recommend", "fixture.ledger", "fixture.audition"]},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "cases": {"type": "array", "minItems": 1, "items": {"type": "object", "required": ["name", "derivation"]}}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"kind": {"const": "fixture.tempo"}}},
+      "then": {"properties": {"cases": {"items": {"$ref": "#/$defs/tempoCase"}}}}
+    },
+    {
+      "if": {"properties": {"kind": {"const": "fixture.status"}}},
+      "then": {"properties": {"cases": {"items": {"$ref": "#/$defs/statusCase"}}}}
+    },
+    {
+      "if": {"properties": {"kind": {"const": "fixture.recommend"}}},
+      "then": {"properties": {"cases": {"items": {"$ref": "#/$defs/recommendCase"}}}}
+    },
+    {
+      "if": {"properties": {"kind": {"const": "fixture.ledger"}}},
+      "then": {"properties": {"cases": {"items": {"$ref": "#/$defs/ledgerCase"}}}}
+    },
+    {
+      "if": {"properties": {"kind": {"const": "fixture.audition"}}},
+      "then": {"properties": {"cases": {"items": {"$ref": "#/$defs/auditionCase"}}}}
+    }
+  ],
+  "$defs": {
+    "derivation": {"type": "string", "minLength": 1, "maxLength": 600},
+    "tempoCase": {
+      "type": "object",
+      "required": ["name", "derivation", "op", "tempo", "sample_rate", "input", "expected"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "derivation": {"$ref": "#/$defs/derivation"},
+        "op": {"enum": ["ticks_to_frames", "frames_to_ticks"]},
+        "tempo": {"$ref": "melody-spec.schema.json#/$defs/tempoMap/properties/tempo"},
+        "sample_rate": {"type": "integer", "minimum": 8000},
+        "input": {"type": "integer", "minimum": 0},
+        "expected": {"type": "integer", "minimum": 0}
+      }
+    },
+    "statusCase": {
+      "type": "object",
+      "required": ["name", "derivation", "profile_id", "profile_revision", "host_class", "evidence", "expected"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "derivation": {"$ref": "#/$defs/derivation"},
+        "profile_id": {"$ref": "common.schema.json#/$defs/slug"},
+        "profile_revision": {"oneOf": [{"$ref": "common.schema.json#/$defs/sha256"}, {"type": "null"}], "description": "null for a capability, whose evidence carries no profile revision."},
+        "host_class": {"$ref": "common.schema.json#/$defs/hostClass"},
+        "evidence": {"type": "array", "items": {"$ref": "evidence.schema.json"}},
+        "expected": {"$ref": "common.schema.json#/$defs/profileStatus"}
+      }
+    },
+    "recommendCase": {
+      "type": "object",
+      "required": ["name", "derivation", "snapshots", "expected"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "derivation": {"$ref": "#/$defs/derivation"},
+        "snapshots": {"type": "array", "items": {"$ref": "hardware-snapshot.schema.json"}},
+        "expected": {
+          "type": "object",
+          "required": ["tier", "reasons", "warnings"],
+          "additionalProperties": false,
+          "properties": {
+            "tier": {"$ref": "common.schema.json#/$defs/computeTier"},
+            "reasons": {"type": "array", "items": {"type": "string", "pattern": "^[a-z0-9_]+$"}},
+            "warnings": {"type": "array", "items": {"type": "string", "pattern": "^[a-z0-9_]+$"}}
+          }
+        }
+      }
+    },
+    "ledgerCase": {
+      "type": "object",
+      "required": ["name", "derivation", "entries", "month", "before", "ceiling_usd", "cap_usd", "expected"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "derivation": {"$ref": "#/$defs/derivation"},
+        "entries": {"type": "array", "items": {"$ref": "ledger-entry.schema.json"}},
+        "month": {"$ref": "common.schema.json#/$defs/month"},
+        "before": {"oneOf": [{"$ref": "common.schema.json#/$defs/dateTime"}, {"type": "null"}]},
+        "ceiling_usd": {"$ref": "common.schema.json#/$defs/usd"},
+        "cap_usd": {"$ref": "common.schema.json#/$defs/usd"},
+        "expected": {
+          "type": "object",
+          "required": ["month_to_date_usd", "allowed", "overrun_blocks"],
+          "additionalProperties": false,
+          "properties": {
+            "month_to_date_usd": {"$ref": "common.schema.json#/$defs/usd"},
+            "allowed": {"type": "boolean"},
+            "overrun_blocks": {"type": "boolean"}
+          }
+        }
+      }
+    },
+    "auditionCase": {
+      "type": "object",
+      "required": ["name", "derivation", "op"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "derivation": {"$ref": "#/$defs/derivation"},
+        "op": {"enum": ["gains", "commitment"]},
+        "loudness": {"type": "object", "patternProperties": {"^[A-Z]$": {"$ref": "common.schema.json#/$defs/loudness"}}, "additionalProperties": false},
+        "expected_gains": {"type": "object", "patternProperties": {"^[A-Z]$": {"$ref": "common.schema.json#/$defs/gainDb"}}, "additionalProperties": false},
+        "mapping": {"type": "array", "items": {"type": "object", "required": ["label", "candidate_id"], "additionalProperties": false,
+                    "properties": {"label": {"$ref": "common.schema.json#/$defs/label"}, "candidate_id": {"$ref": "common.schema.json#/$defs/id"}}}},
+        "nonce": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "preimage": {"type": "string", "minLength": 1, "description": "The exact UTF-8 string hashed, written out by hand."},
+        "expected_commitment": {"$ref": "common.schema.json#/$defs/sha256"}
+      },
+      "if": {"properties": {"op": {"const": "gains"}}},
+      "then": {"required": ["loudness", "expected_gains"]},
+      "else": {"required": ["mapping", "nonce", "preimage", "expected_commitment"]}
+    }
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "description": "Moving the individual project, which holds non-commercial candidate B and an individual-only analysis, to llc is refused.",
+  "expect_rules": [
+    "lane.store_write"
+  ],
+  "id": "SC-LANE-CHANGE-TO-LLC",
+  "kind": "fixture.scenario",
+  "overlay": [
+    {
+      "artifacts": [
+        "0e405f49a5e4b42ddb453d002715c76a629b347cab691bc51a6f6624b704fa79",
+        "2789a942c9533e6ecec15d6b9e0942389ba2f1e3f6fc664356f54291a9f0e884",
+        "32c41d14b799a8e1f844e84f11fe694a8804a31a75749f59c1639ec541465e09",
+        "6b9fe57c2c7a132ee77637ca22f20e82da6669489d249ed93426f401da3b1516",
+        "6bddb7311b9df81220ddfedbcd18c099b6229e9c3e220bbadc2bb2595d1f9260",
+        "6ca121e5fbd59675f0e20b2467e792a8530b997b1817e29356c0b4585297d7e1",
+        "77596a47feb5e00cf1cd4991a1a4ecebbd777f1a5aa76ea9e9a6d4247b3d3515",
+        "b3e0de98dce4bf8a946860ff0439f9b771c19af51359558ec7a87fb7f59f06bf",
+        "c88ebc5ab2432984349930e6cc358dccf486ce4fd359016800eafbc716caa376",
+        "dc777e3766c902a35936fea39ee9ceecee87a562e63e9fb42a090dc80205d7e7",
+        "e72def8d0b533962c620f88ab7da2d60d497a000c199d8ae80d6ff8fbf9d01fa",
+        "fdf30e2a1588e08a02a0205ca7b65f683d57d280383e3687da974c41ea77294f"
+      ],
+      "created_at": "2026-10-09T10:00:30Z",
+      "edit_operation_ids": [
+        "eo_hymn"
+      ],
+      "export_ids": [
+        "ex_hymn"
+      ],
+      "generation_request_ids": [
+        "gr_hymn"
+      ],
+      "heads": {
+        "melody": {
+          "melody_id": "mel_hymn",
+          "rev": 2
+        },
+        "song": {
+          "rev": 1,
+          "song_id": "song_hymn"
+        }
+      },
+      "id": "prj_hymn",
+      "keeper_ids": [
+        "kp_hymn"
+      ],
+      "kind": "project",
+      "lane_changes": [
+        {
+          "act": {
+            "act": "change_lane",
+            "at": "2026-10-09T12:00:00Z",
+            "scope": "owner-ui"
+          },
+          "from": "individual",
+          "to": "llc"
+        }
+      ],
+      "melody_ids": [
+        "mel_hymn",
+        "mel_hymn_asm"
+      ],
+      "name": "Quiet Water (fixture)",
+      "operator_lane": "llc",
+      "project_kind": "song",
+      "reference_ids": [],
+      "schemaVersion": "1.0.0",
+      "song_ids": [
+        "song_hymn"
+      ],
+      "timeline_ids": [
+        "tl_hymn"
+      ]
+    }
+  ],
+  "remove": [],
+  "schemaVersion": "1.0.0"
+}

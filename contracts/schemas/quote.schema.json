@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "quote/1",
+  "description": "The priced, hashed offer for one burst run (GLOSSARY: Quote, Ceiling; O-09, ADR-0030). quote_sha256 is the sha256 of the canonical JSON of terms (record.content_hash). Ceiling = max_minutes.total x the highest rate in the GPU-class list / 60, rounded up to the cent, plus fixed lines (budget.ceiling_arithmetic). A quote whose month-to-date plus ceiling exceeds the cap is refused, with no override (budget.cap_check). Only status changes after creation.",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "id", "status", "refusal_reason", "quote_sha256", "terms"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "quote"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "id": {"$ref": "common.schema.json#/$defs/id"},
+    "status": {"enum": ["offered", "refused", "approved", "expired", "superseded", "declined"]},
+    "refusal_reason": {"oneOf": [{"type": "null"}, {"enum": ["over_cap", "overrun_unacknowledged"]}], "description": "A lane refusal never produces a quote record: it is refused at admission and recorded on the generation request's declined list and the job (ADR-0029 point 7)."},
+    "quote_sha256": {"$ref": "common.schema.json#/$defs/sha256"},
+    "terms": {
+      "type": "object",
+      "required": ["project_id", "request_id", "lane", "created_at", "expires_at", "provider", "cloud", "gpu_class", "rates",
+                   "jobs", "max_minutes", "fixed_lines", "ceiling_usd", "month", "month_to_date_usd", "cap_usd", "egress",
+                   "lane_check", "synthetic_test"],
+      "additionalProperties": false,
+      "properties": {
+        "project_id": {"$ref": "common.schema.json#/$defs/id"},
+        "request_id": {"$ref": "common.schema.json#/$defs/id"},
+        "lane": {"$ref": "common.schema.json#/$defs/operatorLane"},
+        "created_at": {"$ref": "common.schema.json#/$defs/dateTime"},
+        "expires_at": {"$ref": "common.schema.json#/$defs/dateTime", "description": "created_at + 15 minutes."},
+        "provider": {"enum": ["runpod", "fake"]},
+        "cloud": {"enum": ["secure", "community"]},
+        "gpu_class": {"type": "string", "minLength": 1, "maxLength": 60},
+        "rates": {
+          "description": "The live rate read at quote time for each GPU class in the fallback list; a dated snapshot only as a labelled fallback.",
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["gpu_class", "usd_per_hour", "read_at", "source", "snapshot_date", "label"],
+            "additionalProperties": false,
+            "properties": {
+              "gpu_class": {"type": "string", "minLength": 1, "maxLength": 60},
+              "usd_per_hour": {"type": "string", "pattern": "^(0|[1-9][0-9]*)\\.[0-9]{2,4}$"},
+              "read_at": {"$ref": "common.schema.json#/$defs/dateTime"},
+              "source": {"enum": ["live", "snapshot", "fake"]},
+              "snapshot_date": {"oneOf": [{"$ref": "common.schema.json#/$defs/date"}, {"type": "null"}]},
+              "label": {"$ref": "common.schema.json#/$defs/figureLabel"}
+            },
+            "if": {"properties": {"source": {"const": "snapshot"}}},
+            "then": {"properties": {"snapshot_date": {"type": "string"}}},
+            "else": {"properties": {"snapshot_date": {"type": "null"}}}
+          }
+        },
+        "jobs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["job_id", "profile_id", "estimate_minutes", "estimate_basis", "label"],
+            "additionalProperties": false,
+            "properties": {
+              "job_id": {"$ref": "common.schema.json#/$defs/id"},
+              "profile_id": {"$ref": "common.schema.json#/$defs/slug"},
+              "estimate_minutes": {"$ref": "common.schema.json#/$defs/nonNegativeDecimal"},
+              "estimate_basis": {"enum": ["measured_history", "vendor_x3_unmeasured", "fake"]},
+              "label": {"$ref": "common.schema.json#/$defs/figureLabel"}
+            },
+            "allOf": [
+              {"if": {"properties": {"estimate_basis": {"const": "measured_history"}}}, "then": {"properties": {"label": {"const": "MEASURED-LOCAL"}}}},
+              {"if": {"properties": {"estimate_basis": {"const": "vendor_x3_unmeasured"}}}, "then": {"properties": {"label": {"const": "INFERRED"}}}}
+            ]
+          }
+        },
+        "max_minutes": {
+          "type": "object",
+          "required": ["boot", "weights_download", "jobs_total", "teardown_margin", "total"],
+          "additionalProperties": false,
+          "properties": {
+            "boot": {"$ref": "common.schema.json#/$defs/nonNegativeDecimal"},
+            "weights_download": {"$ref": "common.schema.json#/$defs/nonNegativeDecimal"},
+            "jobs_total": {"$ref": "common.schema.json#/$defs/nonNegativeDecimal"},
+            "teardown_margin": {"$ref": "common.schema.json#/$defs/nonNegativeDecimal"},
+            "total": {"$ref": "common.schema.json#/$defs/nonNegativeDecimal"}
+          }
+        },
+        "fixed_lines": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "usd"],
+            "additionalProperties": false,
+            "properties": {"name": {"$ref": "common.schema.json#/$defs/shortText"}, "usd": {"$ref": "common.schema.json#/$defs/usd"}}
+          }
+        },
+        "ceiling_usd": {"$ref": "common.schema.json#/$defs/usd"},
+        "month": {"$ref": "common.schema.json#/$defs/month"},
+        "month_to_date_usd": {"$ref": "common.schema.json#/$defs/usd"},
+        "cap_usd": {"$ref": "common.schema.json#/$defs/usd"},
+        "egress": {
+          "description": "Exactly which assets would leave the studio host, by hash. Never Suno audio, never reference standards.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["sha256", "role"],
+            "additionalProperties": false,
+            "properties": {"sha256": {"$ref": "common.schema.json#/$defs/sha256"}, "role": {"enum": ["abc_score", "lyrics_plan", "job_params", "conditioning_audio"]}}
+          }
+        },
+        "lane_check": {
+          "type": "object",
+          "required": ["result", "profiles"],
+          "additionalProperties": false,
+          "properties": {
+            "result": {"const": "pass", "description": "A quote for a job the lane forbids is never created (ADR-0029 point 7)."},
+            "profiles": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": ["profile_id", "allowed_lanes"],
+                "additionalProperties": false,
+                "properties": {"profile_id": {"$ref": "common.schema.json#/$defs/slug"}, "allowed_lanes": {"$ref": "common.schema.json#/$defs/laneSet"}}
+              }
+            }
+          }
+        },
+        "synthetic_test": {"type": "boolean"}
+      },
+      "if": {"properties": {"provider": {"const": "fake"}}},
+      "then": {"properties": {"synthetic_test": {"const": true}}}
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"status": {"const": "refused"}}},
+      "then": {"properties": {"refusal_reason": {"type": "string"}}},
+      "else": {"properties": {"refusal_reason": {"type": "null"}}}
+    }
+  ]
+}

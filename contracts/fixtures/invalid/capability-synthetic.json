@@ -1,0 +1,231 @@
+{
+  "description": "A playback gate met by synthetic evidence.",
+  "error_contains": "$.capabilities[0].gate.synthetic_allowed",
+  "id": "IR-CAPABILITY-SYNTHETIC",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "capabilities": [
+      {
+        "gate": {
+          "checks": [
+            "playback_underruns_zero",
+            "ui_p95_under_100ms"
+          ],
+          "definitions": {
+            "playback_underruns_zero": "Chrome's AudioContext playbackStats over the scripted 8-track (or 16-track stretch) session for 30 continuous minutes while one generation job runs: the underrun count delta is exactly 0. The track set, durations and script version are attachments.",
+            "ui_p95_under_100ms": "Event Timing API durations of every interaction in the versioned scripted set (transport play and stop, seek, track solo and mute, clip select, mixer fader drag, inspector open), at least 200 samples spread across the 30 minutes while a generation job runs; the 95th percentile is strictly under 100 ms. The script's sha256 is an evidence attachment."
+          },
+          "gate_id": "smoke.studio-playback-darwin",
+          "owner": "jon",
+          "synthetic_allowed": true
+        },
+        "host_os": "darwin",
+        "id": "studio.playback.darwin",
+        "notes": "8 tracks for 30 minutes with zero underruns in Chrome playbackStats, and UI p95 under 100 ms while a generation runs, on a real host of this OS (ADR-0024).",
+        "results_local": [],
+        "scope": "v1-studio",
+        "title": "Studio timeline playback on darwin"
+      },
+      {
+        "gate": {
+          "checks": [
+            "getsettings_processing_off",
+            "decodes",
+            "non_silent"
+          ],
+          "definitions": {
+            "decodes": "The captured WAV decodes with the studio decoder and its frame count equals the AudioWorklet's reported frame count.",
+            "getsettings_processing_off": "MediaStreamTrack.getSettings() after capture reports echoCancellation, noiseSuppression and autoGainControl all false; any true value fails.",
+            "non_silent": "Integrated loudness of the test capture is above -60 LUFS and its peak above -40 dBFS."
+          },
+          "gate_id": "smoke.capture-mic-darwin",
+          "owner": "jon",
+          "synthetic_allowed": false
+        },
+        "host_os": "darwin",
+        "id": "capture.mic.darwin",
+        "notes": "AudioWorklet float32 PCM with echo cancellation, noise suppression and auto gain off, verified with getSettings().",
+        "results_local": [],
+        "scope": "v1-core",
+        "title": "Hum capture in the browser on darwin"
+      },
+      {
+        "gate": {
+          "checks": [
+            "midi_events_hash_match",
+            "midi_reference_phrase_match"
+          ],
+          "definitions": {
+            "midi_events_hash_match": "The sha256 of the stored canonical MIDI event list equals the sha256 the browser computed over the events it received from the Web MIDI port, so no event was dropped, reordered or altered in transit.",
+            "midi_reference_phrase_match": "Jon plays the versioned eight-note reference phrase on his keyboard; the resulting MelodySpec's pitches equal the reference exactly and every onset lies within 30 ms of the received event times."
+          },
+          "gate_id": "smoke.capture-midi-live-darwin",
+          "owner": "jon",
+          "synthetic_allowed": false
+        },
+        "host_os": "darwin",
+        "id": "capture.midi-live.darwin",
+        "notes": "A live performance becomes a MelodySpec through from_midi_events; proven by playing a reference phrase on a real keyboard on a real host of this OS.",
+        "results_local": [],
+        "scope": "v1-core",
+        "title": "Live Web MIDI capture on darwin"
+      },
+      {
+        "gate": {
+          "checks": [
+            "playback_underruns_zero",
+            "ui_p95_under_100ms"
+          ],
+          "definitions": {
+            "playback_underruns_zero": "Chrome's AudioContext playbackStats over the scripted 8-track (or 16-track stretch) session for 30 continuous minutes while one generation job runs: the underrun count delta is exactly 0. The track set, durations and script version are attachments.",
+            "ui_p95_under_100ms": "Event Timing API durations of every interaction in the versioned scripted set (transport play and stop, seek, track solo and mute, clip select, mixer fader drag, inspector open), at least 200 samples spread across the 30 minutes while a generation job runs; the 95th percentile is strictly under 100 ms. The script's sha256 is an evidence attachment."
+          },
+          "gate_id": "smoke.studio-playback-windows",
+          "owner": "jon",
+          "synthetic_allowed": false
+        },
+        "host_os": "windows",
+        "id": "studio.playback.windows",
+        "notes": "8 tracks for 30 minutes with zero underruns in Chrome playbackStats, and UI p95 under 100 ms while a generation runs, on a real host of this OS (ADR-0024).",
+        "results_local": [],
+        "scope": "v1-studio",
+        "title": "Studio timeline playback on windows"
+      },
+      {
+        "gate": {
+          "checks": [
+            "getsettings_processing_off",
+            "decodes",
+            "non_silent"
+          ],
+          "definitions": {
+            "decodes": "The captured WAV decodes with the studio decoder and its frame count equals the AudioWorklet's reported frame count.",
+            "getsettings_processing_off": "MediaStreamTrack.getSettings() after capture reports echoCancellation, noiseSuppression and autoGainControl all false; any true value fails.",
+            "non_silent": "Integrated loudness of the test capture is above -60 LUFS and its peak above -40 dBFS."
+          },
+          "gate_id": "smoke.capture-mic-windows",
+          "owner": "jon",
+          "synthetic_allowed": false
+        },
+        "host_os": "windows",
+        "id": "capture.mic.windows",
+        "notes": "AudioWorklet float32 PCM with echo cancellation, noise suppression and auto gain off, verified with getSettings().",
+        "results_local": [],
+        "scope": "v1-core",
+        "title": "Hum capture in the browser on windows"
+      },
+      {
+        "gate": {
+          "checks": [
+            "midi_events_hash_match",
+            "midi_reference_phrase_match"
+          ],
+          "definitions": {
+            "midi_events_hash_match": "The sha256 of the stored canonical MIDI event list equals the sha256 the browser computed over the events it received from the Web MIDI port, so no event was dropped, reordered or altered in transit.",
+            "midi_reference_phrase_match": "Jon plays the versioned eight-note reference phrase on his keyboard; the resulting MelodySpec's pitches equal the reference exactly and every onset lies within 30 ms of the received event times."
+          },
+          "gate_id": "smoke.capture-midi-live-windows",
+          "owner": "jon",
+          "synthetic_allowed": false
+        },
+        "host_os": "windows",
+        "id": "capture.midi-live.windows",
+        "notes": "A live performance becomes a MelodySpec through from_midi_events; proven by playing a reference phrase on a real keyboard on a real host of this OS.",
+        "results_local": [],
+        "scope": "v1-core",
+        "title": "Live Web MIDI capture on windows"
+      },
+      {
+        "gate": {
+          "checks": [
+            "playback_underruns_zero",
+            "ui_p95_under_100ms"
+          ],
+          "definitions": {
+            "playback_underruns_zero": "Chrome's AudioContext playbackStats over the scripted 8-track (or 16-track stretch) session for 30 continuous minutes while one generation job runs: the underrun count delta is exactly 0. The track set, durations and script version are attachments.",
+            "ui_p95_under_100ms": "Event Timing API durations of every interaction in the versioned scripted set (transport play and stop, seek, track solo and mute, clip select, mixer fader drag, inspector open), at least 200 samples spread across the 30 minutes while a generation job runs; the 95th percentile is strictly under 100 ms. The script's sha256 is an evidence attachment."
+          },
+          "gate_id": "smoke.studio-playback-linux",
+          "owner": "jon",
+          "synthetic_allowed": false
+        },
+        "host_os": "linux",
+        "id": "studio.playback.linux",
+        "notes": "8 tracks for 30 minutes with zero underruns in Chrome playbackStats, and UI p95 under 100 ms while a generation runs, on a real host of this OS (ADR-0024).",
+        "results_local": [],
+        "scope": "v1-studio",
+        "title": "Studio timeline playback on linux"
+      },
+      {
+        "gate": {
+          "checks": [
+            "getsettings_processing_off",
+            "decodes",
+            "non_silent"
+          ],
+          "definitions": {
+            "decodes": "The captured WAV decodes with the studio decoder and its frame count equals the AudioWorklet's reported frame count.",
+            "getsettings_processing_off": "MediaStreamTrack.getSettings() after capture reports echoCancellation, noiseSuppression and autoGainControl all false; any true value fails.",
+            "non_silent": "Integrated loudness of the test capture is above -60 LUFS and its peak above -40 dBFS."
+          },
+          "gate_id": "smoke.capture-mic-linux",
+          "owner": "jon",
+          "synthetic_allowed": false
+        },
+        "host_os": "linux",
+        "id": "capture.mic.linux",
+        "notes": "AudioWorklet float32 PCM with echo cancellation, noise suppression and auto gain off, verified with getSettings().",
+        "results_local": [],
+        "scope": "v1-core",
+        "title": "Hum capture in the browser on linux"
+      },
+      {
+        "gate": {
+          "checks": [
+            "midi_events_hash_match",
+            "midi_reference_phrase_match"
+          ],
+          "definitions": {
+            "midi_events_hash_match": "The sha256 of the stored canonical MIDI event list equals the sha256 the browser computed over the events it received from the Web MIDI port, so no event was dropped, reordered or altered in transit.",
+            "midi_reference_phrase_match": "Jon plays the versioned eight-note reference phrase on his keyboard; the resulting MelodySpec's pitches equal the reference exactly and every onset lies within 30 ms of the received event times."
+          },
+          "gate_id": "smoke.capture-midi-live-linux",
+          "owner": "jon",
+          "synthetic_allowed": false
+        },
+        "host_os": "linux",
+        "id": "capture.midi-live.linux",
+        "notes": "A live performance becomes a MelodySpec through from_midi_events; proven by playing a reference phrase on a real keyboard on a real host of this OS.",
+        "results_local": [],
+        "scope": "v1-core",
+        "title": "Live Web MIDI capture on linux"
+      },
+      {
+        "gate": {
+          "checks": [
+            "adherence_golden_real_separator"
+          ],
+          "definitions": {
+            "adherence_golden_real_separator": "The NeutralVoice adherence golden, mixed under a generated ACE instrumental bed with reverb and doubled and backing vocals, is separated by the real separator and scored by the real adherence profile on this host class; every metric lands inside the thresholds of the adherence gate record committed before the run. The evidence names both profile revisions; a new revision of either re-opens the gate."
+          },
+          "gate_id": "smoke.adherence-real-separator-darwin",
+          "owner": "jon",
+          "synthetic_allowed": false
+        },
+        "host_os": "darwin",
+        "id": "adherence.real-separator.darwin",
+        "notes": "Adherence numbers and 'melody not kept' badges appear on non-synthetic candidates only while this capability is smoke-passed for the separator and adherence revisions in use. A validation on fake-separate (which returns the embedded line exactly) never unlocks it.",
+        "results_local": [],
+        "scope": "v1-core",
+        "title": "Melody adherence on real candidates (Mac separators)"
+      }
+    ],
+    "kind": "capability-registry",
+    "registry_id": "capabilities.v1",
+    "schemaVersion": "1.0.0",
+    "updated_at": "2026-10-09T18:00:00Z"
+  },
+  "record_kind": "capability-registry",
+  "rule": "Playback is proven on real hosts",
+  "schemaVersion": "1.0.0"
+}

@@ -1,0 +1,1978 @@
+{
+  "description": "A stored status field on an engine profile.",
+  "error_contains": "$.profiles[0].status",
+  "id": "IR-PROFILE-STATUS-STORED",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "kind": "engine-profile-registry",
+    "overlay": false,
+    "profiles": [
+      {
+        "allowed_lanes": [
+          "individual",
+          "llc",
+          "research"
+        ],
+        "backend": "mlx",
+        "checkpoint": "acestep-v15-turbo (2B DiT) + 1.7B LM",
+        "claims_published": [
+          {
+            "label": "VENDOR",
+            "metric": "resident_memory_dit_bf16",
+            "note": "2B DiT bf16 resident; the VAE (0.33 GB) and text encoder (1.2 GB) are extra.",
+            "source": "https://github.com/ace-step/ACE-Step-1.5/blob/main/docs/en/GPU_COMPATIBILITY.md",
+            "unit": "GB",
+            "value": "4.7"
+          },
+          {
+            "label": "VENDOR",
+            "metric": "selective_download",
+            "note": "turbo + encoder + VAE selective download, from the repository file list; the preflight estimate uses it.",
+            "source": "https://huggingface.co/ACE-Step/Ace-Step1.5",
+            "unit": "GB",
+            "value": "6.34"
+          }
+        ],
+        "components": [
+          "ace-step-1.5-2b",
+          "ace-step-1.5-lm"
+        ],
+        "engine": "ace-step-1.5",
+        "gates": {
+          "benchmark": {
+            "gate_id": "benchmark.ace-2b-turbo-mlx",
+            "owner": "jon",
+            "requires_preregistration": true,
+            "set": "benchmark-48",
+            "synthetic_allowed": false
+          },
+          "smoke": {
+            "checks": [
+              "install_bytes_match_manifest",
+              "conformance",
+              "decodes",
+              "non_silent",
+              "duration_within_tolerance",
+              "owner_not_garbled"
+            ],
+            "gate_id": "smoke.ace-2b-turbo-mlx",
+            "owner": "jon",
+            "synthetic_allowed": false
+          }
+        },
+        "heavy": true,
+        "host_os": [
+          "darwin"
+        ],
+        "id": "ace-2b-turbo-mlx",
+        "license_record": [
+          {
+            "code_license": "MIT",
+            "component_id": "ace-step-1.5-2b",
+            "obligations": [
+              "apache_notice"
+            ],
+            "weights_license": "MIT"
+          },
+          {
+            "code_license": "MIT",
+            "component_id": "ace-step-1.5-lm",
+            "obligations": [
+              "apache_notice"
+            ],
+            "weights_license": "MIT (Qwen3 fine-tunes; Apache-2.0 upstream)"
+          }
+        ],
+        "limits": {
+          "channels": null,
+          "instrumental_only": false,
+          "lyric_languages": [
+            "en"
+          ],
+          "max_duration_s": null,
+          "sample_rate": null
+        },
+        "notes": "Draft profile. Turbo forces guidance to 1.0 and needs shift=3.0 set by hand, so CFG is hidden (ADR-0018). ACE claims many lyric languages (VENDOR); the registry declares English only until a smoke run per language (Q6 default).",
+        "pins": {
+          "code": {
+            "commit": null,
+            "min_commit": "ca1e85fe9",
+            "repo": "ace-step/ACE-Step-1.5"
+          },
+          "env": {
+            "kind": "uv_lock",
+            "ref": null
+          },
+          "weights": {
+            "allow_patterns": [],
+            "license_acceptance_required": true,
+            "repo": "ACE-Step/Ace-Step1.5",
+            "revision": null,
+            "source": "hf"
+          }
+        },
+        "results_local": [],
+        "status": "smoke-passed",
+        "tasks": [
+          "text_to_song",
+          "cover",
+          "repaint"
+        ],
+        "test_only": false,
+        "title": "ACE-Step 1.5 2B turbo (draft) on MLX"
+      },
+      {
+        "allowed_lanes": [
+          "individual",
+          "llc",
+          "research"
+        ],
+        "backend": "mps",
+        "checkpoint": "acestep-v15-turbo (2B DiT) + 1.7B LM",
+        "claims_published": [
+          {
+            "label": "VENDOR",
+            "metric": "resident_memory_dit_bf16",
+            "note": "2B DiT bf16 resident; the VAE (0.33 GB) and text encoder (1.2 GB) are extra.",
+            "source": "https://github.com/ace-step/ACE-Step-1.5/blob/main/docs/en/GPU_COMPATIBILITY.md",
+            "unit": "GB",
+            "value": "4.7"
+          }
+        ],
+        "components": [
+          "ace-step-1.5-2b",
+          "ace-step-1.5-lm"
+        ],
+        "engine": "ace-step-1.5",
+        "gates": {
+          "benchmark": {
+            "gate_id": "benchmark.ace-2b-turbo-mps",
+            "owner": "jon",
+            "requires_preregistration": true,
+            "set": "benchmark-48",
+            "synthetic_allowed": false
+          },
+          "smoke": {
+            "checks": [
+              "install_bytes_match_manifest",
+              "conformance",
+              "decodes",
+              "non_silent",
+              "duration_within_tolerance",
+              "owner_not_garbled"
+            ],
+            "gate_id": "smoke.ace-2b-turbo-mps",
+            "owner": "jon",
+            "synthetic_allowed": false
+          }
+        },
+        "heavy": true,
+        "host_os": [
+          "darwin"
+        ],
+        "id": "ace-2b-turbo-mps",
+        "license_record": [
+          {
+            "code_license": "MIT",
+            "component_id": "ace-step-1.5-2b",
+            "obligations": [
+              "apache_notice"
+            ],
+            "weights_license": "MIT"
+          },
+          {
+            "code_license": "MIT",
+            "component_id": "ace-step-1.5-lm",
+            "obligations": [
+              "apache_notice"
+            ],
+            "weights_license": "MIT (Qwen3 fine-tunes; Apache-2.0 upstream)"
+          }
+        ],
+        "limits": {
+          "channels": null,
+          "instrumental_only": false,
+          "lyric_languages": [
+            "en"
+          ],
+          "max_duration_s": null,
+          "sample_rate": null
+        },
+        "notes": "MPS twin of the MLX draft profile. MPS disables INT8, offload and torch.compile (VENDOR). The smoke run decides between MLX and MPS. ACE claims many lyric languages (VENDOR); the registry declares English only until a smoke run per language (Q6 default).",
+        "pins": {
+          "code": {
+            "commit": null,
+            "min_commit": "ca1e85fe9",
+            "repo": "ace-step/ACE-Step-1.5"
+          },
+          "env": {
+            "kind": "uv_lock",
+            "ref": null
+          },
+          "weights": {
+            "allow_patterns": [],
+            "license_acceptance_required": true,
+            "repo": "ACE-Step/Ace-Step1.5",
+            "revision": null,
+            "source": "hf"
+          }
+        },
+        "results_local": [],
+        "tasks": [
+          "text_to_song",
+          "cover",
+          "repaint"
+        ],
+        "test_only": false,
+        "title": "ACE-Step 1.5 2B turbo (draft) on MPS"
+      },
+      {
+        "allowed_lanes": [
+          "individual",
+          "llc",
+          "research"
+        ],
+        "backend": "mlx",
+        "checkpoint": "acestep-v15-sft (2B DiT) + 1.7B LM",
+        "claims_published": [
+          {
+            "label": "VENDOR",
+            "metric": "resident_memory_dit_bf16",
+            "note": "2B DiT bf16 resident; the VAE (0.33 GB) and text encoder (1.2 GB) are extra.",
+            "source": "https://github.com/ace-step/ACE-Step-1.5/blob/main/docs/en/GPU_COMPATIBILITY.md",
+            "unit": "GB",
+            "value": "4.7"
+          }
+        ],
+        "components": [
+          "ace-step-1.5-2b",
+          "ace-step-1.5-lm"
+        ],
+        "engine": "ace-step-1.5",
+        "gates": {
+          "benchmark": {
+            "gate_id": "benchmark.ace-2b-sft-mlx",
+            "owner": "jon",
+            "requires_preregistration": true,
+            "set": "benchmark-48",
+            "synthetic_allowed": false
+          },
+          "smoke": {
+            "checks": [
+              "install_bytes_match_manifest",
+              "conformance",
+              "decodes",
+              "non_silent",
+              "duration_within_tolerance",
+              "owner_not_garbled"
+            ],
+            "gate_id": "smoke.ace-2b-sft-mlx",
+            "owner": "jon",
+            "synthetic_allowed": false
+          }
+        },
+        "heavy": true,
+        "host_os": [
+          "darwin"
+        ],
+        "id": "ace-2b-sft-mlx",
+        "license_record": [
+          {
+            "code_license": "MIT",
+            "component_id": "ace-step-1.5-2b",
+            "obligations": [
+              "apache_notice"
+            ],
+            "weights_license": "MIT"
+          },
+          {
+            "code_license": "MIT",
+            "component_id": "ace-step-1.5-lm",
+            "obligations": [
+              "apache_notice"
+            ],
+            "weights_license": "MIT (Qwen3 fine-tunes; Apache-2.0 upstream)"
+          }
+        ],
+        "limits": {
+          "channels": null,
+          "instrumental_only": false,
+          "lyric_languages": [
+            "en"
+          ],
+          "max_duration_s": null,
+          "sample_rate": null
+        },
+        "notes": "Render profile. Pin main >= ca1e85fe9 or set dcw_enabled=False for non-turbo checkpoints. ACE claims many lyric languages (VENDOR); the registry declares English only until a smoke run per language (Q6 default).",
+        "pins": {
+          "code": {
+            "commit": null,
+            "min_commit": "ca1e85fe9",
+            "repo": "ace-step/ACE-Step-1.5"
+          },
+          "env": {
+            "kind": "uv_lock",
+            "ref": null
+          },
+          "weights": {
+            "allow_patterns": [],
+            "license_acceptance_required": true,
+            "repo": "ACE-Step/Ace-Step1.5",
+            "revision": null,
+            "source": "hf"
+          }
+        },
+        "results_local": [],
+        "tasks": [
+          "text_to_song",
+          "cover",
+          "repaint"
+        ],
+        "test_only": false,
+        "title": "ACE-Step 1.5 2B SFT (render) on MLX"
+      },
+      {
+        "allowed_lanes": [
+          "individual",
+          "llc",
+          "research"
+        ],
+        "backend": "mlx",
+        "checkpoint": "acestep-v15-xl-sft (about 4.99B) + 1.7B LM",
+        "claims_published": [
+          {
+            "label": "VENDOR",
+            "metric": "resident_memory_bf16",
+            "note": "About 9 GB bf16 resident.",
+            "source": "https://huggingface.co/ACE-Step/acestep-v15-xl-sft",
+            "unit": "GB",
+            "value": "9"
+          },
+          {
+            "label": "VENDOR",
+            "metric": "download_f32",
+            "note": "Per native F32 checkpoint from the repository listing; diffusers bf16 repos are about 11.1-11.5 GB.",
+            "source": "https://huggingface.co/api/models/ACE-Step/acestep-v15-xl-sft/tree/main",
+            "unit": "GB",
+            "value": "19.95"
+          },
+          {
+            "label": "COMPETITOR-RUN",
+            "metric": "shs100k_hit_at_1_cover_strength_0.8",
+            "note": "ACE XL-SFT cover at strength 0.8, run by the YuE2 authors on SHS100K. Untested on hums.",
+            "source": "https://arxiv.org/html/2609.33757v1",
+            "unit": "%",
+            "value": "2.4"
+          }
+        ],
+        "components": [
+          "ace-step-1.5-xl",
+          "ace-step-1.5-lm"
+        ],
+        "engine": "ace-step-1.5",
+        "gates": {
+          "benchmark": {
+            "gate_id": "benchmark.ace-xl-sft-mlx",
+            "owner": "jon",
+            "requires_preregistration": true,
+            "set": "benchmark-48",
+            "synthetic_allowed": false
+          },
+          "smoke": {
+            "checks": [
+              "install_bytes_match_manifest",
+              "conformance",
+              "decodes",
+              "non_silent",
+              "duration_within_tolerance",
+              "owner_not_garbled"
+            ],
+            "gate_id": "smoke.ace-xl-sft-mlx",
+            "owner": "jon",
+            "synthetic_allowed": false
+          }
+        },
+        "heavy": true,
+        "host_os": [
+          "darwin"
+        ],
+        "id": "ace-xl-sft-mlx",
+        "license_record": [
+          {
+            "code_license": "MIT",
+            "component_id": "ace-step-1.5-xl",
+            "obligations": [
+              "apache_notice"
+            ],
+            "weights_license": "MIT"
+          },
+          {
+            "code_license": "MIT",
+            "component_id": "ace-step-1.5-lm",
+            "obligations": [
+              "apache_notice"
+            ],
+            "weights_license": "MIT (Qwen3 fine-tunes; Apache-2.0 upstream)"
+          }
+        ],
+        "limits": {
+          "channels": null,
+          "instrumental_only": false,
+          "lyric_languages": [
+            "en"
+          ],
+          "max_duration_s": null,
+          "sample_rate": null
+        },
+        "notes": "Only after its own smoke run and the diffusers bf16 loader check (XL-SFT garbled output on Mac before main, #1259). ACE claims many lyric languages (VENDOR); the registry declares English only until a smoke run per language (Q6 default).",
+        "pins": {
+          "code": {
+            "commit": null,
+            "min_commit": "ca1e85fe9",
+            "repo": "ace-step/ACE-Step-1.5"
+          },
+          "env": {
+            "kind": "uv_lock",
+            "ref": null
+          },
+          "weights": {
+            "allow_patterns": [],
+            "license_acceptance_required": true,
+            "repo": "ACE-Step/acestep-v15-xl-sft",
+            "revision": null,
+            "source": "hf"
+          }
+        },
+        "results_local": [],
+        "tasks": [
+          "text_to_song",
+          "cover",
+          "repaint"
+        ],
+        "test_only": false,
+        "title": "ACE-Step 1.5 XL SFT on MLX"
+      },
+      {
+        "allowed_lanes": [
+          "individual",
+          "llc",
+          "research"
+        ],
+        "backend": "mlx",
+        "checkpoint": "acestep-v15-base (2B DiT) + 1.7B LM",
+        "claims_published": [
+          {
+            "label": "VENDOR",
+            "metric": "resident_memory_dit_bf16",
+            "note": "2B DiT bf16 resident; the VAE (0.33 GB) and text encoder (1.2 GB) are extra.",
+            "source": "https://github.com/ace-step/ACE-Step-1.5/blob/main/docs/en/GPU_COMPATIBILITY.md",
+            "unit": "GB",
+            "value": "4.7"
+          }
+        ],
+        "components": [
+          "ace-step-1.5-2b",
+          "ace-step-1.5-lm"
+        ],
+        "engine": "ace-step-1.5",
+        "gates": {
+          "benchmark": {
+            "gate_id": "benchmark.ace-2b-base-mlx",
+            "owner": "jon",
+            "requires_preregistration": true,
+            "set": "benchmark-48",
+            "synthetic_allowed": false
+          },
+          "smoke": {
+            "checks": [
+              "install_bytes_match_manifest",
+              "conformance",
+              "decodes",
+              "non_silent",
+              "duration_within_tolerance",
+              "owner_not_garbled"
+            ],
+            "gate_id": "smoke.ace-2b-base-mlx",
+            "owner": "jon",
+            "synthetic_allowed": false
+          }
+        },
+        "heavy": true,
+        "host_os": [
+          "darwin"
+        ],
+        "id": "ace-2b-base-mlx",
+        "license_record": [
+          {
+            "code_license": "MIT",
+            "component_id": "ace-step-1.5-2b",
+            "obligations": [
+              "apache_notice"
+            ],
+            "weights_license": "MIT"
+          },
+          {
+            "code_license": "MIT",
+            "component_id": "ace-step-1.5-lm",
+            "obligations": [
+              "apache_notice"
+            ],
+            "weights_license": "MIT (Qwen3 fine-tunes; Apache-2.0 upstream)"
+          }
+        ],
+        "limits": {
+          "channels": null,
+          "instrumental_only": false,
+          "lyric_languages": [
+            "en"
+          ],
+          "max_duration_s": null,
+          "sample_rate": null
+        },
+        "notes": "Base checkpoints do every task; installed only when stems, lego or complete are needed (ADR-0002). extract is a re-perform, never an isolation (ADR-0006). ACE claims many lyric languages (VENDOR); the registry declares English only until a smoke run per language (Q6 default).",
+        "pins": {
+          "code": {
+            "commit": null,
+            "min_commit": "ca1e85fe9",
+            "repo": "ace-step/ACE-Step-1.5"
+          },
+          "env": {
+            "kind": "uv_lock",
+            "ref": null
+          },
+          "weights": {
+            "allow_patterns": [],
+            "license_acceptance_required": true,
+            "repo": "ACE-Step/Ace-Step1.5",
+            "revision": null,
+            "source": "hf"
+          }
+        },
+        "results_local": [],
+        "tasks": [
+          "text_to_song",
+          "cover",
+          "repaint",
+          "extend",
+          "extract",
+          "lego",
+          "complete",
+          "instrumental",
+          "reference_timbre"
+        ],
+        "test_only": false,
+        "title": "ACE-Step 1.5 2B base on MLX"
+      },
+      {
+        "allowed_lanes": [
+          "individual",
+          "llc",
+          "research"
+        ],
+        "backend": "cuda",
+        "checkpoint": "acestep-v15-sft (2B DiT) + 1.7B LM",
+        "claims_published": [
+          {
+            "label": "VENDOR",
+            "metric": "resident_memory_dit_bf16",
+            "note": "2B DiT bf16 resident; the VAE (0.33 GB) and text encoder (1.2 GB) are extra.",
+            "source": "https://github.com/ace-step/ACE-Step-1.5/blob/main/docs/en/GPU_COMPATIBILITY.md",
+            "unit": "GB",
+            "value": "4.7"
+          }
+        ],
+        "components": [
+          "ace-step-1.5-2b",
+          "ace-step-1.5-lm"
+        ],
+        "engine": "ace-step-1.5",
+        "gates": {
+          "benchmark": {
+            "gate_id": "benchmark.ace-2b-sft-cuda",
+            "owner": "jon",
+            "requires_preregistration": true,
+            "set": "benchmark-48",
+            "synthetic_allowed": false
+          },
+          "smoke": {
+            "checks": [
+              "install_bytes_match_manifest",
+              "conformance",
+              "decodes",
+              "non_silent",
+              "duration_within_tolerance",
+              "owner_not_garbled"
+            ],
+            "gate_id": "smoke.ace-2b-sft-cuda",
+            "owner": "jon",
+            "synthetic_allowed": false
+          }
+        },
+        "heavy": true,
+        "host_os": [
+          "linux",
+          "windows"
+        ],
+        "id": "ace-2b-sft-cuda",
+        "license_record": [
+          {
+            "code_license": "MIT",
+            "component_id": "ace-step-1.5-2b",
+            "obligations": [
+              "apache_notice"
+            ],
+            "weights_license": "MIT"
+          },
+          {
+            "code_license": "MIT",
+            "component_id": "ace-step-1.5-lm",
+            "obligations": [
+              "apache_notice"
+            ],
+            "weights_license": "MIT (Qwen3 fine-tunes; Apache-2.0 upstream)"
+          }
+        ],
+        "limits": {
+          "channels": null,
+          "instrumental_only": false,
+          "lyric_languages": [
+            "en"
+          ],
+          "max_duration_s": null,
+          "sample_rate": null
+        },
+        "notes": "CUDA twin for tiers 1-3. Windows pins torch 2.7.1+cu128, Linux 2.10.0+cu128 (VENDOR). ACE claims many lyric languages (VENDOR); the registry declares English only until a smoke run per language (Q6 default).",
+        "pins": {
+          "code": {
+            "commit": null,
+            "min_commit": "ca1e85fe9",
+            "repo": "ace-step/ACE-Step-1.5"
+          },
+          "env": {
+            "kind": "uv_lock",
+            "ref": null
+          },
+          "weights": {
+            "allow_patterns": [],
+            "license_acceptance_required": true,
+            "repo": "ACE-Step/Ace-Step1.5",
+            "revision": null,
+            "source": "hf"
+          }
+        },
+        "results_local": [],
+        "tasks": [
+          "text_to_song",
+          "cover",
+          "repaint"
+        ],
+        "test_only": false,
+        "title": "ACE-Step 1.5 2B SFT on CUDA"
+      },
+      {
+        "allowed_lanes": [
+          "individual",
+          "llc",
+          "research"
+        ],
+        "backend": "cuda",
+        "checkpoint": "acestep-v15-xl-sft (about 4.99B) + 1.7B LM",
+        "claims_published": [
+          {
+            "label": "VENDOR",
+            "metric": "min_vram_without_offload",
+            "note": "Vendor GPU tiers: 12 GB marginal with offload and INT8, 16 GB with offload, 20 GB without, 24 GB with the 4B LM.",
+            "source": "https://huggingface.co/ACE-Step/acestep-v15-xl-sft",
+            "unit": "GB",
+            "value": "20"
+          }
+        ],
+        "components": [
+          "ace-step-1.5-xl",
+          "ace-step-1.5-lm"
+        ],
+        "engine": "ace-step-1.5",
+        "gates": {
+          "benchmark": {
+            "gate_id": "benchmark.ace-xl-sft-cuda",
+            "owner": "jon",
+            "requires_preregistration": true,
+            "set": "benchmark-48",
+            "synthetic_allowed": false
+          },
+          "smoke": {
+            "checks": [
+              "install_bytes_match_manifest",
+              "conformance",
+              "decodes",
+              "non_silent",
+              "duration_within_tolerance",
+              "owner_not_garbled"
+            ],
+            "gate_id": "smoke.ace-xl-sft-cuda",
+            "owner": "jon",
+            "synthetic_allowed": false
+          }
+        },
+        "heavy": true,
+        "host_os": [
+          "linux",
+          "windows"
+        ],
+        "id": "ace-xl-sft-cuda",
+        "license_record": [
+          {
+            "code_license": "MIT",
+            "component_id": "ace-step-1.5-xl",
+            "obligations": [
+              "apache_notice"
+            ],
+            "weights_license": "MIT"
+          },
+          {
+            "code_license": "MIT",
+            "component_id": "ace-step-1.5-lm",
+            "obligations": [
+              "apache_notice"
+            ],
+            "weights_license": "MIT (Qwen3 fine-tunes; Apache-2.0 upstream)"
+          }
+        ],
+        "limits": {
+          "channels": null,
+          "instrumental_only": false,
+          "lyric_languages": [
+            "en"
+          ],
+          "max_duration_s": null,
+          "sample_rate": null
+        },
+        "notes": "Tier 1 local render profile; tier 2 and 3 only with offload after a smoke run on that card. ACE claims many lyric languages (VENDOR); the registry declares English only until a smoke run per language (Q6 default).",
+        "pins": {
+          "code": {
+            "commit": null,
+            "min_commit": "ca1e85fe9",
+            "repo": "ace-step/ACE-Step-1.5"
+          },
+          "env": {
+            "kind": "uv_lock",
+            "ref": null
+          },
+          "weights": {
+            "allow_patterns": [],
+            "license_acceptance_required": true,
+            "repo": "ACE-Step/acestep-v15-xl-sft",
+            "revision": null,
+            "source": "hf"
+          }
+        },
+        "results_local": [],
+        "tasks": [
+          "text_to_song",
+          "cover",
+          "repaint"
+        ],
+        "test_only": false,
+        "title": "ACE-Step 1.5 XL SFT on CUDA"
+      },
+      {
+        "allowed_lanes": [
+          "individual",
+          "research"
+        ],
+        "backend": "cuda",
+        "checkpoint": "m-a-p/YuE2-3B + YuE2-Vae",
+        "claims_published": [
+          {
+            "label": "VENDOR",
+            "metric": "shs100k_hit_at_1_score_cover",
+            "note": "Self-reported by the YuE2 authors on SHS100K with a score; not on hums.",
+            "source": "https://arxiv.org/html/2609.33757v1",
+            "unit": "%",
+            "value": "71.3"
+          },
+          {
+            "label": "VENDOR",
+            "metric": "wildsongbench_songbench_avg",
+            "note": "Automatic, self-run by the YuE2 authors.",
+            "source": "https://huggingface.co/datasets/m-a-p/WildSongBench/blob/main/benchmark/results.md",
+            "unit": "score",
+            "value": "6.73"
+          },
+          {
+            "label": "VENDOR",
+            "metric": "edit_adherence_exact_pitch",
+            "note": "On edited model-generated scores; no figure exists for hand-written ABC.",
+            "source": "https://arxiv.org/html/2609.33757v1",
+            "unit": "%",
+            "value": "84.17"
+          },
+          {
+            "label": "VENDOR",
+            "metric": "peak_vram_max_context_rtx4090",
+            "note": "NVML peak at maximum context; 11.18 GiB typical. 24 GB is a recommendation, not a measured floor.",
+            "source": "https://huggingface.co/m-a-p/YuE2-3B",
+            "unit": "GiB",
+            "value": "14.08"
+          },
+          {
+            "label": "VENDOR",
+            "metric": "seconds_per_3.6_min_song_rtx4090",
+            "note": "Vendor speed figure.",
+            "source": "https://huggingface.co/m-a-p/YuE2-3B",
+            "unit": "s",
+            "value": "71"
+          }
+        ],
+        "components": [
+          "yue2-3b"
+        ],
+        "engine": "yue2",
+        "gates": {
+          "benchmark": {
+            "gate_id": "benchmark.yue2-3b-score",
+            "owner": "jon",
+            "requires_preregistration": true,
+            "set": "benchmark-48",
+            "synthetic_allowed": false
+          },
+          "smoke": {
+            "checks": [
+              "install_bytes_match_manifest",
+              "conformance",
+              "decodes",
+              "non_silent",
+              "duration_within_tolerance",
+              "owner_not_garbled"
+            ],
+            "gate_id": "smoke.yue2-3b-score",
+            "owner": "jon",
+            "synthetic_allowed": false
+          }
+        },
+        "heavy": true,
+        "host_os": [
+          "linux"
+        ],
+        "id": "yue2-3b-score",
+        "license_record": [
+          {
+            "code_license": "Apache-2.0",
+            "component_id": "yue2-3b",
+            "obligations": [],
+            "weights_license": "CC BY-NC 4.0 + Individual creator permission (GitHub MODEL_LICENSE, 2026-09-16); HF LICENSE copies are plain CC BY-NC 4.0"
+          }
+        ],
+        "limits": {
+          "channels": null,
+          "instrumental_only": false,
+          "lyric_languages": [
+            "en",
+            "zh"
+          ],
+          "max_duration_s": 360,
+          "sample_rate": null
+        },
+        "notes": "Individual and research lanes only: CC BY-NC 4.0 weights plus an individual-creator permission that excludes companies (GAP-05). The worker refuses llc before loading. Strict two-voice ABC, one integer tempo, full bars, about 6 minutes, en and zh only. In tier 4 every run is an approved burst (ADR-0030).",
+        "pins": {
+          "code": {
+            "commit": null,
+            "min_commit": null,
+            "repo": "multimodal-art-projection/YuE"
+          },
+          "env": {
+            "kind": "oci_image",
+            "ref": null
+          },
+          "weights": {
+            "allow_patterns": [],
+            "license_acceptance_required": true,
+            "repo": "m-a-p/YuE2-3B",
+            "revision": null,
+            "source": "hf"
+          }
+        },
+        "results_local": [],
+        "tasks": [
+          "score_to_song"
+        ],
+        "test_only": false,
+        "title": "YuE2-3B score-to-song (R1)"
+      },
+      {
+        "allowed_lanes": [
+          "individual",
+          "llc",
+          "research"
+        ],
+        "backend": "cuda",
+        "checkpoint": "HeartMuLa-oss-3B-happy-new-year + HeartCodec",
+        "claims_published": [
+          {
+            "label": "COMPETITOR-RUN",
+            "metric": "wildsongbench_songbench_avg",
+            "note": "Run by the YuE2 authors.",
+            "source": "https://huggingface.co/datasets/m-a-p/WildSongBench/blob/main/benchmark/results.md",
+            "unit": "score",
+            "value": "6.25"
+          },
+          {
+            "label": "VENDOR",
+            "metric": "realtime_factor",
+            "note": "Approximately real time per the vendor.",
+            "source": "https://github.com/HeartMuLa/heartlib",
+            "unit": "x",
+            "value": "1.0"
+          }
+        ],
+        "components": [
+          "heartmula-3b"
+        ],
+        "engine": "heartmula",
+        "gates": {
+          "benchmark": {
+            "gate_id": "benchmark.heartmula-3b-cuda",
+            "owner": "jon",
+            "requires_preregistration": true,
+            "set": "benchmark-48",
+            "synthetic_allowed": false
+          },
+          "smoke": {
+            "checks": [
+              "install_bytes_match_manifest",
+              "conformance",
+              "decodes",
+              "non_silent",
+              "duration_within_tolerance",
+              "owner_not_garbled"
+            ],
+            "gate_id": "smoke.heartmula-3b-cuda",
+            "owner": "jon",
+            "synthetic_allowed": false
+          }
+        },
+        "heavy": true,
+        "host_os": [
+          "linux"
+        ],
+        "id": "heartmula-3b-cuda",
+        "license_record": [
+          {
+            "code_license": "Apache-2.0 (heartlib)",
+            "component_id": "heartmula-3b",
+            "obligations": [],
+            "weights_license": "Apache-2.0 (since 2026-01-20)"
+          }
+        ],
+        "limits": {
+          "channels": null,
+          "instrumental_only": false,
+          "lyric_languages": null,
+          "max_duration_s": null,
+          "sample_rate": null
+        },
+        "notes": "Competes with MiniMax Music 3 in smoke for the LLC lane (P6). Lyric languages are undeclared until smoke, so vocal requests are refused as language_unsupported until then.",
+        "pins": {
+          "code": {
+            "commit": null,
+            "min_commit": null,
+            "repo": "HeartMuLa/heartlib"
+          },
+          "env": {
+            "kind": "uv_lock",
+            "ref": null
+          },
+          "weights": {
+            "allow_patterns": [],
+            "license_acceptance_required": true,
+            "repo": "HeartMuLa/HeartMuLa-oss-3B-happy-new-year",
+            "revision": null,
+            "source": "hf"
+          }
+        },
+        "results_local": [],
+        "tasks": [
+          "text_to_song"
+        ],
+        "test_only": false,
+        "title": "HeartMuLa-oss-3B (LLC-lane challenger)"
+      },
+      {
+        "allowed_lanes": [
+          "individual",
+          "llc",
+          "research"
+        ],
+        "backend": "cuda",
+        "checkpoint": "MiniMaxAI/MiniMax-Music3 (diffusers path)",
+        "claims_published": [
+          {
+            "label": "COMPETITOR-RUN",
+            "metric": "wildsongbench_songbench_avg",
+            "note": "Run by the YuE2 authors.",
+            "source": "https://huggingface.co/datasets/m-a-p/WildSongBench/blob/main/benchmark/results.md",
+            "unit": "score",
+            "value": "6.2830"
+          }
+        ],
+        "components": [
+          "minimax-music3"
+        ],
+        "engine": "minimax-music3",
+        "gates": {
+          "benchmark": {
+            "gate_id": "benchmark.minimax-music3-cuda",
+            "owner": "jon",
+            "requires_preregistration": true,
+            "set": "benchmark-48",
+            "synthetic_allowed": false
+          },
+          "smoke": {
+            "checks": [
+              "install_bytes_match_manifest",
+              "conformance",
+              "decodes",
+              "non_silent",
+              "duration_within_tolerance",
+              "owner_not_garbled"
+            ],
+            "gate_id": "smoke.minimax-music3-cuda",
+            "owner": "jon",
+            "synthetic_allowed": false
+          }
+        },
+        "heavy": true,
+        "host_os": [
+          "linux"
+        ],
+        "id": "minimax-music3-cuda",
+        "license_record": [
+          {
+            "code_license": "MiniMax-Music3 Community License covers inference code (GitHub repo has no LICENSE file)",
+            "component_id": "minimax-music3",
+            "obligations": [
+              "acceptable_use_policy",
+              "ai_disclosure",
+              "revenue_threshold",
+              "ui_naming"
+            ],
+            "weights_license": "MiniMax-Music3 Community License: prominent 'MiniMax-Music3' in commercial UI; prior written authorization above US$20M aggregate yearly revenue incl. affiliates; safeguards required for third-party generation services; AUP (Exhibit A, revisable); indemnity"
+          }
+        ],
+        "limits": {
+          "channels": null,
+          "instrumental_only": false,
+          "lyric_languages": null,
+          "max_duration_s": null,
+          "sample_rate": null
+        },
+        "notes": "Community License obligations: 'MiniMax-Music3' named in commercial UIs, written authorization above a revenue threshold, AUP #11 machine-generated disclosure carried into every manifest. One versus two GPUs is CONTESTED; the output rate (32 vs 44.1 kHz) is CONTESTED, so sample_rate is undeclared. Lyric languages undeclared until smoke.",
+        "pins": {
+          "code": {
+            "commit": null,
+            "min_commit": null,
+            "repo": "MiniMax-AI/MiniMax-Music3"
+          },
+          "env": {
+            "kind": "uv_lock",
+            "ref": null
+          },
+          "weights": {
+            "allow_patterns": [],
+            "license_acceptance_required": true,
+            "repo": "MiniMaxAI/MiniMax-Music3",
+            "revision": null,
+            "source": "hf"
+          }
+        },
+        "results_local": [],
+        "tasks": [
+          "text_to_song"
+        ],
+        "test_only": false,
+        "title": "MiniMax Music 3 (LLC-lane challenger)"
+      },
+      {
+        "allowed_lanes": [
+          "individual",
+          "llc",
+          "research"
+        ],
+        "backend": "mlx",
+        "checkpoint": "stabilityai/stable-audio-3-medium (1.4B)",
+        "claims_published": [
+          {
+            "label": "VENDOR",
+            "metric": "seconds_to_render_380s_audio_m4pro_48gb",
+            "note": "Measured by the vendor on an M4 Pro 48 GB, not on this M5 Pro.",
+            "source": "https://github.com/Stability-AI/stable-audio-3/blob/main/optimized/mlx/README.md",
+            "unit": "s",
+            "value": "47.78"
+          },
+          {
+            "label": "VENDOR",
+            "metric": "peak_memory_mlx",
+            "note": "Vendor peak.",
+            "source": "https://github.com/Stability-AI/stable-audio-3/blob/main/optimized/mlx/README.md",
+            "unit": "GB",
+            "value": "5.05"
+          }
+        ],
+        "components": [
+          "stable-audio-3-medium"
+        ],
+        "engine": "stable-audio-3",
+        "gates": {
+          "benchmark": {
+            "gate_id": "benchmark.sa3-medium-mlx",
+            "owner": "jon",
+            "requires_preregistration": true,
+            "set": "benchmark-48",
+            "synthetic_allowed": false
+          },
+          "smoke": {
+            "checks": [
+              "install_bytes_match_manifest",
+              "conformance",
+              "decodes",
+              "non_silent",
+              "duration_within_tolerance",
+              "owner_not_garbled"
+            ],
+            "gate_id": "smoke.sa3-medium-mlx",
+            "owner": "jon",
+            "synthetic_allowed": false
+          }
+        },
+        "heavy": true,
+        "host_os": [
+          "darwin"
+        ],
+        "id": "sa3-medium-mlx",
+        "license_record": [
+          {
+            "code_license": "MIT",
+            "component_id": "stable-audio-3-medium",
+            "obligations": [
+              "attribution",
+              "no_training_on_outputs",
+              "registration",
+              "revenue_threshold"
+            ],
+            "weights_license": "Stability AI Community License + Gemma Terms of Use (T5Gemma); HF main repo gated (auto); -optimized repo ungated"
+          }
+        ],
+        "limits": {
+          "channels": null,
+          "instrumental_only": true,
+          "lyric_languages": null,
+          "max_duration_s": null,
+          "sample_rate": null
+        },
+        "notes": "v1-studio instrumental profile, optional. No intelligible vocals. Gated download and Community License registration first; outputs may not train other foundation models.",
+        "pins": {
+          "code": {
+            "commit": null,
+            "min_commit": null,
+            "repo": "Stability-AI/stable-audio-3"
+          },
+          "env": {
+            "kind": "uv_lock",
+            "ref": null
+          },
+          "weights": {
+            "allow_patterns": [],
+            "license_acceptance_required": true,
+            "repo": "stabilityai/stable-audio-3-medium",
+            "revision": null,
+            "source": "hf"
+          }
+        },
+        "results_local": [],
+        "tasks": [
+          "instrumental"
+        ],
+        "test_only": false,
+        "title": "Stable Audio 3 Medium on MLX (instrumental)"
+      },
+      {
+        "allowed_lanes": [
+          "individual",
+          "llc",
+          "research"
+        ],
+        "backend": "cpu",
+        "checkpoint": "librosa 1.0.0 pYIN + own HMM",
+        "claims_published": [],
+        "components": [
+          "librosa-pyin",
+          "studio-own-code"
+        ],
+        "engine": "studio-analysis",
+        "gates": {
+          "benchmark": {
+            "gate_id": "benchmark.analysis-transcribe-pyin-hmm",
+            "owner": "jon",
+            "requires_preregistration": true,
+            "set": "hum-benchmark",
+            "synthetic_allowed": false
+          },
+          "smoke": {
+            "checks": [
+              "conformance",
+              "transcription_floor_synthetic"
+            ],
+            "gate_id": "smoke.analysis-transcribe-pyin-hmm",
+            "owner": "jon",
+            "synthetic_allowed": true
+          }
+        },
+        "heavy": false,
+        "host_os": [
+          "darwin",
+          "linux",
+          "windows"
+        ],
+        "id": "analysis-transcribe-pyin-hmm",
+        "license_record": [
+          {
+            "code_license": "ISC",
+            "component_id": "librosa-pyin",
+            "obligations": [],
+            "weights_license": "n/a (no weights)"
+          },
+          {
+            "code_license": "Own code (all rights reserved until Q5)",
+            "component_id": "studio-own-code",
+            "obligations": [],
+            "weights_license": "n/a (no weights)"
+          }
+        ],
+        "limits": {
+          "channels": null,
+          "instrumental_only": false,
+          "lyric_languages": null,
+          "max_duration_s": null,
+          "sample_rate": null
+        },
+        "notes": "Weights-free and LLC-clean. Labelled 'unverified on real hums' until the hum benchmark (TB6). Its smoke gate is the preregistered synthetic floor on NeutralVoice hums, which is the one place synthetic evidence may meet a non-test smoke gate.",
+        "pins": {
+          "code": {
+            "commit": null,
+            "min_commit": null,
+            "repo": "Navigata1/aura"
+          },
+          "env": {
+            "kind": "uv_lock",
+            "ref": null
+          },
+          "weights": null
+        },
+        "results_local": [],
+        "tasks": [
+          "transcribe"
+        ],
+        "test_only": false,
+        "title": "pYIN + HMM hum transcription (v0)"
+      },
+      {
+        "allowed_lanes": [
+          "individual",
+          "research"
+        ],
+        "backend": "cpu",
+        "checkpoint": "spotify/basic-pitch 0.4.0",
+        "claims_published": [
+          {
+            "label": "COMMUNITY",
+            "metric": "humming_onset_pitch_f1_octave_aware",
+            "note": "A course project; offsets ignored.",
+            "source": "https://arxiv.org/abs/2410.05455",
+            "unit": "F1",
+            "value": "0.268"
+          }
+        ],
+        "components": [
+          "basic-pitch"
+        ],
+        "engine": "basic-pitch",
+        "gates": {
+          "benchmark": {
+            "gate_id": "benchmark.transcribe-basic-pitch",
+            "owner": "jon",
+            "requires_preregistration": true,
+            "set": "hum-benchmark",
+            "synthetic_allowed": false
+          },
+          "smoke": {
+            "checks": [
+              "conformance",
+              "transcription_floor_synthetic"
+            ],
+            "gate_id": "smoke.transcribe-basic-pitch",
+            "owner": "jon",
+            "synthetic_allowed": true
+          }
+        },
+        "heavy": false,
+        "host_os": [
+          "darwin",
+          "linux",
+          "windows"
+        ],
+        "id": "transcribe-basic-pitch",
+        "license_record": [
+          {
+            "code_license": "Apache-2.0",
+            "component_id": "basic-pitch",
+            "obligations": [],
+            "weights_license": "Apache-2.0 (bundled TF SavedModel, CoreML, TFLite, ONNX)"
+          }
+        ],
+        "limits": {
+          "channels": null,
+          "instrumental_only": false,
+          "lyric_languages": null,
+          "max_duration_s": null,
+          "sample_rate": null
+        },
+        "notes": "Runs in its own Python 3.10 environment (#203). A challenger in the hum benchmark only. Individual and research only until the training-data provenance review (basic-pitch row, unverified_training_data); llc transcription uses pYIN+HMM or manual entry.",
+        "pins": {
+          "code": {
+            "commit": null,
+            "min_commit": null,
+            "repo": "spotify/basic-pitch"
+          },
+          "env": {
+            "kind": "uv_lock",
+            "ref": null
+          },
+          "weights": {
+            "file_path": null,
+            "license_acceptance_required": true,
+            "package": "basic-pitch",
+            "sha256": null,
+            "source": "package",
+            "version": null
+          }
+        },
+        "results_local": [],
+        "tasks": [
+          "transcribe"
+        ],
+        "test_only": false,
+        "title": "Basic Pitch (hum-benchmark challenger)"
+      },
+      {
+        "allowed_lanes": [
+          "individual",
+          "llc",
+          "research"
+        ],
+        "backend": "cpu",
+        "checkpoint": "pyloudnorm + own true-peak meter",
+        "claims_published": [],
+        "components": [
+          "pyloudnorm",
+          "studio-own-code"
+        ],
+        "engine": "studio-analysis",
+        "gates": {
+          "benchmark": null,
+          "smoke": {
+            "checks": [
+              "conformance",
+              "decodes"
+            ],
+            "gate_id": "smoke.analysis-measure",
+            "owner": "jon",
+            "synthetic_allowed": false
+          }
+        },
+        "heavy": false,
+        "host_os": [
+          "darwin",
+          "linux",
+          "windows"
+        ],
+        "id": "analysis-measure",
+        "license_record": [
+          {
+            "code_license": "MIT",
+            "component_id": "pyloudnorm",
+            "obligations": [],
+            "weights_license": "n/a"
+          },
+          {
+            "code_license": "Own code (all rights reserved until Q5)",
+            "component_id": "studio-own-code",
+            "obligations": [],
+            "weights_license": "n/a (no weights)"
+          }
+        ],
+        "limits": {
+          "channels": null,
+          "instrumental_only": false,
+          "lyric_languages": null,
+          "max_duration_s": null,
+          "sample_rate": null
+        },
+        "notes": "Integrated loudness labelled 'BS.1770-4 (pyloudnorm)' until X-47 closes; true peak from the studio's own >=4x oversampled meter; writes the common 48 kHz / 24-bit preview.",
+        "pins": {
+          "code": {
+            "commit": null,
+            "min_commit": null,
+            "repo": "Navigata1/aura"
+          },
+          "env": {
+            "kind": "uv_lock",
+            "ref": null
+          },
+          "weights": null
+        },
+        "results_local": [],
+        "tasks": [
+          "measure"
+        ],
+        "test_only": false,
+        "title": "Measure: decode, loudness, true peak, preview"
+      },
+      {
+        "allowed_lanes": [
+          "individual",
+          "llc",
+          "research"
+        ],
+        "backend": "cpu",
+        "checkpoint": "NeutralVoice",
+        "claims_published": [],
+        "components": [
+          "neutralvoice",
+          "studio-own-code"
+        ],
+        "engine": "studio-analysis",
+        "gates": {
+          "benchmark": null,
+          "smoke": {
+            "checks": [
+              "conformance",
+              "decodes",
+              "non_silent"
+            ],
+            "gate_id": "smoke.analysis-guide-neutralvoice",
+            "owner": "jon",
+            "synthetic_allowed": false
+          }
+        },
+        "heavy": false,
+        "host_os": [
+          "darwin",
+          "linux",
+          "windows"
+        ],
+        "id": "analysis-guide-neutralvoice",
+        "license_record": [
+          {
+            "code_license": "Own code (all rights reserved until Q5)",
+            "component_id": "neutralvoice",
+            "obligations": [],
+            "weights_license": "n/a (no weights)"
+          },
+          {
+            "code_license": "Own code (all rights reserved until Q5)",
+            "component_id": "studio-own-code",
+            "obligations": [],
+            "weights_license": "n/a (no weights)"
+          }
+        ],
+        "limits": {
+          "channels": null,
+          "instrumental_only": false,
+          "lyric_languages": null,
+          "max_duration_s": null,
+          "sample_rate": null
+        },
+        "notes": "Renders the assembled melody. A guide is never a candidate.",
+        "pins": {
+          "code": {
+            "commit": null,
+            "min_commit": null,
+            "repo": "Navigata1/aura"
+          },
+          "env": {
+            "kind": "uv_lock",
+            "ref": null
+          },
+          "weights": null
+        },
+        "results_local": [],
+        "tasks": [
+          "guide"
+        ],
+        "test_only": false,
+        "title": "NeutralVoice guide"
+      },
+      {
+        "allowed_lanes": [
+          "individual",
+          "llc",
+          "research"
+        ],
+        "backend": "cpu",
+        "checkpoint": "studio assemble-audio",
+        "claims_published": [],
+        "components": [
+          "studio-own-code"
+        ],
+        "engine": "studio-analysis",
+        "gates": {
+          "benchmark": null,
+          "smoke": {
+            "checks": [
+              "conformance",
+              "decodes"
+            ],
+            "gate_id": "smoke.analysis-assemble-audio",
+            "owner": "jon",
+            "synthetic_allowed": false
+          }
+        },
+        "heavy": false,
+        "host_os": [
+          "darwin",
+          "linux",
+          "windows"
+        ],
+        "id": "analysis-assemble-audio",
+        "license_record": [
+          {
+            "code_license": "Own code (all rights reserved until Q5)",
+            "component_id": "studio-own-code",
+            "obligations": [],
+            "weights_license": "n/a (no weights)"
+          }
+        ],
+        "limits": {
+          "channels": null,
+          "instrumental_only": false,
+          "lyric_languages": null,
+          "max_duration_s": null,
+          "sample_rate": null
+        },
+        "notes": null,
+        "pins": {
+          "code": {
+            "commit": null,
+            "min_commit": null,
+            "repo": "Navigata1/aura"
+          },
+          "env": {
+            "kind": "uv_lock",
+            "ref": null
+          },
+          "weights": null
+        },
+        "results_local": [],
+        "tasks": [
+          "assemble-audio"
+        ],
+        "test_only": false,
+        "title": "Assemble hum slices along the SongForm (R2-raw)"
+      },
+      {
+        "allowed_lanes": [
+          "individual",
+          "llc",
+          "research"
+        ],
+        "backend": "cpu",
+        "checkpoint": "studio export",
+        "claims_published": [],
+        "components": [
+          "studio-own-code"
+        ],
+        "engine": "studio-analysis",
+        "gates": {
+          "benchmark": null,
+          "smoke": {
+            "checks": [
+              "conformance",
+              "decodes"
+            ],
+            "gate_id": "smoke.analysis-export",
+            "owner": "jon",
+            "synthetic_allowed": false
+          }
+        },
+        "heavy": false,
+        "host_os": [
+          "darwin",
+          "linux",
+          "windows"
+        ],
+        "id": "analysis-export",
+        "license_record": [
+          {
+            "code_license": "Own code (all rights reserved until Q5)",
+            "component_id": "studio-own-code",
+            "obligations": [],
+            "weights_license": "n/a (no weights)"
+          }
+        ],
+        "limits": {
+          "channels": null,
+          "instrumental_only": false,
+          "lyric_languages": null,
+          "max_duration_s": null,
+          "sample_rate": null
+        },
+        "notes": "Bit-exact native copy; a 48 kHz / 24-bit deliverable with TPDF dither seeded from the export id only when the native rate differs; every file re-decoded and re-hashed.",
+        "pins": {
+          "code": {
+            "commit": null,
+            "min_commit": null,
+            "repo": "Navigata1/aura"
+          },
+          "env": {
+            "kind": "uv_lock",
+            "ref": null
+          },
+          "weights": null
+        },
+        "results_local": [],
+        "tasks": [
+          "export"
+        ],
+        "test_only": false,
+        "title": "Export render and verify"
+      },
+      {
+        "allowed_lanes": [
+          "individual",
+          "llc",
+          "research"
+        ],
+        "backend": "cpu",
+        "checkpoint": "librosa pYIN + DTW",
+        "claims_published": [],
+        "components": [
+          "librosa-pyin",
+          "studio-own-code"
+        ],
+        "engine": "studio-analysis",
+        "gates": {
+          "benchmark": null,
+          "smoke": {
+            "checks": [
+              "conformance",
+              "adherence_golden"
+            ],
+            "gate_id": "smoke.analysis-adherence-pyin",
+            "owner": "jon",
+            "synthetic_allowed": true
+          }
+        },
+        "heavy": false,
+        "host_os": [
+          "darwin",
+          "linux",
+          "windows"
+        ],
+        "id": "analysis-adherence-pyin",
+        "license_record": [
+          {
+            "code_license": "ISC",
+            "component_id": "librosa-pyin",
+            "obligations": [],
+            "weights_license": "n/a (no weights)"
+          },
+          {
+            "code_license": "Own code (all rights reserved until Q5)",
+            "component_id": "studio-own-code",
+            "obligations": [],
+            "weights_license": "n/a (no weights)"
+          }
+        ],
+        "limits": {
+          "channels": null,
+          "instrumental_only": false,
+          "lyric_languages": null,
+          "max_duration_s": null,
+          "sample_rate": null
+        },
+        "notes": "Validated on the NeutralVoice-under-bed golden before it is shown on real candidates. Whether librosa's DTW suits the metric is UNVERIFIED.",
+        "pins": {
+          "code": {
+            "commit": null,
+            "min_commit": null,
+            "repo": "Navigata1/aura"
+          },
+          "env": {
+            "kind": "uv_lock",
+            "ref": null
+          },
+          "weights": null
+        },
+        "results_local": [],
+        "tasks": [
+          "adherence"
+        ],
+        "test_only": false,
+        "title": "Melody adherence with pYIN (all lanes)"
+      },
+      {
+        "allowed_lanes": [
+          "individual",
+          "research"
+        ],
+        "backend": "cpu",
+        "checkpoint": "SwiftF0 0.3.0 + pYIN cross-check + DTW",
+        "claims_published": [
+          {
+            "label": "VENDOR",
+            "metric": "vocadito_pitch_f1_50c",
+            "note": "Benchmark run by SwiftF0's own author; RMVPE 0.862, pYIN 0.653 on the same board.",
+            "source": "https://github.com/lars76/pitch-benchmark",
+            "unit": "F1",
+            "value": "0.847"
+          }
+        ],
+        "components": [
+          "swiftf0",
+          "librosa-pyin",
+          "studio-own-code"
+        ],
+        "engine": "studio-analysis",
+        "gates": {
+          "benchmark": null,
+          "smoke": {
+            "checks": [
+              "conformance",
+              "adherence_golden"
+            ],
+            "gate_id": "smoke.analysis-adherence-swiftf0",
+            "owner": "jon",
+            "synthetic_allowed": true
+          }
+        },
+        "heavy": false,
+        "host_os": [
+          "darwin",
+          "linux",
+          "windows"
+        ],
+        "id": "analysis-adherence-swiftf0",
+        "license_record": [
+          {
+            "code_license": "MIT",
+            "component_id": "swiftf0",
+            "obligations": [],
+            "weights_license": "MIT-labelled bundled ONNX (14k params), trained on the author's CC BY-NC-SA research dataset (provenance caveat)"
+          },
+          {
+            "code_license": "ISC",
+            "component_id": "librosa-pyin",
+            "obligations": [],
+            "weights_license": "n/a (no weights)"
+          },
+          {
+            "code_license": "Own code (all rights reserved until Q5)",
+            "component_id": "studio-own-code",
+            "obligations": [],
+            "weights_license": "n/a (no weights)"
+          }
+        ],
+        "limits": {
+          "channels": null,
+          "instrumental_only": false,
+          "lyric_languages": null,
+          "max_duration_s": null,
+          "sample_rate": null
+        },
+        "notes": "Individual and research lanes until SwiftF0's provenance review (its ONNX model was trained on CC BY-NC-SA data). SwiftF0's ONNX model ships inside its pip package: the pin names the package version, the file and its sha256, and installing it waits for Jon's license acceptance (MIT label, CC BY-NC-SA training data).",
+        "pins": {
+          "code": {
+            "commit": null,
+            "min_commit": null,
+            "repo": "lars76/swift-f0"
+          },
+          "env": {
+            "kind": "uv_lock",
+            "ref": null
+          },
+          "weights": {
+            "file_path": null,
+            "license_acceptance_required": true,
+            "package": "swift-f0",
+            "sha256": null,
+            "source": "package",
+            "version": null
+          }
+        },
+        "results_local": [],
+        "tasks": [
+          "adherence"
+        ],
+        "test_only": false,
+        "title": "Melody adherence with SwiftF0 (individual and research)"
+      },
+      {
+        "allowed_lanes": [
+          "individual",
+          "research"
+        ],
+        "backend": "mps",
+        "checkpoint": "htdemucs",
+        "claims_published": [],
+        "components": [
+          "demucs-4.1.0"
+        ],
+        "engine": "demucs",
+        "gates": {
+          "benchmark": null,
+          "smoke": {
+            "checks": [
+              "conformance",
+              "decodes",
+              "non_silent"
+            ],
+            "gate_id": "smoke.separate-demucs",
+            "owner": "jon",
+            "synthetic_allowed": false
+          }
+        },
+        "heavy": true,
+        "host_os": [
+          "darwin"
+        ],
+        "id": "separate-demucs",
+        "license_record": [
+          {
+            "code_license": "MIT",
+            "component_id": "demucs-4.1.0",
+            "obligations": [],
+            "weights_license": "Research/personal use only per the author (facebookresearch/demucs #327, #384, #508); 'license: mit' removed from the HF cards and export script on 2026-08-31. Repo code MIT."
+          }
+        ],
+        "limits": {
+          "channels": null,
+          "instrumental_only": false,
+          "lyric_languages": null,
+          "max_duration_s": null,
+          "sample_rate": null
+        },
+        "notes": "Internal separation for adherence and lyric error only: analysis, never exported as a stem, and its analyzed_by edge never carries its lane into a keeper. Individual and research lanes only (non-commercial by author statement). Weights download through the package at runtime after the license acceptance; the exact file pin is recorded at install. Its htdemucs checkpoint comes from a torch.hub URL, not Hugging Face: the install ticket pins that URL, its sha256 and size here by contract-fix PR before any download, and the download waits for Jon's license acceptance (research or personal use only).",
+        "pins": {
+          "code": {
+            "commit": null,
+            "min_commit": null,
+            "repo": "adefossez/demucs"
+          },
+          "env": {
+            "kind": "uv_lock",
+            "ref": null
+          },
+          "weights": {
+            "bytes": null,
+            "license_acceptance_required": true,
+            "sha256": null,
+            "source": "url",
+            "url": null
+          }
+        },
+        "results_local": [],
+        "tasks": [
+          "separate"
+        ],
+        "test_only": false,
+        "title": "Demucs 4.1.0 internal vocal separation (MPS)"
+      },
+      {
+        "allowed_lanes": [
+          "individual",
+          "research"
+        ],
+        "backend": "mlx",
+        "checkpoint": "htdemucs (MLX conversion)",
+        "claims_published": [
+          {
+            "label": "VENDOR",
+            "metric": "realtime_factor_warm_m4max",
+            "note": "Warm, 40-core M4 Max.",
+            "source": "https://github.com/ssmall256/demucs-mlx",
+            "unit": "x",
+            "value": "114"
+          }
+        ],
+        "components": [
+          "demucs-mlx"
+        ],
+        "engine": "demucs",
+        "gates": {
+          "benchmark": null,
+          "smoke": {
+            "checks": [
+              "conformance",
+              "decodes",
+              "non_silent"
+            ],
+            "gate_id": "smoke.separate-demucs-mlx",
+            "owner": "jon",
+            "synthetic_allowed": false
+          }
+        },
+        "heavy": true,
+        "host_os": [
+          "darwin"
+        ],
+        "id": "separate-demucs-mlx",
+        "license_record": [
+          {
+            "code_license": "MIT",
+            "component_id": "demucs-mlx",
+            "obligations": [],
+            "weights_license": "Converted Meta checkpoints; the same author restriction applies (MIT tag on the conversion does not clear it)."
+          }
+        ],
+        "limits": {
+          "channels": null,
+          "instrumental_only": false,
+          "lyric_languages": null,
+          "max_duration_s": null,
+          "sample_rate": null
+        },
+        "notes": "Same lane and use limits as separate-demucs. The smoke run chooses between MLX and MPS.",
+        "pins": {
+          "code": {
+            "commit": null,
+            "min_commit": null,
+            "repo": "ssmall256/demucs-mlx"
+          },
+          "env": {
+            "kind": "uv_lock",
+            "ref": null
+          },
+          "weights": {
+            "allow_patterns": [],
+            "license_acceptance_required": true,
+            "repo": "ssmall256/demucs-mlx",
+            "revision": null,
+            "source": "hf"
+          }
+        },
+        "results_local": [],
+        "tasks": [
+          "separate"
+        ],
+        "test_only": false,
+        "title": "demucs-mlx internal vocal separation"
+      }
+    ],
+    "registry_id": "engine-profiles.v1",
+    "schemaVersion": "1.0.0",
+    "updated_at": "2026-10-09T18:00:00Z"
+  },
+  "record_kind": "engine-profile-registry",
+  "rule": "ADR-0027: status is computed, never stored",
+  "schemaVersion": "1.0.0"
+}

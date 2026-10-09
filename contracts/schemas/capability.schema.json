@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "capability/1 (registry document)",
+  "description": "Non-engine capabilities (studio.playback per OS, capture.mic, capture.midi) gated per OS by evidence, the same way as engine profiles (ADR-0001, ADR-0024, ADR-0027). No status field: status is computed from evidence records.",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "registry_id", "updated_at", "capabilities"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "capability-registry"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "registry_id": {"type": "string", "pattern": "^[a-z0-9.-]{1,64}$"},
+    "updated_at": {"$ref": "common.schema.json#/$defs/dateTime"},
+    "capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "host_os", "scope", "gate", "results_local", "notes"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"$ref": "common.schema.json#/$defs/capabilityId"},
+          "title": {"$ref": "common.schema.json#/$defs/shortText"},
+          "host_os": {"$ref": "common.schema.json#/$defs/hostOs"},
+          "scope": {"enum": ["v1-core", "v1-studio"]},
+          "gate": {
+            "type": "object",
+            "required": ["gate_id", "checks", "definitions", "synthetic_allowed", "owner"],
+            "additionalProperties": false,
+            "properties": {
+              "gate_id": {"type": "string", "pattern": "^smoke\\.[a-z0-9.-]+$"},
+              "checks": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "engine-profile.schema.json#/$defs/gateCheck"}},
+              "definitions": {
+                "description": "How each check is measured, so the per-OS gate is reproduced the same way on every host: the interaction set, sample counts and pass rule. The measuring script's sha256 is an evidence attachment.",
+                "type": "object",
+                "minProperties": 1,
+                "propertyNames": {"$ref": "engine-profile.schema.json#/$defs/gateCheck"},
+                "additionalProperties": {"$ref": "common.schema.json#/$defs/text"}
+              },
+              "synthetic_allowed": {"const": false},
+              "owner": {"const": "jon"}
+            }
+          },
+          "results_local": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["evidence_id", "metric", "value", "unit", "label"],
+              "additionalProperties": false,
+              "properties": {
+                "evidence_id": {"$ref": "common.schema.json#/$defs/id"},
+                "metric": {"type": "string", "pattern": "^[a-z][a-z0-9_.-]{0,63}$"},
+                "value": {"$ref": "common.schema.json#/$defs/decimal"},
+                "unit": {"type": "string", "minLength": 1, "maxLength": 32},
+                "label": {"const": "MEASURED-LOCAL"}
+              }
+            }
+          },
+          "notes": {"oneOf": [{"$ref": "common.schema.json#/$defs/text"}, {"type": "null"}]}
+        }
+      }
+    }
+  }
+}

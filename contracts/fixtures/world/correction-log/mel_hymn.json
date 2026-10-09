@@ -1,0 +1,28 @@
+{
+  "entries": [
+    {
+      "at": "2026-10-09T10:05:00Z",
+      "base_rev": 1,
+      "new_rev": 2,
+      "ops": [
+        {
+          "delta_semitones": 1,
+          "note_ids": [
+            "n2"
+          ],
+          "op": "transpose"
+        },
+        {
+          "note_ids": [],
+          "op": "set_tempo",
+          "us_per_quarter": 600000
+        }
+      ],
+      "seq": 1
+    }
+  ],
+  "kind": "correction-log",
+  "melody_id": "mel_hymn",
+  "project_id": "prj_hymn",
+  "schemaVersion": "1.0.0"
+}

@@ -1,0 +1,114 @@
+{
+  "base_rev": null,
+  "content_sha256": "5f95189409f6472dfd46fefb5a3eebbf3c2b2b6c6b7846f0a962107a15dbaf6f",
+  "created_at": "2026-10-09T10:09:00Z",
+  "key": {
+    "mode": "major",
+    "tonic": "C"
+  },
+  "kind": "melody-spec",
+  "melody_id": "mel_hymn_asm",
+  "notes": [
+    {
+      "confidence": null,
+      "duration_ticks": 960,
+      "id": "n1",
+      "origin": "assembled",
+      "pitch": 60,
+      "start_tick": 0,
+      "velocity": 90
+    },
+    {
+      "confidence": null,
+      "duration_ticks": 960,
+      "id": "n2",
+      "origin": "assembled",
+      "pitch": 63,
+      "start_tick": 960,
+      "velocity": 90
+    },
+    {
+      "confidence": null,
+      "duration_ticks": 1920,
+      "id": "n3",
+      "origin": "assembled",
+      "pitch": 64,
+      "start_tick": 1920,
+      "velocity": 90
+    },
+    {
+      "confidence": null,
+      "duration_ticks": 1920,
+      "id": "n4",
+      "origin": "assembled",
+      "pitch": 65,
+      "start_tick": 3840,
+      "velocity": 90
+    },
+    {
+      "confidence": null,
+      "duration_ticks": 1920,
+      "id": "n5",
+      "origin": "assembled",
+      "pitch": 67,
+      "start_tick": 5760,
+      "velocity": 90
+    }
+  ],
+  "phrases": [
+    {
+      "end_tick": 3840,
+      "id": "ph1",
+      "name": "opening line",
+      "start_tick": 0
+    },
+    {
+      "end_tick": 7680,
+      "id": "ph2",
+      "name": "answer line",
+      "start_tick": 3840
+    }
+  ],
+  "ppq": 960,
+  "project_id": "prj_hymn",
+  "quantize": null,
+  "rev": 1,
+  "schemaVersion": "1.0.0",
+  "source": {
+    "assembled_from": {
+      "melody": {
+        "melody_id": "mel_hymn",
+        "rev": 2,
+        "tempo_map_rev": 2
+      },
+      "song": {
+        "rev": 1,
+        "song_id": "song_hymn"
+      }
+    },
+    "capture_sha256": null,
+    "seed_kind": "assembled",
+    "transcription": null
+  },
+  "spec_kind": "assembled",
+  "tempo_map": {
+    "meter": [
+      {
+        "denominator": 4,
+        "numerator": 4,
+        "tick": 0
+      }
+    ],
+    "rev": 1,
+    "tempo": [
+      {
+        "tick": 0,
+        "us_per_quarter": 500000
+      },
+      {
+        "tick": 3840,
+        "us_per_quarter": 600000
+      }
+    ]
+  }
+}

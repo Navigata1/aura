@@ -1,0 +1,233 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Shared definitions",
+  "description": "Definitions shared by every record. Not a document type on its own. No $id: references resolve relative to this file (architecture.md §5). Integers only in hashed records: every non-integer quantity is a decimal string (ADR-0028).",
+  "$defs": {
+    "schemaVersion": {
+      "description": "Semantic version of the record's schema. Major 1 for every v1 record; minor versions are additive; a major version is upcast on read and stored objects are never rewritten.",
+      "type": "string",
+      "pattern": "^1\\.[0-9]+\\.[0-9]+$"
+    },
+    "id": {
+      "description": "Opaque identifier with a type prefix, e.g. prj_hymn, job_tr1, mel_hymn.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*_[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+    },
+    "slug": {
+      "description": "Lowercase registry key: engine profile ids, component ids.",
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9.-]{0,63}$"
+    },
+    "capabilityId": {
+      "description": "Dotted capability id, e.g. studio.playback.darwin.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*(\\.[a-z0-9][a-z0-9-]*)+$"
+    },
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "imageDigest": {"description": "OCI image digest.", "type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "gitCommit": {"type": "string", "pattern": "^[0-9a-f]{7,40}$"},
+    "dateTime": {
+      "description": "RFC 3339 timestamp in UTC with a Z suffix.",
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]{1,3})?Z$"
+    },
+    "date": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+    "month": {"description": "UTC calendar month (the cap period, T-09).", "type": "string", "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$"},
+    "uri": {"type": "string", "pattern": "^https://[^\\s]+$", "maxLength": 400},
+    "text": {"type": "string", "minLength": 1, "maxLength": 2000},
+    "shortText": {"type": "string", "minLength": 1, "maxLength": 200},
+
+    "operatorLane": {
+      "description": "Who a project's work is done for (GLOSSARY: Operator lane; ADR-0011). Lane alone always means operator lane.",
+      "enum": ["individual", "llc", "research"]
+    },
+    "laneSet": {"type": "array", "uniqueItems": true, "maxItems": 3, "items": {"$ref": "#/$defs/operatorLane"}},
+
+    "figureLabel": {
+      "description": "Where a number came from (GLOSSARY: Figure label). A vendor number is never shown as measured.",
+      "enum": ["MEASURED-LOCAL", "VENDOR", "COMMUNITY", "COMPETITOR-RUN", "OWNER-REPORTED", "INFERRED", "UNVERIFIED"]
+    },
+    "publishedClaimLabel": {
+      "description": "Labels allowed inside claims_published. MEASURED-LOCAL is forbidden there (ADR-0001).",
+      "enum": ["VENDOR", "COMMUNITY", "COMPETITOR-RUN"]
+    },
+    "decimal": {"description": "Exact decimal as a string.", "type": "string", "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"},
+    "nonNegativeDecimal": {"type": "string", "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"},
+    "usd": {"description": "US dollars with exactly two decimals.", "type": "string", "pattern": "^(0|[1-9][0-9]*)\\.[0-9]{2}$"},
+    "loudness": {"description": "LUFS, LU or dBTP with one or two decimals.", "type": "string", "pattern": "^-?(0|[1-9][0-9]*)\\.[0-9]{1,2}$"},
+    "gainDb": {
+      "description": "An audition gain. Attenuation only: zero or negative, two decimals (GLOSSARY: Level matching).",
+      "type": "string",
+      "pattern": "^(0\\.00|-(0|[1-9][0-9]*)\\.[0-9]{2})$"
+    },
+    "unitInterval": {"description": "A value in [0, 1] with up to four decimals.", "type": "string", "pattern": "^(0(\\.[0-9]{1,4})?|1(\\.0{1,4})?)$"},
+    "bcp47": {"description": "BCP-47 language tag, e.g. en, en-US, zh-Hans.", "type": "string", "pattern": "^[a-z]{2,3}(-[A-Za-z0-9]{2,8})*$"},
+
+    "retentionClass": {"description": "ADR-0034.", "enum": ["irreplaceable", "derived", "reproducible"]},
+    "origin": {
+      "description": "How an artifact came to exist (GLOSSARY: Origin; ADR-0009).",
+      "enum": ["generated_mix", "separated_source", "regenerated_part", "new_part", "human_recording", "rendered_guide",
+               "rendered_midi", "tts_render", "conversion", "imported_mix", "analysis", "preview"]
+    },
+    "edgeType": {
+      "description": "Typed parent edge (ADR-0029). Only derived_from and converted_from carry lane and license obligations.",
+      "enum": ["derived_from", "converted_from", "analyzed_by"]
+    },
+    "parentEdge": {
+      "type": "object",
+      "required": ["edge", "sha256"],
+      "additionalProperties": false,
+      "properties": {"edge": {"$ref": "#/$defs/edgeType"}, "sha256": {"$ref": "#/$defs/sha256"}}
+    },
+    "engineTask": {
+      "description": "What an engine profile is asked to do (ADR-0001).",
+      "enum": ["text_to_song", "cover", "score_to_song", "repaint", "extend", "extract", "lego", "complete", "instrumental", "reference_timbre"]
+    },
+    "analysisTask": {
+      "description": "Tasks of the analysis, guide, separator and export workers (architecture.md §4.9).",
+      "enum": ["transcribe", "measure", "guide", "assemble-audio", "export", "adherence", "probe", "separate"]
+    },
+    "workerTask": {"anyOf": [{"$ref": "#/$defs/engineTask"}, {"$ref": "#/$defs/analysisTask"}]},
+    "jobKind": {
+      "description": "Every product feature is a JobSpec (architecture.md §4.3).",
+      "enum": ["transcribe", "guide", "assemble-audio", "generate", "measure", "adherence", "separate", "export", "repaint", "probe"]
+    },
+    "route": {
+      "description": "A named way of making a sung song from a melody (GLOSSARY: Route).",
+      "enum": ["R1", "R2-raw", "R2-synth", "text"]
+    },
+    "allowedUse": {
+      "description": "What an input may be used for (GLOSSARY: Allowed uses). Checked before any job runs.",
+      "enum": ["listen", "loudness_measure", "dsp_finish", "analysis", "engine_input", "conditioning", "separation_input",
+               "edit_source", "conversion_input", "audition_arm", "eval_reference", "eval_anchor", "export", "training"]
+    },
+    "allowedUses": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/allowedUse"}},
+    "backend": {"enum": ["mlx", "mps", "cuda", "cpu", "fake"]},
+    "hostOs": {"enum": ["darwin", "linux", "windows"]},
+    "hostClass": {
+      "description": "The kind of machine evidence was gathered on, e.g. mlx/m5pro or cuda/rtx4090 (GLOSSARY: Host class). Derived, never typed: the profile's backend prefix (mlx, mps, cuda, cpu, fake) plus a host-model slug from the hardware snapshot (Apple chip, or the NVIDIA model plus VRAM class for a fixed rental class such as cuda/runpod-a5000-24gb). CPU work on the Mac is cpu/m5pro; the same analysis profile on a Linux CI runner is a different host class and needs its own evidence.",
+      "type": "string",
+      "pattern": "^(mlx|mps|cuda|cpu|fake)/[a-z0-9][a-z0-9._-]{0,31}$"
+    },
+    "computeTier": {"description": "O-02 tiers 1-4.", "type": "integer", "minimum": 1, "maximum": 4},
+    "placementKind": {"enum": ["local", "worker_host", "burst"]},
+    "profileStatus": {
+      "description": "Computed, never stored (ADR-0027).",
+      "enum": ["declared", "installed", "smoke-passed", "benchmarked", "disabled"]
+    },
+    "jobState": {
+      "description": "Honest job states (architecture.md §9.1).",
+      "enum": ["queued", "awaiting_approval", "preparing", "loading", "generating", "analyzing", "ready", "failed", "cancelled"]
+    },
+    "failureCode": {
+      "enum": ["worker_lost", "worker_refused", "hash_mismatch", "decode_failed", "media_mismatch", "timeout", "disk_low",
+               "store_unavailable", "budget_refused", "quote_expired", "cancelled_by_owner", "internal"]
+    },
+    "refusalCode": {
+      "description": "Refuse-before-load codes (ADR-0026).",
+      "enum": ["unsupported_task", "lane_forbidden", "over_limit", "language_unsupported", "weights_missing",
+               "insufficient_memory", "insufficient_disk", "busy"]
+    },
+    "step": {
+      "description": "A real step. index and total appear only together, and only when the engine reports real counters. No percentages exist anywhere.",
+      "type": "object",
+      "required": ["name"],
+      "additionalProperties": false,
+      "dependentRequired": {"index": ["total"], "total": ["index"]},
+      "properties": {
+        "name": {"type": "string", "pattern": "^[a-z][a-z0-9_.-]{0,63}$"},
+        "index": {"type": "integer", "minimum": 0},
+        "total": {"type": "integer", "minimum": 1}
+      }
+    },
+    "audioMeta": {
+      "type": "object",
+      "required": ["sample_rate", "channels", "frames", "sample_format"],
+      "additionalProperties": false,
+      "properties": {
+        "sample_rate": {"type": "integer", "minimum": 8000, "maximum": 384000},
+        "channels": {"type": "integer", "minimum": 1, "maximum": 64},
+        "frames": {"type": "integer", "minimum": 0},
+        "sample_format": {"enum": ["pcm_s16", "pcm_s24", "pcm_s32", "pcm_f32"]}
+      }
+    },
+    "mediaType": {"type": "string", "pattern": "^(audio|application|text)/[a-z0-9.+-]+$"},
+    "melodyRef": {
+      "description": "A MelodySpec revision and the tempo-map revision it carries (ADR-0033). The reference rule tempo.ref_resolves checks it.",
+      "type": "object",
+      "required": ["melody_id", "rev", "tempo_map_rev"],
+      "additionalProperties": false,
+      "properties": {
+        "melody_id": {"$ref": "#/$defs/id"},
+        "rev": {"type": "integer", "minimum": 1},
+        "tempo_map_rev": {"type": "integer", "minimum": 1}
+      }
+    },
+    "songRef": {
+      "type": "object",
+      "required": ["song_id", "rev"],
+      "additionalProperties": false,
+      "properties": {"song_id": {"$ref": "#/$defs/id"}, "rev": {"type": "integer", "minimum": 1}}
+    },
+    "recordRef": {
+      "description": "A content-addressed canonical-JSON record (records/sha256/...).",
+      "type": "object",
+      "required": ["kind", "sha256"],
+      "additionalProperties": false,
+      "properties": {
+        "kind": {"enum": ["melody-spec", "song-spec", "abc-score", "lyrics-plan", "correction-log", "export-manifest", "prereg"]},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "releaseBlocker": {
+      "description": "Release-blocker classes (ADR-0011 rule 7, RECONCILIATION D-11 item 6). unverified_training_data marks a permissively licensed model whose training data has not been checked: llc forbids it until a provenance review passes. unverified marks a license not yet checked against a primary source: individual and llc forbid it.",
+      "enum": ["non_commercial_weights", "non_commercial_by_author", "research_or_academic", "unknown_license",
+               "permissive_label_nc_data", "unverified_training_data", "contested", "copyleft", "unverified", "obligations"]
+    },
+    "obligation": {
+      "enum": ["attribution", "apache_notice", "ui_naming", "revenue_threshold", "acceptable_use_policy", "ai_disclosure",
+               "registration", "no_training_on_outputs", "share_alike", "keep_provenance_marks"]
+    },
+    "licenseEntry": {
+      "description": "One component in a license chain. Terms are copied from the component register and must match it (license.chain_complete).",
+      "type": "object",
+      "required": ["component_id", "code_license", "weights_license", "obligations"],
+      "additionalProperties": false,
+      "properties": {
+        "component_id": {"$ref": "#/$defs/slug"},
+        "code_license": {"type": "string", "minLength": 1, "maxLength": 400},
+        "weights_license": {"type": "string", "minLength": 1, "maxLength": 400},
+        "obligations": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/obligation"}}
+      }
+    },
+    "measuredValue": {
+      "description": "A number measured locally on Jon's hardware.",
+      "type": "object",
+      "required": ["metric", "value", "unit", "label"],
+      "additionalProperties": false,
+      "properties": {
+        "metric": {"type": "string", "pattern": "^[a-z][a-z0-9_.-]{0,63}$"},
+        "value": {"$ref": "#/$defs/decimal"},
+        "unit": {"type": "string", "minLength": 1, "maxLength": 32},
+        "label": {"const": "MEASURED-LOCAL"}
+      }
+    },
+    "ownerAct": {
+      "description": "An action only Jon can take, in the Studio UI (ADR-0031). Automation tokens get 403. Recording a reference permission and attesting an import are owner acts like the others.",
+      "type": "object",
+      "required": ["act", "scope", "at"],
+      "additionalProperties": false,
+      "properties": {
+        "act": {"enum": ["approve_quote", "change_cap", "acknowledge_overrun", "change_lane", "give_verdict", "accept_risk", "accept_model_license",
+                         "record_reference_permission", "attest_import"]},
+        "scope": {"const": "owner-ui"},
+        "at": {"$ref": "#/$defs/dateTime"}
+      }
+    },
+    "feel": {
+      "description": "O-05's four feels.",
+      "enum": ["worship_acoustic_ballad", "cinematic_orchestral", "rnb_soul_pop_ballad", "broad_mix"]
+    },
+    "label": {"description": "A blind label.", "type": "string", "pattern": "^[A-Z]$"}
+  }
+}

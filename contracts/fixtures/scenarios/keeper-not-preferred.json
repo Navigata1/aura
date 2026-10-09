@@ -1,0 +1,24 @@
+{
+  "description": "The keeper names candidate B although the verdict preferred candidate A.",
+  "expect_rules": [
+    "keeper.matches_verdict"
+  ],
+  "id": "SC-KEEPER-NOT-PREFERRED",
+  "kind": "fixture.scenario",
+  "overlay": [
+    {
+      "artifact_sha256": "2789a942c9533e6ecec15d6b9e0942389ba2f1e3f6fc664356f54291a9f0e884",
+      "candidate_id": "cand_b",
+      "id": "kp_hymn",
+      "keeper_rev": 1,
+      "kept_at": "2026-10-09T10:41:00Z",
+      "kind": "keeper",
+      "project_id": "prj_hymn",
+      "schemaVersion": "1.0.0",
+      "supersedes_keeper_id": null,
+      "verdict_id": "vd_hymn"
+    }
+  ],
+  "remove": [],
+  "schemaVersion": "1.0.0"
+}

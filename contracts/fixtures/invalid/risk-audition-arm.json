@@ -1,0 +1,25 @@
+{
+  "description": "A risk acceptance that would put a Suno import in the harness.",
+  "error_contains": "$.uses_added[0]",
+  "id": "IR-RISK-AUDITION-ARM",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "act": {
+      "act": "accept_risk",
+      "at": "2026-10-09T12:00:00Z",
+      "scope": "owner-ui"
+    },
+    "id": "ra_x",
+    "kind": "risk-acceptance",
+    "risk": "suno_further_use",
+    "schemaVersion": "1.0.0",
+    "statement": "fixture",
+    "subject_sha256": "6bddb7311b9df81220ddfedbcd18c099b6229e9c3e220bbadc2bb2595d1f9260",
+    "uses_added": [
+      "audition_arm"
+    ]
+  },
+  "record_kind": "risk-acceptance",
+  "rule": "O-08: a risk acceptance never makes a Suno import an audition arm",
+  "schemaVersion": "1.0.0"
+}

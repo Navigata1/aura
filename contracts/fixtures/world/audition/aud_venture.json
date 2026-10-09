@@ -1,0 +1,53 @@
+{
+  "all_arms_ready_at": "2026-10-09T11:04:50Z",
+  "anchors": [],
+  "arms": [
+    {
+      "label": "A",
+      "unplayable": false
+    },
+    {
+      "label": "B",
+      "unplayable": false
+    }
+  ],
+  "brief_id": null,
+  "candidate_ids": [
+    "cand_va",
+    "cand_vb"
+  ],
+  "commitment_sha256": "bf6b9a7ef276a7a3941045c3a5753d38a8e2985ee42c324ee5a69fe37e725a13",
+  "gains": [
+    {
+      "gain_db": "0.00",
+      "label": "A"
+    },
+    {
+      "gain_db": "-0.80",
+      "label": "B"
+    }
+  ],
+  "id": "aud_venture",
+  "kind": "audition",
+  "loudness_standard": "BS.1770-4 (pyloudnorm)",
+  "mode": "product",
+  "opened_at": "2026-10-09T11:05:00Z",
+  "prereg_sha256": null,
+  "preview": {
+    "bit_depth": 24,
+    "sample_rate": 48000
+  },
+  "project_id": "prj_venture",
+  "repeat_pairs": [],
+  "request_ids": [
+    "gr_venture"
+  ],
+  "residual_leak_acknowledged": [
+    "duration",
+    "sonic_character"
+  ],
+  "residual_mismatch_lu": "0.03",
+  "schemaVersion": "1.0.0",
+  "state": "revealed",
+  "true_peak_meter": "studio-truepeak-4x"
+}

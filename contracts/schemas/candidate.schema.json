@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "candidate/1",
+  "description": "One rendered result offered for audition, from a generation request or an edit (GLOSSARY: Candidate, Hard constraint, Badge, Melody adherence, Diagnostic score; ADR-0005). It records its route, profile revision, seed and placement. A candidate is never hidden, only badged. The fields listed in withheld_during_blind never leave the API while a blind audition over the candidate is open; the only per-arm view then is $defs/blindView. Diagnostic scores never select, rank or filter.",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "id", "project_id", "source", "ordinal", "route", "profile_id", "profile_revision",
+               "seed", "placement", "job_id", "artifact_sha256", "preview_sha256", "measures", "adherence",
+               "hard_constraints", "badges", "diagnostics", "synthetic_test", "withheld_during_blind", "created_at"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "candidate"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "id": {"$ref": "common.schema.json#/$defs/id"},
+    "project_id": {"$ref": "common.schema.json#/$defs/id"},
+    "source": {
+      "oneOf": [
+        {"type": "object", "required": ["generation_request_id"], "additionalProperties": false, "properties": {"generation_request_id": {"$ref": "common.schema.json#/$defs/id"}}},
+        {"type": "object", "required": ["edit_operation_id"], "additionalProperties": false, "properties": {"edit_operation_id": {"$ref": "common.schema.json#/$defs/id"}}}
+      ]
+    },
+    "ordinal": {"type": "integer", "minimum": 1, "description": "The only identity shown in the jobs drawer during a blind audition."},
+    "route": {"oneOf": [{"$ref": "common.schema.json#/$defs/route"}, {"type": "null"}]},
+    "profile_id": {"$ref": "common.schema.json#/$defs/slug"},
+    "profile_revision": {"$ref": "common.schema.json#/$defs/sha256"},
+    "seed": {"type": "integer", "minimum": 0},
+    "placement": {
+      "type": "object",
+      "required": ["kind", "host_class"],
+      "additionalProperties": false,
+      "properties": {"kind": {"$ref": "common.schema.json#/$defs/placementKind"}, "host_class": {"$ref": "common.schema.json#/$defs/hostClass"}}
+    },
+    "job_id": {"$ref": "common.schema.json#/$defs/id"},
+    "artifact_sha256": {"$ref": "common.schema.json#/$defs/sha256"},
+    "preview_sha256": {"oneOf": [{"$ref": "common.schema.json#/$defs/sha256"}, {"type": "null"}]},
+    "measures": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["duration_ms", "integrated_lufs", "true_peak_dbtp", "loudness_standard", "true_peak_meter", "label", "analysis_sha256"],
+          "additionalProperties": false,
+          "properties": {
+            "duration_ms": {"type": "integer", "minimum": 0},
+            "integrated_lufs": {"$ref": "common.schema.json#/$defs/loudness"},
+            "true_peak_dbtp": {"$ref": "common.schema.json#/$defs/loudness"},
+            "loudness_standard": {"const": "BS.1770-4 (pyloudnorm)", "description": "Named revision until the -4 vs -5 diff ticket closes (X-47, ADR-0019)."},
+            "true_peak_meter": {"const": "studio-truepeak-4x"},
+            "label": {"const": "MEASURED-LOCAL"},
+            "analysis_sha256": {"$ref": "common.schema.json#/$defs/sha256"}
+          }
+        }
+      ]
+    },
+    "adherence": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["state", "reason"],
+          "additionalProperties": false,
+          "properties": {
+            "state": {"const": "unmeasured"},
+            "reason": {"enum": ["no_melody_seed", "no_eligible_separator", "not_yet_validated", "pending"]}
+          }
+        },
+        {
+          "type": "object",
+          "required": ["state", "median_cents_error", "octave_error_rate", "onset_f1", "contour_correlation", "label", "analysis_sha256"],
+          "additionalProperties": false,
+          "properties": {
+            "state": {"const": "measured"},
+            "median_cents_error": {"$ref": "common.schema.json#/$defs/nonNegativeDecimal"},
+            "octave_error_rate": {"$ref": "common.schema.json#/$defs/unitInterval"},
+            "onset_f1": {"$ref": "common.schema.json#/$defs/unitInterval"},
+            "contour_correlation": {"type": "string", "pattern": "^-?(0(\\.[0-9]{1,4})?|1(\\.0{1,4})?)$"},
+            "label": {"const": "MEASURED-LOCAL"},
+            "analysis_sha256": {"$ref": "common.schema.json#/$defs/sha256"}
+          }
+        }
+      ]
+    },
+    "hard_constraints": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["check", "result"],
+        "additionalProperties": false,
+        "properties": {
+          "check": {"enum": ["decodes", "non_silent", "duration_fit", "no_clipping", "no_true_peak_over", "lyric_per", "melody_adherence"]},
+          "result": {"enum": ["pass", "fail", "unmeasured"]}
+        }
+      }
+    },
+    "badges": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": ["unplayable", "silent", "duration off", "clipping", "true-peak over", "melody not kept", "adherence unmeasured",
+                 "adherence unmeasured (no LLC separator yet)", "lyric errors high", "lyric errors unmeasured",
+                 "Synthetic test output", "unbenchmarked route"]
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["scorer", "metric", "value", "label", "use"],
+        "additionalProperties": false,
+        "properties": {
+          "scorer": {"enum": ["audiobox-aesthetics", "laion-clap"]},
+          "metric": {"type": "string", "pattern": "^[a-z][a-z0-9_.-]{0,63}$"},
+          "value": {"$ref": "common.schema.json#/$defs/decimal"},
+          "label": {"const": "MEASURED-LOCAL"},
+          "use": {"const": "diagnostic only", "description": "Never selects, ranks or filters (ADR-0005)."}
+        }
+      }
+    },
+    "synthetic_test": {"type": "boolean"},
+    "withheld_during_blind": {
+      "const": ["route", "profile_id", "profile_revision", "seed", "placement", "job_id", "artifact_sha256", "preview_sha256",
+                "measures", "adherence", "hard_constraints", "badges", "diagnostics", "source"]
+    },
+    "created_at": {"$ref": "common.schema.json#/$defs/dateTime"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"source": {"required": ["generation_request_id"]}}},
+      "then": {"properties": {"route": {"$ref": "common.schema.json#/$defs/route"}}}
+    },
+    {
+      "if": {"properties": {"synthetic_test": {"const": true}}},
+      "then": {"properties": {"badges": {"contains": {"const": "Synthetic test output"}}}}
+    }
+  ],
+  "$defs": {
+    "blindView": {
+      "description": "Everything the API may say about one arm while a blind audition is open. Before the reveal only 'unplayable' shows.",
+      "type": "object",
+      "required": ["label", "unplayable"],
+      "additionalProperties": false,
+      "properties": {"label": {"$ref": "common.schema.json#/$defs/label"}, "unplayable": {"type": "boolean"}}
+    }
+  }
+}

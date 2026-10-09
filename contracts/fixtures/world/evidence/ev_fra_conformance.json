@@ -1,0 +1,26 @@
+{
+  "attachments": [
+    {
+      "name": "conformance-log.json",
+      "sha256": "81f71aa16bfe42fd47cbd42b84fb4a4c89574a84de4df4c420f586ea873da1d5"
+    }
+  ],
+  "check": "conformance",
+  "checks": [],
+  "gate_id": null,
+  "host_class": "fake/local",
+  "id": "ev_fra_conformance",
+  "kind": "evidence",
+  "measured": [],
+  "prereg_sha256": null,
+  "profile_revision": "f1a45b61325bc9f8d89598ae620e16d601aeb44188758ff87dfa8a237f114185",
+  "recorded_at": "2026-10-09T09:01:00Z",
+  "result": "pass",
+  "schemaVersion": "1.0.0",
+  "subject": {
+    "subject_id": "fake-route-a",
+    "subject_type": "profile"
+  },
+  "synthetic": true,
+  "verdict_ids": []
+}

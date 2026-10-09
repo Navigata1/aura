@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "worker-describe/1 (GET /v1/describe)",
+  "description": "Capability discovery (ADR-0026, architecture.md §9.2). The control service computes profile_revision from these facts and admits the worker only if that revision has an installed record. Each described profile must match its registry declaration: tasks within the declared tasks, lanes equal to the declared allowed lanes (worker.describe_matches_registry).",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "protocol_version", "sdk_version", "worker_id", "host", "env", "code_commit", "profiles"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "worker-describe"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "protocol_version": {"const": 1},
+    "sdk_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "worker_id": {"$ref": "common.schema.json#/$defs/id"},
+    "host": {
+      "type": "object",
+      "required": ["os", "arch", "backend", "device", "memory_bytes", "free_disk_bytes", "nvidia", "metal"],
+      "additionalProperties": false,
+      "properties": {
+        "os": {"$ref": "common.schema.json#/$defs/hostOs"},
+        "arch": {"enum": ["arm64", "x86_64"]},
+        "backend": {"$ref": "common.schema.json#/$defs/backend"},
+        "device": {"type": "string", "minLength": 1, "maxLength": 120},
+        "memory_bytes": {"type": "integer", "minimum": 0},
+        "free_disk_bytes": {"type": "integer", "minimum": 0},
+        "nvidia": {
+          "oneOf": [
+            {"type": "null"},
+            {"type": "object", "required": ["name", "vram_bytes", "driver_version", "compute_capability"], "additionalProperties": false,
+             "properties": {"name": {"type": "string", "minLength": 1}, "vram_bytes": {"type": "integer", "minimum": 0}, "driver_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+(\\.[0-9]+)?$"}, "compute_capability": {"$ref": "common.schema.json#/$defs/nonNegativeDecimal"}}}
+          ]
+        },
+        "metal": {
+          "oneOf": [
+            {"type": "null"},
+            {"type": "object", "required": ["recommended_max_working_set_bytes"], "additionalProperties": false,
+             "properties": {"recommended_max_working_set_bytes": {"type": "integer", "minimum": 0}}}
+          ]
+        }
+      }
+    },
+    "env": {
+      "oneOf": [
+        {"type": "object", "required": ["lock_sha256"], "additionalProperties": false, "properties": {"lock_sha256": {"$ref": "common.schema.json#/$defs/sha256"}}},
+        {"type": "object", "required": ["image_digest"], "additionalProperties": false, "properties": {"image_digest": {"$ref": "common.schema.json#/$defs/imageDigest"}}}
+      ]
+    },
+    "code_commit": {"$ref": "common.schema.json#/$defs/gitCommit"},
+    "profiles": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["profile_id", "tasks", "limits", "lanes", "weights_present", "weights_manifest_sha256"],
+        "additionalProperties": false,
+        "properties": {
+          "profile_id": {"$ref": "common.schema.json#/$defs/slug"},
+          "tasks": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "common.schema.json#/$defs/workerTask"}},
+          "limits": {"$ref": "engine-profile.schema.json#/$defs/profile/properties/limits"},
+          "lanes": {"$ref": "common.schema.json#/$defs/laneSet"},
+          "weights_present": {"type": "boolean"},
+          "weights_manifest_sha256": {"oneOf": [{"$ref": "common.schema.json#/$defs/sha256"}, {"type": "null"}]}
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,162 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "job/1",
+  "description": "One durable unit of work; the id is the idempotency key (GLOSSARY: Job; architecture.md §9.1). States move only along the state machine (job.state_machine); steps are real (no percentages exist in the contract); a job ends ready, failed or cancelled and never shows a partial result. A burst job carries its quote and, once past awaiting_approval, its approval. A paid job never retries automatically.",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "id", "project_id", "job_kind", "task", "profile_id", "profile_revision", "lane",
+               "session_id", "compute_profile_id", "placement", "request_id", "parent_job_id", "inputs", "record_inputs",
+               "params", "seed", "state", "history", "steps", "outputs", "error", "cost", "egress", "quote_id",
+               "approval_id", "retry", "created_at"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "job"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "id": {"$ref": "common.schema.json#/$defs/id"},
+    "project_id": {"$ref": "common.schema.json#/$defs/id"},
+    "job_kind": {"$ref": "common.schema.json#/$defs/jobKind"},
+    "task": {"$ref": "common.schema.json#/$defs/workerTask"},
+    "profile_id": {"$ref": "common.schema.json#/$defs/slug"},
+    "profile_revision": {"$ref": "common.schema.json#/$defs/sha256"},
+    "lane": {"$ref": "common.schema.json#/$defs/operatorLane", "description": "The project's lane at admission (lane.admission)."},
+    "session_id": {"$ref": "common.schema.json#/$defs/id"},
+    "compute_profile_id": {"$ref": "common.schema.json#/$defs/id"},
+    "placement": {
+      "type": "object",
+      "required": ["kind", "host_class"],
+      "additionalProperties": false,
+      "properties": {
+        "kind": {"$ref": "common.schema.json#/$defs/placementKind"},
+        "host_class": {"$ref": "common.schema.json#/$defs/hostClass"},
+        "worker_host_id": {"$ref": "common.schema.json#/$defs/id"}
+      }
+    },
+    "request_id": {"oneOf": [{"$ref": "common.schema.json#/$defs/id"}, {"type": "null"}]},
+    "parent_job_id": {"oneOf": [{"$ref": "common.schema.json#/$defs/id"}, {"type": "null"}]},
+    "inputs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["role", "sha256"],
+        "additionalProperties": false,
+        "properties": {"role": {"type": "string", "pattern": "^[a-z][a-z0-9_]{0,31}$"}, "sha256": {"$ref": "common.schema.json#/$defs/sha256"}}
+      }
+    },
+    "record_inputs": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/recordRef"}},
+    "params": {
+      "type": "object",
+      "required": ["intent", "actual"],
+      "additionalProperties": false,
+      "properties": {"intent": {"type": "object"}, "actual": {"type": ["object", "null"]}}
+    },
+    "seed": {"type": ["integer", "null"], "minimum": 0},
+    "state": {"$ref": "common.schema.json#/$defs/jobState"},
+    "history": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["state", "at"],
+        "additionalProperties": false,
+        "properties": {"state": {"$ref": "common.schema.json#/$defs/jobState"}, "at": {"$ref": "common.schema.json#/$defs/dateTime"}}
+      }
+    },
+    "steps": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/step"}},
+    "outputs": {
+      "description": "Committed atomically when the job becomes ready. A role names an artifact (sha256 of its bytes) or a record (its content hash).",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["role", "sha256"],
+        "additionalProperties": false,
+        "properties": {"role": {"type": "string", "pattern": "^[a-z][a-z0-9_]{0,31}$"}, "sha256": {"$ref": "common.schema.json#/$defs/sha256"}}
+      }
+    },
+    "error": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["code", "retryable", "detail"],
+          "additionalProperties": false,
+          "properties": {
+            "code": {"$ref": "common.schema.json#/$defs/failureCode"},
+            "refusal_code": {"$ref": "common.schema.json#/$defs/refusalCode"},
+            "retryable": {"type": "boolean"},
+            "detail": {"$ref": "common.schema.json#/$defs/shortText"}
+          },
+          "if": {"properties": {"code": {"const": "worker_refused"}}},
+          "then": {"required": ["refusal_code"]}
+        }
+      ]
+    },
+    "cost": {
+      "description": "Zero for local work; the settled amount for burst (ADR-0023).",
+      "type": "object",
+      "required": ["usd", "basis"],
+      "additionalProperties": false,
+      "properties": {
+        "usd": {"$ref": "common.schema.json#/$defs/usd"},
+        "basis": {"enum": ["local_zero", "pending_settlement", "provider_reported", "settled_at_ceiling"]}
+      }
+    },
+    "egress": {
+      "description": "Every asset that left the studio host, by hash, and where it went.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["sha256", "destination"],
+        "additionalProperties": false,
+        "properties": {"sha256": {"$ref": "common.schema.json#/$defs/sha256"}, "destination": {"enum": ["worker_host", "burst"]}}
+      }
+    },
+    "quote_id": {"oneOf": [{"$ref": "common.schema.json#/$defs/id"}, {"type": "null"}]},
+    "approval_id": {"oneOf": [{"$ref": "common.schema.json#/$defs/id"}, {"type": "null"}]},
+    "retry": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["of_job_id", "automatic"],
+          "additionalProperties": false,
+          "properties": {"of_job_id": {"$ref": "common.schema.json#/$defs/id"}, "automatic": {"type": "boolean"}}
+        }
+      ]
+    },
+    "created_at": {"$ref": "common.schema.json#/$defs/dateTime"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"state": {"const": "failed"}}},
+      "then": {"properties": {"error": {"type": "object"}}},
+      "else": {"properties": {"error": {"type": "null"}}}
+    },
+    {
+      "if": {"properties": {"state": {"const": "ready"}}},
+      "then": {"properties": {"outputs": {"minItems": 1}}},
+      "else": {"properties": {"outputs": {"maxItems": 0}}}
+    },
+    {
+      "if": {"properties": {"placement": {"properties": {"kind": {"const": "burst"}}}}},
+      "then": {
+        "properties": {
+          "quote_id": {"type": "string"},
+          "retry": {"oneOf": [{"type": "null"}, {"type": "object", "properties": {"automatic": {"const": false}}}]}
+        }
+      },
+      "else": {"properties": {"quote_id": {"type": "null"}, "approval_id": {"type": "null"}}}
+    },
+    {
+      "if": {
+        "properties": {
+          "placement": {"properties": {"kind": {"const": "burst"}}},
+          "state": {"enum": ["preparing", "loading", "generating", "analyzing", "ready"]}
+        }
+      },
+      "then": {"properties": {"approval_id": {"type": "string"}}}
+    },
+    {
+      "if": {"properties": {"job_kind": {"const": "generate"}}},
+      "then": {"properties": {"task": {"$ref": "common.schema.json#/$defs/engineTask"}}}
+    }
+  ]
+}

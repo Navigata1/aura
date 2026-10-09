@@ -1,0 +1,38 @@
+{
+  "description": "The Suno import is attached as a style reference.",
+  "expect_rules": [
+    "use.suno_boundary"
+  ],
+  "id": "SC-USE-SUNO-AS-REFERENCE",
+  "kind": "fixture.scenario",
+  "overlay": [
+    {
+      "artifact_sha256": "6bddb7311b9df81220ddfedbcd18c099b6229e9c3e220bbadc2bb2595d1f9260",
+      "created_at": "2026-10-09T12:00:00Z",
+      "crop": null,
+      "feel": null,
+      "id": "ref_suno",
+      "kind": "reference",
+      "permission": {
+        "act": {
+          "act": "record_reference_permission",
+          "at": "2026-10-09T12:00:00Z",
+          "scope": "owner-ui"
+        },
+        "granted_uses": [
+          "listen",
+          "loudness_measure",
+          "dsp_finish"
+        ],
+        "listening_only": false,
+        "note": "wrongly attached"
+      },
+      "project_id": null,
+      "role": "style_reference",
+      "schemaVersion": "1.0.0",
+      "source": "licensed"
+    }
+  ],
+  "remove": [],
+  "schemaVersion": "1.0.0"
+}

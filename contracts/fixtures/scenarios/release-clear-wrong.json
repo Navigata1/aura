@@ -1,0 +1,137 @@
+{
+  "description": "The hymn export is releasable (individual lane, no blockers) but says it is not.",
+  "expect_rules": [
+    "release.manifest_blockers"
+  ],
+  "id": "SC-RELEASE-CLEAR-WRONG",
+  "kind": "fixture.scenario",
+  "overlay": [
+    {
+      "ai_disclosure": {
+        "reasons": [
+          "generated_audio_in_closure"
+        ],
+        "required": true
+      },
+      "closure": [
+        "2789a942c9533e6ecec15d6b9e0942389ba2f1e3f6fc664356f54291a9f0e884",
+        "b3e0de98dce4bf8a946860ff0439f9b771c19af51359558ec7a87fb7f59f06bf"
+      ],
+      "closure_sha256": "c8d71c163de91df64892dbc9b247dc6e656f0eba89172735bf9b3f87e955a03e",
+      "converted_vocal": false,
+      "dither": {
+        "kind": "tpdf",
+        "seed_source": "export_id"
+      },
+      "eligible_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "files": [
+        {
+          "audio": {
+            "channels": 2,
+            "frames": 5292000,
+            "sample_format": "pcm_f32",
+            "sample_rate": 44100
+          },
+          "bytes": 1024,
+          "media_type": "audio/wav",
+          "path": "mix-native.wav",
+          "role": "mix_native",
+          "sha256": "2789a942c9533e6ecec15d6b9e0942389ba2f1e3f6fc664356f54291a9f0e884"
+        },
+        {
+          "audio": {
+            "channels": 2,
+            "frames": 5760000,
+            "sample_format": "pcm_s24",
+            "sample_rate": 48000
+          },
+          "bytes": 1024,
+          "media_type": "audio/wav",
+          "path": "mix-48k-24.wav",
+          "role": "deliverable_48k_24",
+          "sha256": "32c41d14b799a8e1f844e84f11fe694a8804a31a75749f59c1639ec541465e09"
+        },
+        {
+          "audio": null,
+          "bytes": 2048,
+          "media_type": "application/json",
+          "path": "melody-spec.json",
+          "role": "melody_spec",
+          "sha256": "111425dbf807ae4730c5fa2fd99ae894bfc204d89a9cb30525a27b369ff85abb"
+        },
+        {
+          "audio": null,
+          "bytes": 2048,
+          "media_type": "application/json",
+          "path": "song-spec.json",
+          "role": "song_spec",
+          "sha256": "77814f3fbcfd8e86fbf6d692f5a488963b468cdfb7c04750dbf23b1979d7d596"
+        }
+      ],
+      "human_contributions": [
+        {
+          "contribution": "melody",
+          "detail": "Hummed the melody and corrected the transcription",
+          "refs": [
+            "dc777e3766c902a35936fea39ee9ceecee87a562e63e9fb42a090dc80205d7e7"
+          ]
+        },
+        {
+          "contribution": "lyrics",
+          "detail": "Wrote the approved lyrics",
+          "refs": []
+        },
+        {
+          "contribution": "choices",
+          "detail": "Kept this candidate in a blind audition",
+          "refs": []
+        }
+      ],
+      "id": "ex_hymn",
+      "imported_sources": [],
+      "keeper_id": "kp_hymn",
+      "kind": "export-manifest",
+      "license_chain": [
+        {
+          "code_license": "Own code (all rights reserved until Q5)",
+          "component_id": "neutralvoice",
+          "obligations": [],
+          "weights_license": "n/a (no weights)"
+        },
+        {
+          "code_license": "Own code (all rights reserved until Q5)",
+          "component_id": "studio-own-code",
+          "obligations": [],
+          "weights_license": "n/a (no weights)"
+        }
+      ],
+      "loudness": {
+        "integrated_lufs": "-14.20",
+        "label": "MEASURED-LOCAL",
+        "meter": "pyloudnorm 0.1.1",
+        "standard": "BS.1770-4",
+        "true_peak_dbtp": "-1.10",
+        "true_peak_meter": "studio-truepeak-4x"
+      },
+      "model_chain": [
+        {
+          "profile_id": "fake-route-a",
+          "profile_revision": "f1a45b61325bc9f8d89598ae620e16d601aeb44188758ff87dfa8a237f114185"
+        }
+      ],
+      "operator_lane": "individual",
+      "project_id": "prj_hymn",
+      "release_blockers": [],
+      "release_clear": false,
+      "schemaVersion": "1.0.0",
+      "synthetic_test": true,
+      "verified_at": "2026-10-09T10:42:40Z"
+    }
+  ],
+  "remove": [],
+  "schemaVersion": "1.0.0"
+}

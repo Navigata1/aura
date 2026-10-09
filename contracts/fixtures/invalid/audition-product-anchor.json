@@ -1,0 +1,68 @@
+{
+  "description": "A product audition with an anchor.",
+  "error_contains": "$.anchors",
+  "id": "IR-AUDITION-PRODUCT-ANCHOR",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "all_arms_ready_at": "2026-10-09T10:30:40Z",
+    "anchors": [
+      {
+        "acknowledged_recognizable": true,
+        "label": "C",
+        "reference_id": "ref_worship"
+      }
+    ],
+    "arms": [
+      {
+        "label": "A",
+        "unplayable": false
+      },
+      {
+        "label": "B",
+        "unplayable": false
+      }
+    ],
+    "brief_id": null,
+    "candidate_ids": [
+      "cand_a",
+      "cand_b"
+    ],
+    "commitment_sha256": "cac0a79d616e78cad9a6fd780c198c999dca9c5352fe8608e60a9e8de24fcb38",
+    "gains": [
+      {
+        "gain_db": "0.00",
+        "label": "A"
+      },
+      {
+        "gain_db": "-1.20",
+        "label": "B"
+      }
+    ],
+    "id": "aud_hymn",
+    "kind": "audition",
+    "loudness_standard": "BS.1770-4 (pyloudnorm)",
+    "mode": "product",
+    "opened_at": "2026-10-09T10:31:00Z",
+    "prereg_sha256": null,
+    "preview": {
+      "bit_depth": 24,
+      "sample_rate": 48000
+    },
+    "project_id": "prj_hymn",
+    "repeat_pairs": [],
+    "request_ids": [
+      "gr_hymn"
+    ],
+    "residual_leak_acknowledged": [
+      "duration",
+      "sonic_character"
+    ],
+    "residual_mismatch_lu": "0.04",
+    "schemaVersion": "1.0.0",
+    "state": "revealed",
+    "true_peak_meter": "studio-truepeak-4x"
+  },
+  "record_kind": "audition",
+  "rule": "A reference standard is never a product arm",
+  "schemaVersion": "1.0.0"
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "worker-health/1 (GET /v1/health)",
+  "description": "Liveness and residency: one heavy model resident per device; /v1/unload frees it.",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "worker_id", "state", "resident_profile", "mem"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "worker-health"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "worker_id": {"$ref": "common.schema.json#/$defs/id"},
+    "state": {"enum": ["idle", "loading", "busy"]},
+    "resident_profile": {"oneOf": [{"$ref": "common.schema.json#/$defs/slug"}, {"type": "null"}]},
+    "mem": {
+      "type": "object",
+      "required": ["rss_bytes", "device_bytes"],
+      "additionalProperties": false,
+      "properties": {"rss_bytes": {"type": "integer", "minimum": 0}, "device_bytes": {"type": ["integer", "null"], "minimum": 0}}
+    }
+  },
+  "if": {"properties": {"state": {"const": "idle"}}},
+  "then": {"properties": {"resident_profile": {}}},
+  "else": {"properties": {"resident_profile": {"type": "string"}}}
+}

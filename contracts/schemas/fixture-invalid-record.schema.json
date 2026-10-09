@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "fixture.invalid-record",
+  "description": "A schema-rule case: one record that its kind's schema must reject, for the reason named. The validator requires at least one schema error whose text contains error_contains, so the case fails for the intended rule and not by accident.",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "id", "record_kind", "rule", "description", "error_contains", "record"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "fixture.invalid-record"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "id": {"type": "string", "pattern": "^IR-[A-Z0-9-]{2,60}$"},
+    "record_kind": {"type": "string", "pattern": "^[a-z][a-z.-]{1,40}$"},
+    "rule": {"type": "string", "minLength": 1, "maxLength": 200},
+    "description": {"type": "string", "minLength": 1, "maxLength": 600},
+    "error_contains": {"type": "string", "minLength": 1, "maxLength": 200},
+    "record": {"type": "object"}
+  }
+}

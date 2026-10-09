@@ -1,0 +1,167 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "melody-spec/1",
+  "description": "The owned, editable melody from a hum, a MIDI file or live MIDI (GLOSSARY: MelodySpec; ADR-0004, ADR-0033). 960 PPQ, tempo as integer microseconds per quarter note, one half-up rounding function for tick<->frame. Revisions are immutable; an edit makes rev+1 on a named base. The tempo map carries its own revision, which rises exactly when the tempo or meter changes (tempo.rev_on_change). spec_kind assembled is the full-length melody laid out along a SongForm (ADR-0032). content_sha256 is the sha256 of the canonical JSON of this record without that field (record.content_hash).",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "melody_id", "rev", "base_rev", "project_id", "created_at", "spec_kind", "ppq",
+               "tempo_map", "key", "notes", "phrases", "source", "quantize", "content_sha256"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "melody-spec"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "melody_id": {"$ref": "common.schema.json#/$defs/id"},
+    "rev": {"type": "integer", "minimum": 1},
+    "base_rev": {"type": ["integer", "null"], "minimum": 1},
+    "project_id": {"$ref": "common.schema.json#/$defs/id"},
+    "created_at": {"$ref": "common.schema.json#/$defs/dateTime"},
+    "spec_kind": {"enum": ["melody", "assembled"]},
+    "ppq": {"const": 960},
+    "tempo_map": {"$ref": "#/$defs/tempoMap"},
+    "key": {
+      "type": "object",
+      "required": ["tonic", "mode"],
+      "additionalProperties": false,
+      "properties": {
+        "tonic": {"enum": ["C", "C#", "Db", "D", "D#", "Eb", "E", "F", "F#", "Gb", "G", "G#", "Ab", "A", "A#", "Bb", "B"]},
+        "mode": {"enum": ["major", "minor", "modal"]}
+      }
+    },
+    "notes": {"type": "array", "items": {"$ref": "#/$defs/note"}},
+    "phrases": {"type": "array", "items": {"$ref": "#/$defs/phrase"}},
+    "source": {
+      "type": "object",
+      "required": ["seed_kind", "capture_sha256", "transcription", "assembled_from"],
+      "additionalProperties": false,
+      "properties": {
+        "seed_kind": {"enum": ["hum", "midi_file", "midi_live", "assembled"]},
+        "capture_sha256": {"oneOf": [{"$ref": "common.schema.json#/$defs/sha256"}, {"type": "null"}]},
+        "transcription": {
+          "oneOf": [
+            {"type": "null"},
+            {
+              "type": "object",
+              "required": ["method", "profile_id", "job_id", "eligible_lanes", "license_chain", "note"],
+              "additionalProperties": false,
+              "properties": {
+                "method": {"enum": ["pyin-hmm", "basic-pitch", "swiftf0-segment-notes"]},
+                "profile_id": {"$ref": "common.schema.json#/$defs/slug"},
+                "job_id": {"$ref": "common.schema.json#/$defs/id"},
+                "eligible_lanes": {"allOf": [{"$ref": "common.schema.json#/$defs/laneSet"}, {"minItems": 1}],
+                                   "description": "The transcriber's components' lanes (lane.record_eligible). A transcribed melody is a record made by a lane-restricted job, so its lanes travel with every revision built on it, corrections included, and bound every project, job and export that uses it."},
+                "license_chain": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/licenseEntry"}},
+                "note": {"const": "unverified on real hums", "description": "Every transcriber carries this label until the hum benchmark (TB6) records otherwise; the label changes only through a schema minor version that adds the benchmarked wording."}
+              }
+            }
+          ]
+        },
+        "assembled_from": {
+          "oneOf": [
+            {"type": "null"},
+            {
+              "type": "object",
+              "required": ["melody", "song"],
+              "additionalProperties": false,
+              "properties": {
+                "melody": {"$ref": "common.schema.json#/$defs/melodyRef"},
+                "song": {"$ref": "common.schema.json#/$defs/songRef"}
+              }
+            }
+          ]
+        }
+      }
+    },
+    "quantize": {
+      "description": "A reversible layer over played timing: notes keep their played ticks.",
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["grid_ticks"],
+          "additionalProperties": false,
+          "properties": {"grid_ticks": {"enum": [60, 80, 120, 160, 240, 320, 480, 960]}}
+        }
+      ]
+    },
+    "content_sha256": {"$ref": "common.schema.json#/$defs/sha256"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"rev": {"const": 1}}},
+      "then": {"properties": {"base_rev": {"type": "null"}}},
+      "else": {"properties": {"base_rev": {"type": "integer"}}}
+    },
+    {
+      "if": {"properties": {"spec_kind": {"const": "assembled"}}},
+      "then": {"properties": {"source": {"properties": {"seed_kind": {"const": "assembled"}, "assembled_from": {"type": "object"}}}}},
+      "else": {"properties": {"source": {"properties": {"seed_kind": {"enum": ["hum", "midi_file", "midi_live"]}, "assembled_from": {"type": "null"}, "capture_sha256": {"$ref": "common.schema.json#/$defs/sha256"}}}}}
+    },
+    {
+      "if": {"properties": {"source": {"properties": {"seed_kind": {"const": "hum"}}}}},
+      "then": {"properties": {"source": {"properties": {"transcription": {"type": "object"}}}}}
+    }
+  ],
+  "$defs": {
+    "tempoMap": {
+      "type": "object",
+      "required": ["rev", "tempo", "meter"],
+      "additionalProperties": false,
+      "properties": {
+        "rev": {"type": "integer", "minimum": 1},
+        "tempo": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["tick", "us_per_quarter"],
+            "additionalProperties": false,
+            "properties": {
+              "tick": {"type": "integer", "minimum": 0},
+              "us_per_quarter": {"type": "integer", "minimum": 1, "maximum": 16777215, "description": "Standard MIDI File tempo unit. 500000 = 120 BPM."}
+            }
+          }
+        },
+        "meter": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["tick", "numerator", "denominator"],
+            "additionalProperties": false,
+            "properties": {
+              "tick": {"type": "integer", "minimum": 0},
+              "numerator": {"type": "integer", "minimum": 1, "maximum": 32},
+              "denominator": {"enum": [1, 2, 4, 8, 16, 32]}
+            }
+          }
+        }
+      }
+    },
+    "note": {
+      "type": "object",
+      "required": ["id", "start_tick", "duration_ticks", "pitch", "velocity", "confidence", "origin"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {"type": "string", "pattern": "^n[0-9]{1,6}$"},
+        "start_tick": {"type": "integer", "minimum": 0},
+        "duration_ticks": {"type": "integer", "minimum": 1},
+        "pitch": {"type": "integer", "minimum": 0, "maximum": 127, "description": "MIDI note number."},
+        "velocity": {"type": "integer", "minimum": 1, "maximum": 127},
+        "confidence": {"oneOf": [{"$ref": "common.schema.json#/$defs/unitInterval"}, {"type": "null"}]},
+        "origin": {"enum": ["transcribed", "corrected", "midi_file", "midi_live", "manual", "assembled"]}
+      },
+      "if": {"properties": {"origin": {"const": "transcribed"}}},
+      "then": {"properties": {"confidence": {"$ref": "common.schema.json#/$defs/unitInterval"}}}
+    },
+    "phrase": {
+      "type": "object",
+      "required": ["id", "name", "start_tick", "end_tick"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {"type": "string", "pattern": "^ph[0-9]{1,4}$"},
+        "name": {"type": "string", "minLength": 1, "maxLength": 60},
+        "start_tick": {"type": "integer", "minimum": 0},
+        "end_tick": {"type": "integer", "minimum": 1}
+      }
+    }
+  }
+}

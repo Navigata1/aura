@@ -1,0 +1,35 @@
+{
+  "description": "A reference sourced from Suno.",
+  "error_contains": "$.source",
+  "id": "IR-REFERENCE-FROM-SUNO",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "artifact_sha256": "4e405787b44e6d1f57af53cd02b5596bdf3adb33077151a720da8586b66eec7f",
+    "created_at": "2026-10-09T09:31:00Z",
+    "crop": null,
+    "feel": "worship_acoustic_ballad",
+    "id": "ref_worship",
+    "kind": "reference",
+    "permission": {
+      "act": {
+        "act": "record_reference_permission",
+        "at": "2026-10-09T09:31:00Z",
+        "scope": "owner-ui"
+      },
+      "granted_uses": [
+        "listen",
+        "loudness_measure",
+        "eval_anchor"
+      ],
+      "listening_only": true,
+      "note": "Fixture stand-in for one of Jon's four reference standards (O-05)."
+    },
+    "project_id": null,
+    "role": "reference_standard",
+    "schemaVersion": "1.0.0",
+    "source": "suno"
+  },
+  "record_kind": "reference",
+  "rule": "ADR-0021: Suno output is never a reference",
+  "schemaVersion": "1.0.0"
+}

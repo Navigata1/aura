@@ -1,0 +1,26 @@
+{
+  "description": "An approval by an automation token.",
+  "error_contains": "$.act",
+  "id": "IR-APPROVAL-AUTOMATION",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "act": {
+      "act": "approve_quote",
+      "at": "2026-10-09T10:22:00Z",
+      "scope": "automation"
+    },
+    "expires_at": "2026-10-09T10:35:00Z",
+    "id": "ap_hymn",
+    "kind": "approval",
+    "nonce_sha256": "6f673440b83aebee8f026a1a05a586a3d84316ebb2c1bfe39e5847b51fb583e6",
+    "quote_id": "q_hymn",
+    "quote_sha256": "6b53072c77cf995ce8efbd3fc34eb78033c0758aebdd70930ddbcf71f9a5c345",
+    "schemaVersion": "1.0.0",
+    "single_use": true,
+    "state": "used",
+    "used_by_run_id": "br_hymn"
+  },
+  "record_kind": "approval",
+  "rule": "ADR-0031: approvals are owner acts",
+  "schemaVersion": "1.0.0"
+}

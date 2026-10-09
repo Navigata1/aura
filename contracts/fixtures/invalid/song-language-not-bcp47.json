@@ -1,0 +1,129 @@
+{
+  "description": "A language name instead of a tag.",
+  "error_contains": "$.approved_lyrics",
+  "id": "IR-SONG-LANGUAGE-NOT-BCP47",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "approved_lyrics": {
+      "approved_at": "2026-10-09T10:08:00Z",
+      "language": "English",
+      "source": "written",
+      "text": "[verse]\nQuiet water, morning light\n[chorus]\nHold me steady through the night"
+    },
+    "asr_transcripts": [],
+    "base_rev": null,
+    "candidate_count": 2,
+    "content_sha256": "958c0469f25db582459503556dfa3061049eab7c81ab222c4f35ef877dd6fc18",
+    "controls": {
+      "duration_s": {
+        "observed": [],
+        "requested": 120,
+        "support": [
+          {
+            "profile_id": "fake-route-a",
+            "status": "supported"
+          },
+          {
+            "profile_id": "fake-burst",
+            "status": "supported"
+          }
+        ]
+      },
+      "exclude_styles": {
+        "observed": [],
+        "requested": [
+          "trap hi-hats"
+        ],
+        "support": [
+          {
+            "profile_id": "fake-route-a",
+            "status": "supported"
+          },
+          {
+            "profile_id": "fake-burst",
+            "status": "supported"
+          }
+        ]
+      },
+      "style": {
+        "observed": [],
+        "requested": "acoustic worship ballad, piano and warm pad",
+        "support": [
+          {
+            "profile_id": "fake-route-a",
+            "status": "supported"
+          },
+          {
+            "profile_id": "fake-burst",
+            "status": "supported"
+          }
+        ]
+      },
+      "vocal_mode": {
+        "observed": [],
+        "requested": "vocal",
+        "support": [
+          {
+            "profile_id": "fake-route-a",
+            "status": "supported"
+          },
+          {
+            "profile_id": "fake-burst",
+            "status": "supported"
+          }
+        ]
+      }
+    },
+    "created_at": "2026-10-09T10:08:00Z",
+    "form": {
+      "sections": [
+        {
+          "bars": 8,
+          "id": "s1",
+          "name": "verse",
+          "phrase_ids": [
+            "ph1"
+          ],
+          "repeats": 1,
+          "section_kind": "vocal"
+        },
+        {
+          "bars": 8,
+          "id": "s2",
+          "name": "chorus",
+          "phrase_ids": [
+            "ph2"
+          ],
+          "repeats": 2,
+          "section_kind": "vocal"
+        }
+      ]
+    },
+    "kind": "song-spec",
+    "larger_n_budget": null,
+    "melody": {
+      "melody_id": "mel_hymn",
+      "rev": 2,
+      "tempo_map_rev": 2
+    },
+    "project_id": "prj_hymn",
+    "references": [],
+    "render_routes": {
+      "mode": "explicit",
+      "routes": [
+        "R2-synth",
+        "R1"
+      ]
+    },
+    "rev": 1,
+    "schemaVersion": "1.0.0",
+    "song_id": "song_hymn",
+    "validation": {
+      "conflicts": [],
+      "unsupported_by_profile": []
+    }
+  },
+  "record_kind": "song-spec",
+  "rule": "Lyrics carry a BCP-47 language",
+  "schemaVersion": "1.0.0"
+}

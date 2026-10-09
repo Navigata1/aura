@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "license-acceptance/1",
+  "description": "Jon's acceptance of one component's license before any of its weights download, gated or not (GLOSSARY: Owner act; ADR-0011 rule 3, ADR-0031). It snapshots the documents he accepted (each hashed, at a pinned commit or revision), where the weights come from, and the register's lanes and obligations at that moment. release_permission records an explicit permission that covers release in named lanes (YuE2's individual-creator permission in its GitHub MODEL_LICENSE, which the Hugging Face LICENSE copy does not carry); an export's release blockers are covered only by such a permission (release.manifest_blockers). At install and at quote time the documents are hashed again: if one changed, the acceptance is voided and the component is refused until Jon accepts again.",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "id", "component_id", "profile_id", "documents", "weights_source", "allowed_lanes", "obligations",
+               "release_permission", "act", "voided"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "license-acceptance"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "id": {"$ref": "common.schema.json#/$defs/id"},
+    "component_id": {"$ref": "common.schema.json#/$defs/slug"},
+    "profile_id": {"oneOf": [{"$ref": "common.schema.json#/$defs/slug"}, {"type": "null"}]},
+    "documents": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["role", "url", "commit_or_revision", "sha256"],
+        "additionalProperties": false,
+        "properties": {
+          "role": {"enum": ["weights_license", "permission", "terms", "code_license"]},
+          "url": {"$ref": "common.schema.json#/$defs/uri"},
+          "commit_or_revision": {"oneOf": [{"type": "string", "pattern": "^[0-9a-f]{7,40}$"}, {"type": "null"}]},
+          "sha256": {"$ref": "common.schema.json#/$defs/sha256"}
+        }
+      }
+    },
+    "weights_source": {"$ref": "engine-profile.schema.json#/$defs/weightsSource"},
+    "allowed_lanes": {"allOf": [{"$ref": "common.schema.json#/$defs/laneSet"}, {"minItems": 1}]},
+    "obligations": {"type": "array", "uniqueItems": true, "items": {"$ref": "common.schema.json#/$defs/obligation"}},
+    "release_permission": {
+      "oneOf": [
+        {"type": "null"},
+        {"type": "object", "required": ["lanes", "document_sha256", "note"], "additionalProperties": false,
+         "properties": {"lanes": {"allOf": [{"$ref": "common.schema.json#/$defs/laneSet"}, {"minItems": 1}]},
+                        "document_sha256": {"$ref": "common.schema.json#/$defs/sha256"},
+                        "note": {"$ref": "common.schema.json#/$defs/shortText"}}}
+      ]
+    },
+    "act": {"allOf": [{"$ref": "common.schema.json#/$defs/ownerAct"}, {"properties": {"act": {"const": "accept_model_license"}}}]},
+    "voided": {
+      "oneOf": [
+        {"type": "null"},
+        {"type": "object", "required": ["at", "reason"], "additionalProperties": false,
+         "properties": {"at": {"$ref": "common.schema.json#/$defs/dateTime"}, "reason": {"enum": ["document_changed", "owner_revoked"]}}}
+      ]
+    }
+  },
+  "if": {"properties": {"component_id": {"const": "yue2-3b"}}},
+  "then": {
+    "properties": {
+      "documents": {"allOf": [{"contains": {"properties": {"role": {"const": "weights_license"}}}},
+                              {"contains": {"properties": {"role": {"const": "permission"}}}}]}
+    }
+  }
+}

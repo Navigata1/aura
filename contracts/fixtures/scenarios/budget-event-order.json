@@ -1,0 +1,34 @@
+{
+  "description": "The provision event was emitted before the reserve event.",
+  "expect_rules": [
+    "budget.reserve_before_provision"
+  ],
+  "id": "SC-BUDGET-EVENT-ORDER",
+  "kind": "fixture.scenario",
+  "overlay": [
+    {
+      "at": "2026-10-09T10:22:01Z",
+      "data": {
+        "run_id": "br_hymn"
+      },
+      "kind": "event",
+      "schemaVersion": "1.0.0",
+      "seq": 1,
+      "subject_id": "br_hymn",
+      "type": "burst.provisioned"
+    },
+    {
+      "at": "2026-10-09T10:22:05Z",
+      "data": {
+        "run_id": "br_hymn"
+      },
+      "kind": "event",
+      "schemaVersion": "1.0.0",
+      "seq": 2,
+      "subject_id": "br_hymn",
+      "type": "ledger.reserve"
+    }
+  ],
+  "remove": [],
+  "schemaVersion": "1.0.0"
+}

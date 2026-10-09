@@ -1,0 +1,374 @@
+{
+  "cases": [
+    {
+      "derivation": "Apple Silicon recommends tier 4 (ADR-0003).",
+      "expected": {
+        "reasons": [
+          "apple_silicon"
+        ],
+        "tier": 4,
+        "warnings": []
+      },
+      "name": "this Mac",
+      "snapshots": [
+        {
+          "accelerators": [
+            {
+              "compute_capability": null,
+              "cuda_runtime": null,
+              "driver_version": null,
+              "metal_recommended_max_working_set_bytes": null,
+              "name": "Apple M5 Pro GPU",
+              "unified_memory": true,
+              "vendor": "apple",
+              "vram_bytes": null
+            }
+          ],
+          "cpu": "Apple M5 Pro",
+          "host_id": "host_m5pro",
+          "id": "hw_m5pro",
+          "kind": "hardware-snapshot",
+          "memory_bytes": 51539607552,
+          "os": {
+            "arch": "arm64",
+            "family": "darwin",
+            "version": "fixture"
+          },
+          "raw_outputs": [],
+          "schemaVersion": "1.0.0",
+          "taken_at": "2026-10-09T10:00:00Z",
+          "volumes": [],
+          "wsl2": null
+        }
+      ]
+    },
+    {
+      "derivation": "24564 MiB = 23.99 GiB >= 23.5 and cc 8.9 >= 8.9; driver 570.86 >= 570.26.",
+      "expected": {
+        "reasons": [
+          "nvidia_24gb_cc89"
+        ],
+        "tier": 1,
+        "warnings": []
+      },
+      "name": "4090",
+      "snapshots": [
+        {
+          "accelerators": [
+            {
+              "compute_capability": "8.9",
+              "cuda_runtime": "12.8",
+              "driver_version": "570.86",
+              "metal_recommended_max_working_set_bytes": null,
+              "name": "RTX 4090",
+              "unified_memory": false,
+              "vendor": "nvidia",
+              "vram_bytes": 25757220864
+            }
+          ],
+          "cpu": "x86",
+          "host_id": "host_4090",
+          "id": "hw_4090",
+          "kind": "hardware-snapshot",
+          "memory_bytes": 68719476736,
+          "os": {
+            "arch": "x86_64",
+            "family": "linux",
+            "version": "fixture"
+          },
+          "raw_outputs": [],
+          "schemaVersion": "1.0.0",
+          "taken_at": "2026-10-09T10:00:00Z",
+          "volumes": [],
+          "wsl2": null
+        }
+      ]
+    },
+    {
+      "derivation": "31.84 GiB, cc 12.0; a Blackwell card on cu126 is warned.",
+      "expected": {
+        "reasons": [
+          "nvidia_24gb_cc89"
+        ],
+        "tier": 1,
+        "warnings": [
+          "blackwell_with_cu126"
+        ]
+      },
+      "name": "5090 with cu126",
+      "snapshots": [
+        {
+          "accelerators": [
+            {
+              "compute_capability": "12.0",
+              "cuda_runtime": "12.6",
+              "driver_version": "575.51",
+              "metal_recommended_max_working_set_bytes": null,
+              "name": "RTX 5090",
+              "unified_memory": false,
+              "vendor": "nvidia",
+              "vram_bytes": 34190917632
+            }
+          ],
+          "cpu": "x86",
+          "host_id": "host_5090",
+          "id": "hw_5090",
+          "kind": "hardware-snapshot",
+          "memory_bytes": 68719476736,
+          "os": {
+            "arch": "x86_64",
+            "family": "linux",
+            "version": "fixture"
+          },
+          "raw_outputs": [],
+          "schemaVersion": "1.0.0",
+          "taken_at": "2026-10-09T10:00:00Z",
+          "volumes": [],
+          "wsl2": null
+        }
+      ]
+    },
+    {
+      "derivation": "24 GiB at cc 8.6 is tier 2; 566.03 < 570.65 on Windows; WSL2 16 GiB < 24.",
+      "expected": {
+        "reasons": [
+          "nvidia_24gb_cc80"
+        ],
+        "tier": 2,
+        "warnings": [
+          "driver_below_cu128_minimum",
+          "wsl2_memory_below_24gib"
+        ]
+      },
+      "name": "3090 on Windows",
+      "snapshots": [
+        {
+          "accelerators": [
+            {
+              "compute_capability": "8.6",
+              "cuda_runtime": "12.8",
+              "driver_version": "566.03",
+              "metal_recommended_max_working_set_bytes": null,
+              "name": "RTX 3090",
+              "unified_memory": false,
+              "vendor": "nvidia",
+              "vram_bytes": 25769803776
+            }
+          ],
+          "cpu": "x86",
+          "host_id": "host_3090",
+          "id": "hw_3090",
+          "kind": "hardware-snapshot",
+          "memory_bytes": 34359738368,
+          "os": {
+            "arch": "x86_64",
+            "family": "windows",
+            "version": "fixture"
+          },
+          "raw_outputs": [],
+          "schemaVersion": "1.0.0",
+          "taken_at": "2026-10-09T10:00:00Z",
+          "volumes": [],
+          "wsl2": {
+            "memory_bytes": 17179869184
+          }
+        }
+      ]
+    },
+    {
+      "derivation": "15.996 GiB is in 11.5-23.5; driver 570.26 meets the Linux minimum exactly; 16 GiB RAM < 24.",
+      "expected": {
+        "reasons": [
+          "nvidia_12_16gb"
+        ],
+        "tier": 3,
+        "warnings": [
+          "host_ram_below_24gib_for_yue2"
+        ]
+      },
+      "name": "16 GB card",
+      "snapshots": [
+        {
+          "accelerators": [
+            {
+              "compute_capability": "8.9",
+              "cuda_runtime": "12.8",
+              "driver_version": "570.26",
+              "metal_recommended_max_working_set_bytes": null,
+              "name": "RTX 4060 Ti 16GB",
+              "unified_memory": false,
+              "vendor": "nvidia",
+              "vram_bytes": 17175674880
+            }
+          ],
+          "cpu": "x86",
+          "host_id": "host_4060ti",
+          "id": "hw_4060ti",
+          "kind": "hardware-snapshot",
+          "memory_bytes": 17179869184,
+          "os": {
+            "arch": "x86_64",
+            "family": "linux",
+            "version": "fixture"
+          },
+          "raw_outputs": [],
+          "schemaVersion": "1.0.0",
+          "taken_at": "2026-10-09T10:00:00Z",
+          "volumes": [],
+          "wsl2": null
+        }
+      ]
+    },
+    {
+      "derivation": "cc 7.5 < 8.0 qualifies for no NVIDIA tier (decision 1 in the README); burst only.",
+      "expected": {
+        "reasons": [
+          "no_qualifying_accelerator"
+        ],
+        "tier": 4,
+        "warnings": [
+          "compute_capability_below_8_0",
+          "burst_only"
+        ]
+      },
+      "name": "pre-BF16 card",
+      "snapshots": [
+        {
+          "accelerators": [
+            {
+              "compute_capability": "7.5",
+              "cuda_runtime": "12.8",
+              "driver_version": "570.86",
+              "metal_recommended_max_working_set_bytes": null,
+              "name": "TITAN RTX",
+              "unified_memory": false,
+              "vendor": "nvidia",
+              "vram_bytes": 25769803776
+            }
+          ],
+          "cpu": "x86",
+          "host_id": "host_titanrtx",
+          "id": "hw_titanrtx",
+          "kind": "hardware-snapshot",
+          "memory_bytes": 68719476736,
+          "os": {
+            "arch": "x86_64",
+            "family": "linux",
+            "version": "fixture"
+          },
+          "raw_outputs": [],
+          "schemaVersion": "1.0.0",
+          "taken_at": "2026-10-09T10:00:00Z",
+          "volumes": [],
+          "wsl2": null
+        }
+      ]
+    },
+    {
+      "derivation": "No accelerator: tier 4, burst only, with a warning.",
+      "expected": {
+        "reasons": [
+          "no_qualifying_accelerator"
+        ],
+        "tier": 4,
+        "warnings": [
+          "burst_only"
+        ]
+      },
+      "name": "no accelerator",
+      "snapshots": [
+        {
+          "accelerators": [],
+          "cpu": "x86",
+          "host_id": "host_cpuonly",
+          "id": "hw_cpuonly",
+          "kind": "hardware-snapshot",
+          "memory_bytes": 34359738368,
+          "os": {
+            "arch": "x86_64",
+            "family": "linux",
+            "version": "fixture"
+          },
+          "raw_outputs": [],
+          "schemaVersion": "1.0.0",
+          "taken_at": "2026-10-09T10:00:00Z",
+          "volumes": [],
+          "wsl2": null
+        }
+      ]
+    },
+    {
+      "derivation": "The best tier wins (option A: Mac studio host, CUDA worker).",
+      "expected": {
+        "reasons": [
+          "nvidia_24gb_cc89"
+        ],
+        "tier": 1,
+        "warnings": []
+      },
+      "name": "Mac plus a reachable 4090",
+      "snapshots": [
+        {
+          "accelerators": [
+            {
+              "compute_capability": null,
+              "cuda_runtime": null,
+              "driver_version": null,
+              "metal_recommended_max_working_set_bytes": null,
+              "name": "Apple M5 Pro GPU",
+              "unified_memory": true,
+              "vendor": "apple",
+              "vram_bytes": null
+            }
+          ],
+          "cpu": "Apple M5 Pro",
+          "host_id": "host_m5pro",
+          "id": "hw_m5pro",
+          "kind": "hardware-snapshot",
+          "memory_bytes": 51539607552,
+          "os": {
+            "arch": "arm64",
+            "family": "darwin",
+            "version": "fixture"
+          },
+          "raw_outputs": [],
+          "schemaVersion": "1.0.0",
+          "taken_at": "2026-10-09T10:00:00Z",
+          "volumes": [],
+          "wsl2": null
+        },
+        {
+          "accelerators": [
+            {
+              "compute_capability": "8.9",
+              "cuda_runtime": "12.8",
+              "driver_version": "570.86",
+              "metal_recommended_max_working_set_bytes": null,
+              "name": "RTX 4090",
+              "unified_memory": false,
+              "vendor": "nvidia",
+              "vram_bytes": 25757220864
+            }
+          ],
+          "cpu": "x86",
+          "host_id": "host_4090",
+          "id": "hw_4090",
+          "kind": "hardware-snapshot",
+          "memory_bytes": 68719476736,
+          "os": {
+            "arch": "x86_64",
+            "family": "linux",
+            "version": "fixture"
+          },
+          "raw_outputs": [],
+          "schemaVersion": "1.0.0",
+          "taken_at": "2026-10-09T10:00:00Z",
+          "volumes": [],
+          "wsl2": null
+        }
+      ]
+    }
+  ],
+  "kind": "fixture.recommend",
+  "schemaVersion": "1.0.0"
+}

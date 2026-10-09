@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "event/1",
+  "description": "The resumable event stream (SSE with Last-Event-ID). seq is strictly increasing. Tests wait on seq, never on sleeps. A burst run's ledger.reserve event precedes its burst.provisioned event (events.reserve_precedes_provision).",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "seq", "at", "type", "subject_id", "data"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "event"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "seq": {"type": "integer", "minimum": 1},
+    "at": {"$ref": "common.schema.json#/$defs/dateTime"},
+    "type": {
+      "enum": ["job.state", "job.step", "job.output", "quote.created", "quote.refused", "approval.recorded", "ledger.reserve",
+               "burst.provisioned", "burst.terminated", "ledger.settle", "ledger.overrun", "session.switched",
+               "project.lane_changed", "audition.opened", "verdict.recorded", "reveal.recorded", "keeper.created",
+               "export.verified", "store.unavailable"]
+    },
+    "subject_id": {"$ref": "common.schema.json#/$defs/id"},
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "state": {"$ref": "common.schema.json#/$defs/jobState"},
+        "step": {"$ref": "common.schema.json#/$defs/step"},
+        "run_id": {"$ref": "common.schema.json#/$defs/id"},
+        "sha256": {"$ref": "common.schema.json#/$defs/sha256"},
+        "role": {"type": "string", "pattern": "^[a-z][a-z0-9_]{0,31}$"}
+      }
+    }
+  },
+  "allOf": [
+    {"if": {"properties": {"type": {"const": "job.state"}}}, "then": {"properties": {"data": {"required": ["state"]}}}},
+    {"if": {"properties": {"type": {"const": "job.step"}}}, "then": {"properties": {"data": {"required": ["step"]}}}},
+    {"if": {"properties": {"type": {"enum": ["ledger.reserve", "burst.provisioned", "burst.terminated", "ledger.settle", "ledger.overrun"]}}}, "then": {"properties": {"data": {"required": ["run_id"]}}}}
+  ]
+}

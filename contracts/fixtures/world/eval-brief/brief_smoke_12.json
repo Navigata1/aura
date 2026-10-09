@@ -1,0 +1,27 @@
+{
+  "candidates_per_arm": 1,
+  "case": "cinematic_instrumental_bed",
+  "compared": [
+    {
+      "profile_id": "fake-route-a",
+      "route": "R2-synth"
+    },
+    {
+      "profile_id": "fake-route-b",
+      "route": "R2-synth"
+    }
+  ],
+  "feel": "worship_acoustic_ballad",
+  "id": "brief_smoke_12",
+  "kind": "eval-brief",
+  "lane": "llc",
+  "notes": "Fixture brief; each brief runs in its own lane.",
+  "reference_ids": [],
+  "schemaVersion": "1.0.0",
+  "seed": {
+    "seed_kind": "none",
+    "sha256": null
+  },
+  "set": "smoke",
+  "song": null
+}

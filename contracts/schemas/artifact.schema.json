@@ -1,0 +1,179 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "artifact/1",
+  "description": "Every stored blob, named by the sha256 of its bytes, never changed once written, with complete provenance (GLOSSARY: Artifact, Provenance, Parent edge; ADR-0009, ADR-0029). eligible_lanes = the allowed lanes of every component in license_chain intersected with the eligible_lanes of every derived_from and converted_from parent; analyzed_by never propagates (lane.artifact_eligible). An artifact without complete provenance is not stored: every key is required, and nulls are allowed only where the origin makes a field inapplicable.",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "sha256", "bytes", "media_type", "origin", "audio", "project_id", "created_at",
+               "retention_class", "synthetic_test", "provenance"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "artifact"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "sha256": {"$ref": "common.schema.json#/$defs/sha256"},
+    "bytes": {"type": "integer", "minimum": 0},
+    "media_type": {"$ref": "common.schema.json#/$defs/mediaType"},
+    "origin": {"$ref": "common.schema.json#/$defs/origin"},
+    "audio": {"oneOf": [{"$ref": "common.schema.json#/$defs/audioMeta"}, {"type": "null"}]},
+    "project_id": {"oneOf": [{"$ref": "common.schema.json#/$defs/id"}, {"type": "null"}], "description": "The project the artifact was made in; null only for evaluation-wide assets such as reference standards. Membership lives in project.artifacts (project.graph_complete)."},
+    "created_at": {"$ref": "common.schema.json#/$defs/dateTime"},
+    "retention_class": {"$ref": "common.schema.json#/$defs/retentionClass"},
+    "synthetic_test": {"type": "boolean", "description": "True for FakeEngine and NeutralVoice test material. Shown as 'Synthetic test output' on every surface."},
+    "provenance": {"$ref": "#/$defs/provenance"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"origin": {"enum": ["human_recording", "imported_mix"]}}},
+      "then": {"properties": {"provenance": {"properties": {"producing_job_id": {"type": "null"}, "engine": {"type": "null"}, "timings": {"type": "null"}}}}},
+      "else": {"properties": {"provenance": {"properties": {"producing_job_id": {"type": "string"}, "engine": {"type": "object"}, "host": {"type": "object"}, "compute": {"type": "object"}, "timings": {"type": "object"}}}}}
+    },
+    {
+      "if": {"properties": {"origin": {"const": "human_recording"}}},
+      "then": {"properties": {"provenance": {"properties": {"capture": {"type": "object"}}}}},
+      "else": {"properties": {"provenance": {"properties": {"capture": {"type": "null"}}}}}
+    },
+    {
+      "if": {"properties": {"origin": {"const": "imported_mix"}}},
+      "then": {"properties": {"provenance": {"properties": {"import_terms_id": {"type": "string"}}}}},
+      "else": {"properties": {"provenance": {"properties": {"import_terms_id": {"type": "null"}}}}}
+    },
+    {
+      "if": {"properties": {"origin": {"enum": ["generated_mix", "regenerated_part", "new_part", "tts_render"]}}},
+      "then": {"properties": {"provenance": {"properties": {"engine": {"properties": {"seed": {"type": "integer"}}}}}}}
+    },
+    {
+      "if": {"properties": {"origin": {"enum": ["preview", "conversion"]}}},
+      "then": {"properties": {"provenance": {"properties": {"parents": {"minItems": 1}}}}}
+    },
+    {
+      "if": {"properties": {"media_type": {"enum": ["audio/wav", "audio/flac"]}}},
+      "then": {"properties": {"audio": {"type": "object"}}},
+      "else": {"properties": {"audio": {"type": "null"}}}
+    }
+  ],
+  "$defs": {
+    "provenance": {
+      "type": "object",
+      "required": ["producing_job_id", "engine", "record_inputs", "host", "compute", "timings", "parents", "operator_lane",
+                   "eligible_lanes", "license_chain", "allowed_uses", "capture", "import_terms_id"],
+      "additionalProperties": false,
+      "properties": {
+        "producing_job_id": {"oneOf": [{"$ref": "common.schema.json#/$defs/id"}, {"type": "null"}]},
+        "engine": {"oneOf": [{"$ref": "#/$defs/engine"}, {"type": "null"}]},
+        "record_inputs": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/recordRef"}},
+        "host": {
+          "oneOf": [
+            {"type": "null"},
+            {
+              "type": "object",
+              "required": ["host_id", "os", "arch", "backend", "host_class"],
+              "additionalProperties": false,
+              "properties": {
+                "host_id": {"$ref": "common.schema.json#/$defs/id"},
+                "os": {"$ref": "common.schema.json#/$defs/hostOs"},
+                "arch": {"enum": ["arm64", "x86_64"]},
+                "backend": {"$ref": "common.schema.json#/$defs/backend"},
+                "host_class": {"$ref": "common.schema.json#/$defs/hostClass"}
+              }
+            }
+          ]
+        },
+        "compute": {
+          "oneOf": [
+            {"type": "null"},
+            {
+              "type": "object",
+              "required": ["compute_profile_id", "tier", "placement"],
+              "additionalProperties": false,
+              "properties": {
+                "compute_profile_id": {"$ref": "common.schema.json#/$defs/id"},
+                "tier": {"$ref": "common.schema.json#/$defs/computeTier"},
+                "placement": {"$ref": "common.schema.json#/$defs/placementKind"}
+              }
+            }
+          ]
+        },
+        "timings": {
+          "description": "Cold and warm wall time measured by the worker SDK itself, never by engine code (ADR-0026), so MEASURED-LOCAL by construction.",
+          "oneOf": [
+            {"type": "null"},
+            {
+              "type": "object",
+              "required": ["cold", "load_wall_ms", "run_wall_ms", "total_wall_ms", "peak_rss_bytes", "label", "measured_by"],
+              "additionalProperties": false,
+              "properties": {
+                "cold": {"type": "boolean"},
+                "load_wall_ms": {"type": "integer", "minimum": 0},
+                "run_wall_ms": {"type": "integer", "minimum": 0},
+                "total_wall_ms": {"type": "integer", "minimum": 0},
+                "peak_rss_bytes": {"type": "integer", "minimum": 0},
+                "label": {"const": "MEASURED-LOCAL"},
+                "measured_by": {"const": "worker-sdk"}
+              }
+            }
+          ]
+        },
+        "parents": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/parentEdge"}},
+        "operator_lane": {"$ref": "common.schema.json#/$defs/operatorLane", "description": "The lane of the job (or capture) that made it."},
+        "eligible_lanes": {"$ref": "common.schema.json#/$defs/laneSet"},
+        "license_chain": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/licenseEntry"}},
+        "allowed_uses": {"$ref": "common.schema.json#/$defs/allowedUses"},
+        "capture": {
+          "oneOf": [
+            {"type": "null"},
+            {
+              "type": "object",
+              "required": ["captured_via", "processing_off_verified", "client_sha256"],
+              "additionalProperties": false,
+              "properties": {
+                "captured_via": {"enum": ["browser_audioworklet_pcm", "midi_file", "web_midi_live", "wav_file_import"]},
+                "processing_off_verified": {"type": ["boolean", "null"], "description": "Echo cancellation, noise suppression and auto gain off, verified with getSettings(); null for MIDI and file imports."},
+                "client_sha256": {"$ref": "common.schema.json#/$defs/sha256", "description": "Hash computed in the browser; ingest verifies it equals sha256."}
+              }
+            }
+          ]
+        },
+        "import_terms_id": {"oneOf": [{"$ref": "common.schema.json#/$defs/id"}, {"type": "null"}]}
+      }
+    },
+    "engine": {
+      "type": "object",
+      "required": ["profile_id", "profile_revision", "code_commit", "env", "sdk_version", "weights", "seed", "params"],
+      "additionalProperties": false,
+      "properties": {
+        "profile_id": {"$ref": "common.schema.json#/$defs/slug"},
+        "profile_revision": {"$ref": "common.schema.json#/$defs/sha256", "description": "sha256(code commit + weights manifest + env lock or image digest + SDK version) (ADR-0027)."},
+        "code_commit": {"$ref": "common.schema.json#/$defs/gitCommit"},
+        "env": {
+          "oneOf": [
+            {"type": "object", "required": ["lock_sha256"], "additionalProperties": false, "properties": {"lock_sha256": {"$ref": "common.schema.json#/$defs/sha256"}}},
+            {"type": "object", "required": ["image_digest"], "additionalProperties": false, "properties": {"image_digest": {"$ref": "common.schema.json#/$defs/imageDigest"}}}
+          ]
+        },
+        "sdk_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "weights": {
+          "oneOf": [
+            {"type": "null"},
+            {
+              "type": "object",
+              "required": ["repo", "revision", "manifest_sha256"],
+              "additionalProperties": false,
+              "properties": {
+                "repo": {"type": "string", "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"},
+                "revision": {"$ref": "common.schema.json#/$defs/gitCommit"},
+                "manifest_sha256": {"$ref": "common.schema.json#/$defs/sha256"}
+              }
+            }
+          ]
+        },
+        "seed": {"type": ["integer", "null"], "minimum": 0},
+        "params": {
+          "description": "Intent (what Jon set) and actual (what the engine received) (ADR-0018). Values are integers, strings or booleans: integers only in hashed records (canonical.integers_only).",
+          "type": "object",
+          "required": ["intent", "actual"],
+          "additionalProperties": false,
+          "properties": {"intent": {"type": "object"}, "actual": {"type": "object"}}
+        }
+      }
+    }
+  }
+}

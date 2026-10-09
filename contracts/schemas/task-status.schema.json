@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "task-status/1 (GET /v1/jobs/{id}, its SSE mirror, and the reply to POST /v1/jobs/{id}/cancel)",
+  "description": "Honest worker-side status (ADR-0026). Steps carry index and total only when the engine reports real counters; there is no percentage field. Timings and peak memory are measured by the SDK itself. Outputs appear only when the task is ready, with the audio facts the control service re-checks. A restarted worker reports a lost job as failed, never ready.",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "job_id", "state", "steps", "outputs", "params_actual", "timings", "error"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "task-status"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "job_id": {"$ref": "common.schema.json#/$defs/id"},
+    "state": {"enum": ["queued", "preparing", "loading", "generating", "ready", "failed", "cancelled"]},
+    "steps": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/step"}},
+    "outputs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["role", "sha256", "audio"],
+        "additionalProperties": false,
+        "properties": {
+          "role": {"type": "string", "pattern": "^[a-z][a-z0-9_]{0,31}$"},
+          "sha256": {"$ref": "common.schema.json#/$defs/sha256"},
+          "audio": {"oneOf": [{"$ref": "common.schema.json#/$defs/audioMeta"}, {"type": "null"}]}
+        }
+      }
+    },
+    "params_actual": {"type": ["object", "null"]},
+    "timings": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["queue_ms", "load_ms", "run_ms", "cold", "peak_rss_bytes", "measured_by"],
+          "additionalProperties": false,
+          "properties": {
+            "queue_ms": {"type": "integer", "minimum": 0},
+            "load_ms": {"type": "integer", "minimum": 0},
+            "run_ms": {"type": "integer", "minimum": 0},
+            "cold": {"type": "boolean"},
+            "peak_rss_bytes": {"type": "integer", "minimum": 0},
+            "measured_by": {"const": "worker-sdk"}
+          }
+        }
+      ]
+    },
+    "error": {
+      "oneOf": [
+        {"type": "null"},
+        {"type": "object", "required": ["code", "retryable", "detail"], "additionalProperties": false,
+         "properties": {"code": {"$ref": "common.schema.json#/$defs/failureCode"}, "retryable": {"type": "boolean"}, "detail": {"$ref": "common.schema.json#/$defs/shortText"}}}
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"state": {"const": "ready"}}},
+      "then": {"properties": {"outputs": {"minItems": 1}, "params_actual": {"type": "object"}, "timings": {"type": "object"}}},
+      "else": {"properties": {"outputs": {"maxItems": 0}}}
+    },
+    {
+      "if": {"properties": {"state": {"const": "failed"}}},
+      "then": {"properties": {"error": {"type": "object"}}},
+      "else": {"properties": {"error": {"type": "null"}}}
+    }
+  ]
+}

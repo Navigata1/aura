@@ -1,0 +1,91 @@
+{
+  "audio": {
+    "channels": 2,
+    "frames": 5760000,
+    "sample_format": "pcm_s24",
+    "sample_rate": 48000
+  },
+  "bytes": 1024,
+  "created_at": "2026-10-09T10:42:30Z",
+  "kind": "artifact",
+  "media_type": "audio/wav",
+  "origin": "conversion",
+  "project_id": "prj_hymn",
+  "provenance": {
+    "allowed_uses": [
+      "listen",
+      "loudness_measure",
+      "export"
+    ],
+    "capture": null,
+    "compute": {
+      "compute_profile_id": "cp_tier4",
+      "placement": "local",
+      "tier": 4
+    },
+    "eligible_lanes": [
+      "individual",
+      "llc",
+      "research"
+    ],
+    "engine": {
+      "code_commit": "0000000",
+      "env": {
+        "lock_sha256": "47704a0df519d14c5c5bbeb744a4336739dc9c33594816b30aa1a2178c14b6c7"
+      },
+      "params": {
+        "actual": {},
+        "intent": {}
+      },
+      "profile_id": "analysis-export",
+      "profile_revision": "935f07b19fef9e19c282e15884472197409c540436d5acba6d1565ab135c9a65",
+      "sdk_version": "0.1.0",
+      "seed": null,
+      "weights": null
+    },
+    "host": {
+      "arch": "arm64",
+      "backend": "cpu",
+      "host_class": "cpu/m5pro",
+      "host_id": "host_mac",
+      "os": "darwin"
+    },
+    "import_terms_id": null,
+    "license_chain": [
+      {
+        "code_license": "Own code (all rights reserved until Q5)",
+        "component_id": "studio-own-code",
+        "obligations": [],
+        "weights_license": "n/a (no weights)"
+      },
+      {
+        "code_license": "Own code (all rights reserved until Q5)",
+        "component_id": "neutralvoice",
+        "obligations": [],
+        "weights_license": "n/a (no weights)"
+      }
+    ],
+    "operator_lane": "individual",
+    "parents": [
+      {
+        "edge": "converted_from",
+        "sha256": "2789a942c9533e6ecec15d6b9e0942389ba2f1e3f6fc664356f54291a9f0e884"
+      }
+    ],
+    "producing_job_id": "job_exp",
+    "record_inputs": [],
+    "timings": {
+      "cold": true,
+      "label": "MEASURED-LOCAL",
+      "load_wall_ms": 50,
+      "measured_by": "worker-sdk",
+      "peak_rss_bytes": 268435456,
+      "run_wall_ms": 900,
+      "total_wall_ms": 950
+    }
+  },
+  "retention_class": "reproducible",
+  "schemaVersion": "1.0.0",
+  "sha256": "32c41d14b799a8e1f844e84f11fe694a8804a31a75749f59c1639ec541465e09",
+  "synthetic_test": true
+}

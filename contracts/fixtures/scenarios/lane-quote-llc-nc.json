@@ -1,0 +1,142 @@
+{
+  "description": "A burst quote is created for an llc project's YuE2-stand-in job; it must be refused at admission and never quoted.",
+  "expect_rules": [
+    "lane.admission",
+    "lane.quote"
+  ],
+  "id": "SC-LANE-QUOTE-LLC-NC",
+  "kind": "fixture.scenario",
+  "overlay": [
+    {
+      "approval_id": null,
+      "compute_profile_id": "cp_tier4",
+      "cost": {
+        "basis": "local_zero",
+        "usd": "0.00"
+      },
+      "created_at": "2026-10-09T11:59:00Z",
+      "egress": [],
+      "error": null,
+      "history": [
+        {
+          "at": "2026-10-09T11:59:00Z",
+          "state": "queued"
+        },
+        {
+          "at": "2026-10-09T12:00:00Z",
+          "state": "awaiting_approval"
+        }
+      ],
+      "id": "job_vburst",
+      "inputs": [],
+      "job_kind": "generate",
+      "kind": "job",
+      "lane": "llc",
+      "outputs": [],
+      "params": {
+        "actual": {},
+        "intent": {}
+      },
+      "parent_job_id": null,
+      "placement": {
+        "host_class": "fake/burst",
+        "kind": "burst"
+      },
+      "profile_id": "fake-burst",
+      "profile_revision": "05a94a98a2f35c694d4fdf383290120d74fb6dd572fa20cc95847ea54a0017ef",
+      "project_id": "prj_venture",
+      "quote_id": "q_llc",
+      "record_inputs": [],
+      "request_id": null,
+      "retry": null,
+      "schemaVersion": "1.0.0",
+      "seed": 9,
+      "session_id": "ses_1",
+      "state": "awaiting_approval",
+      "steps": [],
+      "task": "score_to_song"
+    },
+    {
+      "id": "q_llc",
+      "kind": "quote",
+      "quote_sha256": "abf901502d4e591314f19bddec55f4231011b5a1bd068400c004a9ded28e1210",
+      "refusal_reason": null,
+      "schemaVersion": "1.0.0",
+      "status": "offered",
+      "terms": {
+        "cap_usd": "25.00",
+        "ceiling_usd": "0.38",
+        "cloud": "secure",
+        "created_at": "2026-10-09T12:00:00Z",
+        "egress": [
+          {
+            "role": "abc_score",
+            "sha256": "999e5c1aed368edc9a91c2384775a501fc50e8e1806b5affdaa7cf3dab878276"
+          },
+          {
+            "role": "lyrics_plan",
+            "sha256": "ad8f8b5a3ada85a1743b8022acf3f4f7ee0e190cf06bb494a9161ae89f98f15e"
+          }
+        ],
+        "expires_at": "2026-10-09T12:15:00Z",
+        "fixed_lines": [],
+        "gpu_class": "FAKE-24GB",
+        "jobs": [
+          {
+            "estimate_basis": "fake",
+            "estimate_minutes": "6",
+            "job_id": "job_vburst",
+            "label": "UNVERIFIED",
+            "profile_id": "fake-burst"
+          }
+        ],
+        "lane": "llc",
+        "lane_check": {
+          "profiles": [
+            {
+              "allowed_lanes": [
+                "individual",
+                "research"
+              ],
+              "profile_id": "fake-burst"
+            }
+          ],
+          "result": "pass"
+        },
+        "max_minutes": {
+          "boot": "3",
+          "jobs_total": "6",
+          "teardown_margin": "2",
+          "total": "15",
+          "weights_download": "4"
+        },
+        "month": "2026-10",
+        "month_to_date_usd": "0.21",
+        "project_id": "prj_venture",
+        "provider": "fake",
+        "rates": [
+          {
+            "gpu_class": "FAKE-24GB",
+            "label": "UNVERIFIED",
+            "read_at": "2026-10-09T10:20:00Z",
+            "snapshot_date": null,
+            "source": "fake",
+            "usd_per_hour": "1.10"
+          },
+          {
+            "gpu_class": "FAKE-24GB-ALT",
+            "label": "UNVERIFIED",
+            "read_at": "2026-10-09T10:20:00Z",
+            "snapshot_date": null,
+            "source": "fake",
+            "usd_per_hour": "1.50"
+          }
+        ],
+        "request_id": "gr_venture",
+        "synthetic_test": true
+      }
+    }
+  ],
+  "remove": [],
+  "schemaVersion": "1.0.0"
+}

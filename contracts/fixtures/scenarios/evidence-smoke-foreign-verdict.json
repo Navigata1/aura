@@ -1,0 +1,72 @@
+{
+  "description": "ACE's owner_not_garbled check cites a verdict on FakeEngine candidates, not on this revision's smoke candidates.",
+  "expect_rules": [
+    "evidence.gates"
+  ],
+  "id": "SC-EVIDENCE-SMOKE-FOREIGN-VERDICT",
+  "kind": "fixture.scenario",
+  "overlay": [
+    {
+      "attachments": [],
+      "check": "smoke",
+      "checks": [
+        {
+          "check": "install_bytes_match_manifest",
+          "measured": [],
+          "result": "pass",
+          "verdict_id": null
+        },
+        {
+          "check": "conformance",
+          "measured": [],
+          "result": "pass",
+          "verdict_id": null
+        },
+        {
+          "check": "decodes",
+          "measured": [],
+          "result": "pass",
+          "verdict_id": null
+        },
+        {
+          "check": "non_silent",
+          "measured": [],
+          "result": "pass",
+          "verdict_id": null
+        },
+        {
+          "check": "duration_within_tolerance",
+          "measured": [],
+          "result": "pass",
+          "verdict_id": null
+        },
+        {
+          "check": "owner_not_garbled",
+          "measured": [],
+          "result": "pass",
+          "verdict_id": "vd_hymn"
+        }
+      ],
+      "gate_id": "smoke.ace-2b-sft-mlx",
+      "host_class": "mlx/m5pro",
+      "id": "ev_smoke_foreign",
+      "kind": "evidence",
+      "measured": [],
+      "prereg_sha256": null,
+      "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+      "recorded_at": "2026-10-09T12:00:00Z",
+      "result": "pass",
+      "schemaVersion": "1.0.0",
+      "subject": {
+        "subject_id": "ace-2b-sft-mlx",
+        "subject_type": "profile"
+      },
+      "synthetic": false,
+      "verdict_ids": [
+        "vd_hymn"
+      ]
+    }
+  ],
+  "remove": [],
+  "schemaVersion": "1.0.0"
+}

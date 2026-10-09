@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "reference/1",
+  "description": "Audio Jon attaches to a song or an evaluation, with the permission record that says how it may be used (GLOSSARY: Reference, Reference standard; O-05, O-08). A reference standard is human-made, owned or licensed, one per feel, and listening-only: never engine input, never a product audition arm, only an evaluation anchor. A Suno output is never a reference.",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "id", "project_id", "artifact_sha256", "role", "feel", "crop", "source", "permission", "created_at"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "reference"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "id": {"$ref": "common.schema.json#/$defs/id"},
+    "project_id": {"oneOf": [{"$ref": "common.schema.json#/$defs/id"}, {"type": "null"}], "description": "null for evaluation-wide reference standards."},
+    "artifact_sha256": {"$ref": "common.schema.json#/$defs/sha256"},
+    "role": {"enum": ["reference_standard", "style_reference", "timbre_reference"]},
+    "feel": {"oneOf": [{"$ref": "common.schema.json#/$defs/feel"}, {"type": "null"}]},
+    "crop": {
+      "oneOf": [
+        {"type": "null"},
+        {"type": "object", "required": ["start_ms", "end_ms"], "additionalProperties": false,
+         "properties": {"start_ms": {"type": "integer", "minimum": 0}, "end_ms": {"type": "integer", "minimum": 1}}}
+      ]
+    },
+    "source": {"enum": ["owned_purchase", "licensed", "own_recording"], "description": "Suno output is not a permitted source."},
+    "permission": {
+      "type": "object",
+      "required": ["granted_uses", "listening_only", "act", "note"],
+      "additionalProperties": false,
+      "properties": {
+        "granted_uses": {"$ref": "common.schema.json#/$defs/allowedUses"},
+        "listening_only": {"type": "boolean"},
+        "act": {"allOf": [{"$ref": "common.schema.json#/$defs/ownerAct"}, {"properties": {"act": {"const": "record_reference_permission"}}}]},
+        "note": {"type": "string", "maxLength": 400}
+      },
+      "if": {"properties": {"listening_only": {"const": true}}},
+      "then": {"properties": {"granted_uses": {"items": {"enum": ["listen", "loudness_measure", "eval_anchor"]}}}}
+    },
+    "created_at": {"$ref": "common.schema.json#/$defs/dateTime"}
+  },
+  "if": {"properties": {"role": {"const": "reference_standard"}}},
+  "then": {"properties": {"feel": {"$ref": "common.schema.json#/$defs/feel"}, "permission": {"properties": {"listening_only": {"const": true}}}}}
+}

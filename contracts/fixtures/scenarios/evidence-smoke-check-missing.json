@@ -1,0 +1,64 @@
+{
+  "description": "A passing real smoke record for ACE lists no owner_not_garbled check, so Jon never listened (the gate declares it).",
+  "expect_rules": [
+    "evidence.gates"
+  ],
+  "id": "SC-EVIDENCE-SMOKE-CHECK-MISSING",
+  "kind": "fixture.scenario",
+  "overlay": [
+    {
+      "attachments": [],
+      "check": "smoke",
+      "checks": [
+        {
+          "check": "install_bytes_match_manifest",
+          "measured": [],
+          "result": "pass",
+          "verdict_id": null
+        },
+        {
+          "check": "conformance",
+          "measured": [],
+          "result": "pass",
+          "verdict_id": null
+        },
+        {
+          "check": "decodes",
+          "measured": [],
+          "result": "pass",
+          "verdict_id": null
+        },
+        {
+          "check": "non_silent",
+          "measured": [],
+          "result": "pass",
+          "verdict_id": null
+        },
+        {
+          "check": "duration_within_tolerance",
+          "measured": [],
+          "result": "pass",
+          "verdict_id": null
+        }
+      ],
+      "gate_id": "smoke.ace-2b-sft-mlx",
+      "host_class": "mlx/m5pro",
+      "id": "ev_smoke_no_ear",
+      "kind": "evidence",
+      "measured": [],
+      "prereg_sha256": null,
+      "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+      "recorded_at": "2026-10-09T12:00:00Z",
+      "result": "pass",
+      "schemaVersion": "1.0.0",
+      "subject": {
+        "subject_id": "ace-2b-sft-mlx",
+        "subject_type": "profile"
+      },
+      "synthetic": false,
+      "verdict_ids": []
+    }
+  ],
+  "remove": [],
+  "schemaVersion": "1.0.0"
+}

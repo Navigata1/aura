@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "generation-request/1",
+  "description": "One request to render a SongSpec revision into candidates (GLOSSARY: Generation request). The plan holds route x profile x seed, each with a reason; declined routes carry reasons; nothing is substituted silently. The plan length equals the SongSpec's candidate_count (request.plan_matches_count). Until a Phase-0 benchmark record exists, the plan is labelled 'unbenchmarked routes'.",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "id", "project_id", "song", "mode", "session_id", "compute_profile_id", "plan",
+               "declined", "job_ids", "quote_ids", "candidate_ids", "labels", "created_at"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "generation-request"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "id": {"$ref": "common.schema.json#/$defs/id"},
+    "project_id": {"$ref": "common.schema.json#/$defs/id"},
+    "song": {"$ref": "common.schema.json#/$defs/songRef"},
+    "mode": {"enum": ["auto", "explicit"]},
+    "session_id": {"$ref": "common.schema.json#/$defs/id"},
+    "compute_profile_id": {"$ref": "common.schema.json#/$defs/id"},
+    "plan": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["ordinal", "route", "profile_id", "seed", "placement", "reason"],
+        "additionalProperties": false,
+        "properties": {
+          "ordinal": {"type": "integer", "minimum": 1},
+          "route": {"$ref": "common.schema.json#/$defs/route"},
+          "profile_id": {"$ref": "common.schema.json#/$defs/slug"},
+          "seed": {"type": "integer", "minimum": 0},
+          "placement": {"$ref": "common.schema.json#/$defs/placementKind"},
+          "reason": {"$ref": "common.schema.json#/$defs/shortText"}
+        }
+      }
+    },
+    "declined": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["route", "profile_id", "reason_code", "reason"],
+        "additionalProperties": false,
+        "properties": {
+          "route": {"$ref": "common.schema.json#/$defs/route"},
+          "profile_id": {"oneOf": [{"$ref": "common.schema.json#/$defs/slug"}, {"type": "null"}]},
+          "reason_code": {"enum": ["lane_forbidden", "profile_not_promoted", "ineligible", "burst_declined", "unavailable", "use_forbidden", "budget_refused"]},
+          "reason": {"$ref": "common.schema.json#/$defs/shortText"}
+        }
+      }
+    },
+    "job_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "common.schema.json#/$defs/id"}},
+    "quote_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "common.schema.json#/$defs/id"}},
+    "candidate_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "common.schema.json#/$defs/id"}},
+    "labels": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"enum": ["unbenchmarked routes", "ACE-only: burst declined", "Synthetic test output"]}
+    },
+    "created_at": {"$ref": "common.schema.json#/$defs/dateTime"}
+  }
+}

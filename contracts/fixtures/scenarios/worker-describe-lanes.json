@@ -1,0 +1,124 @@
+{
+  "description": "A worker describes fake-nc with an llc lane it does not have.",
+  "expect_rules": [
+    "worker.describe_matches_registry"
+  ],
+  "id": "SC-WORKER-DESCRIBE-LANES",
+  "kind": "fixture.scenario",
+  "overlay": [
+    {
+      "code_commit": "0000000",
+      "env": {
+        "lock_sha256": "f66d3cea03d102df6b8139947fb3b0c09f8a387a58fd6b4e78a63a6796dbfe54"
+      },
+      "host": {
+        "arch": "arm64",
+        "backend": "fake",
+        "device": "fake-device",
+        "free_disk_bytes": 966367641600,
+        "memory_bytes": 51539607552,
+        "metal": null,
+        "nvidia": null,
+        "os": "darwin"
+      },
+      "kind": "worker-describe",
+      "profiles": [
+        {
+          "lanes": [
+            "individual",
+            "llc",
+            "research"
+          ],
+          "limits": {
+            "channels": 2,
+            "instrumental_only": false,
+            "lyric_languages": [
+              "en"
+            ],
+            "max_duration_s": 600,
+            "sample_rate": 44100
+          },
+          "profile_id": "fake-route-a",
+          "tasks": [
+            "cover",
+            "text_to_song"
+          ],
+          "weights_manifest_sha256": null,
+          "weights_present": true
+        },
+        {
+          "lanes": [
+            "individual",
+            "llc",
+            "research"
+          ],
+          "limits": {
+            "channels": 2,
+            "instrumental_only": false,
+            "lyric_languages": [
+              "en"
+            ],
+            "max_duration_s": 600,
+            "sample_rate": 48000
+          },
+          "profile_id": "fake-route-b",
+          "tasks": [
+            "cover",
+            "text_to_song"
+          ],
+          "weights_manifest_sha256": null,
+          "weights_present": true
+        },
+        {
+          "lanes": [
+            "individual",
+            "research"
+          ],
+          "limits": {
+            "channels": 2,
+            "instrumental_only": false,
+            "lyric_languages": [
+              "en"
+            ],
+            "max_duration_s": 600,
+            "sample_rate": 48000
+          },
+          "profile_id": "fake-burst",
+          "tasks": [
+            "score_to_song"
+          ],
+          "weights_manifest_sha256": null,
+          "weights_present": true
+        },
+        {
+          "lanes": [
+            "individual",
+            "llc",
+            "research"
+          ],
+          "limits": {
+            "channels": 2,
+            "instrumental_only": false,
+            "lyric_languages": [
+              "en"
+            ],
+            "max_duration_s": 600,
+            "sample_rate": 48000
+          },
+          "profile_id": "fake-nc",
+          "tasks": [
+            "cover"
+          ],
+          "weights_manifest_sha256": null,
+          "weights_present": true
+        }
+      ],
+      "protocol_version": 1,
+      "schemaVersion": "1.0.0",
+      "sdk_version": "0.1.0",
+      "worker_id": "wkr_fake"
+    }
+  ],
+  "remove": [],
+  "schemaVersion": "1.0.0"
+}

@@ -1,0 +1,107 @@
+{
+  "approved_lyrics": {
+    "approved_at": "2026-10-09T11:02:00Z",
+    "language": "en",
+    "source": "written",
+    "text": "[hook]\nCarry the morning"
+  },
+  "asr_transcripts": [],
+  "base_rev": null,
+  "candidate_count": 2,
+  "content_sha256": "85a7fe34ebc86cb015ba76a7eaf6475843e9cf7812a232d29040255ebc71c35e",
+  "controls": {
+    "duration_s": {
+      "observed": [],
+      "requested": 120,
+      "support": [
+        {
+          "profile_id": "fake-route-a",
+          "status": "supported"
+        },
+        {
+          "profile_id": "fake-route-b",
+          "status": "supported"
+        }
+      ]
+    },
+    "exclude_styles": {
+      "observed": [],
+      "requested": [
+        "trap hi-hats"
+      ],
+      "support": [
+        {
+          "profile_id": "fake-route-a",
+          "status": "supported"
+        },
+        {
+          "profile_id": "fake-route-b",
+          "status": "supported"
+        }
+      ]
+    },
+    "style": {
+      "observed": [],
+      "requested": "acoustic worship ballad, piano and warm pad",
+      "support": [
+        {
+          "profile_id": "fake-route-a",
+          "status": "supported"
+        },
+        {
+          "profile_id": "fake-route-b",
+          "status": "supported"
+        }
+      ]
+    },
+    "vocal_mode": {
+      "observed": [],
+      "requested": "vocal",
+      "support": [
+        {
+          "profile_id": "fake-route-a",
+          "status": "supported"
+        },
+        {
+          "profile_id": "fake-route-b",
+          "status": "supported"
+        }
+      ]
+    }
+  },
+  "created_at": "2026-10-09T11:02:00Z",
+  "form": {
+    "sections": [
+      {
+        "bars": 4,
+        "id": "s1",
+        "name": "hook",
+        "phrase_ids": [
+          "ph1"
+        ],
+        "repeats": 2,
+        "section_kind": "vocal"
+      }
+    ]
+  },
+  "kind": "song-spec",
+  "larger_n_budget": null,
+  "melody": {
+    "melody_id": "mel_venture",
+    "rev": 1,
+    "tempo_map_rev": 1
+  },
+  "project_id": "prj_venture",
+  "references": [],
+  "render_routes": {
+    "mode": "auto",
+    "routes": []
+  },
+  "rev": 1,
+  "schemaVersion": "1.0.0",
+  "song_id": "song_venture",
+  "validation": {
+    "conflicts": [],
+    "unsupported_by_profile": []
+  }
+}

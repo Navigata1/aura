@@ -1,0 +1,103 @@
+{
+  "approval_id": "ap_hymn",
+  "compute_profile_id": "cp_tier4",
+  "cost": {
+    "basis": "provider_reported",
+    "usd": "0.21"
+  },
+  "created_at": "2026-10-09T10:10:01Z",
+  "egress": [
+    {
+      "destination": "burst",
+      "sha256": "999e5c1aed368edc9a91c2384775a501fc50e8e1806b5affdaa7cf3dab878276"
+    },
+    {
+      "destination": "burst",
+      "sha256": "ad8f8b5a3ada85a1743b8022acf3f4f7ee0e190cf06bb494a9161ae89f98f15e"
+    }
+  ],
+  "error": null,
+  "history": [
+    {
+      "at": "2026-10-09T10:10:01Z",
+      "state": "queued"
+    },
+    {
+      "at": "2026-10-09T10:20:00Z",
+      "state": "awaiting_approval"
+    },
+    {
+      "at": "2026-10-09T10:22:06Z",
+      "state": "preparing"
+    },
+    {
+      "at": "2026-10-09T10:22:10Z",
+      "state": "loading"
+    },
+    {
+      "at": "2026-10-09T10:24:00Z",
+      "state": "generating"
+    },
+    {
+      "at": "2026-10-09T10:30:00Z",
+      "state": "analyzing"
+    },
+    {
+      "at": "2026-10-09T10:30:40Z",
+      "state": "ready"
+    }
+  ],
+  "id": "job_cb",
+  "inputs": [],
+  "job_kind": "generate",
+  "kind": "job",
+  "lane": "individual",
+  "outputs": [
+    {
+      "role": "mix",
+      "sha256": "e72def8d0b533962c620f88ab7da2d60d497a000c199d8ae80d6ff8fbf9d01fa"
+    }
+  ],
+  "params": {
+    "actual": {
+      "cot": "melody"
+    },
+    "intent": {
+      "cot": "melody"
+    }
+  },
+  "parent_job_id": null,
+  "placement": {
+    "host_class": "fake/burst",
+    "kind": "burst"
+  },
+  "profile_id": "fake-burst",
+  "profile_revision": "05a94a98a2f35c694d4fdf383290120d74fb6dd572fa20cc95847ea54a0017ef",
+  "project_id": "prj_hymn",
+  "quote_id": "q_hymn",
+  "record_inputs": [
+    {
+      "kind": "abc-score",
+      "sha256": "999e5c1aed368edc9a91c2384775a501fc50e8e1806b5affdaa7cf3dab878276"
+    },
+    {
+      "kind": "lyrics-plan",
+      "sha256": "ad8f8b5a3ada85a1743b8022acf3f4f7ee0e190cf06bb494a9161ae89f98f15e"
+    }
+  ],
+  "request_id": "gr_hymn",
+  "retry": null,
+  "schemaVersion": "1.0.0",
+  "seed": 7,
+  "session_id": "ses_1",
+  "state": "ready",
+  "steps": [
+    {
+      "name": "stage1"
+    },
+    {
+      "name": "stage2"
+    }
+  ],
+  "task": "score_to_song"
+}

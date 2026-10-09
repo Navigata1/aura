@@ -1,0 +1,542 @@
+{
+  "description": "An llc separation on a profile built on Kim Mel-Band-RoFormer is refused until its training-data review widens the row.",
+  "expect_rules": [
+    "lane.admission"
+  ],
+  "id": "SC-LANE-ADMIT-ROFORMER-LLC-BEFORE-REVIEW",
+  "kind": "fixture.scenario",
+  "overlay": [
+    {
+      "kind": "engine-profile-registry",
+      "overlay": true,
+      "profiles": [
+        {
+          "allowed_lanes": [
+            "individual",
+            "llc",
+            "research"
+          ],
+          "backend": "fake",
+          "checkpoint": "FakeEngine (NeutralVoice guide plus a key-derived pad)",
+          "claims_published": [],
+          "components": [
+            "studio-own-code",
+            "neutralvoice"
+          ],
+          "engine": "fake",
+          "gates": {
+            "benchmark": null,
+            "smoke": {
+              "checks": [
+                "conformance",
+                "decodes",
+                "non_silent"
+              ],
+              "gate_id": "smoke.fake-route-a",
+              "owner": "jon",
+              "synthetic_allowed": true
+            }
+          },
+          "heavy": false,
+          "host_os": [
+            "darwin",
+            "linux",
+            "windows"
+          ],
+          "id": "fake-route-a",
+          "license_record": [
+            {
+              "code_license": "Own code (all rights reserved until Q5)",
+              "component_id": "studio-own-code",
+              "obligations": [],
+              "weights_license": "n/a (no weights)"
+            },
+            {
+              "code_license": "Own code (all rights reserved until Q5)",
+              "component_id": "neutralvoice",
+              "obligations": [],
+              "weights_license": "n/a (no weights)"
+            }
+          ],
+          "limits": {
+            "channels": 2,
+            "instrumental_only": false,
+            "lyric_languages": [
+              "en"
+            ],
+            "max_duration_s": 600,
+            "sample_rate": 44100
+          },
+          "notes": "test_only: visible only when STUDIO_ENV is dev or test; outputs read 'Synthetic test output'.",
+          "pins": {
+            "code": {
+              "commit": null,
+              "min_commit": null,
+              "repo": "Navigata1/aura"
+            },
+            "env": {
+              "kind": "uv_lock",
+              "ref": null
+            },
+            "weights": null
+          },
+          "results_local": [
+            {
+              "evidence_id": "ev_fra_smoke",
+              "host_class": "fake/local",
+              "label": "MEASURED-LOCAL",
+              "metric": "total_wall_ms",
+              "unit": "ms",
+              "value": "1200"
+            }
+          ],
+          "tasks": [
+            "cover",
+            "text_to_song"
+          ],
+          "test_only": true,
+          "title": "FakeEngine route A (stands in for an ACE cover)"
+        },
+        {
+          "allowed_lanes": [
+            "individual",
+            "llc",
+            "research"
+          ],
+          "backend": "fake",
+          "checkpoint": "FakeEngine (NeutralVoice guide plus a key-derived pad)",
+          "claims_published": [],
+          "components": [
+            "studio-own-code",
+            "neutralvoice"
+          ],
+          "engine": "fake",
+          "gates": {
+            "benchmark": null,
+            "smoke": {
+              "checks": [
+                "conformance",
+                "decodes",
+                "non_silent"
+              ],
+              "gate_id": "smoke.fake-route-b",
+              "owner": "jon",
+              "synthetic_allowed": true
+            }
+          },
+          "heavy": false,
+          "host_os": [
+            "darwin",
+            "linux",
+            "windows"
+          ],
+          "id": "fake-route-b",
+          "license_record": [
+            {
+              "code_license": "Own code (all rights reserved until Q5)",
+              "component_id": "studio-own-code",
+              "obligations": [],
+              "weights_license": "n/a (no weights)"
+            },
+            {
+              "code_license": "Own code (all rights reserved until Q5)",
+              "component_id": "neutralvoice",
+              "obligations": [],
+              "weights_license": "n/a (no weights)"
+            }
+          ],
+          "limits": {
+            "channels": 2,
+            "instrumental_only": false,
+            "lyric_languages": [
+              "en"
+            ],
+            "max_duration_s": 600,
+            "sample_rate": 48000
+          },
+          "notes": "test_only: visible only when STUDIO_ENV is dev or test; outputs read 'Synthetic test output'.",
+          "pins": {
+            "code": {
+              "commit": null,
+              "min_commit": null,
+              "repo": "Navigata1/aura"
+            },
+            "env": {
+              "kind": "uv_lock",
+              "ref": null
+            },
+            "weights": null
+          },
+          "results_local": [],
+          "tasks": [
+            "cover",
+            "text_to_song"
+          ],
+          "test_only": true,
+          "title": "FakeEngine route B"
+        },
+        {
+          "allowed_lanes": [
+            "individual",
+            "research"
+          ],
+          "backend": "fake",
+          "checkpoint": "FakeEngine (NeutralVoice guide plus a key-derived pad)",
+          "claims_published": [],
+          "components": [
+            "studio-own-code",
+            "fake-nc-weights"
+          ],
+          "engine": "fake",
+          "gates": {
+            "benchmark": null,
+            "smoke": {
+              "checks": [
+                "conformance",
+                "decodes",
+                "non_silent"
+              ],
+              "gate_id": "smoke.fake-burst",
+              "owner": "jon",
+              "synthetic_allowed": true
+            }
+          },
+          "heavy": false,
+          "host_os": [
+            "darwin",
+            "linux",
+            "windows"
+          ],
+          "id": "fake-burst",
+          "license_record": [
+            {
+              "code_license": "Own code (all rights reserved until Q5)",
+              "component_id": "studio-own-code",
+              "obligations": [],
+              "weights_license": "n/a (no weights)"
+            },
+            {
+              "code_license": "Own test code",
+              "component_id": "fake-nc-weights",
+              "obligations": [],
+              "weights_license": "Fixture stand-in for a non-commercial or research-only license"
+            }
+          ],
+          "limits": {
+            "channels": 2,
+            "instrumental_only": false,
+            "lyric_languages": [
+              "en"
+            ],
+            "max_duration_s": 600,
+            "sample_rate": 48000
+          },
+          "notes": "test_only: visible only when STUDIO_ENV is dev or test; outputs read 'Synthetic test output'.",
+          "pins": {
+            "code": {
+              "commit": null,
+              "min_commit": null,
+              "repo": "Navigata1/aura"
+            },
+            "env": {
+              "kind": "uv_lock",
+              "ref": null
+            },
+            "weights": null
+          },
+          "results_local": [],
+          "tasks": [
+            "score_to_song"
+          ],
+          "test_only": true,
+          "title": "FakeEngine burst pod (stands in for YuE2 on a paid burst)"
+        },
+        {
+          "allowed_lanes": [
+            "individual",
+            "research"
+          ],
+          "backend": "fake",
+          "checkpoint": "FakeEngine (NeutralVoice guide plus a key-derived pad)",
+          "claims_published": [],
+          "components": [
+            "studio-own-code",
+            "fake-nc-weights"
+          ],
+          "engine": "fake",
+          "gates": {
+            "benchmark": null,
+            "smoke": {
+              "checks": [
+                "conformance",
+                "decodes",
+                "non_silent"
+              ],
+              "gate_id": "smoke.fake-nc",
+              "owner": "jon",
+              "synthetic_allowed": true
+            }
+          },
+          "heavy": false,
+          "host_os": [
+            "darwin",
+            "linux",
+            "windows"
+          ],
+          "id": "fake-nc",
+          "license_record": [
+            {
+              "code_license": "Own code (all rights reserved until Q5)",
+              "component_id": "studio-own-code",
+              "obligations": [],
+              "weights_license": "n/a (no weights)"
+            },
+            {
+              "code_license": "Own test code",
+              "component_id": "fake-nc-weights",
+              "obligations": [],
+              "weights_license": "Fixture stand-in for a non-commercial or research-only license"
+            }
+          ],
+          "limits": {
+            "channels": 2,
+            "instrumental_only": false,
+            "lyric_languages": [
+              "en"
+            ],
+            "max_duration_s": 600,
+            "sample_rate": 48000
+          },
+          "notes": "test_only: visible only when STUDIO_ENV is dev or test; outputs read 'Synthetic test output'.",
+          "pins": {
+            "code": {
+              "commit": null,
+              "min_commit": null,
+              "repo": "Navigata1/aura"
+            },
+            "env": {
+              "kind": "uv_lock",
+              "ref": null
+            },
+            "weights": null
+          },
+          "results_local": [],
+          "tasks": [
+            "cover"
+          ],
+          "test_only": true,
+          "title": "FakeEngine with a non-commercial component"
+        },
+        {
+          "allowed_lanes": [
+            "individual",
+            "research"
+          ],
+          "backend": "fake",
+          "checkpoint": "FakeEngine (NeutralVoice guide plus a key-derived pad)",
+          "claims_published": [],
+          "components": [
+            "studio-own-code",
+            "fake-nc-separator-weights"
+          ],
+          "engine": "fake",
+          "gates": {
+            "benchmark": null,
+            "smoke": {
+              "checks": [
+                "conformance",
+                "decodes",
+                "non_silent"
+              ],
+              "gate_id": "smoke.fake-separate",
+              "owner": "jon",
+              "synthetic_allowed": true
+            }
+          },
+          "heavy": false,
+          "host_os": [
+            "darwin",
+            "linux",
+            "windows"
+          ],
+          "id": "fake-separate",
+          "license_record": [
+            {
+              "code_license": "Own code (all rights reserved until Q5)",
+              "component_id": "studio-own-code",
+              "obligations": [],
+              "weights_license": "n/a (no weights)"
+            },
+            {
+              "code_license": "Own test code",
+              "component_id": "fake-nc-separator-weights",
+              "obligations": [],
+              "weights_license": "Fixture stand-in for a non-commercial or research-only license"
+            }
+          ],
+          "limits": {
+            "channels": null,
+            "instrumental_only": false,
+            "lyric_languages": null,
+            "max_duration_s": 600,
+            "sample_rate": null
+          },
+          "notes": "test_only: visible only when STUDIO_ENV is dev or test; outputs read 'Synthetic test output'.",
+          "pins": {
+            "code": {
+              "commit": null,
+              "min_commit": null,
+              "repo": "Navigata1/aura"
+            },
+            "env": {
+              "kind": "uv_lock",
+              "ref": null
+            },
+            "weights": null
+          },
+          "results_local": [],
+          "tasks": [
+            "separate"
+          ],
+          "test_only": true,
+          "title": "FakeEngine separator (stands in for Demucs; returns the vocal it embedded)"
+        },
+        {
+          "allowed_lanes": [
+            "individual",
+            "research"
+          ],
+          "backend": "fake",
+          "checkpoint": "FakeEngine (NeutralVoice guide plus a key-derived pad)",
+          "claims_published": [],
+          "components": [
+            "studio-own-code",
+            "melband-roformer-kim"
+          ],
+          "engine": "fake",
+          "gates": {
+            "benchmark": null,
+            "smoke": {
+              "checks": [
+                "conformance",
+                "decodes",
+                "non_silent"
+              ],
+              "gate_id": "smoke.fake-roformer",
+              "owner": "jon",
+              "synthetic_allowed": true
+            }
+          },
+          "heavy": false,
+          "host_os": [
+            "darwin",
+            "linux",
+            "windows"
+          ],
+          "id": "fake-roformer",
+          "license_record": [
+            {
+              "code_license": "Own code (all rights reserved until Q5)",
+              "component_id": "studio-own-code",
+              "obligations": [],
+              "weights_license": "n/a (no weights)"
+            },
+            {
+              "code_license": "MIT (ZFTurbo MSST / python-audio-separator)",
+              "component_id": "melband-roformer-kim",
+              "obligations": [],
+              "weights_license": "MIT"
+            }
+          ],
+          "limits": {
+            "channels": null,
+            "instrumental_only": false,
+            "lyric_languages": null,
+            "max_duration_s": 600,
+            "sample_rate": null
+          },
+          "notes": "test_only: visible only when STUDIO_ENV is dev or test; outputs read 'Synthetic test output'.",
+          "pins": {
+            "code": {
+              "commit": null,
+              "min_commit": null,
+              "repo": "Navigata1/aura"
+            },
+            "env": {
+              "kind": "uv_lock",
+              "ref": null
+            },
+            "weights": {
+              "allow_patterns": [],
+              "license_acceptance_required": true,
+              "repo": "KimberleyJSN/melbandroformer",
+              "revision": null,
+              "source": "hf"
+            }
+          },
+          "results_local": [],
+          "tasks": [
+            "separate"
+          ],
+          "test_only": true,
+          "title": "FakeEngine separator on Kim Mel-Band-RoFormer's register row"
+        }
+      ],
+      "registry_id": "engine-profiles.fake-overlay",
+      "schemaVersion": "1.0.0",
+      "updated_at": "2026-10-09T09:00:00Z"
+    },
+    {
+      "approval_id": null,
+      "compute_profile_id": "cp_tier4",
+      "cost": {
+        "basis": "local_zero",
+        "usd": "0.00"
+      },
+      "created_at": "2026-10-09T12:00:00Z",
+      "egress": [],
+      "error": null,
+      "history": [
+        {
+          "at": "2026-10-09T12:00:00Z",
+          "state": "queued"
+        }
+      ],
+      "id": "job_rof_llc",
+      "inputs": [
+        {
+          "role": "candidate",
+          "sha256": "f7af17cbfb64026585e4f1049aa82da4ec1b5562d34f15f1b880834e8a5b64cb"
+        }
+      ],
+      "job_kind": "separate",
+      "kind": "job",
+      "lane": "llc",
+      "outputs": [],
+      "params": {
+        "actual": {},
+        "intent": {}
+      },
+      "parent_job_id": null,
+      "placement": {
+        "host_class": "fake/local",
+        "kind": "local"
+      },
+      "profile_id": "fake-roformer",
+      "profile_revision": "1852439b3adaaa5d606080f22543a990086f2d99bb403a6dd643c1e566891aad",
+      "project_id": "prj_venture",
+      "quote_id": null,
+      "record_inputs": [],
+      "request_id": null,
+      "retry": null,
+      "schemaVersion": "1.0.0",
+      "seed": null,
+      "session_id": "ses_1",
+      "state": "queued",
+      "steps": [],
+      "task": "separate"
+    }
+  ],
+  "remove": [],
+  "schemaVersion": "1.0.0"
+}

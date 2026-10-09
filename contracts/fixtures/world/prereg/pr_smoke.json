@@ -1,0 +1,96 @@
+{
+  "body": {
+    "asset_hashes": [
+      "4e405787b44e6d1f57af53cd02b5596bdf3adb33077151a720da8586b66eec7f",
+      "dc777e3766c902a35936fea39ee9ceecee87a562e63e9fb42a090dc80205d7e7"
+    ],
+    "briefs": [
+      {
+        "brief_id": "brief_smoke_01",
+        "lane": "individual"
+      },
+      {
+        "brief_id": "brief_smoke_02",
+        "lane": "llc"
+      },
+      {
+        "brief_id": "brief_smoke_03",
+        "lane": "individual"
+      },
+      {
+        "brief_id": "brief_smoke_04",
+        "lane": "llc"
+      },
+      {
+        "brief_id": "brief_smoke_05",
+        "lane": "individual"
+      },
+      {
+        "brief_id": "brief_smoke_06",
+        "lane": "llc"
+      },
+      {
+        "brief_id": "brief_smoke_07",
+        "lane": "individual"
+      },
+      {
+        "brief_id": "brief_smoke_08",
+        "lane": "llc"
+      },
+      {
+        "brief_id": "brief_smoke_09",
+        "lane": "individual"
+      },
+      {
+        "brief_id": "brief_smoke_10",
+        "lane": "llc"
+      },
+      {
+        "brief_id": "brief_smoke_11",
+        "lane": "individual"
+      },
+      {
+        "brief_id": "brief_smoke_12",
+        "lane": "llc"
+      }
+    ],
+    "budgets": {
+      "candidates_per_brief": 2,
+      "compute_usd_cap": "5.00",
+      "listening_minutes": 120
+    },
+    "committed_at": "2026-10-09T09:45:00Z",
+    "gate_owner": "jon",
+    "listening_quota": {
+      "repeat_pair_fraction": "0.10",
+      "sessions_min": 12,
+      "short_quota_outcome": "inconclusive"
+    },
+    "pins": [
+      {
+        "profile_id": "fake-burst",
+        "profile_revision": "05a94a98a2f35c694d4fdf383290120d74fb6dd572fa20cc95847ea54a0017ef"
+      },
+      {
+        "profile_id": "fake-route-a",
+        "profile_revision": "f1a45b61325bc9f8d89598ae620e16d601aeb44188758ff87dfa8a237f114185"
+      },
+      {
+        "profile_id": "fake-route-b",
+        "profile_revision": "89622a813cfe4f1ce6842dcc59c7d49f44dffd58a3fcf7added6d94c0c867eca"
+      }
+    ],
+    "thresholds": [
+      {
+        "comparator": "gte",
+        "metric": "keeper_preferred_over_reference_rate",
+        "value": "0.25"
+      }
+    ]
+  },
+  "eval_set_id": "es_smoke",
+  "id": "pr_smoke",
+  "kind": "prereg",
+  "prereg_sha256": "324cb399c8c57f9e9e690dc9efc3eaceffa03643fd7a1115b4acf6de6d1f58e7",
+  "schemaVersion": "1.0.0"
+}

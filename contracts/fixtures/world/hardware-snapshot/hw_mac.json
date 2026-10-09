@@ -1,0 +1,41 @@
+{
+  "accelerators": [
+    {
+      "compute_capability": null,
+      "cuda_runtime": null,
+      "driver_version": null,
+      "metal_recommended_max_working_set_bytes": null,
+      "name": "Apple M5 Pro GPU",
+      "unified_memory": true,
+      "vendor": "apple",
+      "vram_bytes": null
+    }
+  ],
+  "cpu": "Apple M5 Pro",
+  "host_id": "host_mac",
+  "id": "hw_mac",
+  "kind": "hardware-snapshot",
+  "memory_bytes": 51539607552,
+  "os": {
+    "arch": "arm64",
+    "family": "darwin",
+    "version": "26.6.2"
+  },
+  "raw_outputs": [
+    {
+      "command": "sysctl -n hw.memsize machdep.cpu.brand_string",
+      "sha256": "303b731972606ddfa4dc0a4e588b489012549eb25f3c3fa5b35cf6269d6a605f"
+    }
+  ],
+  "schemaVersion": "1.0.0",
+  "taken_at": "2026-10-09T09:59:00Z",
+  "volumes": [
+    {
+      "filesystem": "apfs",
+      "free_bytes": 966367641600,
+      "mount": "/Volumes/STUDIO",
+      "role": "studio_volume"
+    }
+  ],
+  "wsl2": null
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "lane-policy/1",
+  "description": "Lane semantics as data (ADR-0011, ADR-0029): the three lanes, the release-blocker classes each lane forbids, and the propagation rule (intersection over derived_from and converted_from; analyzed_by never propagates).",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "default_lane", "lanes", "propagation"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "lane-policy"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "default_lane": {"const": "individual"},
+    "lanes": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "releasable", "forbidden_release_blockers"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"$ref": "common.schema.json#/$defs/operatorLane"},
+          "title": {"$ref": "common.schema.json#/$defs/shortText"},
+          "releasable": {"type": "boolean"},
+          "forbidden_release_blockers": {"type": "array", "uniqueItems": true, "items": {"$ref": "common.schema.json#/$defs/releaseBlocker"}}
+        }
+      }
+    },
+    "propagation": {
+      "type": "object",
+      "required": ["propagating_edges", "non_propagating_edges", "combine", "analysis_jobs_lane_admitted"],
+      "additionalProperties": false,
+      "properties": {
+        "propagating_edges": {"const": ["derived_from", "converted_from"]},
+        "non_propagating_edges": {"const": ["analyzed_by"]},
+        "combine": {"const": "intersection"},
+        "analysis_jobs_lane_admitted": {"const": true}
+      }
+    }
+  }
+}

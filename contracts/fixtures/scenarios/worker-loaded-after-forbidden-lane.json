@@ -1,0 +1,27 @@
+{
+  "description": "The fake-nc worker reported generating for an llc request instead of refusing before load.",
+  "expect_rules": [
+    "worker.refuse_before_load"
+  ],
+  "id": "SC-WORKER-LOADED-AFTER-FORBIDDEN-LANE",
+  "kind": "fixture.scenario",
+  "overlay": [
+    {
+      "error": null,
+      "job_id": "job_nc_llc",
+      "kind": "task-status",
+      "outputs": [],
+      "params_actual": null,
+      "schemaVersion": "1.0.0",
+      "state": "generating",
+      "steps": [
+        {
+          "name": "diffusion"
+        }
+      ],
+      "timings": null
+    }
+  ],
+  "remove": [],
+  "schemaVersion": "1.0.0"
+}

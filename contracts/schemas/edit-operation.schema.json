@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "edit-operation/1 (v1-studio)",
+  "description": "A scoped generative change to a keeper (GLOSSARY: Edit operation, Preservation check; ADR-0017). Mask, crossfades and locked context are in frames of the keeper at its native rate, in a declared PCM domain. It stays a proposal until Jon accepts one of its candidates through an audition; an accepted edit must pass the preservation check (PCM outside the mask and crossfades identical, samples not headers). Undo restores the prior artifact by hash and never regenerates. A whole-song re-render is never labelled a local edit. Locked context never overlaps the mask (edit.mask_wellformed).",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "id", "project_id", "keeper_id", "base_artifact_sha256", "op", "section_name", "mask",
+               "crossfade", "locked_context", "domain", "candidate_ids", "state", "accepted_candidate_id", "result_keeper_id",
+               "preservation", "undo", "whole_song_rerender", "created_at"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "edit-operation"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "id": {"$ref": "common.schema.json#/$defs/id"},
+    "project_id": {"$ref": "common.schema.json#/$defs/id"},
+    "keeper_id": {"$ref": "common.schema.json#/$defs/id"},
+    "base_artifact_sha256": {"$ref": "common.schema.json#/$defs/sha256"},
+    "op": {"enum": ["replace_section", "replace_line", "replace_word", "extend_start", "extend_end"]},
+    "section_name": {"oneOf": [{"type": "string", "pattern": "^[a-z][a-z0-9-]{0,31}$"}, {"type": "null"}]},
+    "mask": {"$ref": "#/$defs/range"},
+    "crossfade": {
+      "type": "object",
+      "required": ["in_frames", "out_frames"],
+      "additionalProperties": false,
+      "properties": {"in_frames": {"type": "integer", "minimum": 0}, "out_frames": {"type": "integer", "minimum": 0}}
+    },
+    "locked_context": {"type": "array", "items": {"$ref": "#/$defs/range"}},
+    "domain": {"$ref": "common.schema.json#/$defs/audioMeta"},
+    "candidate_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "common.schema.json#/$defs/id"}},
+    "state": {"enum": ["proposed", "accepted", "abandoned", "undone"]},
+    "accepted_candidate_id": {"oneOf": [{"$ref": "common.schema.json#/$defs/id"}, {"type": "null"}]},
+    "result_keeper_id": {"oneOf": [{"$ref": "common.schema.json#/$defs/id"}, {"type": "null"}]},
+    "preservation": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["outside_mask_identical", "compared_frames", "evidence_id", "checked_at"],
+          "additionalProperties": false,
+          "properties": {
+            "outside_mask_identical": {"const": true},
+            "compared_frames": {"type": "integer", "minimum": 0},
+            "evidence_id": {"$ref": "common.schema.json#/$defs/id"},
+            "checked_at": {"$ref": "common.schema.json#/$defs/dateTime"}
+          }
+        }
+      ]
+    },
+    "undo": {
+      "oneOf": [
+        {"type": "null"},
+        {"type": "object", "required": ["restored_sha256", "at", "regenerated"], "additionalProperties": false,
+         "properties": {"restored_sha256": {"$ref": "common.schema.json#/$defs/sha256"}, "at": {"$ref": "common.schema.json#/$defs/dateTime"}, "regenerated": {"const": false}}}
+      ]
+    },
+    "whole_song_rerender": {"const": false},
+    "created_at": {"$ref": "common.schema.json#/$defs/dateTime"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"state": {"enum": ["accepted", "undone"]}}},
+      "then": {"properties": {"accepted_candidate_id": {"type": "string"}, "result_keeper_id": {"type": "string"}, "preservation": {"type": "object"}}},
+      "else": {"properties": {"accepted_candidate_id": {"type": "null"}, "result_keeper_id": {"type": "null"}}}
+    },
+    {
+      "if": {"properties": {"state": {"const": "undone"}}},
+      "then": {"properties": {"undo": {"type": "object"}}},
+      "else": {"properties": {"undo": {"type": "null"}}}
+    }
+  ],
+  "$defs": {
+    "range": {
+      "type": "object",
+      "required": ["start_frame", "end_frame"],
+      "additionalProperties": false,
+      "properties": {"start_frame": {"type": "integer", "minimum": 0}, "end_frame": {"type": "integer", "minimum": 1}}
+    }
+  }
+}

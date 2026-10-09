@@ -1,0 +1,42 @@
+{
+  "accepted_candidate_id": null,
+  "base_artifact_sha256": "2789a942c9533e6ecec15d6b9e0942389ba2f1e3f6fc664356f54291a9f0e884",
+  "candidate_ids": [],
+  "created_at": "2026-10-09T11:30:00Z",
+  "crossfade": {
+    "in_frames": 2205,
+    "out_frames": 2205
+  },
+  "domain": {
+    "channels": 2,
+    "frames": 5292000,
+    "sample_format": "pcm_f32",
+    "sample_rate": 44100
+  },
+  "id": "eo_hymn",
+  "keeper_id": "kp_hymn",
+  "kind": "edit-operation",
+  "locked_context": [
+    {
+      "end_frame": 1700000,
+      "start_frame": 0
+    },
+    {
+      "end_frame": 5292000,
+      "start_frame": 2700000
+    }
+  ],
+  "mask": {
+    "end_frame": 2646000,
+    "start_frame": 1764000
+  },
+  "op": "replace_section",
+  "preservation": null,
+  "project_id": "prj_hymn",
+  "result_keeper_id": null,
+  "schemaVersion": "1.0.0",
+  "section_name": "chorus",
+  "state": "proposed",
+  "undo": null,
+  "whole_song_rerender": false
+}

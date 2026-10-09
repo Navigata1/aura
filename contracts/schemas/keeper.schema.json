@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "keeper/1",
+  "description": "The candidate Jon keeps from an audition: the song's version of record (GLOSSARY: Keeper). It names the verdict that chose it, and that verdict must prefer it (keeper.matches_verdict). An accepted edit makes a new keeper revision that supersedes the previous one.",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "id", "project_id", "candidate_id", "verdict_id", "artifact_sha256", "keeper_rev",
+               "supersedes_keeper_id", "kept_at"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "keeper"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "id": {"$ref": "common.schema.json#/$defs/id"},
+    "project_id": {"$ref": "common.schema.json#/$defs/id"},
+    "candidate_id": {"$ref": "common.schema.json#/$defs/id"},
+    "verdict_id": {"$ref": "common.schema.json#/$defs/id"},
+    "artifact_sha256": {"$ref": "common.schema.json#/$defs/sha256"},
+    "keeper_rev": {"type": "integer", "minimum": 1},
+    "supersedes_keeper_id": {"oneOf": [{"$ref": "common.schema.json#/$defs/id"}, {"type": "null"}]},
+    "kept_at": {"$ref": "common.schema.json#/$defs/dateTime"}
+  },
+  "if": {"properties": {"keeper_rev": {"const": 1}}},
+  "then": {"properties": {"supersedes_keeper_id": {"type": "null"}}},
+  "else": {"properties": {"supersedes_keeper_id": {"type": "string"}}}
+}

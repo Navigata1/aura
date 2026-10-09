@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "eval-brief/1",
+  "description": "One evaluation case (GLOSSARY: Brief): a SongSpec with its seed in a named feel and operator lane, run the same way for every route and profile compared. Each brief runs in its own lane: an LLC brief never names YuE2, Demucs or a non-commercial scorer (lane.eval).",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "id", "set", "case", "feel", "lane", "seed", "song", "compared", "candidates_per_arm", "reference_ids", "notes"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "eval-brief"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "id": {"$ref": "common.schema.json#/$defs/id"},
+    "set": {"enum": ["smoke", "benchmark"]},
+    "case": {"type": "string", "pattern": "^[a-z][a-z0-9_]{1,63}$"},
+    "feel": {"$ref": "common.schema.json#/$defs/feel"},
+    "lane": {"$ref": "common.schema.json#/$defs/operatorLane"},
+    "seed": {
+      "type": "object",
+      "required": ["seed_kind", "sha256"],
+      "additionalProperties": false,
+      "properties": {
+        "seed_kind": {"enum": ["hum", "midi", "lyrics", "none"]},
+        "sha256": {"oneOf": [{"$ref": "common.schema.json#/$defs/sha256"}, {"type": "null"}]}
+      }
+    },
+    "song": {"oneOf": [{"$ref": "common.schema.json#/$defs/songRef"}, {"type": "null"}]},
+    "compared": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["route", "profile_id"],
+        "additionalProperties": false,
+        "properties": {"route": {"$ref": "common.schema.json#/$defs/route"}, "profile_id": {"$ref": "common.schema.json#/$defs/slug"}}
+      }
+    },
+    "candidates_per_arm": {"type": "integer", "minimum": 1, "maximum": 8, "description": "Equal for every arm (equal-candidate track)."},
+    "reference_ids": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/id"}},
+    "notes": {"type": "string", "maxLength": 1000}
+  },
+  "if": {"properties": {"set": {"const": "smoke"}}},
+  "then": {
+    "properties": {
+      "case": {
+        "enum": ["hummed_melody", "midi_chord_seed", "guide_vocal_corrected_lyrics", "instrumental_no_vocal", "three_reference_roles",
+                 "one_word_replace", "chorus_replace_protected_verses", "over_four_minutes", "sparse_acoustic_worship", "dense_pop",
+                 "rhythm_heavy", "cinematic_instrumental_bed"]
+      }
+    }
+  }
+}

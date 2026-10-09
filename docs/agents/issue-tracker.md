@@ -50,7 +50,9 @@ Used by `/wayfinder`. The **map** is a single issue with **child** issues as tic
 - Repo: `Navigata1/aura` (private). The default `gh` account on this machine is `IslandDevCrew`; run every
   `gh` command for this repo with `GH_TOKEN="$(gh auth token --user Navigata1)"` so the global active account
   is never switched.
-- Ticket workflow: one issue per ticket → one branch `ticket/<NN>-<slug>` → one PR into `main` with
-  `Closes #<issue>` → required CI checks green → squash-merge → issue closed by the merge.
+- Ticket workflow: one issue per ticket → one branch `ticket/<NN>-<slug>` → one PR into `integration` (O-01) with
+  `Closes #<issue>` → required CI checks green → squash-merge → issue closed by the merge. `main` advances only by
+  Jon's release merge from `integration`. Preconditions (P01…) are `ready-for-human` issues that block T01.
 - Labels in use: `ready-for-agent`, `ready-for-human`, `needs-info`, `needs-triage`, `wontfix`, plus
-  `lane:engine`, `lane:studio`, `lane:voice`, `lane:eval`, `lane:shared`, `area:<name>`, `spec`, `gate:evidence`.
+  `stream:engine`, `stream:studio`, `stream:voice`, `stream:eval`, `stream:shared`, `area:<name>`, `spec`, `gate:evidence`.
+  The `stream:*` labels name work streams; "lane" alone always means operator lane (GLOSSARY).

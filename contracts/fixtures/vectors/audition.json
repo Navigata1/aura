@@ -1,0 +1,65 @@
+{
+  "cases": [
+    {
+      "derivation": "Quietest is -15.40; A is lowered by 1.20, B untouched.",
+      "expected_gains": {
+        "A": "-1.20",
+        "B": "0.00"
+      },
+      "loudness": {
+        "A": "-14.20",
+        "B": "-15.40"
+      },
+      "name": "two arms",
+      "op": "gains"
+    },
+    {
+      "derivation": "No arm moves.",
+      "expected_gains": {
+        "A": "0.00",
+        "B": "0.00"
+      },
+      "loudness": {
+        "A": "-14.00",
+        "B": "-14.00"
+      },
+      "name": "equal loudness",
+      "op": "gains"
+    },
+    {
+      "derivation": "Quietest -12.55: A -9.00 -> -3.55; C -10.10 -> -2.45.",
+      "expected_gains": {
+        "A": "-3.55",
+        "B": "0.00",
+        "C": "-2.45"
+      },
+      "loudness": {
+        "A": "-9.00",
+        "B": "-12.55",
+        "C": "-10.10"
+      },
+      "name": "three arms",
+      "op": "gains"
+    },
+    {
+      "derivation": "Mapping sorted by label, canonical JSON (sorted keys, no spaces), '|', the nonce; hashed with sha256.",
+      "expected_commitment": "99ee4635d0853cda7b834c368ae531e1d2873a9aaef2ac32eed6f94feef034e3",
+      "mapping": [
+        {
+          "candidate_id": "cand_a",
+          "label": "B"
+        },
+        {
+          "candidate_id": "cand_b",
+          "label": "A"
+        }
+      ],
+      "name": "commitment",
+      "nonce": "0000000000000000000000000000000000000000000000000000000000000001",
+      "op": "commitment",
+      "preimage": "[{\"candidate_id\":\"cand_b\",\"label\":\"A\"},{\"candidate_id\":\"cand_a\",\"label\":\"B\"}]|0000000000000000000000000000000000000000000000000000000000000001"
+    }
+  ],
+  "kind": "fixture.audition",
+  "schemaVersion": "1.0.0"
+}

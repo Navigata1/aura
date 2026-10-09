@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-09T10:30:40Z",
+  "data": {
+    "state": "ready"
+  },
+  "kind": "event",
+  "schemaVersion": "1.0.0",
+  "seq": 3,
+  "subject_id": "job_cb",
+  "type": "job.state"
+}

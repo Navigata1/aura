@@ -1,0 +1,53 @@
+{
+  "candidate_ids": [
+    "cand_va",
+    "cand_vb"
+  ],
+  "compute_profile_id": "cp_tier4",
+  "created_at": "2026-10-09T11:04:00Z",
+  "declined": [
+    {
+      "profile_id": "fake-burst",
+      "reason": "fake-burst stands in for YuE2: individual and research lanes only",
+      "reason_code": "lane_forbidden",
+      "route": "R1"
+    }
+  ],
+  "id": "gr_venture",
+  "job_ids": [
+    "job_va",
+    "job_vb"
+  ],
+  "kind": "generation-request",
+  "labels": [
+    "unbenchmarked routes",
+    "Synthetic test output"
+  ],
+  "mode": "auto",
+  "plan": [
+    {
+      "ordinal": 1,
+      "placement": "local",
+      "profile_id": "fake-route-a",
+      "reason": "first in the default route order for the llc lane (unbenchmarked)",
+      "route": "R2-synth",
+      "seed": 21
+    },
+    {
+      "ordinal": 2,
+      "placement": "local",
+      "profile_id": "fake-route-b",
+      "reason": "second eligible profile for the same route",
+      "route": "R2-synth",
+      "seed": 22
+    }
+  ],
+  "project_id": "prj_venture",
+  "quote_ids": [],
+  "schemaVersion": "1.0.0",
+  "session_id": "ses_1",
+  "song": {
+    "rev": 1,
+    "song_id": "song_venture"
+  }
+}

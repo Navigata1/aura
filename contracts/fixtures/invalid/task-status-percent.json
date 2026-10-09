@@ -1,0 +1,48 @@
+{
+  "description": "A percentage in a worker status.",
+  "error_contains": "$.percent",
+  "id": "IR-TASK-STATUS-PERCENT",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "error": null,
+    "job_id": "job_ca",
+    "kind": "task-status",
+    "outputs": [
+      {
+        "audio": {
+          "channels": 2,
+          "frames": 5292000,
+          "sample_format": "pcm_f32",
+          "sample_rate": 44100
+        },
+        "role": "mix",
+        "sha256": "2789a942c9533e6ecec15d6b9e0942389ba2f1e3f6fc664356f54291a9f0e884"
+      }
+    ],
+    "params_actual": {
+      "audio_cover_strength": "0.9",
+      "cover_noise_strength": "0.1"
+    },
+    "percent": 40,
+    "schemaVersion": "1.0.0",
+    "state": "ready",
+    "steps": [
+      {
+        "index": 8,
+        "name": "diffusion",
+        "total": 8
+      }
+    ],
+    "timings": {
+      "cold": true,
+      "load_ms": 50,
+      "measured_by": "worker-sdk",
+      "peak_rss_bytes": 268435456,
+      "queue_ms": 4,
+      "run_ms": 900
+    }
+  },
+  "record_kind": "task-status",
+  "rule": "No invented percentages",
+  "schemaVersion": "1.0.0"
+}

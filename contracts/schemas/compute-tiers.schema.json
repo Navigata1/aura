@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "compute-tiers/1",
+  "description": "Tier rules 1-4 (O-02, ADR-0003, architecture.md §7.2-§7.3) as data for the pure recommend() function. Every NVIDIA tier needs compute capability 8.0 or higher (BF16); a host with no qualifying accelerator is recommended tier 4 placements for CUDA profiles (burst only) and its MLX profiles are unavailable. Thresholds are decimal strings. Placements are presets; the compute profile resolves them against reachable hosts. A tier the hardware cannot satisfy resolves to burst or unavailable, never silently.",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "thresholds", "tiers"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "compute-tiers"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "thresholds": {
+      "type": "object",
+      "required": ["nvidia_tier12_min_vram_gib", "nvidia_tier3_min_vram_gib", "tier1_min_compute_capability",
+                   "tier2_min_compute_capability", "yue2_min_host_ram_gib", "wsl2_min_memory_gib", "min_driver_linux",
+                   "min_driver_windows", "blackwell_min_compute_capability", "blackwell_bad_cuda_runtime"],
+      "additionalProperties": false,
+      "properties": {
+        "nvidia_tier12_min_vram_gib": {"$ref": "common.schema.json#/$defs/nonNegativeDecimal"},
+        "nvidia_tier3_min_vram_gib": {"$ref": "common.schema.json#/$defs/nonNegativeDecimal"},
+        "tier1_min_compute_capability": {"$ref": "common.schema.json#/$defs/nonNegativeDecimal"},
+        "tier2_min_compute_capability": {"$ref": "common.schema.json#/$defs/nonNegativeDecimal"},
+        "yue2_min_host_ram_gib": {"$ref": "common.schema.json#/$defs/nonNegativeDecimal"},
+        "wsl2_min_memory_gib": {"$ref": "common.schema.json#/$defs/nonNegativeDecimal"},
+        "min_driver_linux": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+$"},
+        "min_driver_windows": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+$"},
+        "blackwell_min_compute_capability": {"$ref": "common.schema.json#/$defs/nonNegativeDecimal"},
+        "blackwell_bad_cuda_runtime": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+$"}
+      }
+    },
+    "tiers": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "required": ["tier", "title", "accelerator", "placements"],
+        "additionalProperties": false,
+        "properties": {
+          "tier": {"$ref": "common.schema.json#/$defs/computeTier"},
+          "title": {"$ref": "common.schema.json#/$defs/shortText"},
+          "accelerator": {"enum": ["apple", "nvidia"]},
+          "placements": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["profile_id", "placement", "condition"],
+              "additionalProperties": false,
+              "properties": {
+                "profile_id": {"$ref": "common.schema.json#/$defs/slug"},
+                "placement": {"$ref": "common.schema.json#/$defs/placementKind", "description": "GLOSSARY placement terms: local (the studio host itself), worker_host (a paired worker host; it resolves to local when the qualifying GPU is on the studio host) or burst. Any smoke precondition lives in condition."},
+                "condition": {"oneOf": [{"$ref": "common.schema.json#/$defs/shortText"}, {"type": "null"}]}
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "description": "Any other contact text.",
+  "error_contains": "$.publicContactText",
+  "id": "IR-PRODUCT-CONTACT",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "kind": "product",
+    "productName": "AURA",
+    "publicContactText": "contact the founder",
+    "schemaVersion": "1.0.0"
+  },
+  "record_kind": "product",
+  "rule": "IDC Rule 07: only the public role address",
+  "schemaVersion": "1.0.0"
+}

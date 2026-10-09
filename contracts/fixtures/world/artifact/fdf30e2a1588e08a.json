@@ -1,0 +1,84 @@
+{
+  "audio": null,
+  "bytes": 1024,
+  "created_at": "2026-10-09T10:10:30Z",
+  "kind": "artifact",
+  "media_type": "application/json",
+  "origin": "analysis",
+  "project_id": "prj_hymn",
+  "provenance": {
+    "allowed_uses": [
+      "analysis"
+    ],
+    "capture": null,
+    "compute": {
+      "compute_profile_id": "cp_tier4",
+      "placement": "local",
+      "tier": 4
+    },
+    "eligible_lanes": [
+      "individual",
+      "llc",
+      "research"
+    ],
+    "engine": {
+      "code_commit": "0000000",
+      "env": {
+        "lock_sha256": "e9d0f0d689296edb8c59268bfdfa26586ce1549dcce9a92db8b656c3cc6beb1e"
+      },
+      "params": {
+        "actual": {},
+        "intent": {}
+      },
+      "profile_id": "analysis-measure",
+      "profile_revision": "37fabb89ff8806e3f20bb5991799515cfd9dbc37fa9d939b4c77d36c3260b15f",
+      "sdk_version": "0.1.0",
+      "seed": null,
+      "weights": null
+    },
+    "host": {
+      "arch": "arm64",
+      "backend": "cpu",
+      "host_class": "cpu/m5pro",
+      "host_id": "host_mac",
+      "os": "darwin"
+    },
+    "import_terms_id": null,
+    "license_chain": [
+      {
+        "code_license": "MIT",
+        "component_id": "pyloudnorm",
+        "obligations": [],
+        "weights_license": "n/a"
+      },
+      {
+        "code_license": "Own code (all rights reserved until Q5)",
+        "component_id": "studio-own-code",
+        "obligations": [],
+        "weights_license": "n/a (no weights)"
+      }
+    ],
+    "operator_lane": "individual",
+    "parents": [
+      {
+        "edge": "analyzed_by",
+        "sha256": "2789a942c9533e6ecec15d6b9e0942389ba2f1e3f6fc664356f54291a9f0e884"
+      }
+    ],
+    "producing_job_id": "job_ma",
+    "record_inputs": [],
+    "timings": {
+      "cold": true,
+      "label": "MEASURED-LOCAL",
+      "load_wall_ms": 50,
+      "measured_by": "worker-sdk",
+      "peak_rss_bytes": 268435456,
+      "run_wall_ms": 900,
+      "total_wall_ms": 950
+    }
+  },
+  "retention_class": "derived",
+  "schemaVersion": "1.0.0",
+  "sha256": "fdf30e2a1588e08a02a0205ca7b65f683d57d280383e3687da974c41ea77294f",
+  "synthetic_test": true
+}

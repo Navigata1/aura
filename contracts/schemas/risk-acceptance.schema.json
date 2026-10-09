@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "risk-acceptance/1",
+  "description": "Jon's signed record accepting one named risk, such as one further use of a Suno import (GLOSSARY: Risk acceptance). It is the only thing that can widen an input's allowed uses, only to engine, conditioning, separation, edit or conversion input, and it is an owner act. It never makes a Suno import an audition arm, an evaluation reference or anchor, a reference, training data or test material (O-08, ADR-0010, ADR-0020).",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "id", "risk", "subject_sha256", "uses_added", "statement", "act"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "risk-acceptance"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "id": {"$ref": "common.schema.json#/$defs/id"},
+    "risk": {"enum": ["suno_further_use"]},
+    "subject_sha256": {"$ref": "common.schema.json#/$defs/sha256"},
+    "uses_added": {
+      "description": "Only engine, conditioning, separation, edit or conversion input can ever be added. Training, an audition arm, an evaluation reference and an evaluation anchor are never accepted: O-08 excludes Suno from the harness, and ADR-0020 excludes it from training.",
+      "allOf": [{"$ref": "common.schema.json#/$defs/allowedUses"},
+                {"minItems": 1, "items": {"enum": ["engine_input", "conditioning", "separation_input", "edit_source", "conversion_input"]}}]
+    },
+    "statement": {"$ref": "common.schema.json#/$defs/text"},
+    "act": {"allOf": [{"$ref": "common.schema.json#/$defs/ownerAct"}, {"properties": {"act": {"const": "accept_risk"}}}]}
+  }
+}

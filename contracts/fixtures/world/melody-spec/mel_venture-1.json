@@ -1,0 +1,76 @@
+{
+  "base_rev": null,
+  "content_sha256": "d19d8c0a1766e3197a611db0d5c941282c674e4a7f68165dafbe53541c9a94d9",
+  "created_at": "2026-10-09T11:00:10Z",
+  "key": {
+    "mode": "major",
+    "tonic": "C"
+  },
+  "kind": "melody-spec",
+  "melody_id": "mel_venture",
+  "notes": [
+    {
+      "confidence": null,
+      "duration_ticks": 960,
+      "id": "n1",
+      "origin": "midi_file",
+      "pitch": 67,
+      "start_tick": 0,
+      "velocity": 90
+    },
+    {
+      "confidence": null,
+      "duration_ticks": 960,
+      "id": "n2",
+      "origin": "midi_file",
+      "pitch": 69,
+      "start_tick": 960,
+      "velocity": 90
+    },
+    {
+      "confidence": null,
+      "duration_ticks": 1920,
+      "id": "n3",
+      "origin": "midi_file",
+      "pitch": 71,
+      "start_tick": 1920,
+      "velocity": 90
+    }
+  ],
+  "phrases": [
+    {
+      "end_tick": 3840,
+      "id": "ph1",
+      "name": "hook",
+      "start_tick": 0
+    }
+  ],
+  "ppq": 960,
+  "project_id": "prj_venture",
+  "quantize": null,
+  "rev": 1,
+  "schemaVersion": "1.0.0",
+  "source": {
+    "assembled_from": null,
+    "capture_sha256": "1ddb4a6c6c3c67c5637936e76c5642ce0981b773cb4febf9674fd295d7a47c84",
+    "seed_kind": "midi_file",
+    "transcription": null
+  },
+  "spec_kind": "melody",
+  "tempo_map": {
+    "meter": [
+      {
+        "denominator": 4,
+        "numerator": 4,
+        "tick": 0
+      }
+    ],
+    "rev": 1,
+    "tempo": [
+      {
+        "tick": 0,
+        "us_per_quarter": 500000
+      }
+    ]
+  }
+}

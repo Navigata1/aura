@@ -1,0 +1,11 @@
+{
+  "kind": "worker-health",
+  "mem": {
+    "device_bytes": null,
+    "rss_bytes": 134217728
+  },
+  "resident_profile": null,
+  "schemaVersion": "1.0.0",
+  "state": "idle",
+  "worker_id": "wkr_fake"
+}

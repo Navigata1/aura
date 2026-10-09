@@ -1,0 +1,88 @@
+{
+  "audio": {
+    "channels": 1,
+    "frames": 5292000,
+    "sample_format": "pcm_f32",
+    "sample_rate": 44100
+  },
+  "bytes": 1024,
+  "created_at": "2026-10-09T10:10:32Z",
+  "kind": "artifact",
+  "media_type": "audio/wav",
+  "origin": "analysis",
+  "project_id": "prj_hymn",
+  "provenance": {
+    "allowed_uses": [
+      "analysis"
+    ],
+    "capture": null,
+    "compute": {
+      "compute_profile_id": "cp_tier4",
+      "placement": "local",
+      "tier": 4
+    },
+    "eligible_lanes": [
+      "individual",
+      "research"
+    ],
+    "engine": {
+      "code_commit": "0000000",
+      "env": {
+        "lock_sha256": "16289026b2e0255de5e6aacae41d146eb8966063c7f7380ac4cd38c40aa31b0b"
+      },
+      "params": {
+        "actual": {},
+        "intent": {}
+      },
+      "profile_id": "fake-separate",
+      "profile_revision": "d50db0285f468c8dd33a4697a23b5625f6e07e3bd8a1cfa3bf09dfe7698b8bfc",
+      "sdk_version": "0.1.0",
+      "seed": null,
+      "weights": null
+    },
+    "host": {
+      "arch": "arm64",
+      "backend": "fake",
+      "host_class": "fake/local",
+      "host_id": "host_mac",
+      "os": "darwin"
+    },
+    "import_terms_id": null,
+    "license_chain": [
+      {
+        "code_license": "Own code (all rights reserved until Q5)",
+        "component_id": "studio-own-code",
+        "obligations": [],
+        "weights_license": "n/a (no weights)"
+      },
+      {
+        "code_license": "Own test code",
+        "component_id": "fake-nc-separator-weights",
+        "obligations": [],
+        "weights_license": "Fixture stand-in for a non-commercial or research-only license"
+      }
+    ],
+    "operator_lane": "individual",
+    "parents": [
+      {
+        "edge": "analyzed_by",
+        "sha256": "2789a942c9533e6ecec15d6b9e0942389ba2f1e3f6fc664356f54291a9f0e884"
+      }
+    ],
+    "producing_job_id": "job_sep",
+    "record_inputs": [],
+    "timings": {
+      "cold": true,
+      "label": "MEASURED-LOCAL",
+      "load_wall_ms": 50,
+      "measured_by": "worker-sdk",
+      "peak_rss_bytes": 268435456,
+      "run_wall_ms": 900,
+      "total_wall_ms": 950
+    }
+  },
+  "retention_class": "derived",
+  "schemaVersion": "1.0.0",
+  "sha256": "c88ebc5ab2432984349930e6cc358dccf486ce4fd359016800eafbc716caa376",
+  "synthetic_test": true
+}

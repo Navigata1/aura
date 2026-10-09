@@ -1,0 +1,493 @@
+{
+  "cases": [
+    {
+      "before": null,
+      "cap_usd": "25.00",
+      "ceiling_usd": "0.38",
+      "derivation": "Nothing spent; 0.00 + 0.38 <= 25.00.",
+      "entries": [],
+      "expected": {
+        "allowed": true,
+        "month_to_date_usd": "0.00",
+        "overrun_blocks": false
+      },
+      "month": "2026-10",
+      "name": "empty month"
+    },
+    {
+      "before": null,
+      "cap_usd": "25.00",
+      "ceiling_usd": "0.38",
+      "derivation": "An open reserve counts at its ceiling: 0.38 + 2.00.",
+      "entries": [
+        {
+          "act": null,
+          "at": "2026-10-02T10:00:00Z",
+          "entry_type": "reserve",
+          "kind": "ledger-entry",
+          "month": "2026-10",
+          "note": "vector",
+          "run_id": "br_x",
+          "schemaVersion": "1.0.0",
+          "seq": 1,
+          "usd": "0.38"
+        },
+        {
+          "act": null,
+          "at": "2026-10-01T00:00:00Z",
+          "entry_type": "fixed_line",
+          "kind": "ledger-entry",
+          "month": "2026-10",
+          "note": "vector",
+          "run_id": null,
+          "schemaVersion": "1.0.0",
+          "seq": 2,
+          "usd": "2.00"
+        }
+      ],
+      "expected": {
+        "allowed": true,
+        "month_to_date_usd": "2.38",
+        "overrun_blocks": false
+      },
+      "month": "2026-10",
+      "name": "open reservation and a fixed line"
+    },
+    {
+      "before": null,
+      "cap_usd": "25.00",
+      "ceiling_usd": "0.38",
+      "derivation": "The settle closes the reserve; only 0.21 counts.",
+      "entries": [
+        {
+          "act": null,
+          "at": "2026-10-02T10:00:00Z",
+          "entry_type": "reserve",
+          "kind": "ledger-entry",
+          "month": "2026-10",
+          "note": "vector",
+          "run_id": "br_x",
+          "schemaVersion": "1.0.0",
+          "seq": 1,
+          "usd": "0.38"
+        },
+        {
+          "act": null,
+          "at": "2026-10-02T10:20:00Z",
+          "entry_type": "settle",
+          "kind": "ledger-entry",
+          "month": "2026-10",
+          "note": "vector",
+          "run_id": "br_x",
+          "schemaVersion": "1.0.0",
+          "seq": 2,
+          "usd": "0.21"
+        }
+      ],
+      "expected": {
+        "allowed": true,
+        "month_to_date_usd": "0.21",
+        "overrun_blocks": false
+      },
+      "month": "2026-10",
+      "name": "settled below the reservation"
+    },
+    {
+      "before": null,
+      "cap_usd": "25.00",
+      "ceiling_usd": "0.38",
+      "derivation": "A released reserve counts nothing.",
+      "entries": [
+        {
+          "act": null,
+          "at": "2026-10-02T10:00:00Z",
+          "entry_type": "reserve",
+          "kind": "ledger-entry",
+          "month": "2026-10",
+          "note": "vector",
+          "run_id": "br_x",
+          "schemaVersion": "1.0.0",
+          "seq": 1,
+          "usd": "0.38"
+        },
+        {
+          "act": null,
+          "at": "2026-10-02T10:01:00Z",
+          "entry_type": "release",
+          "kind": "ledger-entry",
+          "month": "2026-10",
+          "note": "vector",
+          "run_id": "br_x",
+          "schemaVersion": "1.0.0",
+          "seq": 2,
+          "usd": "0.00"
+        }
+      ],
+      "expected": {
+        "allowed": true,
+        "month_to_date_usd": "0.00",
+        "overrun_blocks": false
+      },
+      "month": "2026-10",
+      "name": "released"
+    },
+    {
+      "before": null,
+      "cap_usd": "25.00",
+      "ceiling_usd": "0.38",
+      "derivation": "September's settle is not in October (UTC calendar month, T-09).",
+      "entries": [
+        {
+          "act": null,
+          "at": "2026-09-30T23:50:00Z",
+          "entry_type": "settle",
+          "kind": "ledger-entry",
+          "month": "2026-09",
+          "note": "vector",
+          "run_id": "br_sep",
+          "schemaVersion": "1.0.0",
+          "seq": 1,
+          "usd": "10.00"
+        },
+        {
+          "act": null,
+          "at": "2026-10-01T00:10:00Z",
+          "entry_type": "reserve",
+          "kind": "ledger-entry",
+          "month": "2026-10",
+          "note": "vector",
+          "run_id": "br_x",
+          "schemaVersion": "1.0.0",
+          "seq": 2,
+          "usd": "1.00"
+        }
+      ],
+      "expected": {
+        "allowed": true,
+        "month_to_date_usd": "1.00",
+        "overrun_blocks": false
+      },
+      "month": "2026-10",
+      "name": "month boundary"
+    },
+    {
+      "before": "2026-10-02T10:30:00Z",
+      "cap_usd": "25.00",
+      "ceiling_usd": "0.38",
+      "derivation": "Only entries strictly before the quote count.",
+      "entries": [
+        {
+          "act": null,
+          "at": "2026-10-02T10:00:00Z",
+          "entry_type": "reserve",
+          "kind": "ledger-entry",
+          "month": "2026-10",
+          "note": "vector",
+          "run_id": "br_x",
+          "schemaVersion": "1.0.0",
+          "seq": 1,
+          "usd": "0.38"
+        },
+        {
+          "act": null,
+          "at": "2026-10-02T11:00:00Z",
+          "entry_type": "fixed_line",
+          "kind": "ledger-entry",
+          "month": "2026-10",
+          "note": "vector",
+          "run_id": null,
+          "schemaVersion": "1.0.0",
+          "seq": 2,
+          "usd": "5.00"
+        }
+      ],
+      "expected": {
+        "allowed": true,
+        "month_to_date_usd": "0.38",
+        "overrun_blocks": false
+      },
+      "month": "2026-10",
+      "name": "before a quote"
+    },
+    {
+      "before": null,
+      "cap_usd": "25.00",
+      "ceiling_usd": "0.38",
+      "derivation": "24.80 + 0.38 = 25.18 > 25.00: refused.",
+      "entries": [
+        {
+          "act": null,
+          "at": "2026-10-03T10:00:00Z",
+          "entry_type": "fixed_line",
+          "kind": "ledger-entry",
+          "month": "2026-10",
+          "note": "vector",
+          "run_id": null,
+          "schemaVersion": "1.0.0",
+          "seq": 1,
+          "usd": "24.80"
+        }
+      ],
+      "expected": {
+        "allowed": false,
+        "month_to_date_usd": "24.80",
+        "overrun_blocks": false
+      },
+      "month": "2026-10",
+      "name": "over the cap"
+    },
+    {
+      "before": null,
+      "cap_usd": "25.00",
+      "ceiling_usd": "0.38",
+      "derivation": "24.62 + 0.38 = 25.00 <= 25.00: allowed.",
+      "entries": [
+        {
+          "act": null,
+          "at": "2026-10-03T10:00:00Z",
+          "entry_type": "fixed_line",
+          "kind": "ledger-entry",
+          "month": "2026-10",
+          "note": "vector",
+          "run_id": null,
+          "schemaVersion": "1.0.0",
+          "seq": 1,
+          "usd": "24.62"
+        }
+      ],
+      "expected": {
+        "allowed": true,
+        "month_to_date_usd": "24.62",
+        "overrun_blocks": false
+      },
+      "month": "2026-10",
+      "name": "exactly at the cap"
+    },
+    {
+      "before": null,
+      "cap_usd": "25.00",
+      "ceiling_usd": "0.38",
+      "derivation": "The settle holds the actual 0.60; the overrun marks the 0.22 excess and blocks leases.",
+      "entries": [
+        {
+          "act": null,
+          "at": "2026-10-04T10:00:00Z",
+          "entry_type": "reserve",
+          "kind": "ledger-entry",
+          "month": "2026-10",
+          "note": "vector",
+          "run_id": "br_x",
+          "schemaVersion": "1.0.0",
+          "seq": 1,
+          "usd": "0.38"
+        },
+        {
+          "act": null,
+          "at": "2026-10-04T10:30:00Z",
+          "entry_type": "settle",
+          "kind": "ledger-entry",
+          "month": "2026-10",
+          "note": "vector",
+          "run_id": "br_x",
+          "schemaVersion": "1.0.0",
+          "seq": 2,
+          "usd": "0.60"
+        },
+        {
+          "act": null,
+          "at": "2026-10-04T10:30:01Z",
+          "entry_type": "overrun",
+          "kind": "ledger-entry",
+          "month": "2026-10",
+          "note": "vector",
+          "run_id": "br_x",
+          "schemaVersion": "1.0.0",
+          "seq": 3,
+          "usd": "0.22"
+        }
+      ],
+      "expected": {
+        "allowed": true,
+        "month_to_date_usd": "0.60",
+        "overrun_blocks": true
+      },
+      "month": "2026-10",
+      "name": "overrun not double counted"
+    },
+    {
+      "before": null,
+      "cap_usd": "25.00",
+      "ceiling_usd": "0.38",
+      "derivation": "Jon's acknowledgement (an owner act) lifts the block.",
+      "entries": [
+        {
+          "act": null,
+          "at": "2026-10-04T10:00:00Z",
+          "entry_type": "reserve",
+          "kind": "ledger-entry",
+          "month": "2026-10",
+          "note": "vector",
+          "run_id": "br_x",
+          "schemaVersion": "1.0.0",
+          "seq": 1,
+          "usd": "0.38"
+        },
+        {
+          "act": null,
+          "at": "2026-10-04T10:30:00Z",
+          "entry_type": "settle",
+          "kind": "ledger-entry",
+          "month": "2026-10",
+          "note": "vector",
+          "run_id": "br_x",
+          "schemaVersion": "1.0.0",
+          "seq": 2,
+          "usd": "0.60"
+        },
+        {
+          "act": null,
+          "at": "2026-10-04T10:30:01Z",
+          "entry_type": "overrun",
+          "kind": "ledger-entry",
+          "month": "2026-10",
+          "note": "vector",
+          "run_id": "br_x",
+          "schemaVersion": "1.0.0",
+          "seq": 3,
+          "usd": "0.22"
+        },
+        {
+          "act": {
+            "act": "acknowledge_overrun",
+            "at": "2026-10-04T11:00:00Z",
+            "scope": "owner-ui"
+          },
+          "at": "2026-10-04T11:00:00Z",
+          "entry_type": "overrun_acknowledged",
+          "kind": "ledger-entry",
+          "month": "2026-10",
+          "note": "vector",
+          "run_id": null,
+          "schemaVersion": "1.0.0",
+          "seq": 4,
+          "usd": "0.00"
+        }
+      ],
+      "expected": {
+        "allowed": true,
+        "month_to_date_usd": "0.60",
+        "overrun_blocks": false
+      },
+      "month": "2026-10",
+      "name": "overrun acknowledged"
+    },
+    {
+      "before": null,
+      "cap_usd": "25.00",
+      "ceiling_usd": "0.38",
+      "derivation": "The invoice shows 1.10 the ledger never booked (an orphan pod's storage): 0.30 + 1.10 = 1.40 counts, and new leases wait for Jon.",
+      "entries": [
+        {
+          "act": null,
+          "at": "2026-10-04T10:00:00Z",
+          "entry_type": "reserve",
+          "kind": "ledger-entry",
+          "month": "2026-10",
+          "note": "vector",
+          "run_id": "br_x",
+          "schemaVersion": "1.0.0",
+          "seq": 1,
+          "usd": "0.38"
+        },
+        {
+          "act": null,
+          "at": "2026-10-04T10:30:00Z",
+          "entry_type": "settle",
+          "kind": "ledger-entry",
+          "month": "2026-10",
+          "note": "vector",
+          "run_id": "br_x",
+          "schemaVersion": "1.0.0",
+          "seq": 2,
+          "usd": "0.30"
+        },
+        {
+          "act": null,
+          "at": "2026-10-31T09:00:00Z",
+          "entry_type": "reconcile_adjustment",
+          "kind": "ledger-entry",
+          "month": "2026-10",
+          "note": "vector",
+          "run_id": null,
+          "schemaVersion": "1.0.0",
+          "seq": 3,
+          "usd": "1.10"
+        }
+      ],
+      "expected": {
+        "allowed": true,
+        "month_to_date_usd": "1.40",
+        "overrun_blocks": true
+      },
+      "month": "2026-10",
+      "name": "upward reconciliation"
+    },
+    {
+      "before": null,
+      "cap_usd": "25.00",
+      "ceiling_usd": "0.38",
+      "derivation": "Acknowledging lifts the block; the adjustment still counts toward the cap.",
+      "entries": [
+        {
+          "act": null,
+          "at": "2026-10-04T10:30:00Z",
+          "entry_type": "settle",
+          "kind": "ledger-entry",
+          "month": "2026-10",
+          "note": "vector",
+          "run_id": "br_y",
+          "schemaVersion": "1.0.0",
+          "seq": 1,
+          "usd": "0.30"
+        },
+        {
+          "act": null,
+          "at": "2026-10-31T09:00:00Z",
+          "entry_type": "reconcile_adjustment",
+          "kind": "ledger-entry",
+          "month": "2026-10",
+          "note": "vector",
+          "run_id": null,
+          "schemaVersion": "1.0.0",
+          "seq": 2,
+          "usd": "1.10"
+        },
+        {
+          "act": {
+            "act": "acknowledge_overrun",
+            "at": "2026-10-31T09:05:00Z",
+            "scope": "owner-ui"
+          },
+          "at": "2026-10-31T09:05:00Z",
+          "entry_type": "overrun_acknowledged",
+          "kind": "ledger-entry",
+          "month": "2026-10",
+          "note": "vector",
+          "run_id": null,
+          "schemaVersion": "1.0.0",
+          "seq": 3,
+          "usd": "0.00"
+        }
+      ],
+      "expected": {
+        "allowed": true,
+        "month_to_date_usd": "1.40",
+        "overrun_blocks": false
+      },
+      "month": "2026-10",
+      "name": "upward reconciliation acknowledged"
+    }
+  ],
+  "kind": "fixture.ledger",
+  "schemaVersion": "1.0.0"
+}

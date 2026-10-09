@@ -1,0 +1,35 @@
+{
+  "description": "A preregistered listening record cites a preregistration that was never committed.",
+  "expect_rules": [
+    "evidence.gates"
+  ],
+  "id": "SC-EVIDENCE-UNKNOWN-PREREG",
+  "kind": "fixture.scenario",
+  "overlay": [
+    {
+      "attachments": [],
+      "check": "listening-preregistered",
+      "checks": [],
+      "gate_id": null,
+      "host_class": "mlx/m5pro",
+      "id": "ev_bad_prereg",
+      "kind": "evidence",
+      "measured": [],
+      "prereg_sha256": "b8dd5a13363583b48f08c5b92ecf5feb719225b8a042771e2c39d01e4574cdd1",
+      "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+      "recorded_at": "2026-10-09T12:00:00Z",
+      "result": "pass",
+      "schemaVersion": "1.0.0",
+      "subject": {
+        "subject_id": "ace-2b-sft-mlx",
+        "subject_type": "profile"
+      },
+      "synthetic": false,
+      "verdict_ids": [
+        "vd_hymn"
+      ]
+    }
+  ],
+  "remove": [],
+  "schemaVersion": "1.0.0"
+}

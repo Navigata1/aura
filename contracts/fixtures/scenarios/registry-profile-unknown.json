@@ -1,0 +1,57 @@
+{
+  "description": "A job names a profile nobody declared.",
+  "expect_rules": [
+    "registry.profile_known"
+  ],
+  "id": "SC-REGISTRY-PROFILE-UNKNOWN",
+  "kind": "fixture.scenario",
+  "overlay": [
+    {
+      "approval_id": null,
+      "compute_profile_id": "cp_tier4",
+      "cost": {
+        "basis": "local_zero",
+        "usd": "0.00"
+      },
+      "created_at": "2026-10-09T12:00:00Z",
+      "egress": [],
+      "error": null,
+      "history": [
+        {
+          "at": "2026-10-09T12:00:00Z",
+          "state": "queued"
+        }
+      ],
+      "id": "job_unknown",
+      "inputs": [],
+      "job_kind": "generate",
+      "kind": "job",
+      "lane": "individual",
+      "outputs": [],
+      "params": {
+        "actual": {},
+        "intent": {}
+      },
+      "parent_job_id": null,
+      "placement": {
+        "host_class": "fake/local",
+        "kind": "local"
+      },
+      "profile_id": "ace-9b-mlx",
+      "profile_revision": "01eb188536a0de86d42627e34e8b5df513a5f53e00b4656f66b0850ff0eca3fa",
+      "project_id": "prj_hymn",
+      "quote_id": null,
+      "record_inputs": [],
+      "request_id": null,
+      "retry": null,
+      "schemaVersion": "1.0.0",
+      "seed": 1,
+      "session_id": "ses_1",
+      "state": "queued",
+      "steps": [],
+      "task": "cover"
+    }
+  ],
+  "remove": [],
+  "schemaVersion": "1.0.0"
+}

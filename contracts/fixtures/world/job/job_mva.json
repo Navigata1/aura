@@ -1,0 +1,75 @@
+{
+  "approval_id": null,
+  "compute_profile_id": "cp_tier4",
+  "cost": {
+    "basis": "local_zero",
+    "usd": "0.00"
+  },
+  "created_at": "2026-10-09T11:04:31Z",
+  "egress": [],
+  "error": null,
+  "history": [
+    {
+      "at": "2026-10-09T11:04:31Z",
+      "state": "queued"
+    },
+    {
+      "at": "2026-10-09T11:04:32Z",
+      "state": "preparing"
+    },
+    {
+      "at": "2026-10-09T11:04:33Z",
+      "state": "loading"
+    },
+    {
+      "at": "2026-10-09T11:04:34Z",
+      "state": "generating"
+    },
+    {
+      "at": "2026-10-09T11:04:40Z",
+      "state": "ready"
+    }
+  ],
+  "id": "job_mva",
+  "inputs": [
+    {
+      "role": "candidate",
+      "sha256": "248cebebf990bcf02b2df4ba0dc4b3aaaa1bf7fa1b6003d90761ceffd39174da"
+    }
+  ],
+  "job_kind": "measure",
+  "kind": "job",
+  "lane": "llc",
+  "outputs": [
+    {
+      "role": "preview",
+      "sha256": "d7a8c786255865a2feea62fcb6b94d6d3199d14df310cfd0c54b6831d366cb96"
+    },
+    {
+      "role": "measures",
+      "sha256": "99446b40ff4614f7515e834e9c2bf248db36fbf949c66662fe23db7e0a32e118"
+    }
+  ],
+  "params": {
+    "actual": {},
+    "intent": {}
+  },
+  "parent_job_id": "job_va",
+  "placement": {
+    "host_class": "cpu/m5pro",
+    "kind": "local"
+  },
+  "profile_id": "analysis-measure",
+  "profile_revision": "37fabb89ff8806e3f20bb5991799515cfd9dbc37fa9d939b4c77d36c3260b15f",
+  "project_id": "prj_venture",
+  "quote_id": null,
+  "record_inputs": [],
+  "request_id": null,
+  "retry": null,
+  "schemaVersion": "1.0.0",
+  "seed": null,
+  "session_id": "ses_1",
+  "state": "ready",
+  "steps": [],
+  "task": "measure"
+}

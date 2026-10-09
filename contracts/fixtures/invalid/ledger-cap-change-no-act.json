@@ -1,0 +1,21 @@
+{
+  "description": "A cap change without an owner act.",
+  "error_contains": "$.act",
+  "id": "IR-LEDGER-CAP-CHANGE-NO-ACT",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "act": null,
+    "at": "2026-10-09T10:22:01Z",
+    "entry_type": "cap_change",
+    "kind": "ledger-entry",
+    "month": "2026-10",
+    "note": "reserve at ceiling before provisioning",
+    "run_id": null,
+    "schemaVersion": "1.0.0",
+    "seq": 1,
+    "usd": "0.38"
+  },
+  "record_kind": "ledger-entry",
+  "rule": "Raising the cap is an owner act",
+  "schemaVersion": "1.0.0"
+}

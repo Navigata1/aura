@@ -1,0 +1,25 @@
+{
+  "act": {
+    "act": "give_verdict",
+    "at": "2026-10-09T11:10:00Z",
+    "scope": "owner-ui"
+  },
+  "audition_id": "aud_venture",
+  "axes": [],
+  "evidence_kind": "listening-unregistered",
+  "id": "vd_venture",
+  "kind": "verdict",
+  "preferred": "A",
+  "problem_intervals": [],
+  "schemaVersion": "1.0.0",
+  "seconds_listened": [
+    {
+      "label": "A",
+      "seconds": 60
+    },
+    {
+      "label": "B",
+      "seconds": 45
+    }
+  ]
+}

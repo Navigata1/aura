@@ -1,0 +1,32 @@
+{
+  "candidates_per_arm": 1,
+  "case": "hummed_melody",
+  "compared": [
+    {
+      "profile_id": "fake-route-a",
+      "route": "R2-synth"
+    },
+    {
+      "profile_id": "fake-burst",
+      "route": "R1"
+    }
+  ],
+  "feel": "broad_mix",
+  "id": "brief_smoke_01",
+  "kind": "eval-brief",
+  "lane": "individual",
+  "notes": "Fixture brief; each brief runs in its own lane.",
+  "reference_ids": [
+    "ref_worship"
+  ],
+  "schemaVersion": "1.0.0",
+  "seed": {
+    "seed_kind": "hum",
+    "sha256": "dc777e3766c902a35936fea39ee9ceecee87a562e63e9fb42a090dc80205d7e7"
+  },
+  "set": "smoke",
+  "song": {
+    "rev": 1,
+    "song_id": "song_hymn"
+  }
+}

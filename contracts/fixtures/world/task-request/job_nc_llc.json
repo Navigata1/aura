@@ -1,0 +1,12 @@
+{
+  "deadline_s": 600,
+  "inputs": [],
+  "job_id": "job_nc_llc",
+  "kind": "task-request",
+  "lane": "llc",
+  "params": {},
+  "profile_id": "fake-nc",
+  "schemaVersion": "1.0.0",
+  "seed": 3,
+  "task": "cover"
+}

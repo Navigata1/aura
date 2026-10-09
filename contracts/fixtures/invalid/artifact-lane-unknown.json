@@ -1,0 +1,112 @@
+{
+  "description": "An unknown lane.",
+  "error_contains": "$.provenance.operator_lane",
+  "id": "IR-ARTIFACT-LANE-UNKNOWN",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "audio": {
+      "channels": 2,
+      "frames": 5292000,
+      "sample_format": "pcm_f32",
+      "sample_rate": 44100
+    },
+    "bytes": 1024,
+    "created_at": "2026-10-09T10:10:20Z",
+    "kind": "artifact",
+    "media_type": "audio/wav",
+    "origin": "generated_mix",
+    "project_id": "prj_hymn",
+    "provenance": {
+      "allowed_uses": [
+        "listen",
+        "loudness_measure",
+        "dsp_finish",
+        "analysis",
+        "engine_input",
+        "conditioning",
+        "separation_input",
+        "edit_source",
+        "audition_arm",
+        "export"
+      ],
+      "capture": null,
+      "compute": {
+        "compute_profile_id": "cp_tier4",
+        "placement": "local",
+        "tier": 4
+      },
+      "eligible_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "engine": {
+        "code_commit": "0000000",
+        "env": {
+          "lock_sha256": "62ee2062003c017198282cf270b22373d70c6a49332606c2df431981d984005f"
+        },
+        "params": {
+          "actual": {
+            "audio_cover_strength": "0.9",
+            "cover_noise_strength": "0.1"
+          },
+          "intent": {
+            "audio_cover_strength": "0.9"
+          }
+        },
+        "profile_id": "fake-route-a",
+        "profile_revision": "f1a45b61325bc9f8d89598ae620e16d601aeb44188758ff87dfa8a237f114185",
+        "sdk_version": "0.1.0",
+        "seed": 11,
+        "weights": null
+      },
+      "host": {
+        "arch": "arm64",
+        "backend": "fake",
+        "host_class": "fake/local",
+        "host_id": "host_mac",
+        "os": "darwin"
+      },
+      "import_terms_id": null,
+      "license_chain": [
+        {
+          "code_license": "Own code (all rights reserved until Q5)",
+          "component_id": "studio-own-code",
+          "obligations": [],
+          "weights_license": "n/a (no weights)"
+        },
+        {
+          "code_license": "Own code (all rights reserved until Q5)",
+          "component_id": "neutralvoice",
+          "obligations": [],
+          "weights_license": "n/a (no weights)"
+        }
+      ],
+      "operator_lane": "company",
+      "parents": [
+        {
+          "edge": "derived_from",
+          "sha256": "b3e0de98dce4bf8a946860ff0439f9b771c19af51359558ec7a87fb7f59f06bf"
+        }
+      ],
+      "producing_job_id": "job_ca",
+      "record_inputs": [],
+      "timings": {
+        "cold": true,
+        "label": "MEASURED-LOCAL",
+        "load_wall_ms": 50,
+        "measured_by": "worker-sdk",
+        "peak_rss_bytes": 268435456,
+        "run_wall_ms": 900,
+        "total_wall_ms": 950
+      }
+    },
+    "retention_class": "irreplaceable",
+    "schemaVersion": "1.0.0",
+    "sha256": "2789a942c9533e6ecec15d6b9e0942389ba2f1e3f6fc664356f54291a9f0e884",
+    "synthetic_test": true
+  },
+  "record_kind": "artifact",
+  "rule": "Lanes are individual, llc, research",
+  "schemaVersion": "1.0.0"
+}

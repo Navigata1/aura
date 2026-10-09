@@ -1,0 +1,133 @@
+{
+  "description": "Tempo as a string.",
+  "error_contains": "$.tempo_map.tempo[0].us_per_quarter",
+  "id": "IR-MELODY-TEMPO-NOT-INTEGER",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "base_rev": null,
+    "content_sha256": "4d63cd759a3b381d73d9bec75ea8a2adea2249911b467413972bb162e18e8791",
+    "created_at": "2026-10-09T10:01:20Z",
+    "key": {
+      "mode": "major",
+      "tonic": "C"
+    },
+    "kind": "melody-spec",
+    "melody_id": "mel_hymn",
+    "notes": [
+      {
+        "confidence": "0.91",
+        "duration_ticks": 960,
+        "id": "n1",
+        "origin": "transcribed",
+        "pitch": 60,
+        "start_tick": 0,
+        "velocity": 90
+      },
+      {
+        "confidence": "0.64",
+        "duration_ticks": 960,
+        "id": "n2",
+        "origin": "transcribed",
+        "pitch": 62,
+        "start_tick": 960,
+        "velocity": 90
+      },
+      {
+        "confidence": "0.88",
+        "duration_ticks": 1920,
+        "id": "n3",
+        "origin": "transcribed",
+        "pitch": 64,
+        "start_tick": 1920,
+        "velocity": 90
+      },
+      {
+        "confidence": "0.79",
+        "duration_ticks": 1920,
+        "id": "n4",
+        "origin": "transcribed",
+        "pitch": 65,
+        "start_tick": 3840,
+        "velocity": 90
+      },
+      {
+        "confidence": "0.83",
+        "duration_ticks": 1920,
+        "id": "n5",
+        "origin": "transcribed",
+        "pitch": 67,
+        "start_tick": 5760,
+        "velocity": 90
+      }
+    ],
+    "phrases": [
+      {
+        "end_tick": 3840,
+        "id": "ph1",
+        "name": "opening line",
+        "start_tick": 0
+      },
+      {
+        "end_tick": 7680,
+        "id": "ph2",
+        "name": "answer line",
+        "start_tick": 3840
+      }
+    ],
+    "ppq": 960,
+    "project_id": "prj_hymn",
+    "quantize": null,
+    "rev": 1,
+    "schemaVersion": "1.0.0",
+    "source": {
+      "assembled_from": null,
+      "capture_sha256": "dc777e3766c902a35936fea39ee9ceecee87a562e63e9fb42a090dc80205d7e7",
+      "seed_kind": "hum",
+      "transcription": {
+        "eligible_lanes": [
+          "individual",
+          "llc",
+          "research"
+        ],
+        "job_id": "job_tr1",
+        "license_chain": [
+          {
+            "code_license": "ISC",
+            "component_id": "librosa-pyin",
+            "obligations": [],
+            "weights_license": "n/a (no weights)"
+          },
+          {
+            "code_license": "Own code (all rights reserved until Q5)",
+            "component_id": "studio-own-code",
+            "obligations": [],
+            "weights_license": "n/a (no weights)"
+          }
+        ],
+        "method": "pyin-hmm",
+        "note": "unverified on real hums",
+        "profile_id": "analysis-transcribe-pyin-hmm"
+      }
+    },
+    "spec_kind": "melody",
+    "tempo_map": {
+      "meter": [
+        {
+          "denominator": 4,
+          "numerator": 4,
+          "tick": 0
+        }
+      ],
+      "rev": 1,
+      "tempo": [
+        {
+          "tick": 0,
+          "us_per_quarter": "500000"
+        }
+      ]
+    }
+  },
+  "record_kind": "melody-spec",
+  "rule": "ADR-0033: integer microseconds per quarter",
+  "schemaVersion": "1.0.0"
+}

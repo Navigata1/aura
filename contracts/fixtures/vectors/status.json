@@ -1,0 +1,2003 @@
+{
+  "cases": [
+    {
+      "derivation": "Nothing has been checked.",
+      "evidence": [],
+      "expected": "declared",
+      "host_class": "mlx/m5pro",
+      "name": "no evidence",
+      "profile_id": "ace-2b-sft-mlx",
+      "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+    },
+    {
+      "derivation": "installed needs install AND conformance.",
+      "evidence": [
+        {
+          "attachments": [],
+          "check": "install",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "mlx/m5pro",
+          "id": "ev_i",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:00:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        }
+      ],
+      "expected": "declared",
+      "host_class": "mlx/m5pro",
+      "name": "install only",
+      "profile_id": "ace-2b-sft-mlx",
+      "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+    },
+    {
+      "derivation": "Both records pass at this revision and host class.",
+      "evidence": [
+        {
+          "attachments": [],
+          "check": "install",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "mlx/m5pro",
+          "id": "ev_i",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:00:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "conformance",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "mlx/m5pro",
+          "id": "ev_c",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:05:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        }
+      ],
+      "expected": "installed",
+      "host_class": "mlx/m5pro",
+      "name": "install and conformance",
+      "profile_id": "ace-2b-sft-mlx",
+      "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+    },
+    {
+      "derivation": "The declared smoke gate passed with real evidence: every declared check passes and Jon's verdict answers 'not garbled'.",
+      "evidence": [
+        {
+          "attachments": [],
+          "check": "install",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "mlx/m5pro",
+          "id": "ev_i",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:00:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "conformance",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "mlx/m5pro",
+          "id": "ev_c",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:05:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "smoke",
+          "checks": [
+            {
+              "check": "install_bytes_match_manifest",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "conformance",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "decodes",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "non_silent",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "duration_within_tolerance",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "owner_not_garbled",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": "vd_smoke"
+            }
+          ],
+          "gate_id": "smoke.ace-2b-sft-mlx",
+          "host_class": "mlx/m5pro",
+          "id": "ev_s",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:10:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": [
+            "vd_smoke"
+          ]
+        }
+      ],
+      "expected": "smoke-passed",
+      "host_class": "mlx/m5pro",
+      "name": "smoke passes",
+      "profile_id": "ace-2b-sft-mlx",
+      "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+    },
+    {
+      "derivation": "The record has no owner_not_garbled check (a verdict id is the only way to answer it), so Jon never listened; it cannot promote.",
+      "evidence": [
+        {
+          "attachments": [],
+          "check": "install",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "mlx/m5pro",
+          "id": "ev_i",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:00:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "conformance",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "mlx/m5pro",
+          "id": "ev_c",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:05:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "smoke",
+          "checks": [
+            {
+              "check": "install_bytes_match_manifest",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "conformance",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "decodes",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "non_silent",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "duration_within_tolerance",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            }
+          ],
+          "gate_id": "smoke.ace-2b-sft-mlx",
+          "host_class": "mlx/m5pro",
+          "id": "ev_sne",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:10:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        }
+      ],
+      "expected": "installed",
+      "host_class": "mlx/m5pro",
+      "name": "smoke pass without owner verdict",
+      "profile_id": "ace-2b-sft-mlx",
+      "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+    },
+    {
+      "derivation": "install_bytes_match_manifest is declared by the gate but absent from the record.",
+      "evidence": [
+        {
+          "attachments": [],
+          "check": "install",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "mlx/m5pro",
+          "id": "ev_i",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:00:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "conformance",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "mlx/m5pro",
+          "id": "ev_c",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:05:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "smoke",
+          "checks": [
+            {
+              "check": "conformance",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "decodes",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "non_silent",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "duration_within_tolerance",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "owner_not_garbled",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": "vd_smoke"
+            }
+          ],
+          "gate_id": "smoke.ace-2b-sft-mlx",
+          "host_class": "mlx/m5pro",
+          "id": "ev_ssh",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:10:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": [
+            "vd_smoke"
+          ]
+        }
+      ],
+      "expected": "installed",
+      "host_class": "mlx/m5pro",
+      "name": "smoke pass missing a declared check",
+      "profile_id": "ace-2b-sft-mlx",
+      "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+    },
+    {
+      "derivation": "ACE's smoke gate does not allow synthetic evidence (ADR-0027).",
+      "evidence": [
+        {
+          "attachments": [],
+          "check": "install",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "mlx/m5pro",
+          "id": "ev_i",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:00:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "conformance",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "mlx/m5pro",
+          "id": "ev_c",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:05:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "smoke",
+          "checks": [
+            {
+              "check": "install_bytes_match_manifest",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "conformance",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "decodes",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "non_silent",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "duration_within_tolerance",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "owner_not_garbled",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": "vd_smoke"
+            }
+          ],
+          "gate_id": "smoke.ace-2b-sft-mlx",
+          "host_class": "mlx/m5pro",
+          "id": "ev_ss",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:10:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": true,
+          "verdict_ids": [
+            "vd_smoke"
+          ]
+        }
+      ],
+      "expected": "installed",
+      "host_class": "mlx/m5pro",
+      "name": "synthetic smoke on a real engine",
+      "profile_id": "ace-2b-sft-mlx",
+      "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+    },
+    {
+      "derivation": "Preregistered benchmark pass.",
+      "evidence": [
+        {
+          "attachments": [],
+          "check": "install",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "mlx/m5pro",
+          "id": "ev_i",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:00:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "conformance",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "mlx/m5pro",
+          "id": "ev_c",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:05:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "smoke",
+          "checks": [
+            {
+              "check": "install_bytes_match_manifest",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "conformance",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "decodes",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "non_silent",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "duration_within_tolerance",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "owner_not_garbled",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": "vd_smoke"
+            }
+          ],
+          "gate_id": "smoke.ace-2b-sft-mlx",
+          "host_class": "mlx/m5pro",
+          "id": "ev_s",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:10:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": [
+            "vd_smoke"
+          ]
+        },
+        {
+          "attachments": [],
+          "check": "benchmark",
+          "checks": [],
+          "gate_id": "benchmark.ace-2b-sft-mlx",
+          "host_class": "mlx/m5pro",
+          "id": "ev_b",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": "543e7884242778bc74f963a0b870b28a501f53ad72f51f13a41d7afece3075a8",
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-12T10:00:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        }
+      ],
+      "expected": "benchmarked",
+      "host_class": "mlx/m5pro",
+      "name": "benchmark with a preregistration",
+      "profile_id": "ace-2b-sft-mlx",
+      "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+    },
+    {
+      "derivation": "A failing record after promotion disables.",
+      "evidence": [
+        {
+          "attachments": [],
+          "check": "install",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "mlx/m5pro",
+          "id": "ev_i",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:00:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "conformance",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "mlx/m5pro",
+          "id": "ev_c",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:05:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "smoke",
+          "checks": [
+            {
+              "check": "install_bytes_match_manifest",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "conformance",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "decodes",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "non_silent",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "duration_within_tolerance",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "owner_not_garbled",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": "vd_smoke"
+            }
+          ],
+          "gate_id": "smoke.ace-2b-sft-mlx",
+          "host_class": "mlx/m5pro",
+          "id": "ev_s",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:10:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": [
+            "vd_smoke"
+          ]
+        },
+        {
+          "attachments": [],
+          "check": "smoke",
+          "checks": [
+            {
+              "check": "decodes",
+              "measured": [],
+              "result": "fail",
+              "verdict_id": null
+            }
+          ],
+          "gate_id": "smoke.ace-2b-sft-mlx",
+          "host_class": "mlx/m5pro",
+          "id": "ev_f",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-11T10:00:00Z",
+          "result": "fail",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        }
+      ],
+      "expected": "disabled",
+      "host_class": "mlx/m5pro",
+      "name": "later failing smoke",
+      "profile_id": "ace-2b-sft-mlx",
+      "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+    },
+    {
+      "derivation": "disabled is terminal.",
+      "evidence": [
+        {
+          "attachments": [],
+          "check": "install",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "mlx/m5pro",
+          "id": "ev_i",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:00:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "conformance",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "mlx/m5pro",
+          "id": "ev_c",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:05:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "smoke",
+          "checks": [
+            {
+              "check": "install_bytes_match_manifest",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "conformance",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "decodes",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "non_silent",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "duration_within_tolerance",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "owner_not_garbled",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": "vd_smoke"
+            }
+          ],
+          "gate_id": "smoke.ace-2b-sft-mlx",
+          "host_class": "mlx/m5pro",
+          "id": "ev_s",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:10:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": [
+            "vd_smoke"
+          ]
+        },
+        {
+          "attachments": [],
+          "check": "smoke",
+          "checks": [
+            {
+              "check": "decodes",
+              "measured": [],
+              "result": "fail",
+              "verdict_id": null
+            }
+          ],
+          "gate_id": "smoke.ace-2b-sft-mlx",
+          "host_class": "mlx/m5pro",
+          "id": "ev_f",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-11T10:00:00Z",
+          "result": "fail",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "benchmark",
+          "checks": [],
+          "gate_id": "benchmark.ace-2b-sft-mlx",
+          "host_class": "mlx/m5pro",
+          "id": "ev_b",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": "543e7884242778bc74f963a0b870b28a501f53ad72f51f13a41d7afece3075a8",
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-12T10:00:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        }
+      ],
+      "expected": "disabled",
+      "host_class": "mlx/m5pro",
+      "name": "benchmark after a failure stays disabled",
+      "profile_id": "ace-2b-sft-mlx",
+      "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+    },
+    {
+      "derivation": "A failure while declared changes nothing.",
+      "evidence": [
+        {
+          "attachments": [],
+          "check": "install",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "mlx/m5pro",
+          "id": "ev_ef",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T09:00:00Z",
+          "result": "fail",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "install",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "mlx/m5pro",
+          "id": "ev_i",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:00:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "conformance",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "mlx/m5pro",
+          "id": "ev_c",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:05:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        }
+      ],
+      "expected": "installed",
+      "host_class": "mlx/m5pro",
+      "name": "early failure then success",
+      "profile_id": "ace-2b-sft-mlx",
+      "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+    },
+    {
+      "derivation": "A pin change is a new revision; with no records at it, it computes to declared (not installed).",
+      "evidence": [
+        {
+          "attachments": [],
+          "check": "install",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "mlx/m5pro",
+          "id": "ev_i",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:00:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "conformance",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "mlx/m5pro",
+          "id": "ev_c",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:05:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "smoke",
+          "checks": [
+            {
+              "check": "install_bytes_match_manifest",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "conformance",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "decodes",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "non_silent",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "duration_within_tolerance",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "owner_not_garbled",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": "vd_smoke"
+            }
+          ],
+          "gate_id": "smoke.ace-2b-sft-mlx",
+          "host_class": "mlx/m5pro",
+          "id": "ev_s",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:10:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": [
+            "vd_smoke"
+          ]
+        }
+      ],
+      "expected": "declared",
+      "host_class": "mlx/m5pro",
+      "name": "pin change starts over",
+      "profile_id": "ace-2b-sft-mlx",
+      "profile_revision": "550b794271aad851b49b7fc1b76af9d092c2dc77b58f0c54589e56c9a04b501a"
+    },
+    {
+      "derivation": "A new revision with install and conformance returns to installed, not smoke-passed.",
+      "evidence": [
+        {
+          "attachments": [],
+          "check": "install",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "mlx/m5pro",
+          "id": "ev_i",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:00:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "conformance",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "mlx/m5pro",
+          "id": "ev_c",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:05:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "smoke",
+          "checks": [
+            {
+              "check": "install_bytes_match_manifest",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "conformance",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "decodes",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "non_silent",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "duration_within_tolerance",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "owner_not_garbled",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": "vd_smoke"
+            }
+          ],
+          "gate_id": "smoke.ace-2b-sft-mlx",
+          "host_class": "mlx/m5pro",
+          "id": "ev_s",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:10:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": [
+            "vd_smoke"
+          ]
+        },
+        {
+          "attachments": [],
+          "check": "install",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "mlx/m5pro",
+          "id": "ev_i2",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "550b794271aad851b49b7fc1b76af9d092c2dc77b58f0c54589e56c9a04b501a",
+          "recorded_at": "2026-10-13T10:00:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "conformance",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "mlx/m5pro",
+          "id": "ev_c2",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "550b794271aad851b49b7fc1b76af9d092c2dc77b58f0c54589e56c9a04b501a",
+          "recorded_at": "2026-10-13T10:05:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        }
+      ],
+      "expected": "installed",
+      "host_class": "mlx/m5pro",
+      "name": "pin change reinstalled",
+      "profile_id": "ace-2b-sft-mlx",
+      "profile_revision": "550b794271aad851b49b7fc1b76af9d092c2dc77b58f0c54589e56c9a04b501a"
+    },
+    {
+      "derivation": "A status on one host class says nothing about another.",
+      "evidence": [
+        {
+          "attachments": [],
+          "check": "install",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "mlx/m5pro",
+          "id": "ev_i",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:00:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "conformance",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "mlx/m5pro",
+          "id": "ev_c",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:05:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "smoke",
+          "checks": [
+            {
+              "check": "install_bytes_match_manifest",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "conformance",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "decodes",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "non_silent",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "duration_within_tolerance",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "owner_not_garbled",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": "vd_smoke"
+            }
+          ],
+          "gate_id": "smoke.ace-2b-sft-mlx",
+          "host_class": "mlx/m5pro",
+          "id": "ev_s",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:10:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": [
+            "vd_smoke"
+          ]
+        }
+      ],
+      "expected": "declared",
+      "host_class": "cuda/rtx4090",
+      "name": "other host class",
+      "profile_id": "ace-2b-sft-mlx",
+      "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+    },
+    {
+      "derivation": "Product verdicts never promote.",
+      "evidence": [
+        {
+          "attachments": [],
+          "check": "install",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "mlx/m5pro",
+          "id": "ev_i",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:00:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "conformance",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "mlx/m5pro",
+          "id": "ev_c",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:05:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "smoke",
+          "checks": [
+            {
+              "check": "install_bytes_match_manifest",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "conformance",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "decodes",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "non_silent",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "duration_within_tolerance",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "owner_not_garbled",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": "vd_smoke"
+            }
+          ],
+          "gate_id": "smoke.ace-2b-sft-mlx",
+          "host_class": "mlx/m5pro",
+          "id": "ev_s",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:10:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": [
+            "vd_smoke"
+          ]
+        },
+        {
+          "attachments": [],
+          "check": "listening-unregistered",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "mlx/m5pro",
+          "id": "ev_l",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-11T12:00:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": [
+            "vd_x"
+          ]
+        }
+      ],
+      "expected": "smoke-passed",
+      "host_class": "mlx/m5pro",
+      "name": "unregistered listening changes nothing",
+      "profile_id": "ace-2b-sft-mlx",
+      "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+    },
+    {
+      "derivation": "test_only profiles accept synthetic smoke evidence.",
+      "evidence": [
+        {
+          "attachments": [],
+          "check": "install",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "fake/local",
+          "id": "ev_fi",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "f1a45b61325bc9f8d89598ae620e16d601aeb44188758ff87dfa8a237f114185",
+          "recorded_at": "2026-10-09T09:00:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "fake-route-a",
+            "subject_type": "profile"
+          },
+          "synthetic": true,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "conformance",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "fake/local",
+          "id": "ev_fc",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "f1a45b61325bc9f8d89598ae620e16d601aeb44188758ff87dfa8a237f114185",
+          "recorded_at": "2026-10-09T09:01:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "fake-route-a",
+            "subject_type": "profile"
+          },
+          "synthetic": true,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "smoke",
+          "checks": [
+            {
+              "check": "conformance",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "decodes",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "non_silent",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            }
+          ],
+          "gate_id": "smoke.fake-route-a",
+          "host_class": "fake/local",
+          "id": "ev_fs",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "f1a45b61325bc9f8d89598ae620e16d601aeb44188758ff87dfa8a237f114185",
+          "recorded_at": "2026-10-09T09:02:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "fake-route-a",
+            "subject_type": "profile"
+          },
+          "synthetic": true,
+          "verdict_ids": []
+        }
+      ],
+      "expected": "smoke-passed",
+      "host_class": "fake/local",
+      "name": "test_only synthetic smoke",
+      "profile_id": "fake-route-a",
+      "profile_revision": "f1a45b61325bc9f8d89598ae620e16d601aeb44188758ff87dfa8a237f114185"
+    },
+    {
+      "derivation": "The transcriber's smoke gate is the synthetic floor, which allows synthetic evidence.",
+      "evidence": [
+        {
+          "attachments": [],
+          "check": "install",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "cpu/m5pro",
+          "id": "ev_ti",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa",
+          "recorded_at": "2026-10-09T09:00:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "analysis-transcribe-pyin-hmm",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "conformance",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "cpu/m5pro",
+          "id": "ev_tc",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa",
+          "recorded_at": "2026-10-09T09:01:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "analysis-transcribe-pyin-hmm",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "smoke",
+          "checks": [
+            {
+              "check": "conformance",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "transcription_floor_synthetic",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            }
+          ],
+          "gate_id": "smoke.analysis-transcribe-pyin-hmm",
+          "host_class": "cpu/m5pro",
+          "id": "ev_ts",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa",
+          "recorded_at": "2026-10-09T09:02:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "analysis-transcribe-pyin-hmm",
+            "subject_type": "profile"
+          },
+          "synthetic": true,
+          "verdict_ids": []
+        }
+      ],
+      "expected": "smoke-passed",
+      "host_class": "cpu/m5pro",
+      "name": "transcriber synthetic floor",
+      "profile_id": "analysis-transcribe-pyin-hmm",
+      "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa"
+    },
+    {
+      "derivation": "analysis-measure declares no benchmark gate, so nothing can benchmark it.",
+      "evidence": [
+        {
+          "attachments": [],
+          "check": "install",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "cpu/m5pro",
+          "id": "ev_mi",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "37fabb89ff8806e3f20bb5991799515cfd9dbc37fa9d939b4c77d36c3260b15f",
+          "recorded_at": "2026-10-09T09:00:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "analysis-measure",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "conformance",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "cpu/m5pro",
+          "id": "ev_mc",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "37fabb89ff8806e3f20bb5991799515cfd9dbc37fa9d939b4c77d36c3260b15f",
+          "recorded_at": "2026-10-09T09:01:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "analysis-measure",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "smoke",
+          "checks": [
+            {
+              "check": "conformance",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "decodes",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            }
+          ],
+          "gate_id": "smoke.analysis-measure",
+          "host_class": "cpu/m5pro",
+          "id": "ev_ms",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "37fabb89ff8806e3f20bb5991799515cfd9dbc37fa9d939b4c77d36c3260b15f",
+          "recorded_at": "2026-10-09T09:02:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "analysis-measure",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "benchmark",
+          "checks": [],
+          "gate_id": "benchmark.analysis-measure",
+          "host_class": "cpu/m5pro",
+          "id": "ev_mb",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": "adadeb74bb6758359623d178264ec921c827b59d5989768f5655e656a869893f",
+          "profile_revision": "37fabb89ff8806e3f20bb5991799515cfd9dbc37fa9d939b4c77d36c3260b15f",
+          "recorded_at": "2026-10-12T09:00:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "analysis-measure",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        }
+      ],
+      "expected": "smoke-passed",
+      "host_class": "cpu/m5pro",
+      "name": "no benchmark gate",
+      "profile_id": "analysis-measure",
+      "profile_revision": "37fabb89ff8806e3f20bb5991799515cfd9dbc37fa9d939b4c77d36c3260b15f"
+    },
+    {
+      "derivation": "The playback gate declares ui_p95_under_100ms; a record without it cannot pass the gate.",
+      "evidence": [
+        {
+          "attachments": [],
+          "check": "install",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "cpu/m5pro",
+          "id": "ev_pb_i",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": null,
+          "recorded_at": "2026-10-20T09:00:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "studio.playback.darwin",
+            "subject_type": "capability"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "conformance",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "cpu/m5pro",
+          "id": "ev_pb_c",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": null,
+          "recorded_at": "2026-10-20T09:01:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "studio.playback.darwin",
+            "subject_type": "capability"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "smoke",
+          "checks": [
+            {
+              "check": "playback_underruns_zero",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            }
+          ],
+          "gate_id": "smoke.studio-playback-darwin",
+          "host_class": "cpu/m5pro",
+          "id": "ev_pb_s",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": null,
+          "recorded_at": "2026-10-20T09:40:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "studio.playback.darwin",
+            "subject_type": "capability"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        }
+      ],
+      "expected": "installed",
+      "host_class": "cpu/m5pro",
+      "name": "capability smoke missing the ui_p95 check",
+      "profile_id": "studio.playback.darwin",
+      "profile_revision": null
+    },
+    {
+      "derivation": "Both declared playback checks pass on a real host of this OS.",
+      "evidence": [
+        {
+          "attachments": [],
+          "check": "install",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "cpu/m5pro",
+          "id": "ev_pb_i",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": null,
+          "recorded_at": "2026-10-20T09:00:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "studio.playback.darwin",
+            "subject_type": "capability"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "conformance",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "cpu/m5pro",
+          "id": "ev_pb_c",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": null,
+          "recorded_at": "2026-10-20T09:01:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "studio.playback.darwin",
+            "subject_type": "capability"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "smoke",
+          "checks": [
+            {
+              "check": "playback_underruns_zero",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "ui_p95_under_100ms",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            }
+          ],
+          "gate_id": "smoke.studio-playback-darwin",
+          "host_class": "cpu/m5pro",
+          "id": "ev_pb_s",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": null,
+          "recorded_at": "2026-10-20T09:40:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "studio.playback.darwin",
+            "subject_type": "capability"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        }
+      ],
+      "expected": "smoke-passed",
+      "host_class": "cpu/m5pro",
+      "name": "capability smoke with every check",
+      "profile_id": "studio.playback.darwin",
+      "profile_revision": null
+    }
+  ],
+  "kind": "fixture.status",
+  "schemaVersion": "1.0.0"
+}

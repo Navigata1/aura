@@ -1,0 +1,89 @@
+{
+  "components": [
+    {
+      "allowed_lanes": [
+        "individual",
+        "research"
+      ],
+      "category": "song-engine",
+      "code_license": "Own test code",
+      "gated": null,
+      "id": "fake-nc-weights",
+      "name": "Fake non-commercial weights",
+      "notes": "FakeEngine stand-in (architecture.md §4.10); never shipped.",
+      "obligations": [],
+      "output_terms": "Test only.",
+      "primary_sources": [],
+      "process_boundary_required": true,
+      "redistribution_blocker": "Stand-in for a release blocker.",
+      "release_blockers": [
+        "non_commercial_weights"
+      ],
+      "role": "Declared by fake-nc and fake-burst so lane tests run without YuE2.",
+      "test_only": true,
+      "v1_path": false,
+      "verdict": "research-only",
+      "verdict_condition": null,
+      "verification_status": "unverified",
+      "weights_license": "Fixture stand-in for a non-commercial or research-only license"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "research"
+      ],
+      "category": "song-engine",
+      "code_license": "Own test code",
+      "gated": null,
+      "id": "fake-nc-separator-weights",
+      "name": "Fake separator weights (non-commercial by author)",
+      "notes": "FakeEngine stand-in (architecture.md §4.10); never shipped.",
+      "obligations": [],
+      "output_terms": "Test only.",
+      "primary_sources": [],
+      "process_boundary_required": true,
+      "redistribution_blocker": "Stand-in for a release blocker.",
+      "release_blockers": [
+        "non_commercial_by_author"
+      ],
+      "role": "Declared by fake-separate, the Demucs stand-in.",
+      "test_only": true,
+      "v1_path": false,
+      "verdict": "research-only",
+      "verdict_condition": null,
+      "verification_status": "unverified",
+      "weights_license": "Fixture stand-in for a non-commercial or research-only license"
+    },
+    {
+      "allowed_lanes": [
+        "research"
+      ],
+      "category": "song-engine",
+      "code_license": "Own test code",
+      "gated": null,
+      "id": "fake-research-scorer",
+      "name": "Fake research-only scorer",
+      "notes": "FakeEngine stand-in (architecture.md §4.10); never shipped.",
+      "obligations": [],
+      "output_terms": "Test only.",
+      "primary_sources": [],
+      "process_boundary_required": true,
+      "redistribution_blocker": "Stand-in for a release blocker.",
+      "release_blockers": [
+        "research_or_academic"
+      ],
+      "role": "A research-lane-only component for lane-policy tests.",
+      "test_only": true,
+      "v1_path": false,
+      "verdict": "research-only",
+      "verdict_condition": null,
+      "verification_status": "unverified",
+      "weights_license": "Fixture stand-in for a non-commercial or research-only license"
+    }
+  ],
+  "generated_from": [],
+  "kind": "component-register",
+  "overlay": true,
+  "register_id": "components.fake-overlay",
+  "schemaVersion": "1.0.0"
+}

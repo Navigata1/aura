@@ -1,0 +1,86 @@
+{
+  "approval_id": null,
+  "compute_profile_id": "cp_tier4",
+  "cost": {
+    "basis": "local_zero",
+    "usd": "0.00"
+  },
+  "created_at": "2026-10-09T10:10:01Z",
+  "egress": [],
+  "error": null,
+  "history": [
+    {
+      "at": "2026-10-09T10:10:01Z",
+      "state": "queued"
+    },
+    {
+      "at": "2026-10-09T10:10:02Z",
+      "state": "preparing"
+    },
+    {
+      "at": "2026-10-09T10:10:03Z",
+      "state": "loading"
+    },
+    {
+      "at": "2026-10-09T10:10:04Z",
+      "state": "generating"
+    },
+    {
+      "at": "2026-10-09T10:10:20Z",
+      "state": "analyzing"
+    },
+    {
+      "at": "2026-10-09T10:10:40Z",
+      "state": "ready"
+    }
+  ],
+  "id": "job_ca",
+  "inputs": [
+    {
+      "role": "guide",
+      "sha256": "b3e0de98dce4bf8a946860ff0439f9b771c19af51359558ec7a87fb7f59f06bf"
+    }
+  ],
+  "job_kind": "generate",
+  "kind": "job",
+  "lane": "individual",
+  "outputs": [
+    {
+      "role": "mix",
+      "sha256": "2789a942c9533e6ecec15d6b9e0942389ba2f1e3f6fc664356f54291a9f0e884"
+    }
+  ],
+  "params": {
+    "actual": {
+      "audio_cover_strength": "0.9",
+      "cover_noise_strength": "0.1"
+    },
+    "intent": {
+      "audio_cover_strength": "0.9"
+    }
+  },
+  "parent_job_id": null,
+  "placement": {
+    "host_class": "fake/local",
+    "kind": "local"
+  },
+  "profile_id": "fake-route-a",
+  "profile_revision": "f1a45b61325bc9f8d89598ae620e16d601aeb44188758ff87dfa8a237f114185",
+  "project_id": "prj_hymn",
+  "quote_id": null,
+  "record_inputs": [],
+  "request_id": "gr_hymn",
+  "retry": null,
+  "schemaVersion": "1.0.0",
+  "seed": 11,
+  "session_id": "ses_1",
+  "state": "ready",
+  "steps": [
+    {
+      "index": 8,
+      "name": "diffusion",
+      "total": 8
+    }
+  ],
+  "task": "cover"
+}

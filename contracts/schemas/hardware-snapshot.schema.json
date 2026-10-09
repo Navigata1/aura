@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "hardware-snapshot/1",
+  "description": "Detected facts per host, with the raw command outputs kept by hash (architecture.md §7.1). An unreachable host has no snapshot and cannot qualify for a tier. Sizes are integer bytes.",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "id", "host_id", "taken_at", "os", "cpu", "memory_bytes", "accelerators", "wsl2", "volumes", "raw_outputs"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "hardware-snapshot"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "id": {"$ref": "common.schema.json#/$defs/id"},
+    "host_id": {"$ref": "common.schema.json#/$defs/id"},
+    "taken_at": {"$ref": "common.schema.json#/$defs/dateTime"},
+    "os": {
+      "type": "object",
+      "required": ["family", "version", "arch"],
+      "additionalProperties": false,
+      "properties": {"family": {"$ref": "common.schema.json#/$defs/hostOs"}, "version": {"type": "string", "minLength": 1, "maxLength": 80}, "arch": {"enum": ["arm64", "x86_64"]}}
+    },
+    "cpu": {"type": "string", "minLength": 1, "maxLength": 200},
+    "memory_bytes": {"type": "integer", "minimum": 0},
+    "accelerators": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["vendor", "name", "vram_bytes", "unified_memory", "compute_capability", "driver_version", "cuda_runtime", "metal_recommended_max_working_set_bytes"],
+        "additionalProperties": false,
+        "properties": {
+          "vendor": {"enum": ["apple", "nvidia"]},
+          "name": {"type": "string", "minLength": 1, "maxLength": 120},
+          "vram_bytes": {"type": ["integer", "null"], "minimum": 0},
+          "unified_memory": {"type": "boolean"},
+          "compute_capability": {"oneOf": [{"$ref": "common.schema.json#/$defs/nonNegativeDecimal"}, {"type": "null"}]},
+          "driver_version": {"oneOf": [{"type": "string", "pattern": "^[0-9]+\\.[0-9]+(\\.[0-9]+)?$"}, {"type": "null"}]},
+          "cuda_runtime": {"oneOf": [{"type": "string", "pattern": "^[0-9]+\\.[0-9]+$"}, {"type": "null"}]},
+          "metal_recommended_max_working_set_bytes": {"type": ["integer", "null"], "minimum": 0}
+        },
+        "if": {"properties": {"vendor": {"const": "nvidia"}}},
+        "then": {"properties": {"vram_bytes": {"type": "integer"}, "compute_capability": {"type": "string"}, "unified_memory": {"const": false}}}
+      }
+    },
+    "wsl2": {
+      "oneOf": [
+        {"type": "null"},
+        {"type": "object", "required": ["memory_bytes"], "additionalProperties": false, "properties": {"memory_bytes": {"type": ["integer", "null"], "minimum": 0}}}
+      ]
+    },
+    "volumes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["mount", "filesystem", "free_bytes", "role"],
+        "additionalProperties": false,
+        "properties": {
+          "mount": {"type": "string", "minLength": 1, "maxLength": 200},
+          "filesystem": {"enum": ["apfs", "exfat", "ntfs", "ext4", "other"]},
+          "free_bytes": {"type": "integer", "minimum": 0},
+          "role": {"enum": ["internal", "studio_volume", "bundle_host", "other"]}
+        }
+      }
+    },
+    "raw_outputs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["command", "sha256"],
+        "additionalProperties": false,
+        "properties": {"command": {"type": "string", "minLength": 1, "maxLength": 300}, "sha256": {"$ref": "common.schema.json#/$defs/sha256"}}
+      }
+    }
+  }
+}

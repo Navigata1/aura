@@ -1,0 +1,67 @@
+{
+  "description": "NC weights allowed in llc.",
+  "error_contains": "$.components[0].allowed_lanes",
+  "id": "IR-COMPONENT-NC-IN-LLC",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "components": [
+      {
+        "allowed_lanes": [
+          "individual",
+          "llc",
+          "research"
+        ],
+        "category": "song-engine",
+        "code_license": "Apache-2.0",
+        "gated": false,
+        "id": "yue2-3b",
+        "name": "YuE2-3B + YuE2-Vae (+ Vae-legacy)",
+        "notes": "~71 s per 3.6-min song on RTX 4090 (VENDOR). Accepts user ABC score; cot='melody' recommended for covers. Archive the GitHub MODEL_LICENSE commit as the rights record. User-ABC contract (GAP-02): strict two-voice dialect, no tuplets or pickups, one integer tempo, lyrics bound only by section tags, ~6 min maximum, zh/en only. README and MODEL_LICENSE name different licensing contacts; issue #219 unanswered.",
+        "obligations": [],
+        "output_terms": "Individuals acting in an individual capacity may publish, sell, license and monetize outputs, no royalties; companies need a commercial license for weight use; no commercial redistribution of weights",
+        "primary_sources": [
+          "https://github.com/multimodal-art-projection/YuE/blob/main/MODEL_LICENSE",
+          "https://github.com/multimodal-art-projection/YuE/blob/main/docs/generation.md",
+          "https://github.com/multimodal-art-projection/YuE/blob/main/pyproject.toml",
+          "https://github.com/multimodal-art-projection/YuE/blob/main/src/yue2/cuda_graph.py",
+          "https://github.com/multimodal-art-projection/YuE/blob/main/src/yue2/pipeline.py",
+          "https://github.com/multimodal-art-projection/YuE/issues/176",
+          "https://github.com/multimodal-art-projection/YuE/issues/187",
+          "https://github.com/multimodal-art-projection/YuE/issues/209",
+          "https://github.com/multimodal-art-projection/YuE/pull/164",
+          "https://github.com/multimodal-art-projection/YuE/pull/166",
+          "https://huggingface.co/m-a-p/YuE2-3B"
+        ],
+        "process_boundary_required": true,
+        "redistribution_blocker": "NC weights (individual-only permission)",
+        "release_blockers": [
+          "non_commercial_weights"
+        ],
+        "role": "Quality and score/melody-conditioned lane on a CUDA worker",
+        "test_only": false,
+        "v1_path": true,
+        "verdict": "adopt-v1",
+        "verdict_condition": "Conditional on Q1 (a BF16 NVIDIA worker or approved rental passes smoke) and Q3 (individual operator). Not usable for LLC work, including Sabbath Echo.",
+        "verification_status": "corrected",
+        "weights_license": "CC BY-NC 4.0 + Individual creator permission (GitHub MODEL_LICENSE, 2026-09-16); HF LICENSE copies are plain CC BY-NC 4.0"
+      }
+    ],
+    "generated_from": [
+      {
+        "path": "docs/research/evidence-register.json",
+        "sha256": "61cf7d01698b28799e1c83646d5026b8b2e597b4c2d410764a01ddf75b446bf9"
+      },
+      {
+        "path": "scripts/registry/register_overlay.json",
+        "sha256": "c557bf8abee79fc1e9bd284dce7a2ca342e044d9781fb9c069623036aa718d2e"
+      }
+    ],
+    "kind": "component-register",
+    "overlay": false,
+    "register_id": "components.case",
+    "schemaVersion": "1.0.0"
+  },
+  "record_kind": "component-register",
+  "rule": "ADR-0011: NC never in llc",
+  "schemaVersion": "1.0.0"
+}

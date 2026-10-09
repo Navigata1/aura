@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "reveal/1",
+  "description": "Disclosing, after the verdict, which candidate each blind label was (GLOSSARY: Reveal). The commitment published at open time must equal sha256(canonical_json(mapping sorted by label) + '|' + nonce), as UTF-8 bytes (audition.reveal_commitment). Canonical JSON: UTF-8, sorted keys, no insignificant whitespace.",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "id", "audition_id", "verdict_id", "mapping", "nonce", "revealed_at"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "reveal"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "id": {"$ref": "common.schema.json#/$defs/id"},
+    "audition_id": {"$ref": "common.schema.json#/$defs/id"},
+    "verdict_id": {"$ref": "common.schema.json#/$defs/id"},
+    "mapping": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["label", "candidate_id"],
+        "additionalProperties": false,
+        "properties": {"label": {"$ref": "common.schema.json#/$defs/label"}, "candidate_id": {"$ref": "common.schema.json#/$defs/id"}}
+      }
+    },
+    "nonce": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "revealed_at": {"$ref": "common.schema.json#/$defs/dateTime"}
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "audio": {
+    "channels": 2,
+    "frames": 1440000,
+    "sample_format": "pcm_f32",
+    "sample_rate": 48000
+  },
+  "bytes": 1024,
+  "created_at": "2026-10-09T11:04:30Z",
+  "kind": "artifact",
+  "media_type": "audio/wav",
+  "origin": "generated_mix",
+  "project_id": "prj_venture",
+  "provenance": {
+    "allowed_uses": [
+      "listen",
+      "loudness_measure",
+      "dsp_finish",
+      "analysis",
+      "engine_input",
+      "conditioning",
+      "separation_input",
+      "edit_source",
+      "audition_arm",
+      "export"
+    ],
+    "capture": null,
+    "compute": {
+      "compute_profile_id": "cp_tier4",
+      "placement": "local",
+      "tier": 4
+    },
+    "eligible_lanes": [
+      "individual",
+      "llc",
+      "research"
+    ],
+    "engine": {
+      "code_commit": "0000000",
+      "env": {
+        "lock_sha256": "8683b0920d2cda64f974ee5b8187d9503d1b075feef439c7b30ebef5f94e9523"
+      },
+      "params": {
+        "actual": {
+          "audio_cover_strength": "1.0",
+          "cover_noise_strength": "0.0"
+        },
+        "intent": {
+          "audio_cover_strength": "1.0"
+        }
+      },
+      "profile_id": "fake-route-b",
+      "profile_revision": "89622a813cfe4f1ce6842dcc59c7d49f44dffd58a3fcf7added6d94c0c867eca",
+      "sdk_version": "0.1.0",
+      "seed": 22,
+      "weights": null
+    },
+    "host": {
+      "arch": "arm64",
+      "backend": "fake",
+      "host_class": "fake/local",
+      "host_id": "host_mac",
+      "os": "darwin"
+    },
+    "import_terms_id": null,
+    "license_chain": [
+      {
+        "code_license": "Own code (all rights reserved until Q5)",
+        "component_id": "studio-own-code",
+        "obligations": [],
+        "weights_license": "n/a (no weights)"
+      },
+      {
+        "code_license": "Own code (all rights reserved until Q5)",
+        "component_id": "neutralvoice",
+        "obligations": [],
+        "weights_license": "n/a (no weights)"
+      }
+    ],
+    "operator_lane": "llc",
+    "parents": [
+      {
+        "edge": "derived_from",
+        "sha256": "b61b656f22a8eb761b34046a716bc8b0a569c94fc6b4506708dc2e3eaa939356"
+      }
+    ],
+    "producing_job_id": "job_vb",
+    "record_inputs": [],
+    "timings": {
+      "cold": true,
+      "label": "MEASURED-LOCAL",
+      "load_wall_ms": 50,
+      "measured_by": "worker-sdk",
+      "peak_rss_bytes": 268435456,
+      "run_wall_ms": 900,
+      "total_wall_ms": 950
+    }
+  },
+  "retention_class": "irreplaceable",
+  "schemaVersion": "1.0.0",
+  "sha256": "f7af17cbfb64026585e4f1049aa82da4ec1b5562d34f15f1b880834e8a5b64cb",
+  "synthetic_test": true
+}

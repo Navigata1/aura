@@ -1,0 +1,59 @@
+{
+  "description": "Analysis edges carrying lanes.",
+  "error_contains": "$.propagation.propagating_edges",
+  "id": "IR-LANE-POLICY-ANALYZED-BY-PROPAGATES",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "default_lane": "individual",
+    "kind": "lane-policy",
+    "lanes": [
+      {
+        "forbidden_release_blockers": [
+          "research_or_academic",
+          "unknown_license",
+          "unverified"
+        ],
+        "id": "individual",
+        "releasable": true,
+        "title": "Jon personally (the default)"
+      },
+      {
+        "forbidden_release_blockers": [
+          "non_commercial_weights",
+          "non_commercial_by_author",
+          "research_or_academic",
+          "unknown_license",
+          "permissive_label_nc_data",
+          "unverified_training_data",
+          "contested",
+          "unverified"
+        ],
+        "id": "llc",
+        "releasable": true,
+        "title": "Island Development Crew ventures, Sabbath Echo included"
+      },
+      {
+        "forbidden_release_blockers": [],
+        "id": "research",
+        "releasable": false,
+        "title": "Private experiments, never released"
+      }
+    ],
+    "propagation": {
+      "analysis_jobs_lane_admitted": true,
+      "combine": "intersection",
+      "non_propagating_edges": [
+        "analyzed_by"
+      ],
+      "propagating_edges": [
+        "derived_from",
+        "converted_from",
+        "analyzed_by"
+      ]
+    },
+    "schemaVersion": "1.0.0"
+  },
+  "record_kind": "lane-policy",
+  "rule": "ADR-0029: analyzed_by never propagates",
+  "schemaVersion": "1.0.0"
+}

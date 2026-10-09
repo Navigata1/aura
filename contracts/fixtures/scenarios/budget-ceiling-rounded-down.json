@@ -1,0 +1,121 @@
+{
+  "description": "The ceiling 15 min x $1.50/h = $0.375 was rounded down to $0.37.",
+  "expect_rules": [
+    "budget.ceiling_arithmetic"
+  ],
+  "id": "SC-BUDGET-CEILING-ROUNDED-DOWN",
+  "kind": "fixture.scenario",
+  "overlay": [
+    {
+      "id": "q_hymn",
+      "kind": "quote",
+      "quote_sha256": "bbac77bf85624331d21ad1cb3e94008051b5181553b1d428f15beec51f0a54ec",
+      "refusal_reason": null,
+      "schemaVersion": "1.0.0",
+      "status": "approved",
+      "terms": {
+        "cap_usd": "25.00",
+        "ceiling_usd": "0.37",
+        "cloud": "secure",
+        "created_at": "2026-10-09T10:20:00Z",
+        "egress": [
+          {
+            "role": "abc_score",
+            "sha256": "999e5c1aed368edc9a91c2384775a501fc50e8e1806b5affdaa7cf3dab878276"
+          },
+          {
+            "role": "lyrics_plan",
+            "sha256": "ad8f8b5a3ada85a1743b8022acf3f4f7ee0e190cf06bb494a9161ae89f98f15e"
+          }
+        ],
+        "expires_at": "2026-10-09T10:35:00Z",
+        "fixed_lines": [],
+        "gpu_class": "FAKE-24GB",
+        "jobs": [
+          {
+            "estimate_basis": "fake",
+            "estimate_minutes": "6",
+            "job_id": "job_cb",
+            "label": "UNVERIFIED",
+            "profile_id": "fake-burst"
+          }
+        ],
+        "lane": "individual",
+        "lane_check": {
+          "profiles": [
+            {
+              "allowed_lanes": [
+                "individual",
+                "research"
+              ],
+              "profile_id": "fake-burst"
+            }
+          ],
+          "result": "pass"
+        },
+        "max_minutes": {
+          "boot": "3",
+          "jobs_total": "6",
+          "teardown_margin": "2",
+          "total": "15",
+          "weights_download": "4"
+        },
+        "month": "2026-10",
+        "month_to_date_usd": "0.00",
+        "project_id": "prj_hymn",
+        "provider": "fake",
+        "rates": [
+          {
+            "gpu_class": "FAKE-24GB",
+            "label": "UNVERIFIED",
+            "read_at": "2026-10-09T10:20:00Z",
+            "snapshot_date": null,
+            "source": "fake",
+            "usd_per_hour": "1.10"
+          },
+          {
+            "gpu_class": "FAKE-24GB-ALT",
+            "label": "UNVERIFIED",
+            "read_at": "2026-10-09T10:20:00Z",
+            "snapshot_date": null,
+            "source": "fake",
+            "usd_per_hour": "1.50"
+          }
+        ],
+        "request_id": "gr_hymn",
+        "synthetic_test": true
+      }
+    },
+    {
+      "act": {
+        "act": "approve_quote",
+        "at": "2026-10-09T10:22:00Z",
+        "scope": "owner-ui"
+      },
+      "expires_at": "2026-10-09T10:35:00Z",
+      "id": "ap_hymn",
+      "kind": "approval",
+      "nonce_sha256": "6f673440b83aebee8f026a1a05a586a3d84316ebb2c1bfe39e5847b51fb583e6",
+      "quote_id": "q_hymn",
+      "quote_sha256": "bbac77bf85624331d21ad1cb3e94008051b5181553b1d428f15beec51f0a54ec",
+      "schemaVersion": "1.0.0",
+      "single_use": true,
+      "state": "used",
+      "used_by_run_id": "br_hymn"
+    },
+    {
+      "act": null,
+      "at": "2026-10-09T10:22:01Z",
+      "entry_type": "reserve",
+      "kind": "ledger-entry",
+      "month": "2026-10",
+      "note": "reserve at ceiling before provisioning",
+      "run_id": "br_hymn",
+      "schemaVersion": "1.0.0",
+      "seq": 1,
+      "usd": "0.37"
+    }
+  ],
+  "remove": [],
+  "schemaVersion": "1.0.0"
+}

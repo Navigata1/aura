@@ -1,0 +1,33 @@
+{
+  "description": "A sidecar without provenance.",
+  "error_contains": "$.artifact",
+  "id": "IR-SIDECAR-INCOMPLETE",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "artifact": {
+      "audio": {
+        "channels": 1,
+        "frames": 480000,
+        "sample_format": "pcm_f32",
+        "sample_rate": 48000
+      },
+      "bytes": 1024,
+      "created_at": "2026-10-09T10:01:00Z",
+      "kind": "artifact",
+      "media_type": "audio/wav",
+      "origin": "human_recording",
+      "project_id": "prj_hymn",
+      "retention_class": "irreplaceable",
+      "schemaVersion": "1.0.0",
+      "sha256": "dc777e3766c902a35936fea39ee9ceecee87a562e63e9fb42a090dc80205d7e7",
+      "synthetic_test": true
+    },
+    "blob_sha256": "dc777e3766c902a35936fea39ee9ceecee87a562e63e9fb42a090dc80205d7e7",
+    "kind": "provenance-sidecar",
+    "schemaVersion": "1.0.0",
+    "written_at": "2026-10-09T10:01:00Z"
+  },
+  "record_kind": "provenance-sidecar",
+  "rule": "Sidecars carry complete provenance",
+  "schemaVersion": "1.0.0"
+}

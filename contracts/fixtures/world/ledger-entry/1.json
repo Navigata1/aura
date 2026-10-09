@@ -1,0 +1,12 @@
+{
+  "act": null,
+  "at": "2026-10-09T10:22:01Z",
+  "entry_type": "reserve",
+  "kind": "ledger-entry",
+  "month": "2026-10",
+  "note": "reserve at ceiling before provisioning",
+  "run_id": "br_hymn",
+  "schemaVersion": "1.0.0",
+  "seq": 1,
+  "usd": "0.38"
+}

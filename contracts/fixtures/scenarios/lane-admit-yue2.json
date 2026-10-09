@@ -1,0 +1,57 @@
+{
+  "description": "A YuE2 job submitted in the llc project (refused at submit, before any load).",
+  "expect_rules": [
+    "lane.admission"
+  ],
+  "id": "SC-LANE-ADMIT-YUE2",
+  "kind": "fixture.scenario",
+  "overlay": [
+    {
+      "approval_id": null,
+      "compute_profile_id": "cp_tier4",
+      "cost": {
+        "basis": "local_zero",
+        "usd": "0.00"
+      },
+      "created_at": "2026-10-09T12:00:00Z",
+      "egress": [],
+      "error": null,
+      "history": [
+        {
+          "at": "2026-10-09T12:00:00Z",
+          "state": "queued"
+        }
+      ],
+      "id": "job_yue2_llc",
+      "inputs": [],
+      "job_kind": "generate",
+      "kind": "job",
+      "lane": "llc",
+      "outputs": [],
+      "params": {
+        "actual": {},
+        "intent": {}
+      },
+      "parent_job_id": null,
+      "placement": {
+        "host_class": "cuda/rtx4090",
+        "kind": "worker_host"
+      },
+      "profile_id": "yue2-3b-score",
+      "profile_revision": "37522ad18dee26df2c7956bcdd34163bca9d88e991f76a2f6c983581f67b0d8e",
+      "project_id": "prj_venture",
+      "quote_id": null,
+      "record_inputs": [],
+      "request_id": null,
+      "retry": null,
+      "schemaVersion": "1.0.0",
+      "seed": 5,
+      "session_id": "ses_1",
+      "state": "queued",
+      "steps": [],
+      "task": "score_to_song"
+    }
+  ],
+  "remove": [],
+  "schemaVersion": "1.0.0"
+}

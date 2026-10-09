@@ -1,0 +1,23 @@
+{
+  "description": "A later event carries an earlier time.",
+  "expect_rules": [
+    "events.ordered"
+  ],
+  "id": "SC-EVENTS-TIME",
+  "kind": "fixture.scenario",
+  "overlay": [
+    {
+      "at": "2026-10-09T10:00:00Z",
+      "data": {
+        "run_id": "br_hymn"
+      },
+      "kind": "event",
+      "schemaVersion": "1.0.0",
+      "seq": 5,
+      "subject_id": "br_hymn",
+      "type": "ledger.settle"
+    }
+  ],
+  "remove": [],
+  "schemaVersion": "1.0.0"
+}

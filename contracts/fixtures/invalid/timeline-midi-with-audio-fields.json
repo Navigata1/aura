@@ -1,0 +1,75 @@
+{
+  "description": "A MIDI clip with an audio source rate.",
+  "error_contains": "$.tracks[1].clips[0]",
+  "id": "IR-TIMELINE-MIDI-WITH-AUDIO-FIELDS",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "id": "tl_hymn",
+    "kind": "timeline",
+    "markers": [
+      {
+        "name": "verse",
+        "tick": 0
+      },
+      {
+        "name": "chorus",
+        "tick": 3840
+      }
+    ],
+    "melody": {
+      "melody_id": "mel_hymn",
+      "rev": 2,
+      "tempo_map_rev": 2
+    },
+    "project_id": "prj_hymn",
+    "rev": 1,
+    "sample_rate": 44100,
+    "schemaVersion": "1.0.0",
+    "tracks": [
+      {
+        "clips": [
+          {
+            "artifact_sha256": "2789a942c9533e6ecec15d6b9e0942389ba2f1e3f6fc664356f54291a9f0e884",
+            "clip_kind": "audio",
+            "fade_in_frames": 0,
+            "fade_out_frames": 4410,
+            "gain_db": "0.0",
+            "id": "c1",
+            "project_start_frame": 0,
+            "source_end_frame": 5292000,
+            "source_rate": 44100,
+            "source_start_frame": 0
+          }
+        ],
+        "id": "t1",
+        "main": true,
+        "name": "Mix",
+        "part": "mix"
+      },
+      {
+        "clips": [
+          {
+            "clip_kind": "midi",
+            "end_tick": 7680,
+            "id": "c2",
+            "melody": {
+              "melody_id": "mel_hymn",
+              "rev": 2,
+              "tempo_map_rev": 2
+            },
+            "project_start_tick": 0,
+            "source_rate": 44100,
+            "start_tick": 0
+          }
+        ],
+        "id": "t2",
+        "main": false,
+        "name": "Melody",
+        "part": "melody"
+      }
+    ]
+  },
+  "record_kind": "timeline",
+  "rule": "MIDI clips live in ticks",
+  "schemaVersion": "1.0.0"
+}

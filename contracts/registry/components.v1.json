@@ -1,0 +1,3745 @@
+{
+  "components": [
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "song-engine",
+      "code_license": "MIT",
+      "gated": false,
+      "id": "ace-step-1.5-2b",
+      "name": "ACE-Step 1.5 2B DiT (turbo, sft, base, turbo-shift1/3/continuous)",
+      "notes": "Tasks: base = all; sft/turbo = text2music, cover, cover-nofsq, repaint. Turbo guidance auto 1.0; set shift=3.0 manually. Pin main >= ca1e85fe9 or v0.1.8 with dcw_enabled=False for non-turbo. GAP-06: lego appears to return the generated part alone (official DAW places results as separate 'Stems (AI)' clips; medium confidence). #1286 found LM codes overriding src_audio in lego/complete; interim fix #1287 keeps those tasks DiT-first.",
+      "obligations": [
+        "apache_notice"
+      ],
+      "output_terms": "HF cards: commercial use of generated music allowed (VENDOR). Training-data licensing claim is card-only, not in the paper.",
+      "primary_sources": [
+        "https://github.com/ace-step/ACE-Step-1.5/blob/main/LICENSE",
+        "https://huggingface.co/ACE-Step/Ace-Step1.5",
+        "https://github.com/ace-step/ACE-Step-1.5/blob/main/docs/en/GPU_COMPATIBILITY.md",
+        "https://github.com/ace-step/ACE-Step-1.5/blob/main/acestep/gpu_config.py"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "None for weights; keep Apache-2.0 notices for Qwen3-derived LM and Qwen3-Embedding text encoder.",
+      "release_blockers": [],
+      "role": "Fast draft and render lane on the Mac; base for extract/lego/complete",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "adopt-v1",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "MIT"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "song-engine",
+      "code_license": "MIT",
+      "gated": false,
+      "id": "ace-step-1.5-lm",
+      "name": "ACE-Step 5Hz LM planners 0.6B / 1.7B / 4B",
+      "notes": "README rates 'Copy Melody' Weak/Medium/Strong for 0.6/1.7/4B (VENDOR).",
+      "obligations": [
+        "apache_notice"
+      ],
+      "output_terms": "n/a",
+      "primary_sources": [
+        "https://github.com/ace-step/ACE-Step-1.5/blob/main/README.md",
+        "https://huggingface.co/ACE-Step/acestep-5Hz-lm-4B"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "Keep Apache notices",
+      "release_blockers": [],
+      "role": "Lyric/structure planning for text2music, lego, complete (skipped for cover, repaint, extract)",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "adopt-v1",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "MIT (Qwen3 fine-tunes; Apache-2.0 upstream)"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "song-engine",
+      "code_license": "MIT",
+      "gated": false,
+      "id": "ace-step-1.5-xl",
+      "name": "ACE-Step 1.5 XL (xl-base, xl-sft, xl-turbo; ~4.99B params)",
+      "notes": "Whether the upstream app loads diffusers-format XL weights is unverified.",
+      "obligations": [
+        "apache_notice"
+      ],
+      "output_terms": "As 2B",
+      "primary_sources": [
+        "https://huggingface.co/ACE-Step/acestep-v15-xl-sft",
+        "https://huggingface.co/api/models/ACE-Step/acestep-v15-xl-sft/tree/main",
+        "https://github.com/ace-step/ACE-Step-1.5/issues/1259",
+        "https://github.com/ace-step/ACE-Step-1.5/pull/1282"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "None",
+      "release_blockers": [],
+      "role": "Higher-quality render profile",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "adopt-v1",
+      "verdict_condition": null,
+      "verification_status": "corrected",
+      "weights_license": "MIT"
+    },
+    {
+      "allowed_lanes": [],
+      "category": "ui-runtime",
+      "code_license": "AGPL-3.0",
+      "gated": null,
+      "id": "ace-step-daw",
+      "name": "ace-step/ACE-Step-DAW",
+      "notes": "Do not vendor code.",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [
+        "https://github.com/ace-step/ACE-Step-DAW"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "AGPL copyleft",
+      "release_blockers": [
+        "copyleft"
+      ],
+      "role": "Not used",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "reject",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "song-engine",
+      "code_license": "MIT (community author, hosted in ace-step org)",
+      "gated": false,
+      "id": "acestep-cpp-gguf",
+      "name": "acestep.cpp + Serveurperso ACE-Step-1.5-GGUF",
+      "notes": "Quantization quality impact unmeasured. GAP-06: the official ace-step/acestep.cpp and ace-step/acestep.vst3 (MIT, updated 2026-10-05) run on Metal and support lego.",
+      "obligations": [],
+      "output_terms": "As ACE",
+      "primary_sources": [
+        "https://github.com/ace-step/acestep.vst3",
+        "https://huggingface.co/Serveurperso/ACE-Step-1.5-GGUF"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "None known",
+      "release_blockers": [],
+      "role": "Small-footprint Mac runtime",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "MIT tag (community quantization)"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "structure",
+      "code_license": "MIT",
+      "gated": false,
+      "id": "all-in-one",
+      "name": "all-in-one (allin1)",
+      "notes": "Labels: start, end, intro, outro, break, bridge, inst, solo, verse, chorus (no pre-chorus). Stale (1.1.0, 2023-10).",
+      "obligations": [],
+      "output_terms": "None",
+      "primary_sources": [
+        "https://github.com/mir-aidj/all-in-one",
+        "https://huggingface.co/taejunkim/allinone",
+        "https://github.com/mir-aidj/all-in-one/pull/39"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "None",
+      "release_blockers": [],
+      "role": "Beats, downbeats, functional sections",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "MIT tag (taejunkim/allinone; Harmonix)"
+    },
+    {
+      "allowed_lanes": [],
+      "category": "post-production",
+      "code_license": "CC BY-SA 4.0",
+      "gated": false,
+      "id": "apollo",
+      "name": "Apollo",
+      "notes": "44.1 kHz lossy-MP3 restoration GAN, not a 48 kHz upsampler.",
+      "obligations": [
+        "share_alike"
+      ],
+      "output_terms": "ShareAlike on adapted material",
+      "primary_sources": [
+        "https://github.com/JusperLee/Apollo",
+        "https://huggingface.co/JusperLee/Apollo"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "ShareAlike",
+      "release_blockers": [
+        "copyleft"
+      ],
+      "role": "n/a",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "reject",
+      "verdict_condition": null,
+      "verification_status": "corrected",
+      "weights_license": "CC BY-SA 4.0"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "research"
+      ],
+      "category": "voice-conversion",
+      "code_license": "MIT + Terms of Use",
+      "gated": false,
+      "id": "applio",
+      "name": "Applio 3.6.5 (IAHispano)",
+      "notes": "Community fork, active 2026-10. Whether a released song with converted vocals is permissible is CONTESTED (lj1995 'research use only' rider; rmvpe.pt unlicensed). Carried into D-07 and Q6.",
+      "obligations": [],
+      "output_terms": "ToU: commercial use only with rights/permissions for processed audio",
+      "primary_sources": [
+        "https://github.com/IAHispano/Applio"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "Contested base weights",
+      "release_blockers": [
+        "contested"
+      ],
+      "role": "RVC on the Mac",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "Inherits lj1995 base weights question"
+    },
+    {
+      "allowed_lanes": [],
+      "category": "benchmark",
+      "code_license": "n/a",
+      "gated": null,
+      "id": "artificial-analysis-music",
+      "name": "Artificial Analysis music leaderboards v1.1",
+      "notes": "Recruited panel; Bradley-Terry; MiniMax Music 3.0 = 1000 anchor; -16 LUFS / -1 dBTP, 320 kbps MP3 at 44.1 kHz. Vocal: Suno v6 1142 ±15, v6-mini 1116, Mureka V9.5 1103, Lyria 3.5 1052, Eleven Music v2.5 1012. Instrumental: v6 1140.",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [
+        "https://artificialanalysis.ai/music/leaderboard/vocals",
+        "https://artificialanalysis.ai/music/leaderboard/instrumental",
+        "https://artificialanalysis.ai/music/methodology"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "n/a",
+      "release_blockers": [],
+      "role": "External context",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "reference-only",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "song-engine",
+      "code_license": "Apache-2.0",
+      "gated": false,
+      "id": "audio-cpp",
+      "name": "audio.cpp v0.9.1 (ShugoAI LLC)",
+      "notes": "Operator lanes follow the model loaded, not the runtime. A Metal route counts only after a Metal-vs-reference parity check plus the smoke gate.",
+      "obligations": [],
+      "output_terms": "Per model",
+      "primary_sources": [
+        "https://github.com/0xShug0/audio.cpp",
+        "https://huggingface.co/audio-cpp/Yue2-3B-GGUF",
+        "https://huggingface.co/audio-cpp/MiniMax-Music3-GGUF"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "Per model",
+      "release_blockers": [],
+      "role": "Candidate cross-machine ggml runtime (CUDA, Vulkan, HIP, Metal) for YuE2, HeartMuLa, MiniMax Music 3, SheetSage2, MuScriptor, ACE-Step",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "Per model (YuE2 GGUF CC BY-NC; HeartMuLa Apache; MiniMax Community License)"
+    },
+    {
+      "allowed_lanes": [
+        "research"
+      ],
+      "category": "dsp",
+      "code_license": "UNVERIFIED: ffmpeg is LGPL or GPL depending on build flags; afconvert ships with macOS only",
+      "gated": null,
+      "id": "audio-decoder",
+      "name": "Audio decoder for imports (ffmpeg / PyAV / afconvert; to choose)",
+      "notes": "afconvert cannot serve the Windows/Linux control service (D-24). Which ffmpeg build is installed has not been checked.",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [],
+      "process_boundary_required": true,
+      "redistribution_blocker": "Bundling a GPL ffmpeg build would be copyleft; record the build",
+      "release_blockers": [
+        "unverified"
+      ],
+      "role": "Decode phone voice memos (m4a/AAC) and imported songs to working PCM (A2, A12)",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "unverified",
+      "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "scorer",
+      "code_license": "CC-BY-4.0 (+ MIT unilm portions)",
+      "gated": false,
+      "id": "audiobox-aesthetics",
+      "name": "audiobox-aesthetics",
+      "notes": "Resamples to 16 kHz, 10 s windows: blind above 8 kHz. Diagnostic only.",
+      "obligations": [
+        "attribution"
+      ],
+      "output_terms": "Scores unrestricted",
+      "primary_sources": [
+        "https://github.com/facebookresearch/audiobox-aesthetics",
+        "https://huggingface.co/facebook/audiobox-aesthetics"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "Attribution",
+      "release_blockers": [],
+      "role": "Aesthetic diagnostic (CE, CU, PC, PQ)",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "adopt-v1",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "CC-BY-4.0, ungated"
+    },
+    {
+      "allowed_lanes": [
+        "research"
+      ],
+      "category": "post-production",
+      "code_license": "MIT",
+      "gated": false,
+      "id": "audiosr",
+      "name": "AudioSR",
+      "notes": "Synthesizes content above cutoff; not trained for MP3-type loss.",
+      "obligations": [],
+      "output_terms": "None",
+      "primary_sources": [
+        "https://github.com/haoheliu/versatile_audio_super_resolution",
+        "https://arxiv.org/abs/2309.07314"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "None",
+      "release_blockers": [],
+      "role": "Generative super-resolution (research)",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "research-only",
+      "verdict_condition": null,
+      "verification_status": "corrected",
+      "weights_license": "audiosr_basic Apache-2.0; audiosr_speech untagged"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "research"
+      ],
+      "category": "transcription",
+      "code_license": "Apache-2.0",
+      "gated": false,
+      "id": "basic-pitch",
+      "name": "Spotify Basic Pitch",
+      "notes": "Last release 0.4.0 (2024-08-16). Works best on one instrument; trained partly on iKala singing. No hum benchmark. Only humming figure: onset+pitch F1 0.434 octave-invariant / 0.268 octave-aware, no offsets (arXiv 2410.05455, course project, COMMUNITY). Main has unreleased 2025-11 fixes (#179).",
+      "obligations": [],
+      "output_terms": "None",
+      "primary_sources": [
+        "https://arxiv.org/abs/2203.09893",
+        "https://arxiv.org/abs/2410.05455",
+        "https://github.com/spotify/basic-pitch",
+        "https://github.com/spotify/basic-pitch/issues/194",
+        "https://github.com/spotify/basic-pitch/issues/203"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "None",
+      "release_blockers": [
+        "unverified_training_data"
+      ],
+      "role": "Hum/stem to MIDI with pitch bends",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "adopt-v1",
+      "verdict_condition": "Provisional: a local hum benchmark (Basic Pitch vs SwiftF0.segment_notes vs pYIN+HMM, mir_eval COn/COnP/COnPOff) decides the A4 transcriber.",
+      "verification_status": "confirmed",
+      "weights_license": "Apache-2.0 (bundled TF SavedModel, CoreML, TFLite, ONNX)"
+    },
+    {
+      "allowed_lanes": [
+        "research"
+      ],
+      "category": "separation",
+      "code_license": "n/a",
+      "gated": false,
+      "id": "bs-roformer-sw",
+      "name": "BS-RoFormer SW (6-stem)",
+      "notes": "MVSep guitar 9.01 / piano 7.80 SDR (rank 1), Logic Pro 11.2 9.00 / 7.79.",
+      "obligations": [],
+      "output_terms": "Unknown",
+      "primary_sources": [
+        "https://huggingface.co/FractalSurfer/BS-RoFormer-SW-6stem",
+        "https://mvsep.com/quality_checker/leaderboard/guitar/",
+        "https://mvsep.com/quality_checker/leaderboard/piano/"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "Unknown license and provenance",
+      "release_blockers": [
+        "unknown_license"
+      ],
+      "role": "Best open 6-stem (bass, drums, other, vocals, guitar, piano)",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "research-only",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "Unknown; original uploader account deleted; mirrors grant no rights"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "tts",
+      "code_license": "MIT",
+      "gated": false,
+      "id": "chatterbox",
+      "name": "Chatterbox (original, Turbo 350M, Nano 110M, Multilingual V3 0.5B)",
+      "notes": "Arenas (short-form, English): AA 1028; TTS Arena V2 1481 (flagged as a hosted, non-open entry).",
+      "obligations": [],
+      "output_terms": "Every output carries an imperceptible Resemble Perth watermark",
+      "primary_sources": [
+        "https://github.com/resemble-ai/chatterbox",
+        "https://huggingface.co/ResembleAI/chatterbox-turbo",
+        "https://huggingface.co/ResembleAI/chatterbox-nano"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "None",
+      "release_blockers": [],
+      "role": "Narration candidate",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "MIT, ungated"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "research"
+      ],
+      "category": "scorer",
+      "code_license": "CMI-RM Apache-2.0",
+      "gated": false,
+      "id": "cmi-rm-tunejury",
+      "name": "CMI-RM; TuneJury",
+      "notes": "CMI-RewardBench human test: GT preferred over all reranked outputs; gains non-monotonic in N.",
+      "obligations": [],
+      "output_terms": "NC",
+      "primary_sources": [
+        "https://huggingface.co/HaiwenXia/CMI-RM",
+        "https://github.com/yonghyunk1m/TuneJury",
+        "https://arxiv.org/abs/2606.17006",
+        "https://arxiv.org/html/2603.00610v3"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "NC",
+      "release_blockers": [
+        "non_commercial_weights"
+      ],
+      "role": "Pairwise music reward models (research)",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "research-only",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "CC-BY-NC-4.0 (CMI-RM; TuneJury primary, MERT dependency); TuneJury 'Apache CLAP-only variant' provenance unverified"
+    },
+    {
+      "allowed_lanes": [
+        "research"
+      ],
+      "category": "ui-runtime",
+      "code_license": "UNVERIFIED (tools not chosen yet)",
+      "gated": null,
+      "id": "codegen-tools",
+      "name": "Schema-to-type codegen tools (Pydantic and TypeScript generators, OpenAPI client generator)",
+      "notes": "Named in ADR-0011 rule 7 (unverified until checked).",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [],
+      "process_boundary_required": false,
+      "redistribution_blocker": "Unverified license.",
+      "release_blockers": [
+        "unverified"
+      ],
+      "role": "Generate packages/contracts-py and packages/contracts-ts from contracts/schemas.",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "evaluate",
+      "verdict_condition": "Tools chosen and licenses verified before adoption (P0-9).",
+      "verification_status": "unverified",
+      "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "tts",
+      "code_license": "Apache-2.0",
+      "gated": false,
+      "id": "cosyvoice3",
+      "name": "Fun-CosyVoice3-0.5B-2512",
+      "notes": "",
+      "obligations": [],
+      "output_terms": "Demo content 'academic purposes only' refers to examples",
+      "primary_sources": [
+        "https://huggingface.co/FunAudioLLM/Fun-CosyVoice3-0.5B-2512"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "None",
+      "release_blockers": [],
+      "role": "Narration candidate (pronunciation inpainting)",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "Apache-2.0, ungated"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "ui-runtime",
+      "code_license": "Apache-2.0",
+      "gated": null,
+      "id": "cpal",
+      "name": "CPAL 0.18",
+      "notes": "I/O only; graph, DSP and plugin isolation are ours to build.",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [
+        "https://github.com/RustAudio/cpal",
+        "https://crates.io/crates/cpal"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "asio feature pulls Steinberg ASIO SDK (proprietary or GPLv3 since 2025-10-15)",
+      "release_blockers": [],
+      "role": "Native audio I/O if browser gates fail (v2)",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "post-production",
+      "code_license": "MIT / Apache-2.0",
+      "gated": false,
+      "id": "deepfilternet",
+      "name": "DeepFilterNet",
+      "notes": "Never apply globally to music.",
+      "obligations": [],
+      "output_terms": "None",
+      "primary_sources": [
+        "https://github.com/Rikorose/DeepFilterNet"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "None",
+      "release_blockers": [],
+      "role": "Speech-only enhancement for narration",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "unverified",
+      "weights_license": "MIT / Apache-2.0"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "research"
+      ],
+      "category": "separation",
+      "code_license": "MIT",
+      "gated": false,
+      "id": "demucs-4.1.0",
+      "name": "Demucs 4.1.0 (adefossez/demucs): htdemucs, htdemucs_ft, htdemucs_6s",
+      "notes": "htdemucs and ft = 4 stems; 6s = 6 (guitar, piano; piano weak); no backing vocals. facebookresearch repo archived 2025-01-01; adefossez fork is the maintained one (v4.1.0, 2026-07-11). REVISION (GAP-06): license moved from 'unknown' to 'non-commercial (author statement)'.",
+      "obligations": [],
+      "output_terms": "None; stems inherit input rights",
+      "primary_sources": [
+        "https://github.com/adefossez/demucs",
+        "https://pypi.org/project/demucs/4.1.0/",
+        "https://huggingface.co/adefossez/HTDemucs-6s",
+        "https://github.com/facebookresearch/demucs"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "Non-commercial per the author: pretrained weights are 'provided only for scientific purposes' / personal or research use (issues #327, #384, #508), because MUSDB training data is research-only. Download at runtime, never bundle.",
+      "release_blockers": [
+        "non_commercial_by_author"
+      ],
+      "role": "Isolate-original baseline",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "adopt-v1",
+      "verdict_condition": "Individual and research lanes only. LLC work needs another separator.",
+      "verification_status": "corrected",
+      "weights_license": "Research/personal use only per the author (facebookresearch/demucs #327, #384, #508); 'license: mit' removed from the HF cards and export script on 2026-08-31. Repo code MIT."
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "research"
+      ],
+      "category": "separation",
+      "code_license": "MIT",
+      "gated": false,
+      "id": "demucs-mlx",
+      "name": "demucs-mlx 1.6.1",
+      "notes": "Swift package demucs-mlx-swift (MIT) also exists.",
+      "obligations": [],
+      "output_terms": "None",
+      "primary_sources": [
+        "https://github.com/ssmall256/demucs-mlx",
+        "https://pypi.org/project/demucs-mlx/",
+        "https://huggingface.co/ssmall256/demucs-mlx"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "Non-commercial per the author: pretrained weights are 'provided only for scientific purposes' / personal or research use (issues #327, #384, #508), because MUSDB training data is research-only. Download at runtime, never bundle.",
+      "release_blockers": [
+        "non_commercial_by_author"
+      ],
+      "role": "Mac-native separation",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "corrected",
+      "weights_license": "Converted Meta checkpoints; the same author restriction applies (MIT tag on the conversion does not clear it)."
+    },
+    {
+      "allowed_lanes": [],
+      "category": "song-engine",
+      "code_license": "Apache-2.0",
+      "gated": false,
+      "id": "diffrhythm-2",
+      "name": "DiffRhythm 2",
+      "notes": "Instrumental and extension still TODO; repo dormant since 2025-11-09. WSB SongBench 5.24 (COMPETITOR-RUN).",
+      "obligations": [],
+      "output_terms": "Pipeline not commercially clean",
+      "primary_sources": [
+        "https://github.com/ASLP-lab/DiffRhythm2",
+        "https://huggingface.co/OpenMuQ/MuQ-MuLan-large"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "NC dependency",
+      "release_blockers": [],
+      "role": "n/a",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "reject",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "Apache-2.0, but inference loads OpenMuQ/MuQ-MuLan-large (CC BY-NC 4.0)"
+    },
+    {
+      "allowed_lanes": [
+        "research"
+      ],
+      "category": "voice-singing",
+      "code_license": "Apache-2.0",
+      "gated": false,
+      "id": "diffsinger",
+      "name": "OpenVPI DiffSinger 2.5.1",
+      "notes": "Energy, breathiness and voicing are coupled (BestPractices.md).",
+      "obligations": [],
+      "output_terms": "Disclaimer forbids generating a voice without consent; commercial use needs a self-trained vocoder",
+      "primary_sources": [
+        "https://github.com/openvpi/DiffSinger",
+        "https://openvpi.github.io/vocoders/",
+        "https://github.com/openvpi/SingingVocoders",
+        "https://github.com/stakira/OpenUtau"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "NC-SA community vocoder",
+      "release_blockers": [
+        "non_commercial_weights"
+      ],
+      "role": "Score-to-singing research lane",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "research-only",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "Voicebanks per creator; community NSF-HiFiGAN / PC-NSF-HiFiGAN vocoders CC BY-NC-SA 4.0"
+    },
+    {
+      "allowed_lanes": [],
+      "category": "voice-conversion",
+      "code_license": "n/a",
+      "gated": null,
+      "id": "efegen-rvc-pipeline",
+      "name": "efegen/rvc-pipeline",
+      "notes": "Does not exist (404); cited by Kimi.",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [
+        "https://api.github.com/repos/efegen/rvc-pipeline"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "n/a",
+      "release_blockers": [],
+      "role": "n/a",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "reject",
+      "verdict_condition": null,
+      "verification_status": "refuted",
+      "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "desktop-shell",
+      "code_license": "MIT",
+      "gated": null,
+      "id": "electron",
+      "name": "Electron 44",
+      "notes": "",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [
+        "https://github.com/electron/electron/releases/tag/v44.7.0"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "None",
+      "release_blockers": [],
+      "role": "Preferred shell when needed",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [],
+      "category": "hosted",
+      "code_license": "closed",
+      "gated": null,
+      "id": "elevenlabs-music",
+      "name": "ElevenLabs Music (music_v2_5)",
+      "notes": "Not 'the only real music API'.",
+      "obligations": [],
+      "output_terms": "Paid API. Free: commercial with attribution, no streaming; Starter: no attribution, no streaming; Creator+: streaming; film/TV/radio/Studio Games need Enterprise Music",
+      "primary_sources": [
+        "https://elevenlabs.io/docs/overview/capabilities/music",
+        "https://elevenlabs.io/eleven-music-model-specific-terms"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "n/a",
+      "release_blockers": [],
+      "role": "Reference",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "reference-only",
+      "verdict_condition": null,
+      "verification_status": "corrected",
+      "weights_license": "closed"
+    },
+    {
+      "allowed_lanes": [],
+      "category": "tts",
+      "code_license": "closed",
+      "gated": null,
+      "id": "elevenlabs-tts",
+      "name": "ElevenLabs TTS (v3, v4, v4 Turbo, Flash, Turbo, Multilingual v2)",
+      "notes": "List per 1K chars: v3/Multilingual v2/v4 $0.08; Flash/Turbo/v3 Conversational/v4 Turbo $0.04 (v4 promo until Oct 12). v3/v4 do not support SSML break tags; breaks up to 3 s on others. Eleven v4 Turbo (1329) and v4 (1326) top the Artificial Analysis TTS board ahead of v3 (1177): the replacement bar is v4. INFERRED list-price baseline ~$4.0-4.6 per finished hour at $0.08/1K characters (X-48).",
+      "obligations": [],
+      "output_terms": "Paid-plan output is commercial forever after the subscription ends. Prohibited Use Policy (2026-08-17) s.9(j)(k)(l): Output may not be used to build competing models, as ML input, or as a training/testing dataset, so renders cannot seed or train another engine. Clones cannot be exported; a PVC is kept but unusable below the Creator tier.",
+      "primary_sources": [
+        "https://artificialanalysis.ai/text-to-speech/leaderboard",
+        "https://elevenlabs.io/docs/overview/capabilities/text-to-speech/best-practices",
+        "https://elevenlabs.io/docs/overview/models",
+        "https://elevenlabs.io/pricing/api",
+        "https://elevenlabs.io/terms-of-use",
+        "https://elevenlabs.io/use-policy"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "n/a",
+      "release_blockers": [],
+      "role": "Current narration vendor; cost baseline",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "reference-only",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "closed"
+    },
+    {
+      "allowed_lanes": [],
+      "category": "tts",
+      "code_license": "MIT",
+      "gated": false,
+      "id": "f5-tts",
+      "name": "F5-TTS",
+      "notes": "",
+      "obligations": [],
+      "output_terms": "NC",
+      "primary_sources": [
+        "https://huggingface.co/SWivid/F5-TTS"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "NC weights",
+      "release_blockers": [
+        "non_commercial_weights"
+      ],
+      "role": "n/a",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "reject",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "cc-by-nc-4.0"
+    },
+    {
+      "allowed_lanes": [
+        "research"
+      ],
+      "category": "ui-runtime",
+      "code_license": "UNVERIFIED (assumed permissive; not checked against a primary source)",
+      "gated": null,
+      "id": "fastapi",
+      "name": "FastAPI",
+      "notes": "RECONCILIATION.md §8: licenses of FastAPI, SQLite, React, Vite and uv were assumed permissive, never checked.",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [],
+      "process_boundary_required": false,
+      "redistribution_blocker": "Unverified license.",
+      "release_blockers": [
+        "unverified"
+      ],
+      "role": "The control service's HTTP and SSE framework.",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "evaluate",
+      "verdict_condition": "License verification ticket must close before adoption (P0-9).",
+      "verification_status": "unverified",
+      "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [
+        "research"
+      ],
+      "category": "transcription",
+      "code_license": "FCPE MIT; RMVPE (Dream-High) Apache-2.0",
+      "gated": false,
+      "id": "fcpe-rmvpe",
+      "name": "FCPE (torchfcpe 0.0.4) and RMVPE",
+      "notes": "RMVPE tops the author-run Vocadito benchmark (0.862) but has no clean weights.",
+      "obligations": [],
+      "output_terms": "None",
+      "primary_sources": [
+        "https://github.com/CNChTu/FCPE",
+        "https://huggingface.co/ChiTu/FCPE",
+        "https://github.com/Dream-High/RMVPE",
+        "https://github.com/yxlllc/RMVPE/releases"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "No clean weights",
+      "release_blockers": [
+        "unknown_license"
+      ],
+      "role": "Not used",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "research-only",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "FCPE bundled v001 MIT (data unstated), DDSP-200K CC BY-NC-SA; RMVPE: no official weights; yxlllc weights unlicensed; RVC's rmvpe.pt provenance unstated"
+    },
+    {
+      "allowed_lanes": [],
+      "category": "tts",
+      "code_license": "Fish Audio Research License",
+      "gated": false,
+      "id": "fish-speech-s2-pro",
+      "name": "Fish Speech S2-Pro",
+      "notes": "",
+      "obligations": [],
+      "output_terms": "Commercial use (incl. internal org use) needs separate license; 'Built with Fish Audio'; outputs may not improve foundation models",
+      "primary_sources": [
+        "https://github.com/fishaudio/fish-speech/blob/main/LICENSE",
+        "https://huggingface.co/fishaudio/s2-pro"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "Research license",
+      "release_blockers": [
+        "research_or_academic"
+      ],
+      "role": "n/a",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "reject",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "Fish Audio Research License"
+    },
+    {
+      "allowed_lanes": [
+        "research"
+      ],
+      "category": "dataset",
+      "code_license": "MIT",
+      "gated": false,
+      "id": "fma",
+      "name": "Free Music Archive (FMA) dataset",
+      "notes": "",
+      "obligations": [],
+      "output_terms": "'Meant for research purposes'",
+      "primary_sources": [
+        "https://github.com/mdeff/fma",
+        "https://arxiv.org/abs/1612.01840"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "~90% NC by duration (secondary tally)",
+      "release_blockers": [
+        "non_commercial_weights"
+      ],
+      "role": "n/a for shareable adapters",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "reject",
+      "verdict_condition": null,
+      "verification_status": "corrected",
+      "weights_license": "Metadata CC BY 4.0; audio per-artist license"
+    },
+    {
+      "allowed_lanes": [
+        "research"
+      ],
+      "category": "transcription",
+      "code_license": "UNVERIFIED",
+      "gated": null,
+      "id": "g2p-phonemizer",
+      "name": "G2P / phonemizer for lyric PER (to choose)",
+      "notes": "No candidate was checked in this pass. Which G2P the WSB PER protocol uses is also unchecked.",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [
+        "https://github.com/hexgrad/misaki/blob/main/pyproject.toml"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "Any espeak-ng-backed G2P inherits GPL-3.0 (see kokoro-82m)",
+      "release_blockers": [
+        "unverified"
+      ],
+      "role": "Convert approved lyrics and ASR output to phonemes for lyric phoneme error rate (D-05, C2)",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "unverified",
+      "weights_license": "UNVERIFIED"
+    },
+    {
+      "allowed_lanes": [],
+      "category": "hosted",
+      "code_license": "closed",
+      "gated": null,
+      "id": "gemini-lyria-3.5",
+      "name": "Gemini API lyria-3.5",
+      "notes": "",
+      "obligations": [],
+      "output_terms": "$0.08 per song; SynthID watermark on all audio; single-turn, no iterative editing",
+      "primary_sources": [
+        "https://ai.google.dev/gemini-api/docs/music-generation",
+        "https://ai.google.dev/gemini-api/docs/pricing"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "n/a",
+      "release_blockers": [],
+      "role": "Cheapest hosted reference",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "reference-only",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "closed"
+    },
+    {
+      "allowed_lanes": [
+        "research"
+      ],
+      "category": "song-engine",
+      "code_license": "CONTESTED: no LICENSE file; pyproject.toml and README badge declare Apache-2.0",
+      "gated": false,
+      "id": "heartlib-mlx",
+      "name": "Acelogic/heartlib-mlx",
+      "notes": "audio.cpp's heartmula family is the cleaner Metal route.",
+      "obligations": [],
+      "output_terms": "None stated",
+      "primary_sources": [
+        "https://github.com/Acelogic/heartlib-mlx"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "No LICENSE file",
+      "release_blockers": [
+        "contested"
+      ],
+      "role": "Possible Mac route for HeartMuLa",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "watch",
+      "verdict_condition": null,
+      "verification_status": "contested",
+      "weights_license": "Upstream HeartMuLa Apache-2.0"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "song-engine",
+      "code_license": "Apache-2.0 (heartlib)",
+      "gated": false,
+      "id": "heartmula-3b",
+      "name": "HeartMuLa-oss-3B (happy-new-year) + HeartCodec",
+      "notes": "WSB SongBench 6.2483 but SongEval 4.55 inflated by SongEval/AudioBox DPO (evaluator reuse noted by YuE2 authors). 7B unreleased (HF 401). REVISION: promoted from 'after the first comparison reproduces' to LLC-lane challenger alongside MiniMax (D-02). WSB SongBench 6.25 is COMPETITOR-RUN by the YuE2 authors.",
+      "obligations": [],
+      "output_terms": "None stated beyond Apache",
+      "primary_sources": [
+        "https://github.com/HeartMuLa/heartlib",
+        "https://huggingface.co/HeartMuLa/HeartMuLa-oss-3B-happy-new-year"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "None known",
+      "release_blockers": [],
+      "role": "LLC-lane challenger: the only non-ACE open vocal song model found with permissive weights",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "Apache-2.0 (since 2026-01-20)"
+    },
+    {
+      "allowed_lanes": [],
+      "category": "ui-runtime",
+      "code_license": "None (no LICENSE file; README badge claims MIT)",
+      "gated": null,
+      "id": "heartmula-studio",
+      "name": "HeartMuLa-Studio (fspecii)",
+      "notes": "Community, not official; last push 2026-02-25.",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [
+        "https://github.com/fspecii/HeartMuLa-Studio"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "No license: do not copy code",
+      "release_blockers": [
+        "unknown_license"
+      ],
+      "role": "Webapp pattern reference",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "reference-only",
+      "verdict_condition": null,
+      "verification_status": "corrected",
+      "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "transcription",
+      "code_license": "Apache-2.0",
+      "gated": false,
+      "id": "hearttranscriptor",
+      "name": "HeartTranscriptor-oss",
+      "notes": "Whisper fine-tuned on sung lyrics.",
+      "obligations": [],
+      "output_terms": "None",
+      "primary_sources": [
+        "https://huggingface.co/HeartMuLa/HeartTranscriptor-oss"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "None",
+      "release_blockers": [],
+      "role": "Sung-lyric ASR",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "Apache-2.0"
+    },
+    {
+      "allowed_lanes": [
+        "research"
+      ],
+      "category": "dataset",
+      "code_license": "Eval repo has no license",
+      "gated": false,
+      "id": "humtrans",
+      "name": "HumTrans dataset",
+      "notes": "Paper's own transcriber F1 3.0-5.8 ('far from satisfactory'); its eval ignores offsets. Onset/offset labels reported misaligned by arXiv 2410.05455.",
+      "obligations": [],
+      "output_terms": "NC",
+      "primary_sources": [
+        "https://arxiv.org/abs/2309.09623",
+        "https://huggingface.co/datasets/dadinghh2/HumTrans",
+        "https://github.com/shansongliu/HumTrans/blob/main/calc_transcription_eval_metric.py"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "NC",
+      "release_blockers": [
+        "non_commercial_weights"
+      ],
+      "role": "Humming benchmark fixtures (personal evaluation only)",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "research-only",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "Dataset CC BY-NC 4.0"
+    },
+    {
+      "allowed_lanes": [],
+      "category": "song-engine",
+      "code_license": "MIT",
+      "gated": true,
+      "id": "jasco",
+      "name": "Meta JASCO (chords/drums/melody)",
+      "notes": "",
+      "obligations": [],
+      "output_terms": "NC",
+      "primary_sources": [
+        "https://huggingface.co/facebook/jasco-chords-drums-melody-1B"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "NC weights",
+      "release_blockers": [
+        "non_commercial_weights"
+      ],
+      "role": "n/a",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "reject",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "CC-BY-NC 4.0, manually gated"
+    },
+    {
+      "allowed_lanes": [],
+      "category": "ui-runtime",
+      "code_license": "AGPLv3 or JUCE 9 EULA (Starter free <= $20k; Indie <= $300k $40/mo or $800; Pro $175/mo or $3,500); EULA forbids copyleft mixing",
+      "gated": null,
+      "id": "juce-9",
+      "name": "JUCE 9",
+      "notes": "9.0.0 2026-07-21; 9.0.3 2026-09-28.",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [
+        "https://juce.com/legal/juce-9-licence/",
+        "https://github.com/juce-framework/JUCE/blob/master/LICENSE.md"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "AGPL or EULA",
+      "release_blockers": [
+        "copyleft"
+      ],
+      "role": "n/a",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "reject",
+      "verdict_condition": null,
+      "verification_status": "corrected",
+      "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "tts",
+      "code_license": "Apache-2.0",
+      "gated": false,
+      "id": "kokoro-82m",
+      "name": "Kokoro-82M",
+      "notes": "Arenas (short-form, English): AA 1065; TTS Arena V2 1478 (open, inactive).",
+      "obligations": [],
+      "output_terms": "None",
+      "primary_sources": [
+        "https://huggingface.co/hexgrad/Kokoro-82M",
+        "https://github.com/hexgrad/misaki/blob/main/pyproject.toml"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "misaki[en] depends on espeak-ng (GPL-3.0) via espeakng-loader",
+      "release_blockers": [
+        "copyleft"
+      ],
+      "role": "Low-resource narration baseline (no cloning)",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "Apache-2.0"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "scorer",
+      "code_license": "CC0-1.0",
+      "gated": false,
+      "id": "laion-clap",
+      "name": "LAION-CLAP (music checkpoint)",
+      "notes": "Diagnostic only.",
+      "obligations": [],
+      "output_terms": "None",
+      "primary_sources": [
+        "https://github.com/LAION-AI/CLAP",
+        "https://huggingface.co/lukewys/laion_clap",
+        "https://huggingface.co/laion/larger_clap_music"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "None (training data copyrighted, not released: provenance note)",
+      "release_blockers": [],
+      "role": "Text-audio agreement diagnostic",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "adopt-v1",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "CC0-1.0 (lukewys/laion_clap); Apache-2.0 transformers ports (laion/larger_clap_music)"
+    },
+    {
+      "allowed_lanes": [],
+      "category": "song-engine",
+      "code_license": "Unverifiable (canonical GitHub 404)",
+      "gated": null,
+      "id": "levo-2",
+      "name": "SongGeneration / LeVo 2",
+      "notes": "HF tencent repos 401; Space redirects to tencent/SongPrep. WSB SongBench 6.3247 with PER 26.12%.",
+      "obligations": [],
+      "output_terms": "Unverifiable",
+      "primary_sources": [
+        "https://github.com/tencent-ailab/SongGeneration",
+        "https://huggingface.co/lglg666/SongGeneration-v2-large"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "Unknown license; withdrawn",
+      "release_blockers": [
+        "unknown_license"
+      ],
+      "role": "n/a",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "reject",
+      "verdict_condition": null,
+      "verification_status": "unverifiable",
+      "weights_license": "lglg666 mirror 'unknown'; mirror text: research/education only, no commercial or production use"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "transcription",
+      "code_license": "ISC",
+      "gated": null,
+      "id": "librosa-pyin",
+      "name": "librosa 1.0.0 pYIN (+ librosa.sequence.dtw)",
+      "notes": "Vocadito pitch F1 0.653 (author-run benchmark). Whether librosa's DTW is adequate for the adherence metric is UNVERIFIED.",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [
+        "https://github.com/librosa/librosa/releases/tag/1.0.0",
+        "https://pypi.org/pypi/librosa/json"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "None",
+      "release_blockers": [],
+      "role": "Weights-free F0 cross-check; HMM note segmentation; DTW for melody adherence",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "adopt-v1",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "n/a (no weights)"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "separation",
+      "code_license": "Apple commercial",
+      "gated": null,
+      "id": "logic-pro-stem-splitter",
+      "name": "Logic Pro 11.2 Stem Splitter",
+      "notes": "Ranked #2 on MVSep guitar/piano, effectively tied with BS-RoFormer SW. Whether Jon owns Logic is unknown.",
+      "obligations": [],
+      "output_terms": "Per Apple license (not verified)",
+      "primary_sources": [
+        "https://mvsep.com/quality_checker/leaderboard/guitar/"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "n/a",
+      "release_blockers": [],
+      "role": "Comparator",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "reference-only",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "post-production",
+      "code_license": "GPL-3.0",
+      "gated": null,
+      "id": "matchering",
+      "name": "Matchering 2.0.6",
+      "notes": "Last release 2022-10-19; matches RMS, frequency response, peak and stereo width to a reference; no LUFS target.",
+      "obligations": [],
+      "output_terms": "None",
+      "primary_sources": [
+        "https://github.com/sergree/matchering",
+        "https://pypi.org/project/matchering/"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "GPL-3.0 (run as separate process)",
+      "release_blockers": [
+        "copyleft"
+      ],
+      "role": "Reference-matching master (v2, optional)",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "corrected",
+      "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "research"
+      ],
+      "category": "separation",
+      "code_license": "MIT (ZFTurbo MSST / python-audio-separator)",
+      "gated": false,
+      "id": "melband-roformer-kim",
+      "name": "Mel-Band-RoFormer vocals (KimberleyJSN)",
+      "notes": "Allow-list candidate. Training data not stated (UNVERIFIED); check before relying on it for LLC work.",
+      "obligations": [],
+      "output_terms": "None",
+      "primary_sources": [
+        "https://huggingface.co/KimberleyJSN/melbandroformer"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "None known",
+      "release_blockers": [
+        "unverified_training_data"
+      ],
+      "role": "Vocals isolation upgrade; candidate LLC-lane vocal separator for the internal PER and melody-adherence filters",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "MIT"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "transcription",
+      "code_license": "the studio's own license",
+      "gated": null,
+      "id": "melodyspec-abc-converter",
+      "name": "MelodySpec -> YuE2 ABC converter (the studio code)",
+      "notes": "Target dialect confirmed (GAP-02). Validate with the YuE skill's abc_tools.py (repo Apache-2.0 since PR #159). Pickup bars must be padded with rests; tuplets must be re-quantized. Converter quality unbuilt and unmeasured.",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [
+        "https://github.com/multimodal-art-projection/YuE/blob/main/skills/yue2-music/references/abc-editing.md",
+        "https://github.com/multimodal-art-projection/YuE/blob/main/skills/yue2-music/scripts/abc_tools.py"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "None",
+      "release_blockers": [],
+      "role": "R1 route: emit YuE2's native two-voice ABC dialect from the corrected MelodySpec; keep the lyric syllable plan as a sidecar",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "adopt-v1",
+      "verdict_condition": null,
+      "verification_status": "unverified",
+      "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "alignment",
+      "code_license": "MIT",
+      "gated": false,
+      "id": "mfa",
+      "name": "Montreal Forced Aligner",
+      "notes": "v3.4.3 2026-10-08. Singing is out of domain.",
+      "obligations": [
+        "attribution"
+      ],
+      "output_terms": "None",
+      "primary_sources": [
+        "https://github.com/MontrealCorpusTools/Montreal-Forced-Aligner",
+        "https://mfa-models.readthedocs.io/en/latest/acoustic/English/English%20MFA%20acoustic%20model%20v3_1_0.html"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "Attribution",
+      "release_blockers": [],
+      "role": "Speech aligner baseline",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "CC BY 4.0 (speech-trained)"
+    },
+    {
+      "allowed_lanes": [
+        "research"
+      ],
+      "category": "dsp",
+      "code_license": "UNVERIFIED",
+      "gated": null,
+      "id": "midi-synth-soundfont",
+      "name": "MIDI / General MIDI synth and soundfont (to choose)",
+      "notes": "No candidate was checked in this pass.",
+      "obligations": [],
+      "output_terms": "Soundfont terms may restrict rendered audio",
+      "primary_sources": [],
+      "process_boundary_required": false,
+      "redistribution_blocker": "Unverified (synth library and soundfont licenses differ)",
+      "release_blockers": [
+        "unverified"
+      ],
+      "role": "R2(ii) neutral synth render of the MelodySpec; F6 instrument rendering; MIDI preview",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "unverified",
+      "weights_license": "Soundfont licenses UNVERIFIED"
+    },
+    {
+      "allowed_lanes": [
+        "research"
+      ],
+      "category": "dsp",
+      "code_license": "UNVERIFIED (not checked against a primary source)",
+      "gated": null,
+      "id": "mido",
+      "name": "mido (MIDI import and export in Score)",
+      "notes": "Named in the D-11 unverified list.",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [],
+      "process_boundary_required": false,
+      "redistribution_blocker": "Unverified license.",
+      "release_blockers": [
+        "unverified"
+      ],
+      "role": "Standard MIDI File read and write for MelodySpec round trips (architecture.md §4.6).",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "evaluate",
+      "verdict_condition": "Its license row must be verified before adoption (P0-9).",
+      "verification_status": "unverified",
+      "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [],
+      "category": "hosted",
+      "code_license": "n/a",
+      "gated": null,
+      "id": "minimax-hosted-api",
+      "name": "MiniMax hosted Music/Lyrics Generation API",
+      "notes": "Paid APIs unavailable to new users since 2026-08-20; free tiers discontinued.",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [
+        "https://platform.minimax.io/docs/api-reference/music-generation"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "n/a",
+      "release_blockers": [],
+      "role": "n/a",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "reject",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "song-engine",
+      "code_license": "vanch007: MiniMax-Music3 Community License (no SPDX); appautomaton: MIT",
+      "gated": false,
+      "id": "minimax-mlx-ports",
+      "name": "MiniMax Music 3 MLX ports (vanch007, appautomaton)",
+      "notes": "Blocked on this Mac by disk (2-5.5 GiB free) until storage is resolved (Q2).",
+      "obligations": [
+        "acceptable_use_policy",
+        "ai_disclosure",
+        "revenue_threshold",
+        "ui_naming"
+      ],
+      "output_terms": "AUP #11 machine-generated disclosure",
+      "primary_sources": [
+        "https://github.com/vanch007/mlx-minimax-music3",
+        "https://github.com/appautomaton/mlx-minimax-music3"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "Community License obligations",
+      "release_blockers": [
+        "obligations"
+      ],
+      "role": "Possible Mac route for MiniMax",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "watch",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "MiniMax-Music3 Community License (unchanged pass-through)"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "song-engine",
+      "code_license": "MiniMax-Music3 Community License covers inference code (GitHub repo has no LICENSE file)",
+      "gated": false,
+      "id": "minimax-music3",
+      "name": "MiniMax Music 3 (open weights)",
+      "notes": "Output 32 kHz/16-bit stereo per vendor; diffusers docs say vocoder native 44.1 kHz (contested). WSB SongBench 6.2830 (COMPETITOR-RUN). Community audio.cpp RTF 0.74-1.39 on RTX 5090 (COMMUNITY). Hosted API closed to new users since 2026-08-20; free models discontinued. LLC-lane challenger with HeartMuLa (D-02). Per-candidate cost basis is COMMUNITY-derived on a 5090 (V-cost-3).",
+      "obligations": [
+        "acceptable_use_policy",
+        "ai_disclosure",
+        "revenue_threshold",
+        "ui_naming"
+      ],
+      "output_terms": "User responsible; AUP #11 requires clear machine-generated disclosure for public dissemination",
+      "primary_sources": [
+        "https://huggingface.co/MiniMaxAI/MiniMax-Music3",
+        "https://huggingface.co/MiniMaxAI/MiniMax-Music3/blob/main/LICENSE",
+        "https://github.com/MiniMax-AI/MiniMax-Music3",
+        "https://github.com/huggingface/diffusers/releases/tag/v0.40.0"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "Obligations (UI naming, revenue threshold, AUP, safeguards)",
+      "release_blockers": [
+        "obligations"
+      ],
+      "role": "Challenger that a company can license",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "corrected",
+      "weights_license": "MiniMax-Music3 Community License: prominent 'MiniMax-Music3' in commercial UI; prior written authorization above US$20M aggregate yearly revenue incl. affiliates; safeguards required for third-party generation services; AUP (Exhibit A, revisable); indemnity"
+    },
+    {
+      "allowed_lanes": [
+        "research"
+      ],
+      "category": "scorer",
+      "code_license": "UNVERIFIED (believed MIT; not checked in this pass)",
+      "gated": null,
+      "id": "mir-eval",
+      "name": "mir_eval",
+      "notes": "Named by GAP-01; license to verify before adoption.",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [],
+      "process_boundary_required": false,
+      "redistribution_blocker": "License unverified",
+      "release_blockers": [
+        "unverified"
+      ],
+      "role": "Note-level COn/COnP/COnPOff scoring for the hum benchmark",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "unverified",
+      "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "tts",
+      "code_license": "MIT",
+      "gated": false,
+      "id": "mlx-audio",
+      "name": "mlx-audio (Blaizzy)",
+      "notes": "Covers Qwen3-TTS, Kokoro, Chatterbox v2/v3, VoxCPM2, OmniVoice.",
+      "obligations": [],
+      "output_terms": "Per model",
+      "primary_sources": [
+        "https://github.com/Blaizzy/mlx-audio"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "Per model",
+      "release_blockers": [],
+      "role": "Community MLX runtime (TTS, SAM Audio)",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "Per model"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "separation",
+      "code_license": "MIT",
+      "gated": false,
+      "id": "mlx-audio-separator",
+      "name": "mlx-audio-separator",
+      "notes": "",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [
+        "https://github.com/ssmall256/mlx-audio-separator"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "Per model",
+      "release_blockers": [],
+      "role": "MLX Roformer/MDXC/Demucs inference",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "Per model"
+    },
+    {
+      "allowed_lanes": [],
+      "category": "compute",
+      "code_license": "n/a",
+      "gated": null,
+      "id": "modal",
+      "name": "Modal",
+      "notes": "No 4090/5090. 60 s keepalive billed. Starter $30/month credit.",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [
+        "https://modal.com/pricing"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "n/a",
+      "release_blockers": [],
+      "role": "Bounded CUDA rental",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "structure",
+      "code_license": "MIT",
+      "gated": false,
+      "id": "msaf",
+      "name": "msaf",
+      "notes": "Labels are cluster IDs, not verse/chorus names.",
+      "obligations": [],
+      "output_terms": "None",
+      "primary_sources": [
+        "https://github.com/urinieto/msaf"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "None",
+      "release_blockers": [],
+      "role": "Unsupervised segmentation fallback",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "None needed"
+    },
+    {
+      "allowed_lanes": [
+        "research"
+      ],
+      "category": "dataset",
+      "code_license": "Apache-2.0",
+      "gated": false,
+      "id": "mtg-jamendo",
+      "name": "MTG-Jamendo dataset",
+      "notes": "",
+      "obligations": [],
+      "output_terms": "2025-07-02 notice: non-commercial research/academic only; other use needs Jamendo authorization",
+      "primary_sources": [
+        "https://github.com/MTG/mtg-jamendo-dataset",
+        "https://raw.githubusercontent.com/MTG/mtg-jamendo-dataset/master/audio_licenses.txt"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "NC/ND majority; Jamendo notice",
+      "release_blockers": [
+        "non_commercial_weights"
+      ],
+      "role": "n/a for shareable adapters",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "reject",
+      "verdict_condition": null,
+      "verification_status": "corrected",
+      "weights_license": "Metadata CC BY-NC-SA 4.0; audio per-track CC: 21,399 BY-NC-SA, 15,584 BY-NC-ND, 9,933 BY-SA, 3,303 BY-ND, 3,122 BY, 2,274 BY-NC, 0 CC0"
+    },
+    {
+      "allowed_lanes": [
+        "research"
+      ],
+      "category": "song-engine",
+      "code_license": "Apache-2.0",
+      "gated": false,
+      "id": "mulacover",
+      "name": "MuLaCover",
+      "notes": "",
+      "obligations": [],
+      "output_terms": "Outputs (audio, MIDI, tokens, latents) noncommercial without written permission",
+      "primary_sources": [
+        "https://github.com/HeartMuLa/MuLaCover/blob/main/MODEL_LICENSE",
+        "https://github.com/HeartMuLa/MuLaCover/blob/main/LICENSING.md"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "NC weights and outputs",
+      "release_blockers": [
+        "non_commercial_weights"
+      ],
+      "role": "Melody/MIDI-conditioned cover (research)",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "research-only",
+      "verdict_condition": null,
+      "verification_status": "contested",
+      "weights_license": "CC BY-NC 4.0 per HF card (contested vs heartlib README 'all related weights Apache', which predates MuLaCover)"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "research"
+      ],
+      "category": "scorer",
+      "code_license": "MIT",
+      "gated": false,
+      "id": "muq",
+      "name": "MuQ / MuQ-MuLan",
+      "notes": "",
+      "obligations": [],
+      "output_terms": "NC",
+      "primary_sources": [
+        "https://github.com/tencent-ailab/MuQ",
+        "https://huggingface.co/OpenMuQ/MuQ-MuLan-large"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "NC weights",
+      "release_blockers": [
+        "non_commercial_weights"
+      ],
+      "role": "Embeddings / text-audio alignment (research)",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "research-only",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "CC-BY-NC-4.0"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "hosted",
+      "code_license": "closed",
+      "gated": null,
+      "id": "mureka-api",
+      "name": "Mureka API (mureka-9.5)",
+      "notes": "Model enum: auto, mureka-7.6, o2, 8, 9, 9.5 (pin it). Stems via audio-separation-2 up to 12 + MIDI; region-edit lyrics; extend only 7.6/8. AA vocal v1.1: Mureka V9.5 1103 (#3).",
+      "obligations": [],
+      "output_terms": "Pro commercial rights; MIDI/WAV export and Studio on Premier (subscribe page shows no prices)",
+      "primary_sources": [
+        "https://platform.mureka.ai/docs/en/changelog.html",
+        "https://platform.mureka.ai/docs/api/operations/post-v1-song-generate.html",
+        "https://www.mureka.ai/subscribe"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "n/a",
+      "release_blockers": [],
+      "role": "Optional hosted benchmark",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "reference-only",
+      "verdict_condition": null,
+      "verification_status": "corrected",
+      "weights_license": "closed"
+    },
+    {
+      "allowed_lanes": [
+        "research"
+      ],
+      "category": "transcription",
+      "code_license": "MIT",
+      "gated": true,
+      "id": "muscriptor",
+      "name": "MuScriptor (Kyutai/Mirelo)",
+      "notes": "Reported by gap research as a new discovery; not separately verified.",
+      "obligations": [],
+      "output_terms": "NC",
+      "primary_sources": [
+        "https://github.com/0xShug0/audio.cpp"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "NC weights",
+      "release_blockers": [
+        "non_commercial_weights"
+      ],
+      "role": "Multi-instrument audio to MIDI (not used)",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "research-only",
+      "verdict_condition": null,
+      "verification_status": "unverified",
+      "weights_license": "CC BY-NC 4.0, auto-gated"
+    },
+    {
+      "allowed_lanes": [],
+      "category": "song-engine",
+      "code_license": "MIT (audiocraft)",
+      "gated": false,
+      "id": "musicgen-melody",
+      "name": "MusicGen-melody (all sizes)",
+      "notes": "Instrumental only; chroma conditioning.",
+      "obligations": [],
+      "output_terms": "NC",
+      "primary_sources": [
+        "https://huggingface.co/facebook/musicgen-melody"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "NC weights",
+      "release_blockers": [
+        "non_commercial_weights"
+      ],
+      "role": "n/a",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "reject",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "CC-BY-NC 4.0"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "dsp",
+      "code_license": "Own code (all rights reserved until Q5)",
+      "gated": null,
+      "id": "neutralvoice",
+      "name": "NeutralVoice (the studio's own deterministic guide voice)",
+      "notes": "Not built yet. Its quality as a cover input is unmeasured (architecture.md §12).",
+      "obligations": [],
+      "output_terms": "Own work; no third-party terms.",
+      "primary_sources": [],
+      "process_boundary_required": false,
+      "redistribution_blocker": "None (own code; its license is owner-pending, Q5).",
+      "release_blockers": [],
+      "role": "Renders the assembled melody as a plain sung guide: R2-synth input, ground-truth fixtures, FakeEngine's sound, the Playwright fake mic (ADR-0032).",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "adopt-v1",
+      "verdict_condition": null,
+      "verification_status": "unverified",
+      "weights_license": "n/a (no weights)"
+    },
+    {
+      "allowed_lanes": [],
+      "category": "tts",
+      "code_license": "Apache-2.0",
+      "gated": false,
+      "id": "omnivoice",
+      "name": "k2-fsa OmniVoice",
+      "notes": "VoiceStudio's default engine.",
+      "obligations": [],
+      "output_terms": "NC",
+      "primary_sources": [
+        "https://huggingface.co/k2-fsa/OmniVoice"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "NC weights",
+      "release_blockers": [
+        "non_commercial_weights"
+      ],
+      "role": "n/a",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "reject",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "CC-BY-NC (Emilia training data)"
+    },
+    {
+      "allowed_lanes": [],
+      "category": "ui-runtime",
+      "code_license": "AGPL-3.0",
+      "gated": null,
+      "id": "opendaw",
+      "name": "openDAW",
+      "notes": "",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [
+        "https://github.com/andremichelle/openDAW"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "AGPL",
+      "release_blockers": [
+        "copyleft"
+      ],
+      "role": "Design reference",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "reference-only",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "transcription",
+      "code_license": "LGPL-3.0",
+      "gated": false,
+      "id": "pesto",
+      "name": "PESTO (pesto-pitch 2.0.1)",
+      "notes": "Vocadito F1 0.759 (author-run benchmark).",
+      "obligations": [],
+      "output_terms": "None",
+      "primary_sources": [
+        "https://github.com/SonyCSLParis/pesto"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "LGPL-3.0 (dynamic-link / separate-process terms)",
+      "release_blockers": [
+        "copyleft"
+      ],
+      "role": "Secondary F0 tracker",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "LGPL-3.0 (in repo); self-supervised on MIR-1K"
+    },
+    {
+      "allowed_lanes": [],
+      "category": "ui-runtime",
+      "code_license": "Ruach Studio AGPL-3.0; Riff MIT; Remiqora MIT per the audio.cpp README (UNVERIFIED)",
+      "gated": null,
+      "id": "prior-art-studios",
+      "name": "Ruach Studio, Riff, Remiqora",
+      "notes": "Ruach: score-first ABC/MIDI, stems, LoRA training, DAW export. Remiqora: YuE2 + MuScriptor + ACE-Step + Demucs. Reported by gap research; not separately verified.",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [
+        "https://github.com/Flip-Engineering/riff",
+        "https://github.com/0xShug0/audio.cpp"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "Ruach AGPL code must not be mixed into the studio",
+      "release_blockers": [
+        "copyleft"
+      ],
+      "role": "Prior-art studios overlapping the studio's scope; review before building",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "reference-only",
+      "verdict_condition": null,
+      "verification_status": "unverified",
+      "weights_license": "Per model"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "consent",
+      "code_license": "MIT (pyannote.audio)",
+      "gated": false,
+      "id": "pyannote-wespeaker",
+      "name": "pyannote/wespeaker-voxceleb-resnet34-LM",
+      "notes": "pyannote/embedding is MIT but gated with a form. Speech-vs-singing thresholds undocumented.",
+      "obligations": [
+        "attribution"
+      ],
+      "output_terms": "Attribution on redistribution",
+      "primary_sources": [
+        "https://huggingface.co/pyannote/wespeaker-voxceleb-resnet34-LM",
+        "https://github.com/pyannote/pyannote-audio"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "Attribution",
+      "release_blockers": [],
+      "role": "Speaker match for voice consent gate",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "CC-BY-4.0, ungated"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "post-production",
+      "code_license": "MIT",
+      "gated": null,
+      "id": "pyloudnorm",
+      "name": "pyloudnorm 0.2.0",
+      "notes": "Implements BS.1770-4; no true-peak meter (normalize.peak is sample peak). Add own >=4x oversampled TP meter. Whether BS.1770-5 changes integrated loudness for stereo programme relative to -4 is UNVERIFIED (X-47); label results 'BS.1770-4 (pyloudnorm)' until checked.",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [
+        "https://github.com/csteinmetz1/pyloudnorm"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "None",
+      "release_blockers": [],
+      "role": "Integrated loudness, LRA",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "adopt-v1",
+      "verdict_condition": null,
+      "verification_status": "corrected",
+      "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "separation",
+      "code_license": "MIT",
+      "gated": false,
+      "id": "python-audio-separator",
+      "name": "python-audio-separator",
+      "notes": "",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [
+        "https://github.com/nomadkaraoke/python-audio-separator"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "Per model",
+      "release_blockers": [],
+      "role": "Separation orchestration",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "Per model"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "transcription",
+      "code_license": "Apache-2.0",
+      "gated": false,
+      "id": "qwen3-asr",
+      "name": "Qwen3-ASR 0.6B / 1.7B",
+      "notes": "WSB uses lowest PER of 4 ASR passes.",
+      "obligations": [],
+      "output_terms": "None",
+      "primary_sources": [
+        "https://huggingface.co/Qwen/Qwen3-ASR-1.7B"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "None",
+      "release_blockers": [],
+      "role": "Lyric phoneme error rate (WildSongBench protocol)",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "Apache-2.0"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "tts",
+      "code_license": "Apache-2.0",
+      "gated": false,
+      "id": "qwen3-tts",
+      "name": "Qwen3-TTS 12Hz (0.6B / 1.7B Base, CustomVoice, VoiceDesign)",
+      "notes": "10 languages; 3-second clone (VENDOR). Independent long-form paper (arXiv 2609.16989): degrades badly beyond ~1,500 words (Qwen3-TTS-0.6B worst-of-10 WER 35.2%); chunking plus ASR verify-and-regenerate is a core narration feature.",
+      "obligations": [],
+      "output_terms": "None stated",
+      "primary_sources": [
+        "https://github.com/QwenLM/Qwen3-TTS",
+        "https://huggingface.co/Qwen/Qwen3-TTS-12Hz-1.7B-Base"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "None",
+      "release_blockers": [],
+      "role": "Narration candidate",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "Apache-2.0, ungated"
+    },
+    {
+      "allowed_lanes": [
+        "research"
+      ],
+      "category": "ui-runtime",
+      "code_license": "UNVERIFIED (assumed permissive; not checked against a primary source)",
+      "gated": null,
+      "id": "react",
+      "name": "React",
+      "notes": "RECONCILIATION.md §8.",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [],
+      "process_boundary_required": false,
+      "redistribution_blocker": "Unverified license.",
+      "release_blockers": [
+        "unverified"
+      ],
+      "role": "The web app.",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "evaluate",
+      "verdict_condition": "License verification ticket must close before adoption (P0-9).",
+      "verification_status": "unverified",
+      "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [
+        "research"
+      ],
+      "category": "separation",
+      "code_license": "n/a",
+      "gated": false,
+      "id": "roformer-community-ckpts",
+      "name": "Community RoFormer checkpoints (anvuew dereverb/BS-RoFormer, Sucial dereverb-echo, HiDolen Mini-BS-RoFormer-V2, viperx ep_317/937 via TRvlvr, becruily karaoke)",
+      "notes": "Best back-vocal SDR ~7.14 dB (Mel-RoFormer Karaoke/Duet). Ship only from verified allow-list.",
+      "obligations": [],
+      "output_terms": "Varies",
+      "primary_sources": [
+        "https://github.com/ZFTurbo/Music-Source-Separation-Training/blob/main/docs/pretrained_models.md",
+        "https://huggingface.co/anvuew/dereverb_mel_band_roformer",
+        "https://huggingface.co/Sucial/Dereverb-Echo_Mel_Band_Roformer",
+        "https://github.com/TRvlvr/model_repo"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "Copyleft, NC or no license",
+      "release_blockers": [
+        "copyleft",
+        "non_commercial_weights",
+        "unknown_license"
+      ],
+      "role": "Dereverb, karaoke, lead/back vocals",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "research-only",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "GPL-3.0 / CC-BY-NC-SA-4.0 / CC-BY-NC-4.0 / none / none"
+    },
+    {
+      "allowed_lanes": [],
+      "category": "dsp",
+      "code_license": "GPL-2.0-or-later or commercial",
+      "gated": null,
+      "id": "rubberband",
+      "name": "Rubber Band 4.0.0",
+      "notes": "",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [
+        "https://breakfastquay.com/rubberband/",
+        "https://github.com/breakfastquay/rubberband"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "GPL; App Store needs commercial license",
+      "release_blockers": [
+        "copyleft"
+      ],
+      "role": "n/a",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "reject",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [],
+      "category": "compute",
+      "code_license": "n/a",
+      "gated": null,
+      "id": "runpod-serverless",
+      "name": "RunPod serverless",
+      "notes": "Per-second billing; model load into GPU and 5 s default idle billed; image pull and cached model download not billed; scales to zero; default spend limit $80/h.",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [
+        "https://www.runpod.io/pricing",
+        "https://docs.runpod.io/serverless/pricing"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "n/a",
+      "release_blockers": [],
+      "role": "Bounded CUDA rental",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "research"
+      ],
+      "category": "voice-conversion",
+      "code_license": "MIT",
+      "gated": false,
+      "id": "rvc-webui",
+      "name": "RVC WebUI 2.3.260718",
+      "notes": "No official training-time figure; FAQ recommends 10-50 min of data, 20-200 epochs. Whether a released song with converted vocals is permissible is CONTESTED (lj1995 'research use only' rider; rmvpe.pt unlicensed). Carried into D-07 and Q6.",
+      "obligations": [],
+      "output_terms": "User responsible for exported voices",
+      "primary_sources": [
+        "https://github.com/RVC-Project/Retrieval-based-Voice-Conversion-WebUI",
+        "https://huggingface.co/lj1995/VoiceConversionWebUI",
+        "https://github.com/yxlllc/RMVPE"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "Contested weights license",
+      "release_blockers": [
+        "contested"
+      ],
+      "role": "Singing voice conversion (CUDA worker, v2)",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "contested",
+      "weights_license": "Contested: HF lj1995/VoiceConversionWebUI metadata 'mit' but LICENSE text prepends research-use-only rider; rmvpe.pt unlicensed with M4Singer (CC BY-NC-SA) in training data; base models trained on VCTK (CC-BY-4.0)"
+    },
+    {
+      "allowed_lanes": [
+        "research"
+      ],
+      "category": "separation",
+      "code_license": "SAM License (custom)",
+      "gated": true,
+      "id": "sam-audio",
+      "name": "Meta SAM Audio",
+      "notes": "",
+      "obligations": [],
+      "output_terms": "No output restriction beyond as-is and IP-litigation termination; Meta may modify the Agreement with immediate effect",
+      "primary_sources": [
+        "https://github.com/facebookresearch/sam-audio",
+        "https://github.com/facebookresearch/sam-audio/blob/main/LICENSE",
+        "https://arxiv.org/abs/2512.18099"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "Custom, modifiable license",
+      "release_blockers": [],
+      "role": "Prompt-selected target + residual",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "research-only",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "SAM License; HF gated with manual approval"
+    },
+    {
+      "allowed_lanes": [
+        "research"
+      ],
+      "category": "separation",
+      "code_license": "MIT",
+      "gated": false,
+      "id": "scnet",
+      "name": "SCNet",
+      "notes": "SCNet XL IHF Multisong avg 9.92 (ZFTurbo release).",
+      "obligations": [],
+      "output_terms": "None",
+      "primary_sources": [
+        "https://github.com/starrytong/SCNet"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "Unlicensed weights",
+      "release_blockers": [
+        "unknown_license"
+      ],
+      "role": "Alternative separator",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "research-only",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "Google Drive checkpoints, no license; MUSDB-trained"
+    },
+    {
+      "allowed_lanes": [],
+      "category": "voice-conversion",
+      "code_license": "GPL-3.0",
+      "gated": false,
+      "id": "seed-vc",
+      "name": "Seed-VC",
+      "notes": "Archived 2025-11-21 (last push 2025-04-20). Reference 1-30 s per README (code truncates to 25 s). ~300 ms algorithm + ~100 ms device delay; 430 ms measured on tiny speech model, RTX 3060 Laptop (VENDOR).",
+      "obligations": [],
+      "output_terms": "GPL does not restrict outputs",
+      "primary_sources": [
+        "https://github.com/Plachtaa/seed-vc",
+        "https://huggingface.co/Plachta/Seed-VC"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "GPL; archived",
+      "release_blockers": [
+        "copyleft"
+      ],
+      "role": "n/a",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "reject",
+      "verdict_condition": null,
+      "verification_status": "corrected",
+      "weights_license": "GPL-3.0 (HF Plachta/Seed-VC)"
+    },
+    {
+      "allowed_lanes": [
+        "research"
+      ],
+      "category": "song-engine",
+      "code_license": "None (no LICENSE file)",
+      "gated": false,
+      "id": "shao",
+      "name": "Shao (formerly Khala)",
+      "notes": "",
+      "obligations": [],
+      "output_terms": "NC",
+      "primary_sources": [
+        "https://github.com/Shao-Music-AI/Shao"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "No code license; NC weights",
+      "release_blockers": [
+        "non_commercial_weights"
+      ],
+      "role": "n/a",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "research-only",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "CC BY-NC 4.0 ('intended')"
+    },
+    {
+      "allowed_lanes": [
+        "research"
+      ],
+      "category": "transcription",
+      "code_license": "Apache-2.0 (YuE repo)",
+      "gated": false,
+      "id": "sheetsage2",
+      "name": "SheetSage2 (+ MERT2)",
+      "notes": "Basic Pitch is the shippable transcriber.",
+      "obligations": [],
+      "output_terms": "NC",
+      "primary_sources": [
+        "https://huggingface.co/m-a-p/SheetSage2"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "NC weights",
+      "release_blockers": [
+        "non_commercial_weights"
+      ],
+      "role": "Audio to melody ABC transcription for YuE2",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "research-only",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "CC BY-NC 4.0 (no creator permission; HF LICENSE file mislabeled with MERT2 header)"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "dsp",
+      "code_license": "MIT",
+      "gated": null,
+      "id": "signalsmith-stretch",
+      "name": "Signalsmith Stretch 1.4.0",
+      "notes": "Quality unmeasured.",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [
+        "https://github.com/Signalsmith-Audio/signalsmith-stretch"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "None",
+      "release_blockers": [],
+      "role": "Preferred time/pitch",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "research"
+      ],
+      "category": "alignment",
+      "code_license": "MIT",
+      "gated": false,
+      "id": "sofa",
+      "name": "SOFA (Singing-Oriented Forced Aligner)",
+      "notes": "Needs lyrics in dictionary phonemes; advantage over MFA is an untested hypothesis.",
+      "obligations": [],
+      "output_terms": "None",
+      "primary_sources": [
+        "https://github.com/qiuqiao/SOFA",
+        "https://github.com/qiuqiao/SOFA/discussions/31",
+        "https://github.com/M4Singer/M4Singer/blob/master/dataset_license.md"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "Checkpoint licensing",
+      "release_blockers": [],
+      "role": "Singing phoneme alignment (v2)",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "Official Mandarin/multilingual checkpoints unlicensed (training data incl. M4Singer CC BY-NC-SA); English community ckpt tgm_en_v100 has author-stated commercial approval, no license file"
+    },
+    {
+      "allowed_lanes": [
+        "research"
+      ],
+      "category": "transcription",
+      "code_license": "MIT (all three)",
+      "gated": false,
+      "id": "some-game-rosvot",
+      "name": "SOME, openvpi/GAME 1.0.3, ROSVOT",
+      "notes": "ROSVOT COnPOff F 77.4 clean on Mandarin singing (VENDOR); no humming data for any of the three.",
+      "obligations": [],
+      "output_terms": "None",
+      "primary_sources": [
+        "https://github.com/openvpi/SOME/releases",
+        "https://github.com/openvpi/GAME/releases/tag/v1.0.0",
+        "https://github.com/RickyL-2000/ROSVOT",
+        "https://arxiv.org/abs/2405.09940"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "NC / unlicensed weights",
+      "release_blockers": [
+        "non_commercial_weights"
+      ],
+      "role": "Singing note transcription (not used)",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "research-only",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "SOME and GAME CC BY-NC-SA 4.0; ROSVOT unlicensed, trained on M4Singer (CC BY-NC-SA)"
+    },
+    {
+      "allowed_lanes": [
+        "research"
+      ],
+      "category": "scorer",
+      "code_license": "Academic-only LICENSE.txt (README badge says MIT: conflict)",
+      "gated": false,
+      "id": "songbench",
+      "name": "Tencent SongBench",
+      "notes": "Trained on 12k Suno v4-v5 samples; v6 out of distribution.",
+      "obligations": [],
+      "output_terms": "No commercial or production use",
+      "primary_sources": [
+        "https://github.com/Tencent/SongBench",
+        "https://arxiv.org/html/2604.25937v1"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "Academic-only",
+      "release_blockers": [
+        "research_or_academic"
+      ],
+      "role": "WSB judge (research)",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "research-only",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "Uses MuQ (NC)"
+    },
+    {
+      "allowed_lanes": [
+        "research"
+      ],
+      "category": "song-engine",
+      "code_license": "unverified",
+      "gated": null,
+      "id": "songecho",
+      "name": "SongEcho",
+      "notes": "CLEWS Hit@1 48.4% on SHS100K (COMPETITOR-RUN in YuE2 paper).",
+      "obligations": [],
+      "output_terms": "unverified",
+      "primary_sources": [
+        "https://arxiv.org/abs/2602.19976"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "unknown",
+      "release_blockers": [
+        "unverified"
+      ],
+      "role": "Vocal-melody-conditioned cover (research)",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "research-only",
+      "verdict_condition": null,
+      "verification_status": "unverified",
+      "weights_license": "unverified"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "research"
+      ],
+      "category": "scorer",
+      "code_license": "Apache-2.0 (code/configs, per maintainer)",
+      "gated": false,
+      "id": "songeval",
+      "name": "SongEval",
+      "notes": "Intra-model pairwise accuracy 43-55% (SongBench paper Table 3).",
+      "obligations": [],
+      "output_terms": "Maintainer: scores unrestricted (issue reply, not license text)",
+      "primary_sources": [
+        "https://github.com/ASLP-lab/SongEval",
+        "https://github.com/ASLP-lab/SongEval/issues/8",
+        "https://huggingface.co/datasets/ASLP-lab/SongEval"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "NC checkpoint and backbone",
+      "release_blockers": [
+        "non_commercial_weights"
+      ],
+      "role": "Musicality scorer (research)",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "research-only",
+      "verdict_condition": null,
+      "verification_status": "corrected",
+      "weights_license": "Checkpoint CC-BY-NC-SA-4.0; loads OpenMuQ/MuQ-large-msd-iter (CC-BY-NC-4.0)"
+    },
+    {
+      "allowed_lanes": [],
+      "category": "alignment",
+      "code_license": "Academic-only",
+      "gated": null,
+      "id": "songprep",
+      "name": "Tencent SongPrep",
+      "notes": "",
+      "obligations": [],
+      "output_terms": "No commercial or production use",
+      "primary_sources": [
+        "https://github.com/tencent-ailab/SongPrep/blob/main/LICENSE"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "Academic-only",
+      "release_blockers": [
+        "research_or_academic"
+      ],
+      "role": "n/a",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "reject",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "Academic-only"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "dsp",
+      "code_license": "LGPL-2.1 or commercial on request",
+      "gated": null,
+      "id": "soundtouch",
+      "name": "SoundTouch 2.4.1",
+      "notes": "Source moved to Codeberg.",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [
+        "https://codeberg.org/soundtouch/soundtouch",
+        "https://www.surina.net/soundtouch/"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "LGPL obligations",
+      "release_blockers": [
+        "copyleft"
+      ],
+      "role": "Time/pitch fallback",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "consent",
+      "code_license": "Apache-2.0",
+      "gated": false,
+      "id": "speechbrain-ecapa",
+      "name": "speechbrain/spkrec-ecapa-voxceleb",
+      "notes": "",
+      "obligations": [],
+      "output_terms": "None",
+      "primary_sources": [
+        "https://huggingface.co/speechbrain/spkrec-ecapa-voxceleb"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "None",
+      "release_blockers": [],
+      "role": "Alternative speaker match",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "Apache-2.0, ungated"
+    },
+    {
+      "allowed_lanes": [
+        "research"
+      ],
+      "category": "ui-runtime",
+      "code_license": "UNVERIFIED (assumed public domain; not checked against a primary source)",
+      "gated": null,
+      "id": "sqlite",
+      "name": "SQLite (Python stdlib sqlite3)",
+      "notes": "RECONCILIATION.md §8.",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [],
+      "process_boundary_required": false,
+      "redistribution_blocker": "Unverified license.",
+      "release_blockers": [
+        "unverified"
+      ],
+      "role": "The system of record (ADR-0028).",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "evaluate",
+      "verdict_condition": "License verification ticket must close before adoption (P0-9).",
+      "verification_status": "unverified",
+      "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [],
+      "category": "hosted",
+      "code_license": "closed",
+      "gated": null,
+      "id": "stability-sa3-large-api",
+      "name": "Stable Audio 3 Large (API only)",
+      "notes": "Pricing page lists 8 credits (1 credit = $0.01); GPT's secondary figure 26 credits.",
+      "obligations": [],
+      "output_terms": "Per Stability terms",
+      "primary_sources": [
+        "https://platform.stability.ai/pricing",
+        "https://platform.stability.ai/docs/api-reference"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "n/a",
+      "release_blockers": [],
+      "role": "Hosted instrumental reference",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "reference-only",
+      "verdict_condition": null,
+      "verification_status": "contested",
+      "weights_license": "API only"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "song-engine",
+      "code_license": "MIT",
+      "gated": true,
+      "id": "stable-audio-3-medium",
+      "name": "Stable Audio 3 Medium (1.4B)",
+      "notes": "No intelligible vocals per Stability's prompting guide. Trained on licensed AudioSparx + CC0 Freesound.",
+      "obligations": [
+        "attribution",
+        "no_training_on_outputs",
+        "registration",
+        "revenue_threshold"
+      ],
+      "output_terms": "User owns outputs; free below US$1M annual revenue; commercial users register; 'Powered by Stability AI' when distributing; outputs may not train other foundation models",
+      "primary_sources": [
+        "https://github.com/Stability-AI/stable-audio-3",
+        "https://github.com/Stability-AI/stable-audio-3/blob/main/optimized/mlx/README.md",
+        "https://huggingface.co/stabilityai/stable-audio-3-medium",
+        "https://stability.ai/license"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "Community License obligations",
+      "release_blockers": [
+        "obligations"
+      ],
+      "role": "Instrumental beds/loops on the Mac",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "Stability AI Community License + Gemma Terms of Use (T5Gemma); HF main repo gated (auto); -optimized repo ungated"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "song-engine",
+      "code_license": "MIT",
+      "gated": true,
+      "id": "stable-audio-3-small",
+      "name": "Stable Audio 3 Small-Music / Small-SFX (433M)",
+      "notes": "Up to 120 s.",
+      "obligations": [
+        "attribution",
+        "no_training_on_outputs",
+        "registration",
+        "revenue_threshold"
+      ],
+      "output_terms": "As Medium",
+      "primary_sources": [
+        "https://github.com/Stability-AI/stable-audio-3"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "Community License obligations",
+      "release_blockers": [
+        "obligations"
+      ],
+      "role": "Fast sketches and SFX",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "Stability AI Community License + Gemma terms"
+    },
+    {
+      "allowed_lanes": [],
+      "category": "song-engine",
+      "code_license": "n/a",
+      "gated": null,
+      "id": "stable-audio-open-1.0",
+      "name": "Stable Audio Open 1.0",
+      "notes": "47 s cap; superseded by SA3. No 'Stable Audio Open 2.0' exists in the stabilityai HF org.",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [
+        "https://stability.ai/news-updates/introducing-stable-audio-open"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "n/a",
+      "release_blockers": [],
+      "role": "n/a",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "reject",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [],
+      "category": "song-engine",
+      "code_license": "n/a",
+      "gated": null,
+      "id": "stepaudio-3-music",
+      "name": "StepAudio 3 Music",
+      "notes": "GPT claim not re-checked in this pass.",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [
+        "https://huggingface.co/spaces/stepfun-ai/StepAudio-3-Music"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "n/a",
+      "release_blockers": [],
+      "role": "n/a",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "reject",
+      "verdict_condition": null,
+      "verification_status": "unverified",
+      "weights_license": "No downloadable weights verified"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "ui-runtime",
+      "code_license": "Own code (all rights reserved until Q5)",
+      "gated": null,
+      "id": "studio-own-code",
+      "name": "The studio's control service, worker SDK, analysis worker and FakeEngine code",
+      "notes": "Not built yet.",
+      "obligations": [],
+      "output_terms": "Own work; no third-party terms.",
+      "primary_sources": [],
+      "process_boundary_required": false,
+      "redistribution_blocker": "None (own code; its license is owner-pending, Q5).",
+      "release_blockers": [],
+      "role": "Everything the studio writes itself: Score, the HMM note segmentation, the true-peak meter, assembly, export.",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "adopt-v1",
+      "verdict_condition": null,
+      "verification_status": "unverified",
+      "weights_license": "n/a (no weights)"
+    },
+    {
+      "allowed_lanes": [],
+      "category": "hosted",
+      "code_license": "closed",
+      "gated": null,
+      "id": "suno-speech-beta",
+      "name": "Suno Speech (beta)",
+      "notes": "2026-10-01; voice and music generated together.",
+      "obligations": [],
+      "output_terms": "Not stated (plan, commercial, language)",
+      "primary_sources": [
+        "https://suno.com/blog/introducing-speech-beta"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "n/a",
+      "release_blockers": [],
+      "role": "Possible Sabbath Echo comparator",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "reference-only",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "closed"
+    },
+    {
+      "allowed_lanes": [],
+      "category": "hosted",
+      "code_license": "closed",
+      "gated": null,
+      "id": "suno-studio-2",
+      "name": "Suno Studio 2.0",
+      "notes": "MIDI import/record/edit; MIDI clips as generation prompts; wavetable synth; sidechain, convolution reverb; automation; chat bar (beta).",
+      "obligations": [],
+      "output_terms": "Premier-only; 32-bit/48 kHz multitrack/stem export without limitations",
+      "primary_sources": [
+        "https://suno.com/blog/studio-2",
+        "https://help.suno.com/en/articles/13670529"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "n/a",
+      "release_blockers": [],
+      "role": "Feature reference",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "reference-only",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "closed"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "hosted",
+      "code_license": "closed",
+      "gated": null,
+      "id": "suno-v6",
+      "name": "Suno v6 / v6-wild / v6-mini",
+      "notes": "No v6.5 exists (blog to 2026-10-05; release notes to 2026-10-08). Pro $10/mo ($96/yr), Premier $30/mo ($288/yr).",
+      "obligations": [
+        "keep_provenance_marks"
+      ],
+      "output_terms": "2 songs per generation (10 credits); up to 8 min. Commercial use on Pro/Premier only with a permitted download (Pro 20/mo, Premier 60/mo from 2026-09-03; Studio exports exempt). ToS: no using Output or Voice Model to power, enable or train other AI/ML models or to compete with Suno; Suno receives a royalty-free, perpetual, irrevocable license to user Content incl. uploads. Import of Jon's own Suno downloads (GAP-07): DSP finishing allowed ('incidental'); ML separation grey (prefer Suno stems); generative edit/cover/repaint/voice conversion or use to develop or test the studio highest risk; release of DSP-finished permitted downloads allowed.",
+      "primary_sources": [
+        "https://suno.com/blog/introducing-v6",
+        "https://help.suno.com/en/articles/13924481",
+        "https://help.suno.com/en/articles/13924801",
+        "https://suno.com/pricing",
+        "https://suno.com/terms-september-2026"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "ToS",
+      "release_blockers": [],
+      "role": "Owner's paid first attempt and listening reference",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "reference-only",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "closed"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "research"
+      ],
+      "category": "transcription",
+      "code_license": "MIT",
+      "gated": false,
+      "id": "swiftf0",
+      "name": "SwiftF0 0.3.0 (lars76)",
+      "notes": "Frame-level pitch F1@50c on Vocadito 0.847 (RMVPE 0.862, pYIN 0.653) in a benchmark run by SwiftF0's own author (VENDOR). LLC use pending a provenance review.",
+      "obligations": [],
+      "output_terms": "None stated",
+      "primary_sources": [
+        "https://github.com/lars76/swift-f0",
+        "https://github.com/lars76/swift-f0-training",
+        "https://github.com/lars76/pitch-benchmark"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "Training-data provenance (CC BY-NC-SA dataset) behind an MIT-labelled model",
+      "release_blockers": [
+        "permissive_label_nc_data"
+      ],
+      "role": "Monophonic F0 tracker for melody adherence (A7); segment_notes() as a transcriber candidate",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "adopt-v1",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "MIT-labelled bundled ONNX (14k params), trained on the author's CC BY-NC-SA research dataset (provenance caveat)"
+    },
+    {
+      "allowed_lanes": [],
+      "category": "desktop-shell",
+      "code_license": "Apache-2.0 (repo field; commonly also MIT)",
+      "gated": null,
+      "id": "tauri-2",
+      "name": "Tauri 2.12",
+      "notes": "Kimi's 42 MB vs 168 MB figures are RAM, from a secondary blog.",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [
+        "https://v2.tauri.app/start/",
+        "https://v2.tauri.app/reference/webview-versions/"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "None",
+      "release_blockers": [],
+      "role": "n/a",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "reject",
+      "verdict_condition": null,
+      "verification_status": "corrected",
+      "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [],
+      "category": "desktop-shell",
+      "code_license": "Apache-2.0",
+      "gated": null,
+      "id": "tauri-3-cef",
+      "name": "Tauri v3 tauri-runtime-cef",
+      "notes": "Alpha (3.0.0-alpha.4, 2026-10-01).",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [
+        "https://github.com/tauri-apps/tauri/releases",
+        "https://github.com/tauri-apps/tauri/blob/v3/crates/tauri-runtime-cef/Cargo.toml"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "None",
+      "release_blockers": [],
+      "role": "Watch",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "watch",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "research"
+      ],
+      "category": "transcription",
+      "code_license": "MIT",
+      "gated": false,
+      "id": "torchcrepe",
+      "name": "torchcrepe 0.0.24 / CREPE",
+      "notes": "Vocadito F1 0.789 / 0.781 (author-run benchmark).",
+      "obligations": [],
+      "output_terms": "None",
+      "primary_sources": [
+        "https://github.com/maxrmorrison/torchcrepe",
+        "https://github.com/marl/crepe"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "Training-data provenance (MedleyDB NC)",
+      "release_blockers": [
+        "permissive_label_nc_data"
+      ],
+      "role": "Secondary F0 tracker",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "MIT-labelled; trained partly on MedleyDB (non-commercial)"
+    },
+    {
+      "allowed_lanes": [
+        "research"
+      ],
+      "category": "ui-runtime",
+      "code_license": "UNVERIFIED (assumed permissive; not checked against a primary source)",
+      "gated": null,
+      "id": "uv",
+      "name": "uv (Python environments and locks)",
+      "notes": "RECONCILIATION.md §8.",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [],
+      "process_boundary_required": false,
+      "redistribution_blocker": "Unverified license.",
+      "release_blockers": [
+        "unverified"
+      ],
+      "role": "Per-engine environments keyed by lock hash.",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "evaluate",
+      "verdict_condition": "License verification ticket must close before adoption (P0-9).",
+      "verification_status": "unverified",
+      "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [],
+      "category": "compute",
+      "code_license": "n/a",
+      "gated": null,
+      "id": "vast-ai",
+      "name": "Vast.ai",
+      "notes": "Marketplace prices drift.",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [
+        "https://vast.ai/pricing",
+        "https://console.vast.ai/api/v0/bundles/"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "n/a",
+      "release_blockers": [],
+      "role": "Bounded CUDA rental",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [],
+      "category": "tts",
+      "code_license": "MIT",
+      "gated": false,
+      "id": "vibevoice",
+      "name": "Microsoft VibeVoice",
+      "notes": "TTS code removed 2025-09-05; TTS-1.5B disabled.",
+      "obligations": [],
+      "output_terms": "Not recommended for commercial use",
+      "primary_sources": [
+        "https://github.com/microsoft/VibeVoice"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "Research-only intent",
+      "release_blockers": [
+        "research_or_academic"
+      ],
+      "role": "n/a",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "reject",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "MIT tags; README: research and development purposes only"
+    },
+    {
+      "allowed_lanes": [
+        "research"
+      ],
+      "category": "ui-runtime",
+      "code_license": "UNVERIFIED (assumed permissive; not checked against a primary source)",
+      "gated": null,
+      "id": "vite",
+      "name": "Vite",
+      "notes": "RECONCILIATION.md §8.",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [],
+      "process_boundary_required": false,
+      "redistribution_blocker": "Unverified license.",
+      "release_blockers": [
+        "unverified"
+      ],
+      "role": "The web app's build tool.",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "evaluate",
+      "verdict_condition": "License verification ticket must close before adoption (P0-9).",
+      "verification_status": "unverified",
+      "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [
+        "research"
+      ],
+      "category": "transcription",
+      "code_license": "Apache-2.0 (per gap research; unverified)",
+      "gated": null,
+      "id": "vocalparse",
+      "name": "VocalParse (ngoctham/VocalParse)",
+      "notes": "Singing-transcription LALM; not benchmarked on humming.",
+      "obligations": [],
+      "output_terms": "unknown",
+      "primary_sources": [
+        "https://arxiv.org/abs/2605.04613"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "Unverified",
+      "release_blockers": [
+        "unverified"
+      ],
+      "role": "Unverified lead for the A4 transcriber",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "watch",
+      "verdict_condition": null,
+      "verification_status": "unverified",
+      "weights_license": "Apache-2.0 (per gap research; based on Qwen3-ASR-1.7B)"
+    },
+    {
+      "allowed_lanes": [],
+      "category": "tts",
+      "code_license": "AGPL-3.0-only + paid commercial license (Yupcha Softwares; CLA)",
+      "gated": false,
+      "id": "voicestudio",
+      "name": "VoiceStudio (debpalash)",
+      "notes": "Pro $99/user/year; Lifetime $299; neither includes closed-source distribution or private hosting. Electron only (Tauri retired at 0.5.3). SHA 06c6e077 = merge of release/0.5.7-final; latest tag v0.5.6.",
+      "obligations": [],
+      "output_terms": "Per model; Pro/commercial license grants no model rights",
+      "primary_sources": [
+        "https://github.com/debpalash/VoiceStudio/blob/main/LICENSE-NOTICE.md",
+        "https://github.com/debpalash/VoiceStudio/commit/06c6e077f0fc35149efefc3561e9be5ae835d916",
+        "https://voicestudio.sh/pro"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "AGPL; NC default weights",
+      "release_blockers": [
+        "copyleft"
+      ],
+      "role": "Narration UX reference",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "reference-only",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "Not relicensed; default OmniVoice CC-BY-NC; tokenizer Higgs Audio 2 / Llama community terms"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "tts",
+      "code_license": "Apache-2.0",
+      "gated": false,
+      "id": "voxcpm2",
+      "name": "VoxCPM2 (2B, 48 kHz, 30 languages)",
+      "notes": "Cloning and voice design. Independent long-form paper (arXiv 2609.16989): degrades badly beyond ~1,500 words (Qwen3-TTS-0.6B worst-of-10 WER 35.2%); chunking plus ASR verify-and-regenerate is a core narration feature.",
+      "obligations": [],
+      "output_terms": "None stated",
+      "primary_sources": [
+        "https://github.com/OpenBMB/VoxCPM",
+        "https://huggingface.co/openbmb/VoxCPM2"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "None",
+      "release_blockers": [],
+      "role": "Narration candidate #1",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "Apache-2.0 ('free for commercial use')"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "ui-runtime",
+      "code_license": "MIT",
+      "gated": null,
+      "id": "vst3-sdk",
+      "name": "Steinberg VST3 SDK",
+      "notes": "",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [
+        "https://github.com/steinbergmedia/vst3sdk"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "None",
+      "release_blockers": [],
+      "role": "Plugin hosting (v2+)",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "ui-runtime",
+      "code_license": "MIT",
+      "gated": null,
+      "id": "waveform-playlist",
+      "name": "waveform-playlist v16 (+ Tone.js)",
+      "notes": "v16.0.0 2026-09-28: multiple clips per track, sample-based positions, per-clip gain/fades, crossfade overlaps, AudioWorklet recording, WAV export.",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [
+        "https://github.com/naomiaro/waveform-playlist"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "None",
+      "release_blockers": [],
+      "role": "Timeline base candidate",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "ui-runtime",
+      "code_license": "BSD-3-Clause",
+      "gated": null,
+      "id": "wavesurfer-core",
+      "name": "wavesurfer.js 8",
+      "notes": "8.0.0 2026-09-23; 8.0.2 2026-10-07.",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [
+        "https://github.com/katspaugh/wavesurfer.js",
+        "https://github.com/katspaugh/wavesurfer.js/releases/tag/8.0.0"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "None",
+      "release_blockers": [],
+      "role": "Single-waveform display",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [],
+      "category": "ui-runtime",
+      "code_license": "BSD-3-Clause (paid support)",
+      "gated": null,
+      "id": "wavesurfer-multitrack",
+      "name": "wavesurfer-multitrack",
+      "notes": "npm 0.4.12 (2024-07); depends on wavesurfer ^7; imports draggable.js removed from v8 dist; one file per track; HTMLAudioElement per track synced with 0.3 s tolerance.",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [
+        "https://github.com/katspaugh/wavesurfer-multitrack",
+        "https://www.npmjs.com/package/wavesurfer-multitrack"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "None",
+      "release_blockers": [],
+      "role": "n/a",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "reject",
+      "verdict_condition": null,
+      "verification_status": "corrected",
+      "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "ui-runtime",
+      "code_license": "W3C (1.0 Recommendation 2021-06-17; 1.1 Working Draft 2026-09-22)",
+      "gated": null,
+      "id": "web-audio-chromium",
+      "name": "Web Audio API + AudioWorklet (Chromium)",
+      "notes": "Measured round trip MBP 2021 (WAC 2025): Chrome 52.33 ms, Safari 100.02 ms, Firefox 38.89 ms. Chrome 146 playbackStats; Chrome 153 renderSizeHint.",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [
+        "https://www.w3.org/TR/webaudio/",
+        "https://www.w3.org/TR/webaudio-1.0/",
+        "https://github.com/chromium/chromium/blob/main/media/audio/mac/audio_manager_mac.cc",
+        "https://doi.org/10.5281/zenodo.17642262"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "None",
+      "release_blockers": [],
+      "role": "Preview playback graph",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "adopt-v1",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [],
+      "category": "ui-runtime",
+      "code_license": "n/a",
+      "gated": null,
+      "id": "webkit-web-audio",
+      "name": "Safari / WKWebView Web Audio",
+      "notes": "",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [
+        "https://github.com/WebKit/WebKit/blob/main/Source/WebCore/Modules/webaudio/AudioContext.cpp",
+        "https://github.com/mdn/browser-compat-data/blob/main/api/AudioContext.json"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "n/a",
+      "release_blockers": [],
+      "role": "Not supported for Studio",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "reject",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "transcription",
+      "code_license": "MIT",
+      "gated": false,
+      "id": "whisper",
+      "name": "OpenAI Whisper large-v3 / large-v3-turbo",
+      "notes": "HeartMuLa paper reports Whisper struggles on singing.",
+      "obligations": [],
+      "output_terms": "None",
+      "primary_sources": [
+        "https://github.com/openai/whisper",
+        "https://huggingface.co/openai/whisper-large-v3"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "None",
+      "release_blockers": [],
+      "role": "Lyric ASR / PER check",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "adopt-v1",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "large-v3 Apache-2.0 (HF card); large-v3-turbo MIT"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "alignment",
+      "code_license": "BSD-2-Clause",
+      "gated": false,
+      "id": "whisperx",
+      "name": "WhisperX",
+      "notes": "Paper evaluates speech only at 200 ms collar; ±50 ms on singing unsourced.",
+      "obligations": [],
+      "output_terms": "None",
+      "primary_sources": [
+        "https://github.com/m-bain/whisperX",
+        "https://github.com/m-bain/whisperX/blob/main/whisperx/alignment.py",
+        "https://arxiv.org/html/2303.00747"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "NC aligners for fr/de/es/it",
+      "release_blockers": [],
+      "role": "Word-level timing (English)",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "corrected",
+      "weights_license": "English aligner (torchaudio WAV2VEC2_ASR_BASE_960H) MIT; fr/de/es/it VoxPopuli aligners CC BY-NC 4.0; most others jonatasgrosman Apache-2.0; pyannote community-1 diarization CC-BY-4.0 gated"
+    },
+    {
+      "allowed_lanes": [],
+      "category": "benchmark",
+      "code_license": "n/a",
+      "gated": false,
+      "id": "wildsongbench",
+      "name": "WildSongBench (m-a-p)",
+      "notes": "192 prompts; built and run by the YuE2 team; 'not a matched-compute comparison'.",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [
+        "https://huggingface.co/datasets/m-a-p/WildSongBench",
+        "https://huggingface.co/datasets/m-a-p/WildSongBench/blob/main/benchmark/results.md"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "n/a",
+      "release_blockers": [],
+      "role": "External context",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "reference-only",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "Prompts: no license tag"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "song-engine",
+      "code_license": "Apache-2.0",
+      "gated": false,
+      "id": "yue1-7b",
+      "name": "YuE1 (s1-7B anneal en-cot/icl, s2-1B)",
+      "notes": "WSB SongBench 4.92 (COMPETITOR-RUN); superseded by YuE2. REVISION (GAP-06): reject -> watch. Apache-2.0 weights make it LLC-clean on license, but it is heavy (>=80 GB for full songs), weaker (SongBench 4.92 vs 6.73 for YuE2, VENDOR-run) and trained on in-the-wild internet music (provenance risk). Considered only if HeartMuLa and MiniMax both fail the LLC smoke.",
+      "obligations": [],
+      "output_terms": "Credit requested, not required",
+      "primary_sources": [
+        "https://github.com/multimodal-art-projection/YuE/tree/YuE-v1",
+        "https://arxiv.org/abs/2503.08638"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "Data provenance: 650K h of in-the-wild internet music",
+      "release_blockers": [],
+      "role": "LLC-lane last resort; the only engine with native vocal and instrumental tracks (vtrack/itrack)",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "watch",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "Apache-2.0"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "research"
+      ],
+      "category": "song-engine",
+      "code_license": "Apache-2.0",
+      "gated": false,
+      "id": "yue2-3b",
+      "name": "YuE2-3B + YuE2-Vae (+ Vae-legacy)",
+      "notes": "~71 s per 3.6-min song on RTX 4090 (VENDOR). Accepts user ABC score; cot='melody' recommended for covers. Archive the GitHub MODEL_LICENSE commit as the rights record. User-ABC contract (GAP-02): strict two-voice dialect, no tuplets or pickups, one integer tempo, lyrics bound only by section tags, ~6 min maximum, zh/en only. README and MODEL_LICENSE name different licensing contacts; issue #219 unanswered.",
+      "obligations": [],
+      "output_terms": "Individuals acting in an individual capacity may publish, sell, license and monetize outputs, no royalties; companies need a commercial license for weight use; no commercial redistribution of weights",
+      "primary_sources": [
+        "https://github.com/multimodal-art-projection/YuE/blob/main/MODEL_LICENSE",
+        "https://github.com/multimodal-art-projection/YuE/blob/main/docs/generation.md",
+        "https://github.com/multimodal-art-projection/YuE/blob/main/pyproject.toml",
+        "https://github.com/multimodal-art-projection/YuE/blob/main/src/yue2/cuda_graph.py",
+        "https://github.com/multimodal-art-projection/YuE/blob/main/src/yue2/pipeline.py",
+        "https://github.com/multimodal-art-projection/YuE/issues/176",
+        "https://github.com/multimodal-art-projection/YuE/issues/187",
+        "https://github.com/multimodal-art-projection/YuE/issues/209",
+        "https://github.com/multimodal-art-projection/YuE/pull/164",
+        "https://github.com/multimodal-art-projection/YuE/pull/166",
+        "https://huggingface.co/m-a-p/YuE2-3B"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "NC weights (individual-only permission)",
+      "release_blockers": [
+        "non_commercial_weights"
+      ],
+      "role": "Quality and score/melody-conditioned lane on a CUDA worker",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "adopt-v1",
+      "verdict_condition": "Conditional on Q1 (a BF16 NVIDIA worker or approved rental passes smoke) and Q3 (individual operator). Not usable for LLC work, including Sabbath Echo.",
+      "verification_status": "corrected",
+      "weights_license": "CC BY-NC 4.0 + Individual creator permission (GitHub MODEL_LICENSE, 2026-09-16); HF LICENSE copies are plain CC BY-NC 4.0"
+    },
+    {
+      "allowed_lanes": [
+        "research"
+      ],
+      "category": "song-engine",
+      "code_license": "MIT",
+      "gated": false,
+      "id": "yue2-cpp",
+      "name": "yue2.cpp (ServeurpersoCom)",
+      "notes": "Individual lane only once the creator permission is confirmed to cover converted weights (ask with Q3).",
+      "obligations": [],
+      "output_terms": "As YuE2 (contested for converted weights)",
+      "primary_sources": [
+        "https://github.com/ServeurpersoCom/yue2.cpp",
+        "https://huggingface.co/Serveurperso/YuE2-GGUF"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "NC weights",
+      "release_blockers": [
+        "contested",
+        "non_commercial_weights"
+      ],
+      "role": "Dedicated YuE2 ggml runtime with ABC, continuation, LoRA stacking and a WebUI",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "Serveurperso/YuE2-GGUF CC BY-NC 4.0; whether the individual-creator permission carries over to converted weights is not stated"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "separation",
+      "code_license": "MIT",
+      "gated": false,
+      "id": "zfturbo-msst",
+      "name": "ZFTurbo Music-Source-Separation-Training + lucidrains BS-RoFormer",
+      "notes": "BS-RoFormer paper (ByteDance) released no official weights.",
+      "obligations": [],
+      "output_terms": "n/a",
+      "primary_sources": [
+        "https://github.com/ZFTurbo/Music-Source-Separation-Training",
+        "https://github.com/lucidrains/BS-RoFormer",
+        "https://arxiv.org/abs/2309.02612"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "Per checkpoint",
+      "release_blockers": [],
+      "role": "Separation framework and architecture",
+      "test_only": false,
+      "v1_path": false,
+      "verdict": "evaluate",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "Per checkpoint (ZFTurbo's own release assets have no weights license; MUSDB-only models inherit academic data caveat)"
+    }
+  ],
+  "generated_from": [
+    {
+      "path": "docs/research/evidence-register.json",
+      "sha256": "61cf7d01698b28799e1c83646d5026b8b2e597b4c2d410764a01ddf75b446bf9"
+    },
+    {
+      "path": "scripts/registry/register_overlay.json",
+      "sha256": "c557bf8abee79fc1e9bd284dce7a2ca342e044d9781fb9c069623036aa718d2e"
+    }
+  ],
+  "kind": "component-register",
+  "overlay": false,
+  "register_id": "components.v1",
+  "schemaVersion": "1.0.0"
+}

@@ -1,0 +1,264 @@
+{
+  "cases": [
+    {
+      "derivation": "0 ticks is 0 s.",
+      "expected": 0,
+      "input": 0,
+      "name": "zero",
+      "op": "ticks_to_frames",
+      "sample_rate": 48000,
+      "tempo": [
+        {
+          "tick": 0,
+          "us_per_quarter": 500000
+        }
+      ]
+    },
+    {
+      "derivation": "960 ticks = 1 quarter = 0.5 s; 0.5 x 48000 = 24000.",
+      "expected": 24000,
+      "input": 960,
+      "name": "one beat at 120 BPM, 48 kHz",
+      "op": "ticks_to_frames",
+      "sample_rate": 48000,
+      "tempo": [
+        {
+          "tick": 0,
+          "us_per_quarter": 500000
+        }
+      ]
+    },
+    {
+      "derivation": "0.5 s / 960 x 48000 = 25 exactly.",
+      "expected": 25,
+      "input": 1,
+      "name": "one tick at 120 BPM, 48 kHz",
+      "op": "ticks_to_frames",
+      "sample_rate": 48000,
+      "tempo": [
+        {
+          "tick": 0,
+          "us_per_quarter": 500000
+        }
+      ]
+    },
+    {
+      "derivation": "8 quarters x 0.5 s = 4 s = 192000 frames.",
+      "expected": 192000,
+      "input": 7680,
+      "name": "two bars at 120 BPM",
+      "op": "ticks_to_frames",
+      "sample_rate": 48000,
+      "tempo": [
+        {
+          "tick": 0,
+          "us_per_quarter": 500000
+        }
+      ]
+    },
+    {
+      "derivation": "22050 / 960 = 22.96875, rounded half-up to 23.",
+      "expected": 23,
+      "input": 1,
+      "name": "one tick at 44.1 kHz rounds up",
+      "op": "ticks_to_frames",
+      "sample_rate": 44100,
+      "tempo": [
+        {
+          "tick": 0,
+          "us_per_quarter": 500000
+        }
+      ]
+    },
+    {
+      "derivation": "16 x 22.96875 = 367.5, half-up gives 368.",
+      "expected": 368,
+      "input": 16,
+      "name": "exact half rounds up",
+      "op": "ticks_to_frames",
+      "sample_rate": 44100,
+      "tempo": [
+        {
+          "tick": 0,
+          "us_per_quarter": 500000
+        }
+      ]
+    },
+    {
+      "derivation": "0.5 s x 44100.",
+      "expected": 22050,
+      "input": 960,
+      "name": "one beat at 44.1 kHz",
+      "op": "ticks_to_frames",
+      "sample_rate": 44100,
+      "tempo": [
+        {
+          "tick": 0,
+          "us_per_quarter": 500000
+        }
+      ]
+    },
+    {
+      "derivation": "4 quarters at 0.5 s = 2 s = 96000.",
+      "expected": 96000,
+      "input": 3840,
+      "name": "at the tempo change",
+      "op": "ticks_to_frames",
+      "sample_rate": 48000,
+      "tempo": [
+        {
+          "tick": 0,
+          "us_per_quarter": 500000
+        },
+        {
+          "tick": 3840,
+          "us_per_quarter": 600000
+        }
+      ]
+    },
+    {
+      "derivation": "96000 + 960 ticks at 0.6 s per quarter = 0.6 s x 48000 = 28800; 124800.",
+      "expected": 124800,
+      "input": 4800,
+      "name": "after the tempo change",
+      "op": "ticks_to_frames",
+      "sample_rate": 48000,
+      "tempo": [
+        {
+          "tick": 0,
+          "us_per_quarter": 500000
+        },
+        {
+          "tick": 3840,
+          "us_per_quarter": 600000
+        }
+      ]
+    },
+    {
+      "derivation": "Inverse of the beat case.",
+      "expected": 960,
+      "input": 24000,
+      "name": "frames to ticks, one beat",
+      "op": "frames_to_ticks",
+      "sample_rate": 48000,
+      "tempo": [
+        {
+          "tick": 0,
+          "us_per_quarter": 500000
+        }
+      ]
+    },
+    {
+      "derivation": "12 / 25 = 0.48 ticks, rounds to 0.",
+      "expected": 0,
+      "input": 12,
+      "name": "frames to ticks, below half",
+      "op": "frames_to_ticks",
+      "sample_rate": 48000,
+      "tempo": [
+        {
+          "tick": 0,
+          "us_per_quarter": 500000
+        }
+      ]
+    },
+    {
+      "derivation": "13 / 25 = 0.52 ticks, rounds to 1.",
+      "expected": 1,
+      "input": 13,
+      "name": "frames to ticks, above half",
+      "op": "frames_to_ticks",
+      "sample_rate": 48000,
+      "tempo": [
+        {
+          "tick": 0,
+          "us_per_quarter": 500000
+        }
+      ]
+    },
+    {
+      "derivation": "480000 us per quarter: 960e6 / (480000 x 48000) = 1/24 tick per frame; 12 frames = 0.5, half-up 1.",
+      "expected": 1,
+      "input": 12,
+      "name": "frames to ticks, exact half at 125 BPM",
+      "op": "frames_to_ticks",
+      "sample_rate": 48000,
+      "tempo": [
+        {
+          "tick": 0,
+          "us_per_quarter": 480000
+        }
+      ]
+    },
+    {
+      "derivation": "36 / 24 = 1.5, half-up 2.",
+      "expected": 2,
+      "input": 36,
+      "name": "frames to ticks, 1.5 at 125 BPM",
+      "op": "frames_to_ticks",
+      "sample_rate": 48000,
+      "tempo": [
+        {
+          "tick": 0,
+          "us_per_quarter": 480000
+        }
+      ]
+    },
+    {
+      "derivation": "Inverse of the change boundary.",
+      "expected": 3840,
+      "input": 96000,
+      "name": "frames to ticks at the change",
+      "op": "frames_to_ticks",
+      "sample_rate": 48000,
+      "tempo": [
+        {
+          "tick": 0,
+          "us_per_quarter": 500000
+        },
+        {
+          "tick": 3840,
+          "us_per_quarter": 600000
+        }
+      ]
+    },
+    {
+      "derivation": "14400 frames past 96000 = 0.3 s; at 0.6 s per quarter that is 480 ticks; 3840 + 480.",
+      "expected": 4320,
+      "input": 110400,
+      "name": "frames to ticks after the change",
+      "op": "frames_to_ticks",
+      "sample_rate": 48000,
+      "tempo": [
+        {
+          "tick": 0,
+          "us_per_quarter": 500000
+        },
+        {
+          "tick": 3840,
+          "us_per_quarter": 600000
+        }
+      ]
+    },
+    {
+      "derivation": "Inverse of the after-change case.",
+      "expected": 4800,
+      "input": 124800,
+      "name": "frames to ticks round trip",
+      "op": "frames_to_ticks",
+      "sample_rate": 48000,
+      "tempo": [
+        {
+          "tick": 0,
+          "us_per_quarter": 500000
+        },
+        {
+          "tick": 3840,
+          "us_per_quarter": 600000
+        }
+      ]
+    }
+  ],
+  "kind": "fixture.tempo",
+  "schemaVersion": "1.0.0"
+}

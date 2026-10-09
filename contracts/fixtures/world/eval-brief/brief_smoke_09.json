@@ -1,0 +1,27 @@
+{
+  "candidates_per_arm": 1,
+  "case": "sparse_acoustic_worship",
+  "compared": [
+    {
+      "profile_id": "fake-route-a",
+      "route": "R2-synth"
+    },
+    {
+      "profile_id": "fake-burst",
+      "route": "R1"
+    }
+  ],
+  "feel": "broad_mix",
+  "id": "brief_smoke_09",
+  "kind": "eval-brief",
+  "lane": "individual",
+  "notes": "Fixture brief; each brief runs in its own lane.",
+  "reference_ids": [],
+  "schemaVersion": "1.0.0",
+  "seed": {
+    "seed_kind": "none",
+    "sha256": null
+  },
+  "set": "smoke",
+  "song": null
+}

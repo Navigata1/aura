@@ -1,0 +1,156 @@
+{
+  "description": "The studio's decisions layered over docs/research/evidence-register.json when scripts/registry/sync.py regenerates contracts/registry/components.v1.json. Every entry cites the ADR or document it comes from. Edit this file (or the evidence register), never components.v1.json.",
+  "lane_rules": {
+    "research_includes_individual": "ADR-0011 rule 5: research is the private-experiments lane, so every component allowed in individual is also allowed in research."
+  },
+  "allowed_lanes_override": {
+    "swiftf0": {
+      "lanes": ["individual", "research"],
+      "source": "ADR-0011 rule 6 and architecture.md §10: individual and research until its provenance review (MIT-labelled ONNX trained on CC BY-NC-SA data)."
+    },
+    "melband-roformer-kim": {
+      "lanes": ["individual", "research"],
+      "source": "ADR-0006, ADR-0011 rule 6, the spec's Unverified capabilities table and the LLC-separator ticket: MIT code and weights, but its training data is UNVERIFIED, so llc waits for the training-data review; a passing review widens this row by contract-fix PR."
+    },
+    "basic-pitch": {
+      "lanes": ["individual", "research"],
+      "source": "ADR-0011 rule 6 (design review 2026-10-09): Apache-2.0, but trained partly on singing and piano datasets whose terms are unchecked (the register's own note cites iKala); individual and research until the provenance review ticket records its training datasets and their terms."
+    },
+    "muq": {
+      "lanes": ["individual", "research"],
+      "source": "O-06: non-commercial scorers are allowed in individual and research projects (diagnostics only, ADR-0005)."
+    },
+    "songeval": {
+      "lanes": ["individual", "research"],
+      "source": "O-06: non-commercial scorers are allowed in individual and research projects (diagnostics only, ADR-0005)."
+    },
+    "cmi-rm-tunejury": {
+      "lanes": ["individual", "research"],
+      "source": "O-06: non-commercial scorers are allowed in individual and research projects (diagnostics only, ADR-0005)."
+    },
+    "mir-eval": {"lanes": ["research"], "source": "lanes.v1.json: individual and llc forbid an unverified license; widened when its license row is verified (T03)."},
+    "g2p-phonemizer": {"lanes": ["research"], "source": "lanes.v1.json: individual and llc forbid an unverified license; widened when the lyric-error-rate ticket verifies the G2P."},
+    "midi-synth-soundfont": {"lanes": ["research"], "source": "lanes.v1.json: individual and llc forbid an unverified license; widened by the MIDI synth evaluation ticket."},
+    "audio-decoder": {"lanes": ["research"], "source": "lanes.v1.json: individual and llc forbid an unverified license; widened by the codec license ticket."},
+    "mido": {"lanes": ["research"], "source": "lanes.v1.json: individual and llc forbid an unverified license; widened when T03 verifies it."},
+    "fastapi": {"lanes": ["research"], "source": "lanes.v1.json: stack row, widened when T01 verifies the stack rows (stack libraries are not profile components)."},
+    "sqlite": {"lanes": ["research"], "source": "lanes.v1.json: stack row, widened when T01 verifies the stack rows."},
+    "uv": {"lanes": ["research"], "source": "lanes.v1.json: stack row, widened when T01 verifies the stack rows."},
+    "react": {"lanes": ["research"], "source": "lanes.v1.json: stack row, widened when T01 verifies the stack rows."},
+    "vite": {"lanes": ["research"], "source": "lanes.v1.json: stack row, widened when T01 verifies the stack rows."},
+    "codegen-tools": {"lanes": ["research"], "source": "lanes.v1.json: stack row, widened when T01 verifies the stack rows."}
+  },
+  "release_blockers": {
+    "source": "ADR-0011 rule 7 and RECONCILIATION.md §6 D-11 item 6, plus copyleft rows from §4.",
+    "non_commercial_weights": ["yue2-3b", "yue2-cpp", "sheetsage2", "muq", "songeval", "mulacover", "omnivoice", "f5-tts", "diffsinger",
+                               "shao", "musicgen-melody", "jasco", "some-game-rosvot", "muscriptor", "humtrans", "cmi-rm-tunejury",
+                               "roformer-community-ckpts", "mtg-jamendo", "fma"],
+    "non_commercial_by_author": ["demucs-4.1.0", "demucs-mlx"],
+    "research_or_academic": ["songbench", "songprep", "fish-speech-s2-pro", "vibevoice"],
+    "unknown_license": ["bs-roformer-sw", "levo-2", "scnet", "fcpe-rmvpe", "roformer-community-ckpts", "heartmula-studio"],
+    "permissive_label_nc_data": ["swiftf0", "torchcrepe"],
+    "unverified_training_data": ["melband-roformer-kim", "basic-pitch"],
+    "contested": ["rvc-webui", "applio", "heartlib-mlx", "yue2-cpp"],
+    "copyleft": ["rubberband", "kokoro-82m", "pesto", "matchering", "seed-vc", "ace-step-daw", "opendaw", "voicestudio", "juce-9",
+                 "apollo", "soundtouch", "prior-art-studios", "roformer-community-ckpts"],
+    "unverified": ["mir-eval", "g2p-phonemizer", "midi-synth-soundfont", "audio-decoder", "vocalparse", "songecho",
+                   "mido", "fastapi", "sqlite", "uv", "react", "vite", "codegen-tools"],
+    "obligations": ["minimax-music3", "minimax-mlx-ports", "stable-audio-3-medium", "stable-audio-3-small"]
+  },
+  "obligations": {
+    "source": "RECONCILIATION.md §4 (output terms and redistribution columns).",
+    "ace-step-1.5-2b": ["apache_notice"],
+    "ace-step-1.5-xl": ["apache_notice"],
+    "ace-step-1.5-lm": ["apache_notice"],
+    "minimax-music3": ["ui_naming", "revenue_threshold", "acceptable_use_policy", "ai_disclosure"],
+    "minimax-mlx-ports": ["ui_naming", "revenue_threshold", "acceptable_use_policy", "ai_disclosure"],
+    "stable-audio-3-medium": ["attribution", "registration", "revenue_threshold", "no_training_on_outputs"],
+    "stable-audio-3-small": ["attribution", "registration", "revenue_threshold", "no_training_on_outputs"],
+    "audiobox-aesthetics": ["attribution"],
+    "pyannote-wespeaker": ["attribution"],
+    "mfa": ["attribution"],
+    "apollo": ["share_alike"],
+    "suno-v6": ["keep_provenance_marks"]
+  },
+  "v1_path": {
+    "source": "architecture.md §3-§4, §7.3, §10; ADR-0002, ADR-0004, ADR-0005, ADR-0011 rule 6.",
+    "ids": ["ace-step-1.5-2b", "ace-step-1.5-xl", "ace-step-1.5-lm", "yue2-3b", "heartmula-3b", "minimax-music3",
+            "stable-audio-3-medium", "demucs-4.1.0", "demucs-mlx", "melband-roformer-kim", "basic-pitch", "whisper",
+            "qwen3-asr", "swiftf0", "librosa-pyin", "mir-eval", "pyloudnorm", "audiobox-aesthetics", "laion-clap",
+            "web-audio-chromium", "melodyspec-abc-converter", "g2p-phonemizer", "midi-synth-soundfont", "audio-decoder",
+            "runpod-serverless", "suno-v6", "neutralvoice", "studio-own-code", "mido", "fastapi", "sqlite", "uv", "react",
+            "vite", "codegen-tools"]
+  },
+  "supplement": {
+    "source": "Components on the v1 path that the evidence register has no row for: the studio's own code and the stack libraries whose licenses RECONCILIATION.md §8 lists as never checked. Their licenses are recorded as UNVERIFIED, not assumed.",
+    "rows": [
+      {
+        "id": "neutralvoice", "name": "NeutralVoice (the studio's own deterministic guide voice)", "category": "dsp",
+        "role": "Renders the assembled melody as a plain sung guide: R2-synth input, ground-truth fixtures, FakeEngine's sound, the Playwright fake mic (ADR-0032).",
+        "code_license": "Own code (all rights reserved until Q5)", "weights_license": "n/a (no weights)",
+        "output_terms": "Own work; no third-party terms.", "gated": null, "verdict": "adopt-v1", "verdict_condition": null,
+        "operator_lanes": ["individual", "llc"], "redistribution_blocker": "None (own code; its license is owner-pending, Q5).",
+        "evidence_status": "unverified", "primary_sources": [], "notes": "Not built yet. Its quality as a cover input is unmeasured (architecture.md §12)."
+      },
+      {
+        "id": "studio-own-code", "name": "The studio's control service, worker SDK, analysis worker and FakeEngine code", "category": "ui-runtime",
+        "role": "Everything the studio writes itself: Score, the HMM note segmentation, the true-peak meter, assembly, export.",
+        "code_license": "Own code (all rights reserved until Q5)", "weights_license": "n/a (no weights)",
+        "output_terms": "Own work; no third-party terms.", "gated": null, "verdict": "adopt-v1", "verdict_condition": null,
+        "operator_lanes": ["individual", "llc"], "redistribution_blocker": "None (own code; its license is owner-pending, Q5).",
+        "evidence_status": "unverified", "primary_sources": [], "notes": "Not built yet."
+      },
+      {
+        "id": "mido", "name": "mido (MIDI import and export in Score)", "category": "dsp",
+        "role": "Standard MIDI File read and write for MelodySpec round trips (architecture.md §4.6).",
+        "code_license": "UNVERIFIED (not checked against a primary source)", "weights_license": "n/a",
+        "output_terms": "n/a", "gated": null, "verdict": "evaluate", "verdict_condition": "Its license row must be verified before adoption (P0-9).",
+        "operator_lanes": ["individual", "llc"], "redistribution_blocker": "Unverified license.",
+        "evidence_status": "unverified", "primary_sources": [], "notes": "Named in the D-11 unverified list."
+      },
+      {
+        "id": "fastapi", "name": "FastAPI", "category": "ui-runtime", "role": "The control service's HTTP and SSE framework.",
+        "code_license": "UNVERIFIED (assumed permissive; not checked against a primary source)", "weights_license": "n/a",
+        "output_terms": "n/a", "gated": null, "verdict": "evaluate", "verdict_condition": "License verification ticket must close before adoption (P0-9).",
+        "operator_lanes": ["individual", "llc"], "redistribution_blocker": "Unverified license.",
+        "evidence_status": "unverified", "primary_sources": [], "notes": "RECONCILIATION.md §8: licenses of FastAPI, SQLite, React, Vite and uv were assumed permissive, never checked."
+      },
+      {
+        "id": "sqlite", "name": "SQLite (Python stdlib sqlite3)", "category": "ui-runtime", "role": "The system of record (ADR-0028).",
+        "code_license": "UNVERIFIED (assumed public domain; not checked against a primary source)", "weights_license": "n/a",
+        "output_terms": "n/a", "gated": null, "verdict": "evaluate", "verdict_condition": "License verification ticket must close before adoption (P0-9).",
+        "operator_lanes": ["individual", "llc"], "redistribution_blocker": "Unverified license.",
+        "evidence_status": "unverified", "primary_sources": [], "notes": "RECONCILIATION.md §8."
+      },
+      {
+        "id": "uv", "name": "uv (Python environments and locks)", "category": "ui-runtime", "role": "Per-engine environments keyed by lock hash.",
+        "code_license": "UNVERIFIED (assumed permissive; not checked against a primary source)", "weights_license": "n/a",
+        "output_terms": "n/a", "gated": null, "verdict": "evaluate", "verdict_condition": "License verification ticket must close before adoption (P0-9).",
+        "operator_lanes": ["individual", "llc"], "redistribution_blocker": "Unverified license.",
+        "evidence_status": "unverified", "primary_sources": [], "notes": "RECONCILIATION.md §8."
+      },
+      {
+        "id": "react", "name": "React", "category": "ui-runtime", "role": "The web app.",
+        "code_license": "UNVERIFIED (assumed permissive; not checked against a primary source)", "weights_license": "n/a",
+        "output_terms": "n/a", "gated": null, "verdict": "evaluate", "verdict_condition": "License verification ticket must close before adoption (P0-9).",
+        "operator_lanes": ["individual", "llc"], "redistribution_blocker": "Unverified license.",
+        "evidence_status": "unverified", "primary_sources": [], "notes": "RECONCILIATION.md §8."
+      },
+      {
+        "id": "vite", "name": "Vite", "category": "ui-runtime", "role": "The web app's build tool.",
+        "code_license": "UNVERIFIED (assumed permissive; not checked against a primary source)", "weights_license": "n/a",
+        "output_terms": "n/a", "gated": null, "verdict": "evaluate", "verdict_condition": "License verification ticket must close before adoption (P0-9).",
+        "operator_lanes": ["individual", "llc"], "redistribution_blocker": "Unverified license.",
+        "evidence_status": "unverified", "primary_sources": [], "notes": "RECONCILIATION.md §8."
+      },
+      {
+        "id": "codegen-tools", "name": "Schema-to-type codegen tools (Pydantic and TypeScript generators, OpenAPI client generator)", "category": "ui-runtime",
+        "role": "Generate packages/contracts-py and packages/contracts-ts from contracts/schemas.",
+        "code_license": "UNVERIFIED (tools not chosen yet)", "weights_license": "n/a",
+        "output_terms": "n/a", "gated": null, "verdict": "evaluate", "verdict_condition": "Tools chosen and licenses verified before adoption (P0-9).",
+        "operator_lanes": ["individual", "llc"], "redistribution_blocker": "Unverified license.",
+        "evidence_status": "unverified", "primary_sources": [], "notes": "Named in ADR-0011 rule 7 (unverified until checked)."
+      }
+    ]
+  }
+}

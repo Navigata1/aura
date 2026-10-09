@@ -1,0 +1,62 @@
+{
+  "description": "A cover job takes the listening-only reference standard as input.",
+  "expect_rules": [
+    "use.allowed_uses"
+  ],
+  "id": "SC-USE-REFERENCE-AS-INPUT",
+  "kind": "fixture.scenario",
+  "overlay": [
+    {
+      "approval_id": null,
+      "compute_profile_id": "cp_tier4",
+      "cost": {
+        "basis": "local_zero",
+        "usd": "0.00"
+      },
+      "created_at": "2026-10-09T12:00:00Z",
+      "egress": [],
+      "error": null,
+      "history": [
+        {
+          "at": "2026-10-09T12:00:00Z",
+          "state": "queued"
+        }
+      ],
+      "id": "job_ref_cover",
+      "inputs": [
+        {
+          "role": "conditioning",
+          "sha256": "4e405787b44e6d1f57af53cd02b5596bdf3adb33077151a720da8586b66eec7f"
+        }
+      ],
+      "job_kind": "generate",
+      "kind": "job",
+      "lane": "individual",
+      "outputs": [],
+      "params": {
+        "actual": {},
+        "intent": {}
+      },
+      "parent_job_id": null,
+      "placement": {
+        "host_class": "fake/local",
+        "kind": "local"
+      },
+      "profile_id": "fake-route-a",
+      "profile_revision": "f1a45b61325bc9f8d89598ae620e16d601aeb44188758ff87dfa8a237f114185",
+      "project_id": "prj_hymn",
+      "quote_id": null,
+      "record_inputs": [],
+      "request_id": null,
+      "retry": null,
+      "schemaVersion": "1.0.0",
+      "seed": 1,
+      "session_id": "ses_1",
+      "state": "queued",
+      "steps": [],
+      "task": "cover"
+    }
+  ],
+  "remove": [],
+  "schemaVersion": "1.0.0"
+}

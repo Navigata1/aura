@@ -1,0 +1,220 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "song-spec/1 (with SongForm)",
+  "description": "What Jon asks for in a song (GLOSSARY: SongSpec, SongForm, Approved lyrics; ADR-0004, ADR-0018). Approved lyrics are kept apart from any ASR transcript, and ASR never overwrites them. Each control records what was requested, what each engine profile supports and what was observed (intent vs actual). Revisions are immutable. content_sha256 covers the record without that field.",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "song_id", "rev", "base_rev", "project_id", "created_at", "melody", "approved_lyrics",
+               "asr_transcripts", "controls", "form", "references", "candidate_count", "larger_n_budget", "render_routes",
+               "validation", "content_sha256"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "song-spec"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "song_id": {"$ref": "common.schema.json#/$defs/id"},
+    "rev": {"type": "integer", "minimum": 1},
+    "base_rev": {"type": ["integer", "null"], "minimum": 1},
+    "project_id": {"$ref": "common.schema.json#/$defs/id"},
+    "created_at": {"$ref": "common.schema.json#/$defs/dateTime"},
+    "melody": {
+      "description": "The melody seed's MelodySpec revision; null only for the text route (no melody seed).",
+      "oneOf": [{"$ref": "common.schema.json#/$defs/melodyRef"}, {"type": "null"}]
+    },
+    "approved_lyrics": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["text", "language", "source", "approved_at"],
+          "additionalProperties": false,
+          "properties": {
+            "text": {"type": "string", "minLength": 1, "maxLength": 20000},
+            "language": {"$ref": "common.schema.json#/$defs/bcp47"},
+            "source": {"enum": ["written", "accepted_suggestion"], "description": "Never ASR: speech recognition never overwrites approved lyrics."},
+            "approved_at": {"$ref": "common.schema.json#/$defs/dateTime"}
+          }
+        }
+      ]
+    },
+    "asr_transcripts": {
+      "description": "Separate assets, referenced only. They never become approved lyrics.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["candidate_id", "artifact_sha256", "language"],
+        "additionalProperties": false,
+        "properties": {
+          "candidate_id": {"$ref": "common.schema.json#/$defs/id"},
+          "artifact_sha256": {"$ref": "common.schema.json#/$defs/sha256"},
+          "language": {"$ref": "common.schema.json#/$defs/bcp47"}
+        }
+      }
+    },
+    "controls": {
+      "type": "object",
+      "required": ["style", "exclude_styles", "vocal_mode", "duration_s"],
+      "additionalProperties": false,
+      "properties": {
+        "style": {"$ref": "#/$defs/trackedText"},
+        "exclude_styles": {"$ref": "#/$defs/trackedList"},
+        "vocal_mode": {"$ref": "#/$defs/trackedVocalMode"},
+        "duration_s": {"$ref": "#/$defs/trackedSeconds"}
+      }
+    },
+    "form": {
+      "type": "object",
+      "required": ["sections"],
+      "additionalProperties": false,
+      "properties": {
+        "sections": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["id", "name", "section_kind", "phrase_ids", "bars", "repeats"],
+            "additionalProperties": false,
+            "properties": {
+              "id": {"type": "string", "pattern": "^s[0-9]{1,3}$"},
+              "name": {"type": "string", "pattern": "^[a-z][a-z0-9-]{0,31}$", "description": "Section names survive every step: SongSpec, timeline, export."},
+              "section_kind": {"enum": ["vocal", "instrumental"]},
+              "phrase_ids": {"type": "array", "items": {"type": "string", "pattern": "^ph[0-9]{1,4}$"}},
+              "bars": {"type": "integer", "minimum": 1, "maximum": 256},
+              "repeats": {"type": "integer", "minimum": 1, "maximum": 16}
+            }
+          }
+        }
+      }
+    },
+    "references": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["reference_id", "use"],
+        "additionalProperties": false,
+        "properties": {
+          "reference_id": {"$ref": "common.schema.json#/$defs/id"},
+          "use": {"enum": ["listen", "conditioning"], "description": "conditioning requires the reference's permission to grant it (use.reference_permission)."}
+        }
+      }
+    },
+    "candidate_count": {"type": "integer", "minimum": 2, "maximum": 8, "description": "Two per request by default (ADR-0005). A larger n is an explicit, priced choice."},
+    "larger_n_budget": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["usd_ceiling", "reason"],
+          "additionalProperties": false,
+          "properties": {"usd_ceiling": {"$ref": "common.schema.json#/$defs/usd"}, "reason": {"$ref": "common.schema.json#/$defs/shortText"}}
+        }
+      ]
+    },
+    "render_routes": {
+      "type": "object",
+      "required": ["mode", "routes"],
+      "additionalProperties": false,
+      "properties": {
+        "mode": {"enum": ["auto", "explicit"]},
+        "routes": {"type": "array", "uniqueItems": true, "items": {"$ref": "common.schema.json#/$defs/route"}}
+      },
+      "if": {"properties": {"mode": {"const": "explicit"}}},
+      "then": {"properties": {"routes": {"minItems": 1}}}
+    },
+    "validation": {
+      "type": "object",
+      "required": ["conflicts", "unsupported_by_profile"],
+      "additionalProperties": false,
+      "properties": {
+        "conflicts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["code", "fields", "detail"],
+            "additionalProperties": false,
+            "properties": {
+              "code": {"enum": ["instrumental_with_vocal_words", "lyrics_language_unsupported", "duration_over_limit", "unsupported_field"]},
+              "fields": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": "^[a-z_.]+$"}},
+              "detail": {"$ref": "common.schema.json#/$defs/shortText"}
+            }
+          }
+        },
+        "unsupported_by_profile": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["profile_id", "field"],
+            "additionalProperties": false,
+            "properties": {"profile_id": {"$ref": "common.schema.json#/$defs/slug"}, "field": {"type": "string", "pattern": "^[a-z_.]+$"}}
+          }
+        }
+      }
+    },
+    "content_sha256": {"$ref": "common.schema.json#/$defs/sha256"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"rev": {"const": 1}}},
+      "then": {"properties": {"base_rev": {"type": "null"}}},
+      "else": {"properties": {"base_rev": {"type": "integer"}}}
+    },
+    {
+      "if": {"properties": {"controls": {"properties": {"vocal_mode": {"properties": {"requested": {"const": "instrumental"}}}}}}},
+      "then": {"properties": {"approved_lyrics": {"type": "null"}}},
+      "else": {"properties": {"approved_lyrics": {"type": "object"}}}
+    },
+    {
+      "if": {"properties": {"candidate_count": {"minimum": 3}}},
+      "then": {"properties": {"larger_n_budget": {"type": "object"}}},
+      "else": {"properties": {"larger_n_budget": {"type": "null"}}}
+    }
+  ],
+  "$defs": {
+    "support": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["profile_id", "status"],
+        "additionalProperties": false,
+        "properties": {
+          "profile_id": {"$ref": "common.schema.json#/$defs/slug"},
+          "status": {"enum": ["supported", "unsupported", "mapped"]},
+          "mapped_to": {"type": "string", "pattern": "^[a-z_.]+$"}
+        },
+        "if": {"properties": {"status": {"const": "mapped"}}},
+        "then": {"required": ["mapped_to"]}
+      }
+    },
+    "observedList": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["candidate_id", "value"],
+        "additionalProperties": false,
+        "properties": {"candidate_id": {"$ref": "common.schema.json#/$defs/id"}, "value": {"type": ["string", "integer", "boolean"]}}
+      }
+    },
+    "trackedText": {
+      "type": "object",
+      "required": ["requested", "support", "observed"],
+      "additionalProperties": false,
+      "properties": {"requested": {"type": "string", "maxLength": 1000}, "support": {"$ref": "#/$defs/support"}, "observed": {"$ref": "#/$defs/observedList"}}
+    },
+    "trackedList": {
+      "type": "object",
+      "required": ["requested", "support", "observed"],
+      "additionalProperties": false,
+      "properties": {"requested": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1, "maxLength": 80}}, "support": {"$ref": "#/$defs/support"}, "observed": {"$ref": "#/$defs/observedList"}}
+    },
+    "trackedVocalMode": {
+      "type": "object",
+      "required": ["requested", "support", "observed"],
+      "additionalProperties": false,
+      "properties": {"requested": {"enum": ["vocal", "instrumental"]}, "support": {"$ref": "#/$defs/support"}, "observed": {"$ref": "#/$defs/observedList"}}
+    },
+    "trackedSeconds": {
+      "type": "object",
+      "required": ["requested", "support", "observed"],
+      "additionalProperties": false,
+      "properties": {"requested": {"type": "integer", "minimum": 10, "maximum": 600}, "support": {"$ref": "#/$defs/support"}, "observed": {"$ref": "#/$defs/observedList"}}
+    }
+  }
+}

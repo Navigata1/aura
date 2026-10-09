@@ -1,0 +1,19 @@
+{
+  "audition_id": "aud_venture",
+  "id": "rv_venture",
+  "kind": "reveal",
+  "mapping": [
+    {
+      "candidate_id": "cand_vb",
+      "label": "A"
+    },
+    {
+      "candidate_id": "cand_va",
+      "label": "B"
+    }
+  ],
+  "nonce": "0c6901aa7293a224143de5951d08a1fa3a8b8ab452de0f618d0d55ccd431ce65",
+  "revealed_at": "2026-10-09T11:10:05Z",
+  "schemaVersion": "1.0.0",
+  "verdict_id": "vd_venture"
+}

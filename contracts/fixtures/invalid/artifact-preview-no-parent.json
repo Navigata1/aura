@@ -1,0 +1,100 @@
+{
+  "description": "A preview with no parent.",
+  "error_contains": "$.provenance.parents",
+  "id": "IR-ARTIFACT-PREVIEW-NO-PARENT",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "audio": {
+      "channels": 2,
+      "frames": 5760000,
+      "sample_format": "pcm_s24",
+      "sample_rate": 48000
+    },
+    "bytes": 1024,
+    "created_at": "2026-10-09T10:10:30Z",
+    "kind": "artifact",
+    "media_type": "audio/wav",
+    "origin": "preview",
+    "project_id": "prj_hymn",
+    "provenance": {
+      "allowed_uses": [
+        "listen",
+        "audition_arm"
+      ],
+      "capture": null,
+      "compute": {
+        "compute_profile_id": "cp_tier4",
+        "placement": "local",
+        "tier": 4
+      },
+      "eligible_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "engine": {
+        "code_commit": "0000000",
+        "env": {
+          "lock_sha256": "e9d0f0d689296edb8c59268bfdfa26586ce1549dcce9a92db8b656c3cc6beb1e"
+        },
+        "params": {
+          "actual": {},
+          "intent": {}
+        },
+        "profile_id": "analysis-measure",
+        "profile_revision": "37fabb89ff8806e3f20bb5991799515cfd9dbc37fa9d939b4c77d36c3260b15f",
+        "sdk_version": "0.1.0",
+        "seed": null,
+        "weights": null
+      },
+      "host": {
+        "arch": "arm64",
+        "backend": "cpu",
+        "host_class": "cpu/m5pro",
+        "host_id": "host_mac",
+        "os": "darwin"
+      },
+      "import_terms_id": null,
+      "license_chain": [
+        {
+          "code_license": "MIT",
+          "component_id": "pyloudnorm",
+          "obligations": [],
+          "weights_license": "n/a"
+        },
+        {
+          "code_license": "Own code (all rights reserved until Q5)",
+          "component_id": "studio-own-code",
+          "obligations": [],
+          "weights_license": "n/a (no weights)"
+        },
+        {
+          "code_license": "Own code (all rights reserved until Q5)",
+          "component_id": "neutralvoice",
+          "obligations": [],
+          "weights_license": "n/a (no weights)"
+        }
+      ],
+      "operator_lane": "individual",
+      "parents": [],
+      "producing_job_id": "job_ma",
+      "record_inputs": [],
+      "timings": {
+        "cold": true,
+        "label": "MEASURED-LOCAL",
+        "load_wall_ms": 50,
+        "measured_by": "worker-sdk",
+        "peak_rss_bytes": 268435456,
+        "run_wall_ms": 900,
+        "total_wall_ms": 950
+      }
+    },
+    "retention_class": "reproducible",
+    "schemaVersion": "1.0.0",
+    "sha256": "77596a47feb5e00cf1cd4991a1a4ecebbd777f1a5aa76ea9e9a6d4247b3d3515",
+    "synthetic_test": true
+  },
+  "record_kind": "artifact",
+  "rule": "A preview converts a candidate",
+  "schemaVersion": "1.0.0"
+}

@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "project/1 (the project graph)",
+  "description": "One song and everything made for it, under one operator lane (GLOSSARY: Project; ADR-0009, ADR-0011). artifacts lists every artifact committed into the project: the store write path refuses one whose eligible_lanes lacks the project's lane (lane.store_write), and a lane change re-checks them all. A lane change is an owner act. Narration is reserved: no schema change is needed when it arrives.",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "id", "name", "project_kind", "operator_lane", "created_at", "lane_changes", "heads",
+               "artifacts", "melody_ids", "song_ids", "generation_request_ids", "keeper_ids", "export_ids", "reference_ids",
+               "edit_operation_ids", "timeline_ids"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "project"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "id": {"$ref": "common.schema.json#/$defs/id"},
+    "name": {"type": "string", "minLength": 1, "maxLength": 120},
+    "project_kind": {"enum": ["song", "narration"]},
+    "operator_lane": {"$ref": "common.schema.json#/$defs/operatorLane"},
+    "created_at": {"$ref": "common.schema.json#/$defs/dateTime"},
+    "lane_changes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["from", "to", "act"],
+        "additionalProperties": false,
+        "properties": {
+          "from": {"$ref": "common.schema.json#/$defs/operatorLane"},
+          "to": {"$ref": "common.schema.json#/$defs/operatorLane"},
+          "act": {"allOf": [{"$ref": "common.schema.json#/$defs/ownerAct"}, {"properties": {"act": {"const": "change_lane"}}}]}
+        }
+      }
+    },
+    "heads": {
+      "type": "object",
+      "required": ["melody", "song"],
+      "additionalProperties": false,
+      "properties": {
+        "melody": {
+          "oneOf": [
+            {"type": "null"},
+            {"type": "object", "required": ["melody_id", "rev"], "additionalProperties": false,
+             "properties": {"melody_id": {"$ref": "common.schema.json#/$defs/id"}, "rev": {"type": "integer", "minimum": 1}}}
+          ]
+        },
+        "song": {"oneOf": [{"type": "null"}, {"$ref": "common.schema.json#/$defs/songRef"}]}
+      }
+    },
+    "artifacts": {"type": "array", "uniqueItems": true, "items": {"$ref": "common.schema.json#/$defs/sha256"}},
+    "melody_ids": {"$ref": "#/$defs/idList"},
+    "song_ids": {"$ref": "#/$defs/idList"},
+    "generation_request_ids": {"$ref": "#/$defs/idList"},
+    "keeper_ids": {"$ref": "#/$defs/idList"},
+    "export_ids": {"$ref": "#/$defs/idList"},
+    "reference_ids": {"$ref": "#/$defs/idList"},
+    "edit_operation_ids": {"$ref": "#/$defs/idList"},
+    "timeline_ids": {"$ref": "#/$defs/idList"}
+  },
+  "$defs": {
+    "idList": {"type": "array", "uniqueItems": true, "items": {"$ref": "common.schema.json#/$defs/id"}}
+  }
+}

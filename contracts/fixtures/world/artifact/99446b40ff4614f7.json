@@ -1,0 +1,84 @@
+{
+  "audio": null,
+  "bytes": 1024,
+  "created_at": "2026-10-09T11:04:40Z",
+  "kind": "artifact",
+  "media_type": "application/json",
+  "origin": "analysis",
+  "project_id": "prj_venture",
+  "provenance": {
+    "allowed_uses": [
+      "analysis"
+    ],
+    "capture": null,
+    "compute": {
+      "compute_profile_id": "cp_tier4",
+      "placement": "local",
+      "tier": 4
+    },
+    "eligible_lanes": [
+      "individual",
+      "llc",
+      "research"
+    ],
+    "engine": {
+      "code_commit": "0000000",
+      "env": {
+        "lock_sha256": "e9d0f0d689296edb8c59268bfdfa26586ce1549dcce9a92db8b656c3cc6beb1e"
+      },
+      "params": {
+        "actual": {},
+        "intent": {}
+      },
+      "profile_id": "analysis-measure",
+      "profile_revision": "37fabb89ff8806e3f20bb5991799515cfd9dbc37fa9d939b4c77d36c3260b15f",
+      "sdk_version": "0.1.0",
+      "seed": null,
+      "weights": null
+    },
+    "host": {
+      "arch": "arm64",
+      "backend": "cpu",
+      "host_class": "cpu/m5pro",
+      "host_id": "host_mac",
+      "os": "darwin"
+    },
+    "import_terms_id": null,
+    "license_chain": [
+      {
+        "code_license": "MIT",
+        "component_id": "pyloudnorm",
+        "obligations": [],
+        "weights_license": "n/a"
+      },
+      {
+        "code_license": "Own code (all rights reserved until Q5)",
+        "component_id": "studio-own-code",
+        "obligations": [],
+        "weights_license": "n/a (no weights)"
+      }
+    ],
+    "operator_lane": "llc",
+    "parents": [
+      {
+        "edge": "analyzed_by",
+        "sha256": "248cebebf990bcf02b2df4ba0dc4b3aaaa1bf7fa1b6003d90761ceffd39174da"
+      }
+    ],
+    "producing_job_id": "job_mva",
+    "record_inputs": [],
+    "timings": {
+      "cold": true,
+      "label": "MEASURED-LOCAL",
+      "load_wall_ms": 50,
+      "measured_by": "worker-sdk",
+      "peak_rss_bytes": 268435456,
+      "run_wall_ms": 900,
+      "total_wall_ms": 950
+    }
+  },
+  "retention_class": "derived",
+  "schemaVersion": "1.0.0",
+  "sha256": "99446b40ff4614f7515e834e9c2bf248db36fbf949c66662fe23db7e0a32e118",
+  "synthetic_test": true
+}

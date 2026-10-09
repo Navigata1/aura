@@ -1,0 +1,290 @@
+{
+  "description": "A YuE2 artifact (individual and research only) made in the individual project is committed into the llc project.",
+  "expect_rules": [
+    "lane.store_write"
+  ],
+  "id": "SC-LANE-STORE-YUE2",
+  "kind": "fixture.scenario",
+  "overlay": [
+    {
+      "approval_id": null,
+      "compute_profile_id": "cp_tier4",
+      "cost": {
+        "basis": "local_zero",
+        "usd": "0.00"
+      },
+      "created_at": "2026-10-09T12:00:00Z",
+      "egress": [],
+      "error": null,
+      "history": [
+        {
+          "at": "2026-10-09T12:00:00Z",
+          "state": "queued"
+        },
+        {
+          "at": "2026-10-09T12:00:01Z",
+          "state": "preparing"
+        },
+        {
+          "at": "2026-10-09T12:00:02Z",
+          "state": "loading"
+        },
+        {
+          "at": "2026-10-09T12:00:03Z",
+          "state": "generating"
+        },
+        {
+          "at": "2026-10-09T12:01:00Z",
+          "state": "ready"
+        }
+      ],
+      "id": "job_yue2",
+      "inputs": [],
+      "job_kind": "generate",
+      "kind": "job",
+      "lane": "individual",
+      "outputs": [
+        {
+          "role": "mix",
+          "sha256": "82058e746bc6f4273169dd817ee3c2a4810314ebeb08a707a8a9331828935b4b"
+        }
+      ],
+      "params": {
+        "actual": {
+          "cot": "melody"
+        },
+        "intent": {
+          "cot": "melody"
+        }
+      },
+      "parent_job_id": null,
+      "placement": {
+        "host_class": "cuda/rtx4090",
+        "kind": "worker_host"
+      },
+      "profile_id": "yue2-3b-score",
+      "profile_revision": "37522ad18dee26df2c7956bcdd34163bca9d88e991f76a2f6c983581f67b0d8e",
+      "project_id": "prj_hymn",
+      "quote_id": null,
+      "record_inputs": [
+        {
+          "kind": "abc-score",
+          "sha256": "999e5c1aed368edc9a91c2384775a501fc50e8e1806b5affdaa7cf3dab878276"
+        }
+      ],
+      "request_id": null,
+      "retry": null,
+      "schemaVersion": "1.0.0",
+      "seed": 5,
+      "session_id": "ses_1",
+      "state": "ready",
+      "steps": [],
+      "task": "score_to_song"
+    },
+    {
+      "audio": {
+        "channels": 2,
+        "frames": 5292000,
+        "sample_format": "pcm_f32",
+        "sample_rate": 44100
+      },
+      "bytes": 1024,
+      "created_at": "2026-10-09T12:01:00Z",
+      "kind": "artifact",
+      "media_type": "audio/wav",
+      "origin": "generated_mix",
+      "project_id": "prj_hymn",
+      "provenance": {
+        "allowed_uses": [
+          "listen",
+          "loudness_measure",
+          "dsp_finish",
+          "analysis",
+          "engine_input",
+          "conditioning",
+          "separation_input",
+          "edit_source",
+          "audition_arm",
+          "export"
+        ],
+        "capture": null,
+        "compute": {
+          "compute_profile_id": "cp_tier4",
+          "placement": "worker_host",
+          "tier": 4
+        },
+        "eligible_lanes": [
+          "individual",
+          "research"
+        ],
+        "engine": {
+          "code_commit": "0000000",
+          "env": {
+            "lock_sha256": "d460ba39977c2ef87739b7488080c934c0c6e69ce886fb9858c2c07c129b591b"
+          },
+          "params": {
+            "actual": {
+              "cot": "melody"
+            },
+            "intent": {
+              "cot": "melody"
+            }
+          },
+          "profile_id": "yue2-3b-score",
+          "profile_revision": "37522ad18dee26df2c7956bcdd34163bca9d88e991f76a2f6c983581f67b0d8e",
+          "sdk_version": "0.1.0",
+          "seed": 5,
+          "weights": null
+        },
+        "host": {
+          "arch": "x86_64",
+          "backend": "cuda",
+          "host_class": "cuda/rtx4090",
+          "host_id": "host_cuda1",
+          "os": "linux"
+        },
+        "import_terms_id": null,
+        "license_chain": [
+          {
+            "code_license": "Apache-2.0",
+            "component_id": "yue2-3b",
+            "obligations": [],
+            "weights_license": "CC BY-NC 4.0 + Individual creator permission (GitHub MODEL_LICENSE, 2026-09-16); HF LICENSE copies are plain CC BY-NC 4.0"
+          }
+        ],
+        "operator_lane": "individual",
+        "parents": [],
+        "producing_job_id": "job_yue2",
+        "record_inputs": [
+          {
+            "kind": "abc-score",
+            "sha256": "999e5c1aed368edc9a91c2384775a501fc50e8e1806b5affdaa7cf3dab878276"
+          }
+        ],
+        "timings": {
+          "cold": true,
+          "label": "MEASURED-LOCAL",
+          "load_wall_ms": 50,
+          "measured_by": "worker-sdk",
+          "peak_rss_bytes": 268435456,
+          "run_wall_ms": 900,
+          "total_wall_ms": 950
+        }
+      },
+      "retention_class": "derived",
+      "schemaVersion": "1.0.0",
+      "sha256": "82058e746bc6f4273169dd817ee3c2a4810314ebeb08a707a8a9331828935b4b",
+      "synthetic_test": false
+    },
+    {
+      "artifacts": [
+        "0e405f49a5e4b42ddb453d002715c76a629b347cab691bc51a6f6624b704fa79",
+        "2789a942c9533e6ecec15d6b9e0942389ba2f1e3f6fc664356f54291a9f0e884",
+        "32c41d14b799a8e1f844e84f11fe694a8804a31a75749f59c1639ec541465e09",
+        "6b9fe57c2c7a132ee77637ca22f20e82da6669489d249ed93426f401da3b1516",
+        "6bddb7311b9df81220ddfedbcd18c099b6229e9c3e220bbadc2bb2595d1f9260",
+        "6ca121e5fbd59675f0e20b2467e792a8530b997b1817e29356c0b4585297d7e1",
+        "77596a47feb5e00cf1cd4991a1a4ecebbd777f1a5aa76ea9e9a6d4247b3d3515",
+        "82058e746bc6f4273169dd817ee3c2a4810314ebeb08a707a8a9331828935b4b",
+        "b3e0de98dce4bf8a946860ff0439f9b771c19af51359558ec7a87fb7f59f06bf",
+        "c88ebc5ab2432984349930e6cc358dccf486ce4fd359016800eafbc716caa376",
+        "dc777e3766c902a35936fea39ee9ceecee87a562e63e9fb42a090dc80205d7e7",
+        "e72def8d0b533962c620f88ab7da2d60d497a000c199d8ae80d6ff8fbf9d01fa",
+        "fdf30e2a1588e08a02a0205ca7b65f683d57d280383e3687da974c41ea77294f"
+      ],
+      "created_at": "2026-10-09T10:00:30Z",
+      "edit_operation_ids": [
+        "eo_hymn"
+      ],
+      "export_ids": [
+        "ex_hymn"
+      ],
+      "generation_request_ids": [
+        "gr_hymn"
+      ],
+      "heads": {
+        "melody": {
+          "melody_id": "mel_hymn",
+          "rev": 2
+        },
+        "song": {
+          "rev": 1,
+          "song_id": "song_hymn"
+        }
+      },
+      "id": "prj_hymn",
+      "keeper_ids": [
+        "kp_hymn"
+      ],
+      "kind": "project",
+      "lane_changes": [],
+      "melody_ids": [
+        "mel_hymn",
+        "mel_hymn_asm"
+      ],
+      "name": "Quiet Water (fixture)",
+      "operator_lane": "individual",
+      "project_kind": "song",
+      "reference_ids": [],
+      "schemaVersion": "1.0.0",
+      "song_ids": [
+        "song_hymn"
+      ],
+      "timeline_ids": [
+        "tl_hymn"
+      ]
+    },
+    {
+      "artifacts": [
+        "1ddb4a6c6c3c67c5637936e76c5642ce0981b773cb4febf9674fd295d7a47c84",
+        "248cebebf990bcf02b2df4ba0dc4b3aaaa1bf7fa1b6003d90761ceffd39174da",
+        "49dc0401afa40ab995c2d1c0a905a9587eb775ab9b36ad0819137d896db94eac",
+        "82058e746bc6f4273169dd817ee3c2a4810314ebeb08a707a8a9331828935b4b",
+        "99446b40ff4614f7515e834e9c2bf248db36fbf949c66662fe23db7e0a32e118",
+        "b61b656f22a8eb761b34046a716bc8b0a569c94fc6b4506708dc2e3eaa939356",
+        "d7a8c786255865a2feea62fcb6b94d6d3199d14df310cfd0c54b6831d366cb96",
+        "e7bf134c89dd4bad03f6082130b74267e24e4d089adaec8d8c2b710dfd4cc8d9",
+        "f7af17cbfb64026585e4f1049aa82da4ec1b5562d34f15f1b880834e8a5b64cb"
+      ],
+      "created_at": "2026-10-09T10:59:00Z",
+      "edit_operation_ids": [],
+      "export_ids": [
+        "ex_venture"
+      ],
+      "generation_request_ids": [
+        "gr_venture"
+      ],
+      "heads": {
+        "melody": {
+          "melody_id": "mel_venture",
+          "rev": 1
+        },
+        "song": {
+          "rev": 1,
+          "song_id": "song_venture"
+        }
+      },
+      "id": "prj_venture",
+      "keeper_ids": [
+        "kp_venture"
+      ],
+      "kind": "project",
+      "lane_changes": [],
+      "melody_ids": [
+        "mel_venture",
+        "mel_venture_asm"
+      ],
+      "name": "Venture hook (fixture)",
+      "operator_lane": "llc",
+      "project_kind": "song",
+      "reference_ids": [],
+      "schemaVersion": "1.0.0",
+      "song_ids": [
+        "song_venture"
+      ],
+      "timeline_ids": []
+    }
+  ],
+  "remove": [],
+  "schemaVersion": "1.0.0"
+}

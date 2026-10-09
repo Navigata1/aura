@@ -1,0 +1,102 @@
+# Contracts (`contracts/`)
+
+The language-neutral source of truth (architecture.md §2, §5, §6.3; the JOVRA `spec/` pattern). The control service,
+the TypeScript client, the stdlib worker SDK and the eval harness share these contracts, not code. A rule change lands
+here first, as a schema, rule and fixture change, and only then in code. Contracts change only through contract tickets.
+
+```
+contracts/
+  product.json         the one rename constant and the public contact text (O-10, ADR-0035, ADR-0037)
+  schemas/             JSON Schema 2020-12; every record has kind + schemaVersion; no $id, relative $refs only
+  registry/            components.v1.json (generated), engine-profiles.v1.json, capabilities.v1.json, lanes.v1.json,
+                       compute-tiers.v1.json
+  reference/           studio_ref/: stdlib reference implementations; generate_fixtures.py (deterministic bytes)
+  fixtures/            registry/ (fake-* test overlays), world/, scenarios/, invalid/, vectors/
+scripts/spec/validate.py          the contract gate (stdlib only); non-zero exit on any failure
+scripts/spec/jsonschema_subset.py refuses every keyword it does not implement
+scripts/registry/sync.py          evidence-register.json + register_overlay.json -> components.v1.json
+```
+
+Run from the repo root (Python 3.11+, nothing to install):
+
+```
+python3 scripts/registry/sync.py                  # regenerate the component register
+python3 contracts/reference/generate_fixtures.py  # regenerate contracts/fixtures (same bytes every run)
+python3 scripts/spec/validate.py                  # the gate; -v for detail, --rules to list the reference rules
+```
+
+## What the gate proves
+
+1. Schemas use only implemented keywords and every `$ref` resolves; the checker's own self-tests show it rejects
+   known-bad values keyword by keyword.
+2. Every file validates against the schema its `kind` names; no file holds a float (integers only, ADR-0028).
+3. `components.v1.json` and every fixture regenerate byte-identically.
+4. The **world** (two projects, individual and llc, from capture to export, with the shipped registries and the fake
+   overlays) breaks none of the 59 cross-file reference rules, and the hand-derived lane and closure assertions hold.
+5. Every **scenario** (world + overlay) triggers exactly the rules it names, and every rule is triggered by at least one
+   scenario, so none is vacuous. Lane cases include a YuE2 artifact forced into an llc project (`lane.store_write`),
+   a YuE2 job submitted in llc (`lane.admission`), a lane change refused, analysis edges that must not propagate,
+   an llc quote that must never exist, a RoFormer separation in llc before its training-data review, an unverified
+   license claiming llc, a melody drafted by an individual-only transcriber read by an llc job (`lane.record_eligible`),
+   a DAW bounce whose lanes are declared rather than inherited, a Suno file declared as a DAW bounce, a smoke pass
+   without Jon's verdict, and a keeper after a tie (valid) or after 'neither' (refused).
+6. Every **invalid record** is rejected by its schema at the named location (status stored on a profile, MEASURED-LOCAL
+   in `claims_published`, a positive audition gain, a Suno reference, a percentage in a step, an import nobody
+   attested, a risk acceptance that would make a Suno import an audition arm, a YuE2 license acceptance without its
+   GitHub permission document, and so on).
+7. **Vectors**: tick<->frame (960 PPQ, integer tempo, one half-up rounding), the status fold, `recommend()`, ledger
+   arithmetic and audition gains and commitments match hand-derived values exactly.
+8. `docs/evidence/` (a hash-checked export of the store: evidence plus the verdicts and preregistrations it cites)
+   validates by kind and breaks no reference rule, so a hand-committed passing record cannot become a status; then the
+   computed status of the shipped registry from it (none yet: every profile and capability is `declared`), plus the
+   Rule-07 lint (no bare address in Markdown prose) and the product-name lint.
+
+Fixtures are JSON only. Every audio hash in them is a synthetic label; nothing was rendered, measured or listened to.
+The world runs on FakeEngine stand-ins (`fake-*`, `test_only`, `synthetic_test: true`); real-engine records appear only
+inside scenarios, and vector inputs are hypothetical inputs to pure functions. None of it is evidence.
+
+## Decisions taken where the documents left room
+
+1. **Status is computed, never stored** (ADR-0001, ADR-0027, GLOSSARY "Profile status"): profiles carry no status
+   field, and the schema rejects one. "Published" figures live in `claims_published`. With no evidence recorded,
+   every seed profile computes to `declared`; nothing is smoke-passed.
+2. **Status fold**: a failing record while still `declared` changes nothing; a failing install, conformance, smoke or
+   benchmark record once at `installed` or above gives `disabled`, which is terminal for that revision and host class.
+   A smoke record promotes only when its `checks` list every check the gate declares, each passing, with
+   `owner_not_garbled` answered by a verdict id (the rule `evidence.gates` checks that the verdict is an owner-ui act on
+   that revision's own candidates). A pin change is a new revision at `declared`.
+3. **recommend()**: every NVIDIA tier needs compute capability >= 8.0 (BF16); with several reachable hosts the best tier
+   wins (a Mac studio host can drive a tailnet CUDA worker); "WSL2 memory under 24 GB" is read as 24 GiB.
+4. **Ceiling** rounds up to the cent. **Month-to-date** counts settle amounts, open reserves, fixed lines and
+   reconciliation adjustments; a settle or release closes its reserve; overrun entries mark an excess already inside the
+   settle amount and add nothing; an overrun or a reconciliation adjustment blocks new leases until acknowledged.
+5. **Commitment** = `sha256(canonical_json(mapping sorted by label) + "|" + nonce)`.
+6. **Lanes**: in the register, every component allowed in `individual` is also allowed in `research`; SwiftF0 is
+   narrowed to individual and research (ADR-0011 rule 6), and the 2026-10-09 design review narrowed Kim
+   Mel-Band-RoFormer and Basic Pitch the same way (`unverified_training_data`, forbidden in llc), widened the
+   non-commercial scorers to individual and research (O-06), and made every row with an UNVERIFIED license
+   research-only (individual and llc now forbid `unverified`). An `analyzed_by` edge is recorded on the analysis
+   artifact, pointing at the audio it read. An import's lanes are bounded by its attested terms, and a transcribed
+   MelodySpec carries its transcriber's lanes.
+7. **Lyric languages**: ACE profiles declare `en` only until a smoke run per language (Q6 default); HeartMuLa and
+   MiniMax leave languages undeclared, so vocal requests are refused until their smoke runs.
+8. **Register text** copied from the research register uses neutral wording for the product name (ADR-0035), and nine
+   supplement rows cover v1-path components the research register lacks (own code, NeutralVoice, and stack libraries
+   recorded as license-UNVERIFIED, not assumed).
+
+9. **Design review, 2026-10-09** (architecture.md, "Design review log"): `audition-session/1` became `audition/1`
+   (verdicts and reveals carry `audition_id`; an audition may draw on several requests); every import is an owner act
+   (`attest_import`) whose uses follow its source; a risk acceptance can add only engine, conditioning, separation, edit
+   or conversion input; `license-acceptance/1` records every weights acceptance (YuE2 needs both license documents);
+   weights come from a Hugging Face revision, a pinned URL or a file in a pinned package; export manifests carry
+   `release_blockers` and `release_clear`; compute tiers use the glossary's placement terms; capabilities define how
+   each check is measured, live MIDI is proven by an event-list hash and a played reference phrase, and
+   `adherence.real-separator.darwin` gates adherence on real candidates; quotes never carry a lane refusal.
+
+## Not covered yet (needs vectors before code relies on it)
+
+SongForm assembly, MelodySpec -> YuE2 ABC emission, the MIDI round trip, `render_mode` stitching, route standing and
+the plan-rules order, the remaining job kinds and tasks (isolate, dsp-finish, dsp-edit, offline-render, preservation,
+per, align, diagnostics, stem-to-midi, a reserved tts), `price-snapshots/`, frozen `legacy/`
+fixtures (they freeze at the first release), the TypeScript twin of the tempo vectors and the Pydantic/TS codegen
+drift check.

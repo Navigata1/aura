@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "evidence/1",
+  "description": "The stored result of a check that could have failed (GLOSSARY: Evidence record, Synthetic evidence; ADR-0027). The only way a status changes or a gate passes. Measurements are MEASURED-LOCAL; attachments are hashed (never audio). Benchmark, hum-benchmark and preregistered listening records need a preregistration hash and may never be synthetic. Listening records cite owner verdicts. checks holds the per-check results of the run: a smoke record passes its gate only when every check the gate declares is present and passing for this revision and host class, and an owner_not_garbled check carries the owner-ui verdict that answered it (status fold, evidence.gates). The store is the system of record; files under docs/evidence are a hash-checked export of it.",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "id", "check", "subject", "profile_revision", "host_class", "gate_id", "result",
+               "measured", "checks", "synthetic", "attachments", "prereg_sha256", "verdict_ids", "recorded_at"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "evidence"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "id": {"$ref": "common.schema.json#/$defs/id"},
+    "check": {"enum": ["install", "conformance", "smoke", "benchmark", "listening-unregistered", "listening-preregistered", "playback",
+                       "throughput", "hum-benchmark", "host-inventory", "ledger-reconcile"]},
+    "subject": {
+      "type": "object",
+      "required": ["subject_type", "subject_id"],
+      "additionalProperties": false,
+      "properties": {
+        "subject_type": {"enum": ["profile", "capability", "store", "host", "route", "ledger"]},
+        "subject_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$"}
+      }
+    },
+    "profile_revision": {"oneOf": [{"$ref": "common.schema.json#/$defs/sha256"}, {"type": "null"}]},
+    "host_class": {"oneOf": [{"$ref": "common.schema.json#/$defs/hostClass"}, {"type": "null"}]},
+    "gate_id": {"oneOf": [{"type": "string", "pattern": "^(smoke|benchmark)\\.[a-z0-9.-]+$"}, {"type": "null"}]},
+    "result": {"enum": ["pass", "fail", "inconclusive"]},
+    "measured": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/measuredValue"}},
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["check", "result", "verdict_id", "measured"],
+        "additionalProperties": false,
+        "properties": {
+          "check": {"$ref": "engine-profile.schema.json#/$defs/gateCheck"},
+          "result": {"enum": ["pass", "fail", "inconclusive"]},
+          "verdict_id": {"oneOf": [{"$ref": "common.schema.json#/$defs/id"}, {"type": "null"}]},
+          "measured": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/measuredValue"}}
+        },
+        "if": {"properties": {"check": {"enum": ["owner_not_garbled", "preregistered_listening"]}}},
+        "then": {"properties": {"verdict_id": {"$ref": "common.schema.json#/$defs/id"}}}
+      }
+    },
+    "synthetic": {"type": "boolean"},
+    "attachments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "sha256"],
+        "additionalProperties": false,
+        "properties": {"name": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{0,80}$"}, "sha256": {"$ref": "common.schema.json#/$defs/sha256"}}
+      }
+    },
+    "prereg_sha256": {"oneOf": [{"$ref": "common.schema.json#/$defs/sha256"}, {"type": "null"}]},
+    "verdict_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "common.schema.json#/$defs/id"}},
+    "recorded_at": {"$ref": "common.schema.json#/$defs/dateTime"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"check": {"enum": ["benchmark", "hum-benchmark", "listening-preregistered"]}}},
+      "then": {"properties": {"prereg_sha256": {"type": "string"}, "synthetic": {"const": false}}}
+    },
+    {
+      "if": {"properties": {"check": {"enum": ["listening-unregistered", "listening-preregistered"]}}},
+      "then": {"properties": {"verdict_ids": {"minItems": 1}}}
+    },
+    {
+      "if": {"properties": {"subject": {"properties": {"subject_type": {"enum": ["profile", "capability"]}}}}},
+      "then": {"properties": {"host_class": {"type": "string"}}}
+    },
+    {
+      "if": {"properties": {"subject": {"properties": {"subject_type": {"const": "profile"}}}}},
+      "then": {"properties": {"profile_revision": {"type": "string"}}}
+    }
+  ]
+}

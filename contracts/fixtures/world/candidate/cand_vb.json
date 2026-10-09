@@ -1,0 +1,89 @@
+{
+  "adherence": {
+    "reason": "no_eligible_separator",
+    "state": "unmeasured"
+  },
+  "artifact_sha256": "f7af17cbfb64026585e4f1049aa82da4ec1b5562d34f15f1b880834e8a5b64cb",
+  "badges": [
+    "Synthetic test output",
+    "adherence unmeasured (no LLC separator yet)",
+    "lyric errors unmeasured",
+    "unbenchmarked route"
+  ],
+  "created_at": "2026-10-09T11:04:50Z",
+  "diagnostics": [],
+  "hard_constraints": [
+    {
+      "check": "decodes",
+      "result": "pass"
+    },
+    {
+      "check": "non_silent",
+      "result": "pass"
+    },
+    {
+      "check": "duration_fit",
+      "result": "pass"
+    },
+    {
+      "check": "no_clipping",
+      "result": "pass"
+    },
+    {
+      "check": "no_true_peak_over",
+      "result": "pass"
+    },
+    {
+      "check": "melody_adherence",
+      "result": "unmeasured"
+    },
+    {
+      "check": "lyric_per",
+      "result": "unmeasured"
+    }
+  ],
+  "id": "cand_vb",
+  "job_id": "job_vb",
+  "kind": "candidate",
+  "measures": {
+    "analysis_sha256": "e7bf134c89dd4bad03f6082130b74267e24e4d089adaec8d8c2b710dfd4cc8d9",
+    "duration_ms": 30000,
+    "integrated_lufs": "-13.80",
+    "label": "MEASURED-LOCAL",
+    "loudness_standard": "BS.1770-4 (pyloudnorm)",
+    "true_peak_dbtp": "-1.30",
+    "true_peak_meter": "studio-truepeak-4x"
+  },
+  "ordinal": 2,
+  "placement": {
+    "host_class": "fake/local",
+    "kind": "local"
+  },
+  "preview_sha256": "49dc0401afa40ab995c2d1c0a905a9587eb775ab9b36ad0819137d896db94eac",
+  "profile_id": "fake-route-b",
+  "profile_revision": "89622a813cfe4f1ce6842dcc59c7d49f44dffd58a3fcf7added6d94c0c867eca",
+  "project_id": "prj_venture",
+  "route": "R2-synth",
+  "schemaVersion": "1.0.0",
+  "seed": 22,
+  "source": {
+    "generation_request_id": "gr_venture"
+  },
+  "synthetic_test": true,
+  "withheld_during_blind": [
+    "route",
+    "profile_id",
+    "profile_revision",
+    "seed",
+    "placement",
+    "job_id",
+    "artifact_sha256",
+    "preview_sha256",
+    "measures",
+    "adherence",
+    "hard_constraints",
+    "badges",
+    "diagnostics",
+    "source"
+  ]
+}

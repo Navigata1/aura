@@ -1,0 +1,19 @@
+{
+  "audition_id": "aud_hymn",
+  "id": "rv_hymn",
+  "kind": "reveal",
+  "mapping": [
+    {
+      "candidate_id": "cand_b",
+      "label": "A"
+    },
+    {
+      "candidate_id": "cand_a",
+      "label": "B"
+    }
+  ],
+  "nonce": "b6da24c65259ab7937b713b7b90c9ff5ecfaa7cb82dd418686ca39dba24c7576",
+  "revealed_at": "2026-10-09T10:40:05Z",
+  "schemaVersion": "1.0.0",
+  "verdict_id": "vd_hymn"
+}
