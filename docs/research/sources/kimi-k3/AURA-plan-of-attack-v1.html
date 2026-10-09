@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AURA — Personal Suno-6-Class Music Studio · Plan of Attack</title>
+<style>
+:root{
+  --bg:#0b0b10;
+  --panel:#0e0e13;
+  --panel-2:#12121a;
+  --border:rgba(255,255,255,.08);
+  --border-soft:rgba(255,255,255,.05);
+  --text:#e9e6e1;
+  --muted:#9a99a4;
+  --dim:#6d6c78;
+  --amber:#f59e0b;
+  --orange:#f97316;
+  --green:#34d399;
+  --red:#f87171;
+  --neutral-blue:#7dd3fc;
+  --mono:ui-monospace,"SF Mono","Cascadia Mono",Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:radial-gradient(rgba(255,255,255,.028) 1px,transparent 1px);
+  background-size:3px 3px;
+  opacity:.55;
+}
+::selection{background:rgba(245,158,11,.28);color:#fff}
+a{color:var(--amber);text-decoration:none}
+a:hover{color:var(--orange)}
+.wrap{max-width:1200px;margin:0 auto;padding:0 28px;position:relative;z-index:1}
+
+/* ---------- progress bar + nav ---------- */
+#progress{position:fixed;top:0;left:0;height:2px;width:0%;z-index:60;
+  background:linear-gradient(90deg,var(--amber),var(--orange));
+  box-shadow:0 0 12px rgba(245,158,11,.5);}
+nav{position:sticky;top:0;z-index:50;background:rgba(11,11,16,.82);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border-soft);}
+.nav-inner{max-width:1200px;margin:0 auto;padding:12px 28px;display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+.brand{font-family:var(--mono);font-size:13px;letter-spacing:.22em;color:var(--amber);font-weight:600;white-space:nowrap}
+.brand span{color:var(--dim);letter-spacing:.1em}
+.nav-links{display:flex;gap:4px;flex-wrap:wrap}
+.nav-links a{font-family:var(--mono);font-size:11px;color:var(--muted);padding:5px 9px;border-radius:6px;letter-spacing:.04em;transition:color .2s,background .2s}
+.nav-links a:hover{color:var(--amber);background:rgba(245,158,11,.08)}
+.nav-links a.active{color:var(--amber);background:rgba(245,158,11,.1)}
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;overflow:hidden}
+#wave{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.hero-fade{position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse 70% 55% at 50% 48%,rgba(11,11,16,.15),rgba(11,11,16,.88) 78%)}
+.hero-content{position:relative;z-index:2;padding:0 24px}
+.hero-eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.35em;color:var(--amber);text-transform:uppercase;margin-bottom:22px}
+.hero h1{font-size:clamp(44px,8.5vw,104px);font-weight:800;letter-spacing:.04em;line-height:1.02;
+  background:linear-gradient(120deg,#fff 20%,#fbbf24 55%,var(--orange) 90%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  text-shadow:0 0 80px rgba(245,158,11,.15);}
+.hero-sub{margin-top:22px;font-size:clamp(15px,2.2vw,21px);color:var(--muted);font-weight:400;max-width:720px;margin-left:auto;margin-right:auto}
+.hero-sub b{color:var(--text);font-weight:600}
+.hero-meta{margin-top:34px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.hero-chip{font-family:var(--mono);font-size:11.5px;color:var(--muted);border:1px solid var(--border);border-radius:999px;padding:7px 15px;background:rgba(14,14,19,.7);letter-spacing:.06em}
+.hero-chip em{font-style:normal;color:var(--amber)}
+.scroll-cue{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:10px;color:var(--dim);font-family:var(--mono);font-size:10.5px;letter-spacing:.3em}
+.scroll-cue .line{width:1px;height:44px;background:linear-gradient(180deg,var(--amber),transparent);animation:cue 2.2s ease-in-out infinite;transform-origin:top}
+@keyframes cue{0%{transform:scaleY(0)}45%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
+
+/* ---------- section scaffolding ---------- */
+section{padding:96px 0 72px;border-top:1px solid var(--border-soft)}
+.sec-num{font-family:var(--mono);font-size:13px;letter-spacing:.3em;color:var(--amber);margin-bottom:14px}
+.sec-num::before{content:"";display:inline-block;width:34px;height:1px;background:var(--amber);vertical-align:middle;margin-right:12px;opacity:.7}
+h2{font-size:clamp(30px,4.6vw,52px);font-weight:800;letter-spacing:-.01em;line-height:1.08;margin-bottom:14px}
+h2 .accent{background:linear-gradient(100deg,var(--amber),var(--orange));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.sec-lede{color:var(--muted);font-size:17px;max-width:820px;margin-bottom:44px}
+.sec-lede b{color:var(--text)}
+h3{font-size:20px;font-weight:700;margin:40px 0 18px;letter-spacing:-.005em}
+h3 .tag{font-family:var(--mono);font-size:11px;color:var(--amber);letter-spacing:.15em;vertical-align:middle;margin-right:10px;font-weight:500}
+
+/* reveal animation — content visible by default; hidden only when JS can reveal it */
+.reveal{transition:opacity .8s cubic-bezier(.22,.61,.36,1),transform .8s cubic-bezier(.22,.61,.36,1)}
+body.armed .reveal:not(.in){opacity:0;transform:translateY(26px)}
+
+/* ---------- cards / panels ---------- */
+.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:24px 26px;transition:transform .35s cubic-bezier(.22,.61,.36,1),border-color .35s,box-shadow .35s}
+.card:hover{transform:translateY(-4px);border-color:rgba(245,158,11,.28);box-shadow:0 14px 40px rgba(0,0,0,.45)}
+.grid{display:grid;gap:18px}
+.grid.c2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.grid.c3{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.grid.c4{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+
+/* ---------- stat row ---------- */
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:14px;margin:52px 0 8px}
+.stat{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:22px 18px;text-align:center;position:relative;overflow:hidden}
+.stat::after{content:"";position:absolute;top:0;left:20%;right:20%;height:1px;background:linear-gradient(90deg,transparent,rgba(245,158,11,.6),transparent)}
+.stat .val{font-family:var(--mono);font-size:clamp(24px,3vw,32px);font-weight:700;color:var(--amber);letter-spacing:-.02em;line-height:1.1}
+.stat .lbl{font-size:12px;color:var(--muted);margin-top:9px;line-height:1.45}
+.verdict-banner{margin-top:44px;background:linear-gradient(135deg,rgba(245,158,11,.08),rgba(249,115,22,.05));border:1px solid rgba(245,158,11,.25);border-radius:14px;padding:30px 32px}
+.verdict-banner p{font-size:17px;color:var(--text)}
+.verdict-banner p b{color:var(--amber)}
+
+/* ---------- tables ---------- */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:14px;background:var(--panel)}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:640px}
+th{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);text-align:left;padding:14px 18px;border-bottom:1px solid var(--border);background:var(--panel-2)}
+td{padding:15px 18px;border-bottom:1px solid var(--border-soft);vertical-align:top;color:var(--muted)}
+td:first-child{color:var(--text)}
+tr:last-child td{border-bottom:none}
+tbody tr{transition:background .2s}
+tbody tr:hover{background:rgba(245,158,11,.045)}
+tbody tr:nth-child(even){background:rgba(255,255,255,.015)}
+tbody tr:nth-child(even):hover{background:rgba(245,158,11,.045)}
+td .mono{font-family:var(--mono);font-size:12.5px;color:var(--text)}
+
+/* pills */
+.pill{display:inline-block;font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.08em;padding:4px 11px;border-radius:999px;white-space:nowrap;transition:transform .25s,box-shadow .25s}
+.pill:hover{transform:translateY(-2px)}
+.pill.ok{color:var(--green);background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3)}
+.pill.ok:hover{box-shadow:0 4px 16px rgba(52,211,153,.18)}
+.pill.warn{color:var(--amber);background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.32)}
+.pill.warn:hover{box-shadow:0 4px 16px rgba(245,158,11,.18)}
+.pill.bad{color:var(--red);background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.32)}
+.pill.bad:hover{box-shadow:0 4px 16px rgba(248,113,113,.18)}
+.pill.neutral{color:var(--neutral-blue);background:rgba(125,211,252,.07);border:1px solid rgba(125,211,252,.25)}
+.pill.gray{color:var(--muted);background:rgba(255,255,255,.05);border:1px solid var(--border)}
+
+/* ---------- S3 horizontal timeline ---------- */
+.h-timeline{position:relative;margin:56px 0 20px;padding:0 6px}
+.h-line{position:absolute;top:26px;left:2%;right:2%;height:2px;background:rgba(255,255,255,.08);border-radius:2px}
+.h-line .fill{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--amber),var(--orange));border-radius:2px;transition:width 2.4s cubic-bezier(.22,.61,.36,1)}
+.in .h-line .fill,.h-timeline.in .h-line .fill{width:100%}
+.h-nodes{display:flex;justify-content:space-between;position:relative}
+.h-node{width:16.5%;text-align:center;position:relative}
+.h-dot{width:14px;height:14px;border-radius:50%;border:2px solid var(--amber);background:var(--bg);margin:20px auto 14px;position:relative;transition:background .5s,box-shadow .5s;transition-delay:var(--d,0s)}
+.h-timeline.in .h-dot{background:var(--amber);box-shadow:0 0 14px rgba(245,158,11,.55)}
+.h-node .yr{font-family:var(--mono);font-size:12px;color:var(--amber);letter-spacing:.08em}
+.h-node .nm{font-weight:700;font-size:14px;margin:3px 0 5px}
+.h-node .ds{font-size:12px;color:var(--muted);line-height:1.5;padding:0 4px}
+.h-node.hot .h-dot{border-color:var(--orange)}
+.h-timeline.in .h-node.hot .h-dot{background:var(--orange);box-shadow:0 0 18px rgba(249,115,22,.7)}
+
+/* ---------- S4 pipeline ---------- */
+.pipe{position:relative;display:flex;gap:0;align-items:stretch;margin:48px 0 12px;flex-wrap:nowrap;overflow-x:auto;padding-bottom:8px}
+.pipe-stage{flex:1;min-width:190px;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px 18px;position:relative;z-index:2;margin-right:44px}
+.pipe-stage:last-child{margin-right:0}
+.pipe-stage .num{font-family:var(--mono);font-size:11px;color:var(--orange);letter-spacing:.2em;margin-bottom:8px}
+.pipe-stage h4{font-size:15px;margin-bottom:7px}
+.pipe-stage p{font-size:12.5px;color:var(--muted);line-height:1.55}
+.pipe-arrow{position:absolute;right:-38px;top:50%;transform:translateY(-50%);color:var(--dim);font-size:18px;z-index:2}
+.pipe-track{position:absolute;top:50%;left:2%;right:2%;height:2px;background:rgba(245,158,11,.15);z-index:1}
+.pipe-dot{position:absolute;top:50%;left:0;width:10px;height:10px;margin-top:-5px;border-radius:50%;background:var(--amber);box-shadow:0 0 12px var(--amber),0 0 28px rgba(245,158,11,.5);z-index:3;animation:flow 6s linear infinite}
+@keyframes flow{0%{left:0%;opacity:0}6%{opacity:1}94%{opacity:1}100%{left:calc(100% - 10px);opacity:0}}
+.levers{margin-top:36px}
+.lever{display:flex;gap:16px;padding:16px 4px;border-bottom:1px solid var(--border-soft);align-items:baseline}
+.lever:last-child{border-bottom:none}
+.lever .n{font-family:var(--mono);color:var(--orange);font-size:14px;min-width:26px}
+.lever p{font-size:14.5px;color:var(--muted)}
+.lever p b{color:var(--text)}
+
+/* ---------- feature map ---------- */
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-top:20px}
+.feat{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:15px 17px;font-size:13px}
+.feat .f{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--dim);text-transform:uppercase;display:block;margin-bottom:6px}
+.feat b{color:var(--amber);font-weight:600}
+
+/* ---------- S6 competitors ---------- */
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:30px}
+.chip{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--muted);background:var(--panel);border:1px solid var(--border);border-radius:999px;padding:8px 18px;cursor:pointer;transition:all .25s}
+.chip:hover{color:var(--text);border-color:rgba(245,158,11,.35)}
+.chip.on{color:#0b0b10;background:linear-gradient(100deg,var(--amber),var(--orange));border-color:transparent;font-weight:600}
+.comp-card{display:flex;flex-direction:column}
+.comp-card.hidden{display:none}
+.comp-card h4{font-size:18px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.comp-card .cat{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;color:var(--dim);border:1px solid var(--border);padding:2px 9px;border-radius:999px;text-transform:uppercase}
+.comp-card ul{list-style:none;margin:14px 0 0;font-size:13.5px}
+.comp-card ul li{padding:4px 0 4px 22px;position:relative;color:var(--muted)}
+.comp-card ul.pro li::before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:700}
+.comp-card ul.con li::before{content:"✗";position:absolute;left:0;color:var(--red);font-weight:700}
+.comp-card .diff{margin-top:auto;padding-top:16px;font-size:12.5px;border-top:1px dashed var(--border);color:var(--dim)}
+.comp-card .diff b{color:var(--amber);font-weight:600;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:4px}
+.strikes{display:grid;grid-template-columns:repeat(auto-fill,minmax(265px,1fr));gap:14px;margin-top:24px}
+.strike{background:var(--panel);border:1px solid var(--border);border-left:3px solid var(--orange);border-radius:10px;padding:18px 20px;transition:transform .3s,border-color .3s}
+.strike:hover{transform:translateX(5px);border-left-color:var(--amber)}
+.strike .sn{font-family:var(--mono);font-size:20px;color:var(--orange);font-weight:700}
+.strike h5{font-size:14.5px;margin:6px 0 6px}
+.strike p{font-size:12.5px;color:var(--muted);line-height:1.55}
+.win-banner{margin-top:46px;background:linear-gradient(120deg,rgba(245,158,11,.12),rgba(249,115,22,.06));border:1px solid rgba(245,158,11,.4);border-radius:16px;padding:34px 36px;text-align:center;position:relative;overflow:hidden}
+.win-banner::before{content:"";position:absolute;top:-60%;left:20%;right:20%;height:120%;background:radial-gradient(ellipse,rgba(245,158,11,.12),transparent 70%);pointer-events:none}
+.win-banner .tag{font-family:var(--mono);font-size:11px;letter-spacing:.3em;color:var(--amber);text-transform:uppercase}
+.win-banner .formula{margin-top:14px;font-size:clamp(15px,2.4vw,20px);font-weight:600;line-height:1.7}
+.win-banner .formula .plus{color:var(--orange);font-family:var(--mono);padding:0 6px}
+.win-banner .sub{margin-top:12px;color:var(--muted);font-size:13.5px;font-family:var(--mono)}
+
+/* ---------- S7 ladder ---------- */
+.ladder{margin-top:40px;display:flex;flex-direction:column;gap:16px}
+.rung{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:24px 28px;position:relative;transition:transform .35s,border-color .35s}
+.rung:hover{transform:translateX(6px)}
+.rung .rn{font-family:var(--mono);font-size:11px;letter-spacing:.24em;color:var(--amber);text-transform:uppercase;margin-bottom:6px}
+.rung h4{font-size:18px;margin-bottom:6px}
+.rung h4 .when{font-family:var(--mono);font-size:11.5px;color:var(--dim);font-weight:400;letter-spacing:.08em;margin-left:10px}
+.rung p{font-size:14px;color:var(--muted);max-width:840px}
+.rung p b{color:var(--text)}
+.rung .cost{display:inline-block;margin-top:12px;font-family:var(--mono);font-size:12px;color:var(--green);border:1px solid rgba(52,211,153,.28);background:rgba(52,211,153,.07);border-radius:7px;padding:4px 12px}
+.rung.r1{border-color:rgba(245,158,11,.5);background:linear-gradient(135deg,rgba(245,158,11,.09),var(--panel) 55%);margin-left:clamp(0px,4vw,56px)}
+.rung.r2{margin-left:clamp(0px,8vw,112px)}
+.rung.r3{margin-left:clamp(0px,12vw,168px)}
+.rung.r4{margin-left:clamp(0px,16vw,224px)}
+.rung .star{position:absolute;top:-13px;right:22px;background:linear-gradient(100deg,var(--amber),var(--orange));color:#0b0b10;font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.14em;padding:5px 14px;border-radius:999px}
+.rung.rx{border-color:rgba(248,113,113,.45);background:linear-gradient(135deg,rgba(248,113,113,.07),var(--panel) 55%);margin-left:clamp(0px,20vw,280px)}
+.rung.rx .rn{color:var(--red)}
+.rung.rx .cost{color:var(--red);border-color:rgba(248,113,113,.3);background:rgba(248,113,113,.07)}
+.doctrine{margin-top:34px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.doctrine .card p{font-size:13.5px;color:var(--muted)}
+.doctrine .card p b{color:var(--text)}
+.doctrine h4{font-size:14px;font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin-bottom:10px}
+
+/* ---------- S8 terminal ---------- */
+.terminal{background:#0a0a0f;border:1px solid var(--border);border-radius:14px;overflow:hidden;margin:36px 0}
+.term-bar{display:flex;align-items:center;gap:8px;padding:12px 18px;background:var(--panel-2);border-bottom:1px solid var(--border)}
+.term-bar .dot{width:11px;height:11px;border-radius:50%}
+.term-bar .dot:nth-child(1){background:#f87171}
+.term-bar .dot:nth-child(2){background:#fbbf24}
+.term-bar .dot:nth-child(3){background:#34d399}
+.term-bar .ttl{font-family:var(--mono);font-size:11px;color:var(--dim);margin-left:10px;letter-spacing:.1em}
+.terminal pre{padding:24px;overflow-x:auto;font-family:var(--mono);font-size:12.8px;line-height:1.75;color:#c9c6bf}
+.terminal pre .am{color:var(--amber)}
+.tier h4{font-size:16px}
+.tier .t-num{font-family:var(--mono);font-size:11px;color:var(--orange);letter-spacing:.2em;display:block;margin-bottom:8px}
+.tier p{font-size:13.5px;color:var(--muted);margin-top:8px}
+.tier .price{margin-top:14px;font-family:var(--mono);font-size:15px;color:var(--green);font-weight:600}
+.callout{border-left:3px solid var(--amber);background:rgba(245,158,11,.05);border-radius:0 10px 10px 0;padding:16px 22px;margin-top:16px;font-size:14px;color:var(--muted)}
+.callout b{color:var(--text)}
+.callout.red{border-color:var(--red);background:rgba(248,113,113,.05)}
+
+/* ---------- S9 vertical timeline ---------- */
+.v-timeline{position:relative;margin:36px 0 0;padding-left:44px}
+.v-timeline::before{content:"";position:absolute;left:14px;top:8px;bottom:8px;width:2px;background:rgba(255,255,255,.07)}
+.v-fill{position:absolute;left:14px;top:8px;width:2px;height:0;background:linear-gradient(180deg,var(--amber),var(--orange));transition:height 2.6s cubic-bezier(.22,.61,.36,1)}
+.v-timeline.in .v-fill{height:calc(100% - 16px)}
+.phase{position:relative;padding:0 0 38px}
+.phase:last-child{padding-bottom:0}
+.phase::before{content:"";position:absolute;left:-36px;top:6px;width:13px;height:13px;border-radius:50%;border:2px solid var(--amber);background:var(--bg);transition:background .4s .3s,box-shadow .4s .3s}
+.v-timeline.in .phase::before{background:var(--amber);box-shadow:0 0 12px rgba(245,158,11,.5)}
+.phase .ph{font-family:var(--mono);font-size:11px;letter-spacing:.24em;color:var(--amber);text-transform:uppercase}
+.phase h4{font-size:19px;margin:5px 0 7px}
+.phase h4 .when{font-family:var(--mono);font-size:12px;color:var(--dim);font-weight:400;margin-left:10px}
+.phase p{font-size:14px;color:var(--muted);max-width:820px}
+.exit-chip{display:inline-block;font-family:var(--mono);font-size:11px;color:var(--green);background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.25);border-radius:7px;padding:4px 11px;margin:10px 8px 0 0}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--border-soft);padding:60px 0 50px;text-align:center}
+footer .f-line{font-family:var(--mono);font-size:12px;color:var(--dim);letter-spacing:.06em;line-height:2}
+footer .f-line em{font-style:normal;color:var(--amber)}
+footer .f-mark{font-size:26px;font-weight:800;letter-spacing:.3em;margin-bottom:16px;background:linear-gradient(100deg,var(--amber),var(--orange));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+
+@media (max-width:820px){
+  .pipe{flex-direction:column}
+  .pipe-stage{margin-right:0;margin-bottom:34px;min-width:0}
+  .pipe-arrow{right:auto;left:50%;top:auto;bottom:-30px;transform:translateX(-50%) rotate(90deg)}
+  .pipe-track,.pipe-dot{display:none}
+  .h-nodes{flex-wrap:wrap}
+  .h-node{width:33%;margin-bottom:20px}
+  .h-line{display:none}
+  .rung.r1,.rung.r2,.rung.r3,.rung.r4,.rung.rx{margin-left:0}
+  .nav-links{display:none}
+  section{padding:64px 0 52px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important}
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+<noscript><style>.reveal{opacity:1 !important;transform:none !important}.tl-line::after,.rm-line::after{width:100% !important}</style></noscript>
+</head>
+<body>
+<div id="progress"></div>
+<nav>
+  <div class="nav-inner">
+    <div class="brand">AURA <span>/ PLAN OF ATTACK</span></div>
+    <div class="nav-links">
+      <a href="#s0">00 Verdict</a>
+      <a href="#s1">01 Fable</a>
+      <a href="#s2">02 Target</a>
+      <a href="#s3">03 Anatomy</a>
+      <a href="#s4">04 Engine</a>
+      <a href="#s5">05 Arsenal</a>
+      <a href="#s6">06 Battlefield</a>
+      <a href="#s7">07 Playbook</a>
+      <a href="#s8">08 Architecture</a>
+      <a href="#s9">09 Roadmap</a>
+      <a href="#s10">10 Risk</a>
+      <a href="#s11">11 Method</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <canvas id="wave"></canvas>
+  <div class="hero-fade"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Research Dossier · Final Report</div>
+    <h1>AURA</h1>
+    <p class="hero-sub"><b>AUdio Rendering Atelier</b> — a personal Suno-6-class music studio. Plan of attack for building it locally, on open weights, with export freedom nobody sells.</p>
+    <div class="hero-meta">
+      <span class="hero-chip">DATE <em>2026-10-08</em></span>
+      <span class="hero-chip">BASIS <em>6-agent research swarm</em></span>
+      <span class="hero-chip">EVIDENCE <em>~150 searches · 150 frames analyzed</em></span>
+    </div>
+  </div>
+  <div class="scroll-cue"><span>SCROLL</span><span class="line"></span></div>
+</header>
+
+<!-- ============ S0 ============ -->
+<section id="s0">
+  <div class="wrap">
+    <div class="sec-num reveal">SECTION 00</div>
+    <h2 class="reveal">Executive verdict — <span class="accent">buildable, and the timing is uniquely good.</span></h2>
+    <p class="sec-lede reveal">Open weights (ACE-Step 1.5, MIT, Feb 2026) now hit the Suno v4.5–v5 band. Suno's own v5.5 innovation was <b>personalization</b> — which is cheap to replicate. And the entire industry is wounded on exports and pricing: <b>a local app wins by default.</b></p>
+
+    <div class="grid c2">
+      <div class="card reveal">
+        <h3 style="margin-top:0"><span class="tag">SPLIT</span>UI = 20%, engine = 80%</h3>
+        <p style="color:var(--muted);font-size:14.5px">Fable was right about the split — but the 80% is now <b style="color:var(--text)">rentable</b>. A 2-variant song costs roughly $0.01–0.03 on a serverless RTX 4090, and drafting runs natively on Apple Silicon (~25s/song on an M3 Pro via the MLX fork).</p>
+      </div>
+      <div class="card reveal">
+        <h3 style="margin-top:0"><span class="tag">CEILING</span>The honest ceiling</h3>
+        <p style="color:var(--muted);font-size:14.5px">Open-domain Suno v6 parity is <b style="color:var(--text)">not achievable solo</b>. But <b style="color:var(--text)">v5-parity on your genres + v5.5 feature-parity + export freedom nobody sells</b> = a Suno-6-class personal experience in 6–12 months.</p>
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat reveal"><div class="val"><span class="count" data-target="0.03" data-decimals="2" data-prefix="$">0</span></div><div class="lbl">per 2-variant song, serverless 4090 (from $0.01)</div></div>
+      <div class="stat reveal"><div class="val"><span class="count" data-target="150">0</span></div><div class="lbl">frames analyzed from the Suno tutorial</div></div>
+      <div class="stat reveal"><div class="val">~<span class="count" data-target="150">0</span></div><div class="lbl">sources searched across the swarm</div></div>
+      <div class="stat reveal"><div class="val"><span class="count" data-target="6">0</span></div><div class="lbl">research agents, cross-verified</div></div>
+      <div class="stat reveal"><div class="val"><span class="count" data-target="76" data-prefix="$" data-suffix="K">0</span></div><div class="lbl">scratch-training cost floor ($55–76K) — ruled out</div></div>
+      <div class="stat reveal"><div class="val"><span class="count" data-target="25" data-suffix="s">0</span></div><div class="lbl">per draft song on an M3 Pro 36GB (MLX)</div></div>
+    </div>
+
+    <div class="verdict-banner reveal">
+      <p><b>Single highest-leverage move:</b> inference-time best-of-n reranking — generate 8–16 candidates, auto-score them, show the best 2. It closes ⅓–½ the perceptual gap with <b>zero training</b>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ S1 ============ -->
+<section id="s1">
+  <div class="wrap">
+    <div class="sec-num reveal">SECTION 01</div>
+    <h2 class="reveal">Fable's analysis — <span class="accent">verified &amp; corrected.</span></h2>
+    <p class="sec-lede reveal">Our own due diligence on every material claim in the Fable 5.1 video analysis. Most of it held up — including verbatim confirmation against arXiv 2602.00744. Two model names did not exist at all.</p>
+    <div class="tbl-wrap reveal">
+      <table>
+        <thead><tr><th style="width:34%">Fable claim</th><th style="width:16%">Verdict</th><th>Correction / nuance</th></tr></thead>
+        <tbody>
+          <tr><td>Feature inventory from frames (Simple / Advanced / Voices / Cover / Studio / Stems / Hum / Export / Pricing)</td><td><span class="pill ok">CONFIRMED</span></td><td>Matches our independent frame review; add the "Sounds" tab, Hooks, Labs, and the onboarding quest Fable caught.</td></tr>
+          <tr><td>UI is the easy 20%</td><td><span class="pill ok">CONFIRMED</span></td><td>All controls visible in frames; wavesurfer-multitrack + React covers it.</td></tr>
+          <tr><td>ACE-Step 1.5: Feb 2026, &lt;10s/song on 3090, &lt;4GB VRAM, 10-min, cover / repaint / stems / timbre-clone</td><td><span class="pill ok">CONFIRMED</span></td><td>Verbatim from arXiv 2602.00744. <span style="color:var(--amber)">Bonus: it's MIT-licensed</span> (Fable didn't note); XL 4B variant exists (12–20GB).</td></tr>
+          <tr><td>ACE-Step 39.1/26.3 vs Suno v5 46.8/34.2</td><td><span class="pill warn">CONFIRMED · CAVEAT</span></td><td>Computed by ACE-Step's <i>own</i> reward models. Third-party WildSongBench: 6.01 vs 6.87 — same gap, more honest.</td></tr>
+          <tr><td>YuE 7B Apache-2.0, 16GB VRAM, ~5min / 3-min song</td><td><span class="pill warn">PARTLY WRONG</span></td><td>Official: 24–80GB VRAM; ~15min (H800) to ~36min (4090) per 3-min. YuE is the slow quality batch path, not interactive.</td></tr>
+          <tr><td>Apple Silicon risk — "test before building UI"</td><td><span class="pill ok">RESOLVED</span></td><td>The clockworksquirrel fork runs ACE-Step natively on MPS+MLX: ~25s/song on an M3 Pro 36GB.</td></tr>
+          <tr><td>Stack: Next.js → FastAPI → ACE-Step + Demucs + LLM + SQLite</td><td><span class="pill ok">CONFIRMED</span></td><td>Right shape. Add: SSE progress (HeartMuLa Studio pattern), demucs-mlx on Mac (73× realtime), Tauri shell later.</td></tr>
+          <tr><td>"Melodyssey", "Stable Audio Open 2.0"</td><td><span class="pill bad">HALLUCINATED</span></td><td>No such models. Actual: Stable Audio 3 open Small/Medium (May 2026).</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+<!-- ============ S2 ============ -->
+<section id="s2">
+  <div class="wrap">
+    <div class="sec-num reveal">SECTION 02</div>
+    <h2 class="reveal">The target spec — <span class="accent">Suno 2026, grounded in 150 frames.</span></h2>
+    <p class="sec-lede reveal">Every feature below is tied to sampled frames from Simon Crowe's Suno tutorial, followed by what our clone needs to match it.</p>
+    <div class="grid c2">
+      <div class="card reveal"><h3 style="margin-top:0"><span class="tag">#013–018</span>Simple mode</h3><p style="font-size:14px;color:var(--muted)">1 prompt + dice randomizer → 4 variants (2× v4.5, 2× v5.5). <b style="color:var(--text)">Ours:</b> prompt → LLM lyric + style expansion → n-ranked 2 best variants.</p></div>
+      <div class="card reveal"><h3 style="margin-top:0"><span class="tag">#017 · #046</span>Advanced mode</h3><p style="font-size:14px;color:var(--muted)">Song Description, Lyrics (Write / Prompt / Instrumental), Exclude Styles, Vocal Gender, Weirdness %, Style Influence %, Duration, model picker, tag suggestions. <b style="color:var(--text)">Ours:</b> form state → generation params — ACE-Step supports CFG / duration / tags natively; weirdness ≈ temperature / guidance mapping.</p></div>
+      <div class="card reveal"><h3 style="margin-top:0"><span class="tag">#060–072</span>Create a Voice (Beta)</h3><p style="font-size:14px;color:var(--muted)">Record / upload / library, ≥10s, consent phrase read-aloud. <b style="color:var(--text)">Ours:</b> Seed-VC zero-shot (1–30s) or RVC train (5–15min) + pyannote consent verification — we keep Suno's ethics gate, for your own voice only.</p></div>
+      <div class="card reveal"><h3 style="margin-top:0"><span class="tag">#076</span>Cover</h3><p style="font-size:14px;color:var(--muted)">Swap voice / style, keep the song. <b style="color:var(--text)">Ours:</b> Demucs vocal split → RVC / Seed-VC convert → RMS-matched remix (reference pipeline: efegen/rvc-pipeline, 6GB VRAM).</p></div>
+      <div class="card reveal"><h3 style="margin-top:0"><span class="tag">#089</span>Song Editor</h3><p style="font-size:14px;color:var(--muted)">Section-labeled timeline (Verse / Pre / Chorus / Bridge) + lyrics pane. <b style="color:var(--text)">Ours:</b> all-in-one (MIT) functional segmentation + WhisperX word alignment (±50ms).</p></div>
+      <div class="card reveal"><h3 style="margin-top:0"><span class="tag">#092–136</span>Studio DAW</h3><p style="font-size:14px;color:var(--muted)">Multitrack, version lanes, clip tempo / transpose / speed / volume, 133 BPM grid, undo, "Copy to Main Track". <b style="color:var(--text)">Ours:</b> wavesurfer-multitrack + Web Audio; non-destructive version stack in SQLite.</p></div>
+      <div class="card reveal"><h3 style="margin-top:0"><span class="tag">#113–125</span>Stems</h3><p style="font-size:14px;color:var(--muted)">Extract 8 stems, Insert All, per-stem prompted regen. <b style="color:var(--text)">Ours:</b> BS-RoFormer / htdemucs_6s gives clean 6-way — 8-way is an industry gap (opportunity: transcription-to-MIDI as the "pro" substitute); per-stem regen via ACE-Step repaint.</p></div>
+      <div class="card reveal"><h3 style="margin-top:0"><span class="tag">#132–137</span>Hum-to-instrument</h3><p style="font-size:14px;color:var(--muted)">Mic → instrument → render. <b style="color:var(--text)">Ours:</b> Basic Pitch (Apache-2.0, polyphonic pitch-bend) → MIDI → sampler / synth, or MusicGen-melody conditioning.</p></div>
+      <div class="card reveal"><h3 style="margin-top:0"><span class="tag">#141–145</span>Export</h3><p style="font-size:14px;color:var(--muted)">MP3 / WAV + share links. Trivial. <b style="color:var(--amber)">We add stems ZIP + MIDI + project file — permanently, no caps.</b></p></div>
+      <div class="card reveal"><h3 style="margin-top:0"><span class="tag">#028</span>Pricing frame</h3><p style="font-size:14px;color:var(--muted)">Free / Pro $10 / Premier $30, with download caps since 9/3/26. <b style="color:var(--amber)">For us: n/a — kill credits entirely. That's the wedge.</b></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ S3 ============ -->
+<section id="s3">
+  <div class="wrap">
+    <div class="sec-num reveal">SECTION 03</div>
+    <h2 class="reveal">Inside Suno — <span class="accent">engineering anatomy.</span></h2>
+    <p class="sec-lede reveal">Founded 2022 by four ex-Kensho ML engineers. Bark TTS (MIT, 2023) proves EnCodec-token autoregressive-transformer DNA. The community-consensus architecture — <b>LLM lyric planner → AR codec-token model → diffusion decoder/renderer</b> — is speculative and flagged as such: Suno publishes nothing.</p>
+
+    <div class="h-timeline reveal" id="sunoTimeline">
+      <div class="h-line"><span class="fill"></span></div>
+      <div class="h-nodes">
+        <div class="h-node"><div class="h-dot" style="--d:.1s"></div><div class="yr">MAR 2024</div><div class="nm">v3</div><div class="ds">First viral wave; 2-minute songs.</div></div>
+        <div class="h-node"><div class="h-dot" style="--d:.5s"></div><div class="yr">NOV 2024</div><div class="nm">v4</div><div class="ds">Personas, Covers, Remaster.</div></div>
+        <div class="h-node"><div class="h-dot" style="--d:.9s"></div><div class="yr">MAY 2025</div><div class="nm">v4.5</div><div class="ds">Weirdness / Style-Influence sliders; 8-minute songs.</div></div>
+        <div class="h-node hot"><div class="h-dot" style="--d:1.3s"></div><div class="yr">SEP 2025</div><div class="nm">v5 "chirp-crow"</div><div class="ds"><b style="color:var(--amber)">The fidelity leap.</b> 44.1kHz-class output, breaths/vibrato, stereo imaging, ELO 1293. Critique: "stable but safe."</div></div>
+        <div class="h-node"><div class="h-dot" style="--d:1.7s"></div><div class="yr">MAR 2026</div><div class="nm">v5.5 "chirp-fenix"</div><div class="ds"><b style="color:var(--text)">No fidelity gain</b> — personalization only: Voices cloning, per-user LoRA (≥6 tracks), My Taste.</div></div>
+        <div class="h-node hot"><div class="h-dot" style="--d:2.1s"></div><div class="yr">SEP 9 2026</div><div class="nm">v6</div><div class="ds">Licensed WMG/BMG/Believe training, surgical edits, mashups, image/video prompts. Arena #1 (1142 Elo) <b style="color:var(--red)">but heavy backlash</b> — "muffled," below v5 on WildSongBench. Older models retired.</div></div>
+      </div>
+    </div>
+
+    <div class="grid c3" style="margin-top:48px">
+      <div class="card reveal">
+        <h3 style="margin-top:0"><span class="tag">ORIGIN</span>The DAW came by acquisition</h3>
+        <p style="font-size:14px;color:var(--muted)">Suno's Studio DAW traces to the <b style="color:var(--text)">WavTool acquisition (Jun 2025)</b> — bought, not built. A local clone can match it with wavesurfer-multitrack.</p>
+      </div>
+      <div class="card reveal">
+        <h3 style="margin-top:0"><span class="tag">DATA</span>Leaked training diet</h3>
+        <p style="font-size:14px;color:var(--muted)">Via the Nov 2025 breach (reported by 404 Media, Jul 2026): <b style="color:var(--text)">2.01M YouTube Music clips / 113,879h</b>, 152k h tagged YT, Pond5 62k h, IMSLP, Genius lyrics, Deezer, Jamendo, Freesound, podcast plans.</p>
+      </div>
+      <div class="card reveal">
+        <h3 style="margin-top:0"><span class="tag">EXPOSURE</span>The legal arc</h3>
+        <p style="font-size:14px;color:var(--muted)">RIAA suit Jun 2024 → Warner settled Nov 2025 (licensing + Songkick acquisition) → UMG/Sony still litigating; <b style="color:var(--text)">GEMA Munich ruling Jul 2026: memorization = reproduction.</b> Meanwhile: $5.4B valuation, ~$300M ARR, 7M tracks/day.</p>
+      </div>
+    </div>
+
+    <div class="callout reveal" style="margin-top:34px">
+      <b>The lesson:</b> Suno's moat is scraped-data scale + preference data + infrastructure. Its liability is that same data. <b>We take the inverse position: CC0 + synthetic + your own voice.</b>
+    </div>
+  </div>
+</section>
+<!-- ============ S4 ============ -->
+<section id="s4">
+  <div class="wrap">
+    <div class="sec-num reveal">SECTION 04</div>
+    <h2 class="reveal">The 80% gap, <span class="accent">deconstructed.</span></h2>
+    <p class="sec-lede reveal">Every modern song model — Suno included, by all verified signals — is the same four-stage pipeline. The magic is in the ingredients, not the shape.</p>
+
+    <div class="pipe reveal" id="pipeline">
+      <div class="pipe-track"></div>
+      <div class="pipe-dot"></div>
+      <div class="pipe-stage"><span class="num">STAGE 1</span><h4>LLM planner</h4><p>Prompt → structured lyrics with [Verse]/[Chorus] metatags + a style caption.</p><span class="pipe-arrow">→</span></div>
+      <div class="pipe-stage"><span class="num">STAGE 2</span><h4>Acoustic generator</h4><p>DiT / flow-matching or codec-LM over 5–25Hz neural audio tokens. 2026 SOTA moved from RVQ to FSQ/CVQ low-frame-rate codecs.</p><span class="pipe-arrow">→</span></div>
+      <div class="pipe-stage"><span class="num">STAGE 3</span><h4>Codec / VAE decoder</h4><p>Token sequence → raw waveform.</p><span class="pipe-arrow">→</span></div>
+      <div class="pipe-stage"><span class="num">STAGE 4</span><h4>Post-chain</h4><p>Source separation → per-stem cleanup → master to −14 LUFS / −1dBTP → optional audio-SR upscale to 48kHz.</p></div>
+    </div>
+
+    <h3 class="reveal" style="margin-top:56px">Where Suno's extra quality actually comes from <span style="font-size:13px;color:var(--dim);font-family:var(--mono);font-weight:400">— evidence-weighted</span></h3>
+    <div class="levers reveal">
+      <div class="lever"><span class="n">01</span><p><b>Training-data scale / curation</b> — 113k+ hours of (scraped) audio.</p></div>
+      <div class="lever"><span class="n">02</span><p><b>Proprietary preference tuning</b> — "My Taste" is RLHF-as-product.</p></div>
+      <div class="lever"><span class="n">03</span><p><b>In-house stems conditioned into training</b> — ACE-Step 1.5 copied this openly: trained on 6M stem-separated tracks.</p></div>
+      <div class="lever"><span class="n">04</span><p><b>Best-of-n behind the scenes</b> — Suno returns 2–4 survivors from a larger batch.</p></div>
+      <div class="lever"><span class="n">05</span><p><b>Post-mix polish</b> — separation, cleanup, mastering.</p></div>
+    </div>
+    <div class="callout reveal" style="margin-top:30px"><b>Every lever except ①'s copyrighted scale has an open equivalent.</b> The gap is measurable — and closable in stages (see Section 07).</div>
+  </div>
+</section>
+
+<!-- ============ S5 ============ -->
+<section id="s5">
+  <div class="wrap">
+    <div class="sec-num reveal">SECTION 05</div>
+    <h2 class="reveal">The open-source arsenal <span class="accent">— verified Oct 2026.</span></h2>
+    <p class="sec-lede reveal">Song generators with vocals, ranked by fit. Every row cross-checked against repos, papers, and leaderboards.</p>
+
+    <div class="tbl-wrap reveal">
+      <table>
+        <thead><tr><th>Model</th><th>Architecture</th><th>License</th><th>VRAM</th><th>Speed</th><th>Quality tier</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><b>ACE-Step 1.5</b></td><td><span class="mono">LM planner + distilled DiT</span></td><td><span class="pill ok">MIT</span></td><td><span class="mono">&lt;4GB (XL: 12–20GB)</span></td><td><span class="mono">&lt;10s/song (3090); ~25s M3 Pro</span></td><td>Suno v4.5–v5 band</td><td>LoRA in ~1h; cover / repaint / stem-extract / timbre-clone; official MLX</td></tr>
+          <tr><td><b>YuE2-3B</b> (Sep 2026)</td><td><span class="mono">AR–NAR MoT + flow</span></td><td><span class="pill neutral">Apache-2.0</span></td><td><span class="mono">24GB+</span></td><td><span class="mono">~15–36min / 3-min</span></td><td>Tops WildSongBench (best-of-8, self-reported)</td><td>CC0 + synthetic trained; quality batch path; editable score</td></tr>
+          <tr><td><b>LeVo 2 / SongGeneration 2</b> (Tencent)</td><td><span class="mono">4B hybrid LLM-diffusion</span></td><td><span class="pill warn">⚠ GH-vs-HF conflict</span></td><td><span class="mono">12GB+</span></td><td><span class="mono">minutes</span></td><td>Strong harmony</td><td>Verify license before use</td></tr>
+          <tr><td><b>DiffRhythm 2</b></td><td><span class="mono">DiT</span></td><td><span class="pill neutral">Apache-2.0</span></td><td><span class="mono">8GB+</span></td><td><span class="mono">fast</span></td><td>Full-song, weaker vocals</td><td>Good for instrumentals</td></tr>
+          <tr><td><b>HeartMuLa</b></td><td><span class="mono">codec LM</span></td><td><span class="pill neutral">Apache-2.0</span></td><td><span class="mono">8GB</span></td><td><span class="mono">moderate</span></td><td>Solid</td><td>Ships reference webapp (React + FastAPI + SQLModel + SSE)</td></tr>
+          <tr><td><b>MiniMax Music 3</b></td><td><span class="mono">n/a</span></td><td><span class="pill warn">Community · $20M cap</span></td><td><span class="mono">API / weights</span></td><td><span class="mono">fast</span></td><td>High</td><td>Attribution required</td></tr>
+          <tr><td><b>Stable Audio 3 S/M</b> (May 2026)</td><td><span class="mono">DiT</span></td><td><span class="pill ok">Open weights</span></td><td><span class="mono">8GB</span></td><td><span class="mono">Mac-fast</span></td><td>Instrumental only</td><td>Licensed training data</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="reveal">Support stack — feature → tool, all local</h3>
+    <div class="feat-grid reveal">
+      <div class="feat"><span class="f">Stems</span><b>Demucs htdemucs_ft / BS-RoFormer</b> — clean 6-way max today</div>
+      <div class="feat"><span class="f">Voice clone</span><b>Seed-VC</b> (GPL, zero-shot) / <b>RVC v2</b> (MIT)</div>
+      <div class="feat"><span class="f">Consent</span><b>pyannote</b> speaker verification</div>
+      <div class="feat"><span class="f">Cover</span><b>Demucs → RVC → remix</b> pipeline</div>
+      <div class="feat"><span class="f">Hum-to-MIDI</span><b>Basic Pitch</b> → MIDI → sampler</div>
+      <div class="feat"><span class="f">Sections</span><b>all-in-one</b> (MIT) segmentation</div>
+      <div class="feat"><span class="f">Lyrics align</span><b>WhisperX</b> — ±50ms word timing</div>
+      <div class="feat"><span class="f">Mastering</span><b>Matchering 2.0 + pyloudnorm</b> — −14 LUFS</div>
+      <div class="feat"><span class="f">Upscale / remaster</span><b>Apollo / AudioSR</b> (MIT, 48kHz)</div>
+      <div class="feat"><span class="f">Scoring</span><b>audiobox-aesthetics + SongEval + MuLan-CLAP + lyric-WER</b></div>
+      <div class="feat"><span class="f">Lyrics</span>Any <b>local LLM</b> emitting Suno metatag grammar</div>
+    </div>
+  </div>
+</section>
+<!-- ============ S6 ============ -->
+<section id="s6">
+  <div class="wrap">
+    <div class="sec-num reveal">SECTION 06</div>
+    <h2 class="reveal">Competitive battlefield — <span class="accent">20 products researched.</span></h2>
+    <p class="sec-lede reveal">Filter the field. Every card's cons list is a feature request for AURA.</p>
+
+    <div class="chips reveal" id="compChips">
+      <button class="chip on" data-filter="all">All</button>
+      <button class="chip" data-filter="gen">Generators</button>
+      <button class="chip" data-filter="daw">DAW / vocals</button>
+      <button class="chip" data-filter="walled">Walled gardens</button>
+    </div>
+
+    <div class="grid c3" id="compGrid">
+      <div class="card comp-card reveal" data-cat="gen"><h4>Suno <span class="cat">Generator</span></h4>
+        <ul class="pro"><li>Best vocal realism + speed</li><li>Studio DAW, Personas</li></ul>
+        <ul class="con"><li>Download caps 20/60/mo + $2.99/extra</li><li>Stems carry phantom reverb / bleed</li><li>Studio stem-replacement ~2% success</li><li>Moderation opacity, billing complaints</li></ul>
+        <div class="diff"><b>Differentiator</b>The quality bar everyone is measured against.</div></div>
+      <div class="card comp-card reveal" data-cat="walled"><h4>Udio <span class="cat">Walled garden</span></h4>
+        <ul class="pro"><li>Inpainting workflow</li><li>Beloved sound</li></ul>
+        <ul class="con"><li>Post-UMG settlement (Oct 2025): ALL downloads disabled</li><li>Relaunch perpetually delayed</li></ul>
+        <div class="diff"><b>Differentiator</b>The cautionary tale: a walled garden can close overnight.</div></div>
+      <div class="card comp-card reveal" data-cat="gen"><h4>ElevenLabs Music <span class="cat">Generator</span></h4>
+        <ul class="pro"><li>Licensing-clean (Merlin / Kobalt / UMG)</li><li>Commercial use from $6/mo</li><li>The only real music API</li></ul>
+        <ul class="con"><li>Less songcraft depth</li><li>Credit-intensive music generation</li></ul>
+        <div class="diff"><b>Differentiator</b>Legal cleanliness + developer API.</div></div>
+      <div class="card comp-card reveal" data-cat="gen"><h4>Mureka <span class="cat">Generator</span></h4>
+        <ul class="pro"><li>Unlimited commercial downloads at $10/mo</li><li>MIDI / DAW-session export</li></ul>
+        <ul class="con"><li>Low mindshare</li><li>Vocal polish below Suno</li></ul>
+        <div class="diff"><b>Differentiator</b>Export economics + MIDI out.</div></div>
+      <div class="card comp-card reveal" data-cat="walled"><h4>Google Flow Music <span class="cat">Walled garden</span></h4>
+        <ul class="pro"><li>Free</li><li>Lyria 3.5 (absorbed Riffusion)</li></ul>
+        <ul class="con"><li>SynthID watermark, no opt-out</li><li>Ecosystem lock-in</li></ul>
+        <div class="diff"><b>Differentiator</b>Free — paid for in watermark and lock-in.</div></div>
+      <div class="card comp-card reveal" data-cat="daw"><h4>AIVA <span class="cat">DAW / MIDI</span></h4>
+        <ul class="pro"><li>MIDI-first workflow</li><li>Full ownership, buy-once</li></ul>
+        <ul class="con"><li>No vocals focus</li></ul>
+        <div class="diff"><b>Differentiator</b>Ownership as the product.</div></div>
+      <div class="card comp-card reveal" data-cat="daw"><h4>ACE Studio <span class="cat">DAW / vocals</span></h4>
+        <ul class="pro"><li>Note-editable vocals</li><li>Artist-compensated voices</li><li>Buy-once, no subscription</li></ul>
+        <ul class="con"><li>Not a full song generator</li></ul>
+        <div class="diff"><b>Differentiator</b>Note-level vocal control, ethically sourced voices.</div></div>
+      <div class="card comp-card reveal" data-cat="daw"><h4>BandLab SongStarter <span class="cat">DAW / MIDI</span></h4>
+        <ul class="pro"><li>Free generate → MIDI → DAW pipeline</li></ul>
+        <ul class="con"><li>Toy-grade generation</li><li>"You don't own the track"</li></ul>
+        <div class="diff"><b>Differentiator</b>The free MIDI on-ramp.</div></div>
+      <div class="card comp-card reveal" data-cat="gen"><h4>Stable Audio <span class="cat">Generator</span></h4>
+        <ul class="pro"><li>Open weights, self-hostable</li><li>Licensed training data (v3 S/M)</li></ul>
+        <ul class="con"><li>Instrumental-only</li></ul>
+        <div class="diff"><b>Differentiator</b>Open-weights self-hosting.</div></div>
+      <div class="card comp-card reveal" data-cat="walled"><h4>Boomy <span class="cat">Walled garden</span></h4>
+        <ul class="pro"><li>Zero learning curve</li><li>Built-in distribution to Spotify + 40 platforms</li></ul>
+        <ul class="con"><li>Free tier can't download at all</li><li>Revenue share on distributed tracks</li><li>Quality behind Suno / Udio / Soundraw</li></ul>
+        <div class="diff"><b>Differentiator</b>Cheapest path from prompt to streaming release.</div></div>
+      <div class="card comp-card reveal" data-cat="gen"><h4>Soundraw <span class="cat">Generator</span></h4>
+        <ul class="pro"><li>Bar-level structure editor, real-time mixer</li><li>Stem export</li></ul>
+        <ul class="con"><li>Instrumental-only, no free-text prompts</li><li>Formulaic without editing</li></ul>
+        <div class="diff"><b>Differentiator</b>Parameter-driven background music with structure control.</div></div>
+      <div class="card comp-card reveal" data-cat="daw"><h4>Moises <span class="cat">DAW / stems</span></h4>
+        <ul class="pro"><li>Best-in-class stem separation + practice suite</li><li>65–75M+ users, full mobile parity</li></ul>
+        <ul class="con"><li>Not a generator</li><li>Partner-only API</li></ul>
+        <div class="diff"><b>Differentiator</b>Stem separation as a daily-driver tool.</div></div>
+      <div class="card comp-card reveal" data-cat="daw"><h4>Kits.AI <span class="cat">DAW / vocals</span></h4>
+        <ul class="pro"><li>50+ royalty-free artist voices, custom training</li><li>Stem extraction + AI mastering bundled</li></ul>
+        <ul class="con"><li>Voice studio, not a song generator</li></ul>
+        <div class="diff"><b>Differentiator</b>Royalty-free voice-clone studio for music.</div></div>
+      <div class="card comp-card reveal" data-cat="daw"><h4>LANDR <span class="cat">DAW / mastering</span></h4>
+        <ul class="pro"><li>Master → distribute → plugins in one ecosystem</li><li>Stems as an in-DAW plugin (AudioShake engine)</li></ul>
+        <ul class="con"><li>MP3-only masters on entry tier</li><li>Subscription lock-in for the toolchain</li></ul>
+        <div class="diff"><b>Differentiator</b>The bundled master-and-release pipeline.</div></div>
+      <div class="card comp-card reveal" data-cat="gen"><h4>Mubert <span class="cat">Generator</span></h4>
+        <ul class="pro"><li>Battle-tested B2B music API</li><li>License-certificate compliance trail</li></ul>
+        <ul class="con"><li>No vocals / lyrics; weak rock &amp; metal</li><li>Confusing licensing; 2.8/5 public feedback on billing</li><li>Can't release tracks as songs — ever</li></ul>
+        <div class="diff"><b>Differentiator</b>Adaptive background-music API with compliance paper trail.</div></div>
+    </div>
+    <p class="reveal" style="margin-top:16px;font-size:12.5px;color:var(--dim);font-family:var(--mono)">Also researched: Loudly, Beatoven, Mubert, Kits.AI, Moises, LANDR, Boomy — full cards in sunoclone_dim04.md.</p>
+
+    <h3 class="reveal" style="margin-top:60px">Cross-platform complaint themes <span style="color:var(--orange)">= our attack surface</span></h3>
+    <div class="strikes reveal">
+      <div class="strike"><span class="sn">01</span><h5>Export hostage-taking</h5><p>Caps, watermarks, walled gardens. "Export rights are the product." The #1 gap industry-wide.</p></div>
+      <div class="strike"><span class="sn">02</span><h5>Credit-burn economics</h5><p>Pay for failed generations, no rollover, opaque credit math.</p></div>
+      <div class="strike"><span class="sn">03</span><h5>Lyric / prompt adherence failures</h5><p>Ignored lyrics, mispronunciation, wrong voice gender — controllability is the #1 quality gap.</p></div>
+      <div class="strike"><span class="sn">04</span><h5>Editing destroys the song</h5><p>Regenerate-and-pray; true section-sticky editing is unsolved everywhere.</p></div>
+      <div class="strike"><span class="sn">05</span><h5>Dirty stems</h5><p>Secondary AI passes leave reverb artifacts, bleed, missing stems.</p></div>
+      <div class="strike"><span class="sn">06</span><h5>No MIDI / DAW / VST export</h5><p>Only AIVA, Mureka Premier, and BandLab offer it. Pros demand it universally.</p></div>
+      <div class="strike"><span class="sn">07</span><h5>Ownership ambiguity</h5><p>Rights attach at creation, no retroactive licensing, "(if any)" certificates.</p></div>
+      <div class="strike"><span class="sn">08</span><h5>Trust &amp; billing horror stories</h5><p>Unauthorized charges, cancellation friction, songs held hostage. Near-zero cost to beat.</p></div>
+    </div>
+
+    <div class="win-banner reveal">
+      <div class="tag">The winning formula — nobody ships all six</div>
+      <div class="formula">Suno-class vocals<span class="plus">+</span>unlimited exports<span class="plus">+</span>clean stems<span class="plus">+</span>MIDI/DAW export<span class="plus">+</span>honest pricing ($0 local)<span class="plus">+</span>licensed/CC0 data</div>
+      <div class="sub">AURA ships all six by construction: local, open, yours.</div>
+    </div>
+  </div>
+</section>
+<!-- ============ S7 ============ -->
+<section id="s7">
+  <div class="wrap">
+    <div class="sec-num reveal">SECTION 07</div>
+    <h2 class="reveal">Gap-closure playbook — <span class="accent">five rungs, ascending.</span></h2>
+    <p class="sec-lede reveal">Each rung buys measurable quality for a known price. Climb in order; stop when your eval harness says the gap is closed.</p>
+
+    <div class="ladder">
+      <div class="rung reveal">
+        <div class="rn">Rung 0</div>
+        <h4>Post-chain polish <span class="when">WEEK 1</span></h4>
+        <p>BS-RoFormer stems → per-stem denoise → Matchering master → −14 LUFS. Instant perceived-quality win.</p>
+        <span class="cost">≈ $0</span>
+      </div>
+      <div class="rung r1 reveal">
+        <span class="star">★ HIGHEST LEVERAGE</span>
+        <div class="rn">Rung 1</div>
+        <h4>Best-of-n reranking <span class="when">WEEK 2–4</span></h4>
+        <p>Generate 8–16 → score with audiobox-aesthetics + SongEval + MuLan-CLAP + lyric-WER → serve the top 2. <b>YuE2's documented 6.73 → 6.96 jump past Suno v5's 6.87 average came from exactly this.</b></p>
+        <span class="cost">&lt; $0.20 / song</span>
+      </div>
+      <div class="rung r2 reveal">
+        <div class="rn">Rung 2</div>
+        <h4>Style LoRA <span class="when">MONTH 2–3</span></h4>
+        <p>ACE-Step one-click LoRA: 8 songs, ~1h on a 3090/12GB. Genre-local identity — this is how "your genres" become a moat.</p>
+        <span class="cost">$100–300 cloud</span>
+      </div>
+      <div class="rung r3 reveal">
+        <div class="rn">Rung 3</div>
+        <h4>DPO on synthetic preference pairs <span class="when">MONTH 3–6</span></h4>
+        <p>Reward model = the same scorers; DiffRhythm+ / Tango2 recipes. Watch for diversity collapse (KL guard).</p>
+        <span class="cost">$200–800</span>
+      </div>
+      <div class="rung r4 reveal">
+        <div class="rn">Rung 4</div>
+        <h4>Continued SFT on 1–5k h licensed / CC0 / synthetic <span class="when">MONTH 6–12 · OPTIONAL</span></h4>
+        <p>Only if the harness still shows a gap after Rungs 0–3.</p>
+        <span class="cost">$1–5K</span>
+      </div>
+      <div class="rung rx reveal">
+        <div class="rn">Rung X — quantified NO</div>
+        <h4>Scratch training</h4>
+        <p>ACE-Step-scale ≈ <b>46K A100-hours ≈ $55–76K</b> + a 100k-h corpus. YuE-scale ≈ <b>$200–300K+</b> + 650k h + a 512-GPU cluster + documented catastrophic run failures. <b>Not the path.</b></p>
+        <span class="cost">$55K–300K+ · REJECTED</span>
+      </div>
+    </div>
+
+    <div class="doctrine">
+      <div class="card reveal">
+        <h4>Data doctrine</h4>
+        <p>CC0 / CC-BY (MTG-Jamendo CC cores, FMA), licensed packs, synthetic self-improvement loops (YuE2's recipe: "primarily CC0 + synthetic"). <b>Never scrape copyrighted audio</b> — the GEMA ruling and Jamendo v. Nvidia (€17.8M) show the bill comes due. Your voice only for cloning, behind a consent-phrase gate like Suno #070.</p>
+      </div>
+      <div class="card reveal">
+        <h4>Eval harness first</h4>
+        <p>LUFS-matched blind A/B vs Suno outputs on a fixed prompt battery; track FAD / CLAP / SongEval plus your own win-rate. <b>If you can't measure the gap, you can't close it.</b></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ S8 ============ -->
+<section id="s8">
+  <div class="wrap">
+    <div class="sec-num reveal">SECTION 08</div>
+    <h2 class="reveal">Reference architecture <span class="accent">&amp; cost.</span></h2>
+    <p class="sec-lede reveal">Local-first. Browser-on-localhost for v1, Tauri shell later. The engine sits behind an abstraction so backends swap freely.</p>
+
+    <div class="terminal reveal">
+      <div class="term-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="ttl">aura — system layout</span></div>
+      <pre>┌─ Desktop (Linux/Win/Mac): <span class="am">Tauri 2 shell</span> (42MB vs Electron 168MB) or pure browser-on-localhost (v1)
+│   React UI: Create panel (Simple/Advanced) · Library · <span class="am">wavesurfer-multitrack Studio</span> · Stems drawer · Voice lab
+├─ FastAPI worker + SQLModel/SQLite + asyncio.Queue + <span class="am">SSE progress</span> (HeartMuLa Studio pattern — proven)
+│   Lyrics: local LLM (Ollama) emitting Suno metatag grammar
+│   Engine abstraction → backends: [local MLX/MPS on Mac] [local CUDA] [<span class="am">serverless GPU burst</span>]
+│   Generation: ACE-Step 1.5 turbo 8-step (draft) / SFT 50-step (render) / YuE2 (quality batch)
+│   Ranker: n=8–16 → audiobox-aesthetics + SongEval + CLAP + lyric-WER → <span class="am">top 2 to UI</span>
+│   Stems: Demucs (demucs-mlx 73× RT on Mac) / BS-RoFormer · Mastering: Matchering + pyloudnorm
+└─ Storage: local-first library, WAV/MP3/stems-ZIP/MIDI export, <span class="am">no credits, no caps, ever</span></pre>
+    </div>
+
+    <div class="grid c3">
+      <div class="card tier reveal"><span class="t-num">TIER ①</span><h4>Mac-only</h4><p>M3 Pro 36GB: draft at ~25s/song natively (MLX), render via cloud burst.</p><div class="price">&lt; $15/mo @ 500 songs</div></div>
+      <div class="card tier reveal"><span class="t-num">TIER ②</span><h4>Any NVIDIA 24GB box</h4><p>3090 / 4090: fully local, 2–10s drafts. No cloud dependency at all.</p><div class="price">$0 marginal / song</div></div>
+      <div class="card tier reveal"><span class="t-num">TIER ③</span><h4>Cloud-only</h4><p>RunPod serverless 4090 at $1.10/h active-seconds, scale-to-zero. A 2-variant song ≈ 1–1.5 GPU-min.</p><div class="price">$0.01–0.03 / song</div></div>
+    </div>
+
+    <div class="callout reveal" style="margin-top:30px"><b>Renting beats owning until ~1,000+ songs/month.</b> Scale-to-zero serverless means idle cost is exactly zero.</div>
+    <div class="callout red reveal"><b>Biggest infra risk:</b> CUDA-stack fragility × 3 OSes (torch cu126/cu128, Blackwell sm_120, flash-attn pins, MPS bugs). Mitigate with per-OS pinned envs, Docker, and CI on all three. Avoid <b>gcui-art/suno-api</b> (dead since Dec 2025, ToS risk) and <b>MusicGen</b> (CC-BY-NC).</div>
+  </div>
+</section>
+<!-- ============ S9 ============ -->
+<section id="s9">
+  <div class="wrap">
+    <div class="sec-num reveal">SECTION 09</div>
+    <h2 class="reveal">Phased roadmap — <span class="accent">day 1 to month 12.</span></h2>
+    <p class="sec-lede reveal">Stage-gated: every phase has exit criteria, and no phase starts before the previous one exits.</p>
+
+    <div class="v-timeline reveal" id="roadmap">
+      <span class="v-fill"></span>
+      <div class="phase">
+        <div class="ph">Phase 0 · Day 1–3</div>
+        <h4>Engine smoke test</h4>
+        <p>Install ACE-Step (MLX fork on Mac / CUDA on PC), render 3 reference songs, run Demucs + all-in-one + WhisperX; verify the eval harness scorers. This is the "know within an hour" gate Fable recommended — now de-risked.</p>
+        <span class="exit-chip">EXIT: 3 songs on disk + scores</span>
+      </div>
+      <div class="phase">
+        <div class="ph">Phase 1 · Week 1–3</div>
+        <h4>MVP "Create"</h4>
+        <p>React Create panel mirroring frames #017 / #046, FastAPI queue + SSE, LLM lyrics, ACE-Step generation, 2-variant cards, player, local library, WAV/MP3 export.</p>
+        <span class="exit-chip">EXIT: prompt → song in &lt;60s cloud / &lt;90s Mac</span>
+      </div>
+      <div class="phase">
+        <div class="ph">Phase 2 · Week 3–6</div>
+        <h4>Quality engine</h4>
+        <p>Best-of-n ranker, post-chain mastering, LoRA tooling, eval dashboard.</p>
+        <span class="exit-chip">EXIT: blind-A/B win-rate vs stock ACE-Step ≥ 70%</span>
+      </div>
+      <div class="phase">
+        <div class="ph">Phase 3 · Week 6–12</div>
+        <h4>Studio</h4>
+        <p>wavesurfer-multitrack, version lanes, clip tempo / transpose / speed / volume, stems drawer (6-way), section labels, cover pipeline, hum-to-MIDI, voice lab with consent gate, MIDI + stems-ZIP export.</p>
+        <span class="exit-chip">EXIT: full re-creation of the tutorial's workflow, locally</span>
+      </div>
+      <div class="phase">
+        <div class="ph">Phase 4 · Month 3–12</div>
+        <h4>"Suno-6-class"</h4>
+        <p>DPO loop on your preferences, per-genre LoRA library, per-stem repaint editing, Tauri installers for all 3 OSes, optional self-hosted share server.</p>
+        <span class="exit-chip">EXIT: v5-parity on your genres, measured by harness</span>
+        <span class="exit-chip">EXIT: v5.5 feature-parity + exports nobody else offers</span>
+      </div>
+      <div class="phase">
+        <div class="ph">Stretch</div>
+        <h4>Beyond the plan</h4>
+        <p>Song → music-video generation, live jam mode (Seed-VC at 300ms latency), mobile companion.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ S10 ============ -->
+<section id="s10">
+  <div class="wrap">
+    <div class="sec-num reveal">SECTION 10</div>
+    <h2 class="reveal">Risk register — <span class="accent">honest.</span></h2>
+    <p class="sec-lede reveal">What can actually kill this project, and the standing mitigation for each.</p>
+    <div class="tbl-wrap reveal">
+      <table>
+        <thead><tr><th style="width:32%">Risk</th><th style="width:14%">Severity</th><th>Mitigation</th></tr></thead>
+        <tbody>
+          <tr><td>Open model quality plateaus below v5.5 / v6</td><td><span class="pill warn">MED</span></td><td>best-of-n + LoRA + DPO stack; accept the genre-local ceiling</td></tr>
+          <tr><td>CUDA / MPS dependency hell × 3 OSes</td><td><span class="pill bad">HIGH</span></td><td>Pinned envs, Docker, per-OS CI, cloud fallback</td></tr>
+          <tr><td>ACE-Step repo stagnation / license drift</td><td><span class="pill warn">LOW-MED</span></td><td>MIT fork frozen locally; YuE2 / HeartMuLa as swap-in backends</td></tr>
+          <tr><td>Voice-clone misuse</td><td><span class="pill warn">MED</span></td><td>Consent-phrase + pyannote verification; own-voice-only policy</td></tr>
+          <tr><td>Legal (distribution of outputs / models)</td><td><span class="pill ok">LOW · personal use</span></td><td>CC0 / synthetic data doctrine; no scraping; NC licenses (MusicGen, YuE2-Comfy LoRA trainer) excluded from anything shared</td></tr>
+          <tr><td>Scope creep (a DAW is months of work)</td><td><span class="pill warn">MED</span></td><td>Stage-gated phases; wavesurfer-multitrack, not a from-scratch DAW</td></tr>
+          <tr><td>"Suno 7" leapfrogs again</td><td><span class="pill gray">ACCEPT</span></td><td>Our wedge (exports / ownership / local) is structural, not quality-based</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ S11 ============ -->
+<section id="s11" style="padding-bottom:40px">
+  <div class="wrap">
+    <div class="sec-num reveal">SECTION 11</div>
+    <h2 class="reveal" style="font-size:clamp(24px,3.4vw,36px)">Methodology &amp; sources</h2>
+    <p class="reveal" style="color:var(--muted);font-size:14px;max-width:900px;margin-top:16px">
+      6-agent research swarm, ~150 searches, verbatim-excerpt evidence standard, cross-verified (conflict log in <span style="font-family:var(--mono);font-size:12.5px">research/</span>).
+      Key primary sources: arXiv 2602.00744 (ACE-Step 1.5), arXiv 2506.00045 (ACE-Step), YuE / YuE2 repos + papers, 404 Media Suno-breach reporting (Jul 2026), RIAA filings, GEMA ruling coverage, WildSongBench, MVSep leaderboards, official pricing pages (Suno / Udio / ElevenLabs / Mureka), RunPod / Vast / Modal pricing, and the r/SunoAI &amp; r/udiomusic complaint corpus.
+      Full dossiers: <span style="font-family:var(--mono);font-size:12.5px">sunoclone_dim01–06.md</span>. UI grounding: 150 sampled frames of Simon Crowe's Suno tutorial, analyzed and corrected against Fable 5.1's video review.
+    </p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="f-mark">AURA</div>
+    <div class="f-line">Generated <em>2026-10-08</em> · Research swarm: <em>6 agents</em> · Evidence standard: verbatim excerpts, cross-verified<br>For personal review — <em>build command pending.</em></div>
+  </div>
+</footer>
+
+<script>
+/* fail-safe: if anything below throws, never leave content hidden */
+window.addEventListener("error", function(){
+  document.querySelectorAll(".reveal").forEach(function(e){ e.classList.add("in"); e.style.opacity=1; e.style.transform="none"; });
+});
+</script>
+<script>
+(function(){
+  "use strict";
+  var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---- reading progress ---- */
+  var prog = document.getElementById("progress");
+  function onScroll(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    prog.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + "%";
+  }
+  window.addEventListener("scroll", onScroll, {passive:true});
+  onScroll();
+
+  /* ---- scroll reveal with stagger ---- */
+  var revealEls = Array.prototype.slice.call(document.querySelectorAll(".reveal"));
+  // stagger siblings inside the same parent
+  var parents = new Map();
+  revealEls.forEach(function(el){
+    var p = el.parentNode;
+    var i = parents.get(p) || 0;
+    parents.set(p, i + 1);
+    el.style.transitionDelay = (i % 8) * 70 + "ms";
+  });
+  var noanim = location.hash === "#noanim";
+  if("IntersectionObserver" in window && !reduced && !noanim){
+    document.body.classList.add("armed");
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); }
+      });
+    }, {threshold:.12, rootMargin:"0px 0px -40px 0px"});
+    revealEls.forEach(function(el){ io.observe(el); });
+    ["sunoTimeline","roadmap"].forEach(function(id){
+      var n = document.getElementById(id); if(n) io.observe(n);
+    });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add("in"); });
+    ["sunoTimeline","roadmap"].forEach(function(id){
+      var n = document.getElementById(id); if(n) n.classList.add("in");
+    });
+  }
+
+  /* ---- animated counters ---- */
+  function animateCount(el){
+    var target = parseFloat(el.getAttribute("data-target")) || 0;
+    var dec = parseInt(el.getAttribute("data-decimals") || "0", 10);
+    var pre = el.getAttribute("data-prefix") || "";
+    var suf = el.getAttribute("data-suffix") || "";
+    if(reduced){ el.textContent = pre + target.toFixed(dec) + suf; return; }
+    var dur = 1400, t0 = null;
+    function frame(t){
+      if(!t0) t0 = t;
+      var k = Math.min((t - t0) / dur, 1);
+      var eased = 1 - Math.pow(1 - k, 3);
+      el.textContent = pre + (target * eased).toFixed(dec) + suf;
+      if(k < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+  var counters = Array.prototype.slice.call(document.querySelectorAll(".count"));
+  if("IntersectionObserver" in window){
+    var cio = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ animateCount(e.target); cio.unobserve(e.target); }
+      });
+    }, {threshold:.4});
+    counters.forEach(function(c){ cio.observe(c); });
+  } else {
+    counters.forEach(animateCount);
+  }
+
+  /* ---- competitor filter chips ---- */
+  var chipsWrap = document.getElementById("compChips");
+  var cards = Array.prototype.slice.call(document.querySelectorAll("#compGrid .comp-card"));
+  if(chipsWrap){
+    chipsWrap.addEventListener("click", function(ev){
+      var t = ev.target;
+      var btn = (t && t.nodeType === 1 && t.closest) ? t.closest(".chip") : null;
+      if(!btn) return;
+      Array.prototype.forEach.call(chipsWrap.querySelectorAll(".chip"), function(c){ c.classList.remove("on"); });
+      btn.classList.add("on");
+      var f = btn.getAttribute("data-filter");
+      cards.forEach(function(card){
+        var show = (f === "all") || (card.getAttribute("data-cat") === f);
+        card.classList.toggle("hidden", !show);
+      });
+    });
+  }
+
+  /* ---- nav scrollspy ---- */
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll(".nav-links a"));
+  var secs = navLinks.map(function(a){ return document.querySelector(a.getAttribute("href")); }).filter(Boolean);
+  if("IntersectionObserver" in window && secs.length){
+    var spy = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          navLinks.forEach(function(a){
+            a.classList.toggle("active", a.getAttribute("href") === "#" + e.target.id);
+          });
+        }
+      });
+    }, {rootMargin:"-30% 0px -60% 0px"});
+    secs.forEach(function(s){ spy.observe(s); });
+  }
+
+  /* ---- hero waveform / equalizer canvas ---- */
+  var canvas = document.getElementById("wave");
+  if(canvas && canvas.getContext){
+    var ctx = canvas.getContext("2d");
+    var W = 0, H = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var bars = [], BAR_COUNT = 96, t = 0;
+    function resize(){
+      W = canvas.clientWidth; H = canvas.clientHeight;
+      canvas.width = W * dpr; canvas.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    window.addEventListener("resize", resize);
+    resize();
+    for(var i = 0; i < BAR_COUNT; i++){
+      bars.push({a: .3 + Math.random() * .7, s: .4 + Math.random() * 1.1, p: Math.random() * Math.PI * 2});
+    }
+    function drawStatic(){
+      ctx.clearRect(0, 0, W, H);
+      render(1.7);
+    }
+    function render(time){
+      var bw = W / BAR_COUNT;
+      var mid = H * 0.52;
+      for(var i = 0; i < BAR_COUNT; i++){
+        var b = bars[i];
+        var env = Math.sin((i / BAR_COUNT) * Math.PI); // dome envelope
+        var v = (Math.sin(time * b.s + b.p) * .5 + .5) * b.a * env;
+        var h = Math.max(2, v * H * 0.34);
+        var x = i * bw + bw * 0.22;
+        var w = bw * 0.56;
+        var g = ctx.createLinearGradient(0, mid - h, 0, mid + h);
+        g.addColorStop(0, "rgba(245,158,11," + (0.10 + v * 0.45) + ")");
+        g.addColorStop(1, "rgba(249,115,22," + (0.06 + v * 0.30) + ")");
+        ctx.fillStyle = g;
+        ctx.fillRect(x, mid - h, w, h * 2);
+      }
+      // soft center glow line
+      ctx.fillStyle = "rgba(245,158,11,.10)";
+      ctx.fillRect(0, mid - 1, W, 2);
+    }
+    if(reduced){
+      drawStatic();
+    } else {
+      var hero = document.querySelector(".hero");
+      var running = true;
+      if("IntersectionObserver" in window && hero){
+        new IntersectionObserver(function(en){
+          running = en[0].isIntersecting;
+        }, {threshold:0}).observe(hero);
+      }
+      (function loop(){
+        if(running){
+          t += 0.016;
+          ctx.clearRect(0, 0, W, H);
+          render(t);
+        }
+        requestAnimationFrame(loop);
+      })();
+    }
+  }
+})();
+</script>
+</body>
+</html>

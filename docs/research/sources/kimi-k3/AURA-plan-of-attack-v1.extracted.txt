@@ -1,0 +1,452 @@
+ 
+ AURA — Personal Suno-6-Class Music Studio · Plan of Attack 
+ AURA / PLAN OF ATTACK 
+ 00 Verdict 
+ 01 Fable 
+ 02 Target 
+ 03 Anatomy 
+ 04 Engine 
+ 05 Arsenal 
+ 06 Battlefield 
+ 07 Playbook 
+ 08 Architecture 
+ 09 Roadmap 
+ 10 Risk 
+ 11 Method 
+ Research Dossier · Final Report
+ AURA
+ AUdio Rendering Atelier — a personal Suno-6-class music studio. Plan of attack for building it locally, on open weights, with export freedom nobody sells.
+ DATE 2026-10-08 
+ BASIS 6-agent research swarm 
+ EVIDENCE ~150 searches · 150 frames analyzed 
+ SCROLL 
+ SECTION 00
+ Executive verdict — buildable, and the timing is uniquely good. 
+ Open weights (ACE-Step 1.5, MIT, Feb 2026) now hit the Suno v4.5–v5 band. Suno's own v5.5 innovation was personalization — which is cheap to replicate. And the entire industry is wounded on exports and pricing: a local app wins by default. 
+ SPLIT UI = 20%, engine = 80%
+ Fable was right about the split — but the 80% is now rentable . A 2-variant song costs roughly $0.01–0.03 on a serverless RTX 4090, and drafting runs natively on Apple Silicon (~25s/song on an M3 Pro via the MLX fork).
+ CEILING The honest ceiling
+ Open-domain Suno v6 parity is not achievable solo . But v5-parity on your genres + v5.5 feature-parity + export freedom nobody sells = a Suno-6-class personal experience in 6–12 months.
+ 0 
+ per 2-variant song, serverless 4090 (from $0.01)
+ 0 
+ frames analyzed from the Suno tutorial
+ ~ 0 
+ sources searched across the swarm
+ 0 
+ research agents, cross-verified
+ 0 
+ scratch-training cost floor ($55–76K) — ruled out
+ 0 
+ per draft song on an M3 Pro 36GB (MLX)
+ Single highest-leverage move: inference-time best-of-n reranking — generate 8–16 candidates, auto-score them, show the best 2. It closes ⅓–½ the perceptual gap with zero training .
+ SECTION 01
+ Fable's analysis — verified & corrected. 
+ Our own due diligence on every material claim in the Fable 5.1 video analysis. Most of it held up — including verbatim confirmation against arXiv 2602.00744. Two model names did not exist at all.
+ Fable claim
+ Verdict
+ Correction / nuance
+ Feature inventory from frames (Simple / Advanced / Voices / Cover / Studio / Stems / Hum / Export / Pricing)
+ CONFIRMED 
+ Matches our independent frame review; add the "Sounds" tab, Hooks, Labs, and the onboarding quest Fable caught.
+ UI is the easy 20%
+ CONFIRMED 
+ All controls visible in frames; wavesurfer-multitrack + React covers it.
+ ACE-Step 1.5: Feb 2026, <10s/song on 3090, <4GB VRAM, 10-min, cover / repaint / stems / timbre-clone
+ CONFIRMED 
+ Verbatim from arXiv 2602.00744. Bonus: it's MIT-licensed (Fable didn't note); XL 4B variant exists (12–20GB).
+ ACE-Step 39.1/26.3 vs Suno v5 46.8/34.2
+ CONFIRMED · CAVEAT 
+ Computed by ACE-Step's own reward models. Third-party WildSongBench: 6.01 vs 6.87 — same gap, more honest.
+ YuE 7B Apache-2.0, 16GB VRAM, ~5min / 3-min song
+ PARTLY WRONG 
+ Official: 24–80GB VRAM; ~15min (H800) to ~36min (4090) per 3-min. YuE is the slow quality batch path, not interactive.
+ Apple Silicon risk — "test before building UI"
+ RESOLVED 
+ The clockworksquirrel fork runs ACE-Step natively on MPS+MLX: ~25s/song on an M3 Pro 36GB.
+ Stack: Next.js → FastAPI → ACE-Step + Demucs + LLM + SQLite
+ CONFIRMED 
+ Right shape. Add: SSE progress (HeartMuLa Studio pattern), demucs-mlx on Mac (73× realtime), Tauri shell later.
+ "Melodyssey", "Stable Audio Open 2.0"
+ HALLUCINATED 
+ No such models. Actual: Stable Audio 3 open Small/Medium (May 2026).
+ SECTION 02
+ The target spec — Suno 2026, grounded in 150 frames. 
+ Every feature below is tied to sampled frames from Simon Crowe's Suno tutorial, followed by what our clone needs to match it.
+ #013–018 Simple mode
+ 1 prompt + dice randomizer → 4 variants (2× v4.5, 2× v5.5). Ours: prompt → LLM lyric + style expansion → n-ranked 2 best variants.
+ #017 · #046 Advanced mode
+ Song Description, Lyrics (Write / Prompt / Instrumental), Exclude Styles, Vocal Gender, Weirdness %, Style Influence %, Duration, model picker, tag suggestions. Ours: form state → generation params — ACE-Step supports CFG / duration / tags natively; weirdness ≈ temperature / guidance mapping.
+ #060–072 Create a Voice (Beta)
+ Record / upload / library, ≥10s, consent phrase read-aloud. Ours: Seed-VC zero-shot (1–30s) or RVC train (5–15min) + pyannote consent verification — we keep Suno's ethics gate, for your own voice only.
+ #076 Cover
+ Swap voice / style, keep the song. Ours: Demucs vocal split → RVC / Seed-VC convert → RMS-matched remix (reference pipeline: efegen/rvc-pipeline, 6GB VRAM).
+ #089 Song Editor
+ Section-labeled timeline (Verse / Pre / Chorus / Bridge) + lyrics pane. Ours: all-in-one (MIT) functional segmentation + WhisperX word alignment (±50ms).
+ #092–136 Studio DAW
+ Multitrack, version lanes, clip tempo / transpose / speed / volume, 133 BPM grid, undo, "Copy to Main Track". Ours: wavesurfer-multitrack + Web Audio; non-destructive version stack in SQLite.
+ #113–125 Stems
+ Extract 8 stems, Insert All, per-stem prompted regen. Ours: BS-RoFormer / htdemucs_6s gives clean 6-way — 8-way is an industry gap (opportunity: transcription-to-MIDI as the "pro" substitute); per-stem regen via ACE-Step repaint.
+ #132–137 Hum-to-instrument
+ Mic → instrument → render. Ours: Basic Pitch (Apache-2.0, polyphonic pitch-bend) → MIDI → sampler / synth, or MusicGen-melody conditioning.
+ #141–145 Export
+ MP3 / WAV + share links. Trivial. We add stems ZIP + MIDI + project file — permanently, no caps. 
+ #028 Pricing frame
+ Free / Pro $10 / Premier $30, with download caps since 9/3/26. For us: n/a — kill credits entirely. That's the wedge. 
+ SECTION 03
+ Inside Suno — engineering anatomy. 
+ Founded 2022 by four ex-Kensho ML engineers. Bark TTS (MIT, 2023) proves EnCodec-token autoregressive-transformer DNA. The community-consensus architecture — LLM lyric planner → AR codec-token model → diffusion decoder/renderer — is speculative and flagged as such: Suno publishes nothing.
+ MAR 2024
+ v3
+ First viral wave; 2-minute songs.
+ NOV 2024
+ v4
+ Personas, Covers, Remaster.
+ MAY 2025
+ v4.5
+ Weirdness / Style-Influence sliders; 8-minute songs.
+ SEP 2025
+ v5 "chirp-crow"
+ The fidelity leap. 44.1kHz-class output, breaths/vibrato, stereo imaging, ELO 1293. Critique: "stable but safe."
+ MAR 2026
+ v5.5 "chirp-fenix"
+ No fidelity gain — personalization only: Voices cloning, per-user LoRA (≥6 tracks), My Taste.
+ SEP 9 2026
+ v6
+ Licensed WMG/BMG/Believe training, surgical edits, mashups, image/video prompts. Arena #1 (1142 Elo) but heavy backlash — "muffled," below v5 on WildSongBench. Older models retired.
+ ORIGIN The DAW came by acquisition
+ Suno's Studio DAW traces to the WavTool acquisition (Jun 2025) — bought, not built. A local clone can match it with wavesurfer-multitrack.
+ DATA Leaked training diet
+ Via the Nov 2025 breach (reported by 404 Media, Jul 2026): 2.01M YouTube Music clips / 113,879h , 152k h tagged YT, Pond5 62k h, IMSLP, Genius lyrics, Deezer, Jamendo, Freesound, podcast plans.
+ EXPOSURE The legal arc
+ RIAA suit Jun 2024 → Warner settled Nov 2025 (licensing + Songkick acquisition) → UMG/Sony still litigating; GEMA Munich ruling Jul 2026: memorization = reproduction. Meanwhile: $5.4B valuation, ~$300M ARR, 7M tracks/day.
+ The lesson: Suno's moat is scraped-data scale + preference data + infrastructure. Its liability is that same data. We take the inverse position: CC0 + synthetic + your own voice. 
+ SECTION 04
+ The 80% gap, deconstructed. 
+ Every modern song model — Suno included, by all verified signals — is the same four-stage pipeline. The magic is in the ingredients, not the shape.
+ STAGE 1 LLM planner
+ Prompt → structured lyrics with [Verse]/[Chorus] metatags + a style caption.
+ → 
+ STAGE 2 Acoustic generator
+ DiT / flow-matching or codec-LM over 5–25Hz neural audio tokens. 2026 SOTA moved from RVQ to FSQ/CVQ low-frame-rate codecs.
+ → 
+ STAGE 3 Codec / VAE decoder
+ Token sequence → raw waveform.
+ → 
+ STAGE 4 Post-chain
+ Source separation → per-stem cleanup → master to −14 LUFS / −1dBTP → optional audio-SR upscale to 48kHz.
+ Where Suno's extra quality actually comes from — evidence-weighted 
+ 01 Training-data scale / curation — 113k+ hours of (scraped) audio.
+ 02 Proprietary preference tuning — "My Taste" is RLHF-as-product.
+ 03 In-house stems conditioned into training — ACE-Step 1.5 copied this openly: trained on 6M stem-separated tracks.
+ 04 Best-of-n behind the scenes — Suno returns 2–4 survivors from a larger batch.
+ 05 Post-mix polish — separation, cleanup, mastering.
+ Every lever except ①'s copyrighted scale has an open equivalent. The gap is measurable — and closable in stages (see Section 07).
+ SECTION 05
+ The open-source arsenal — verified Oct 2026. 
+ Song generators with vocals, ranked by fit. Every row cross-checked against repos, papers, and leaderboards.
+ Model
+ Architecture
+ License
+ VRAM
+ Speed
+ Quality tier
+ Notes
+ ACE-Step 1.5 
+ LM planner + distilled DiT 
+ MIT 
+ <4GB (XL: 12–20GB) 
+ <10s/song (3090); ~25s M3 Pro 
+ Suno v4.5–v5 band
+ LoRA in ~1h; cover / repaint / stem-extract / timbre-clone; official MLX
+ YuE2-3B (Sep 2026)
+ AR–NAR MoT + flow 
+ Apache-2.0 
+ 24GB+ 
+ ~15–36min / 3-min 
+ Tops WildSongBench (best-of-8, self-reported)
+ CC0 + synthetic trained; quality batch path; editable score
+ LeVo 2 / SongGeneration 2 (Tencent)
+ 4B hybrid LLM-diffusion 
+ ⚠ GH-vs-HF conflict 
+ 12GB+ 
+ minutes 
+ Strong harmony
+ Verify license before use
+ DiffRhythm 2 
+ DiT 
+ Apache-2.0 
+ 8GB+ 
+ fast 
+ Full-song, weaker vocals
+ Good for instrumentals
+ HeartMuLa 
+ codec LM 
+ Apache-2.0 
+ 8GB 
+ moderate 
+ Solid
+ Ships reference webapp (React + FastAPI + SQLModel + SSE)
+ MiniMax Music 3 
+ n/a 
+ Community · $20M cap 
+ API / weights 
+ fast 
+ High
+ Attribution required
+ Stable Audio 3 S/M (May 2026)
+ DiT 
+ Open weights 
+ 8GB 
+ Mac-fast 
+ Instrumental only
+ Licensed training data
+ Support stack — feature → tool, all local
+ Stems Demucs htdemucs_ft / BS-RoFormer — clean 6-way max today
+ Voice clone Seed-VC (GPL, zero-shot) / RVC v2 (MIT)
+ Consent pyannote speaker verification
+ Cover Demucs → RVC → remix pipeline
+ Hum-to-MIDI Basic Pitch → MIDI → sampler
+ Sections all-in-one (MIT) segmentation
+ Lyrics align WhisperX — ±50ms word timing
+ Mastering Matchering 2.0 + pyloudnorm — −14 LUFS
+ Upscale / remaster Apollo / AudioSR (MIT, 48kHz)
+ Scoring audiobox-aesthetics + SongEval + MuLan-CLAP + lyric-WER 
+ Lyrics Any local LLM emitting Suno metatag grammar
+ SECTION 06
+ Competitive battlefield — 20 products researched. 
+ Filter the field. Every card's cons list is a feature request for AURA.
+ All 
+ Generators 
+ DAW / vocals 
+ Walled gardens 
+ Suno Generator 
+ Best vocal realism + speed
+ Studio DAW, Personas
+ Download caps 20/60/mo + $2.99/extra
+ Stems carry phantom reverb / bleed
+ Studio stem-replacement ~2% success
+ Moderation opacity, billing complaints
+ Differentiator The quality bar everyone is measured against.
+ Udio Walled garden 
+ Inpainting workflow
+ Beloved sound
+ Post-UMG settlement (Oct 2025): ALL downloads disabled
+ Relaunch perpetually delayed
+ Differentiator The cautionary tale: a walled garden can close overnight.
+ ElevenLabs Music Generator 
+ Licensing-clean (Merlin / Kobalt / UMG)
+ Commercial use from $6/mo
+ The only real music API
+ Less songcraft depth
+ Credit-intensive music generation
+ Differentiator Legal cleanliness + developer API.
+ Mureka Generator 
+ Unlimited commercial downloads at $10/mo
+ MIDI / DAW-session export
+ Low mindshare
+ Vocal polish below Suno
+ Differentiator Export economics + MIDI out.
+ Google Flow Music Walled garden 
+ Free
+ Lyria 3.5 (absorbed Riffusion)
+ SynthID watermark, no opt-out
+ Ecosystem lock-in
+ Differentiator Free — paid for in watermark and lock-in.
+ AIVA DAW / MIDI 
+ MIDI-first workflow
+ Full ownership, buy-once
+ No vocals focus
+ Differentiator Ownership as the product.
+ ACE Studio DAW / vocals 
+ Note-editable vocals
+ Artist-compensated voices
+ Buy-once, no subscription
+ Not a full song generator
+ Differentiator Note-level vocal control, ethically sourced voices.
+ BandLab SongStarter DAW / MIDI 
+ Free generate → MIDI → DAW pipeline
+ Toy-grade generation
+ "You don't own the track"
+ Differentiator The free MIDI on-ramp.
+ Stable Audio Generator 
+ Open weights, self-hostable
+ Licensed training data (v3 S/M)
+ Instrumental-only
+ Differentiator Open-weights self-hosting.
+ Boomy Walled garden 
+ Zero learning curve
+ Built-in distribution to Spotify + 40 platforms
+ Free tier can't download at all
+ Revenue share on distributed tracks
+ Quality behind Suno / Udio / Soundraw
+ Differentiator Cheapest path from prompt to streaming release.
+ Soundraw Generator 
+ Bar-level structure editor, real-time mixer
+ Stem export
+ Instrumental-only, no free-text prompts
+ Formulaic without editing
+ Differentiator Parameter-driven background music with structure control.
+ Moises DAW / stems 
+ Best-in-class stem separation + practice suite
+ 65–75M+ users, full mobile parity
+ Not a generator
+ Partner-only API
+ Differentiator Stem separation as a daily-driver tool.
+ Kits.AI DAW / vocals 
+ 50+ royalty-free artist voices, custom training
+ Stem extraction + AI mastering bundled
+ Voice studio, not a song generator
+ Differentiator Royalty-free voice-clone studio for music.
+ LANDR DAW / mastering 
+ Master → distribute → plugins in one ecosystem
+ Stems as an in-DAW plugin (AudioShake engine)
+ MP3-only masters on entry tier
+ Subscription lock-in for the toolchain
+ Differentiator The bundled master-and-release pipeline.
+ Mubert Generator 
+ Battle-tested B2B music API
+ License-certificate compliance trail
+ No vocals / lyrics; weak rock & metal
+ Confusing licensing; 2.8/5 public feedback on billing
+ Can't release tracks as songs — ever
+ Differentiator Adaptive background-music API with compliance paper trail.
+ Also researched: Loudly, Beatoven, Mubert, Kits.AI, Moises, LANDR, Boomy — full cards in sunoclone_dim04.md.
+ Cross-platform complaint themes = our attack surface 
+ 01 Export hostage-taking
+ Caps, watermarks, walled gardens. "Export rights are the product." The #1 gap industry-wide.
+ 02 Credit-burn economics
+ Pay for failed generations, no rollover, opaque credit math.
+ 03 Lyric / prompt adherence failures
+ Ignored lyrics, mispronunciation, wrong voice gender — controllability is the #1 quality gap.
+ 04 Editing destroys the song
+ Regenerate-and-pray; true section-sticky editing is unsolved everywhere.
+ 05 Dirty stems
+ Secondary AI passes leave reverb artifacts, bleed, missing stems.
+ 06 No MIDI / DAW / VST export
+ Only AIVA, Mureka Premier, and BandLab offer it. Pros demand it universally.
+ 07 Ownership ambiguity
+ Rights attach at creation, no retroactive licensing, "(if any)" certificates.
+ 08 Trust & billing horror stories
+ Unauthorized charges, cancellation friction, songs held hostage. Near-zero cost to beat.
+ The winning formula — nobody ships all six
+ Suno-class vocals + unlimited exports + clean stems + MIDI/DAW export + honest pricing ($0 local) + licensed/CC0 data
+ AURA ships all six by construction: local, open, yours.
+ SECTION 07
+ Gap-closure playbook — five rungs, ascending. 
+ Each rung buys measurable quality for a known price. Climb in order; stop when your eval harness says the gap is closed.
+ Rung 0
+ Post-chain polish WEEK 1 
+ BS-RoFormer stems → per-stem denoise → Matchering master → −14 LUFS. Instant perceived-quality win.
+ ≈ $0 
+ ★ HIGHEST LEVERAGE 
+ Rung 1
+ Best-of-n reranking WEEK 2–4 
+ Generate 8–16 → score with audiobox-aesthetics + SongEval + MuLan-CLAP + lyric-WER → serve the top 2. YuE2's documented 6.73 → 6.96 jump past Suno v5's 6.87 average came from exactly this. 
+ < $0.20 / song 
+ Rung 2
+ Style LoRA MONTH 2–3 
+ ACE-Step one-click LoRA: 8 songs, ~1h on a 3090/12GB. Genre-local identity — this is how "your genres" become a moat.
+ $100–300 cloud 
+ Rung 3
+ DPO on synthetic preference pairs MONTH 3–6 
+ Reward model = the same scorers; DiffRhythm+ / Tango2 recipes. Watch for diversity collapse (KL guard).
+ $200–800 
+ Rung 4
+ Continued SFT on 1–5k h licensed / CC0 / synthetic MONTH 6–12 · OPTIONAL 
+ Only if the harness still shows a gap after Rungs 0–3.
+ $1–5K 
+ Rung X — quantified NO
+ Scratch training
+ ACE-Step-scale ≈ 46K A100-hours ≈ $55–76K + a 100k-h corpus. YuE-scale ≈ $200–300K+ + 650k h + a 512-GPU cluster + documented catastrophic run failures. Not the path. 
+ $55K–300K+ · REJECTED 
+ Data doctrine
+ CC0 / CC-BY (MTG-Jamendo CC cores, FMA), licensed packs, synthetic self-improvement loops (YuE2's recipe: "primarily CC0 + synthetic"). Never scrape copyrighted audio — the GEMA ruling and Jamendo v. Nvidia (€17.8M) show the bill comes due. Your voice only for cloning, behind a consent-phrase gate like Suno #070.
+ Eval harness first
+ LUFS-matched blind A/B vs Suno outputs on a fixed prompt battery; track FAD / CLAP / SongEval plus your own win-rate. If you can't measure the gap, you can't close it. 
+ SECTION 08
+ Reference architecture & cost. 
+ Local-first. Browser-on-localhost for v1, Tauri shell later. The engine sits behind an abstraction so backends swap freely.
+ aura — system layout 
+ ┌─ Desktop (Linux/Win/Mac): Tauri 2 shell (42MB vs Electron 168MB) or pure browser-on-localhost (v1)
+│ React UI: Create panel (Simple/Advanced) · Library · wavesurfer-multitrack Studio · Stems drawer · Voice lab
+├─ FastAPI worker + SQLModel/SQLite + asyncio.Queue + SSE progress (HeartMuLa Studio pattern — proven)
+│ Lyrics: local LLM (Ollama) emitting Suno metatag grammar
+│ Engine abstraction → backends: [local MLX/MPS on Mac] [local CUDA] [ serverless GPU burst ]
+│ Generation: ACE-Step 1.5 turbo 8-step (draft) / SFT 50-step (render) / YuE2 (quality batch)
+│ Ranker: n=8–16 → audiobox-aesthetics + SongEval + CLAP + lyric-WER → top 2 to UI 
+│ Stems: Demucs (demucs-mlx 73× RT on Mac) / BS-RoFormer · Mastering: Matchering + pyloudnorm
+└─ Storage: local-first library, WAV/MP3/stems-ZIP/MIDI export, no credits, no caps, ever 
+ TIER ① Mac-only
+ M3 Pro 36GB: draft at ~25s/song natively (MLX), render via cloud burst.
+ < $15/mo @ 500 songs
+ TIER ② Any NVIDIA 24GB box
+ 3090 / 4090: fully local, 2–10s drafts. No cloud dependency at all.
+ $0 marginal / song
+ TIER ③ Cloud-only
+ RunPod serverless 4090 at $1.10/h active-seconds, scale-to-zero. A 2-variant song ≈ 1–1.5 GPU-min.
+ $0.01–0.03 / song
+ Renting beats owning until ~1,000+ songs/month. Scale-to-zero serverless means idle cost is exactly zero.
+ Biggest infra risk: CUDA-stack fragility × 3 OSes (torch cu126/cu128, Blackwell sm_120, flash-attn pins, MPS bugs). Mitigate with per-OS pinned envs, Docker, and CI on all three. Avoid gcui-art/suno-api (dead since Dec 2025, ToS risk) and MusicGen (CC-BY-NC).
+ SECTION 09
+ Phased roadmap — day 1 to month 12. 
+ Stage-gated: every phase has exit criteria, and no phase starts before the previous one exits.
+ Phase 0 · Day 1–3
+ Engine smoke test
+ Install ACE-Step (MLX fork on Mac / CUDA on PC), render 3 reference songs, run Demucs + all-in-one + WhisperX; verify the eval harness scorers. This is the "know within an hour" gate Fable recommended — now de-risked.
+ EXIT: 3 songs on disk + scores 
+ Phase 1 · Week 1–3
+ MVP "Create"
+ React Create panel mirroring frames #017 / #046, FastAPI queue + SSE, LLM lyrics, ACE-Step generation, 2-variant cards, player, local library, WAV/MP3 export.
+ EXIT: prompt → song in <60s cloud / <90s Mac 
+ Phase 2 · Week 3–6
+ Quality engine
+ Best-of-n ranker, post-chain mastering, LoRA tooling, eval dashboard.
+ EXIT: blind-A/B win-rate vs stock ACE-Step ≥ 70% 
+ Phase 3 · Week 6–12
+ Studio
+ wavesurfer-multitrack, version lanes, clip tempo / transpose / speed / volume, stems drawer (6-way), section labels, cover pipeline, hum-to-MIDI, voice lab with consent gate, MIDI + stems-ZIP export.
+ EXIT: full re-creation of the tutorial's workflow, locally 
+ Phase 4 · Month 3–12
+ "Suno-6-class"
+ DPO loop on your preferences, per-genre LoRA library, per-stem repaint editing, Tauri installers for all 3 OSes, optional self-hosted share server.
+ EXIT: v5-parity on your genres, measured by harness 
+ EXIT: v5.5 feature-parity + exports nobody else offers 
+ Stretch
+ Beyond the plan
+ Song → music-video generation, live jam mode (Seed-VC at 300ms latency), mobile companion.
+ SECTION 10
+ Risk register — honest. 
+ What can actually kill this project, and the standing mitigation for each.
+ Risk
+ Severity
+ Mitigation
+ Open model quality plateaus below v5.5 / v6
+ MED 
+ best-of-n + LoRA + DPO stack; accept the genre-local ceiling
+ CUDA / MPS dependency hell × 3 OSes
+ HIGH 
+ Pinned envs, Docker, per-OS CI, cloud fallback
+ ACE-Step repo stagnation / license drift
+ LOW-MED 
+ MIT fork frozen locally; YuE2 / HeartMuLa as swap-in backends
+ Voice-clone misuse
+ MED 
+ Consent-phrase + pyannote verification; own-voice-only policy
+ Legal (distribution of outputs / models)
+ LOW · personal use 
+ CC0 / synthetic data doctrine; no scraping; NC licenses (MusicGen, YuE2-Comfy LoRA trainer) excluded from anything shared
+ Scope creep (a DAW is months of work)
+ MED 
+ Stage-gated phases; wavesurfer-multitrack, not a from-scratch DAW
+ "Suno 7" leapfrogs again
+ ACCEPT 
+ Our wedge (exports / ownership / local) is structural, not quality-based
+ SECTION 11
+ Methodology & sources
+ 6-agent research swarm, ~150 searches, verbatim-excerpt evidence standard, cross-verified (conflict log in research/ ).
+ Key primary sources: arXiv 2602.00744 (ACE-Step 1.5), arXiv 2506.00045 (ACE-Step), YuE / YuE2 repos + papers, 404 Media Suno-breach reporting (Jul 2026), RIAA filings, GEMA ruling coverage, WildSongBench, MVSep leaderboards, official pricing pages (Suno / Udio / ElevenLabs / Mureka), RunPod / Vast / Modal pricing, and the r/SunoAI & r/udiomusic complaint corpus.
+ Full dossiers: sunoclone_dim01–06.md . UI grounding: 150 sampled frames of Simon Crowe's Suno tutorial, analyzed and corrected against Fable 5.1's video review.
+ AURA
+ Generated 2026-10-08 · Research swarm: 6 agents · Evidence standard: verbatim excerpts, cross-verified
+For personal review — build command pending. 
