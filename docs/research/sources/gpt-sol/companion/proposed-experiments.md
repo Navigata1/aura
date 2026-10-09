@@ -1,0 +1,722 @@
+# Proposed experiment register
+
+All 16 experiments are proposed and have not run. The planned 48 music briefs and 12-brief smoke subset have not been instantiated or selected. This register supplies reviewable hypotheses, procedures, measurements and promotion/stop decisions; it is not a results file.
+
+| ID | Hypothesis | Status |
+|---|---|---|
+| MG-E01 | Two pinned engines can satisfy one reproducible artifact contract on supported hardware before a studio interface is built. | proposed_not_run |
+| MG-E02 | An independent engine or declared selection pipeline can improve accepted full-song quality within a fair, explicit budget. | proposed_not_run |
+| MG-E03 | Structured lyric and performance conditioning can improve intelligibility and expressive singing without sacrificing musicality. | proposed_not_run |
+| MG-E04 | Codec reconstruction exposes a fidelity ceiling that prompting or mastering alone cannot remove. | proposed_not_run |
+| MG-E05 | Authorized native reference conditioning, an authorized adapter or performance conversion can maintain a chosen singing identity across varied excerpts. | proposed_not_run |
+| MG-E06 | A local lyric/section repair can preserve immutable working PCM outside its explicit edit and crossfade mask while sounding musically continuous. | proposed_not_run |
+| MG-E07 | A modern separator can produce useful faithful stems for a deliberately limited instrument taxonomy. | proposed_not_run |
+| MG-E08 | Reference-conditioned re-performance can yield cleaner usable parts than extraction while changing the original performance. | proposed_not_run |
+| MG-E09 | Human performance and explicit score/MIDI rendering can achieve high-quality, controllable results for selected songs before broad generative parity is available. | proposed_not_run |
+| MG-E10 | Long full songs expose structure and identity drift that short samples conceal. | proposed_not_run |
+| MG-E11 | A rights-cleared domain/identity adapter improves held-out target uses beyond prompt/reference-only baselines without unacceptable memorization. | proposed_not_run |
+| MG-E12 | A separate local narration service can preserve approved text, pronunciation and narrator identity across resumable longform chapters. | proposed_not_run |
+| MG-E13 | Measured cost per approved narration hour can identify the economic value of a local service without relying on the user-reported historical $25k figure. | proposed_not_run |
+| MG-E14 | One project/control application can maintain responsive, reliable audio transport across Mac, Windows and Linux while generation runs separately. | proposed_not_run |
+| MG-E15 | Manifest-based aligned stems and tempo/MIDI data survive a three-OS DAW round trip without timing loss. | proposed_not_run |
+| MG-E16 | Accepted takes and project state survive interruption independently of model jobs and OS-specific workers. | proposed_not_run |
+
+## Complete machine-readable contract
+
+```json
+{
+  "schema_version": "1.0",
+  "created_on": "2026-10-08",
+  "status": "proposed_not_run",
+  "scope_authority": "/Users/IDC2.5/Music Gen/reports/Music-Gen-Master-Plan-v1-2026-10-08.md",
+  "scope_note": "A proposed experiment register derived from the root master plan. No fixture instantiated, model installed, inference run, training run, controlled audition or cross-platform product test is represented by this file.",
+  "fixture_design": {
+    "status": "proposed_not_instantiated",
+    "planned_total": 48,
+    "instantiated_total": 0,
+    "proposed_categories": [
+      {
+        "name": "sparse_acoustic_worship",
+        "planned_briefs": 6
+      },
+      {
+        "name": "dense_pop",
+        "planned_briefs": 6
+      },
+      {
+        "name": "rhythm_heavy",
+        "planned_briefs": 6
+      },
+      {
+        "name": "cinematic_orchestral",
+        "planned_briefs": 6
+      },
+      {
+        "name": "instrumental_beds",
+        "planned_briefs": 6
+      },
+      {
+        "name": "authorized_voice_reference_control",
+        "planned_briefs": 6
+      },
+      {
+        "name": "local_repairs",
+        "planned_briefs": 6
+      },
+      {
+        "name": "difficult_edge_cases",
+        "planned_briefs": 6
+      }
+    ],
+    "smoke_subset": {
+      "planned_total": 12,
+      "selected_total": 0,
+      "status": "proposed_not_selected"
+    },
+    "narration_suite": {
+      "separate_from_music_fixtures": true,
+      "status": "proposed_not_instantiated",
+      "count": null
+    },
+    "constraints": "Set actual genres, languages, texts, durations, reference permissions and expected constraints before generating. The 48 slots are design counts, not existing fixture files."
+  },
+  "preregistration": {
+    "required_before_execution": [
+      "Exact assets and content hashes",
+      "Selected operator/entity and intended use",
+      "Pinned code/checkpoint/dependency/rights records",
+      "Machine/backend inventory",
+      "Candidate budget, selection rules and paid-run ceiling",
+      "Task-specific acceptance criteria and any statistical margin",
+      "Listening protocol and permitted reference-provider access"
+    ],
+    "threshold_policy": "Only numeric gates already proposed in the master are reproduced here. They remain proposed planning choices. Other tolerances, budgets and margins are unset until preregistration; no observed success or failure is asserted.",
+    "result_policy": "Retain all candidates, failures, edits, conversion steps and review notes. Published capability claims and local measurements remain separate.",
+    "results": null
+  },
+  "profiles": {
+    "mac_control": {
+      "hardware": "Apple M5 Pro; 48 GiB unified memory, verified by root host inventory",
+      "runtime": "Not yet installed or benchmarked",
+      "purpose": "Control/development and supported Apple local runners"
+    },
+    "windows_target_pending": {
+      "hardware": "User reports Windows access; CPU/GPU/RAM/device specifications not yet supplied",
+      "runtime": "Not installed or tested"
+    },
+    "linux_target_pending": {
+      "hardware": "User reports Linux access; CPU/GPU/RAM/device specifications not yet supplied",
+      "runtime": "Not installed or tested"
+    },
+    "cuda_render_conditional": {
+      "hardware": "Actual suitable NVIDIA inventory or separately authorized bounded rental required",
+      "runtime": "Not provisioned",
+      "purpose": "CUDA-only quality challenger"
+    },
+    "ace_task_profiles": {
+      "engine": "ACE-Step 1.5 release/checkpoints to pin",
+      "tasks": "Select documented base/turbo/XL capability per experiment; no universal task support assumed",
+      "status": "unbenchmarked"
+    },
+    "minimax_quality_conditional": {
+      "engine": "MiniMax-Music3 exact release/checkpoint to pin",
+      "requirements": "CUDA path and intended-use community-license conditions",
+      "status": "unbenchmarked"
+    },
+    "blind_level_matched": {
+      "protocol": "Private anonymous auditions; randomized presentation; no heavy corrective mastering; full songs and problem intervals",
+      "aggregation": "Cluster uncertainty by brief; report objective diagnostics separately"
+    },
+    "codec_native_roundtrip": {
+      "protocol": "Selected model’s exact compatible codec at native configuration; no silent codec swapping"
+    },
+    "working_pcm_preservation": {
+      "protocol": "Immutable pre-edit working PCM, same sample rate/channel layout/dtype; compare samples outside explicit edit/crossfade masks"
+    },
+    "faithful_separation": {
+      "protocol": "Pinned supported separator; preserve mixture, estimated stems and residual; no generative repair in this lane"
+    },
+    "reperformance": {
+      "protocol": "New reference-conditioned or score-rendered performance; explicitly different provenance from faithful extraction"
+    },
+    "singing_identity_routes": {
+      "protocol": "Native reference conditioning, supported authorized adapter and conversion evaluated separately"
+    },
+    "score_human_production": {
+      "protocol": "Original score/MIDI, authorized performance and permitted instrument renderers; log human labor"
+    },
+    "adapter_research_conditional": {
+      "protocol": "Rights-cleared data and supported recipe; disjoint performer/work/recording-family splits; no training authorized by this register"
+    },
+    "voice_service_conditional": {
+      "engines": "Selected permitted Qwen3-TTS/Chatterbox/CosyVoice candidates after exact component review",
+      "protocol": "Separate approved narration service; stable reusable voice prompt and paragraph/chapter manifests",
+      "status": "unbenchmarked"
+    },
+    "cost_accounting": {
+      "protocol": "Actual charges/energy and explicit labor/ownership allocations divided by approved finished hours; no historical savings assumption"
+    },
+    "daw_export_roundtrip": {
+      "protocol": "Aligned dry/processed stems, MIDI and tempo map; identified DAWs on actual target systems"
+    },
+    "job_recovery": {
+      "protocol": "Separate artifact/project state from worker/job state; preserve hashes and terminal disposition"
+    }
+  },
+  "experiments": [
+    {
+      "id": "MG-E01",
+      "hypothesis": "Two pinned engines can satisfy one reproducible artifact contract on supported hardware before a studio interface is built.",
+      "required_assets": [
+        "Twelve smoke briefs selected from the planned fixture set, not yet created",
+        "Pinned engine/code/checkpoint/license manifests",
+        "Actual machine inventory and a bounded run budget"
+      ],
+      "profiles": [
+        "mac_control",
+        "cuda_render_conditional",
+        "ace_task_profiles",
+        "minimax_quality_conditional"
+      ],
+      "procedure": [
+        "Record hardware, backend, revision, checkpoint hash, precision and complete inference settings.",
+        "Run the proposed 12-brief smoke subset with both adapters; retain every output, error and failed attempt.",
+        "Repeat a selected run under the same recorded conditions to distinguish reproducibility from a seed promise."
+      ],
+      "measurements": [
+        "Artifact/manifest completeness",
+        "Native rate and output duration",
+        "Cold/warm wall time and real-time factor",
+        "Peak process/GPU memory and failure classification"
+      ],
+      "stop_or_promote_rule": {
+        "promote": "The master’s proposed gate is two pinned adapters completing the 12 smoke briefs, with failures retained and output provenance complete.",
+        "stop": "Do not promote an unsupported backend, unavailable checkpoint, unresolved intended-use license or irreproducible artifact contract."
+      },
+      "rights_notes": [
+        "Resolve each selected checkpoint and dependency’s intended-use terms before execution.",
+        "A fallback engine must be explicitly identified; a substituted run cannot be labeled as the original engine."
+      ],
+      "status": "proposed_not_run"
+    },
+    {
+      "id": "MG-E02",
+      "hypothesis": "An independent engine or declared selection pipeline can improve accepted full-song quality within a fair, explicit budget.",
+      "required_assets": [
+        "Approved fixture briefs and lyrics",
+        "Current lawfully obtained reference outputs if provider comparison is authorized",
+        "Independent listeners and randomized blind audition sheets",
+        "Preregistered candidate counts, selection criteria and spending ceiling"
+      ],
+      "profiles": [
+        "ace_task_profiles",
+        "minimax_quality_conditional",
+        "blind_level_matched"
+      ],
+      "procedure": [
+        "Evaluate a single-candidate lane and a separately labeled equal-candidate-budget selection lane; the master’s four takes per brief is an example to settle before rendering.",
+        "Apply the same requested duration and comparable scope, retaining rejected candidates and failures.",
+        "Randomize level-matched full-song and problem-interval comparisons; report compute/wall cost separately from candidate equality."
+      ],
+      "measurements": [
+        "Composition, sonic artifacts, lyrics, identity, constraint adherence and overall preference",
+        "Accepted-result rate and total cost per accepted song",
+        "Uncertainty clustered by brief",
+        "Results split by use case and selection lane"
+      ],
+      "stop_or_promote_rule": {
+        "promote": "Promote a use-case route only after owner/external listener acceptance under the declared budget; choose any later noninferiority margin before listening.",
+        "stop": "Do not promote a universal parity claim from a pilot, unequal selection budget, mastering loudness advantage or pooled votes without brief-level uncertainty."
+      },
+      "rights_notes": [
+        "Use only original/approved lyrics and licensed references.",
+        "Provider outputs need lawful access and applicable comparison/storage terms."
+      ],
+      "status": "proposed_not_run"
+    },
+    {
+      "id": "MG-E03",
+      "hypothesis": "Structured lyric and performance conditioning can improve intelligibility and expressive singing without sacrificing musicality.",
+      "required_assets": [
+        "Approved sung texts with pronunciation notes and section maps",
+        "Paired briefs varying syllable density, phrasing, tempo and supported language",
+        "Human lyric auditors and singing evaluators"
+      ],
+      "profiles": [
+        "ace_task_profiles",
+        "minimax_quality_conditional",
+        "blind_level_matched"
+      ],
+      "procedure": [
+        "Compare plain prompts with structured lyric/section/performance instructions using the same engine and declared candidate budget.",
+        "Audit missing/repeated lines, consonants, stresses, breaths and word-to-note fit against the approved text.",
+        "Collect blind judgments of expression, pitch, phrasing and musicality; keep ASR diagnostics separate from human corrections."
+      ],
+      "measurements": [
+        "Human-corrected word/phoneme errors",
+        "Missing/repeated line counts",
+        "Pitch/phrase and pronunciation annotations",
+        "Expression and overall musical preference",
+        "Acceptance versus rerender/repair time"
+      ],
+      "stop_or_promote_rule": {
+        "promote": "Use the master’s proposed pilot gate of no missing/repeated lines in accepted tracks; register language and expression criteria before larger evaluation.",
+        "stop": "Stop an instruction strategy that gains automated lyric scores while listeners reject its phrasing or timbre."
+      },
+      "rights_notes": [
+        "Keep approved wording immutable unless an authorized edit is explicitly recorded.",
+        "Avoid imitation of an unconsented singer identity."
+      ],
+      "status": "proposed_not_run"
+    },
+    {
+      "id": "MG-E04",
+      "hypothesis": "Codec reconstruction exposes a fidelity ceiling that prompting or mastering alone cannot remove.",
+      "required_assets": [
+        "Held-out licensed dry and mixed recordings spanning vocals, breaths, cymbals, dense mixes and stereo space",
+        "Exact codec/checkpoint pair used by each evaluated engine",
+        "Native sample-rate and conversion manifests"
+      ],
+      "profiles": [
+        "codec_native_roundtrip",
+        "blind_level_matched"
+      ],
+      "procedure": [
+        "Encode and decode held-out recordings through each available authorized codec at its native configuration.",
+        "Compare original, round trip and generated output independently; level-match without corrective mastering.",
+        "Annotate lost transients, consonants, bandwidth, stereo image and metallic/watery artifacts; keep resampling as a separate logged operation."
+      ],
+      "measurements": [
+        "Blind reconstruction preference and artifact annotations",
+        "Spectral/transient and stereo/mono diagnostics",
+        "Reconstruction wall time and memory",
+        "Codec-specific failures by source domain"
+      ],
+      "stop_or_promote_rule": {
+        "promote": "Advance decoder research only when held-out reconstruction reveals a material listener-relevant ceiling; preregister the later improvement criterion.",
+        "stop": "Do not replace a learned codec under an existing generator without a documented compatibility/adaptation experiment; a 48 kHz container alone is not evidence of improvement."
+      },
+      "rights_notes": [
+        "Recording access is not training permission; this first trial is reconstruction only.",
+        "Pin codec terms separately from generator terms."
+      ],
+      "status": "proposed_not_run"
+    },
+    {
+      "id": "MG-E05",
+      "hypothesis": "Authorized native reference conditioning, an authorized adapter or performance conversion can maintain a chosen singing identity across varied excerpts.",
+      "required_assets": [
+        "Consented identity reference recordings and permitted-use record",
+        "Ten varied excerpts for the master’s proposed first identity gate, not yet created",
+        "Disjoint cross-style/octave/language challenge material",
+        "Original performance for conversion comparisons"
+      ],
+      "profiles": [
+        "singing_identity_routes",
+        "blind_level_matched"
+      ],
+      "procedure": [
+        "Test native conditioning, supported adapter and conversion as separately labeled routes with identical target excerpts where feasible.",
+        "Keep source singer, target identity, melody and arrangement provenance distinct.",
+        "Perform blind owner/listener identity reviews and annotate timbre, pitch, diction, breath and vibrato degradation."
+      ],
+      "measurements": [
+        "Identity recognition and consistency by excerpt",
+        "Pitch/diction/artifact diagnostics",
+        "Performance preservation for conversion",
+        "Failure distribution across octave/style/language"
+      ],
+      "stop_or_promote_rule": {
+        "promote": "Apply the master’s proposed ten-excerpt blind owner review gate, then define broader challenge-set criteria before scale-up.",
+        "stop": "Do not generalize one successful chorus to all voices, registers or languages; stop any route lacking consent or stable source/target provenance."
+      },
+      "rights_notes": [
+        "Require identity owner permission and allowed-use scope.",
+        "Adapter training rights and voice conversion rights are separate from model code licensing."
+      ],
+      "status": "proposed_not_run"
+    },
+    {
+      "id": "MG-E06",
+      "hypothesis": "A local lyric/section repair can preserve immutable working PCM outside its explicit edit and crossfade mask while sounding musically continuous.",
+      "required_assets": [
+        "An accepted dry working-PCM take and immutable reference hash",
+        "Authorized one-word and section repair requests",
+        "Sample-index edit/crossfade masks",
+        "Pinned engine profile supporting the requested operation"
+      ],
+      "profiles": [
+        "working_pcm_preservation",
+        "ace_task_profiles",
+        "blind_level_matched"
+      ],
+      "procedure": [
+        "Record working PCM rate, channel layout and dtype before editing.",
+        "Render replacement material and copy retained original working samples outside explicit masks.",
+        "Compare canonical sample ranges rather than WAV headers; audition boundaries and verify lyrics.",
+        "Log conversion, time stretching, generative covers and final mix renders as different operations."
+      ],
+      "measurements": [
+        "Outside-mask sample equality and changed-sample ranges",
+        "Boundary click/discontinuity and musical transition annotations",
+        "Requested lyric/section correctness",
+        "Repair attempts, duration and acceptance"
+      ],
+      "stop_or_promote_rule": {
+        "promote": "The master’s proposed preservation gate is byte-identical retained working PCM at the same rate/layout/dtype outside edit/crossfade masks, plus accepted boundaries.",
+        "stop": "Stop the exact-preservation claim if kept samples change; do not apply this gate to re-performance, stretching, conversion or mastering."
+      },
+      "rights_notes": [
+        "Use owned or explicitly editable source material.",
+        "Retain the source and edit manifest; approved lyric changes require an explicit authorized request."
+      ],
+      "status": "proposed_not_run"
+    },
+    {
+      "id": "MG-E07",
+      "hypothesis": "A modern separator can produce useful faithful stems for a deliberately limited instrument taxonomy.",
+      "required_assets": [
+        "Licensed ground-truth multitrack recordings and their documented mixtures",
+        "Pinned separator weights/licenses",
+        "Sparse and dense examples within the supported taxonomy"
+      ],
+      "profiles": [
+        "faithful_separation",
+        "blind_level_matched"
+      ],
+      "procedure": [
+        "Run a baseline and a candidate separator under recorded settings.",
+        "Retain individual estimates, residual and recombined output without corrective generation.",
+        "Evaluate isolated stems and the recombination against known sources; annotate bleed, missing content and time shifts."
+      ],
+      "measurements": [
+        "Reference-source and mixture-residual diagnostics",
+        "Bleed, artifact and timing annotations",
+        "Isolated/recombined listener utility",
+        "Wall time, memory and accepted-stem rate"
+      ],
+      "stop_or_promote_rule": {
+        "promote": "Promote only tested instruments and use cases after owner/listener acceptance; set task-specific metric tolerances before evaluation.",
+        "stop": "Do not infer arbitrary-instrument isolation from a four-stem result or claim clean original recordings when artifacts remain."
+      },
+      "rights_notes": [
+        "Confirm recording/stem evaluation permission and exact checkpoint terms.",
+        "Source and estimated-stem provenance remain attached."
+      ],
+      "status": "proposed_not_run"
+    },
+    {
+      "id": "MG-E08",
+      "hypothesis": "Reference-conditioned re-performance can yield cleaner usable parts than extraction while changing the original performance.",
+      "required_assets": [
+        "Authorized source songs and selected parts",
+        "Aligned source/stem or corrected transcription",
+        "Eligible reference-conditioned engine or instrument renderer",
+        "Matched faithful-separation outputs from MG-E07"
+      ],
+      "profiles": [
+        "reperformance",
+        "faithful_separation",
+        "blind_level_matched"
+      ],
+      "procedure": [
+        "Create a faithful extraction and a separately labeled new performance for the same requested part.",
+        "Compare notes, onset timing, articulation, identity and musical fit, then audition each in the source arrangement.",
+        "Keep the original and transformation manifest; show both results without calling the re-performance an original isolated stem."
+      ],
+      "measurements": [
+        "Musical and timing match",
+        "Articulation/identity changes and isolated cleanliness",
+        "Recombined arrangement preference",
+        "Human correction time and accepted-part cost"
+      ],
+      "stop_or_promote_rule": {
+        "promote": "Promote re-performance only as a distinct operation when listeners accept its musical match and its changed-performance provenance is clear.",
+        "stop": "Do not use mixture residual or exact-PCM preservation as the success criterion for a new performance; stop if clean sound disguises incorrect notes or rhythm."
+      },
+      "rights_notes": [
+        "Reference use, transformation and performer identity permissions must cover the requested operation.",
+        "Restricted research models are not automatically eligible commercial backends."
+      ],
+      "status": "proposed_not_run"
+    },
+    {
+      "id": "MG-E09",
+      "hypothesis": "Human performance and explicit score/MIDI rendering can achieve high-quality, controllable results for selected songs before broad generative parity is available.",
+      "required_assets": [
+        "Original score, lyrics and arrangement",
+        "Authorized singer/instrument recordings or commercially permitted voice/instrument libraries",
+        "Editable MIDI and tempo map",
+        "Comparable full-song generated arrangement"
+      ],
+      "profiles": [
+        "score_human_production",
+        "blind_level_matched"
+      ],
+      "procedure": [
+        "Produce the same composition through a score/human route and a full-song-generation route, recording all human work.",
+        "Keep notes, automation, guide vocal, dry stems and mixer state editable.",
+        "Compare final arrangements and attempt the same requested lyric, instrument and section revisions in both routes."
+      ],
+      "measurements": [
+        "Listener preference and musical intent adherence",
+        "Revision precision and time",
+        "Stem quality and project editability",
+        "Total production labor and accepted-song cost"
+      ],
+      "stop_or_promote_rule": {
+        "promote": "Promote this route for use cases where the owner accepts quality/control at the observed labor cost; agree on the acceptable cost envelope before expansion.",
+        "stop": "Do not present human-assisted results as autonomous generation or attribute instrument-library quality to a music model."
+      },
+      "rights_notes": [
+        "Verify recording, performer, voicebank and instrument-library distribution/training terms separately.",
+        "An instrument license permitting finished-song use may not permit training a new model."
+      ],
+      "status": "proposed_not_run"
+    },
+    {
+      "id": "MG-E10",
+      "hypothesis": "Long full songs expose structure and identity drift that short samples conceal.",
+      "required_assets": [
+        "Approved full-song briefs with repeatable chorus, verse evolution and purposeful ending",
+        "Section and lyric maps",
+        "Eligible engines with supported duration limits"
+      ],
+      "profiles": [
+        "ace_task_profiles",
+        "minimax_quality_conditional",
+        "blind_level_matched"
+      ],
+      "procedure": [
+        "Generate complete songs within each engine’s supported duration; keep requested versus achieved structure.",
+        "Review early/middle/final sections together and compare recurring choruses and singer identity.",
+        "Annotate verse omissions, abrupt transitions, harmonic drift, repeated filler and truncated endings."
+      ],
+      "measurements": [
+        "Section/lyric map adherence",
+        "Recurring melody/identity consistency",
+        "Transition and ending quality",
+        "Long-song acceptance, failure rate and cost"
+      ],
+      "stop_or_promote_rule": {
+        "promote": "Promote supported longform use cases only after full-song acceptance; define structure/timing tolerances before the trial.",
+        "stop": "Do not extrapolate short-clip success to full songs or silently stitch unsupported durations into an alleged native-generation result."
+      },
+      "rights_notes": [
+        "Use original/approved texts and composition references.",
+        "Record any continuation, stitching or editing as a separate transformation."
+      ],
+      "status": "proposed_not_run"
+    },
+    {
+      "id": "MG-E11",
+      "hypothesis": "A rights-cleared domain/identity adapter improves held-out target uses beyond prompt/reference-only baselines without unacceptable memorization.",
+      "required_assets": [
+        "Licensed training recordings with performer/work/family-separated splits",
+        "Supported adapter training recipe and checkpoint terms",
+        "Held-out briefs, identities where relevant and independent listeners",
+        "Approved experiment compute ceiling"
+      ],
+      "profiles": [
+        "adapter_research_conditional",
+        "blind_level_matched"
+      ],
+      "procedure": [
+        "Run prompt-only and reference-only baselines before training.",
+        "Train only supported components after data rights and split checks.",
+        "Compare adapter versus baselines on unseen recordings/styles; inspect nearest-source resemblance and retained diversity."
+      ],
+      "measurements": [
+        "Held-out preference and target-domain improvement",
+        "Identity/style generalization",
+        "Memorization and source resemblance review",
+        "Training/inference cost and regression artifacts"
+      ],
+      "stop_or_promote_rule": {
+        "promote": "Advance only if a preregistered held-out criterion improves over both baselines with acceptable memorization/regression review.",
+        "stop": "Stop for leakage, missing training permission, source reproduction concerns or a gain limited to training songs; do not claim broad parity from a narrow adapter."
+      },
+      "rights_notes": [
+        "Public availability is not training permission.",
+        "Voice, recording, lyrics, weights and synthetic-data provenance require separate entries."
+      ],
+      "status": "proposed_not_run"
+    },
+    {
+      "id": "MG-E12",
+      "hypothesis": "A separate local narration service can preserve approved text, pronunciation and narrator identity across resumable longform chapters.",
+      "required_assets": [
+        "A separate approved narration suite, not yet instantiated",
+        "Consented voice references",
+        "Pronunciation lexicon and text/chapter hashes",
+        "Current project content-policy audit before Sabbath Echo integration"
+      ],
+      "profiles": [
+        "voice_service_conditional",
+        "blind_level_matched"
+      ],
+      "procedure": [
+        "Compare eligible local engines against a lawfully available current narration reference.",
+        "Render chapter/paragraph chunks with reusable identity prompts, then join using logged timing and loudness operations.",
+        "Audit word-for-word correctness, pronunciation, paragraph transitions and beginning-to-end identity; rerender one corrected paragraph and verify unchanged neighbors."
+      ],
+      "measurements": [
+        "Human-corrected omissions, repetitions and pronunciation errors",
+        "Longform identity/prosody drift",
+        "Join quality, timing and resumability",
+        "Editorial repair time and accepted finished duration"
+      ],
+      "stop_or_promote_rule": {
+        "promote": "Promote an engine only after the approved-text pilot is accepted and current project policies/voice rights are verified; define the larger chapter criteria before expansion.",
+        "stop": "Stop on unauthorized wording changes, unstable identity, unavailable commercial terms or a project policy excluding synthesis."
+      },
+      "rights_notes": [
+        "Preserve the master’s provisional separation of licensed Scripture audio and narration; re-audit current governing files before integration.",
+        "No assumed commercial clearance from VoiceStudio’s app license or Pro purchase."
+      ],
+      "status": "proposed_not_run"
+    },
+    {
+      "id": "MG-E13",
+      "hypothesis": "Measured cost per approved narration hour can identify the economic value of a local service without relying on the user-reported historical $25k figure.",
+      "required_assets": [
+        "Approved narration pilot and acceptance records from MG-E12",
+        "Actual provider/local compute charges or measured energy data",
+        "Logged editing/review/operations labor and recurring-tool costs",
+        "Owner-set cost envelope before paid execution"
+      ],
+      "profiles": [
+        "voice_service_conditional",
+        "cost_accounting"
+      ],
+      "procedure": [
+        "Record all attempts, failures, repairs and human review, not only accepted renders.",
+        "Separate marginal run cost from ownership/maintenance allocation; make allocation assumptions explicit.",
+        "Divide total measured/declared costs by approved finished hours; compare like-for-like output quality and workload with the current reference."
+      ],
+      "measurements": [
+        "Compute, tools, labor and operations cost components",
+        "Approved finished hours and rejected-hour ratio",
+        "Cost per approved hour and reviewer minutes per approved hour",
+        "Cold/warm throughput and sensitivity to rerender rates"
+      ],
+      "stop_or_promote_rule": {
+        "promote": "Promote a future cost claim only when supported by observed accepted-hour quality/cost and owner-agreed accounting inputs.",
+        "stop": "Do not infer savings from software price, raw generated duration or an unverified historical invoice; stop paid runs at the pre-agreed ceiling."
+      },
+      "rights_notes": [
+        "Commercial output rights must be cleared before using approved hours in a business workflow.",
+        "Historical user-reported expenditure is context, not verified billing evidence."
+      ],
+      "status": "proposed_not_run"
+    },
+    {
+      "id": "MG-E14",
+      "hypothesis": "One project/control application can maintain responsive, reliable audio transport across Mac, Windows and Linux while generation runs separately.",
+      "required_assets": [
+        "Eight aligned test tracks and a persisted test project",
+        "Actual three-OS machine/device/backend inventory",
+        "Instrumentation for audio underruns, UI latency and loopback where available",
+        "Background render workload supported by each machine"
+      ],
+      "profiles": [
+        "mac_control",
+        "windows_target_pending",
+        "linux_target_pending",
+        "working_pcm_preservation"
+      ],
+      "procedure": [
+        "Play the proposed eight-track workload for 30 minutes on each target OS using actual audio devices, while background generation operates through workers.",
+        "Measure UI input latency and audio underruns; record driver, sample rate and buffer size.",
+        "Test seek, loop, solo/mute and device changes; measure microphone/controller round trip separately when hardware is available."
+      ],
+      "measurements": [
+        "Observed underruns/dropouts and transport accuracy",
+        "UI interaction p95 and audio round-trip latency",
+        "CPU/memory and buffer/device settings",
+        "Backend-specific failure and recovery behavior"
+      ],
+      "stop_or_promote_rule": {
+        "promote": "Use the master’s proposed first gates of eight tracks for 30 minutes per OS without observed underruns and UI interaction p95 below 100 ms during background generation.",
+        "stop": "Do not call three-platform ready from one OS, headless export or a browser latency hint; record untested devices as untested."
+      },
+      "rights_notes": [
+        "Use rights-cleared audio fixtures.",
+        "Audio backend/plugin distribution licenses need review before packaging."
+      ],
+      "status": "proposed_not_run"
+    },
+    {
+      "id": "MG-E15",
+      "hypothesis": "Manifest-based aligned stems and tempo/MIDI data survive a three-OS DAW round trip without timing loss.",
+      "required_assets": [
+        "An accepted project with dry/processed stems, MIDI, tempo map and provenance manifest",
+        "Authorized DAW installations on the three target OSes",
+        "Reference working PCM and render settings"
+      ],
+      "profiles": [
+        "daw_export_roundtrip",
+        "windows_target_pending",
+        "linux_target_pending",
+        "mac_control"
+      ],
+      "procedure": [
+        "Export stems at one project rate with common zero start and frame count; preserve original/native-rate metadata separately.",
+        "Import the package into an identified DAW on each OS and verify start, end, tempo-map and MIDI alignment.",
+        "Audition dry and processed recombinations; distinguish float-format headroom from original acoustic fidelity."
+      ],
+      "measurements": [
+        "Per-stem sample rate, start, frame count and offsets",
+        "Imported MIDI/tempo-map alignment",
+        "Recombination differences and missing assets",
+        "Cross-platform path/name/manifest handling"
+      ],
+      "stop_or_promote_rule": {
+        "promote": "Apply the master’s proposed aligned-export gate: common project rate, zero start and frame count, with the imported DAW session staying aligned.",
+        "stop": "Stop export promotion on drift, omitted assets or ambiguous transformations; 32-bit/48 kHz packaging is not a quality result."
+      },
+      "rights_notes": [
+        "Export may redistribute samples, presets or derived performances; check the relevant library/model/output terms.",
+        "Preserve permitted-use and transformation provenance with the package."
+      ],
+      "status": "proposed_not_run"
+    },
+    {
+      "id": "MG-E16",
+      "hypothesis": "Accepted takes and project state survive interruption independently of model jobs and OS-specific workers.",
+      "required_assets": [
+        "A persisted creator/studio prototype and accepted/rejected artifacts",
+        "Interruptible render/cancel workloads",
+        "Project and job-state manifests",
+        "Three-OS test environments when available"
+      ],
+      "profiles": [
+        "mac_control",
+        "windows_target_pending",
+        "linux_target_pending",
+        "job_recovery"
+      ],
+      "procedure": [
+        "Interrupt a render, cancel a queued job, disconnect a remote worker and force application restart in separately logged cases.",
+        "Reopen the project and audit accepted takes, edit history, job terminal states and asset hashes.",
+        "Resume eligible jobs without duplicating accepted outputs; retain failed attempts and upgrade provenance."
+      ],
+      "measurements": [
+        "Accepted artifact/state preservation",
+        "Orphan/duplicate asset and stale-job counts",
+        "Restart/resume behavior and recovery duration",
+        "Cross-platform interruption failures"
+      ],
+      "stop_or_promote_rule": {
+        "promote": "Use the master’s proposed recovery gate: forced restart preserves accepted takes and project state; later interrupted-render/cancel/upgrade tests span the three OSes.",
+        "stop": "Stop promotion if cancellation corrupts originals, accepted files disappear or a failed job is reported as successful."
+      },
+      "rights_notes": [
+        "Recovery must retain source permissions and revocation/retention records.",
+        "Test fixtures must not contain unapproved private voice recordings."
+      ],
+      "status": "proposed_not_run"
+    }
+  ]
+}
+```

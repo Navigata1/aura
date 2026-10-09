@@ -1,0 +1,1044 @@
+{
+ "label": "extract:gpt-sol-core",
+ "agent_id": "ab141fa5888c9db14",
+ "phase": "Extract",
+ "result": {
+  "source": "gpt-sol-core",
+  "claims": [
+   {
+    "id": "S01",
+    "topic": "suno-facts",
+    "claim": "Suno v5.5 was released March 26, 2026 with Voices, Custom Models and My Taste.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "evidence": "Master plan s1; root-source-register",
+    "urls": [
+     "https://suno.com/blog/v5-5"
+    ]
+   },
+   {
+    "id": "S02",
+    "topic": "suno-facts",
+    "claim": "Suno's current documented generation is v6 (core, wild, mini variants), released September 9, 2026. The help page documents eight-minute generation.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "high",
+    "evidence": "Master plan s1; FRAMING; generation-research Decision",
+    "urls": [
+     "https://help.suno.com/en/articles/13924801",
+     "https://suno.com/blog"
+    ]
+   },
+   {
+    "id": "S03",
+    "topic": "suno-facts",
+    "claim": "No official Suno v6.5 release was located. 'Suno 6.5' is treated as the owner's aspirational target, to be defined by audible and operational acceptance criteria rather than a version number.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "high",
+    "evidence": "Master plan s1; generation-research Decision; FRAMING",
+    "urls": [
+     "https://suno.com/blog"
+    ]
+   },
+   {
+    "id": "S04",
+    "topic": "suno-facts",
+    "claim": "The v6 announcement describes local section and lyric edits, multi-source mashups, isolate-and-sample workflows and multimodal inputs. The official v6 video shows different references supplying vocal, drum, atmosphere and energy roles, edits that keep verses or replace words, and an extra-compute mode described as reducing drift in longer songs.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "evidence": "Master plan s1 and video table (_lHvWn2SNC4 02:10-03:26, 09:45-11:08, 15:21-16:00). Vendor demo, not proof of sample-level preservation.",
+    "urls": [
+     "https://suno.com/blog/introducing-v6",
+     "https://about.suno.com/blog/introducing-v6",
+     "https://www.youtube.com/watch?v=_lHvWn2SNC4&t=130s"
+    ]
+   },
+   {
+    "id": "S05",
+    "topic": "suno-facts",
+    "claim": "Suno Studio 2.0 includes MIDI recording and editing, MIDI-conditioned generation, automation, effects and chat-directed production. Suno acquired WavTool and its browser DAW team in 2025.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "evidence": "Master plan s1; root-source-register",
+    "urls": [
+     "https://suno.com/blog/studio-2",
+     "https://suno.com/blog/suno-acquires-wavtool"
+    ]
+   },
+   {
+    "id": "S06",
+    "topic": "suno-facts",
+    "claim": "Suno's June 11, 2026 stem update describes 'regenerated stems': the requested instrument is generated anew to match the source rather than extracted. Clean output and faithful output are therefore separate requirements. The implementation is not published.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "high",
+    "evidence": "Master plan s5 calls this 'the most consequential discovery in this sweep'; independently rechecked in independent-master-review D",
+    "urls": [
+     "https://suno.com/blog/stem-separation-updates"
+    ]
+   },
+   {
+    "id": "S07",
+    "topic": "suno-facts",
+    "claim": "Suno Voices takes a recording plus a verification phrase and keeps the resulting Voice private.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "evidence": "Master plan s6",
+    "urls": [
+     "https://suno.com/products/voices"
+    ]
+   },
+   {
+    "id": "S08",
+    "topic": "suno-facts",
+    "claim": "Suno launched a Speech beta on October 1, 2026 for spoken audio with music.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "low",
+    "evidence": "root-source-register only; not developed further in the plan",
+    "urls": [
+     "https://suno.com/blog/introducing-speech-beta"
+    ]
+   },
+   {
+    "id": "S09",
+    "topic": "suno-facts",
+    "claim": "In a March 14, 2024 interview, CEO Mikey Shulman described transformer-based next-token likelihood over audio/music token sequences, a largely end-to-end approach, audio tokenization as major proprietary work, and token throughput fast enough for streaming. This is historical and does not establish the v5.5/v6 recipe.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "evidence": "suno-engineering-disclosures s1 (approx. 02:41-06:43, 10:11); master plan s4",
+    "urls": [
+     "https://www.latent.space/p/suno"
+    ]
+   },
+   {
+    "id": "S10",
+    "topic": "data-training",
+    "claim": "Suno's January 1, 2026 California AB 2013 disclosure reports tens of millions of public audio files with textual metadata, possible user Content/Activity in post-training, cleaning and filtering, removal of structured user identifiers, and synthetic data. It is not an audited per-version dataset.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "evidence": "suno-engineering-disclosures s1; master plan s4",
+    "urls": [
+     "https://help.suno.com/en/articles/9709569"
+    ]
+   },
+   {
+    "id": "S11",
+    "topic": "suno-facts",
+    "claim": "Suno's October 1, 2026 Safety Center says it checks submitted recordings and lyrics for similarity, names training strategies 'Original Creation, By Design', and attaches C2PA Content Credentials. One example shows a v5.5 system-version field.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "evidence": "suno-engineering-disclosures s1",
+    "urls": [
+     "https://about.suno.com/safety"
+    ]
+   },
+   {
+    "id": "S12",
+    "topic": "suno-facts",
+    "claim": "A bounded patent search verified no relevant Suno-assigned or version-linked patent. US20260141890A1 (lyric replacement; inventor John Chowhan Park, assignee Individual) and US20260120836A1 (Iconic Inventions LLC, which only mentions Suno as an engine) are not Suno work.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "low",
+    "evidence": "suno-engineering-disclosures s2. Not exhaustive, and not a freedom-to-operate opinion.",
+    "urls": [
+     "https://patents.google.com/patent/US20260141890A1/en",
+     "https://patents.google.com/patent/US20260120836A1/en"
+    ]
+   },
+   {
+    "id": "S13",
+    "topic": "suno-facts",
+    "claim": "The inspected public sources do not establish v5.5/v6 parameter count, tokenizer, training objective mix, per-version dataset, stem architecture, serving topology, or whether Custom Models use LoRA, embeddings or full tuning. Bark is an older model, not Suno's song engine.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "evidence": "Master plan s4; independent-master-review E",
+    "urls": [
+     "https://github.com/suno-ai/bark"
+    ]
+   },
+   {
+    "id": "S14",
+    "topic": "suno-facts",
+    "claim": "The root register calls v6 'September partner-developed v6', so the January 2026 data disclosure predates it and cannot describe the v6 corpus.",
+    "source_confidence": "asserted",
+    "decision_impact": "low",
+    "evidence": "root-source-register access notes, line 32. No citation for 'partner-developed'.",
+    "urls": []
+   },
+   {
+    "id": "E01",
+    "topic": "song-engine",
+    "claim": "ACE-Step 1.5 XL: 4B DiT variants released April 2, 2026. Upstream recommends at least 20GB VRAM without offload, or 12GB with INT8 and CPU offload. Documented backends: Mac MLX/MPS, NVIDIA CUDA, AMD ROCm, Intel XPU and CPU. The repo and the XL SFT card are MIT.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "high",
+    "evidence": "generation-research shortlist; independent-master-review s3 line 48",
+    "urls": [
+     "https://github.com/ace-step/ACE-Step-1.5",
+     "https://huggingface.co/ACE-Step/acestep-v15-xl-sft"
+    ]
+   },
+   {
+    "id": "E02",
+    "topic": "song-engine",
+    "claim": "ACE's inference contract makes lego, extract and complete base-model-only tasks. Cover, repaint and extract skip the LM. Turbo guidance is distilled, so CFG is auto-corrected to 1. Output defaults to 48kHz. XL SFT and turbo do not inherit every base task.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "high",
+    "evidence": "generation-research s4; master plan s3 (pin separate task profiles)",
+    "urls": [
+     "https://github.com/ace-step/ACE-Step-1.5/blob/main/docs/en/INFERENCE.md"
+    ]
+   },
+   {
+    "id": "E03",
+    "topic": "data-training",
+    "claim": "ACE's technical report describes pretraining on about 20 million pairs, a stem-enriched task curriculum, a curated high-quality SFT stage, adversarial VAE training on 120 A100 GPUs, and distilled eight-step rendering. The authors say training data was licensed, public-domain/royalty-free or synthetic; this is not independently audited.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "evidence": "generation-research s5 and shortlist",
+    "urls": [
+     "https://arxiv.org/html/2602.00744v1",
+     "https://huggingface.co/ACE-Step/acestep-v15-xl-sft"
+    ]
+   },
+   {
+    "id": "E04",
+    "topic": "song-engine",
+    "claim": "MiniMax Music 3: the official HF weight repo is 57.4GB. The model card documents CUDA, five-minute songs and non-streaming generation, needing 24GB+ with offload paths below that. The older GitHub recipe uses two CUDA GPUs. HF currently says to install a pinned Diffusers PR commit.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "high",
+    "evidence": "generation-research shortlist; independent-master-review A and line 49",
+    "urls": [
+     "https://huggingface.co/MiniMaxAI/MiniMax-Music3",
+     "https://huggingface.co/MiniMaxAI/MiniMax-Music3/tree/main",
+     "https://github.com/MiniMax-AI/MiniMax-Music3"
+    ]
+   },
+   {
+    "id": "E05",
+    "topic": "architecture",
+    "claim": "MiniMax Music 3 pairs an 8B global LM, which predicts the first codebook for long-range structure, with a 0.6B local LM that predicts the remaining codebooks. Fused continuous hidden states feed flow matching and a music-adapted Flow-VAE. Native output is 32kHz, 16-bit stereo.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "high",
+    "evidence": "generation-research s2",
+    "urls": [
+     "https://github.com/MiniMax-AI/MiniMax-Music3"
+    ]
+   },
+   {
+    "id": "E06",
+    "topic": "legal-licensing",
+    "claim": "MiniMax Music 3 uses a custom Community License covering software and weights. Commercial use is allowed but requires prominent model naming in product UI, prior written authorization above US$20M aggregate annual revenue from covered products/services (licensee plus affiliates), maintained safeguards for third-party generation services, and an AUP. It is not MIT.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "high",
+    "evidence": "generation-research; independent-generation-review s1 (the threshold applies to covered revenue, not all company revenue)",
+    "urls": [
+     "https://huggingface.co/MiniMaxAI/MiniMax-Music3/blob/main/LICENSE"
+    ]
+   },
+   {
+    "id": "E07",
+    "topic": "song-engine",
+    "claim": "MiniMax's auto-generated HF 'Use this model' helper contains an image-pipeline snippet and a generic MPS comment. The substantive model card requires CUDA. The helper is not evidence that MiniMax runs on a Mac.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "high",
+    "evidence": "Master plan s7; generation-research observation 3; adversarial findings table",
+    "urls": [
+     "https://huggingface.co/MiniMaxAI/MiniMax-Music3"
+    ]
+   },
+   {
+    "id": "E08",
+    "topic": "song-engine",
+    "claim": "YuE2 replaced YuE1 in the official repo in September 2026, with released YuE2-3B and VAE weights. Official starting point: Linux, Python 3.12, a BF16 NVIDIA GPU with 24GB VRAM, one request at a time, 48kHz stereo output.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "high",
+    "evidence": "generation-research shortlist; independent-master-review line 51",
+    "urls": [
+     "https://github.com/multimodal-art-projection/YuE",
+     "https://github.com/multimodal-art-projection/YuE/blob/main/docs/generation.md"
+    ]
+   },
+   {
+    "id": "E09",
+    "topic": "legal-licensing",
+    "claim": "YuE2 code is Apache-2.0. The weights are CC BY-NC 4.0 plus an additional permission dated 2026-09-16: individuals acting in an individual capacity may publish, sell, license and monetize outputs without fees. Company commercial use of the weights needs separate licensing. The operator entity (individual vs LLC) must be recorded.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "high",
+    "evidence": "independent-generation-review s2; independent-master-review wording correction",
+    "urls": [
+     "https://github.com/multimodal-art-projection/YuE/blob/main/MODEL_LICENSE"
+    ]
+   },
+   {
+    "id": "E10",
+    "topic": "architecture",
+    "claim": "YuE2 is an autoregressive/non-autoregressive Mixture-of-Transformers. Text and lyrics produce an ABC melody/chord plan, then semantic tokens, flow-matched acoustic latents and a stereo VAE decode. It has about 3.58B parameters and was trained on about 346,000 hours of music. Score edits regenerate the full recording and do not preserve the original waveform.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "high",
+    "evidence": "generation-research s1 and shortlist",
+    "urls": [
+     "https://arxiv.org/html/2609.33757v1",
+     "https://arxiv.org/abs/2609.33757"
+    ]
+   },
+   {
+    "id": "E11",
+    "topic": "quality-eval",
+    "claim": "In YuE2's own expert listening study, Suno v6 got 59.3% overall preference against 31.6% for YuE2 best-of-eight (ties kept in the denominator). YuE2 best-of-eight beat Suno v4.5 57.3% to 30.5%. Against Suno v5 the result was roughly balanced.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "high",
+    "evidence": "independent-generation-review s6; master plan s3",
+    "urls": [
+     "https://arxiv.org/html/2609.33757v1"
+    ]
+   },
+   {
+    "id": "E12",
+    "topic": "quality-eval",
+    "claim": "YuE2's benchmark covers 192 prompts. Its best-of-eight selection uses SongBench Musicality, PER is the lowest of four ASR passes, and the benchmark decoder (legacy VAE) differs from the default listening VAE. It is not a matched-compute, single-take benchmark.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "evidence": "generation-research license-traps section; independent-generation-review s6",
+    "urls": [
+     "https://github.com/multimodal-art-projection/YuE/blob/main/docs/benchmarks.md"
+    ]
+   },
+   {
+    "id": "E13",
+    "topic": "song-engine",
+    "claim": "HeartMuLa released a 3B 'happy-new-year' checkpoint, HeartCodec and HeartTranscriptor. Generation defaults to 240 seconds. CUDA examples split model and codec across GPUs or lazy-load them. Inference is about real-time, with acceleration still a TODO. The repo and base weights became Apache-2.0 on January 20, 2026.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "high",
+    "evidence": "generation-research shortlist",
+    "urls": [
+     "https://github.com/HeartMuLa/heartlib",
+     "https://huggingface.co/HeartMuLa/HeartMuLa-oss-3B-happy-new-year"
+    ]
+   },
+   {
+    "id": "E14",
+    "topic": "song-engine",
+    "claim": "HeartMuLa's 'comparable to Suno' claim refers to an internal 7B model that has not been released publicly. A `--version 7B` CLI option is not evidence of downloadable weights.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "high",
+    "evidence": "independent-generation-review s4",
+    "urls": [
+     "https://github.com/HeartMuLa/heartlib"
+    ]
+   },
+   {
+    "id": "E15",
+    "topic": "legal-licensing",
+    "claim": "MuLaCover (released September 16, 2026) has Apache-2.0 source. Its official weights, including fine-tuned, quantized and merged derivatives, are CC BY-NC 4.0. A separate clause bars commercial use of generated audio, MIDI, tokens and latents without written permission. It was tested on Ubuntu 24.04 / PyTorch 2.10 / CUDA 13 / B300, and it reinterprets a reference rather than preserving the waveform.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "high",
+    "evidence": "generation-research shortlist; independent-generation-review s3",
+    "urls": [
+     "https://github.com/HeartMuLa/MuLaCover",
+     "https://huggingface.co/HeartMuLa/MuLaCover",
+     "https://github.com/HeartMuLa/MuLaCover/blob/main/MODEL_LICENSE",
+     "https://github.com/HeartMuLa/MuLaCover/blob/main/LICENSING.md"
+    ]
+   },
+   {
+    "id": "E16",
+    "topic": "song-engine",
+    "claim": "Stable Audio 3: Small-Music/SFX (433M) runs on CPU for up to 120s. Medium (1.4B) needs CUDA and runs up to 380s. Large is API-only. Official optimized routes include CPU and Apple MLX. Weights are under a gated Community License plus Gemma terms, trained on licensed AudioSparx and filtered CC Freesound. The official guide says it is not intended for intelligible vocals.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "evidence": "generation-research shortlist",
+    "urls": [
+     "https://github.com/Stability-AI/stable-audio-3",
+     "https://huggingface.co/stabilityai/stable-audio-3-medium",
+     "https://kb.stability.ai/knowledge-base/stable-audio-3-prompt-guide"
+    ]
+   },
+   {
+    "id": "E17",
+    "topic": "competitor",
+    "claim": "The Stable Audio 3 Large API offers asynchronous text, audio and inpaint routes at 44.1kHz stereo, with a duration field up to 380s, for 26 credits per successful text generation.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "low",
+    "evidence": "generation-research hosted engines",
+    "urls": [
+     "https://platform.stability.ai/docs/api-reference"
+    ]
+   },
+   {
+    "id": "E18",
+    "topic": "song-engine",
+    "claim": "DiffRhythm 2 (code and weights released October 30, 2025, Apache-2.0) uses semi-autoregressive block flow matching with reference audio plus lyrics. Extension and instrumental modes are TODOs. v1.2 is a separate editing/continuation model, and v1 memory figures do not apply to v2.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "evidence": "generation-research shortlist; independent-master-review R5",
+    "urls": [
+     "https://github.com/ASLP-lab/DiffRhythm2",
+     "https://github.com/ASLP-lab/DiffRhythm"
+    ]
+   },
+   {
+    "id": "E19",
+    "topic": "song-engine",
+    "claim": "Shao (formerly Khala) uses a 64-layer RVQ with coarse generation followed by acoustic super-resolution. Its weights are CC BY-NC 4.0. It recommends NVIDIA 24GB+ in a pinned NGC container, and the authors warn other runtime stacks can produce severely degraded, noise-like output.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "evidence": "generation-research shortlist; independent-master-review R3",
+    "urls": [
+     "https://github.com/Shao-Music-AI/Shao",
+     "https://huggingface.co/liujiafeng/Shao-MusicGeneration-v1.0/raw/main/README.md",
+     "https://arxiv.org/abs/2605.01790"
+    ]
+   },
+   {
+    "id": "E20",
+    "topic": "legal-licensing",
+    "claim": "SongGeneration/LeVo 2 access is unresolved. On 2026-10-08 the canonical Tencent GitHub repo and API returned 404 and the Tencent HF page returned 401. The reachable lglg666/SongGeneration-v2-large card says only 'license: unknown'.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "evidence": "independent-generation-review s5 endpoint table",
+    "urls": [
+     "https://github.com/tencent-ailab/SongGeneration",
+     "https://api.github.com/repos/tencent-ailab/SongGeneration",
+     "https://huggingface.co/tencent/SongGeneration",
+     "https://huggingface.co/lglg666/SongGeneration-v2-large",
+     "https://levo-demo.github.io/"
+    ]
+   },
+   {
+    "id": "E21",
+    "topic": "architecture",
+    "claim": "StepAudio 3 Music uses a 50Hz single-codebook semantic tokenizer, an MoE ABC planner, a flow-matching DiT and 48kHz audio. It was trained on more than 5 million hours (about 1 trillion corpus tokens) with expert-preference DPO. No downloadable weights were verified; only a provider-backed Space using a `step-music` submit/query API with a backend key.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "evidence": "generation-research s5 and hosted engines",
+    "urls": [
+     "https://arxiv.org/html/2609.16034v1",
+     "https://audio.stepfun.ai/",
+     "https://huggingface.co/spaces/stepfun-ai/StepAudio-3-Music/blob/main/README.md?code=true"
+    ]
+   },
+   {
+    "id": "E22",
+    "topic": "architecture",
+    "claim": "The MuSeC paper (September 2026) proposes separating semantic and acoustic information inside a music codec. It argues that reconstruction-only tokens are hard for LMs to predict and that speech-centred semantic codecs lose musical information. No deployable weights or license were verified.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "evidence": "generation-research s3",
+    "urls": [
+     "https://arxiv.org/html/2609.21240v1"
+    ]
+   },
+   {
+    "id": "E23",
+    "topic": "architecture",
+    "claim": "The codec/vocoder sets much of the timbre and transient ceiling. Swapping a codec such as Descript DAC under an existing model generally requires adaptation or retraining, and upsampling 32kHz to 48kHz changes the container, not the information.",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "high",
+    "evidence": "Master plan s4 item 4; generation-research s2. The DAC repo is cited for the codec's existence; the claim about swapping is the corpus's own engineering inference.",
+    "urls": [
+     "https://github.com/descriptinc/descript-audio-codec"
+    ]
+   },
+   {
+    "id": "E24",
+    "topic": "competitor",
+    "claim": "Mureka 9.5 API (changelog dated August 28, 2026): the song endpoint takes structured lyrics, prompt and voice/reference controls and returns up to three outputs. Docs also expose extension, stems, complementary tracks, region edits and remix. Paid API outputs carry commercial authorization. Pin the model explicitly, because `auto` can drift.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "evidence": "generation-research hosted engines",
+    "urls": [
+     "https://platform.mureka.ai/docs/en/changelog.html",
+     "https://platform.mureka.ai/docs/api/operations/post-v1-song-generate.html",
+     "https://platform.mureka.ai/docs/en/faq.html"
+    ]
+   },
+   {
+    "id": "E25",
+    "topic": "legal-licensing",
+    "claim": "SongPrep (full-song structure and lyric transcription with timestamps) is licensed for academic use only and excludes production and commercial use, even though its Qwen base is Apache. SongEval's README says CC BY-NC-SA 4.0 while its GitHub metadata says Apache-2.0.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "evidence": "generation-research evaluation/preprocessing license traps",
+    "urls": [
+     "https://github.com/tencent-ailab/SongPrep/blob/main/LICENSE",
+     "https://github.com/ASLP-lab/SongEval"
+    ]
+   },
+   {
+    "id": "Q01",
+    "topic": "quality-eval",
+    "claim": "FAD is sensitive to sample size, embedding choice and reference set. FAD and CLAP are diagnostics with fixed settings, not a replacement for listening.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "evidence": "Master plan s8",
+    "urls": [
+     "https://arxiv.org/abs/2311.01616"
+    ]
+   },
+   {
+    "id": "Q02",
+    "topic": "quality-eval",
+    "claim": "Proposed benchmark: 48 fixed briefs (8 categories x 6) with a 12-brief smoke subset, about four takes per brief per engine, and separate equal-candidate and equal-compute/cost tracks. Comparisons are private, level-matched and randomized, with uncertainty clustered by brief. The generation module proposes 40 briefs with four seeds instead.",
+    "source_confidence": "asserted",
+    "decision_impact": "high",
+    "evidence": "Master plan s8; generation-research 'Making up the quality gap'. Neither set exists yet.",
+    "urls": []
+   },
+   {
+    "id": "Q03",
+    "topic": "quality-eval",
+    "claim": "Proposed first edit gate: kept dry PCM outside the explicit edit/crossfade mask is byte-identical to the immutable pre-edit working PCM at the same sample rate, channel layout and dtype. Compare canonical sample ranges, not WAV headers. The gate does not apply to covers, re-performances, time stretches or new mix renders.",
+    "source_confidence": "asserted",
+    "decision_impact": "high",
+    "evidence": "Master plan s8; independent-master-review C (a 32kHz MiniMax output resampled into a 48kHz project cannot be byte-identical to its native source)",
+    "urls": []
+   },
+   {
+    "id": "Q04",
+    "topic": "quality-eval",
+    "claim": "Proposed preview and responsiveness gates: eight tracks play for 30 minutes on each target platform with no observed underruns, and UI interaction p95 stays below 100 ms during background generation.",
+    "source_confidence": "asserted",
+    "decision_impact": "medium",
+    "evidence": "Master plan s8 gates table; labelled proposed planning choices",
+    "urls": []
+   },
+   {
+    "id": "Q05",
+    "topic": "quality-eval",
+    "claim": "Every model's quality baseline is unmeasured: no model was installed, generated, auditioned or benchmarked in this research.",
+    "source_confidence": "asserted",
+    "decision_impact": "high",
+    "evidence": "Master plan intro and s15; generation-research intro; disclosures intro",
+    "urls": []
+   },
+   {
+    "id": "T01",
+    "topic": "separation-transcription",
+    "claim": "Spotify Basic Pitch supports polyphonic transcription with pitch bends, but its own docs say it works best on one instrument at a time. It is not a mixed-song-to-perfect-MIDI tool.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "evidence": "Master plan s5",
+    "urls": [
+     "https://github.com/spotify/basic-pitch/blob/main/README.md?plain=1"
+    ]
+   },
+   {
+    "id": "T02",
+    "topic": "separation-transcription",
+    "claim": "Proposed separation stack: Demucs as baseline, with modern band/roformer or SCNet candidates whose exact weight licenses still need checking. Start with vocals/accompaniment and a small instrument taxonomy, and keep a residual track.",
+    "source_confidence": "asserted",
+    "decision_impact": "medium",
+    "evidence": "Master plan s5 table and practical path; no URLs or license checks given for these separators",
+    "urls": []
+   },
+   {
+    "id": "T03",
+    "topic": "separation-transcription",
+    "claim": "SOFA is an MIT-licensed singing-oriented forced aligner with dictionary/G2P input, confidence output, TextGrid export and boundary evaluation. Downloaded checkpoints and language assets carry their own terms, and its advantage over speech aligners such as MFA is a hypothesis to test.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "evidence": "suno-engineering-disclosures s4",
+    "urls": [
+     "https://github.com/qiuqiao/SOFA",
+     "https://montreal-forced-aligner.readthedocs.io/en/latest/"
+    ]
+   },
+   {
+    "id": "T04",
+    "topic": "separation-transcription",
+    "claim": "SyncTrack uses shared cross-track modules plus instrument-specific modules and proposes within-track stability and cross-track synchronization metrics. It was studied only on bass/drums/guitar/piano in 16kHz, 10.24s Slakh clips, and its code/weight license is not established.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "low",
+    "evidence": "suno-engineering-disclosures s5",
+    "urls": [
+     "https://arxiv.org/html/2603.01101v1",
+     "https://github.com/YangLabHKUST/SyncTrack"
+    ]
+   },
+   {
+    "id": "V01",
+    "topic": "voice-singing",
+    "claim": "OpenVPI DiffSinger (Apache-2.0) conditions acoustic synthesis on phonemes, duration and F0, with variance models for duration, pitch and other curves. Voicebanks, vocoders and extractors carry separate terms. Its docs warn that energy, breathiness and voicing are coupled and can produce unnatural tension/loudness combinations.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "evidence": "suno-engineering-disclosures s3; master plan s6",
+    "urls": [
+     "https://github.com/openvpi/DiffSinger",
+     "https://github.com/openvpi/DiffSinger/blob/main/docs/BestPractices.md"
+    ]
+   },
+   {
+    "id": "V02",
+    "topic": "voice-singing",
+    "claim": "The MakeDiffSinger guide says vowels usually align to note beginnings while leading consonants can come before them, so word-level karaoke timestamps are not enough for realistic consonant placement.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "low",
+    "evidence": "suno-engineering-disclosures s4",
+    "urls": [
+     "https://github.com/openvpi/MakeDiffSinger/blob/main/variance-temp-solution/README.md"
+    ]
+   },
+   {
+    "id": "V03",
+    "topic": "voice-singing",
+    "claim": "RVC is a separate performance-to-timbre conversion route. Neither its code license nor DiffSinger's licenses arbitrary singer banks.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "evidence": "Master plan s6",
+    "urls": [
+     "https://github.com/RVC-Project/Retrieval-based-Voice-Conversion-WebUI"
+    ]
+   },
+   {
+    "id": "V04",
+    "topic": "legal-licensing",
+    "claim": "VoiceStudio (debpalash) is an Electron desktop app with local engines and optional remote workers. The app is AGPL-3.0-only and does not clear downloaded model assets. Its default OmniVoice weights are noncommercial.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "high",
+    "evidence": "Master plan s6; independent-master-review s4",
+    "urls": [
+     "https://github.com/debpalash/VoiceStudio",
+     "https://github.com/debpalash/VoiceStudio/blob/main/LICENSE-NOTICE.md",
+     "https://huggingface.co/k2-fsa/OmniVoice"
+    ]
+   },
+   {
+    "id": "V05",
+    "topic": "competitor",
+    "claim": "VoiceStudio Pro costs $99 per user per year or $299 one-time Lifetime, with three registered devices per seat (checked October 8, 2026). The video narration says '$99 a month'. Closed-source distribution and private hosting are excluded from the plans, and speech-model licenses remain separate.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "evidence": "independent-master-review s4; master plan video table (GZtLsvklYBI 02:13-02:25)",
+    "urls": [
+     "https://voicestudio.sh/pro"
+    ]
+   },
+   {
+    "id": "V06",
+    "topic": "voice-singing",
+    "claim": "Production-oriented TTS candidates to compare: Qwen3-TTS, Chatterbox Turbo, CosyVoice3 and Kokoro. F5-TTS and Fish Speech show that a permissive code repo can still have restricted official weights.",
+    "source_confidence": "asserted",
+    "decision_impact": "medium",
+    "evidence": "Master plan s6 refers to a voice research appendix that is not in this corpus; no URLs given",
+    "urls": []
+   },
+   {
+    "id": "V07",
+    "topic": "compute-cost",
+    "claim": "The $25,000 ElevenLabs spend is a user-reported historical figure, not an inspected invoice. The business case should compare cost per approved finished hour, including inference, retries, editorial review, setup and operations.",
+    "source_confidence": "asserted",
+    "decision_impact": "medium",
+    "evidence": "Master plan s6 and s13",
+    "urls": []
+   },
+   {
+    "id": "V08",
+    "topic": "workflow-process",
+    "claim": "Prior Sabbath Echo records separate licensed Scripture audio (Bible Brain) from EGW/ElevenLabs narration and forbid synthesized Scripture in that project. This was not re-audited in this run.",
+    "source_confidence": "asserted",
+    "decision_impact": "medium",
+    "evidence": "Master plan s6; FRAMING memory use",
+    "urls": []
+   },
+   {
+    "id": "L01",
+    "topic": "legal-licensing",
+    "claim": "Pond5's contributor FAQ and Envato's author policy prohibit the relevant AI-generated uploads as primary sale content, contradicting the monetization video's claims. The US Copyright Office Part 2 report assesses human authorship case by case, so adding one human element does not make a whole generated work copyrightable.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "evidence": "Master plan s2; root-source-register",
+    "urls": [
+     "https://contributor.pond5.com/faq/",
+     "https://www.pond5.com/help/en/articles/10086182-does-pond5-allow-ai-generated-content-for-licensing",
+     "https://help.author.envato.com/hc/en-us/articles/13313674070681-AI-generated-content-policy-for-Market-and-Elements",
+     "https://www.copyright.gov/ai/Copyright-and-Artificial-Intelligence-Part-2-Copyrightability-Report.pdf"
+    ]
+   },
+   {
+    "id": "L02",
+    "topic": "legal-licensing",
+    "claim": "Do not build on third-party 'Suno API' endpoints. An official model provider or a user-authorized manual import is a stronger custody route than services that may depend on account automation or undocumented endpoints.",
+    "source_confidence": "asserted",
+    "decision_impact": "medium",
+    "evidence": "generation-research hosted engines",
+    "urls": []
+   },
+   {
+    "id": "L03",
+    "topic": "data-training",
+    "claim": "Owning a WAV file is not automatically permission to train on its composition, lyrics or performer identity, and a provider's output-use permission may not permit training a competing model.",
+    "source_confidence": "asserted",
+    "decision_impact": "medium",
+    "evidence": "generation-research 'Fourth: specialize using owned data'",
+    "urls": []
+   },
+   {
+    "id": "H01",
+    "topic": "compute-cost",
+    "claim": "The local host is an Apple M5 Pro (Mac17,8, arm64) with 51,539,607,552 bytes (48 GiB) of unified memory. That memory is not equivalent to 48GB of NVIDIA VRAM. Linux/Windows GPU specs are unknown.",
+    "source_confidence": "asserted",
+    "decision_impact": "high",
+    "evidence": "FRAMING; root-source-register (sysctl); master plan s9",
+    "urls": []
+   },
+   {
+    "id": "H02",
+    "topic": "compute-cost",
+    "claim": "A four-minute 48kHz stereo float32 file is 92,160,000 bytes (about 87.9 MiB). Twelve such stems are about 1.03 GiB, and four full versions approach 4.12 GiB.",
+    "source_confidence": "asserted",
+    "decision_impact": "medium",
+    "evidence": "Master plan s9 arithmetic",
+    "urls": []
+   },
+   {
+    "id": "H03",
+    "topic": "compute-cost",
+    "claim": "Illustration only: at $1/GPU-hour, 60s per candidate and four candidates, inference costs $0.0667 per brief. At a 25% acceptance rate that becomes $0.2667 per accepted brief. Serial best-of-8 at a 10s render needs about 80s before judging.",
+    "source_confidence": "speculative",
+    "decision_impact": "low",
+    "evidence": "Master plan s9; generation-research formulas; labelled hypothetical inputs",
+    "urls": []
+   },
+   {
+    "id": "W01",
+    "topic": "workflow-process",
+    "claim": "Proposed phase efforts for an experienced small team with agents: P0 reproducibility and benchmark, 1-2 weeks; P1 creator foundation, 2-4; P2 useful studio, 3-6; P3 sound/identity experiments, 4-8; P4 separation and re-performance, 4-8; P5 production and distribution, 4-8; P6 frontier, a separately funded ML program.",
+    "source_confidence": "asserted",
+    "decision_impact": "medium",
+    "evidence": "Master plan s11; labelled 'not a commitment'",
+    "urls": []
+   },
+   {
+    "id": "W02",
+    "topic": "studio-ui-tech",
+    "claim": "Web Audio 1.1 is a W3C working draft. It provides a routing graph and real-time/offline facilities but does not guarantee low microphone latency, consistent device behavior or native plugin hosting.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "evidence": "Master plan s7",
+    "urls": [
+     "https://www.w3.org/TR/webaudio/"
+    ]
+   },
+   {
+    "id": "W03",
+    "topic": "post-production",
+    "claim": "Loudness and true peak should be measured with ITU-R BS.1770-5. The artistic target depends on the destination, and a dry export should always be kept.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "low",
+    "evidence": "Master plan s4 item 6",
+    "urls": [
+     "https://www.itu.int/rec/R-REC-BS.1770-5-202311-I/"
+    ]
+   },
+   {
+    "id": "X01",
+    "topic": "competitor",
+    "claim": "In the replacement-tools video, the narrator acknowledges VoiceStudio's default model is noncommercial and says ACE output and control fell short of Suno in his experience. The ACE screen shown uses a cloud backend with 14-second results.",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "medium",
+    "evidence": "Master plan video table, GZtLsvklYBI 02:13-02:25, 16:30-18:51",
+    "urls": [
+     "https://www.youtube.com/watch?v=GZtLsvklYBI&t=133s"
+    ]
+   },
+   {
+    "id": "X02",
+    "topic": "suno-facts",
+    "claim": "A working songwriter reports melody-following regression in Suno v5.5 and four or five attempts to get a keeper. He seeds with a MIDI-programmed Kontakt guitar and returns the keeper to Logic.",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "medium",
+    "evidence": "Master plan video table, MJ4d0-Wi1z8 05:00-07:00, 25:30-33:30",
+    "urls": [
+     "https://www.youtube.com/watch?v=MJ4d0-Wi1z8&t=300s"
+    ]
+   },
+   {
+    "id": "X03",
+    "topic": "suno-facts",
+    "claim": "In Simon Crowe's tutorial, entering Suno Studio through the editor preserves section markers (11:30-12:15), and Studio shows versions and instrument parts.",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "low",
+    "evidence": "Master plan s2",
+    "urls": [
+     "https://www.youtube.com/watch?v=MI6vwl_ZHN8&t=690s"
+    ]
+   },
+   {
+    "id": "X04",
+    "topic": "workflow-process",
+    "claim": "Video analysis covered 8 sources: all transcripts read, 2,450 frames extracted, 288 overview thumbnails plus 44 full-resolution images inspected, for 307 distinct sampled frames. There was no continuous watch and no auditory scoring.",
+    "source_confidence": "asserted",
+    "decision_impact": "low",
+    "evidence": "Master plan s2",
+    "urls": []
+   }
+  ],
+  "features": [
+   {
+    "name": "Three-way isolation semantics (Isolate original / Re-perform this part / Create a new part)",
+    "description": "Treat extraction from the existing waveform, regenerated re-performance of a part, and native composed tracks as distinct operations with distinct promises and gates.",
+    "evidence": "Suno stem update, June 11, 2026 (https://suno.com/blog/stem-separation-updates); master plan s5 table",
+    "proposed_implementation": "Record the operation type, original asset, accepted replacement and confidence on every artifact. Gate separation on bleed, mixture residual and ground-truth metrics. Gate re-performance on notes, articulation, rhythm and identity, not residual. Label the actions in the UI with those three names."
+   },
+   {
+    "name": "Separation with residual track and recombination check",
+    "description": "Use a modern separator on a quality preset, keep a residual track, and listen to both the isolated stems and the recombined output.",
+    "evidence": "Master plan s5 practical path",
+    "proposed_implementation": "Demucs as baseline, then band/roformer or SCNet candidates with license records. Start with vocals/accompaniment and a small instrument taxonomy, and never extrapolate a 4-stem model to arbitrary instrument names."
+   },
+   {
+    "name": "Replace-part mix rule",
+    "description": "Replacing a part must remove the old one, not layer the new part over a stereo mix that still contains it.",
+    "evidence": "Master plan s5",
+    "proposed_implementation": "Rebuild the mix from retained sources plus the accepted new part, or use a separately evaluated suppression/residual operation. Keep bleed and subtraction artifacts audible during review."
+   },
+   {
+    "name": "Transcribe-and-render clean instruments",
+    "description": "Get a clean, controllable part by transcribing a well-isolated stem, correcting the notes, and rendering through a quality instrument.",
+    "evidence": "Basic Pitch README; master plan s5",
+    "proposed_implementation": "Basic Pitch for polyphonic transcription with pitch bends (best on one instrument), an editable piano roll, then a render through licensed virtual instruments."
+   },
+   {
+    "name": "Reference-conditioned re-performance adapter (experiment)",
+    "description": "Inputs: source stem, surrounding mix context, tempo/score and instrument label. Output: a new dry part.",
+    "evidence": "Master plan s5",
+    "proposed_implementation": "An ML experiment evaluating melody, onset, groove and phrasing preservation, with context, crossfading and explicit tail handling at edit boundaries."
+   },
+   {
+    "name": "Multi-reference role conditioning",
+    "description": "Different references supply vocal, drum, atmosphere and energy roles.",
+    "evidence": "Official v6 video _lHvWn2SNC4 02:10-03:26",
+    "proposed_implementation": "SongSpec references carry source permissions and hashes. The engine exposes them only where a backend actually supports reference conditioning; otherwise the request is marked as an approximation."
+   },
+   {
+    "name": "Local section/lyric edit with preservation",
+    "description": "Change one section or word while keeping the rest of the material intact.",
+    "evidence": "v6 video 09:45-11:08; v6 announcement; DrRRvM4oc4w 09:38-11:35",
+    "proposed_implementation": "EditOperation stores affected tracks, mask/time range, instruction, locked context, variant IDs, crossfade/tail policy and the accepted result. The kept PCM is composited so samples outside the mask are byte-identical. A whole-song rerender is never presented as a local edit; it is labelled a new performance or offered as a human, take-selection or voice-synthesis fallback."
+   },
+   {
+    "name": "Extra-compute / long-song drift mode",
+    "description": "Suno describes a higher-compute mode that reduces drift in longer songs.",
+    "evidence": "v6 video 15:21-16:00",
+    "proposed_implementation": "Map to a quality tier: slow SFT/base lane for keepers versus a turbo exploration lane, plus best-of-k priced tiers (single, best-of-two, separately priced best-of-eight)."
+   },
+   {
+    "name": "Voice identity registry with verification",
+    "description": "A Suno Voices-style flow: a recording plus a verification phrase, kept private.",
+    "evidence": "https://suno.com/products/voices; master plan s6",
+    "proposed_implementation": "Authorized identity references in a registry. Test native identity conditioning, an approved singer adapter, and conversion to an authorized timbre as three separate paths. The singing gate is the same identity across ten varied excerpts passing blind owner review."
+   },
+   {
+    "name": "Personal taste memory",
+    "description": "Personalization in the spirit of Suno's My Taste and Custom Models.",
+    "evidence": "Suno v5.5 announcement; master plan s12",
+    "proposed_implementation": "A local, editable preference memory of genres, accepted takes and explicit reasons, used first for routing, selection and prompt improvement. It should preserve diversity, and training on a learned preference score comes later with holdout listeners."
+   },
+   {
+    "name": "MIDI, automation, effects and chat-directed production (Studio 2.0 parity)",
+    "description": "MIDI recording/editing, MIDI-conditioned generation, automation, effects and chat-driven production.",
+    "evidence": "https://suno.com/blog/studio-2",
+    "proposed_implementation": "Build order: tempo map/warp, automation, MIDI import/export and piano roll, then effects (after an offline/real-time equivalence test), then recording and native plugins (after latency proof). Chat is a command interface over tested operations with an inspectable diff and undo. Chat-authored effects run only in a reviewed graph or sandboxed DSP with CPU/memory limits and a bypass."
+   },
+   {
+    "name": "Section markers, versions and parts preserved on project transfer",
+    "description": "Moving a song into the studio keeps its section markers, versions and instrument parts.",
+    "evidence": "Simon Crowe MI6vwl_ZHN8 11:30-12:15",
+    "proposed_implementation": "Project transfers keep annotations and alternate takes rather than flattening the session to a single WAV."
+   },
+   {
+    "name": "Lyric alignment, alternate replacements, audition before insert, undo and fades",
+    "description": "These controls matter more than a long list of soft sliders.",
+    "evidence": "Deliberate-control tutorial DrRRvM4oc4w 09:38-11:35, 12:40-13:55",
+    "proposed_implementation": "A SOFA-style align-and-review tool with confidence and human correction; alternate takes auditioned before commit; nondestructive edits that change references and never overwrite originals."
+   },
+   {
+    "name": "Human-authored seed preservation and DAW round trip",
+    "description": "Keep the human chord/melody seed, correct the lyric transcription, generate arrangements, compare takes, and return the keeper to a DAW.",
+    "evidence": "MJ4d0-Wi1z8 05:00-07:00, 25:30-33:30",
+    "proposed_implementation": "Human performance, MIDI and generated parts are first-class. Stem export shares project rate, zero start and frame count, and the gate is that an imported DAW session stays aligned."
+   },
+   {
+    "name": "SongSpec composition object",
+    "description": "A structured record of brief, lyrics, sections, tempo/key/meter, references, voice, duration, variant budget and engine.",
+    "evidence": "Master plan s4 and s7; generation-research s1 (YuE2 planning)",
+    "proposed_implementation": "Each field carries requested, supported and observed values. The object also holds form, bars, tempo map, key/chord map, melody, syllable alignment, energy trajectory and voice role, and is preserved even when an engine cannot consume every field. LLM suggestions to approved lyrics stay visible and reversible."
+   },
+   {
+    "name": "PerformanceSpec",
+    "description": "A singing-performance layer beneath SongSpec.",
+    "evidence": "suno-engineering-disclosures s6; master plan s7",
+    "proposed_implementation": "Pronunciation dictionary revision; syllable/phoneme-to-note mapping; rests, breaths and slurs; continuous F0 and expression curves; singer provenance; confidence plus human corrections. Each engine declares which fields it consumes."
+   },
+   {
+    "name": "Artifact provenance",
+    "description": "Immutable audio plus full generation lineage.",
+    "evidence": "Master plan s7",
+    "proposed_implementation": "Each artifact stores SHA-256, native rate/channels/format, duration, model/weight/codec revisions, config, seed, machine/backend, wall time, parents and an origin enum (generated_mix, separated_source, regenerated_part, human_recording, rendered_midi). Converted files point back to the native source."
+   },
+   {
+    "name": "EngineCapability and licensing registry",
+    "description": "Per-engine and per-profile declaration of what each engine can do and is permitted to do.",
+    "evidence": "generation-research architecture; master plan s7; independent-master-review A",
+    "proposed_implementation": "Flags: text_to_song, instrumental, cover, inpaint, extend, native_stems, separate_stems, add_instrument, vocal_to_bgm, reference_voice, score_input, score_output, streaming, max_duration, platform/runtime. Published claims and local test results are separate fields, and license plus permitted use mode (personal vs company) is recorded. Engine = provider boundary; profile = checkpoint, task and backend."
+   },
+   {
+    "name": "Isolated engine workers with honest job states",
+    "description": "Per-engine pinned environments and a truthful job lifecycle.",
+    "evidence": "Master plan s7; generation-research architecture",
+    "proposed_implementation": "States: queued, preparing, loading, generating, analyzing, ready, plus failed and cancelled. Report real steps rather than invented percentages, commit outputs atomically, time cold loads separately, and keep one heavy model resident per constrained GPU. Workers reject unsupported jobs before loading and enforce VRAM and queue limits."
+   },
+   {
+    "name": "Cross-machine worker control",
+    "description": "The Mac acts as studio/control workstation while a Linux/Windows NVIDIA machine serves CUDA-only engines.",
+    "evidence": "Master plan s7 and s12",
+    "proposed_implementation": "Shared job protocol. Remote workers authenticate, restrict origins, enforce limits and receive only referenced assets. The UI gets a project API, never a shell."
+   },
+   {
+    "name": "Blind level-matched audition and A/B",
+    "description": "A listening-first UI built around comparison.",
+    "evidence": "Master plan s7 and s8",
+    "proposed_implementation": "Large audition area, quick level-matched A/B, take history, randomized private anonymous comparisons, separate scoring axes (composition, artifacts, lyrics, identity, adherence, overall) and marked problem intervals."
+   },
+   {
+    "name": "Hard-constraint candidate reranking",
+    "description": "Filter candidates on objective failures first, then apply aesthetic signals.",
+    "evidence": "generation-research 'Second: improve inference'",
+    "proposed_implementation": "Check for valid/non-silent audio, duration/truncation, lyric transcription agreement, rough section adherence and clipping first, then aesthetic scores. The kept take records its full candidate budget."
+   },
+   {
+    "name": "Codec reconstruction study tool",
+    "description": "Encode and decode owned audio to locate the decoder's fidelity ceiling.",
+    "evidence": "generation-research s3; master plan s10 C",
+    "proposed_implementation": "Compare original versus round-trip on cymbals, transients, bass attacks, sibilance, stereo image, reverb tails and dense ensembles, before any training."
+   },
+   {
+    "name": "Score-to-singing and guide-conversion lanes",
+    "description": "Controllable vocals that complement full-song sampling.",
+    "evidence": "DiffSinger, RVC; disclosures s3",
+    "proposed_implementation": "Twelve-phrase pilot comparing native full-song vocals, licensed DiffSinger-style score singing, and an authorized guide plus conversion. Metrics: cents error, octave errors, onsets, V/UV and intelligibility."
+   },
+   {
+    "name": "Sequential context-conditioned multitrack",
+    "description": "Arrangement assistance using ACE base `lego`.",
+    "evidence": "ACE inference doc; disclosures s5",
+    "proposed_implementation": "Twelve owned eight-bar arrangements comparing independent parts, sequential lego, and a shared-score render. Includes lock-and-change tests and common zero/rate/frame-count export with tails."
+   },
+   {
+    "name": "Narration voice service",
+    "description": "Separate voice service for Sabbath Echo and other authorized work.",
+    "evidence": "Master plan s6; VoiceStudio",
+    "proposed_implementation": "Inputs: approved text, language, versioned voice, pronunciation dictionary and prosody plan. Outputs: chunked dry audio, word timings, render manifest and QA. Semantic chunking, resumable rendering, missing/repeated-word checks and human approval of names. Optional VoiceStudio evaluation fork (Navigata1/voice-studio-lab, proposed) with a thin adapter."
+   },
+   {
+    "name": "Music-video extension",
+    "description": "A later producer that works on the accepted assets of a music project.",
+    "evidence": "BKDrtzJktO0 15:00-15:34, 21:30-23:00",
+    "proposed_implementation": "Shot manifest with start/duration, performer identity, references, lead-vocal guide, phoneme timing, camera instructions and budget. The guide bus is kept separate from playback so backing vocals do not drive lip-sync, with a deliberate guide-export operation replacing the black-background MP4 workaround."
+   },
+   {
+    "name": "Export provenance and destination eligibility",
+    "description": "Keep human contributions and provenance on export, and check distribution eligibility per destination.",
+    "evidence": "x8EOgO7UQ54 03:08-03:21; Pond5/Envato policies; Suno Safety Center C2PA",
+    "proposed_implementation": "Export manifests keep the human contributions, model/license chain and conversion settings. The C2PA-style Content Credentials Suno uses are noted as a reference point."
+   },
+   {
+    "name": "Durable local ownership of sessions",
+    "description": "Durable local files, transparent provenance and ownership of sessions, prompted by download/access concerns on hosted platforms.",
+    "evidence": "CZazcFtS4Co 00:00-00:30, 21:48-22:05",
+    "proposed_implementation": "Local SQLite metadata with content-addressed audio, forced-restart recovery gate, lossless working files, lightweight previews and bounded caches."
+   },
+   {
+    "name": "Cost and economics logging",
+    "description": "Per-run cost accounting.",
+    "evidence": "Master plan s9",
+    "proposed_implementation": "Log inference cost, cost per accepted song, cost per approved narration hour, cold and warm RTF, and local electricity plus review time."
+   },
+   {
+    "name": "Hosted provider lane (Mureka, Stable Audio Large, StepAudio)",
+    "description": "Official hosted engines used as a benchmark or premium fallback.",
+    "evidence": "Mureka 9.5 docs; Stability API; StepAudio Space",
+    "proposed_implementation": "Pin the model rather than using `auto`. Record billing and terms. Mureka exposes stems, extension, complementary tracks, region edits and remix to benchmark against."
+   },
+   {
+    "name": "Speech-with-music audio",
+    "description": "Suno's Speech beta produces spoken audio with music.",
+    "evidence": "https://suno.com/blog/introducing-speech-beta (root register)",
+    "proposed_implementation": "Only noted as a separate creative-audio opportunity; no implementation proposed."
+   }
+  ],
+  "recommendations": [
+   "Build a studio around interchangeable music engines, with a fast local editing lane, a separate quality-generation lane, and an independently evaluated voice service.",
+   "Start with two engines: ACE for speed/control and MiniMax as the provisional independent quality challenger on suitable NVIDIA hardware. The pair is a hypothesis, not a tested optimum; personal-use YuE2 can replace MiniMax if its rights, control and pilot results suit the job. Add HeartMuLa after the first comparison is reproducible. Do not install all challengers at once.",
+   "Choose the second installed model after hardware inventory, exact use mode, and the first 12 smoke briefs; the selection gate must allow the proposed pair to lose.",
+   "Within ACE, pin separate task profiles: turbo/XL for drafts or fidelity, and the supported base checkpoint for extract, lego and complete; keep CFG and other controls faithful to the chosen variant.",
+   "Engine routing begins with explicit user choice; automatic selection comes only after our benchmark supplies evidence.",
+   "There is no universal settings translation: expose a common creative intent while keeping engine-specific controls available and recording the transformation; an unsupported operation must be unavailable or identified as an approximate workflow.",
+   "Retain model-native audio for evaluation; resample for mixing while retaining the original file and sample rate in provenance.",
+   "Close the sound gap as a sequence of hypotheses: prompt structure and engine choice, then reference conditioning, selection and local repair, then approved-domain adapters and decoder reconstruction ceiling, then a new representation or broad training only if earned. Each step needs an ablation with the same briefs and candidate budget.",
+   "Run a codec reconstruction study on owned/reference-quality audio before training any generator.",
+   "Build and label separation and re-performance separately: 'Isolate original', 'Re-perform this part', 'Create a new part'.",
+   "Implement the align-and-review tool before promising phoneme-accurate generation; first establish what was actually sung through independent ASR plus human review, then align the approved observed transcript.",
+   "Sequence experiments after engine smoke tests: align/review a small vocal set; run the expressive twelve-phrase comparison; then eight-bar multitrack ablations.",
+   "Add a PerformanceSpec beneath SongSpec; each engine reports which fields it actually consumes.",
+   "Studio feature order: creation/library/audition first; then aligned multitrack playback, gain/pan/mute/solo, selection, split/trim/fades and export; then tempo-map/warp, automation, MIDI import/export and piano roll; effects after an offline/real-time equivalence test; recording and native plugins after device/latency proof; chat as a command interface over tested operations with inspectable diff and undo.",
+   "Initial stack: React/TypeScript web UI; Web Audio graph/AudioWorklet for bounded preview with separate offline render; FastAPI local control service with SQLite metadata and content-addressed audio; separate pinned Python environments per engine; Linux CUDA workers as needed; optional desktop/native host evaluated after browser/audio proof.",
+   "Use the Mac as initial studio/control workstation and compatible local inference target; let an NVIDIA Linux or Windows machine provide CUDA services. Record each machine's CPU, RAM, GPU, VRAM, driver, storage and network before choosing hardware; benchmark on a bounded rental before buying a GPU.",
+   "Keep one heavy model resident at a time initially; serialize scarce-GPU jobs and prioritize short audition requests.",
+   "Our current baseline is unmeasured for every model. Do not assign a percentage of Suno quality. Build one benchmark that allows the best candidate to win and allows our preferred architecture to lose.",
+   "Run separate comparison tracks for equal candidate count and equal compute/cost; show both raw single-take reliability and selected-result quality; report uncertainty clustered by brief.",
+   "Maintain a component-level release/rights registry: code, weights, codec/tokenizer, voice permissions and output terms are separate entries; record the actual operator (individual vs LLC).",
+   "Keep MiniMax as a commercial candidate with documented attribution, safeguards and threshold checks; treat YuE2 as two rights lanes; use MuLaCover only for permitted research; evaluate only the released HeartMuLa 3B; keep SongGeneration in discovery until canonical access and terms are verified.",
+   "Do not make SongPrep the deployed lyric evaluator; resolve SongEval's license conflict before commercial scoring use.",
+   "Do not build the plan around third-party 'Suno API' endpoints; prefer official providers or user-authorized manual import. Pin hosted model versions (e.g. not Mureka 'auto').",
+   "Voice: compare Qwen3-TTS, Chatterbox Turbo, CosyVoice3 and Kokoro on approved narration; fork debpalash/VoiceStudio as Navigata1/voice-studio-lab (proposed) for evaluation only after pinning a commit and auditing model licenses; keep the upstream UI fork distinct from an independently owned service.",
+   "Judge narration economics by cost per approved finished hour from a sample-based pilot, not by the historical $25k figure.",
+   "Pin the initial stack, then admit updates through regression tests. 'Latest' is not a reproducible engine.",
+   "First two weeks: M0-01 machine/use-case inventory; M0-02 pinned release/license register; M0-03 48-brief fixture set plus 12-brief smoke subset; M0-04 ACE adapter; M0-05 MiniMax adapter or documented substitute; M0-06 blind pilot and failure taxonomy; M1-01 project/artifact/engine/job schemas; M1-02 creator UX prototype from real audio; V0-01/V0-02 separate voice lane.",
+   "Keep a named owner for each acceptance gate so coding progress cannot silently substitute for listening or performance evidence.",
+   "Foundation training (escalation E) proceeds only if narrower steps expose a material ceiling, assets/rights are secured, and an ML program is funded; the decision packet needs reproducible shortcomings, rights-cleared dataset inventory, measured tokens/hour, and a funded cap."
+  ],
+  "unique_insights": [
+   "Suno's own June 2026 stem post says its clean stems are regenerated, not extracted. That makes 'clean' and 'faithful' separate requirements and splits isolation into separation, re-performance and native multitrack.",
+   "YuE2's own paper is the strongest evidence against open-model parity: expert listeners preferred Suno v6 59.3% to 31.6% over YuE2 best-of-eight, despite strong automatic scores. Best-of-8 with a benchmark-only decoder is not comparable to a single fresh take.",
+   "MiniMax's HF 'Use this model' helper suggests MPS through an irrelevant image snippet; the real card requires CUDA. Auto-generated helpers are not compatibility evidence.",
+   "YuE2's license separates an individual creator, who may monetize outputs, from a company, which needs separate permission. Jon's personal use and his LLC's use are different rights lanes and must be recorded as such.",
+   "MuLaCover restricts commercial use of outputs (audio, MIDI, tokens, latents) in addition to the weights, even though its source is Apache and its parent HeartMuLa is Apache.",
+   "HeartMuLa's 'Suno-comparable' claim refers to an unreleased internal 7B. The CLI's --version 7B flag is not evidence of downloadable weights.",
+   "Byte-identical edit preservation only holds in a declared working-PCM domain (same rate, channels and dtype). A 32kHz MiniMax output resampled into a 48kHz project cannot be byte-identical to its native file, and WAV header bytes can differ while samples match.",
+   "ACE turbo's CFG is auto-corrected to 1, so a CFG slider would mislead the user. Different ACE checkpoints support different tasks (lego/extract/complete are base-only), which is why the plan separates an engine from a profile.",
+   "Upsampling 32kHz to 48kHz changes the container, not the information, and a clean 32kHz take can beat a flawed 48kHz one. Export sample rate is not a quality ranking.",
+   "A codec round-trip study can show that no amount of prompting or planning will recover detail the decoder destroys. Compare the same latent through different decoders rather than different songs.",
+   "Do not force-align a generated vocal to the requested lyrics and call it correct. First establish what was actually sung with independent ASR plus human review, because aligners and recognizers can hallucinate the requested word.",
+   "Word-level karaoke timing cannot place realistic consonants: vowels sit on note onsets and leading consonants come before them. Hence the syllable/phoneme-to-note PerformanceSpec.",
+   "Common evaluation tools carry license traps: SongPrep is academic-only, and SongEval's README and GitHub metadata disagree on its license.",
+   "Pond5 and Envato currently ban the AI-generated uploads that the monetization video promotes.",
+   "Mureka's `auto` model setting can drift silently, so hosted model versions must be pinned for reproducibility.",
+   "For music-video lip-sync, keep a lead-vocal guide bus separate from the playback bus so backing vocals and ad-libs do not drive the lead's mouth.",
+   "A four-minute 48kHz stereo float32 stem is about 87.9 MiB; twelve stems are about 1.03 GiB and four versions about 4.12 GiB, so storage needs explicit budgeting.",
+   "Suno's Safety Center attaches C2PA Content Credentials and runs similarity checks, a provenance precedent worth mirroring in export manifests.",
+   "Suno's AB 2013 data disclosure (January 2026) predates v6, which the corpus calls 'partner-developed', so it cannot describe the v6 corpus.",
+   "Two plausible-looking 'Suno' lyric-replacement and media patents belong to other assignees. This guards against building the plan on false attribution.",
+   "The 2024 Shulman interview (next-token, end-to-end, proprietary tokenizer) contradicts the assumption that Suno uses a hand-written score/phoneme pipeline. A composition-first design is still justified for controllability.",
+   "A provider's output-use permission may not allow training a competing model, so synthetic training data needs its generator and terms recorded.",
+   "The narration lane may pay back sooner than any music-model work: narration targets are smaller and more directly testable.",
+   "Shao/Khala warns that changing the pinned NVIDIA runtime can produce noise-like output, a concrete reason to pin per-engine containers.",
+   "Repeated listener votes on a few songs are not independent samples, so uncertainty should be clustered by brief.",
+   "The DiffSinger docs warn that energy, breathiness and voicing are coupled, so the UI should not present those curves as independent sliders."
+  ],
+  "weaknesses_of_this_source": [
+   "Nothing was run: no model install, generation, listening test or hardware benchmark. Every quality, speed and VRAM figure is an upstream claim, and the corpus says so.",
+   "The proposed initial challenger, MiniMax Music 3, needs CUDA (24GB+ or two GPUs) and a 57.4GB download, but the Linux/Windows GPU specs are unknown. The two-engine plan may not be runnable as written, and the only Mac-native song engines named are ACE and Stable Audio (instrumental only).",
+   "It never addresses the Mac's disk constraint. It computes stem storage, but a 57.4GB MiniMax repo and multi-checkpoint ACE profiles cannot fit in the owner's roughly 8.5 GiB free space, and no disk-budget plan exists.",
+   "Internal inconsistencies: the master plan proposes 48 briefs and two engines, while generation-research proposes 40 briefs with four seeds and an acceptance gate of 'three primary engines'. The v6 announcement URL also appears on two different hosts (suno.com/blog vs about.suno.com/blog).",
+   "It relies on companion artifacts not in this corpus (video appendix and inspection manifest, voice/studio research module, a machine-readable register of 16 experiments, master-review-input.md). The TTS candidates Qwen3-TTS, Chatterbox Turbo, CosyVoice3 and Kokoro come with no URLs, licenses or specs here.",
+   "The 'independent' reviews are agents in the same GPT run reviewing their own root synthesis, so the independence is limited, and the reviews mostly confirm with minor wording fixes.",
+   "It is heavily hedged and conservative, light on concrete product decisions. It names no concrete separator checkpoint with a license (only 'band/roformer or SCNet'), no mastering tool, and no Apple Silicon throughput figures.",
+   "It never addresses the owner's actual starting input, a melody in his head. There is no hum/sing-to-MIDI or melody-capture path; Basic Pitch is discussed only for transcribing isolated stems.",
+   "Phase efforts assume 'an experienced small team with agent assistance', not a single owner, and the sum is 18-38+ weeks before frontier work. That suggests a long time to the first usable song.",
+   "The video evidence is sampled frames (307 distinct) plus transcripts, with no auditory scoring. Claims drawn from tutorials are treated as feature hints only.",
+   "The voice/Sabbath Echo lane relies on unverified historical memory; the repository and contract were not re-audited.",
+   "Post-production and mastering are thin: it names generic EQ, de-essing, dynamics and BS.1770 loudness but specifies no implementation or quality gate for them.",
+   "Some primary sources carry very recent or unusual identifiers (arXiv 2609.x, patents published in 2026) that were not checked beyond one access pass. It concedes web documents can change and must be pinned.",
+   "The cost model has no actual rental prices or electricity measurements; the cost illustration is explicitly hypothetical.",
+   "It gives no concrete UI design: no layout, component spec or visual direction beyond 'listening-first', restrained colors and progressive disclosure."
+  ]
+ }
+}

@@ -1,0 +1,127 @@
+{
+ "label": "critic",
+ "agent_id": "a88063c3d20fdaca2",
+ "phase": "Critic",
+ "result": {
+  "gaps": [
+   {
+    "id": "GAP-01-hum-transcription-and-f0",
+    "question": "Which hum/sung-melody note transcriber and which monophonic F0 tracker meet all three of these conditions: (a) a clean license for both code and weights; (b) they run on Apple Silicon under a current Python, given that Basic Pitch officially supports only Python 3.10 there and has not released since 0.4.0 (2024-08); (c) they have been benchmarked on humming or singing? Concretely: does any published humming-transcription benchmark (HumTrans 2023, MIR-QBSH or similar) report note-level onset/offset F1 for Basic Pitch against singing-specific transcribers (OpenVPI SOME, ROSVOT) and F0-plus-HMM pipelines (librosa pYIN, CREPE/torchcrepe, FCPE, PESTO, RMVPE)? For each candidate, what are the code and weights licenses, and does it run through MPS, CoreML or ONNX?",
+    "why_it_matters": "A4 (transcribe) and A7 (melody-adherence score) are v1-core, and D-04 steps 2 and 6 depend on them. The adherence metric (median cents error, octave-error rate, onset F1, contour correlation) needs an F0 tracker. None is named or license-checked anywhere in the register. RMVPE, the common default, is already flagged as unlicensed with NC training data. If Basic Pitch is weak on hums, the score-first flow begins with a bad MelodySpec and Jon has to fix most notes by hand.",
+    "suggested_primary_sources": [
+     "https://github.com/spotify/basic-pitch (pyproject/setup, open issues on Python >=3.11 and macOS)",
+     "HumTrans humming-transcription dataset paper (2023) and its GitHub/HF release",
+     "https://github.com/openvpi/SOME (LICENSE, releases, ONNX)",
+     "ROSVOT repository and paper",
+     "https://github.com/marl/crepe and https://github.com/maxrmorrison/torchcrepe (LICENSE, weights)",
+     "https://librosa.org/doc/latest/generated/librosa.pyin.html",
+     "https://github.com/CNChTu/FCPE",
+     "https://github.com/SonyCSLParis/pesto (LICENSE)",
+     "https://github.com/yxlllc/RMVPE"
+    ]
+   },
+   {
+    "id": "GAP-02-yue2-user-abc-input-contract",
+    "question": "In the YuE2 inference code (current main and the release we would pin), can a caller pass its own melody/chord ABC score plus its own lyrics directly, without transcribing reference audio through SheetSage2? If so: (1) Which ABC subset is accepted (key, meter, ties, tuplets, pickup bars, tempo changes)? (2) How are lyric syllables or sections bound to bars? (3) Is `cot='melody'` documented to keep the supplied pitches exactly, or only to use them as a plan the model may revise? (4) What is the maximum length in bars or seconds? (5) Which lyric languages are supported? (6) Does SheetSage2 or MERT2 (CC BY-NC, with no creator permission) load at inference on the user-ABC path?",
+    "why_it_matters": "Route R1 in D-04 (MelodySpec -> ABC -> YuE2) is the main reason YuE2 is in the first engine pair: it is the only primary-documented melody-score path. The 71.3% Hit@1 figure measures cover-from-audio through SheetSage2 on SHS100K, not user-supplied ABC. Register X-13 says YuE2 'accepts a user ABC score' but gives no interface detail. If the user-ABC path is missing, partial or lossy, D-02's rationale and the MelodySpec->ABC converter ticket both change.",
+    "suggested_primary_sources": [
+     "https://github.com/multimodal-art-projection/YuE/blob/main/docs/generation.md and the inference scripts it references",
+     "https://huggingface.co/m-a-p/YuE2-3B (model card)",
+     "https://arxiv.org/html/2609.33757v1 (symbolic planning and cover sections)",
+     "YuE GitHub issues and discussions on ABC input and lyric alignment"
+    ]
+   },
+   {
+    "id": "GAP-03-yue2-hardware-floor-and-windows",
+    "question": "What does YuE2-3B plus YuE2-Vae actually need to run at full context through to final audio decode? (1) GPU VRAM: the official requirement is 24 GB, but the vendor reports 11.18 GiB peak and 14.08 GiB at maximum context. (2) Host RAM: 24 GB is stated. (3) Does it run on 16 GB consumer cards such as the RTX 4060 Ti 16 GB, 4080 or 5070 Ti? (4) Does it run on Windows natively, or under WSL2 with CUDA, given torch 2.10.0 and a vLLM extra that is Linux-only? (5) Which GPU generations and driver versions work with its pinned torch/CUDA wheels? For example, Blackwell sm_120 needs cu128 with torch <=2.11, or cu130+ with an R580+ driver.",
+    "why_it_matters": "The Linux and Windows GPUs are unknown, and D-03 prefers Linux only because YuE2 is officially Linux-only. If Jon's strongest NVIDIA card is in the Windows box, whether WSL2 works decides if any rental is needed. Row A4 is marked 'CONFIRMED 24 GB' but cites an 11-14 GiB peak in the same cell. Resolving that decides whether a 16 GB card qualifies and which rental tier to budget.",
+    "suggested_primary_sources": [
+     "https://github.com/multimodal-art-projection/YuE/blob/main/docs/generation.md",
+     "https://huggingface.co/m-a-p/YuE2-3B",
+     "YuE GitHub issues filtered for Windows, WSL, 16GB, OOM",
+     "https://docs.nvidia.com/cuda/wsl-user-guide/",
+     "https://github.com/pytorch/pytorch/blob/main/RELEASE.md"
+    ]
+   },
+   {
+    "id": "GAP-04-non-ace-vocal-engine-on-apple-silicon",
+    "question": "Can any non-ACE vocal song engine credibly run on the M5 Pro? Check three ports. (a) The community yue2.cpp Metal port: repo URL, license of the code and of its GGUF conversions, last commit, whether it implements the ABC / `cot='melody'` path, and any output comparison against the PyTorch reference. (b) The community MiniMax Music 3 MLX/GGUF ports (audio.cpp): Metal support, peak memory against the M5 Pro's 37.44 GiB Metal working set, and whether the Community License obligations pass through. (c) The HeartMuLa MLX port, which reportedly has no license. Separately, have YuE issues #176 (silent BF16 corruption on MPS) and #187 (Metal memory runaway) been fixed upstream?",
+    "why_it_matters": "The owner explicitly rejects an ACE-only design. Yet D-02 reverse-if (c) and D-03 make the no-CUDA fallback 'Mac-only ACE + SA3', and SA3 cannot produce intelligible vocals. Any sung song would then be ACE-only. Until the GPU inventory exists, a vetted Mac port is the only way to meet the owner's constraint without renting.",
+    "suggested_primary_sources": [
+     "yue2.cpp repository (LICENSE, README, issues)",
+     "https://huggingface.co/audio-cpp/MiniMax-Music3-GGUF and the audio.cpp repository",
+     "HeartMuLa community MLX port repository",
+     "https://github.com/multimodal-art-projection/YuE/issues/176",
+     "https://github.com/multimodal-art-projection/YuE/issues/187"
+    ]
+   },
+   {
+    "id": "GAP-05-yue2-individual-permission-scope",
+    "question": "What exactly does the 'Individual creator permission' in YuE's GitHub MODEL_LICENSE (2026-09-16) allow? (1) Can an individual later assign or license output songs to a company such as Island Development Crew LLC, or use them on a company-run property such as Sabbath Echo? (2) Does a single-member LLC owned by the individual count as a 'company'? (3) Is the permission revocable, and which text governs where it conflicts with the plain CC BY-NC 4.0 LICENSE on Hugging Face? (4) Has the YuE team answered any of this publicly, or published a commercial-license contact or terms?",
+    "why_it_matters": "D-02 puts YuE2 in the first pair on the assumption of an individual operator lane, but Q3 (individual vs LLC) is still open. Sabbath Echo is an IDC venture, so music made for it is probably LLC work. §8 already lists 'whether Jon can license an individually made YuE2 song to his LLC' as unchecked. If the answer is no, LLC work has to run on MiniMax or ACE, and the D-02 install order changes.",
+    "suggested_primary_sources": [
+     "https://github.com/multimodal-art-projection/YuE/blob/main/MODEL_LICENSE (and its git history for the 2026-09-16 commit)",
+     "https://huggingface.co/m-a-p/YuE2-3B/blob/main/LICENSE",
+     "YuE GitHub issues and discussions on commercial use",
+     "https://creativecommons.org/licenses/by-nc/4.0/legalcode (definition of NonCommercial)"
+    ]
+   },
+   {
+    "id": "GAP-06-native-generation-stems",
+    "question": "Which engines in the v1 path can output separate vocal and accompaniment tracks (or more stems) natively, instead of a single mix? (1) Does YuE2 keep YuE1's dual-track vocal and instrumental token streams and write them as separate files? (2) Can ACE-Step 1.5 base return a generated part on its own (lego/complete output before mixing)? (3) Does MiniMax Music 3 expose separate tracks? Separately: did the original facebookresearch/demucs v4 release state a license that covers its pretrained checkpoints? The adefossez Hugging Face safetensors carry no license field.",
+    "why_it_matters": "The owner wants Suno-class isolation. Suno regenerates up to 12 stems, while open separators give 4-6, with weak piano and no backing vocals (C22-C23). Generation-time stems would give a clean vocal/instrumental split for AURA's own songs with no separation artifacts, which changes how D-06 splits Isolate original from Re-perform. Demucs is adopt-v1 but sits on the 'unknown license' release-blocker list, and that matters for the open-source-ready goal.",
+    "suggested_primary_sources": [
+     "https://huggingface.co/m-a-p/YuE2-3B and YuE docs/generation.md (output files)",
+     "https://github.com/multimodal-art-projection/YuE/tree/YuE-v1 (dual-track description)",
+     "https://arxiv.org/html/2609.33757v1 (architecture section)",
+     "https://github.com/ace-step/ACE-Step-1.5/blob/main/docs/en/INFERENCE.md",
+     "https://github.com/MiniMax-AI/MiniMax-Music3",
+     "https://github.com/facebookresearch/demucs (README, LICENSE, release notes for v4 checkpoints)"
+    ]
+   },
+   {
+    "id": "GAP-07-suno-output-import-tos",
+    "question": "Under Suno's September-2026 Terms of Service and its help articles on ownership for paid plans, may a Pro or Premier subscriber import their own downloaded Suno output (the full mix or Studio stems) into a local tool and do each of the following? (a) Mix or master it with DSP. (b) Run a local separation model on it. (c) Make generative edits, such as ACE repaint or cover, or voice conversion. (d) Release the result. Which clause governs each case ('power, enable or train other AI/ML models', 'compete with Suno', or the ownership/assignment terms), and what ownership does Suno grant paid subscribers over their output?",
+    "why_it_matters": "Jon will pay Suno for his first attempt at this song, so the natural next step is to finish that version in his own studio. D-11 rule 7 and D-21 forbid conditioning on Suno output 'unless Jon accepts the ToS risk', and §8 leaves 'power, enable' uninterpreted. The feature inventory has no row for importing an existing song. The answer decides whether AURA can be the finishing tool for the Suno version or may only treat it as a listening reference.",
+    "suggested_primary_sources": [
+     "https://suno.com/terms-september-2026",
+     "https://suno.com/blog/suno-updates-tos",
+     "help.suno.com articles on ownership and commercial rights for songs made on paid plans",
+     "https://suno.com/pricing"
+    ]
+   },
+   {
+    "id": "GAP-08-narration-quality-and-elevenlabs-terms",
+    "question": "Two questions about the narration lane. (a) Is there independent, non-vendor human-preference or MOS evidence comparing VoxCPM2, Qwen3-TTS, Chatterbox (Turbo/Multilingual), Fun-CosyVoice3 and Kokoro against ElevenLabs v3 and Multilingual v2 for long-form English narration, including stability beyond a few sentences (drift, skipped or hallucinated words)? Candidates are the Artificial Analysis TTS leaderboard and the HF TTS Arena V2. (b) Do ElevenLabs' Terms of Service and Prohibited Use Policy allow existing ElevenLabs-generated narration, such as Sabbath Echo's current renders, to be used as a cloning reference or as training data for another TTS engine? Who keeps rights to custom or Professional Voice Clone voices if the subscription ends?",
+    "why_it_matters": "The D-08 business case is replacing a reported ~$25k ElevenLabs spend. The register checks only licenses for the candidates and has no quality evidence for any of them. Voice continuity for existing Sabbath Echo content depends on whether current renders can seed a new engine without breaching ElevenLabs' terms.",
+    "suggested_primary_sources": [
+     "https://artificialanalysis.ai/text-to-speech/leaderboard",
+     "https://huggingface.co/spaces/TTS-AGI/TTS-Arena-V2",
+     "https://elevenlabs.io/terms-of-use",
+     "https://elevenlabs.io/use-policy",
+     "ElevenLabs voice-cloning help documentation (Instant and Professional Voice Clone ownership)"
+    ]
+   }
+  ],
+  "document_defects": [
+   "evidence-register.json X-06 states \"'Suno 6.5' is the owner's target\" with final_verdict 'confirmed', but the finding is that no v6.5 exists. Restate the claim as 'Suno v6.5 exists' and mark it refuted, so a verdict filter does not report it as confirmed.",
+   "evidence-register.json X-02 states '~8.5 GiB free' with final_verdict 'measured-local', but the measurement (2.0 GiB) contradicts it. Use 'corrected', as V-cost-1 does, so queries for corrections find it.",
+   "RECONCILIATION §1 A4 marks YuE2's '24 GB-class NVIDIA GPU' requirement as CONFIRMED while the same cell cites 11.18 GiB peak and 14.08 GiB at maximum context (VENDOR). The conflict is never resolved. State it as open, because it decides whether a 16 GB card qualifies.",
+   "YuE2's WildSongBench scores (6.73 / 6.96) and the expert-preference study come from the YuE2 authors (§4.5: WSB is 'built and run by the YuE2 team'), so for YuE2 itself they are VENDOR/self-run. §0 ('best published open scores'), C11 and D-02 present them without that label, while other engines' scores on the same board are labelled COMPETITOR-RUN. D-02 should also note that the 6.96 best-of-8 was selected with SongBench (academic-only) and Q3O, which D-05 forbids, so AURA cannot reproduce it. And it should state that every quality figure supporting the chosen pair is authored by an interested party; no independent human evaluation of ACE or YuE2 is cited.",
+   "C44 / V-cost-3 price MiniMax at ~$0.03-0.13 per candidate, but RECONCILIATION never states the speed this is based on. The register's only basis is a COMMUNITY audio.cpp RTF of 0.74-1.39 on an RTX 5090, priced at 4090 and other rental rates. State the basis, label it COMMUNITY-derived, and flag the hardware mismatch.",
+   "D-18 cites GSV-14 and D-23 cites GSV-50. About fifteen feature-inventory rows cite 'GSV §2/§3', 'GSV MG-E16', 'GPT MG-E01/E02/E04/E05/E15' and similar. The Inputs table says those companion files are not archived, and the register has no GSV-* entries, so none of these citations can be audited. Archive the files with SHA-256 sums, or label every GSV-derived point UNVERIFIED.",
+   "The Inputs row says an independent skeptic re-checked 23 claims and the document uses the 'skeptic-adjusted final verdict'. Register claims have no fields for the verifier verdict, the skeptic verdict, or which 23 were re-checked, so the adjustment cannot be audited. Add verifier_verdict, skeptic_verdict and skeptic_checked fields.",
+   "The owner explicitly requires cross-platform support (Linux, Windows, Mac), yet the feature inventory has no row for it and no D-xx decision covers it. D-03 implicitly makes the Mac the only studio host and Linux/Windows workers only. Make this explicit: decide whether the localhost UI and control service must run on Windows and Linux. Also note that all browser audio-latency evidence (C39) comes from a 2021 MacBook Pro, and Windows/Linux Chrome is unmeasured.",
+   "The no-CUDA fallback in D-02 reverse-if (c) and D-03 is 'Mac-only ACE + SA3'. SA3 produces no intelligible vocals, so this is ACE-only for any sung song, which contradicts the owner's explicit 'not ACE-only' requirement. Present it as a constraint violation that needs owner sign-off, not as a routine fallback. Likewise, YuE2's 'adopt-v1' verdict in §4.1 and in the register depends on two unanswered owner questions (Q1 hardware, Q3 operator). Record it as conditional.",
+   "The v1-core flow relies on components that have no row in the component register: the F0/pitch tracker and DTW for melody adherence (D-04 step 6, A7); the G2P/phonemizer for lyric PER (D-05, C2), where the Kokoro row already shows the espeak-ng GPL-3.0 trap; the MIDI/GM synth and soundfont for R2(ii)'s 'neutral synth render' and for F6; the MelodySpec->ABC converter for R1; and the audio decoder for phone voice memos (A2: m4a/AAC via ffmpeg or afconvert, where LGPL vs GPL builds matter). Add rows marked unverified so the ticket DAG has nodes for them.",
+   "Tier inconsistency: v1-core needs vocal separation (D-05 'lyric PER on the separated vocal'; D-04 step 6 'separate the vocal'), but feature-inventory E1 (Isolate original / Demucs) is tiered v1-studio, and the coverage check's list of v1-core primitives omits `separate` and `align`. Move separation into v1-core, or say that the adherence and PER filters use an internal separator outside the stems feature.",
+   "D-04 defines three routes (R1; R2 with raw-hum and synth-render variants; R3), but feature-inventory A6 says 'Two routes compete in Phase 0'. Step 6 ('Show 2 candidates') does not say how the two candidates map to routes or engines. C7 ('mixed-engine candidate sets') is tiered v1-studio even though the v1-core flow is already mixed-engine. Reconcile these so the spec can define the candidate fan-out.",
+   "D-07 reverse-if moves own-voice conversion (Applio/RVC) into v1 'for the individual lane only'. But the lj1995 base weights and rmvpe carry a contested 'research use only' rider (register lanes: individual + research), and the doc never says whether a released song with converted vocals is permissible. Carry the contested status into D-07 and Q6.",
+   "D-08 ranks engines by cost per approved finished hour but never computes the ElevenLabs baseline. At the cited list price ($0.08 per 1K characters), one finished hour (~50-58k characters at ~150 wpm) costs about $4-5 (INFERRED). The reported ~$25k would then imply roughly 5,000+ finished hours, or heavy regeneration or subscription overhead. Show this arithmetic and ask in Q9 for the plan/usage split, because the business case depends on it.",
+   "D-10 and D-19 say 'BS.1770-5 integrated loudness with pyloudnorm', but §4.6 and the register say pyloudnorm implements BS.1770-4. Either state whether -4 and -5 give identical integrated loudness for stereo programme, or mark the version mismatch as unverified.",
+   "A19 and register V-suno-6 write '9/3/26', which can be read as March or September, in an otherwise ISO-dated document; elsewhere the register uses 2026-09-03. Use ISO 8601.",
+   "D-21 expects Jon to make a Suno version first, yet the feature inventory has no row for importing an existing finished song (his paid Suno render, or a bounce from a DAW) for separation, editing or mastering. Add the row and mark its Suno-ToS dependency.",
+   "D-08 (Sabbath Echo) does not state its operator lane. Sabbath Echo is an Island Development Crew venture, so its work is probably LLC-lane, which would exclude YuE2 and every other NC component from any Sabbath Echo music beds. Q3 currently asks only about 'this song'. Extend Q3, or state the lane in D-08."
+  ]
+ }
+}

@@ -1,0 +1,1067 @@
+{
+ "label": "extract:gpt-sol-voice-video",
+ "agent_id": "a6d9fe5fcba459b6c",
+ "phase": "Extract",
+ "result": {
+  "source": "gpt-sol-voice-video",
+  "claims": [
+   {
+    "id": "GSV-01",
+    "topic": "suno-facts",
+    "claim": "Suno says its current stem feature uses generative reconstruction: each stem is regenerated from scratch with its latest model, not extracted. It advertises automatic separation into up to 12 stems plus selection from nearly 100 instrument types, and says some fine-grained cases are still improving. It does not disclose the network, training data, conditioning or fidelity numbers.",
+    "evidence": "voice-studio-research.md Verdict and section 4; source register SU-01 (Jun 11, 2026).",
+    "source_confidence": "primary-cited",
+    "decision_impact": "high",
+    "urls": [
+     "https://suno.com/blog/stem-separation-updates"
+    ]
+   },
+   {
+    "id": "GSV-02",
+    "topic": "suno-facts",
+    "claim": "Suno Studio 2.0 (Aug 13, 2026) publicly supports MIDI import, record and edit; a wavetable synth; MIDI as a generation prompt; audio effects including sidechain compression and convolution reverb; automation; and 32-bit/48kHz exports for Premier.",
+    "evidence": "voice-studio-research.md section 6; SU-02.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "high",
+    "urls": [
+     "https://suno.com/blog/studio-2"
+    ]
+   },
+   {
+    "id": "GSV-03",
+    "topic": "suno-facts",
+    "claim": "Suno v6 was announced on Suno's channel on 9 Sep 2026 as the v6, v6-wild and v6-mini family, with vendor-claimed quality gains. The corpus treats it as the current visible feature baseline that supersedes the v5.5 tutorials. Quality claims are vendor demos, not independent scoring.",
+    "evidence": "video-analysis.md _lHvWn2SNC4 section; 00:06-00:16 and 16:02-16:08.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "high",
+    "urls": [
+     "https://www.youtube.com/watch?v=_lHvWn2SNC4"
+    ]
+   },
+   {
+    "id": "GSV-04",
+    "topic": "suno-facts",
+    "claim": "v6 supports role-bound multi-reference prompting. Three separately named song attachments carry role-specific instructions: rhythm from the first, atmosphere from the second, vocal energy from the third.",
+    "evidence": "_lHvWn2SNC4 02:10-03:26; frame 71 at nominal 03:24, which I viewed: chips for three songs, an Audio/Voice/Image add-row and a Simple/Advanced/Sounds tab.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "high",
+    "urls": [
+     "https://www.youtube.com/watch?v=_lHvWn2SNC4"
+    ]
+   },
+   {
+    "id": "GSV-05",
+    "topic": "suno-facts",
+    "claim": "v6 demos show time-indexed sampling from a reference ('sample the guitar riff at 0:45, isolate, build a new beat'), image input with iterative restyling, video-energy direction, phone voice-memo capture and a melody-preservation request.",
+    "evidence": "_lHvWn2SNC4 04:33-04:48 (frame 96), 05:08-06:18 (frame 111), 06:56-07:59 (frame 150), 08:15-08:43 (frame 174, the phone recorder, which also visibly shows a '30 min limit for audio uploads'), 08:44-08:58.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "urls": [
+     "https://www.youtube.com/watch?v=_lHvWn2SNC4"
+    ]
+   },
+   {
+    "id": "GSV-06",
+    "topic": "suno-facts",
+    "claim": "v6 exposes separate controls for Max Mode (Off/On), Weirdness, Style Influence, Variety (between-output diversity, e.g. 'Normal'/'Balanced variety') and Personalize/My Taste. The vendor describes Max Mode as extra compute that reduces drift in long songs, voices and covers, especially after about two minutes. No mechanism is disclosed.",
+    "evidence": "_lHvWn2SNC4 frame 246 (nominal 11:53), viewed: also Duration Custom/Auto. Variety at 11:36-12:07; Max Mode at 15:21-16:00.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "high",
+    "urls": [
+     "https://www.youtube.com/watch?v=_lHvWn2SNC4"
+    ]
+   },
+   {
+    "id": "GSV-07",
+    "topic": "suno-facts",
+    "claim": "Suno v6 claims precise edits: changing chorus energy while keeping the verses, and replacing words with song structure preserved. The inspected frames do not establish waveform-level preservation, so the preservation claim stays attributed to the vendor.",
+    "evidence": "_lHvWn2SNC4 09:45-10:03 and 10:33-11:08; frames 220 and 222.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "high",
+    "urls": [
+     "https://www.youtube.com/watch?v=_lHvWn2SNC4"
+    ]
+   },
+   {
+    "id": "GSV-08",
+    "topic": "suno-facts",
+    "claim": "Suno's 'Extract Stems and MIDI' dialog offers Auto split, Split from mix and Advanced split (marked New), and 'auto extract from a list of 12 instruments'. Lead Vocal and Backing Vocals are separate from drums, bass, percussion, synth and other. The corpus warns that this does not prove the generator emits native stems.",
+    "evidence": "BKDrtzJktO0 frames 330/340 (nominal 22:11, 22:51); frame 330 viewed. It also shows 'Open in Studio' and a Download dropdown.",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "high",
+    "urls": [
+     "https://www.youtube.com/watch?v=BKDrtzJktO0"
+    ]
+   },
+   {
+    "id": "GSV-09",
+    "topic": "suno-facts",
+    "claim": "The Suno Studio stem panel lists 12 detectable stems: Vocals, B Vocals, Drums, Bass, Guitar, Keyboard, Percussion, Strings, Synth, FX, Brass, Woodwinds.",
+    "evidence": "MI6vwl_ZHN8 frame 186 (nominal 15:01), viewed; Studio badge '1.2', 133 BPM, 4/4.",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "medium",
+    "urls": [
+     "https://www.youtube.com/watch?v=MI6vwl_ZHN8"
+    ]
+   },
+   {
+    "id": "GSV-10",
+    "topic": "suno-facts",
+    "claim": "Creating a Suno singing voice has a consent-style flow: record a singing sample, trim it (32 s shown), read a displayed challenge phrase aloud, then confirm own voice.",
+    "evidence": "MI6vwl_ZHN8 07:45-09:45; frames 115, 117 and 118 (117 viewed: 'Read this out loud' with phrase and waveform).",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "medium",
+    "urls": [
+     "https://www.youtube.com/watch?v=MI6vwl_ZHN8"
+    ]
+   },
+   {
+    "id": "GSV-11",
+    "topic": "suno-facts",
+    "claim": "Routing a song Editor → Studio keeps the automatically named sections in Studio. The presenter says entering Studio directly lacks that segmentation.",
+    "evidence": "MI6vwl_ZHN8 11:30-12:15; SYNTHESIS item 2.",
+    "source_confidence": "asserted",
+    "decision_impact": "medium",
+    "urls": [
+     "https://www.youtube.com/watch?v=MI6vwl_ZHN8"
+    ]
+   },
+   {
+    "id": "GSV-12",
+    "topic": "quality-eval",
+    "claim": "A professional songwriter reports that Suno v5.5 follows melody less accurately than earlier versions, a cross-version melody-adherence regression. A newer model can sound better while following the tune worse.",
+    "evidence": "MJ4d0-Wi1z8 30:00-30:35; SYNTHESIS item 7.",
+    "source_confidence": "asserted",
+    "decision_impact": "high",
+    "urls": [
+     "https://www.youtube.com/watch?v=MJ4d0-Wi1z8"
+    ]
+   },
+   {
+    "id": "GSV-13",
+    "topic": "workflow-process",
+    "claim": "The songwriter normally needs four or five generations per keeper and calls the result a demo, not a finished song. Best-of-many demos hide rejected candidates and their cost.",
+    "evidence": "MJ4d0-Wi1z8 33:00-33:30 and 36:00-36:30.",
+    "source_confidence": "asserted",
+    "decision_impact": "medium",
+    "urls": [
+     "https://www.youtube.com/watch?v=MJ4d0-Wi1z8"
+    ]
+   },
+   {
+    "id": "GSV-14",
+    "topic": "suno-facts",
+    "claim": "A nominally instrumental generation picked up unwanted vocals because the style prompt still mentioned vocals. Suno does not surface conflicts between the instrumental flag and style text.",
+    "evidence": "MJ4d0-Wi1z8 13:00-13:32.",
+    "source_confidence": "asserted",
+    "decision_impact": "medium",
+    "urls": [
+     "https://www.youtube.com/watch?v=MJ4d0-Wi1z8"
+    ]
+   },
+   {
+    "id": "GSV-15",
+    "topic": "workflow-process",
+    "claim": "The songwriter's 'acoustic guitar' seed was actually a keyboard-programmed Kontakt guitar in Logic (MIDI regions and piano roll). Human-authored MIDI, a hum and a guide vocal were round-tripped through Suno cover with explicit lyrics, then back to Logic. The submitted settings were Weirdness 15%, Style Influence 90%, Audio Influence 90%.",
+    "evidence": "MJ4d0-Wi1z8 05:00-05:41 (frame 58); frame 108 viewed: also Exclude styles, Vocal Gender, Lyrics Mode Manual/Auto. Frame 104 shows different values.",
+    "source_confidence": "asserted",
+    "decision_impact": "medium",
+    "urls": [
+     "https://www.youtube.com/watch?v=MJ4d0-Wi1z8"
+    ]
+   },
+   {
+    "id": "GSV-16",
+    "topic": "competitor",
+    "claim": "The roundup's ACE-Step demo is not local evidence. It shows the Cloud toggle selected, the model 'ACE-Step V1.5 XL Turbo' and several 14-second results. The presenter rates its quality below Suno and its editing as less extensive. A maker slide rates it between Suno v4.5 and v5 and says code and model are MIT, which still needs checking against the repo and model card.",
+    "evidence": "GZtLsvklYBI frame 155 (nominal 16:41) and frame 172 (nominal 18:31), both viewed; 16:30-17:16, 17:49-18:06, 18:30-18:51.",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "high",
+    "urls": [
+     "https://www.youtube.com/watch?v=GZtLsvklYBI"
+    ]
+   },
+   {
+    "id": "GSV-17",
+    "topic": "song-engine",
+    "claim": "An ACE-Step slide visible in the roundup claims it needs an NVIDIA GPU with at least 4GB of its own memory or an Apple Silicon Mac, plus about 10GB of free disk, and runs much slower without a GPU. Release notes on screen mention Docker support, 'Retake' controllable variation generation, 'Flow-Edit' prompt-guided audio editing and repaint improvements.",
+    "evidence": "Visible in the GZtLsvklYBI key-frame image f_0172, which I viewed. The corpus text does not spell out these details. They are presenter and maker assertions, not measurements.",
+    "source_confidence": "asserted",
+    "decision_impact": "medium",
+    "urls": [
+     "https://www.youtube.com/watch?v=GZtLsvklYBI"
+    ]
+   },
+   {
+    "id": "GSV-18",
+    "topic": "song-engine",
+    "claim": "The experiment profiles name ACE-Step 1.5 (base/turbo/XL task profiles; no universal task support assumed) and MiniMax-Music3 as the full-song engines under test. MiniMax-Music3 is a CUDA-path 'quality conditional' engine with intended-use community-license conditions. Both are unbenchmarked.",
+    "evidence": "proposed-experiments.md profiles ace_task_profiles and minimax_quality_conditional; MG-E01, E02, E03, E10.",
+    "source_confidence": "asserted",
+    "decision_impact": "high",
+    "urls": []
+   },
+   {
+    "id": "GSV-19",
+    "topic": "voice-singing",
+    "claim": "VoiceStudio (debpalash) provides cloning, designed voices, timed dubbing, dictation and transcription, audiobook and batch workflows, and optional remote workers. It ships macOS, Windows and Linux packages: CUDA on NVIDIA, MPS on Apple Silicon, and only a remote backend for Intel Macs. Current main uses Electron; Tauri is retired.",
+    "evidence": "voice-studio-research.md section 1; VS-01, VS-05.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "urls": [
+     "https://github.com/debpalash/VoiceStudio",
+     "https://github.com/debpalash/VoiceStudio/blob/main/docs/install/macos.md"
+    ]
+   },
+   {
+    "id": "GSV-20",
+    "topic": "legal-licensing",
+    "claim": "The VoiceStudio app is AGPL-3.0-only, with separate commercial licensing for proprietary embedding. Its default k2-fsa OmniVoice pretrained weights are CC-BY-NC with separate tokenizer terms. The app license does not clear model rights.",
+    "evidence": "VS-02 license notice; TT-12; the roundup presenter says the same at 02:13-02:25 (frame 23).",
+    "source_confidence": "primary-cited",
+    "decision_impact": "high",
+    "urls": [
+     "https://github.com/debpalash/VoiceStudio/blob/main/LICENSE-NOTICE.md",
+     "https://huggingface.co/k2-fsa/OmniVoice"
+    ]
+   },
+   {
+    "id": "GSV-21",
+    "topic": "compute-cost",
+    "claim": "VoiceStudio Pro costs $99 per user per year or $299 one-time Lifetime, each for three devices. Closed-source distribution and private hosting are not included. The roundup narration wrongly said $99 per month, while its slide said per year.",
+    "evidence": "VS-07 vendor Pro page; GZtLsvklYBI 02:26 vs frame 23 (viewed: '$99 a year').",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "urls": [
+     "https://voicestudio.sh/pro"
+    ]
+   },
+   {
+    "id": "GSV-22",
+    "topic": "voice-singing",
+    "claim": "VoiceStudio main resolved to SHA 06c6e077f0fc35149efefc3561e9be5ae835d916 (2026-10-07, 'release/0.5.7-final'). Its benchmark page contains no verified result rows.",
+    "evidence": "VS-06 and VS-03.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "low",
+    "urls": [
+     "https://github.com/debpalash/VoiceStudio/commit/06c6e077f0fc35149efefc3561e9be5ae835d916",
+     "https://github.com/debpalash/VoiceStudio/blob/main/docs/benchmarks.md"
+    ]
+   },
+   {
+    "id": "GSV-23",
+    "topic": "voice-singing",
+    "claim": "The roundup slide says VoiceStudio runs best on a recent Mac or an NVIDIA GPU with 6GB, needs about 10GB of disk, and cannot run locally on older Intel Macs. For paid work it suggests switching from OmniVoice to VoxCPM2 or CosyVoice 3.",
+    "evidence": "GZtLsvklYBI frame 23 (nominal 02:23), viewed. These are presenter assertions, not measurements.",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "medium",
+    "urls": [
+     "https://www.youtube.com/watch?v=GZtLsvklYBI"
+    ]
+   },
+   {
+    "id": "GSV-24",
+    "topic": "voice-singing",
+    "claim": "Qwen3-TTS 12Hz family (released Jan 22, 2026): 0.6B and 1.7B Base cloning models (reference audio plus transcript; reusable voice prompt), 1.7B VoiceDesign and CustomVoice variants, ten languages. Repo and 1.7B Base card are Apache-2.0. Official examples use CUDA, so MPS/MLX needs separate verification. Designed voices can be sampled and reused as stable references.",
+    "evidence": "voice-studio-research.md section 2 table; TT-01, TT-02.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "high",
+    "urls": [
+     "https://github.com/QwenLM/Qwen3-TTS",
+     "https://huggingface.co/Qwen/Qwen3-TTS-12Hz-1.7B-Base"
+    ]
+   },
+   {
+    "id": "GSV-25",
+    "topic": "voice-singing",
+    "claim": "Chatterbox comes in original, multilingual (23+ languages), Turbo (350M, English, paralinguistic tags) and Nano variants. Repo and Turbo card are MIT. The official Mac MPS example covers only the original engine; Turbo and Nano must be tested on Mac. A watermark path exists.",
+    "evidence": "TT-03, TT-04, TT-05.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "high",
+    "urls": [
+     "https://github.com/resemble-ai/chatterbox",
+     "https://huggingface.co/ResembleAI/chatterbox-turbo",
+     "https://github.com/resemble-ai/chatterbox/blob/master/example_for_mac.py"
+    ]
+   },
+   {
+    "id": "GSV-26",
+    "topic": "voice-singing",
+    "claim": "CosyVoice 3 (Fun-CosyVoice3-0.5B-2512) offers cross-lingual cloning, instruction control, bi-streaming, and pronunciation inpainting for English CMU phonemes and Chinese pinyin. Repo and selected card are Apache-2.0.",
+    "evidence": "TT-06, TT-07.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "urls": [
+     "https://github.com/QwenAudio/CosyVoice",
+     "https://huggingface.co/FunAudioLLM/Fun-CosyVoice3-0.5B-2512"
+    ]
+   },
+   {
+    "id": "GSV-27",
+    "topic": "voice-singing",
+    "claim": "Kokoro-82M is a small Apache-2.0 TTS model with supplied voices. It is a low-resource narration baseline, not evidence of zero-shot voice cloning.",
+    "evidence": "TT-08.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "low",
+    "urls": [
+     "https://huggingface.co/hexgrad/Kokoro-82M"
+    ]
+   },
+   {
+    "id": "GSV-28",
+    "topic": "legal-licensing",
+    "claim": "F5-TTS code is MIT, but the official pretrained models are CC-BY-NC because of training-data constraints. Use them only for research or retrain under a proper license; do not bundle them into a commercial service.",
+    "evidence": "TT-09.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "urls": [
+     "https://github.com/SWivid/F5-TTS",
+     "https://arxiv.org/abs/2410.06885"
+    ]
+   },
+   {
+    "id": "GSV-29",
+    "topic": "legal-licensing",
+    "claim": "Current Fish Speech main is S2-Pro, a 4B multi-speaker system with fine-grained tags whose published performance is on an H200. Both code and weights are under the Fish Audio Research License, and commercial use, which can include internal organizational operations, needs a separate written license. The older 'Apache code + OpenAudio S1' guidance is stale.",
+    "evidence": "TT-10, TT-11; refutation register.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "high",
+    "urls": [
+     "https://github.com/fishaudio/fish-speech",
+     "https://github.com/fishaudio/fish-speech/blob/main/LICENSE",
+     "https://arxiv.org/abs/2603.08823"
+    ]
+   },
+   {
+    "id": "GSV-30",
+    "topic": "voice-singing",
+    "claim": "OmniVoice is a roughly 0.6B diffusion-language-model TTS with 646-language metadata, cloning, voice design and pronunciation controls. Code is Apache-2.0; the pretrained model is CC-BY-NC. The language count is availability metadata, not uniform quality.",
+    "evidence": "TT-12.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "urls": [
+     "https://huggingface.co/k2-fsa/OmniVoice"
+    ]
+   },
+   {
+    "id": "GSV-31",
+    "topic": "legal-licensing",
+    "claim": "Microsoft VibeVoice Realtime 0.5B is a streaming TTS (about ten minutes, single speaker, mainly English). Its card metadata says MIT, but the body limits intended use to research and discourages commercial deployment. The earlier 1.5B TTS path was removed or disabled.",
+    "evidence": "TT-13, TT-14.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "urls": [
+     "https://github.com/microsoft/VibeVoice",
+     "https://huggingface.co/microsoft/VibeVoice-Realtime-0.5B"
+    ]
+   },
+   {
+    "id": "GSV-32",
+    "topic": "voice-singing",
+    "claim": "ElevenLabs' newer v3/v4 models do not support SSML break tags, and dictionary/IPA behavior differs by model. Credits convert differently per model, and custom voices carry multipliers, so historical spend cannot be reconstructed from a generic plan.",
+    "evidence": "EL-01 to EL-04.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "urls": [
+     "https://elevenlabs.io/docs/overview/capabilities/text-to-speech/best-practices",
+     "https://elevenlabs.io/docs/eleven-api/guides/how-to/text-to-speech/pronunciation-dictionaries",
+     "https://help.elevenlabs.io/hc/en-us/articles/27562020846481-What-are-credits",
+     "https://help.elevenlabs.io/hc/en-us/articles/26050485079057-What-are-custom-rates-and-credit-multipliers"
+    ]
+   },
+   {
+    "id": "GSV-33",
+    "topic": "separation-transcription",
+    "claim": "Hybrid Transformer Demucs is the official music separator with published checkpoints, but Meta archived the repository on Jan 1, 2025. Treat it as a pinned reproducible baseline, not an actively maintained commitment.",
+    "evidence": "ST-01.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "high",
+    "urls": [
+     "https://github.com/facebookresearch/demucs"
+    ]
+   },
+   {
+    "id": "GSV-34",
+    "topic": "separation-transcription",
+    "claim": "BS-RoFormer (band-split plus RoPE transformer) has a well-known MIT independent implementation (lucidrains), but code terms do not license third-party checkpoints. Use only provenance-verified checkpoints.",
+    "evidence": "ST-02, ST-03.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "urls": [
+     "https://arxiv.org/abs/2309.02612",
+     "https://github.com/lucidrains/BS-RoFormer"
+    ]
+   },
+   {
+    "id": "GSV-35",
+    "topic": "separation-transcription",
+    "claim": "SCNet's official sparse-compression separator is MIT-licensed, with a released MUSDB-trained checkpoint and a large variant. It is a speed/quality-balance candidate, but its weight-shipping rights need review.",
+    "evidence": "ST-04, ST-05.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "urls": [
+     "https://github.com/starrytong/SCNet",
+     "https://arxiv.org/abs/2401.13276"
+    ]
+   },
+   {
+    "id": "GSV-36",
+    "topic": "separation-transcription",
+    "claim": "Meta SAM Audio separates a target plus residual, conditioned on text, visual or time-span prompts. CUDA is recommended, checkpoints are gated, reranking raises memory and latency, and a custom SAM License applies. It is a prompt-selected instrument lane, not proof of 100-instrument Suno parity.",
+    "evidence": "ST-06, ST-07, ST-08.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "high",
+    "urls": [
+     "https://github.com/facebookresearch/sam-audio",
+     "https://arxiv.org/abs/2512.18099",
+     "https://github.com/facebookresearch/sam-audio/blob/main/LICENSE"
+    ]
+   },
+   {
+    "id": "GSV-37",
+    "topic": "voice-singing",
+    "claim": "OpenVPI's maintained DiffSinger does 44.1kHz score-to-singing with variance controls (pitch, energy, breathiness) under Apache-2.0 code. Voicebanks and recordings carry their own permissions. It gives note-level control far beyond full-song prompting, but needs score preparation and a suitable singer bank.",
+    "evidence": "SV-01; section 5.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "high",
+    "urls": [
+     "https://github.com/openvpi/DiffSinger"
+    ]
+   },
+   {
+    "id": "GSV-38",
+    "topic": "voice-singing",
+    "claim": "RVC (MIT code) does retrieval-based singing voice conversion with F0 extraction. It neither composes nor turns speech into a performed score. The source singer's timing and expression remain load-bearing.",
+    "evidence": "SV-02.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "urls": [
+     "https://github.com/RVC-Project/Retrieval-based-Voice-Conversion-WebUI"
+    ]
+   },
+   {
+    "id": "GSV-39",
+    "topic": "separation-transcription",
+    "claim": "Spotify Basic Pitch outputs MIDI with pitch bends and works best on one instrument at a time. That supports a separation → transcription → piano-roll correction flow, not a mixed-song score extractor.",
+    "evidence": "AU-01.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "urls": [
+     "https://github.com/spotify/basic-pitch"
+    ]
+   },
+   {
+    "id": "GSV-40",
+    "topic": "legal-licensing",
+    "claim": "JUCE's current modules are dual-licensed AGPL/commercial, and its device API exposes input/output latency and overruns. CPAL is a lower-level Apache-2.0 Rust option covering CoreAudio, WASAPI with optional ASIO, and ALSA with optional PipeWire/JACK/PulseAudio. A permissive I/O layer still leaves the audio graph, DSP, plugin isolation and DAW semantics to build.",
+    "evidence": "AU-03, AU-04, AU-05.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "high",
+    "urls": [
+     "https://github.com/juce-framework/JUCE/blob/master/LICENSE.md",
+     "https://docs.juce.com/master/classjuce_1_1AudioIODevice.html",
+     "https://github.com/RustAudio/cpal"
+    ]
+   },
+   {
+    "id": "GSV-41",
+    "topic": "studio-ui-tech",
+    "claim": "For a browser studio, use AudioWorklet for custom real-time DSP and the audio clock for scheduling. The Web Audio latency hint is at the browser's discretion, so actual latency must be measured.",
+    "evidence": "AU-02.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "urls": [
+     "https://www.w3.org/TR/webaudio-1.0/"
+    ]
+   },
+   {
+    "id": "GSV-42",
+    "topic": "legal-licensing",
+    "claim": "Rubber Band supports independent time and pitch changes, but proprietary distribution needs its commercial license under its GPL/commercial terms. SoundTouch is an alternative to audition on drums, strings, vocals, reverbs and extreme ratios.",
+    "evidence": "AU-06, AU-07.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "urls": [
+     "https://breakfastquay.com/rubberband/",
+     "https://www.surina.net/soundtouch/"
+    ]
+   },
+   {
+    "id": "GSV-43",
+    "topic": "post-production",
+    "claim": "DeepFilterNet targets 48kHz speech enhancement under MIT/Apache code. A speech denoiser must not be applied globally to music, because it can suppress intended instrumental textures.",
+    "evidence": "AU-08; section 7.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "low",
+    "urls": [
+     "https://github.com/Rikorose/DeepFilterNet"
+    ]
+   },
+   {
+    "id": "GSV-44",
+    "topic": "post-production",
+    "claim": "Mastering cannot recover missing performance detail or fix lyric errors. Aggressive limiting or generative enhancement can hide defects. A 32-bit/48kHz container does not prove 32 bits of source precision or restore bandwidth the model discarded, so quality should be measured before and after every enhancement stage.",
+    "evidence": "section 7 engineering inference; refutation register; MG-E04 and MG-E15 stop rules.",
+    "source_confidence": "asserted",
+    "decision_impact": "high",
+    "urls": []
+   },
+   {
+    "id": "GSV-45",
+    "topic": "architecture",
+    "claim": "The studio should run on two clocks and two engines. A real-time audio engine owns sample scheduling, monitoring, effects and device I/O. Background workers own generation, transcription, separation, denoising and heavy export. The audio callback must never do blocking inference, disk reads, network calls or unbounded allocation.",
+    "evidence": "section 7.",
+    "source_confidence": "asserted",
+    "decision_impact": "high",
+    "urls": []
+   },
+   {
+    "id": "GSV-46",
+    "topic": "architecture",
+    "claim": "Stems should be three explicit operations with different contracts and tests: Extract original part (an estimate from the mix, judged by reference-stem comparison, bleed and sum-to-mixture residual); Re-perform this part (a cleaner new performance judged on melody, onset and harmony fidelity); Generate a new part (new compatible content).",
+    "evidence": "section 4 table; MG-E07 and MG-E08.",
+    "source_confidence": "asserted",
+    "decision_impact": "high",
+    "urls": []
+   },
+   {
+    "id": "GSV-47",
+    "topic": "architecture",
+    "claim": "Timeline model: integer sample positions for audio, musical ticks for score events, a versioned tempo/time-signature map, beat, key and chord candidates with confidence, reversible local quantization that keeps the original offset, and word/phoneme lyric alignment with explicit melisma.",
+    "evidence": "section 6.",
+    "source_confidence": "asserted",
+    "decision_impact": "high",
+    "urls": []
+   },
+   {
+    "id": "GSV-48",
+    "topic": "architecture",
+    "claim": "A reusable narrator `voice_id` should be a versioned bundle: authorized references, transcript, language/accent, style defaults, pronunciation dictionary, consent record and engine-specific embedding. The clean recording is the source of truth, because a serialized embedding ties the voice to one encoder revision. Cached prompts are invalidated when the reference or encoder changes.",
+    "evidence": "section 2, 'A reusable narrator is a managed asset'.",
+    "source_confidence": "asserted",
+    "decision_impact": "medium",
+    "urls": []
+   },
+   {
+    "id": "GSV-49",
+    "topic": "compute-cost",
+    "claim": "The user-reported $25k ElevenLabs spend is not a verified invoice. Savings cannot be calculated until corpus, voice rights, characters, rejected takes, editorial labor and quality target are known, so cost must be measured per accepted audio hour.",
+    "evidence": "Verdict; section 8; MG-E13.",
+    "source_confidence": "asserted",
+    "decision_impact": "medium",
+    "urls": []
+   },
+   {
+    "id": "GSV-50",
+    "topic": "compute-cost",
+    "claim": "Cost model: compute_hours = A·r·m and total = F + compute_hours·c + energy + review labor + ops, where A is accepted hours, r is RTF and m is the generated/accepted ratio. Illustration only: 1,000 final minutes (16.667 h) at RTF 0.5 and ratio 1.5 needs 12.5 compute hours, excluding review, startup, transfers and rights.",
+    "evidence": "section 8.",
+    "source_confidence": "asserted",
+    "decision_impact": "medium",
+    "urls": []
+   },
+   {
+    "id": "GSV-51",
+    "topic": "legal-licensing",
+    "claim": "Current Pond5 policy does not allow AI-generated submissions, and Envato Market/Elements (which includes AudioJungle) does not allow AI-generated content as a primary sale item. This contradicts the monetization video's advice that disclosed AI music is accepted.",
+    "evidence": "video-analysis.md x8EOgO7UQ54 section; video 03:08-03:21, 07:43-07:49.",
+    "source_confidence": "primary-cited",
+    "decision_impact": "medium",
+    "urls": [
+     "https://www.pond5.com/help/en/articles/10086182-does-pond5-allow-ai-generated-content-for-licensing",
+     "https://contributor.pond5.com/faq/",
+     "https://help.author.envato.com/hc/en-us/articles/13313674070681-AI-generated-content-policy-for-Market-and-Elements"
+    ]
+   },
+   {
+    "id": "GSV-52",
+    "topic": "legal-licensing",
+    "claim": "Adding one played note, sung line or percussion layer should not be assumed to grant copyright over an otherwise generated composition. Commercial permission, copyrightability, model licensing, reference rights and platform eligibility are separate questions.",
+    "evidence": "x8EOgO7UQ54 03:48-04:12 and 06:32-07:28, plus the corpus's correction.",
+    "source_confidence": "asserted",
+    "decision_impact": "medium",
+    "urls": []
+   },
+   {
+    "id": "GSV-53",
+    "topic": "voice-singing",
+    "claim": "Historical Sabbath Echo boundary: Bible Brain supplied Scripture audio, TTS was limited to authorized EGW narration, and a 'never TTS Scripture' rule applied. This comes from memory and was not revalidated against the current repo.",
+    "evidence": "section 3; memory provenance /Users/IDC2.5/.codex/memories/MEMORY.md:1427.",
+    "source_confidence": "asserted",
+    "decision_impact": "high",
+    "urls": []
+   },
+   {
+    "id": "GSV-54",
+    "topic": "quality-eval",
+    "claim": "Proposed narration pilot: 60 approved passages (20 ordinary, 20 difficult names/numbers/quotations, 20 emotional, long-sentence or mixed-format) plus ten-minute assembled sessions. Qwen, Chatterbox, CosyVoice and a Kokoro baseline are compared on the same texts, consented voices, loudness and format. Acceptance dimensions cover text integrity, pronunciation, identity, longform, quality, throughput, reliability and delivery.",
+    "evidence": "section 3 pilot gate table. These are targets, not measured baselines.",
+    "source_confidence": "asserted",
+    "decision_impact": "medium",
+    "urls": []
+   },
+   {
+    "id": "GSV-55",
+    "topic": "quality-eval",
+    "claim": "The experiment register proposes 16 experiments (MG-E01 to E16). It plans 48 fixture briefs in 8 categories of 6 (sparse_acoustic_worship, dense_pop, rhythm_heavy, cinematic_orchestral, instrumental_beds, authorized_voice_reference_control, local_repairs, difficult_edge_cases) and a 12-brief smoke subset. Nothing has been instantiated or run.",
+    "evidence": "proposed-experiments.md fixture_design.",
+    "source_confidence": "asserted",
+    "decision_impact": "high",
+    "urls": []
+   },
+   {
+    "id": "GSV-56",
+    "topic": "quality-eval",
+    "claim": "MG-E01 gate: two pinned engine adapters complete the 12 smoke briefs with failures retained and provenance complete before a studio interface is built. Unsupported backends, unavailable checkpoints, unresolved intended-use licenses and irreproducible artifacts are not promoted.",
+    "evidence": "proposed-experiments.md MG-E01.",
+    "source_confidence": "asserted",
+    "decision_impact": "high",
+    "urls": []
+   },
+   {
+    "id": "GSV-57",
+    "topic": "quality-eval",
+    "claim": "MG-E02 compares engines in a single-candidate lane and a separately labeled equal-candidate-budget selection lane (the master's example is four takes per brief). Comparisons are blind, level-matched, without heavy corrective mastering, on full songs and problem intervals, with uncertainty clustered by brief. No universal parity claim may come from a pilot.",
+    "evidence": "MG-E02; blind_level_matched profile.",
+    "source_confidence": "asserted",
+    "decision_impact": "high",
+    "urls": []
+   },
+   {
+    "id": "GSV-58",
+    "topic": "quality-eval",
+    "claim": "MG-E04 codec-ceiling test: round-trip held-out licensed recordings through each engine's exact native codec to expose a fidelity ceiling that prompting or mastering cannot remove. A learned codec under an existing generator should not be replaced without a compatibility experiment.",
+    "evidence": "MG-E04.",
+    "source_confidence": "asserted",
+    "decision_impact": "high",
+    "urls": []
+   },
+   {
+    "id": "GSV-59",
+    "topic": "quality-eval",
+    "claim": "MG-E06 repair-preservation gate: retained working PCM must be byte-identical outside explicit edit/crossfade masks at the same rate, layout and dtype, with accepted boundaries. The gate does not apply to re-performance, stretching, conversion or mastering.",
+    "evidence": "MG-E06; working_pcm_preservation profile.",
+    "source_confidence": "asserted",
+    "decision_impact": "high",
+    "urls": []
+   },
+   {
+    "id": "GSV-60",
+    "topic": "quality-eval",
+    "claim": "MG-E05 singing-identity gate: a blind owner review across ten varied excerpts, with native reference conditioning, an authorized adapter and voice conversion tested as separately labeled routes.",
+    "evidence": "MG-E05.",
+    "source_confidence": "asserted",
+    "decision_impact": "medium",
+    "urls": []
+   },
+   {
+    "id": "GSV-61",
+    "topic": "studio-ui-tech",
+    "claim": "Audio-engine gates: 48kHz sessions with 256-frame buffers (5.33 ms per block); round-trip latency measured by wired loopback, separately from generated-audio TTFA; 16 tracks with inserts, automation and scrubbing for 30 minutes without callback overruns. Separately, MG-E14 sets 8 tracks for 30 minutes per OS with no underruns and UI interaction p95 under 100 ms during background generation.",
+    "evidence": "voice-studio-research.md section 7 gates; proposed-experiments.md MG-E14.",
+    "source_confidence": "asserted",
+    "decision_impact": "medium",
+    "urls": []
+   },
+   {
+    "id": "GSV-62",
+    "topic": "studio-ui-tech",
+    "claim": "MG-E15 aligned-export gate: stems at a common project rate, zero start and frame count, with MIDI and tempo map, staying aligned in an identified DAW on each OS. Intermediates stay 32-bit float, and dither applies only when reducing integer bit depth.",
+    "evidence": "MG-E15; section 7 gates.",
+    "source_confidence": "asserted",
+    "decision_impact": "medium",
+    "urls": []
+   },
+   {
+    "id": "GSV-63",
+    "topic": "compute-cost",
+    "claim": "Hardware state: the Mac is an M5 Pro with 48 GiB unified memory (verified by the root host inventory). Windows and Linux CPU, GPU, RAM and devices are unknown. A CUDA quality challenger needs real NVIDIA inventory or a separately authorized bounded rental. Multiple OSes do not pool into one GPU, and 48 GiB does not guarantee fast frontier audio.",
+    "evidence": "section 7; proposed-experiments.md profiles; refutation register.",
+    "source_confidence": "asserted",
+    "decision_impact": "high",
+    "urls": []
+   },
+   {
+    "id": "GSV-64",
+    "topic": "workflow-process",
+    "claim": "For music videos, lip-sync reacts to unwanted ad-libs and backing vocals. The workaround is to export only the chosen lead-vocal stem as audio in a black-background MP4, drive the performer from it, and restore the full mix later. The presenter also recommends cheap draft video generations before the high-quality render.",
+    "evidence": "BKDrtzJktO0 21:30-23:00 and 15:00-15:34; frame 230 shows a hosted video generator (10 s, 16:9, 1080p, credit-bearing button).",
+    "source_confidence": "asserted",
+    "decision_impact": "low",
+    "urls": [
+     "https://www.youtube.com/watch?v=BKDrtzJktO0"
+    ]
+   },
+   {
+    "id": "GSV-65",
+    "topic": "suno-facts",
+    "claim": "Suno's v5-era Song Editor (Beta, alongside Legacy Editor) has named waveform sections, Reset All with undo/redo, Replace over a time range with a 'Smart' mode, New Lyrics with Fix Alignment, two alternate replacement candidates each with Insert, Save as New Song, Get Stems, Edit in Studio, a FADE handle and a tempo control.",
+    "evidence": "DrRRvM4oc4w frames 197, 206 and 223 (viewed); 09:38-11:35.",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "medium",
+    "urls": [
+     "https://www.youtube.com/watch?v=DrRRvM4oc4w"
+    ]
+   },
+   {
+    "id": "GSV-66",
+    "topic": "suno-facts",
+    "claim": "Suno Studio 1.2 has alternate take lanes (Version 1/Version 2) under each track and Copy to Main Track. Clip settings cover Tempo (On Beat), Transpose, Speed (½/×2) and Clip Volume, with Remix and Extract Stems. A track EQ has presets, six bands, a high-pass and Follow Track Tempo. Audio tracks take mic input, and a Cover action works per track.",
+    "evidence": "MI6vwl_ZHN8 frames 212, 221 and 234 (viewed); 14:45-19:40.",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "medium",
+    "urls": [
+     "https://www.youtube.com/watch?v=MI6vwl_ZHN8"
+    ]
+   },
+   {
+    "id": "GSV-67",
+    "topic": "suno-facts",
+    "claim": "A Suno Persona is created from an existing song in the library and has a Public toggle, which raises a persistence and privacy requirement for reusable identities.",
+    "evidence": "DrRRvM4oc4w frame 155 (nominal 07:54), viewed; 07:30-08:30.",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "low",
+    "urls": [
+     "https://www.youtube.com/watch?v=DrRRvM4oc4w"
+    ]
+   },
+   {
+    "id": "GSV-68",
+    "topic": "suno-facts",
+    "claim": "The commentary video alleges Suno download limits and watermarking but specifies no watermark mechanism and proves no detection reliability.",
+    "evidence": "CZazcFtS4Co 00:00-00:30 and 21:48-22:05; only a talking head is visible in the inspected samples.",
+    "source_confidence": "asserted",
+    "decision_impact": "low",
+    "urls": [
+     "https://www.youtube.com/watch?v=CZazcFtS4Co"
+    ]
+   },
+   {
+    "id": "GSV-69",
+    "topic": "quality-eval",
+    "claim": "Video evidence coverage: 8 videos (7 user-supplied plus Simon Crowe's supplemental tutorial), 2,450 fixed-cadence frames extracted at 480p, 288 overview thumbnails and 44 full-resolution frames inspected (307 distinct), all eight transcripts read. There was no continuous watch and no controlled listening. No video reveals Suno's weights, data, size or architecture, and the Claude 20/80 estimate is an unmeasured heuristic.",
+    "evidence": "METHOD.md; independent-video-review.md.",
+    "source_confidence": "asserted",
+    "decision_impact": "medium",
+    "urls": []
+   }
+  ],
+  "features": [
+   {
+    "name": "Role-bound multi-reference inputs",
+    "description": "Attach several reference songs or files and give each a role (rhythm, atmosphere, vocal energy, instrument or voice target) and a strength.",
+    "evidence": "Suno v6 _lHvWn2SNC4 02:10-03:26, frame 71 (three named chips with role text); BKDrtzJktO0 frame 161 (use @Video 1 audio only, not visuals).",
+    "proposed_implementation": "A reference asset that keeps source ID/hash, crop start/end, role, instrument/voice target, strength and permission. Bindings are explicit, so an index change cannot silently retarget the wrong source."
+   },
+   {
+    "name": "Time-indexed sampling and isolation from a reference",
+    "description": "Say 'sample the guitar riff at 0:45, isolate it, build a new beat around it'.",
+    "evidence": "_lHvWn2SNC4 04:33-04:48, frame 96.",
+    "proposed_implementation": "Time-indexed source selection on reference assets, then the separation lane, then generation conditioned on the extracted part. Extraction and re-performance stay labeled as different operations."
+   },
+   {
+    "name": "Image/video-to-music brief",
+    "description": "Use an image or video's mood or energy to direct a song, with iterative restyling.",
+    "evidence": "_lHvWn2SNC4 05:08-06:18 (frame 111), 06:56-07:59 (frame 150).",
+    "proposed_implementation": "Image or video understanding produces a structured musical brief. The corpus says this does not require the core generator to be natively multimodal."
+   },
+   {
+    "name": "Voice memo / hum capture as seed",
+    "description": "Record a phone memo or hum as the musical seed, then cover it with audio influence control.",
+    "evidence": "_lHvWn2SNC4 08:15-08:43, frame 174 (phone recorder; '30 min limit for audio uploads' visible); DrRRvM4oc4w 05:30-07:06; MJ4d0-Wi1z8 16:00-19:30.",
+    "proposed_implementation": "Hummed-melody fixture in the first evaluation; melody preservation measured as an evaluated constraint (MIDI/chord/hum fixtures, onset/pitch tests)."
+   },
+   {
+    "name": "Melody preservation request",
+    "description": "Ask the generator to keep the user's melody.",
+    "evidence": "_lHvWn2SNC4 08:44-08:58; MJ4d0-Wi1z8 30:00-30:35 (v5.5 follows melody worse).",
+    "proposed_implementation": "Cross-version melody, harmony and chord regression sets; MIDI-conditioned generation advertises a tolerance until measured."
+   },
+   {
+    "name": "Protected-region edits (section and word replacement)",
+    "description": "Change the chorus while keeping the verses; replace a word with structure preserved.",
+    "evidence": "_lHvWn2SNC4 09:45-10:03 and 10:33-11:08; DrRRvM4oc4w frames 197/206 (Replace from time range, Smart mode).",
+    "proposed_implementation": "Sample-index edit and crossfade masks; byte-identical working PCM outside the masks (MG-E06); a lyric/word alignment layer."
+   },
+   {
+    "name": "Diversity vs adherence controls",
+    "description": "Separate controls for Weirdness, Style Influence, Audio Influence, Variety, Personalize/My Taste and Duration Custom/Auto.",
+    "evidence": "_lHvWn2SNC4 frame 246; MJ4d0-Wi1z8 frame 108 (Weirdness 15%, Style Influence 90%, Audio Influence 90%, Exclude styles, Vocal Gender, Lyrics Mode Manual/Auto).",
+    "proposed_implementation": "Record creative intent plus the actual engine-specific parameters. No universal slider mapping. A capability-aware UI shows only the controls a backend actually implements."
+   },
+   {
+    "name": "Max Mode (compute-budgeted quality)",
+    "description": "Spend more compute to reduce drift in long songs, voices and covers.",
+    "evidence": "_lHvWn2SNC4 15:21-16:00; frame 246 toggle.",
+    "proposed_implementation": "A quality/compute budget mode. Planning, longer context, multi-candidate selection or a better checkpoint are tested as alternative hypotheses, recording elapsed time and accepted results."
+   },
+   {
+    "name": "Separate lyrics and style editors with tags",
+    "description": "Lyrics with structural/performance bracket tags kept apart from the style prompt.",
+    "evidence": "DrRRvM4oc4w frame 95, 02:00-05:12.",
+    "proposed_implementation": "Lyric text and style text stay distinct. Bracket tags are treated as soft directions, not an executable score. Lyric words must never become hidden style instructions."
+   },
+   {
+    "name": "Prompt-conflict detection",
+    "description": "Surface conflicts, for example an instrumental flag while the style text mentions vocals.",
+    "evidence": "MJ4d0-Wi1z8 13:00-13:32.",
+    "proposed_implementation": "Resolve instrumental flags, lyric mode, voice references and vocal tags transparently before submitting. Include an explicit no-vocal fixture."
+   },
+   {
+    "name": "Lyric correction before re-performance",
+    "description": "Fix ASR-recognized lyrics before covering.",
+    "evidence": "MJ4d0-Wi1z8 28:00-29:08, frames 286/292/297.",
+    "proposed_implementation": "Keep approved lyric text, source transcript and alignment as distinct assets. An ASR guess never silently replaces the author's text."
+   },
+   {
+    "name": "Persona / reusable singer identity",
+    "description": "Create a persona from an existing song, with a Public toggle.",
+    "evidence": "DrRRvM4oc4w 07:30-08:30, frame 155.",
+    "proposed_implementation": "Identity references with persistence, privacy and permission fields. Singing identity is evaluated separately (MG-E05)."
+   },
+   {
+    "name": "Consent-verified singing voice creation",
+    "description": "Record a singing sample, trim it, read a challenge phrase, confirm own voice.",
+    "evidence": "MI6vwl_ZHN8 07:45-09:45, frames 115/117/118.",
+    "proposed_implementation": "Consent record inside the voice profile bundle (permitted uses: narration, singing, languages, distribution, training, duration)."
+   },
+   {
+    "name": "Alternates with commit (Insert / Copy to Main Track)",
+    "description": "A generative edit produces two candidates to audition. The user inserts or copies one deliberately; undo and Reset All are available.",
+    "evidence": "DrRRvM4oc4w frame 206; MI6vwl_ZHN8 frame 212.",
+    "proposed_implementation": "A generative edit is a proposal until committed. Source and candidates are kept separately, and undo restores the true previous artifact without regenerating. Nondestructive take history."
+   },
+   {
+    "name": "Named song sections and section-preserving Editor→Studio",
+    "description": "Auto-named sections (intro, verse, pre-chorus, chorus, bridge) carried from the Editor into the Studio.",
+    "evidence": "MI6vwl_ZHN8 11:30-12:15, frame 186; DrRRvM4oc4w frame 197.",
+    "proposed_implementation": "One versioned project graph (sections, lyrics, beats, clips, tracks, references) shared by all tools."
+   },
+   {
+    "name": "Stem and MIDI extraction (12 instruments, lead/backing vocals)",
+    "description": "Auto split, Split from mix and Advanced split; up to 12 stems including separate lead and backing vocals; MIDI extraction.",
+    "evidence": "BKDrtzJktO0 frames 330/340; MI6vwl_ZHN8 frame 186; Suno stem blog (generative reconstruction, about 100 instrument types).",
+    "proposed_implementation": "Three explicit operations (extract original / re-perform / generate new part). Faithful lane: Demucs baseline against audited BS-RoFormer, SCNet and SAM Audio, storing mixture, stems and residual. Basic Pitch for per-stem MIDI."
+   },
+   {
+    "name": "Instrument replacement with reconstruction rule",
+    "description": "Isolate a synth or drum part, cover it, audition, then commit a replacement.",
+    "evidence": "MI6vwl_ZHN8 14:45-17:15, frames 192/212/220.",
+    "proposed_implementation": "Explicit mixer routing and residual policy, so the old part is removed, suppressed or replaced in a reconstructed mix and not doubled."
+   },
+   {
+    "name": "Studio take lanes and clip settings",
+    "description": "Version lanes per track, Copy to Main Track, clip Tempo (On Beat), Transpose, Speed ½/×2, Clip Volume, Remix, Extract Stems.",
+    "evidence": "MI6vwl_ZHN8 frame 212.",
+    "proposed_implementation": "Track-local variants, safe commit, a tempo map, and time/pitch via an audited Rubber Band (commercial license) or SoundTouch."
+   },
+   {
+    "name": "Per-track EQ and Follow Track Tempo",
+    "description": "EQ with presets, six bands and a high-pass; clips follow track tempo.",
+    "evidence": "MI6vwl_ZHN8 frame 234.",
+    "proposed_implementation": "Core DSP set: gain/pan, trim/fades, metering, EQ, compressor, limiter, sends/buses, sidechain, convolution reverb, automation."
+   },
+   {
+    "name": "Mic recording into an audio track and conversion to an instrument",
+    "description": "Record mic input, then convert it into an electric-guitar part via cover.",
+    "evidence": "MI6vwl_ZHN8 17:30-18:35, frames 221/224.",
+    "proposed_implementation": "Recording-device selection and error handling, round-trip latency measurement, and origin-aligned takes."
+   },
+   {
+    "name": "Suno Studio 2.0 DAW surface",
+    "description": "MIDI import/record/edit, wavetable synth, MIDI as a generation prompt, sidechain compression, convolution reverb, automation, 32-bit/48kHz export.",
+    "evidence": "suno.com/blog/studio-2 (Aug 13, 2026).",
+    "proposed_implementation": "Real-time audio engine (JUCE AGPL/commercial, CPAL Apache, or Web Audio AudioWorklet) separate from generation workers. Plugin hosting only after the core graph survives device changes and offline rendering."
+   },
+   {
+    "name": "Sounds / loops generation",
+    "description": "Short sounds and loops. A 'Sounds' tab is visible beside Simple/Advanced in v6.",
+    "evidence": "DrRRvM4oc4w 08:30-09:30; _lHvWn2SNC4 frames 71/96 tab bar.",
+    "proposed_implementation": "Loop and sound presets, loop-safe edits."
+   },
+   {
+    "name": "Fade handle and tempo control in the editor",
+    "description": "A FADE handle on clips and a numeric tempo control in the transport.",
+    "evidence": "DrRRvM4oc4w frame 223 (tempo 75, FADE).",
+    "proposed_implementation": "Actual DSP behind every waveform control; nonblocking playback."
+   },
+   {
+    "name": "WAV / DAW roundtrip",
+    "description": "Move selected output back into Logic or another DAW.",
+    "evidence": "MJ4d0-Wi1z8 final demo 33:34-38:50, frame 343 (Logic arrangement).",
+    "proposed_implementation": "Manifest-based aligned stems, MIDI and tempo map at a common project rate, zero start and frame count (MG-E15)."
+   },
+   {
+    "name": "Per-performer lip-sync buses",
+    "description": "Export the chosen lead vocal alone to drive a video performer's lip-sync, then restore the full mix later.",
+    "evidence": "BKDrtzJktO0 21:30-23:00.",
+    "proposed_implementation": "Separate guide and playback buses, synchronized stem origins, and exact shot-duration and frame-rate contracts, exported as a bridge rather than an MP4 workaround."
+   },
+   {
+    "name": "Draft/finish render budget",
+    "description": "Cheap draft generations before a high-quality render.",
+    "evidence": "BKDrtzJktO0 15:00-15:34; frame 230.",
+    "proposed_implementation": "Draft and finish quality modes with cost and time recorded."
+   },
+   {
+    "name": "Keeper-cost reporting",
+    "description": "Count every attempt, not just the best clip.",
+    "evidence": "MJ4d0-Wi1z8 33:00-33:30 (4-5 tries); GZtLsvklYBI frame 155.",
+    "proposed_implementation": "Save rejected candidates and the selection reason; report latency and cost per keeper and successes per declared attempt budget."
+   },
+   {
+    "name": "Workspaces and library organization",
+    "description": "Workspaces, filters, a newest sort and project organization.",
+    "evidence": "_lHvWn2SNC4 frames 71/96 (Workspaces > project, Filters (3)); DrRRvM4oc4w 00:44-01:35.",
+    "proposed_implementation": "Cross-project asset governance and reproducible generation parameters."
+   },
+   {
+    "name": "Delivery packages for clients",
+    "description": "Cue sheets, duration-constrained versions, loop-safe edits, instrumental/vocal variants, mood and use-case catalogs.",
+    "evidence": "x8EOgO7UQ54 04:12-04:39, 05:17-05:28.",
+    "proposed_implementation": "Provenance-rich delivery with metadata and consent records. The contradicted stock-marketplace path is removed."
+   },
+   {
+    "name": "ACEMusic competitor UI",
+    "description": "Cloud/Local toggle, model selector (ACE-Step V1.5 XL Turbo), Simple/Custom/Remix/Edit tabs, Instrumental checkbox, Upload Audio, Publish, Get API Key.",
+    "evidence": "GZtLsvklYBI frame 155 (viewed). ACE-Step release notes in frame 172 also list Retake (controllable variation), Flow-Edit (prompt-guided audio editing), repaint improvements and Docker.",
+    "proposed_implementation": "The corpus says to evaluate the model/runtime/license combination on the actual worker. A cloud demo is not a local benchmark."
+   },
+   {
+    "name": "Narration service (Sabbath Echo / Music Gen shared)",
+    "description": "A detachable, resumable longform narration pipeline.",
+    "evidence": "voice-studio-research.md section 3; MG-E12/E13.",
+    "proposed_implementation": "Source manifest with text hashes and rights; consented voice profile; deterministic normalization; semantic chunking with IDs; bounded retries per paragraph; ASR diff and alignment; assembly with crossfades and loudness; content-addressed audio manifest; reviewed publishing."
+   },
+   {
+    "name": "Engine-neutral script / pronunciation layer",
+    "description": "Pronunciation overrides, pauses, emphasis, speaker changes and timing compiled per engine.",
+    "evidence": "section 2; ElevenLabs docs (v3/v4 do not support SSML breaks).",
+    "proposed_implementation": "Display text stays canonical while a separate spoken-form alias or phoneme field drives synthesis. Cache keys combine text and dictionary version. Difficult names are previewed before a batch."
+   },
+   {
+    "name": "Voice design → reusable reference",
+    "description": "Design a voice, sample it, and reuse it as a stable reference.",
+    "evidence": "Qwen3-TTS workflow (TT-01).",
+    "proposed_implementation": "Versioned voice_id bundle; drift tests across paragraphs, emotions and languages."
+   },
+   {
+    "name": "Score-to-singing lane",
+    "description": "Note pitches, durations, phonemes and expressive curves rendered by a singing synthesizer.",
+    "evidence": "OpenVPI DiffSinger (SV-01).",
+    "proposed_implementation": "Editable symbolic notes plus a consented voicebank. Pitch and duration fidelity are tested across registers (P2 controlled singer)."
+   },
+   {
+    "name": "Singing voice conversion (optional)",
+    "description": "Convert an existing sung performance to an authorized target timbre.",
+    "evidence": "RVC (SV-02).",
+    "proposed_implementation": "Only an auditioned optional operation, with strong separation, pitch handling and voicebank provenance."
+   },
+   {
+    "name": "Stem-native coordinated generation (research)",
+    "description": "Generate coordinated sources as separate tracks before summing.",
+    "evidence": "section 4, proposed design. The corpus does not claim Suno uses it.",
+    "proposed_implementation": "Joint conditioning, a shared structure/beat plan and synchronized latent timing; independent per-instrument generation is not enough."
+   },
+   {
+    "name": "Separation → transcription → piano roll",
+    "description": "Extract a stem, transcribe it to MIDI, then correct it by hand.",
+    "evidence": "Basic Pitch (AU-01).",
+    "proposed_implementation": "Basic Pitch on single-instrument stems; source take, extracted MIDI, corrected MIDI and regenerated audio kept as distinct assets."
+   },
+   {
+    "name": "Speech-only enhancement path",
+    "description": "Denoise narration without touching music.",
+    "evidence": "DeepFilterNet (AU-08).",
+    "proposed_implementation": "A separate enhancement route for speech, never applied globally to music."
+   },
+   {
+    "name": "Generated DSP / plugin code with safety",
+    "description": "LLM-generated plugin or DSP scripts.",
+    "evidence": "section 7.",
+    "proposed_implementation": "Treat as potentially faulty: bounded resources, crash recovery, compilation and runtime checks, audition at a safe level (ear safety)."
+   },
+   {
+    "name": "Interruption-safe project state",
+    "description": "Accepted takes survive crashes, cancels, worker disconnects and restarts.",
+    "evidence": "MG-E16; section 9 P1.",
+    "proposed_implementation": "Artifact and project state kept apart from worker/job state; hashes and terminal disposition; resume without duplicating accepted outputs."
+   }
+  ],
+  "recommendations": [
+   "The fastest defensible route is a measured narration pilot and a capable audio editor, with full-song quality treated as a separate research program.",
+   "Do not treat a polished shell, an open model license, or clean-sounding isolated stems as proof of Suno parity.",
+   "Pin VoiceStudio (a chosen revision such as 06c6e077) for personal evaluation in the separate narration lane, and keep app and model terms visible in any future fork. Before proprietary embedding, choose AGPL compliance, negotiated embedding/hosting terms, or an independently built shell around licensed engines.",
+   "P0 asset and evaluation contracts: frozen voice/text permissions, a model/license manifest, a blind test corpus, track provenance labels and a per-job metrics schema.",
+   "P0 Mac narration audition: compare Qwen3-TTS, Chatterbox, CosyVoice and Kokoro on the existing Mac using permitted voices and text, recording accepted samples, a defect register, warm/cold memory, RTF and TTFA. Claim no parity from docs.",
+   "P1 resumable narration service (script compiler, voice profile registry, per-paragraph cache, retries, alignment, manifests, review UI) and P1 studio transport and basic mixing (non-destructive clips, routing, effects, automation, meters, multitrack export) around existing generation workers.",
+   "P2 faithful extraction (Demucs baseline vs audited BS-RoFormer, SCNet and SAM Audio) and P2 controlled singer (OpenVPI DiffSinger voicebank pilot, optional authorized RVC comparison). P3 generative re-performance and P3 Sabbath Echo narration integration.",
+   "A two-week starting board can reasonably contain the contract/schema, candidate environment setup, a limited audition and a first comparison register. No calendar duration is claimed from documentation.",
+   "Build narration as a detachable service consumed by Sabbath Echo and Music Gen, rather than welding religious content into the music engine. Preserve the 'never TTS Scripture' boundary unless the owner-governed scope changes.",
+   "Build an engine-neutral script format compiled into each engine's supported controls, and do not promise universal SSML. Never mutate the displayed canonical corpus to make a model pronounce it; use a separate spoken-form alias or phoneme field.",
+   "Offer explicit stem operations (Extract original part, Re-perform this part, Generate a new part), each with its own tests, and never call a re-performance an original isolated stem.",
+   "For any separator, record clip length, overlap, normalization, channel handling and resampling. Use overlap-add for chunked inference and keep stereo coherent. Store source, estimated stems and residual. Listen to the stem, the residual and the reconstructed mix.",
+   "Recommended studio sequence: keep a full-song generation lane for ideation, add editable symbolic notes and a consented score-to-singing lane for predictable melodies, and add voice conversion only as an auditioned optional operation.",
+   "Use integer sample positions for audio and musical ticks for score events, with a versioned tempo map. Quantization is reversible and local. Lyric alignment is at word and phoneme level with melisma modeled explicitly.",
+   "Run two clocks and two engines: the real-time audio engine owns scheduling and I/O, and background workers own generation, separation and export. Never run blocking inference, disk, network or unbounded allocation in the audio callback.",
+   "Start the mixer with gain/pan, trim/fades, metering, EQ, compressor, limiter, sends/buses, sidechain routing, convolution reverb and automation. Add plugin hosting only after the core graph survives device changes and offline rendering.",
+   "Begin at 48kHz sessions with 256-frame buffers. Measure round-trip latency with wired loopback separately from generated-audio TTFA. Keep 32-bit float intermediates and dither only when reducing integer bit depth.",
+   "Use accepted audio hours as the cost denominator; track warm/cold times, retries and review labor; separately report first-audio latency, completed-render latency and batch throughput.",
+   "Keep frontend, job orchestration, music generation, speech, separation, editing and video generation behind independently versioned interfaces.",
+   "Use one versioned project graph with sections, lyrics, beats, clips, tracks and references, rather than independent tools that discard each other's context.",
+   "Treat a generative edit as a proposal until it is committed. Keep source and candidates separate, and make undo restore the true previous artifact rather than trigger regeneration.",
+   "Make prompt parsing expose conflicts: resolve instrumental flags, lyric mode, voice references and vocal tags transparently.",
+   "Correct the words before re-performing them, keeping approved lyric text, the source transcript and the alignment distinct.",
+   "Preserve melody and harmony as evaluated constraints, with cross-version control regression tests using actual MIDI, chord and hum fixtures.",
+   "Replacing a stem requires a reconstruction rule (remove, suppress or replace the old part) with explicit mixer routing and a residual policy.",
+   "Record creative intent and actual engine-specific parameters, and do not invent a universal slider mapping. Do not make every backend show sliders it cannot implement.",
+   "Save rejected candidates and the selection reason, and report total latency and cost per keeper and successes per declared attempt budget. Fix the candidate budget before comparing engines.",
+   "Refresh volatile policy and price facts from primary sources, and do not use popular tutorials as release-clearance records. Remove the contradicted Pond5/AudioJungle marketplace path.",
+   "The first evaluation should contain: a human MIDI chord seed, a hummed melody, a guide vocal with corrected lyrics, an explicit no-vocal instrumental prompt, a three-reference role-binding task, one-word replacement, chorus-only replacement with protected verses, a long voice-conditioned piece, a per-singer isolation/lip-sync guide, an alternate-take commit/undo cycle, and an Editor→Studio→DAW roundtrip.",
+   "Before any experiment executes, preregister exact assets and hashes, operator and intended use, pinned code/checkpoint/dependency/rights records, the machine inventory, the candidate budget and paid-run ceiling, acceptance criteria and the listening protocol. Retain all candidates and failures.",
+   "MG-E01: promote only when two pinned adapters complete the 12 smoke briefs with failures retained and output provenance complete, before a studio interface is built.",
+   "Do not replace a learned codec under an existing generator without a documented compatibility/adaptation experiment. A 48 kHz container alone is not evidence of improvement.",
+   "Evaluate the product by usable keepers and musical control, not by bulk generation counts. Preserve human contributions and edit lineage."
+  ],
+  "unique_insights": [
+   "Suno itself says its stems are regenerated from scratch, so 'clean stems' is a generation problem rather than a separation one. A local Demucs/RoFormer pipeline answers a different contract, so the UI must label extract vs re-perform vs new part.",
+   "Replacing an isolated stem on top of the original stereo mix doubles the instrument unless the old part is subtracted, suppressed or reconstructed. A residual/reconstruction policy is a core mixer requirement that UI screenshots hide.",
+   "A newer model can sound better while following the user's melody worse (the songwriter's v5.5 report). For a hum-to-song owner, cross-version melody-adherence regression tests matter more than sonic preference alone.",
+   "Prompt conflicts are real failure modes: a nominal instrumental gained vocals because the style text mentioned vocals. The studio should surface and resolve conflicts between flags and text before submitting.",
+   "ASR-recognized lyrics must not silently overwrite the author's text. Approved lyrics, ASR transcript and alignment are three distinct assets.",
+   "The section map is lost at tool boundaries unless deliberately preserved (Editor→Studio keeps sections, direct Studio entry does not), which argues for one versioned project graph.",
+   "The roundup's ACE-Step demo was Cloud-selected 14-second clips of the XL Turbo model, and the presenter himself judged it below Suno. Popular 'open-source replacement' videos do not show local full-song capability.",
+   "The VoiceStudio narration said $99/month while its slide said $99/year. The vendor page resolves it, and also excludes private hosting and closed-source distribution from Pro/Lifetime. Buying Pro does not clear the noncommercial OmniVoice weights.",
+   "License traps: Fish Speech current main moved to a research license (internal organizational use can count as commercial); VibeVoice has MIT metadata but a research-only body; F5-TTS and OmniVoice weights are NC though code is permissive; Demucs is archived; JUCE is AGPL/commercial; Rubber Band is GPL/commercial; SAM Audio has a custom license and gated weights.",
+   "Chatterbox's official Mac MPS example validates only the original engine, not Turbo or Nano. Qwen3-TTS official examples are CUDA-only, so Apple Silicon support must be proven per exact model variant.",
+   "Keep the clean voice recording as the source of truth rather than a serialized embedding, which ties the voice to one encoder revision. Invalidate cached prompts when the reference or encoder changes.",
+   "Narration failure modes are subtle: one omitted negation can change meaning, and a 500 ms unintended pause impairs comprehension. Review labor dominates, so cheap local retries do not remove review costs.",
+   "Suno's singing-voice creation uses a read-aloud challenge phrase and own-voice confirmation, a concrete consent pattern to copy into the voice profile's consent record. Persona has a Public toggle, implying identity privacy settings.",
+   "Lip-sync for music videos needs a per-performer guide bus (lead vocal only, because ad-libs and backing vocals confuse lip-sync), separate from the audience mix.",
+   "Exact-preservation edits can be tested bytewise: working PCM outside the edit/crossfade mask must be byte-identical at the same rate, layout and dtype. This gate does not apply to re-performance, stretching or mastering.",
+   "Codec round-trip of held-out recordings exposes the generator's fidelity ceiling, which no prompting or mastering can exceed. Swapping in a better decoder needs a compatibility experiment.",
+   "Best-of-many hides economics: a pro songwriter needs 4-5 generations per keeper, so engines must be compared at a fixed, equal candidate budget with rejects retained.",
+   "Generated plugin or DSP code is a software feature with compilation, runtime and ear-safety requirements, not merely a chat response.",
+   "Multiple OSes do not pool GPUs, and 48 GiB unified memory does not guarantee fast frontier audio.",
+   "A speech denoiser such as DeepFilterNet must not be applied globally to music, because it suppresses intended textures.",
+   "Max Mode's 'extra compute reduces drift after about two minutes' suggests that long-song drift is the key quality axis to test (MG-E10), with candidate mechanisms of planning, longer context or multi-candidate selection.",
+   "From the key-frame images: the v6 phone recorder shows a 30-minute audio upload limit, and the ACE-Step slide claims an NVIDIA GPU with at least 4GB or an Apple Silicon Mac plus about 10GB of disk, with Retake and Flow-Edit editing features. The VoiceStudio slide also claims about 10GB of disk."
+  ],
+  "weaknesses_of_this_source": [
+   "Nothing was run: no model installed, no inference, no listening test, no M5 Pro measurement. Every capability is from maintainer docs, model cards or videos, and all 16 experiments are proposed_not_run with 0 of 48 fixtures instantiated.",
+   "The corpus focuses on narration and stems, while full-song generation engine selection is mostly deferred to a 'master plan' outside this corpus. ACE-Step 1.5 and MiniMax-Music3 appear only as experiment profile names, with no license, VRAM, Apple Silicon or duration details in these files, and no broader survey of open song engines.",
+   "The video evidence is thin relative to volume: 307 of 2,450 frames inspected (only 44 at full resolution), no continuous watch and no audio evaluation. Several tutorials are v5/v5.5-era, and the v6 material is a vendor demo.",
+   "The audio-engine gates are internally inconsistent: voice-studio-research proposes 16 tracks for 30 minutes without overruns, while MG-E14 uses 8 tracks for 30 minutes per OS with UI p95 under 100 ms. Neither is reconciled.",
+   "Studio technology is left undecided: JUCE, CPAL and Web Audio/AudioWorklet are described but none is chosen, and there is no frontend stack recommendation.",
+   "The corpus never addresses the Mac's very limited free disk (about 8.5 GiB per owner context), even though slides it cites claim about 10GB of disk for VoiceStudio and for ACE-Step. That is a direct conflict with the P0 Mac audition.",
+   "VoxCPM2, which the roundup frame names as a commercial-friendly VoiceStudio alternative, is not evaluated in the speech table.",
+   "The Sabbath Echo scope ('never TTS Scripture', Bible Brain) comes from memory and was not revalidated against the current repository.",
+   "The cost model has no actual numbers beyond one illustrative calculation. The $25k figure is correctly marked unverified, but no ElevenLabs-equivalent plan comparison was attempted.",
+   "Heavy hedging and repeated disclaimers make concrete selections scarce. Most gates are 'proposed' and many tolerances are left 'unset until preregistration', which delays decisions.",
+   "The owner's core use case (a melody in his head → a beautiful finished song) gets only a hummed-melody fixture and a melody-preservation test. No concrete hum-to-song pipeline (pitch extraction → MIDI → conditioned generation) is designed end to end.",
+   "The DiffSinger lane omits voicebank availability, quality evidence and Apple Silicon support. RVC's training-data and model provenance is not examined beyond MIT code.",
+   "Some Suno claims (v6 controls, Max Mode semantics, the word-replacement preservation claim) rest only on vendor demo narration. The corpus notes this but builds feature contracts on them anyway.",
+   "proposed-experiments.md cites a scope authority file (/Users/IDC2.5/Music Gen/reports/Music-Gen-Master-Plan-v1-2026-10-08.md) and 'the master's proposed gates' that are not in this corpus, so some thresholds cannot be traced to their rationale here."
+  ]
+ }
+}

@@ -1,0 +1,871 @@
+{
+ "label": "extract:claude-fable",
+ "agent_id": "a80456f299ebfd27f",
+ "phase": "Extract",
+ "result": {
+  "source": "claude-fable",
+  "claims": [
+   {
+    "id": "CF-01",
+    "topic": "workflow-process",
+    "claim": "Every Suno product fact in this corpus comes from one third-party tutorial: Simon Crowe, 'Suno AI Tutorial For Beginners (2026)', uploaded 2026-08-25, 20:19 long, about 35k views. It was analyzed through YouTube auto-captions (474 timestamped lines, 3,292 words) and 150 deduplicated frames (#001-#150). UI labels come from the frames, not the audio.",
+    "evidence": "VIDEO-ANALYSIS.md header and Method; HANDOFF §2",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "medium",
+    "urls": [
+     "https://youtu.be/MI6vwl_ZHN8"
+    ]
+   },
+   {
+    "id": "CF-02",
+    "topic": "suno-facts",
+    "claim": "In the Aug 2026 recording, Suno's model picker shows only 'v4.5-all' (free plan) and 'v5.5' (paid). No Suno v6 appears anywhere in the corpus.",
+    "evidence": "#017 dropdown 'v4.5-all', #046 dropdown 'v5.5'; transcript [02:28-02:39]",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "high",
+    "urls": [
+     "https://youtu.be/MI6vwl_ZHN8"
+    ]
+   },
+   {
+    "id": "CF-03",
+    "topic": "suno-facts",
+    "claim": "One click in Simple mode returns four results: 2 from v4.5 and 2 from v5.5. The free-plan results carry an 'Upgrade for full song' chip. The SPEC reads this as a two-model preview and shows only 2 versions.",
+    "evidence": "#018, #021-#024; transcript [02:26-02:39]; SPEC Screens item 2",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "medium",
+    "urls": [
+     "https://youtu.be/MI6vwl_ZHN8"
+    ]
+   },
+   {
+    "id": "CF-04",
+    "topic": "suno-facts",
+    "claim": "Each Advanced-mode generation returns two versions from the same prompt and lyrics. They sound slightly different.",
+    "evidence": "transcript [06:34-06:40]; #046 workspace list shows paired titles (e.g. two 'Sunday Spreadsheet', two 'Broken Crown')",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "high",
+    "urls": [
+     "https://youtu.be/MI6vwl_ZHN8"
+    ]
+   },
+   {
+    "id": "CF-05",
+    "topic": "suno-facts",
+    "claim": "Suno plan matrix from frame #028. Free: $0, 50 credits renewing daily (~10 songs), v4.5-all only, no monthly downloads (starting 9/3/26), no commercial use, standard features only, audio uploads up to 8 min, shared creation queue. Pro: $10/mo (about $8/mo annual, 'SAVE 20%'), 2,500 credits/mo (~500 songs), v5.5, 20 downloads/mo (starting 9/3/26), commercial use rights for new songs, 'Standard + Pro features (personas and advanced editing)'. Premier: $30/mo, 10,000 credits/mo (~2,000 songs), Suno Studio access, v5.5, 60 downloads/mo, commercial rights.",
+    "evidence": "#028 (reference/pricing-and-studio.jpg top half); transcript [03:37-04:21]",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "medium",
+    "urls": [
+     "https://youtu.be/MI6vwl_ZHN8"
+    ]
+   },
+   {
+    "id": "CF-06",
+    "topic": "suno-facts",
+    "claim": "In #028 'Access to Suno Studio' appears only on the Premier ($30/mo) plan. The narrator recommends Pro and says it includes advanced editing and stem separation. The Studio, stems and per-stem features in the video therefore sit behind paid tiers, with Studio specifically on Premier.",
+    "evidence": "#028 plan cards; transcript [03:46-04:04]",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "medium",
+    "urls": [
+     "https://youtu.be/MI6vwl_ZHN8"
+    ]
+   },
+   {
+    "id": "CF-07",
+    "topic": "compute-cost",
+    "claim": "The narrator puts a normal Suno generation at about 5 credits, so 2,500 credits is about 500 songs. The figure is spoken only and never shown on screen. The corpus lists it as unverified.",
+    "evidence": "transcript [04:06-04:15]; VIDEO-ANALYSIS §3",
+    "source_confidence": "asserted",
+    "decision_impact": "low",
+    "urls": [
+     "https://youtu.be/MI6vwl_ZHN8"
+    ]
+   },
+   {
+    "id": "CF-08",
+    "topic": "suno-facts",
+    "claim": "The download caps and credit terms are marked 'starting 9/3/26', so Suno was mid-way through a policy change when the video was recorded. The corpus warns against treating the pricing matrix as stable.",
+    "evidence": "#028; VIDEO-ANALYSIS §2.10; HANDOFF §5",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "low",
+    "urls": [
+     "https://youtu.be/MI6vwl_ZHN8"
+    ]
+   },
+   {
+    "id": "CF-09",
+    "topic": "ux-feature",
+    "claim": "Full Advanced-create control set: tabs Simple | Advanced | Sounds, a model dropdown, and an attach row (+ Audio, + Voice, + Inspo). Below that are a Song Description textarea with an enhance icon, + Lyrics, an Instrumental toggle and Suggestions tag chips. More Options holds Lyrics Write|Prompt|Instrumental, Exclude styles, Vocal Gender Male/Female, a Weirdness slider (default 50%), a Style Influence slider (default 50%) and Duration Custom|Auto (default Auto). The narrator sets Lyrics=Prompt and Male and leaves everything else at default.",
+    "evidence": "#017, #046 (reference/create-panel-and-more-options.jpg); transcript [05:56-06:12]",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "high",
+    "urls": [
+     "https://youtu.be/MI6vwl_ZHN8"
+    ]
+   },
+   {
+    "id": "CF-10",
+    "topic": "voice-singing",
+    "claim": "Capture rules for Suno 'Create a Voice' (Beta): Record, Upload Audio or Select from library. On-screen tips say to sing in the target style and language, that the built-in mic is fine, to pick a quiet spot and to record at least 10 seconds. The narrator says Suno accepts about 15 s to 4 min, that ~2 min is the sweet spot, and that the sample should be in a quiet room with some range and energy.",
+    "evidence": "#060 (reference/create-voice-and-song-editor.jpg top); transcript [08:02-08:44]",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "medium",
+    "urls": [
+     "https://youtu.be/MI6vwl_ZHN8"
+    ]
+   },
+   {
+    "id": "CF-11",
+    "topic": "legal-licensing",
+    "claim": "Suno gates voice creation by having the user read a displayed phrase aloud, a liveness/consent check. The corpus drops this gate for an owner-only build and replaces it with a consent checkbox plus a stored reference clip. A voice is unusable until voices.consent_at is set.",
+    "evidence": "#070, transcript [09:22-09:28]; SPEC Non-goals; CLAUDE.md Conventions",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "high",
+    "urls": [
+     "https://youtu.be/MI6vwl_ZHN8"
+    ]
+   },
+   {
+    "id": "CF-12",
+    "topic": "voice-singing",
+    "claim": "The user's voice is applied through Library > ... > Remix > Cover. The source song becomes an Audio attachment with a Cover mode pill, and the voice appears as a chip. The narrator says Cover keeps the existing song while plain regeneration would produce a different song. The output is titled '... (cover)'.",
+    "evidence": "#076-#085; transcript [10:10-10:44]",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "high",
+    "urls": [
+     "https://youtu.be/MI6vwl_ZHN8"
+    ]
+   },
+   {
+    "id": "CF-13",
+    "topic": "ux-feature",
+    "claim": "Suno's song command surface. The Library ... menu has Remix, Edit, Publish, Share, Download, Manage, Add to Queue, Add to Playlist and Move to Trash. The Edit submenu has Extend, Crop, Remove Section, Reverse, Adjust Speed, Fade In, Fade Out, Replace Section, Remaster, Open in Studio and Open in Editor.",
+    "evidence": "#076, #088",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "high",
+    "urls": [
+     "https://youtu.be/MI6vwl_ZHN8"
+    ]
+   },
+   {
+    "id": "CF-14",
+    "topic": "ux-feature",
+    "claim": "The Song Editor (Beta) splits a song into labelled, colour-coded sections (VERSE, PRE, CHORUS, VERSE 2, BRIDGE...) beside a lyrics pane and shows a BPM (133). Its header actions are Legacy Editor, Reset All, undo/redo, Save as New Song, Get Stems and Edit in Studio. The narrator goes through the Editor because opening Studio directly does not sectionize the song.",
+    "evidence": "#089-#091 (reference/create-voice-and-song-editor.jpg bottom); transcript [11:47-12:13]",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "medium",
+    "urls": [
+     "https://youtu.be/MI6vwl_ZHN8"
+    ]
+   },
+   {
+    "id": "CF-15",
+    "topic": "studio-ui-tech",
+    "claim": "Suno Studio layout. The project header has the song name, undo/redo and Export, plus a Clip | Track inspector toggle. Track lanes have S/M, a 'No Input' source and a fader, and hold colour-coded section clips. The clip inspector has Remix, like/dislike, Clip Settings (Tempo: On Beat; Transpose +/-; Speed 1/2 / x2; Clip Volume in dB), Stems > Extract, a Version carousel and Styles. The bottom prompt bar reads Song ▾ | Styles | Lyrics | Replace ▾. The footer has Upload, 4/4, 133 BPM, timecode and bar position. A 'Saved' autosave indicator is visible.",
+    "evidence": "#092 (reference/pricing-and-studio.jpg bottom); #113/#116",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "medium",
+    "urls": [
+     "https://youtu.be/MI6vwl_ZHN8"
+    ]
+   },
+   {
+    "id": "CF-16",
+    "topic": "ux-feature",
+    "claim": "Changing one lyric line works as follows: select a section title, set the inspector to Clip, copy the lyrics into the Lyrics box and edit the line. Then set the prompt-bar scope Song>Vocals and mode Replace>Cover and hit Generate. Two takes appear as Version 1 / Version 2 sub-lanes; pick one and press Copy to Main Track. The narrator chooses Cover so the original stays as close as possible.",
+    "evidence": "transcript [12:13-14:13]; #097-#103",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "high",
+    "urls": [
+     "https://youtu.be/MI6vwl_ZHN8"
+    ]
+   },
+   {
+    "id": "CF-17",
+    "topic": "separation-transcription",
+    "claim": "Suno's 'Extract Stems > All detected stems' returns 8 labelled stems: Vocals, B Vocals, Drums, Bass, Guitar, Percussion, Synth and FX. Each stem has an insert arrow and a ... menu, and the panel has Insert All and Download. Insert All puts every stem on its own coloured track, which the narrator calls 'a bit much' and undoes. He prefers inserting a single stem by arrow or by dragging to a 'Drop Here' target.",
+    "evidence": "#113, #115, #116 (reference/stems-panel.jpg); transcript [14:44-15:37]",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "high",
+    "urls": [
+     "https://youtu.be/MI6vwl_ZHN8"
+    ]
+   },
+   {
+    "id": "CF-18",
+    "topic": "separation-transcription",
+    "claim": "Per-stem regeneration works by selecting a stem, entering a prompt (e.g. 'more epic', 'bigger and more energetic') and choosing Cover. Two versions come back, the user auditions them against the original and presses Copy to Main Track. The narrator says this swaps one instrument without changing the rest. The corpus reads the frames as a new lane copied to main, so the mix is rebuilt rather than regenerated in place, and says to model it that way.",
+    "evidence": "#117-#128; transcript [15:37-17:12]; VIDEO-ANALYSIS §3; HANDOFF §5",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "high",
+    "urls": [
+     "https://youtu.be/MI6vwl_ZHN8"
+    ]
+   },
+   {
+    "id": "CF-19",
+    "topic": "ux-feature",
+    "claim": "Hum-to-instrument: Add Track > No Input > pick a mic ('1 | External Microphone'), arm the track, record a hum and stop. Choose an instrument (Electric guitar), give a prompt ('Energetic electric rock guitar') and press Cover. The result lands on an Audio Track lane whose inspector has EQ (Flat/Reset) and Follow Track Tempo.",
+    "evidence": "#129-#139; transcript [17:22-18:50]",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "high",
+    "urls": [
+     "https://youtu.be/MI6vwl_ZHN8"
+    ]
+   },
+   {
+    "id": "CF-20",
+    "topic": "post-production",
+    "claim": "Studio exports Full Song or Multitrack; the result is saved to the Library with a 'Song Saved!' toast. From the song page, Download offers MP3 Audio, WAV Audio, Get Stems, MIDI and Video. The narrator picks WAV for higher quality. The SPEC keeps MP3, WAV and Stems and puts MIDI and Video out of scope.",
+    "evidence": "#141-#145; transcript [18:50-19:43]; SPEC Screens item 5",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "medium",
+    "urls": [
+     "https://youtu.be/MI6vwl_ZHN8"
+    ]
+   },
+   {
+    "id": "CF-21",
+    "topic": "suno-facts",
+    "claim": "Several features appear only in frames and are never explained: the Sounds tab, the Hooks and Labs nav items, Earn Credits, the Inspo attachment, and an 'Unlock Your Sound 4 of 6' quest with a countdown.",
+    "evidence": "#017, #046; VIDEO-ANALYSIS §2.10",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "low",
+    "urls": [
+     "https://youtu.be/MI6vwl_ZHN8"
+    ]
+   },
+   {
+    "id": "CF-22",
+    "topic": "suno-facts",
+    "claim": "In Aug 2026 voice cloning was labelled Beta and described by the narrator as brand new. The video ends by teasing a separate AI music-video flow that the corpus does not cover.",
+    "evidence": "#060 'Beta' badge; transcript [07:44-07:50], [19:44-19:52]",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "low",
+    "urls": [
+     "https://youtu.be/MI6vwl_ZHN8"
+    ]
+   },
+   {
+    "id": "CF-23",
+    "topic": "suno-facts",
+    "claim": "Suno's models are proprietary and Suno has no public API, so the engine has to be an open model.",
+    "evidence": "HANDOFF §2 (no source cited)",
+    "source_confidence": "asserted",
+    "decision_impact": "high",
+    "urls": []
+   },
+   {
+    "id": "CF-24",
+    "topic": "architecture",
+    "claim": "The corpus's thesis is that Suno is three products in one nav: a prompt-to-song generator, a voice layer (clone plus Cover), and Studio, a browser DAW built on stems, per-stem AI regeneration and audio-to-audio. Every feature reduces to two generation primitives, text->song and audio+text->song (cover), plus source separation.",
+    "evidence": "VIDEO-ANALYSIS §1, §4.2; HANDOFF §4",
+    "source_confidence": "asserted",
+    "decision_impact": "high",
+    "urls": []
+   },
+   {
+    "id": "CF-25",
+    "topic": "architecture",
+    "claim": "SPEC primitive contracts:\n- generate(description, lyrics|prompt|instrumental, style tags, exclude, vocal gender, weirdness, style influence, duration, voice_id?) returns 2 versions, each a wav plus sections[].\n- cover(source audio, optional new lyrics, style text, voice_id?, strength) returns 2 versions.\n- separate(audio) returns stems.\n- audio2instrument(mic/upload clip, instrument, style text) returns 1-2 versions; it is cover at high strength.\n- sectionize(audio + lyrics) returns [{label, start, end}].",
+    "evidence": "SPEC 'Primitives' table",
+    "source_confidence": "asserted",
+    "decision_impact": "high",
+    "urls": []
+   },
+   {
+    "id": "CF-26",
+    "topic": "song-engine",
+    "claim": "ACE-Step 1.5 is the chosen engine candidate. The stated reason is that it alone claims every primitive the UI needs: text->song, cover/audio-conditioned regeneration, repaint, stems and timbre cloning.",
+    "evidence": "VIDEO-ANALYSIS §4.4; HANDOFF §4; ACE-Step 1.5 paper cited",
+    "source_confidence": "primary-cited",
+    "decision_impact": "high",
+    "urls": [
+     "https://arxiv.org/html/2602.00744v1",
+     "https://arxiv.org/html/2506.00045v1"
+    ]
+   },
+   {
+    "id": "CF-27",
+    "topic": "quality-eval",
+    "claim": "ACE-Step 1.5 reports style/lyric alignment of 39.1/26.3 against Suno v5's 46.8/34.2. These are self-reported numbers. The corpus concludes the quality will be 'good', not v5.5, and warns not to promise Suno v5.5 quality.",
+    "evidence": "VIDEO-ANALYSIS §4.4; HANDOFF §5; SPEC Known risks",
+    "source_confidence": "primary-cited",
+    "decision_impact": "high",
+    "urls": [
+     "https://arxiv.org/html/2602.00744v1"
+    ]
+   },
+   {
+    "id": "CF-28",
+    "topic": "compute-cost",
+    "claim": "According to the corpus, the ACE-Step 1.5 paper claims under 10 s per song on an RTX 3090.",
+    "evidence": "SPEC Phase 0 ('paper claims <10 s/song on 3090'); HANDOFF §4",
+    "source_confidence": "primary-cited",
+    "decision_impact": "high",
+    "urls": [
+     "https://arxiv.org/html/2602.00744v1"
+    ]
+   },
+   {
+    "id": "CF-29",
+    "topic": "compute-cost",
+    "claim": "ACE-Step 1.5 is said to need under 4 GB of VRAM.",
+    "evidence": "HANDOFF §4 only; the figure is not attributed to a specific source line",
+    "source_confidence": "asserted",
+    "decision_impact": "high",
+    "urls": []
+   },
+   {
+    "id": "CF-30",
+    "topic": "song-engine",
+    "claim": "The corpus says ACE-Step on Apple Silicon/MPS is unverified in the paper. It cites a Mac write-up but takes no findings from it. Phase 0 exists to settle Mac MPS versus cloud GPU.",
+    "evidence": "SPEC Known risks; HANDOFF §2-§3; VIDEO-ANALYSIS §5 cites the lilting.ch Mac article",
+    "source_confidence": "asserted",
+    "decision_impact": "high",
+    "urls": [
+     "https://lilting.ch/en/articles/ace-step-music-generation-mac"
+    ]
+   },
+   {
+    "id": "CF-31",
+    "topic": "legal-licensing",
+    "claim": "The ACE-Step 1.5 weights license is unconfirmed because the paper does not state it. The corpus says to confirm it at install time.",
+    "evidence": "SPEC Known risks; HANDOFF §3, §7",
+    "source_confidence": "asserted",
+    "decision_impact": "high",
+    "urls": [
+     "https://arxiv.org/html/2602.00744v1"
+    ]
+   },
+   {
+    "id": "CF-32",
+    "topic": "song-engine",
+    "claim": "The fallback engine is YuE 7B: Apache-2.0, about 16 GB VRAM, about 5 min per track (described as 'slow'). It has not been tested.",
+    "evidence": "HANDOFF §4, §7; SPEC Known risks (no URL given)",
+    "source_confidence": "asserted",
+    "decision_impact": "high",
+    "urls": []
+   },
+   {
+    "id": "CF-33",
+    "topic": "competitor",
+    "claim": "MusicGen is rejected because it has no vocals and its license is CC-BY-NC.",
+    "evidence": "HANDOFF §4 (no URL)",
+    "source_confidence": "asserted",
+    "decision_impact": "medium",
+    "urls": []
+   },
+   {
+    "id": "CF-34",
+    "topic": "competitor",
+    "claim": "Stable Audio Open is rejected because of its 47 s cap and its textural output.",
+    "evidence": "HANDOFF §4 (no URL)",
+    "source_confidence": "asserted",
+    "decision_impact": "medium",
+    "urls": []
+   },
+   {
+    "id": "CF-35",
+    "topic": "separation-transcription",
+    "claim": "Stems come from Demucs htdemucs_6s (6 stems), not from the generation model's own stem head, because Demucs is described as mature, local and deterministic. The corpus accepts that the labels will not match Suno's 8.",
+    "evidence": "SPEC Primitives row 'separate'; HANDOFF §4",
+    "source_confidence": "asserted",
+    "decision_impact": "high",
+    "urls": []
+   },
+   {
+    "id": "CF-36",
+    "topic": "separation-transcription",
+    "claim": "Demucs gives 4-6 stems where Suno gives 8, and 'B Vocals / FX / Percussion' will not map cleanly. The mapping to Suno's labels is approximate.",
+    "evidence": "SPEC Known risks and Primitives table",
+    "source_confidence": "asserted",
+    "decision_impact": "medium",
+    "urls": []
+   },
+   {
+    "id": "CF-37",
+    "topic": "architecture",
+    "claim": "Proposed stack, chosen for solo-dev speed with Redis/Postgres explicitly deferred:\n- apps/web: Next.js 15 (App Router) + Tailwind + shadcn/ui\n- apps/api: FastAPI + SQLite (SQLModel) + local disk\n- apps/engine: Python worker running ACE-Step 1.5, Demucs and an LLM\n- pnpm for JS, uv for Python",
+    "evidence": "SPEC Architecture; CLAUDE.md Conventions; HANDOFF §4",
+    "source_confidence": "asserted",
+    "decision_impact": "high",
+    "urls": []
+   },
+   {
+    "id": "CF-38",
+    "topic": "architecture",
+    "claim": "The job queue is a SQLite table polled by the worker; v0 has no Redis. Web and API talk over REST, with SSE for job progress. The engine sits behind one ENGINE_URL, so it can run on the Mac (MPS) or on a remote GPU box without API changes.",
+    "evidence": "SPEC Architecture",
+    "source_confidence": "asserted",
+    "decision_impact": "high",
+    "urls": []
+   },
+   {
+    "id": "CF-39",
+    "topic": "architecture",
+    "claim": "On-disk layout: data/songs/<id>/{master.wav, master.mp3, stems/*.wav, meta.json} and data/voices/<id>/ref.wav. data/ is gitignored, and audio and model weights are never committed.",
+    "evidence": "SPEC Architecture; CLAUDE.md Conventions",
+    "source_confidence": "asserted",
+    "decision_impact": "medium",
+    "urls": []
+   },
+   {
+    "id": "CF-40",
+    "topic": "architecture",
+    "claim": "SQLite schema:\n- songs(id, title, description, lyrics, style_tags, model, voice_id, parent_id, kind generate|cover|stem, version_no, duration_s, bpm?, created_at, art_path, audio_path)\n- voices(id, name, tags, description, art_path, ref_path, consent_at)\n- stems(id, song_id, label, path)\n- jobs(id, type, params_json, status, progress, error, result_song_ids, created_at)\n- projects(id, song_id, state_json), saved on every change to mirror Suno's 'Saved'",
+    "evidence": "SPEC Data model",
+    "source_confidence": "asserted",
+    "decision_impact": "medium",
+    "urls": []
+   },
+   {
+    "id": "CF-41",
+    "topic": "workflow-process",
+    "claim": "Phase 0 is an engine smoke test (~1 h) that gates all UI work:\n1. Install ACE-Step 1.5.\n2. Generate a 60 s song from the 'Algorithm Hates Me' prompt.\n3. Run one cover with a reference clip.\n4. Run Demucs on the result.\n5. Record wall time and peak memory on the Mac (arm64/MPS).\nIf a song takes more than 5 min or MPS is unsupported, provision an RTX 3090/4090-class cloud GPU and point ENGINE_URL at it. Results go in docs/ENGINE-NOTES.md.",
+    "evidence": "SPEC Phases; HANDOFF §4, §7; CLAUDE.md",
+    "source_confidence": "asserted",
+    "decision_impact": "high",
+    "urls": []
+   },
+   {
+    "id": "CF-42",
+    "topic": "workflow-process",
+    "claim": "Phase order after Phase 0:\n- Phase 1, Generate + Library: shell, Simple/Advanced create, job queue + SSE, song page, player, downloads, LLM lyrics + dice. Done when the narrator's prompt yields two playable WAVs from the UI.\n- Phase 2, Voice + Cover.\n- Phase 3, Stems + Studio v0: Demucs, stems drawer, multitrack with Version lanes and Copy to Main Track, per-stem Cover, full/multitrack export.\n- Phase 4: hum-to-instrument, Song Editor sectionizing, clip Tempo/Transpose.",
+    "evidence": "SPEC Phases",
+    "source_confidence": "asserted",
+    "decision_impact": "high",
+    "urls": []
+   },
+   {
+    "id": "CF-43",
+    "topic": "workflow-process",
+    "claim": "Phase 1 depends on Phase 0 only for latency expectations, so scaffolding could start in parallel if the owner accepts the risk.",
+    "evidence": "HANDOFF §7",
+    "source_confidence": "asserted",
+    "decision_impact": "medium",
+    "urls": []
+   },
+   {
+    "id": "CF-44",
+    "topic": "architecture",
+    "claim": "Sectionizing plan: v0 runs an LLM over the lyrics plus a fixed-length heuristic; v1 uses all-in-one or msaf.",
+    "evidence": "SPEC Primitives row 'sectionize' (no URLs)",
+    "source_confidence": "asserted",
+    "decision_impact": "medium",
+    "urls": []
+   },
+   {
+    "id": "CF-45",
+    "topic": "architecture",
+    "claim": "An LLM is needed for lyrics (Lyrics=Prompt mode) and for the dice random-concept button. No provider has been chosen ('any chat model works'). The key belongs in .env.local and is never committed.",
+    "evidence": "SPEC Primitives, Screens item 2; HANDOFF §7",
+    "source_confidence": "asserted",
+    "decision_impact": "medium",
+    "urls": []
+   },
+   {
+    "id": "CF-46",
+    "topic": "ux-feature",
+    "claim": "Rule: every generation produces two versions, and the UI always offers A/B before Copy to Main Track. The corpus calls this the cheapest quality lever and says it matches Suno's ergonomics.",
+    "evidence": "HANDOFF §4; CLAUDE.md; #102-#103",
+    "source_confidence": "asserted",
+    "decision_impact": "high",
+    "urls": []
+   },
+   {
+    "id": "CF-47",
+    "topic": "ux-feature",
+    "claim": "Non-goals for the personal build: accounts, credits, plans, Explore feed, publishing, comments, download caps and anything multi-tenant. The liveness gate becomes a lightweight consent note.",
+    "evidence": "SPEC Non-goals; VIDEO-ANALYSIS §4.3; CLAUDE.md",
+    "source_confidence": "asserted",
+    "decision_impact": "medium",
+    "urls": []
+   },
+   {
+    "id": "CF-48",
+    "topic": "ux-feature",
+    "claim": "Control names should match Suno's frames exactly (Weirdness, Style Influence, Cover, Copy to Main Track) so muscle memory carries over.",
+    "evidence": "CLAUDE.md Conventions",
+    "source_confidence": "asserted",
+    "decision_impact": "low",
+    "urls": []
+   },
+   {
+    "id": "CF-49",
+    "topic": "studio-ui-tech",
+    "claim": "The Studio timeline would be built on wavesurfer.js or a custom canvas. v0 can stub the clip Tempo/Transpose controls.",
+    "evidence": "SPEC Screens item 7",
+    "source_confidence": "asserted",
+    "decision_impact": "medium",
+    "urls": []
+   },
+   {
+    "id": "CF-50",
+    "topic": "quality-eval",
+    "claim": "The corpus treats the claim that Cover keeps the song as true in the demo only. Cover fidelity depends on the model, so it must be tested on the corpus's own engine. The v5.5-over-v4.5 judgment is one listener's subjective view.",
+    "evidence": "VIDEO-ANALYSIS §3; transcript [03:15-03:22], [10:20-10:31]",
+    "source_confidence": "asserted",
+    "decision_impact": "medium",
+    "urls": []
+   },
+   {
+    "id": "CF-51",
+    "topic": "compute-cost",
+    "claim": "The corpus describes the owner's machine as macOS arm64 ('mac-lan') with Homebrew, yt-dlp, ffmpeg, python3, node and deno installed and an Apple Silicon GPU. It records no chip model, RAM or free disk.",
+    "evidence": "HANDOFF §2",
+    "source_confidence": "asserted",
+    "decision_impact": "medium",
+    "urls": []
+   },
+   {
+    "id": "CF-52",
+    "topic": "workflow-process",
+    "claim": "Media-capture traps:\n- YouTube blocks the cloud container (429 / bot check), so media had to be pulled on the Mac.\n- The yt-dlp subtitle fetch succeeded with en-orig, --sleep-subtitles 5 and a 20 s wait.\n- Modern ffmpeg rejects -vsync; use -fps_mode vfr.\n- -frame_pts values are frame indices, so the sheet timestamps read 00:00 and frame numbers are the stable reference.",
+    "evidence": "HANDOFF §5",
+    "source_confidence": "asserted",
+    "decision_impact": "low",
+    "urls": []
+   },
+   {
+    "id": "CF-53",
+    "topic": "ux-feature",
+    "claim": "Cards in the Suno workspace list show titles that differ from the typed prompts ('Sunday Spreadsheet', 'Broken Crown', 'Subway Key'). They also show style captions richer than the sample prompts: '80s rock anthem with driving eighth-note guitars, punchy toms...' and 'Cinematic instrumental with piano, swelling strings, slow half-time build...'. This suggests Suno auto-titles songs and expands style prompts. The corpus text does not mention it.",
+    "evidence": "#046 right-hand workspace cards (reference/create-panel-and-more-options.jpg) compared with the sample prompts #036-#038",
+    "source_confidence": "speculative",
+    "decision_impact": "medium",
+    "urls": [
+     "https://youtu.be/MI6vwl_ZHN8"
+    ]
+   },
+   {
+    "id": "CF-54",
+    "topic": "ux-feature",
+    "claim": "The Song Editor frame shows UI the corpus text does not list: a 'Replace Lyrics' button under the lyrics pane, an Edit | My Edits tab pair (an edit history), and the hint 'Choose a section of the timeline or lyrics to start editing'. The last means sections can be selected from either the timeline or the lyrics.",
+    "evidence": "#089 (reference/create-voice-and-song-editor.jpg bottom)",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "low",
+    "urls": [
+     "https://youtu.be/MI6vwl_ZHN8"
+    ]
+   },
+   {
+    "id": "CF-55",
+    "topic": "studio-ui-tech",
+    "claim": "Studio frames show detail beyond the text:\n- Clips on stem lanes carry lyric-fragment labels ('THE A', 'THE ALGO'), suggesting lyric-aligned segments.\n- A left drawer lists library song thumbnails.\n- Version 1/2 sub-lanes have up-arrow promote buttons.\n- A floating toolbar holds a Cover button with a dropdown.\n- After a stem insert, the main song track reads 'Muted'.",
+    "evidence": "#113, #116 (reference/stems-panel.jpg)",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "low",
+    "urls": [
+     "https://youtu.be/MI6vwl_ZHN8"
+    ]
+   },
+   {
+    "id": "CF-56",
+    "topic": "voice-singing",
+    "claim": "The SPEC Voices screen mirrors Suno's flow: Record / Upload / Library, then recording with a live waveform (Restart/Pause/Done), then trim with Start over / Use Voice, then details (name, tags, description, art). The consent checkbox replaces #070. Suno's details step also offers an AI-generated avatar ('Prompt Suno to create an image').",
+    "evidence": "#060-#072; SPEC Screens item 4",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "medium",
+    "urls": [
+     "https://youtu.be/MI6vwl_ZHN8"
+    ]
+   },
+   {
+    "id": "CF-57",
+    "topic": "legal-licensing",
+    "claim": "On Suno, commercial use rights apply only to 'new songs made' on Pro or Premier. The Free plan has no commercial use and no downloads.",
+    "evidence": "#028",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "medium",
+    "urls": [
+     "https://youtu.be/MI6vwl_ZHN8"
+    ]
+   },
+   {
+    "id": "CF-58",
+    "topic": "workflow-process",
+    "claim": "As of the 2026-10-08 handoff the corpus is research only. No code has been written, Phase 0 has not run, and the ACE-Step install, MPS support, weights license and real quality are all unverified. There is a single docs-only commit e8feab8. The handoff says to treat every claim in it as context to verify, not fact.",
+    "evidence": "HANDOFF §1, §3, §8 and Prompt",
+    "source_confidence": "asserted",
+    "decision_impact": "high",
+    "urls": []
+   },
+   {
+    "id": "CF-59",
+    "topic": "suno-facts",
+    "claim": "The Suno UI is dark and dense with pink-orange gradient CTAs (Create, Replace). Studio's 'Edit in Studio' button uses a purple-blue gradient.",
+    "evidence": "HANDOFF §9; #017, #046, #089, #092",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "low",
+    "urls": [
+     "https://youtu.be/MI6vwl_ZHN8"
+    ]
+   },
+   {
+    "id": "CF-60",
+    "topic": "song-engine",
+    "claim": "The corpus cites a 2026 deployment survey of open-source music generation on cloud GPUs, but takes no specific figures from it.",
+    "evidence": "VIDEO-ANALYSIS §5; HANDOFF §6",
+    "source_confidence": "secondary-cited",
+    "decision_impact": "low",
+    "urls": [
+     "https://www.spheron.network/blog/deploy-open-source-ai-music-generation-gpu-cloud-2026/"
+    ]
+   }
+  ],
+  "features": [
+   {
+    "name": "Accounts and onboarding",
+    "description": "Sign-up modal ('Ready to make music?') with Google/Apple/Phone, then birthday, username and display name, then an optional persona survey (Content creator ... Songwriter or lyricist).",
+    "evidence": "#006-#007; transcript [00:34-00:56]",
+    "proposed_implementation": "Dropped. The build has no accounts (SPEC Non-goals)."
+   },
+   {
+    "name": "App shell with persistent player",
+    "description": "Left nav (Home, Explore, Create, Studio, Library, user, Earn Credits, Labs, Hooks) and a bottom player bar with shuffle/prev/play/next/repeat, scrubber, volume and queue, plus like, dislike, comment and share icons.",
+    "evidence": "#017, #046",
+    "proposed_implementation": "Nav reduced to Home / Create / Studio / Library (+ Voices). Persistent bottom player keeps shuffle, prev, play, next, repeat, scrubber, volume and queue (SPEC Screens 1)."
+   },
+   {
+    "name": "Explore / community remix",
+    "description": "Grid of community songs with 'Made in Suno Studio' and 'Best Of' rows. Any song can be opened and remixed.",
+    "evidence": "#009-#011; transcript [01:04-01:27]",
+    "proposed_implementation": "Dropped (no Explore feed)."
+   },
+   {
+    "name": "Simple mode with dice",
+    "description": "Hero 'Describe the song you want to make', a dice button that fills a random concept, and Create.",
+    "evidence": "#013-#016; transcript [01:29-02:14]",
+    "proposed_implementation": "Hero textbox with an LLM-generated random concept on dice. Create returns 2 versions (SPEC Screens 2)."
+   },
+   {
+    "name": "Multi-model preview",
+    "description": "Simple Create returns 4 results: 2x v4.5 and 2x v5.5. Free results carry an 'Upgrade for full song' chip.",
+    "evidence": "#018, #021-#024; transcript [02:26-02:39]",
+    "proposed_implementation": "Show 2 versions, not 4. A model picker stays in Advanced."
+   },
+   {
+    "name": "Advanced create form",
+    "description": "Simple|Advanced|Sounds tabs, model dropdown, + Audio / + Voice / + Inspo attach row, Song Description with enhance icon, + Lyrics, Instrumental toggle, Suggestions chips.",
+    "evidence": "#017, #046",
+    "proposed_implementation": "Reproduce the #017 + #046 control set exactly. It feeds the `generate` primitive (SPEC Screens 3)."
+   },
+   {
+    "name": "More Options generation controls",
+    "description": "Lyrics Write|Prompt|Instrumental, Exclude styles, Vocal Gender Male/Female, Weirdness % (default 50), Style Influence % (default 50), Duration Custom|Auto.",
+    "evidence": "#046; transcript [05:56-06:12]",
+    "proposed_implementation": "Map to `generate` params: exclude, vocal gender, weirdness, style influence, duration. The mapping to engine knobs is not specified."
+   },
+   {
+    "name": "LLM lyric writing (Prompt mode)",
+    "description": "With Lyrics=Prompt, Suno writes the lyrics from the description.",
+    "evidence": "transcript [05:56-06:04], [02:14-02:21]",
+    "proposed_implementation": "LLM writes lyrics when mode=prompt. Provider not chosen; key in .env.local."
+   },
+   {
+    "name": "Inspo attachment, Sounds tab, Hooks, Labs",
+    "description": "Visible in the frames, never explained.",
+    "evidence": "#017, #046; VIDEO-ANALYSIS §2.10",
+    "proposed_implementation": "Inspo appears in the SPEC attach row with no defined semantics. Sounds, Hooks and Labs are not specified."
+   },
+   {
+    "name": "Workspace results list",
+    "description": "Right-hand 'Workspaces > My Workspace' list with Search, Filters, Newest, List view and pagination. Each card shows a thumbnail with duration, title, model chip, caption, like/dislike/share and a ... menu.",
+    "evidence": "#017, #046",
+    "proposed_implementation": "Right column on Create with filters, thumbnail, title, model chip, like/dislike/share and a ... menu (#076 items minus Publish)."
+   },
+   {
+    "name": "Auto-generated titles and expanded style captions",
+    "description": "Workspace cards show titles that differ from the prompts and style captions more detailed than the typed prompts. This suggests an automatic title and prompt-expansion step.",
+    "evidence": "#046 cards ('Sunday Spreadsheet', 'Broken Crown', 'Subway Key') vs sample prompts #036-#038; image observation, not in corpus text",
+    "proposed_implementation": "Not addressed by the corpus."
+   },
+   {
+    "name": "Two versions per generation with A/B",
+    "description": "Every generation returns two takes, auditioned before one is chosen.",
+    "evidence": "transcript [06:34]; #102-#103",
+    "proposed_implementation": "Always 2 versions. The UI offers A/B before Copy to Main Track (CLAUDE.md, HANDOFF §4)."
+   },
+   {
+    "name": "Create a Voice (Beta)",
+    "description": "Record / Upload Audio / Select from library, then recording with a live waveform (Restart/Pause/Done), then trim with a pink selection region (Start over / Use Voice), then details (name, style tags, description, avatar upload or AI-generated image).",
+    "evidence": "#060-#072; transcript [07:59-09:44]",
+    "proposed_implementation": "Voices screen with the same steps. Reference stored at data/voices/<id>/ref.wav in the voices table (SPEC Screens 4, Phase 2)."
+   },
+   {
+    "name": "Voice verification (liveness)",
+    "description": "After recording, the user reads a displayed phrase aloud to prove it is their voice.",
+    "evidence": "#070; transcript [09:22-09:28]",
+    "proposed_implementation": "Replaced by a consent checkbox, a stored reference clip and voices.consent_at, which must be set before the voice is usable."
+   },
+   {
+    "name": "Remix > Cover with own voice",
+    "description": "Library ... > Remix > Cover attaches the song as Audio with a Cover pill. Adding a voice chip and pressing Create returns two covers sung in the user's voice, titled '(cover)'.",
+    "evidence": "#076-#085; transcript [10:10-11:31]",
+    "proposed_implementation": "`cover` primitive (ACE-Step audio+text->music with timbre/voice reference). Voice chip on create (Phase 2)."
+   },
+   {
+    "name": "Library context menu",
+    "description": "Remix, Edit, Publish, Share, Download, Manage, Add to Queue, Add to Playlist, Move to Trash.",
+    "evidence": "#076",
+    "proposed_implementation": "Same menu without Publish (SPEC Screens 3)."
+   },
+   {
+    "name": "Edit operations submenu",
+    "description": "Extend, Crop, Remove Section, Reverse, Adjust Speed, Fade In, Fade Out, Replace Section, Remaster, Open in Studio, Open in Editor.",
+    "evidence": "#088",
+    "proposed_implementation": "Listed as the clone's command surface, but the SPEC maps none of Extend, Replace Section, Remaster or the DSP edits to a primitive. Only Open in Editor/Studio have screens."
+   },
+   {
+    "name": "Song Editor (Beta) sectionized timeline",
+    "description": "Colour-coded labelled sections (VERSE, PRE, CHORUS, BRIDGE...), FADE handle, BPM, lyrics pane with Edit | My Edits and Replace Lyrics. Header has Legacy Editor, Reset All, undo/redo, Save as New Song, Get Stems, Edit in Studio.",
+    "evidence": "#089-#091; transcript [11:47-12:13]",
+    "proposed_implementation": "Section-coloured timeline plus lyrics pane plus Save as New Song / Get Stems / Edit in Studio. `sectionize` helper (v0 LLM over lyrics + fixed-length heuristic; v1 all-in-one/msaf), Phase 4."
+   },
+   {
+    "name": "Studio multitrack DAW",
+    "description": "Tracks with S/M, 'No Input' source and fader; colour-coded section clips; Clip|Track inspector; Version carousel; Styles; prompt bar Song▾ | Styles | Lyrics | Replace▾; transport (Upload, 4/4, BPM, timecode, bar position); Export; undo; 'Saved' autosave; Learn and Layout menus.",
+    "evidence": "#092, #113, #116",
+    "proposed_implementation": "Multitrack timeline (wavesurfer.js or custom canvas) with S/M, Version 1/2 sub-lanes, Copy to Main Track, Clip inspector, prompt bar (Song|Vocals · Styles · Lyrics · Replace|Cover). State lives in projects.state_json, saved on every change (SPEC Screens 7, Phase 3)."
+   },
+   {
+    "name": "Clip Settings",
+    "description": "Per-clip Tempo (On Beat), Transpose +/-, Speed 1/2 or x2, Clip Volume dB, and a colour swatch.",
+    "evidence": "#092",
+    "proposed_implementation": "Included in the inspector. v0 may stub Tempo/Transpose; real versions come in Phase 4."
+   },
+   {
+    "name": "Section lyric re-sing",
+    "description": "Edit one lyric line in a section and regenerate only the vocals with scope Song>Vocals and mode Replace>Cover. Two takes appear as Version sub-lanes; Copy to Main Track commits one.",
+    "evidence": "#097-#103; transcript [12:17-14:13]",
+    "proposed_implementation": "`cover` with new lyrics and vocals scope, producing Version lanes and Copy to Main Track."
+   },
+   {
+    "name": "Stem extraction",
+    "description": "'All detected stems': Vocals, B Vocals, Drums, Bass, Guitar, Percussion, Synth, FX. Per-stem insert arrow or drag to 'Drop Here', Insert All, Download.",
+    "evidence": "#113, #115, #116; transcript [14:44-15:37]",
+    "proposed_implementation": "`separate` primitive via Demucs htdemucs_6s (6 stems, approximate label mapping). Stems drawer with per-stem insert, Insert All and Download (Phase 3)."
+   },
+   {
+    "name": "Per-stem regeneration",
+    "description": "Select a stem, prompt it ('more epic'), press Cover, audition two versions against the original, then Copy to Main Track.",
+    "evidence": "#117-#128; transcript [15:37-17:22]",
+    "proposed_implementation": "Per-stem `cover` producing a new lane, then Copy to Main Track, which rebuilds the mix. Explicitly not in-place regeneration (Phase 3)."
+   },
+   {
+    "name": "Hum-to-instrument",
+    "description": "Add Track > No Input > mic picker, arm, record a hum, choose an instrument, prompt, Cover.",
+    "evidence": "#129-#139; transcript [17:22-18:50]",
+    "proposed_implementation": "`audio2instrument` = `cover` at high strength on the hummed clip. Add Track > No Input / mic record in Studio (Phase 4)."
+   },
+   {
+    "name": "Audio-track EQ and Follow Track Tempo",
+    "description": "The inspector for a recorded/generated audio track has EQ (Flat/Reset) and Follow Track Tempo.",
+    "evidence": "#136-#138",
+    "proposed_implementation": "No dedicated implementation in the SPEC."
+   },
+   {
+    "name": "Export Full Song / Multitrack",
+    "description": "Studio Export menu, then a 'Song Saved!' toast linking to the song.",
+    "evidence": "#141-#142; transcript [18:50-19:10]",
+    "proposed_implementation": "Export > Full Song | Multitrack (SPEC Screens 7, Phase 3)."
+   },
+   {
+    "name": "Song page and downloads",
+    "description": "Song page has cover art, title, author, caption, date, reactions, lyrics, Remix, a Similar sidebar and comments. Download offers MP3 / WAV / Get Stems / MIDI / Video, with a 'Preparing your download' state.",
+    "evidence": "#143-#145; transcript [19:16-19:43]",
+    "proposed_implementation": "Song page with art, title, caption, lyrics and Remix. Downloads MP3 / WAV / Stems; MIDI and Video out of scope (SPEC Screens 5)."
+   },
+   {
+    "name": "Share link",
+    "description": "Copy a share link from the song page.",
+    "evidence": "transcript [19:11-19:16]",
+    "proposed_implementation": "Not in the SPEC (publishing and social removed)."
+   },
+   {
+    "name": "Cover art and AI avatars",
+    "description": "Each song has artwork. Voices can get an uploaded or AI-prompted avatar.",
+    "evidence": "#046 thumbnails, #071-#072",
+    "proposed_implementation": "songs.art_path and voices.art_path exist; no art generator is specified."
+   },
+   {
+    "name": "Credits, plans, download caps, quests",
+    "description": "Credit counters, session credit message, plan upgrade page, monthly download caps, 'Unlock Your Sound' quest.",
+    "evidence": "#028, #046",
+    "proposed_implementation": "Dropped entirely."
+   },
+   {
+    "name": "Job queue with live progress",
+    "description": "Proposed infrastructure for long-running generation.",
+    "evidence": "SPEC Architecture, Data model",
+    "proposed_implementation": "jobs table in SQLite polled by the Python worker, with progress streamed to web over SSE."
+   },
+   {
+    "name": "AI music video",
+    "description": "Teased at the end of the tutorial as a follow-on flow.",
+    "evidence": "transcript [19:44-19:52]",
+    "proposed_implementation": "Out of scope. HANDOFF suggests a separate video-analysis teardown if needed."
+   }
+  ],
+  "recommendations": [
+   "\"Decide this with the smoke test in Phase 0 before any UI work.\" Engine may run on the Mac (MPS) or a remote GPU box; the API only needs ENGINE_URL.",
+   "Phase 0 — Engine smoke test (do first, ~1 h): install ACE-Step 1.5; generate a 60 s song from the 'Algorithm Hates Me' prompt (VIDEO-ANALYSIS §2.4); run one cover with a reference clip; run Demucs on the result; record wall time + peak memory on this Mac (arm64/MPS). If >5 min per song or MPS unsupported, provision a cloud GPU (RTX 3090/4090 class) and point ENGINE_URL there. Output: docs/ENGINE-NOTES.md with the numbers.",
+   "Engine candidate = ACE-Step 1.5 (claims text→song, cover/audio-conditioned regen, stems + timbre cloning). Fallback: YuE 7B (Apache-2.0, 16 GB, ~5 min/track). Rejected: MusicGen (no vocals, CC-BY-NC), Stable Audio Open (47 s cap, textural).",
+   "Organise the spec around three primitives (generate, cover, separate); hum-to-instrument is cover at high strength; Song Editor sections are a sectionize helper — 'so features don't multiply the engine surface.'",
+   "Two versions per generation, always; UI always offers A/B before 'Copy to Main Track'.",
+   "Use Demucs (htdemucs_6s) for stems, not the model's own stem head; accept the label mismatch with Suno's 8 stems.",
+   "Model per-stem 'Cover' as a new lane + Copy to Main Track, not in-place regeneration — 'Modelling it as in-place will fight the UI.'",
+   "Drop credits/plans/Explore/publishing/comments/download caps/liveness gate; keep a consent flag on voices. Voice cloning is owner's voice only; voices.consent_at must be set before a voice is usable.",
+   "Stack: Next.js 15 (App Router) + Tailwind + shadcn/ui / FastAPI + SQLite (SQLModel) / Python worker; SQLite-polled queue; REST + SSE; Redis/Postgres explicitly deferred. pnpm for JS, uv for Python.",
+   "Generated media lives in data/ (gitignored). Never commit audio or model weights. LLM API key in .env.local, never committed.",
+   "Match Suno's control names from the frames (Weirdness, Style Influence, Cover, Copy to Main Track) — 'the point is muscle-memory parity.'",
+   "Don't promise Suno v5.5 quality; ACE-Step's numbers are self-reported. Set expectations.",
+   "Confirm ACE-Step 1.5 weights license at install time (paper does not state it).",
+   "Phase 1 done when the narrator's prompt yields two playable WAVs from the UI; then Phase 2 Voice + Cover, Phase 3 Stems + Studio v0, Phase 4 hum-to-instrument, Song Editor sectionizing, clip Tempo/Transpose.",
+   "Phase 1 scaffolding could start in parallel with Phase 0 if the owner accepts the risk.",
+   "Show 2 versions on Simple create (Suno shows 4 only because it previews two models). MIDI and Video downloads are out of scope. v0 can stub clip Tempo/Transpose.",
+   "Use the frames, not the transcript, for UI labels; don't 'correct' them from auto-captions.",
+   "Treat the Suno pricing matrix as unstable ('starting 9/3/26' caveats).",
+   "Don't retry YouTube pulls from a cloud container; use -fps_mode vfr instead of -vsync; treat frame numbers (#NNN) as the stable reference.",
+   "Use the frontend-design skill before building the shell (Suno look: dark, dense, pink-orange gradient CTAs).",
+   "Treat every claim in the handoff as context to verify, not fact to trust."
+  ],
+  "unique_insights": [
+   "Suno in late 2026 is effectively three products under one nav: a prompt-to-song generator, a voice layer (clone your voice, apply it with Cover), and Studio, a browser DAW built on stems, per-stem AI regeneration and audio-to-audio. The tutorial walks through them in exactly that order.",
+   "Cover and regenerate are different contracts. Cover keeps the existing song's identity and changes voice, lyrics or one stem; regenerate produces a different song. Nearly every editing feature in Suno (voice swap, lyric fix, per-stem upgrade, hum-to-instrument) is a scoped Cover.",
+   "Fixing one lyric line is a doubly scoped Cover: one section, vocals only (Song>Vocals + Replace>Cover) with edited lyrics. That implies the engine must regenerate a section's vocals while keeping the backing track.",
+   "Per-stem 'replacement' is really a new lane plus Copy to Main Track, which rebuilds the mix rather than regenerating in place. Building it in place would fight the UI.",
+   "Section boundaries come before section editing. The narrator goes through the Song Editor only because Studio does not sectionize, so a sectionize step (lyrics plus audio to labelled spans) is a hidden prerequisite.",
+   "Simple mode's four results are a two-model A/B (2x v4.5 + 2x v5.5), not four seeds. The base contract is two takes per prompt.",
+   "Hum-to-instrument (hum into the mic, pick an instrument, Cover) is the Suno feature closest to the owner's actual starting point, a melody in his head. The corpus models it as cover at high strength on the hummed clip.",
+   "Suno's voice clone uses a read-aloud phrase as a liveness/consent gate. The corpus deliberately replaces it with a consent checkbox, a stored reference clip and consent_at gating for an owner-only tool.",
+   "The frames show things the narration never mentions: the Sounds tab, Hooks, Labs, the Inspo attachment, Multitrack export, MIDI/Video downloads, per-clip Tempo/Transpose/Speed/Volume, per-track EQ, and the full right-click menus including Extend, Replace Section and Remaster.",
+   "From the images: workspace cards show auto-generated titles and style captions richer than the typed prompts. This hints at an LLM layer that titles songs and expands prompts, which a plan focused on the generation model would miss.",
+   "From the images: Studio stem-lane clips are labelled with lyric fragments, suggesting lyric-aligned segmentation. The Song Editor also has a 'Replace Lyrics' button and an Edit | My Edits history tab.",
+   "For the owner's paid Suno attempt: Studio access appears only on Premier ($30/mo); Pro ($10/mo) has 20 downloads/mo; Free has no downloads or commercial use. The Studio frames' credit chip reads 9.2k-9.3k, above Pro's 2,500/mo, so the narrator who recommends Pro seems to be on a higher tier. That last point is an inference from the images.",
+   "Suno's voice-sample numbers: at least 10 s on screen, 15 s to 4 min accepted, ~2 min sweet spot, a quiet room, range and energy. These are usable defaults for the clone's own voice-capture UX.",
+   "It records concrete media-capture traps (YouTube 429 from cloud containers, the yt-dlp subtitle workaround, ffmpeg -fps_mode vfr, -frame_pts being frame indices), which will matter for any further video teardowns.",
+   "projects.state_json is autosaved on every change to mirror Suno's 'Saved' indicator, and every song row has parent_id, kind (generate|cover|stem) and version_no, so the lineage of covers, stems and versions is first-class in the data model."
+  ],
+  "weaknesses_of_this_source": [
+   "Single secondary source: every Suno product fact comes from one creator's YouTube tutorial (auto-captions plus sampled frames). There are no official Suno docs, changelogs or API references, and the corpus admits frames are a sample that could miss brief UI.",
+   "It never addresses the owner's 'Suno v6 / 6.5' quality target. Only v4.5-all and v5.5 are observed, and the quality comparison is against Suno v5 (self-reported by ACE-Step).",
+   "The engine plan is ACE-Step-centric, which the owner has explicitly rejected as a sole design. The only alternative, YuE, is untested. MusicGen and Stable Audio Open are dismissed in one line each, and no other vocal-capable engines, singing-voice-conversion models or post-production models are surveyed.",
+   "Licensing is thin. The ACE-Step 1.5 weights license is unknown. The YuE Apache-2.0 and MusicGen CC-BY-NC claims cite no source. The Demucs license is not mentioned. There is no analysis of training-data provenance, output commercial use or the implications of open-sourcing the studio later.",
+   "Hardware assumptions are generic. HANDOFF knows only 'macOS arm64'. It does not record the M5 Pro / 48 GiB, the unknown Linux/Windows GPUs, or the ~8.5 GiB of free disk, which could block a model download. The '~1 h' Phase 0 estimate and the cloud-GPU fallback have no disk, cost or $/hour numbers.",
+   "Some numbers are uncited or self-reported. '<4 GB VRAM' has no attribution. '<10 s/song on 3090' and the 39.1/26.3 vs 46.8/34.2 alignment scores are ACE-Step's own claims. A Mac-specific ACE-Step article is cited but none of its findings are extracted.",
+   "It overclaims completeness. 'The UI is fully specified... Nothing requires guessing' contradicts its own caveats about sampled frames and leaves Sounds, Hooks, Labs, Inspo and Personas unspecified.",
+   "'Everything reduces to 3 primitives' ignores the observed Extend, Replace Section, Remaster, Crop, Reverse, Adjust Speed and Fade operations (#088). The primitives table has no extend/repaint, mastering or DSP primitive, even though §4 notes ACE-Step claims repaint. There is no mastering or post-production chain.",
+   "The stem spec is internally inconsistent. The `separate` row lists 'bvocals?', but htdemucs_6s has no backing-vocal stem. 'Piano/synth' is a guess at the mapping, and FX/Percussion are unmapped.",
+   "Voice cloning relies entirely on ACE-Step's unverified 'timbre cloning'. There is no dedicated singing-voice-conversion path, no quality test for the cover-in-my-voice result, and no narration/TTS consideration (e.g. the separate Sabbath Echo voice studio).",
+   "There is no evaluation methodology: no listening-test protocol, objective metrics or regression set beyond 'use the Algorithm Hates Me prompt'. 'Two versions is the cheapest quality lever' is asserted, not measured.",
+   "The sectionize plan is weak and uncited: an LLM over the lyrics plus a fixed-length heuristic, with 'all-in-one / msaf' named but no links. Section-scoped vocal regeneration, the core of the lyric-fix flow, depends on it.",
+   "The owner's real use case, turning a melody in his head into a song, is never directly addressed. There is no melody/pitch transcription or melody-conditioning path beyond 'cover at high strength on a hummed clip'.",
+   "A minor citation slip: the pricing table attributes stems to Pro via [04:01] (narration), while frame #028 lists Pro as 'personas and advanced editing' and puts Studio on Premier. The corpus does not flag that the narrator recommends Pro while using Premier-only Studio.",
+   "Cover art and lyric/dice LLM providers are left open (art_path exists with no generator; 'any chat model works'). There is no security or threat model, and no handling of how the job queue fails or retries.",
+   "It is research-only: zero code and zero measurements. Every engine, latency and quality claim is unverified, and the handoff itself says to treat its claims as context to verify."
+  ]
+ }
+}
