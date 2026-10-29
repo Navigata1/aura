@@ -12,4 +12,4 @@ Scope: unsupported benchmark-conclusion containment and typed preregistration lo
 
 Full benchmark functionality remains unavailable. C02 #4 must implement the result binding described in the adjacent contract-fix document before promotion or concluded failure is accepted. No merge or completed capability is claimed here.
 
-Detailed logs and reviewed-file hashes are retained on the studio volume under `evidence/C01/`, including `independent-review.md`, `adversarial-review.json`, `deliverable-tree-gate.log` and `root-gates.txt` where present. They are local execution evidence, not store evidence records.
+Detailed logs and reviewed-file hashes are retained on the studio volume under `evidence/C01/`, including `independent-review.md`, `reviewer-probes.log`, `deliverable-tree-gate.log` and `root-gates.txt`. They are local execution evidence, not store evidence records.
