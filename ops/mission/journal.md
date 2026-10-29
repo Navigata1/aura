@@ -27,3 +27,8 @@
 - Full local gate passes: fresh tracked-copy contracts, package tests, frontend tests/build, policy scan and actual bundled-module license inventory. Independent review found and drove fixes for nested/internal image backing, unknown buses, cache symlink escapes, inherited environment overrides, dependency extras and bundled dev-dependency provenance.
 - Node 22.22.3 was fetched from the official distribution with SHA-256 matching SHASUMS256.txt, placed on STUDIO, and version-checked. No separate signature verification is claimed.
 - Reviewed environment helpers copied to STUDIO/bootstrap; the small user config sources them and selects external Node. Missing volume/toolchain refuses without exporting. Hosted CI and blocked repository/account prerequisites remain separate.
+
+## 2026-10-29 — reviewed draft PRs
+
+- Draft PR #5 preserves C01 containment; draft PR #6 preserves the reviewed T01 foundation. Both target integration; neither is merged.
+- T01 commit-aware local gate at 57f4c67 passed. Live hosted CI is being inspected separately. Worktrees remain on STUDIO while their PRs are open.

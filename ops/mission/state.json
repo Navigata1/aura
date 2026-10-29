@@ -10,7 +10,7 @@
     "northStar": "Owned melody to an editable song, judged by the owner in blind audition.",
     "status": "active",
     "started": "2026-10-29",
-    "updated": "2026-10-29T21:08:05.110807+00:00",
+    "updated": "2026-10-29T21:11:25.616036+00:00",
     "sessionCount": 2
   },
   "policies": {
@@ -93,12 +93,16 @@
         {
           "id": "T01",
           "title": "Foundation: repository skeleton, the product-name constant, three-OS CI, and the Rule-07, secret, license and weights lints",
-          "status": "in_progress",
+          "status": "blocked",
           "dependsOn": [
             "P01"
           ],
-          "pr": null,
-          "notes": "Issue #2; external worktree preparation active. P01 owner confirmation and all T01 acceptance checks required before closure."
+          "pr": {
+            "number": 6,
+            "url": "https://github.com/Navigata1/aura/pull/6",
+            "mergedAt": null
+          },
+          "notes": "Draft PR #6. Commit-aware local full gate passed at 57f4c67; independent code review passed. P01 account setting, private branch-protection403 and hosted/nightly evidence remain open; no merge."
         },
         {
           "id": "T02",
@@ -1307,10 +1311,10 @@
   "resume": {
     "activePhase": "P0",
     "nextActions": [
-      "Finish T01 foundation in external worktree, with primary-source license rows and independent review; do not close until P01 privacy confirmation.",
-      "Finish C01 bounded fail-closed repair and review before any registry runtime consumer. Full conclusion binding remains required before benchmark status can advance.",
-      "Run the declared CI and merge ticket PRs into integration only after the repository gates pass. Continue T02/T03 frontier after T01 closes.",
-      "Before enabling benchmark status, close C02 #4 with both valid concluded-set positives and independent substitution/quota negatives. Keep unbenchmarked labels until then."
+      "Check draft PR #6 current-head hosted CI; fix any failures, keep T01 open until its external acceptance conditions are satisfied or explicitly revised.",
+      "Owner enables GitHub email-exposure push blocking (P01 #1); private branch protection needs an account-plan change or explicit owner revision of the merge requirement.",
+      "After T01 merges into integration, update PR #5 base, rerun clean-tree/CI checks, and merge only after its review gates pass.",
+      "Then continue T02/T03; C02 #4 blocks benchmark promotion until concluded results are actually bound."
     ],
     "blockers": [
       "P01: owner must enable Block command line pushes that expose my email; read-only browser verified it is off (Keep email private is already on).",
