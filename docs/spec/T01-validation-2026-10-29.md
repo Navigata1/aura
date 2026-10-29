@@ -19,7 +19,7 @@ Detailed local logs live on STUDIO under `evidence/T01/` and `evidence/T01-root-
 
 1. P01: read-only browser inspection found Keep email private enabled but Block command line pushes exposing email disabled. The owner must enable the latter. No personal address is retained in repo evidence.
 2. GitHub refused private integration branch protection with HTTP 403. Required-check enforcement is unavailable under the current account plan. No repository visibility, subscription or default-branch change was made.
-3. Hosted Linux PR checks and actual macOS/Windows matrix runs are separate from the local result. CI config alone is not a passing run.
+3. Hosted checks are separate from the local result. The foundation PR runs the same reusable gate on Linux, macOS and Windows to obtain initial OS evidence before integration has its workflows; later ticket PRs retain the planned Linux fast gate. CI config alone is not a passing run.
 4. GitHub scheduled workflows run from default main. Main remains owner-release-only. A configured nightly schedule or a manual equivalent is not an observed scheduled run; first scheduled-run evidence follows an owner release unless the owner revises the acceptance sequence.
 
 No real hardware engine test, owner listening verdict, paid GPU run, real per-OS playback, or model-license acceptance occurred. The interim STUDIO volume holds only reproducible development data until T18/T19 qualify storage for irreplaceable data. T01 stays open until its remaining acceptance conditions are satisfied or explicitly revised.
