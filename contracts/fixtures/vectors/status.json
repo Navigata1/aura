@@ -527,7 +527,7 @@
       "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
     },
     {
-      "derivation": "Preregistered benchmark pass.",
+      "derivation": "A preregistration hash alone proves no concluded result; benchmark promotion is unavailable until its binding contract lands.",
       "evidence": [
         {
           "attachments": [],
@@ -653,9 +653,9 @@
           "verdict_ids": []
         }
       ],
-      "expected": "benchmarked",
+      "expected": "smoke-passed",
       "host_class": "mlx/m5pro",
-      "name": "benchmark with a preregistration",
+      "name": "benchmark without a bound conclusion",
       "profile_id": "ace-2b-sft-mlx",
       "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
     },
@@ -1996,6 +1996,780 @@
       "name": "capability smoke with every check",
       "profile_id": "studio.playback.darwin",
       "profile_revision": null
+    },
+    {
+      "derivation": "A preregistration hash and verdict id cannot establish a bound conclusion, so it neither promotes nor disables.",
+      "evidence": [
+        {
+          "attachments": [],
+          "check": "install",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "mlx/m5pro",
+          "id": "ev_i",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:00:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "conformance",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "mlx/m5pro",
+          "id": "ev_c",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:05:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "smoke",
+          "checks": [
+            {
+              "check": "install_bytes_match_manifest",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "conformance",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "decodes",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "non_silent",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "duration_within_tolerance",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "owner_not_garbled",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": "vd_smoke"
+            }
+          ],
+          "gate_id": "smoke.ace-2b-sft-mlx",
+          "host_class": "mlx/m5pro",
+          "id": "ev_s",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:10:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": [
+            "vd_smoke"
+          ]
+        },
+        {
+          "attachments": [],
+          "check": "benchmark",
+          "checks": [
+            {
+              "check": "preregistered_listening",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": "vd_existing"
+            }
+          ],
+          "gate_id": "benchmark.ace-2b-sft-mlx",
+          "host_class": "mlx/m5pro",
+          "id": "ev_unbound_pass",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": "543e7884242778bc74f963a0b870b28a501f53ad72f51f13a41d7afece3075a8",
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-12T10:00:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": [
+            "vd_existing"
+          ]
+        }
+      ],
+      "expected": "smoke-passed",
+      "host_class": "mlx/m5pro",
+      "name": "benchmark pass is unsupported",
+      "profile_id": "ace-2b-sft-mlx",
+      "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+    },
+    {
+      "derivation": "A preregistration hash and verdict id cannot establish a bound conclusion, so it neither promotes nor disables.",
+      "evidence": [
+        {
+          "attachments": [],
+          "check": "install",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "mlx/m5pro",
+          "id": "ev_i",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:00:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "conformance",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "mlx/m5pro",
+          "id": "ev_c",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:05:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "smoke",
+          "checks": [
+            {
+              "check": "install_bytes_match_manifest",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "conformance",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "decodes",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "non_silent",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "duration_within_tolerance",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "owner_not_garbled",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": "vd_smoke"
+            }
+          ],
+          "gate_id": "smoke.ace-2b-sft-mlx",
+          "host_class": "mlx/m5pro",
+          "id": "ev_s",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:10:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": [
+            "vd_smoke"
+          ]
+        },
+        {
+          "attachments": [],
+          "check": "benchmark",
+          "checks": [
+            {
+              "check": "preregistered_listening",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": "vd_existing"
+            }
+          ],
+          "gate_id": "benchmark.ace-2b-sft-mlx",
+          "host_class": "mlx/m5pro",
+          "id": "ev_unbound_fail",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": "543e7884242778bc74f963a0b870b28a501f53ad72f51f13a41d7afece3075a8",
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-12T10:00:00Z",
+          "result": "fail",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": [
+            "vd_existing"
+          ]
+        }
+      ],
+      "expected": "smoke-passed",
+      "host_class": "mlx/m5pro",
+      "name": "benchmark fail is unsupported",
+      "profile_id": "ace-2b-sft-mlx",
+      "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+    },
+    {
+      "derivation": "A preregistration hash and verdict id cannot establish a bound conclusion, so it neither promotes nor disables.",
+      "evidence": [
+        {
+          "attachments": [],
+          "check": "install",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "mlx/m5pro",
+          "id": "ev_i",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:00:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "conformance",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "mlx/m5pro",
+          "id": "ev_c",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:05:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "smoke",
+          "checks": [
+            {
+              "check": "install_bytes_match_manifest",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "conformance",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "decodes",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "non_silent",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "duration_within_tolerance",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "owner_not_garbled",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": "vd_smoke"
+            }
+          ],
+          "gate_id": "smoke.ace-2b-sft-mlx",
+          "host_class": "mlx/m5pro",
+          "id": "ev_s",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-10T10:10:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": [
+            "vd_smoke"
+          ]
+        },
+        {
+          "attachments": [],
+          "check": "benchmark",
+          "checks": [
+            {
+              "check": "preregistered_listening",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": "vd_existing"
+            }
+          ],
+          "gate_id": "benchmark.ace-2b-sft-mlx",
+          "host_class": "mlx/m5pro",
+          "id": "ev_unbound_inconclusive",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": "543e7884242778bc74f963a0b870b28a501f53ad72f51f13a41d7afece3075a8",
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "recorded_at": "2026-10-12T10:00:00Z",
+          "result": "inconclusive",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "ace-2b-sft-mlx",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": [
+            "vd_existing"
+          ]
+        }
+      ],
+      "expected": "smoke-passed",
+      "host_class": "mlx/m5pro",
+      "name": "benchmark inconclusive is unsupported",
+      "profile_id": "ace-2b-sft-mlx",
+      "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+    },
+    {
+      "derivation": "A preregistration hash and verdict id cannot establish a bound conclusion, so it neither promotes nor disables.",
+      "evidence": [
+        {
+          "attachments": [],
+          "check": "install",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "cpu/m5pro",
+          "id": "ev_ti",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa",
+          "recorded_at": "2026-10-09T09:00:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "analysis-transcribe-pyin-hmm",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "conformance",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "cpu/m5pro",
+          "id": "ev_tc",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa",
+          "recorded_at": "2026-10-09T09:01:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "analysis-transcribe-pyin-hmm",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "smoke",
+          "checks": [
+            {
+              "check": "conformance",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "transcription_floor_synthetic",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            }
+          ],
+          "gate_id": "smoke.analysis-transcribe-pyin-hmm",
+          "host_class": "cpu/m5pro",
+          "id": "ev_ts",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa",
+          "recorded_at": "2026-10-09T09:02:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "analysis-transcribe-pyin-hmm",
+            "subject_type": "profile"
+          },
+          "synthetic": true,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "hum-benchmark",
+          "checks": [
+            {
+              "check": "preregistered_listening",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": "vd_existing"
+            }
+          ],
+          "gate_id": "benchmark.analysis-transcribe-pyin-hmm",
+          "host_class": "cpu/m5pro",
+          "id": "ev_unbound_pass",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": "543e7884242778bc74f963a0b870b28a501f53ad72f51f13a41d7afece3075a8",
+          "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa",
+          "recorded_at": "2026-10-12T10:00:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "analysis-transcribe-pyin-hmm",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": [
+            "vd_existing"
+          ]
+        }
+      ],
+      "expected": "smoke-passed",
+      "host_class": "cpu/m5pro",
+      "name": "hum-benchmark pass is unsupported",
+      "profile_id": "analysis-transcribe-pyin-hmm",
+      "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa"
+    },
+    {
+      "derivation": "A preregistration hash and verdict id cannot establish a bound conclusion, so it neither promotes nor disables.",
+      "evidence": [
+        {
+          "attachments": [],
+          "check": "install",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "cpu/m5pro",
+          "id": "ev_ti",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa",
+          "recorded_at": "2026-10-09T09:00:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "analysis-transcribe-pyin-hmm",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "conformance",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "cpu/m5pro",
+          "id": "ev_tc",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa",
+          "recorded_at": "2026-10-09T09:01:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "analysis-transcribe-pyin-hmm",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "smoke",
+          "checks": [
+            {
+              "check": "conformance",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "transcription_floor_synthetic",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            }
+          ],
+          "gate_id": "smoke.analysis-transcribe-pyin-hmm",
+          "host_class": "cpu/m5pro",
+          "id": "ev_ts",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa",
+          "recorded_at": "2026-10-09T09:02:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "analysis-transcribe-pyin-hmm",
+            "subject_type": "profile"
+          },
+          "synthetic": true,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "hum-benchmark",
+          "checks": [
+            {
+              "check": "preregistered_listening",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": "vd_existing"
+            }
+          ],
+          "gate_id": "benchmark.analysis-transcribe-pyin-hmm",
+          "host_class": "cpu/m5pro",
+          "id": "ev_unbound_fail",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": "543e7884242778bc74f963a0b870b28a501f53ad72f51f13a41d7afece3075a8",
+          "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa",
+          "recorded_at": "2026-10-12T10:00:00Z",
+          "result": "fail",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "analysis-transcribe-pyin-hmm",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": [
+            "vd_existing"
+          ]
+        }
+      ],
+      "expected": "smoke-passed",
+      "host_class": "cpu/m5pro",
+      "name": "hum-benchmark fail is unsupported",
+      "profile_id": "analysis-transcribe-pyin-hmm",
+      "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa"
+    },
+    {
+      "derivation": "A preregistration hash and verdict id cannot establish a bound conclusion, so it neither promotes nor disables.",
+      "evidence": [
+        {
+          "attachments": [],
+          "check": "install",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "cpu/m5pro",
+          "id": "ev_ti",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa",
+          "recorded_at": "2026-10-09T09:00:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "analysis-transcribe-pyin-hmm",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "conformance",
+          "checks": [],
+          "gate_id": null,
+          "host_class": "cpu/m5pro",
+          "id": "ev_tc",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa",
+          "recorded_at": "2026-10-09T09:01:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "analysis-transcribe-pyin-hmm",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "smoke",
+          "checks": [
+            {
+              "check": "conformance",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            },
+            {
+              "check": "transcription_floor_synthetic",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": null
+            }
+          ],
+          "gate_id": "smoke.analysis-transcribe-pyin-hmm",
+          "host_class": "cpu/m5pro",
+          "id": "ev_ts",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": null,
+          "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa",
+          "recorded_at": "2026-10-09T09:02:00Z",
+          "result": "pass",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "analysis-transcribe-pyin-hmm",
+            "subject_type": "profile"
+          },
+          "synthetic": true,
+          "verdict_ids": []
+        },
+        {
+          "attachments": [],
+          "check": "hum-benchmark",
+          "checks": [
+            {
+              "check": "preregistered_listening",
+              "measured": [],
+              "result": "pass",
+              "verdict_id": "vd_existing"
+            }
+          ],
+          "gate_id": "benchmark.analysis-transcribe-pyin-hmm",
+          "host_class": "cpu/m5pro",
+          "id": "ev_unbound_inconclusive",
+          "kind": "evidence",
+          "measured": [],
+          "prereg_sha256": "543e7884242778bc74f963a0b870b28a501f53ad72f51f13a41d7afece3075a8",
+          "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa",
+          "recorded_at": "2026-10-12T10:00:00Z",
+          "result": "inconclusive",
+          "schemaVersion": "1.0.0",
+          "subject": {
+            "subject_id": "analysis-transcribe-pyin-hmm",
+            "subject_type": "profile"
+          },
+          "synthetic": false,
+          "verdict_ids": [
+            "vd_existing"
+          ]
+        }
+      ],
+      "expected": "smoke-passed",
+      "host_class": "cpu/m5pro",
+      "name": "hum-benchmark inconclusive is unsupported",
+      "profile_id": "analysis-transcribe-pyin-hmm",
+      "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa"
     }
   ],
   "kind": "fixture.status",

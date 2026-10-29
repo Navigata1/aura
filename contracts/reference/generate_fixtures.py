@@ -1169,6 +1169,38 @@ def build_scenarios(docs: list[dict], L: dict) -> list[dict]:
        [ev("ev_bad_bench", "smoke", "ace-2b-sft-mlx", "benchmark.ace-2b-sft-mlx", True)])
     sc("EVIDENCE-UNKNOWN-PREREG", ["evidence.gates"], "A preregistered listening record cites a preregistration that was never committed.",
        [ev("ev_bad_prereg", "listening-preregistered", "ace-2b-sft-mlx", None, False, prereg=H("never-committed"))])
+    sc("EVIDENCE-WRONG-KIND-PREREG", ["evidence.gates"],
+       "A melody content hash is not a preregistration, even though it is a known record hash.",
+       [ev("ev_wrong_kind_prereg", "listening-preregistered", "ace-2b-sft-mlx", None, False,
+           prereg=get("melody-spec", "mel_hymn", 1)["content_sha256"])])
+    sc("EVIDENCE-BENCHMARK-CONCLUSION-UNSUPPORTED", ["evidence.gates"],
+       "A known preregistration and an existing owner verdict do not prove a concluded benchmark result.",
+       [ev("ev_benchmark_unbound", "benchmark", "ace-2b-sft-mlx", "benchmark.ace-2b-sft-mlx", False,
+           prereg=get("prereg", "pr_smoke")["prereg_sha256"],
+           checks=[{"check": "preregistered_listening", "result": "pass", "verdict_id": "vd_hymn", "measured": []}])])
+    for check, pid in (("benchmark", "ace-2b-sft-mlx"), ("hum-benchmark", "analysis-transcribe-pyin-hmm")):
+        for result in ("pass", "fail"):
+            record = ev("ev_unsupported_" + check + "_" + result, check, pid, "benchmark." + pid, False,
+                        prereg=get("prereg", "pr_smoke")["prereg_sha256"])
+            record["result"] = result
+            sc("EVIDENCE-UNSUPPORTED-" + check.upper() + "-" + result.upper(), ["evidence.gates"],
+               "An unsupported concluded " + check + " cannot be admitted as either a pass or failure.", [record])
+        pending = ev("ev_pending_" + check, check, pid, "benchmark." + pid, False,
+                     prereg=get("prereg", "pr_smoke")["prereg_sha256"])
+        pending["result"] = "inconclusive"
+        sc("EVIDENCE-INCONCLUSIVE-" + check.upper() + "-OK", [],
+           "An inconclusive " + check + " records no conclusion and changes no status.", [pending])
+    sc("EVIDENCE-MIXED-PROFILE-LISTENING-OK", [],
+       "A listening record may cite the existing mixed-profile audition; ordinary listening is not a benchmark conclusion.",
+       [ev("ev_mixed_listening", "listening-preregistered", "fake-route-a", None, False,
+           prereg=get("prereg", "pr_smoke")["prereg_sha256"], verdicts=["vd_hymn"])])
+    unlabelled = edit(("generation-request", "gr_hymn"),
+                      lambda d: d.update(labels=[x for x in d["labels"] if x != "unbenchmarked routes"]))
+    claims = [ev("ev_claim_" + p["profile_id"], "benchmark", p["profile_id"], None, False,
+                 prereg=get("prereg", "pr_smoke")["prereg_sha256"]) for p in unlabelled["plan"]]
+    sc("REQUEST-UNSUPPORTED-BENCHMARK-LABEL", ["evidence.gates", "request.plan_consistent"],
+       "Unsupported benchmark records cannot remove the unbenchmarked route label, including records without a gate.",
+       [unlabelled, *claims])
     ace_checks = PROFILES["ace-2b-sft-mlx"]["gates"]["smoke"]["checks"]
     sc("EVIDENCE-SMOKE-CHECK-MISSING", ["evidence.gates"],
        "A passing real smoke record for ACE lists no owner_not_garbled check, so Jon never listened (the gate declares it).",
@@ -1529,7 +1561,8 @@ def build_vectors() -> dict[str, dict]:
             "install_bytes_match_manifest is declared by the gate but absent from the record."),
         stc("synthetic smoke on a real engine", ace, rev, host, [inst, conf, smoke_syn], "installed",
             "ACE's smoke gate does not allow synthetic evidence (ADR-0027)."),
-        stc("benchmark with a preregistration", ace, rev, host, [inst, conf, smoke, bench], "benchmarked", "Preregistered benchmark pass."),
+        stc("benchmark without a bound conclusion", ace, rev, host, [inst, conf, smoke, bench], "smoke-passed",
+            "A preregistration hash alone proves no concluded result; benchmark promotion is unavailable until its binding contract lands."),
         stc("later failing smoke", ace, rev, host, [inst, conf, smoke, later_fail], "disabled", "A failing record after promotion disables."),
         stc("benchmark after a failure stays disabled", ace, rev, host, [inst, conf, smoke, later_fail, bench], "disabled", "disabled is terminal."),
         stc("early failure then success", ace, rev, host, [early_fail, inst, conf], "installed", "A failure while declared changes nothing."),
@@ -1574,6 +1607,18 @@ def build_vectors() -> dict[str, dict]:
                  subject_type="capability", checks=passing(["playback_underruns_zero", "ui_p95_under_100ms"]))],
             "smoke-passed", "Both declared playback checks pass on a real host of this OS."),
     ]}
+
+    for name in ("smoke passes", "transcriber synthetic floor"):
+        case = next(c for c in status["cases"] if c["name"] == name)
+        pid, revision, host_class = case["profile_id"], case["profile_revision"], case["host_class"]
+        check = "hum-benchmark" if pid == "analysis-transcribe-pyin-hmm" else "benchmark"
+        for outcome in ("pass", "fail", "inconclusive"):
+            record = evr("ev_unbound_" + outcome, check, pid, revision, host_class, "2026-10-12T10:00:00Z",
+                         result=outcome, gate="benchmark." + pid, prereg=H("prereg-bench"),
+                         checks=passing(["preregistered_listening"], "vd_existing"), verdicts=["vd_existing"])
+            status["cases"].append(stc(check + " " + outcome + " is unsupported", pid, revision, host_class,
+                                      case["evidence"] + [record], "smoke-passed",
+                                      "A preregistration hash and verdict id cannot establish a bound conclusion, so it neither promotes nor disables."))
 
     GIB = 2 ** 30
     MIB = 2 ** 20

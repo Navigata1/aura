@@ -1,0 +1,31 @@
+{
+  "description": "An inconclusive benchmark records no conclusion and changes no status.",
+  "expect_rules": [],
+  "id": "SC-EVIDENCE-INCONCLUSIVE-BENCHMARK-OK",
+  "kind": "fixture.scenario",
+  "overlay": [
+    {
+      "attachments": [],
+      "check": "benchmark",
+      "checks": [],
+      "gate_id": "benchmark.ace-2b-sft-mlx",
+      "host_class": "mlx/m5pro",
+      "id": "ev_pending_benchmark",
+      "kind": "evidence",
+      "measured": [],
+      "prereg_sha256": "324cb399c8c57f9e9e690dc9efc3eaceffa03643fd7a1115b4acf6de6d1f58e7",
+      "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+      "recorded_at": "2026-10-09T12:00:00Z",
+      "result": "inconclusive",
+      "schemaVersion": "1.0.0",
+      "subject": {
+        "subject_id": "ace-2b-sft-mlx",
+        "subject_type": "profile"
+      },
+      "synthetic": false,
+      "verdict_ids": []
+    }
+  ],
+  "remove": [],
+  "schemaVersion": "1.0.0"
+}

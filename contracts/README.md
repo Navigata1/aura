@@ -60,8 +60,8 @@ inside scenarios, and vector inputs are hypothetical inputs to pure functions. N
 1. **Status is computed, never stored** (ADR-0001, ADR-0027, GLOSSARY "Profile status"): profiles carry no status
    field, and the schema rejects one. "Published" figures live in `claims_published`. With no evidence recorded,
    every seed profile computes to `declared`; nothing is smoke-passed.
-2. **Status fold**: a failing record while still `declared` changes nothing; a failing install, conformance, smoke or
-   benchmark record once at `installed` or above gives `disabled`, which is terminal for that revision and host class.
+2. **Status fold**: a failing record while still `declared` changes nothing; a failing install, conformance or smoke
+   record once at `installed` or above gives `disabled`, which is terminal for that revision and host class.
    A smoke record promotes only when its `checks` list every check the gate declares, each passing, with
    `owner_not_garbled` answered by a verdict id (the rule `evidence.gates` checks that the verdict is an owner-ui act on
    that revision's own candidates). A pin change is a new revision at `declared`.
@@ -92,6 +92,23 @@ inside scenarios, and vector inputs are hypothetical inputs to pure functions. N
    `release_blockers` and `release_clear`; compute tiers use the glossary's placement terms; capabilities define how
    each check is measured, live MIDI is proven by an event-list hash and a played reference phrase, and
    `adherence.real-separator.darwin` gates adherence on real candidates; quotes never carry a lane refusal.
+
+## C01 containment, 2026-10-29
+
+The intended benchmark transition in ADR-0027 is **not implemented**. Its previous reference fold accepted a hash
+without proving a concluded result. C01 therefore fails closed: `evidence.gates` refuses **pass and fail** conclusions
+for both `benchmark` and `hum-benchmark` with `benchmark conclusion unsupported`, and the pure status fold ignores
+both kinds. Neither can promote nor disable a profile. Inconclusive records remain non-promoting; existing
+install/conformance/smoke semantics are unchanged. Generation requests retain `unbenchmarked routes` even when an
+unsupported benchmark record is present. A preregistration hash now resolves only to a `prereg` record, never to a
+MelodySpec or SongSpec hash.
+
+This is containment, **not completion of the benchmark feature**. Mixed-profile listening is still valid; C01 does not
+reuse the smoke rule that every candidate must belong to one profile. Existing schemas remain load-compatible and
+unsupported conclusions are refused by reference admission. The former status golden claiming that a bare hash
+benchmarked an engine was corrected; no frozen legacy fixture changed. See
+[the follow-on binding criteria](../docs/spec/contract-fixes/C01-benchmark-conclusions.md), required before T08 relies on
+benchmark conclusions and coordinated with T02's route-standing work.
 
 ## Not covered yet (needs vectors before code relies on it)
 

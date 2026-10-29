@@ -1,0 +1,33 @@
+{
+  "description": "An unsupported concluded hum-benchmark cannot be admitted as either a pass or failure.",
+  "expect_rules": [
+    "evidence.gates"
+  ],
+  "id": "SC-EVIDENCE-UNSUPPORTED-HUM-BENCHMARK-FAIL",
+  "kind": "fixture.scenario",
+  "overlay": [
+    {
+      "attachments": [],
+      "check": "hum-benchmark",
+      "checks": [],
+      "gate_id": "benchmark.analysis-transcribe-pyin-hmm",
+      "host_class": "mlx/m5pro",
+      "id": "ev_unsupported_hum-benchmark_fail",
+      "kind": "evidence",
+      "measured": [],
+      "prereg_sha256": "324cb399c8c57f9e9e690dc9efc3eaceffa03643fd7a1115b4acf6de6d1f58e7",
+      "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa",
+      "recorded_at": "2026-10-09T12:00:00Z",
+      "result": "fail",
+      "schemaVersion": "1.0.0",
+      "subject": {
+        "subject_id": "analysis-transcribe-pyin-hmm",
+        "subject_type": "profile"
+      },
+      "synthetic": false,
+      "verdict_ids": []
+    }
+  ],
+  "remove": [],
+  "schemaVersion": "1.0.0"
+}
