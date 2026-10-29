@@ -10,7 +10,7 @@
     "northStar": "Owned melody to an editable song, judged by the owner in blind audition.",
     "status": "active",
     "started": "2026-10-29",
-    "updated": "2026-10-29T21:11:25.616036+00:00",
+    "updated": "2026-10-29T21:27:48.208084+00:00",
     "sessionCount": 2
   },
   "policies": {
@@ -88,7 +88,17 @@
       "goal": "Execute the 105 ticket graph with independent gates",
       "status": "in_progress",
       "sessionsEstimate": "Not re-estimated; no completion-date promise",
-      "gates": [],
+      "gates": [
+        {
+          "id": "foundation-software",
+          "title": "Foundation software tests, builds and policy gates",
+          "command": "uv run --frozen python scripts/ci/run.py --base 79cd9aff1ee239bd0422e684b4e8d58b73bb7c0f",
+          "status": "passed",
+          "evidence": "ops/mission/evidence/T01-three-os-ci.json",
+          "lastRun": "2026-10-29T21:27:48.208084+00:00",
+          "notes": "Hosted Linux/macOS/Windows at d4e0c00. Synthetic/software checks only; no real audio playback or quality evidence. Consult live PR checks after later commits."
+        }
+      ],
       "tasks": [
         {
           "id": "T01",
@@ -102,7 +112,7 @@
             "url": "https://github.com/Navigata1/aura/pull/6",
             "mergedAt": null
           },
-          "notes": "Draft PR #6. Commit-aware local full gate passed at 57f4c67; independent code review passed. P01 account setting, private branch-protection403 and hosted/nightly evidence remain open; no merge."
+          "notes": "Draft PR #6. Reviewed code at d4e0c00 passes hosted Linux, macOS and Windows in run 40957624618; OS-specific test skips remain visible in logs. P01 email-exposure setting, private branch-protection 403 and first scheduled-nightly evidence remain open. No merge or music functionality claim."
         },
         {
           "id": "T02",
@@ -1311,10 +1321,11 @@
   "resume": {
     "activePhase": "P0",
     "nextActions": [
-      "Check draft PR #6 current-head hosted CI; fix any failures, keep T01 open until its external acceptance conditions are satisfied or explicitly revised.",
-      "Owner enables GitHub email-exposure push blocking (P01 #1); private branch protection needs an account-plan change or explicit owner revision of the merge requirement.",
-      "After T01 merges into integration, update PR #5 base, rerun clean-tree/CI checks, and merge only after its review gates pass.",
-      "Then continue T02/T03; C02 #4 blocks benchmark promotion until concluded results are actually bound."
+      "Resolve P01 #1: owner enables Block command line pushes that expose my email. Keep email private is already enabled.",
+      "Resolve T01 #2 branch-protection403: GitHub plan support or explicit owner revision of enforced-branch requirement. Keep repository private; do not release-merge main.",
+      "Read PR #6 latest-head CI before any merge. Code at d4e0c00 passed all three hosted operating systems; T01 remains open for external acceptance and scheduled-nightly sequencing.",
+      "After T01 merges into integration, update PR #5 base and rerun clean-tree/CI gates. Disposable combination at foundation 88335e0 plus C01 d63f824 already passed local contract gates, not a merge.",
+      "Then advance T02/T03 frontier. C02 #4 must bind concluded results before benchmark promotion is enabled."
     ],
     "blockers": [
       "P01: owner must enable Block command line pushes that expose my email; read-only browser verified it is off (Keep email private is already on).",

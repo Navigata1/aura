@@ -8,4 +8,4 @@ This authorizes implementation from the October 9 spec and ticket direction and 
 
 The setup evidence in `ops/mission/evidence/setup-result.json` records local observations. Spotlight already reports indexing and searching disabled; the agent ran no sudo. Both the mounted volume and image report Time Machine exclusion. A successful APFS filesystem verification was observed. This is an interim development volume: no real songs, references, model acceptance or durable owner evidence have been stored.
 
-Navigata1 account email privacy settings remain pending owner confirmation. This document does not attest to them. No blanket approval for paid GPU runs, model licenses, reference permissions, verdicts or main-branch release merges follows from the continuation request.
+Read-only browser inspection subsequently verified Navigata1 Keep email private enabled and Block command line pushes that expose email disabled. The owner must enable the latter under P01; no account setting was changed by the agent. No blanket approval for paid GPU runs, model licenses, reference permissions, verdicts or main-branch release merges follows from the continuation request.

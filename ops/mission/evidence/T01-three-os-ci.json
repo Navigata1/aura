@@ -1,0 +1,377 @@
+{
+  "conclusion": "success",
+  "headSha": "d4e0c00e3efd09492f9db9d4802cfb34ee234199",
+  "jobs": [
+    {
+      "completedAt": "2026-10-29T21:25:49Z",
+      "conclusion": "success",
+      "databaseId": 123741708853,
+      "name": "checks / foundation (ubuntu-latest)",
+      "startedAt": "2026-10-29T21:25:07Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-29T21:25:10Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-29T21:25:09Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:25:11Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "number": 2,
+          "startedAt": "2026-10-29T21:25:10Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:25:11Z",
+          "conclusion": "success",
+          "name": "Disposable CI environment",
+          "number": 3,
+          "startedAt": "2026-10-29T21:25:11Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:25:18Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1",
+          "number": 4,
+          "startedAt": "2026-10-29T21:25:11Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:25:22Z",
+          "conclusion": "success",
+          "name": "Run pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413",
+          "number": 5,
+          "startedAt": "2026-10-29T21:25:18Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:25:23Z",
+          "conclusion": "success",
+          "name": "Run astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2",
+          "number": 6,
+          "startedAt": "2026-10-29T21:25:22Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:25:25Z",
+          "conclusion": "success",
+          "name": "Install managed Python and frozen workspace",
+          "number": 7,
+          "startedAt": "2026-10-29T21:25:23Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:25:26Z",
+          "conclusion": "success",
+          "name": "Install frozen web workspace",
+          "number": 8,
+          "startedAt": "2026-10-29T21:25:25Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:25:46Z",
+          "conclusion": "success",
+          "name": "Foundation gate",
+          "number": 9,
+          "startedAt": "2026-10-29T21:25:26Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:25:46Z",
+          "conclusion": "success",
+          "name": "Post Run astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2",
+          "number": 15,
+          "startedAt": "2026-10-29T21:25:46Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:25:46Z",
+          "conclusion": "success",
+          "name": "Post Run pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413",
+          "number": 16,
+          "startedAt": "2026-10-29T21:25:46Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:25:46Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1",
+          "number": 17,
+          "startedAt": "2026-10-29T21:25:46Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:25:47Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "number": 18,
+          "startedAt": "2026-10-29T21:25:46Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:25:47Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 19,
+          "startedAt": "2026-10-29T21:25:47Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/Navigata1/aura/actions/runs/40957624618/job/123741708853"
+    },
+    {
+      "completedAt": "2026-10-29T21:26:09Z",
+      "conclusion": "success",
+      "databaseId": 123741709320,
+      "name": "checks / foundation (windows-latest)",
+      "startedAt": "2026-10-29T21:25:07Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-29T21:25:09Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-29T21:25:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:25:16Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "number": 2,
+          "startedAt": "2026-10-29T21:25:09Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:25:18Z",
+          "conclusion": "success",
+          "name": "Disposable CI environment",
+          "number": 3,
+          "startedAt": "2026-10-29T21:25:16Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:25:26Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1",
+          "number": 4,
+          "startedAt": "2026-10-29T21:25:18Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:25:31Z",
+          "conclusion": "success",
+          "name": "Run pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413",
+          "number": 5,
+          "startedAt": "2026-10-29T21:25:26Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:25:33Z",
+          "conclusion": "success",
+          "name": "Run astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2",
+          "number": 6,
+          "startedAt": "2026-10-29T21:25:31Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:25:36Z",
+          "conclusion": "success",
+          "name": "Install managed Python and frozen workspace",
+          "number": 7,
+          "startedAt": "2026-10-29T21:25:33Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:25:39Z",
+          "conclusion": "success",
+          "name": "Install frozen web workspace",
+          "number": 8,
+          "startedAt": "2026-10-29T21:25:36Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:26:04Z",
+          "conclusion": "success",
+          "name": "Foundation gate",
+          "number": 9,
+          "startedAt": "2026-10-29T21:25:39Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:26:04Z",
+          "conclusion": "success",
+          "name": "Post Run astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2",
+          "number": 15,
+          "startedAt": "2026-10-29T21:26:04Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:26:04Z",
+          "conclusion": "success",
+          "name": "Post Run pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413",
+          "number": 16,
+          "startedAt": "2026-10-29T21:26:04Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:26:04Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1",
+          "number": 17,
+          "startedAt": "2026-10-29T21:26:04Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:26:06Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "number": 18,
+          "startedAt": "2026-10-29T21:26:04Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:26:06Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 19,
+          "startedAt": "2026-10-29T21:26:06Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/Navigata1/aura/actions/runs/40957624618/job/123741709320"
+    },
+    {
+      "completedAt": "2026-10-29T21:25:59Z",
+      "conclusion": "success",
+      "databaseId": 123741709341,
+      "name": "checks / foundation (macos-latest)",
+      "startedAt": "2026-10-29T21:25:07Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-29T21:25:11Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-29T21:25:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:25:15Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "number": 2,
+          "startedAt": "2026-10-29T21:25:11Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:25:15Z",
+          "conclusion": "success",
+          "name": "Disposable CI environment",
+          "number": 3,
+          "startedAt": "2026-10-29T21:25:15Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:25:23Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1",
+          "number": 4,
+          "startedAt": "2026-10-29T21:25:15Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:25:27Z",
+          "conclusion": "success",
+          "name": "Run pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413",
+          "number": 5,
+          "startedAt": "2026-10-29T21:25:23Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:25:29Z",
+          "conclusion": "success",
+          "name": "Run astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2",
+          "number": 6,
+          "startedAt": "2026-10-29T21:25:27Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:25:32Z",
+          "conclusion": "success",
+          "name": "Install managed Python and frozen workspace",
+          "number": 7,
+          "startedAt": "2026-10-29T21:25:29Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:25:33Z",
+          "conclusion": "success",
+          "name": "Install frozen web workspace",
+          "number": 8,
+          "startedAt": "2026-10-29T21:25:32Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:25:54Z",
+          "conclusion": "success",
+          "name": "Foundation gate",
+          "number": 9,
+          "startedAt": "2026-10-29T21:25:33Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:25:55Z",
+          "conclusion": "success",
+          "name": "Post Run astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2",
+          "number": 15,
+          "startedAt": "2026-10-29T21:25:54Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:25:55Z",
+          "conclusion": "success",
+          "name": "Post Run pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413",
+          "number": 16,
+          "startedAt": "2026-10-29T21:25:55Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:25:55Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1",
+          "number": 17,
+          "startedAt": "2026-10-29T21:25:55Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:25:56Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "number": 18,
+          "startedAt": "2026-10-29T21:25:55Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-29T21:25:57Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 19,
+          "startedAt": "2026-10-29T21:25:56Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/Navigata1/aura/actions/runs/40957624618/job/123741709341"
+    }
+  ],
+  "status": "completed",
+  "url": "https://github.com/Navigata1/aura/actions/runs/40957624618"
+}

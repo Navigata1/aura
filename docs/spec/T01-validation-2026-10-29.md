@@ -35,3 +35,7 @@ The foundation is a broad pre-specified ticket; most diff volume is generated re
 Run 40955793946 passed Linux and macOS but exposed native backslashes in Windows registry provenance. `scripts/registry/sync.py` now serializes relative provenance paths with `as_posix()`. A public-generator Windows-path regression failed before and passes after; Mac-generated registry bytes remain unchanged. Independent review approved the narrow fix. Hosted Windows must rerun beyond that formerly failing stage; it is not passed by the local regression alone.
 
 The next Windows run progressed beyond registry validation and exposed shell-boundary test failures. Tests now choose Git-for-Windows Bash explicitly and use the managed interpreter with portable quoting. A separately reproduced Windows path-separator mismatch in bundle ownership is corrected through normalized path comparison, with a public bundle-inventory regression. Independent targeted review passed; actual Windows CI still determines hosted readiness.
+
+## Hosted three-OS result
+
+[Run 40957624618](https://github.com/Navigata1/aura/actions/runs/40957624618) passed Linux, macOS and Windows at `d4e0c00e3efd09492f9db9d4802cfb34ee234199`. Windows environment-key casing required one additional test correction; every cache containment assertion remains. See `ops/mission/evidence/T01-three-os-ci.json` for the exact jobs and steps. This supersedes the pending hosted-software observations above, while account settings, branch protection, actual scheduled-nightly evidence and real audio/playback gates remain open.

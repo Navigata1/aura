@@ -32,3 +32,9 @@
 
 - Draft PR #5 preserves C01 containment; draft PR #6 preserves the reviewed T01 foundation. Both target integration; neither is merged.
 - T01 commit-aware local gate at 57f4c67 passed. Live hosted CI is being inspected separately. Worktrees remain on STUDIO while their PRs are open.
+
+## 2026-10-29 — three-host software gate passed
+
+- Hosted run 40957624618 at d4e0c00 passed Linux, macOS and Windows after fixes for portable registry provenance, explicit Git Bash/interpreter selection, Windows environment-key casing and normalized bundle ownership. Separate targeted reviews found no open findings.
+- The committed CI JSON preserves host, job and step results. This is scaffold/software evidence only; OS playback, model inference and listening remain unverified.
+- PRs #5 and #6 remain draft and unmerged. Owner email-exposure blocking and private branch protection are still required; scheduled nightly evidence awaits the owner release path.
