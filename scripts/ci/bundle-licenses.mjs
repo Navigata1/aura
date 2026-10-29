@@ -30,7 +30,7 @@ export function bundleLicenses() {
             directory = parent;
           }
           const metadata = JSON.parse(fs.readFileSync(path.join(directory, 'package.json'), 'utf8'));
-          if ([workspace, path.join(workspace, 'apps/web')].includes(directory)) continue;
+          if ([workspace, path.join(workspace, 'apps/web')].some(own => path.relative(own, directory) === '')) continue;
           packages.set(`${metadata.name}@${metadata.version}`, { name: metadata.name, version: metadata.version, license: metadata.license ?? 'UNKNOWN' });
         }
       }

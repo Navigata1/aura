@@ -5,17 +5,17 @@ import subprocess
 import sys
 import tempfile
 import unittest
-from storage_fixture import boundary_environment
+from storage_fixture import boundary_environment, managed_python_shell_path, native_bash
 
 ROOT = Path(__file__).resolve().parents[2]
 
 class EnvironmentTest(unittest.TestCase):
     def test_missing_volume_exports_nothing(self):
         with tempfile.TemporaryDirectory() as tmp:
-            env = {**os.environ, 'STUDIO_ROOT': str(Path(tmp) / 'absent')}
+            env = {**os.environ, 'STUDIO_ROOT': str(Path(tmp) / 'absent'), 'STUDIO_PYTHON': managed_python_shell_path()}
             command = 'before=$(env | sort); source scripts/dev/studio-env.sh; status=$?; after=$(env | sort); [ "$status" -ne 0 ] && [ "$before" = "$after" ]'
-            result = subprocess.run(['bash', '-c', command], env=env, cwd=ROOT, text=True, capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr)
+            result = subprocess.run([native_bash(), '-c', command], env=env, cwd=ROOT, text=True, capture_output=True)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
             self.assertFalse(Path(env['STUDIO_ROOT']).exists())
 
     def test_missing_volume_worktree_creates_nothing(self):
@@ -34,8 +34,8 @@ class EnvironmentTest(unittest.TestCase):
 
     def test_every_exported_cache_stays_on_volume(self):
         with tempfile.TemporaryDirectory() as tmp:
-            result = subprocess.run(['bash','-c','source scripts/dev/studio-env.sh && python3 -c "import os,json; print(json.dumps(dict(os.environ)))"'],env=boundary_environment(tmp),cwd=ROOT,text=True,capture_output=True)
-        self.assertEqual(result.returncode,0,result.stderr)
+            result = subprocess.run([native_bash(),'-c','source scripts/dev/studio-env.sh && "$STUDIO_PYTHON" -c "import os,json; print(json.dumps(dict(os.environ)))"'],env=boundary_environment(tmp),cwd=ROOT,text=True,capture_output=True)
+        self.assertEqual(result.returncode,0,result.stdout+result.stderr)
         values=json.loads(result.stdout)
         root=Path(values['STUDIO_ROOT']).resolve()
         for name in ['HF_HOME','HF_HUB_CACHE','HF_XET_CACHE','UV_CACHE_DIR','UV_PYTHON_INSTALL_DIR','UV_TOOL_DIR','UV_TOOL_BIN_DIR','PIP_CACHE_DIR','TORCH_HOME','XDG_CACHE_HOME','XDG_DATA_HOME','XDG_STATE_HOME','npm_config_cache','COREPACK_HOME','PLAYWRIGHT_BROWSERS_PATH','TMPDIR','PNPM_HOME']:

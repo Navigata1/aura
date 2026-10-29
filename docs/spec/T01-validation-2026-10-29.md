@@ -7,7 +7,7 @@ This is a buildable scaffold and guarded development environment, not a music-ge
 The complete local gate (`uv run --frozen python scripts/ci/run.py --files-only`) passes from the dedicated external volume with pinned Node 22.22.3 and managed Python 3.12.13. Independent review reran it after storage and license-graph corrections.
 
 - Fresh tracked-file copy: 49 schemas, 306 valid-by-kind records, 59 reference rules; registry regeneration and 105-ticket DAG pass. The previously ignored required store fixture is now tracked.
-- 37 Python tests plus 4 subtests, 2 Vitest tests and 1 Node bundled-module provenance test pass.
+- 37 Python tests plus 4 subtests, 2 Vitest tests and 2 Node bundled-module provenance tests pass.
 - Web production build passes. The emitted module inventory is bound to chunk hashes and checks five third-party package entries. Control currently has no third-party runtime dependencies; future additions are traversed including requested extras.
 - Policy scanner passes on the delivered tracked tree and emitted bundle. Planted negatives cover the declared contact/commit, secrets, licensing, product naming, weights and audio rules. This is bounded rule coverage, not a claim that all possible secrets or attacks are detected.
 - Guard negatives cover a missing mount, low space, internal/nested/unknown backing, cache symlink escape, inherited workspace override and unverified bundle/runtime dependency metadata.
@@ -33,3 +33,5 @@ The foundation is a broad pre-specified ticket; most diff volume is generated re
 ## First hosted Windows correction
 
 Run 40955793946 passed Linux and macOS but exposed native backslashes in Windows registry provenance. `scripts/registry/sync.py` now serializes relative provenance paths with `as_posix()`. A public-generator Windows-path regression failed before and passes after; Mac-generated registry bytes remain unchanged. Independent review approved the narrow fix. Hosted Windows must rerun beyond that formerly failing stage; it is not passed by the local regression alone.
+
+The next Windows run progressed beyond registry validation and exposed shell-boundary test failures. Tests now choose Git-for-Windows Bash explicitly and use the managed interpreter with portable quoting. A separately reproduced Windows path-separator mismatch in bundle ownership is corrected through normalized path comparison, with a public bundle-inventory regression. Independent targeted review passed; actual Windows CI still determines hosted readiness.
