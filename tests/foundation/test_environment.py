@@ -39,7 +39,9 @@ class EnvironmentTest(unittest.TestCase):
         values=json.loads(result.stdout)
         root=Path(values['STUDIO_ROOT']).resolve()
         for name in ['HF_HOME','HF_HUB_CACHE','HF_XET_CACHE','UV_CACHE_DIR','UV_PYTHON_INSTALL_DIR','UV_TOOL_DIR','UV_TOOL_BIN_DIR','PIP_CACHE_DIR','TORCH_HOME','XDG_CACHE_HOME','XDG_DATA_HOME','XDG_STATE_HOME','npm_config_cache','COREPACK_HOME','PLAYWRIGHT_BROWSERS_PATH','TMPDIR','PNPM_HOME']:
-            self.assertTrue(Path(values[name]).resolve().is_relative_to(root),name)
+            # Python's Windows os.environ normalizes keys to uppercase before JSON export.
+            key = name.upper() if os.name == 'nt' else name
+            self.assertTrue(Path(values[key]).resolve().is_relative_to(root),name)
 
 
 class StorageRefusalTest(unittest.TestCase):
