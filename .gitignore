@@ -1,4 +1,4 @@
-# AURA — never commit audio, weights, or local stores
+# Studio — never commit audio, weights, or local stores
 .DS_Store
 ._*
 node_modules/
@@ -30,3 +30,9 @@ store/
 *.gguf
 .scratch/
 .claude/worktrees/
+
+*.egg-info/
+
+# Golden store metadata is JSON, not a local project store.
+!contracts/fixtures/world/store/
+!contracts/fixtures/world/store/store.json

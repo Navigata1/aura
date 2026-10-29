@@ -1,0 +1,12 @@
+name: Pull request checks
+on:
+  pull_request:
+    branches: [integration, main]
+permissions:
+  contents: read
+jobs:
+  checks:
+    uses: ./.github/workflows/foundation.yml
+    with:
+      platforms: '["ubuntu-latest"]'
+      base: ${{ github.event.pull_request.base.sha }}

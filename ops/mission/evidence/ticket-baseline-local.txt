@@ -1,0 +1,11 @@
+ok    105 tickets (26 L, 64 M, 15 S); 1 precondition(s)
+ok    streams: engine 29, studio 25, voice 14, eval 16, shared 21
+ok    graph acyclic, every ticket reaches T01, blockers transitively reduced
+ok    parallel tickets own disjoint paths; every slot filler descends from its slot's declarer
+ok    413/413 user stories covered; out of v1: none
+ok    71 in-scope inventory rows traced; 35 unverified-capability rows gated; O-01..O-11 and 37 ADRs cited
+ok    labels from docs/agents/issue-tracker.md; 23 tickets need Jon, all ready-for-human: T19, T47, T51, T52, T55, T60, T61, T62, T63, T68, T69, T73, T74, T83, T84, T86, T91, T92, T94, T95, T97, T98, T104
+ok    every acceptance criterion names its evidence; every 'Why blocked:' names its blockers
+ok    depth-1 frontier: T02, T03; max depth 19; critical path weight 49
+checked docs/spec/tickets.md
+PASSED

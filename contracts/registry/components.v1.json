@@ -869,29 +869,33 @@
     },
     {
       "allowed_lanes": [
+        "individual",
+        "llc",
         "research"
       ],
       "category": "ui-runtime",
-      "code_license": "UNVERIFIED (assumed permissive; not checked against a primary source)",
+      "code_license": "MIT",
       "gated": null,
       "id": "fastapi",
-      "name": "FastAPI",
-      "notes": "RECONCILIATION.md §8: licenses of FastAPI, SQLite, React, Vite and uv were assumed permissive, never checked.",
-      "obligations": [],
-      "output_terms": "n/a",
-      "primary_sources": [],
-      "process_boundary_required": false,
-      "redistribution_blocker": "Unverified license.",
-      "release_blockers": [
-        "unverified"
+      "name": "fastapi",
+      "notes": "T01 source-license verification 2026-10-29. Version: 0.162.0. Source SHA-256: 4ec89ffc81485b97fec584b2d4a961032eeffe834453894fd9c1274906cc744e. See docs/research/licenses/stack-sources-2026-10-29.json.",
+      "obligations": [
+        "attribution"
       ],
-      "role": "The control service's HTTP and SSE framework.",
+      "output_terms": "No model output terms; retain applicable code license and notices.",
+      "primary_sources": [
+        "https://raw.githubusercontent.com/fastapi/fastapi/0.162.0/LICENSE"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "No source-license blocker; retain notices and audit resolved distributions before redistribution.",
+      "release_blockers": [],
+      "role": "Planned control HTTP framework (T05).",
       "test_only": false,
       "v1_path": true,
       "verdict": "evaluate",
-      "verdict_condition": "License verification ticket must close before adoption (P0-9).",
-      "verification_status": "unverified",
-      "weights_license": "n/a"
+      "verdict_condition": "Source license checked for the named version; future adoption must pin compatible dependencies and audit the exact distribution and transitive licenses.",
+      "verification_status": "confirmed",
+      "weights_license": "n/a (no weights)"
     },
     {
       "allowed_lanes": [
@@ -1233,6 +1237,36 @@
         "llc",
         "research"
       ],
+      "category": "ui-runtime",
+      "code_license": "MIT",
+      "gated": null,
+      "id": "keyring",
+      "name": "keyring",
+      "notes": "T01 source-license verification 2026-10-29. Version: 25.7.0. Source SHA-256: 5a57cb4db85e2a2dd88c290628908add57e3451449e0a9a71fdfb38776fd759d. See docs/research/licenses/stack-sources-2026-10-29.json.",
+      "obligations": [
+        "attribution"
+      ],
+      "output_terms": "No model output terms; retain applicable code license and notices.",
+      "primary_sources": [
+        "https://files.pythonhosted.org/packages/43/4b/674af6ef2f97d56f0ab5153bf0bfa28ccb6c3ed4d1babf4305449668807b/keyring-25.7.0.tar.gz"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "No source-license blocker; retain notices and audit resolved distributions before redistribution.",
+      "release_blockers": [],
+      "role": "Planned OS keychain access.",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "evaluate",
+      "verdict_condition": "Source license checked for the named version; future adoption must pin compatible dependencies and audit the exact distribution and transitive licenses.",
+      "verification_status": "confirmed",
+      "weights_license": "n/a (no weights)"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
       "category": "tts",
       "code_license": "Apache-2.0",
       "gated": false,
@@ -1341,6 +1375,39 @@
       "v1_path": true,
       "verdict": "adopt-v1",
       "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "n/a (no weights)"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "dsp",
+      "code_license": "LGPL-2.1-or-later",
+      "gated": null,
+      "id": "libsndfile",
+      "name": "libsndfile",
+      "notes": "T01 source-license verification 2026-10-29. Version: 1.2.2. Source SHA-256: ad01ea5cd2755f6048383c8d54c88459cd6fcb17757c5c8892f8c5ea060f6140. See docs/research/licenses/stack-sources-2026-10-29.json. LGPL applies to library; permission for commercial use does not remove redistribution/relinking obligations.",
+      "obligations": [
+        "attribution"
+      ],
+      "output_terms": "No model output terms; retain applicable code license and notices.",
+      "primary_sources": [
+        "https://raw.githubusercontent.com/libsndfile/libsndfile/1.2.2/COPYING",
+        "https://raw.githubusercontent.com/libsndfile/libsndfile/1.2.2/src/sndfile.c"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "Worker process only; LGPL obligations and exact binary dependency review apply.",
+      "release_blockers": [
+        "copyleft"
+      ],
+      "role": "Worker-only audio I/O library; no linking or bundling into control/web.",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "evaluate",
+      "verdict_condition": "Source license checked for the named version; future adoption must pin compatible dependencies and audit the exact distribution and transitive licenses.",
       "verification_status": "confirmed",
       "weights_license": "n/a (no weights)"
     },
@@ -1674,6 +1741,36 @@
         "llc",
         "research"
       ],
+      "category": "dsp",
+      "code_license": "MIT",
+      "gated": null,
+      "id": "mlx",
+      "name": "mlx",
+      "notes": "T01 source-license verification 2026-10-29. Version: 0.32.4. Source SHA-256: ccfab7ccb2ea306f71531c8ca77bb55507606cd90768b1e32b8b52ab5b48cf01. See docs/research/licenses/stack-sources-2026-10-29.json.",
+      "obligations": [
+        "attribution"
+      ],
+      "output_terms": "No model output terms; retain applicable code license and notices.",
+      "primary_sources": [
+        "https://raw.githubusercontent.com/ml-explore/mlx/v0.32.4/LICENSE"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "No source-license blocker; retain notices and audit resolved distributions before redistribution.",
+      "release_blockers": [],
+      "role": "Planned worker hardware probe and Apple Silicon runtime; no ML dependency in control.",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "evaluate",
+      "verdict_condition": "Source license checked for the named version; future adoption must pin compatible dependencies and audit the exact distribution and transitive licenses.",
+      "verification_status": "confirmed",
+      "weights_license": "n/a (no weights)"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
       "category": "tts",
       "code_license": "MIT",
       "gated": false,
@@ -1975,6 +2072,66 @@
       "weights_license": "n/a (no weights)"
     },
     {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "ui-runtime",
+      "code_license": "MIT with bundled dependency notices",
+      "gated": null,
+      "id": "node",
+      "name": "node",
+      "notes": "T01 source-license verification 2026-10-29. Version: 22.22.3. Source SHA-256: c738ae413cf561f174e34f6961f8ca458aae2369a73640dda6234c629b98bcc4. See docs/research/licenses/stack-sources-2026-10-29.json. The core MIT grant coexists with bundled dependency notices. Build tooling only; not a control/web dependency.",
+      "obligations": [
+        "attribution"
+      ],
+      "output_terms": "No model output terms; retain applicable code license and notices.",
+      "primary_sources": [
+        "https://raw.githubusercontent.com/nodejs/node/v22.22.3/LICENSE"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "No source-license blocker; retain notices and audit resolved distributions before redistribution.",
+      "release_blockers": [],
+      "role": "Build-time JavaScript runtime; no Node service shipped.",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "adopt-v1",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "n/a (no weights)"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "dsp",
+      "code_license": "BSD-3-Clause",
+      "gated": null,
+      "id": "numpy",
+      "name": "numpy",
+      "notes": "T01 source-license verification 2026-10-29. Version: 2.5.4. Source SHA-256: 1be1df33863f97a7bc1c4d67980bd6c69c9a6fef0a5ee76e6ad6cb91e56e8491. See docs/research/licenses/stack-sources-2026-10-29.json. Source BSD license confirmed; package/wheel includes other notices and must stay in a worker. No wheel was installed by this review.",
+      "obligations": [
+        "attribution"
+      ],
+      "output_terms": "No model output terms; retain applicable code license and notices.",
+      "primary_sources": [
+        "https://raw.githubusercontent.com/numpy/numpy/v2.5.4/LICENSE.txt"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "No source-license blocker; retain notices and audit resolved distributions before redistribution.",
+      "release_blockers": [],
+      "role": "Worker numerical arrays; no dependency in control.",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "evaluate",
+      "verdict_condition": "Source license checked for the named version; future adoption must pin compatible dependencies and audit the exact distribution and transitive licenses.",
+      "verification_status": "confirmed",
+      "weights_license": "n/a (no weights)"
+    },
+    {
       "allowed_lanes": [],
       "category": "tts",
       "code_license": "Apache-2.0",
@@ -2057,6 +2214,67 @@
       "weights_license": "LGPL-3.0 (in repo); self-supervised on MIR-1K"
     },
     {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "ui-runtime",
+      "code_license": "Apache-2.0",
+      "gated": null,
+      "id": "playwright",
+      "name": "playwright",
+      "notes": "T01 source-license verification 2026-10-29. Version: 1.64.1. Source SHA-256: 45873d00a0dd243596deb4aa23b2493b3d1f0671921bf2538ea431d7380220eb. See docs/research/licenses/stack-sources-2026-10-29.json.",
+      "obligations": [
+        "apache_notice",
+        "attribution"
+      ],
+      "output_terms": "No model output terms; retain applicable code license and notices.",
+      "primary_sources": [
+        "https://raw.githubusercontent.com/microsoft/playwright/v1.64.1/LICENSE"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "No source-license blocker; retain notices and audit resolved distributions before redistribution.",
+      "release_blockers": [],
+      "role": "Browser test runner; browser distributions reviewed separately before redistribution.",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "evaluate",
+      "verdict_condition": "Source license checked for the named version; future adoption must pin compatible dependencies and audit the exact distribution and transitive licenses.",
+      "verification_status": "confirmed",
+      "weights_license": "n/a (no weights)"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "ui-runtime",
+      "code_license": "MIT",
+      "gated": null,
+      "id": "pnpm",
+      "name": "pnpm",
+      "notes": "T01 source-license verification 2026-10-29. Version: 11.1.2. Source SHA-256: 4b8e2a57502758b2d034ece9cabf19dd098c5609003ed8dbdafd085274f25bd9. See docs/research/licenses/stack-sources-2026-10-29.json.",
+      "obligations": [
+        "attribution"
+      ],
+      "output_terms": "No model output terms; retain applicable code license and notices.",
+      "primary_sources": [
+        "https://raw.githubusercontent.com/pnpm/pnpm/v11.1.2/LICENSE"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "No source-license blocker; retain notices and audit resolved distributions before redistribution.",
+      "release_blockers": [],
+      "role": "Web package manager.",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "adopt-v1",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "n/a (no weights)"
+    },
+    {
       "allowed_lanes": [],
       "category": "ui-runtime",
       "code_license": "Ruach Studio AGPL-3.0; Riff MIT; Remiqora MIT per the audio.cpp README (UNVERIFIED)",
@@ -2120,6 +2338,36 @@
         "llc",
         "research"
       ],
+      "category": "ui-runtime",
+      "code_license": "MIT",
+      "gated": null,
+      "id": "pydantic",
+      "name": "pydantic",
+      "notes": "T01 source-license verification 2026-10-29. Version: 2.14.2. Source SHA-256: a9e186f3ca16b5eef84318e7a701721351a00cb7b8ae3a4394b67b49e3529ef3. See docs/research/licenses/stack-sources-2026-10-29.json.",
+      "obligations": [
+        "attribution"
+      ],
+      "output_terms": "No model output terms; retain applicable code license and notices.",
+      "primary_sources": [
+        "https://raw.githubusercontent.com/pydantic/pydantic/v2.14.2/LICENSE"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "No source-license blocker; retain notices and audit resolved distributions before redistribution.",
+      "release_blockers": [],
+      "role": "Planned contract types and validation.",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "evaluate",
+      "verdict_condition": "Source license checked for the named version; future adoption must pin compatible dependencies and audit the exact distribution and transitive licenses.",
+      "verification_status": "confirmed",
+      "weights_license": "n/a (no weights)"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
       "category": "post-production",
       "code_license": "MIT",
       "gated": null,
@@ -2141,6 +2389,66 @@
       "verdict_condition": null,
       "verification_status": "corrected",
       "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "ui-runtime",
+      "code_license": "MIT",
+      "gated": null,
+      "id": "pytest",
+      "name": "pytest",
+      "notes": "T01 source-license verification 2026-10-29. Version: 9.2.0. Source SHA-256: ca836a5f9ecca3b2f350230faa20a48fb8b145653b5568d784862df864706b9b. See docs/research/licenses/stack-sources-2026-10-29.json.",
+      "obligations": [
+        "attribution"
+      ],
+      "output_terms": "No model output terms; retain applicable code license and notices.",
+      "primary_sources": [
+        "https://raw.githubusercontent.com/pytest-dev/pytest/9.2.0/LICENSE"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "No source-license blocker; retain notices and audit resolved distributions before redistribution.",
+      "release_blockers": [],
+      "role": "Python development test runner.",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "adopt-v1",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "n/a (no weights)"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "ui-runtime",
+      "code_license": "PSF-2.0 and historical Python licenses",
+      "gated": null,
+      "id": "python",
+      "name": "python",
+      "notes": "T01 source-license verification 2026-10-29. Version: 3.12.13. Source SHA-256: 3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf. See docs/research/licenses/stack-sources-2026-10-29.json. Upstream CPython source license verified; python-build-standalone distribution has additional bundled dependencies, requiring separate artifact inventory before redistribution.",
+      "obligations": [
+        "attribution"
+      ],
+      "output_terms": "No model output terms; retain applicable code license and notices.",
+      "primary_sources": [
+        "https://raw.githubusercontent.com/python/cpython/v3.12.13/LICENSE"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "No source-license blocker; retain notices and audit resolved distributions before redistribution.",
+      "release_blockers": [],
+      "role": "Managed CPython runtime; standalone build distribution dependencies reviewed separately.",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "adopt-v1",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "n/a (no weights)"
     },
     {
       "allowed_lanes": [
@@ -2229,29 +2537,63 @@
     },
     {
       "allowed_lanes": [
+        "individual",
+        "llc",
         "research"
       ],
       "category": "ui-runtime",
-      "code_license": "UNVERIFIED (assumed permissive; not checked against a primary source)",
+      "code_license": "MIT",
       "gated": null,
       "id": "react",
-      "name": "React",
-      "notes": "RECONCILIATION.md §8.",
-      "obligations": [],
-      "output_terms": "n/a",
-      "primary_sources": [],
-      "process_boundary_required": false,
-      "redistribution_blocker": "Unverified license.",
-      "release_blockers": [
-        "unverified"
+      "name": "react",
+      "notes": "T01 source-license verification 2026-10-29. Version: 19.3.1. Source SHA-256: da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93. See docs/research/licenses/stack-sources-2026-10-29.json.",
+      "obligations": [
+        "attribution"
       ],
-      "role": "The web app.",
+      "output_terms": "No model output terms; retain applicable code license and notices.",
+      "primary_sources": [
+        "https://raw.githubusercontent.com/react/react/v19.3.1/LICENSE"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "No source-license blocker; retain notices and audit resolved distributions before redistribution.",
+      "release_blockers": [],
+      "role": "Web view library.",
       "test_only": false,
       "v1_path": true,
-      "verdict": "evaluate",
-      "verdict_condition": "License verification ticket must close before adoption (P0-9).",
-      "verification_status": "unverified",
-      "weights_license": "n/a"
+      "verdict": "adopt-v1",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "n/a (no weights)"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "ui-runtime",
+      "code_license": "MIT",
+      "gated": null,
+      "id": "react-dom",
+      "name": "react-dom",
+      "notes": "T01 source-license verification 2026-10-29. Version: 19.3.1. Source SHA-256: da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93. See docs/research/licenses/stack-sources-2026-10-29.json.",
+      "obligations": [
+        "attribution"
+      ],
+      "output_terms": "No model output terms; retain applicable code license and notices.",
+      "primary_sources": [
+        "https://raw.githubusercontent.com/react/react/v19.3.1/LICENSE"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "No source-license blocker; retain notices and audit resolved distributions before redistribution.",
+      "release_blockers": [],
+      "role": "Web DOM renderer.",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "adopt-v1",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "n/a (no weights)"
     },
     {
       "allowed_lanes": [
@@ -2396,6 +2738,38 @@
       "verdict_condition": null,
       "verification_status": "confirmed",
       "weights_license": "SAM License; HF gated with manual approval"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "dsp",
+      "code_license": "BSD-3-Clause (source); wheel runtime may include LGPL-2.1-or-later and GPL-3.0-with-GCC-exception",
+      "gated": null,
+      "id": "scipy",
+      "name": "scipy",
+      "notes": "T01 source-license verification 2026-10-29. Version: 1.18.1. Source SHA-256: 221e59f5e910fd7f94e44f0dac77436a11338c285c6346232e4a850a50da0e94. See docs/research/licenses/stack-sources-2026-10-29.json. Source-license verification only; platform wheels can include OpenBLAS and compiler runtimes. Audit actual wheel before adoption.",
+      "obligations": [
+        "attribution"
+      ],
+      "output_terms": "No model output terms; retain applicable code license and notices.",
+      "primary_sources": [
+        "https://raw.githubusercontent.com/scipy/scipy/v1.18.1/LICENSE.txt"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "Worker process only; LGPL obligations and exact binary dependency review apply.",
+      "release_blockers": [
+        "copyleft"
+      ],
+      "role": "Worker numerical algorithms; binary runtime dependencies reviewed separately.",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "evaluate",
+      "verdict_condition": "Source license checked for the named version; future adoption must pin compatible dependencies and audit the exact distribution and transitive licenses.",
+      "verification_status": "confirmed",
+      "weights_license": "n/a (no weights)"
     },
     {
       "allowed_lanes": [
@@ -2717,6 +3091,38 @@
         "research"
       ],
       "category": "dsp",
+      "code_license": "BSD-3-Clause (wrapper); linked libsndfile LGPL-2.1-or-later",
+      "gated": null,
+      "id": "soundfile",
+      "name": "soundfile",
+      "notes": "T01 source-license verification 2026-10-29. Version: 0.14.0. Source SHA-256: 0dd2e411fed553ba891845077e5a32c5b726d1bbc46ff31a2118ae1ccf816752. See docs/research/licenses/stack-sources-2026-10-29.json. Wrapper license is BSD; the dependency boundary comes from libsndfile, not from relicensing this wrapper.",
+      "obligations": [
+        "attribution"
+      ],
+      "output_terms": "No model output terms; retain applicable code license and notices.",
+      "primary_sources": [
+        "https://raw.githubusercontent.com/bastibe/python-soundfile/0.14.0/LICENSE"
+      ],
+      "process_boundary_required": true,
+      "redistribution_blocker": "Worker process only; LGPL obligations and exact binary dependency review apply.",
+      "release_blockers": [
+        "copyleft"
+      ],
+      "role": "Worker audio I/O wrapper over libsndfile; no dependency in control.",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "evaluate",
+      "verdict_condition": "Source license checked for the named version; future adoption must pin compatible dependencies and audit the exact distribution and transitive licenses.",
+      "verification_status": "confirmed",
+      "weights_license": "n/a (no weights)"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "dsp",
       "code_license": "LGPL-2.1 or commercial on request",
       "gated": null,
       "id": "soundtouch",
@@ -2771,29 +3177,31 @@
     },
     {
       "allowed_lanes": [
+        "individual",
+        "llc",
         "research"
       ],
       "category": "ui-runtime",
-      "code_license": "UNVERIFIED (assumed public domain; not checked against a primary source)",
+      "code_license": "Public domain dedication",
       "gated": null,
       "id": "sqlite",
-      "name": "SQLite (Python stdlib sqlite3)",
-      "notes": "RECONCILIATION.md §8.",
+      "name": "sqlite",
+      "notes": "T01 source-license verification 2026-10-29. Version: Python-linked runtime version checked at adoption. Source SHA-256: 44ca9f793055c8e32fc65f65a4f5bcf813a33f5bdaaa084067dd617a4ed3cc70. See docs/research/licenses/stack-sources-2026-10-29.json. Official public-domain dedication checked; no SPDX license inferred. Read actual linked SQLite version at adoption.",
       "obligations": [],
-      "output_terms": "n/a",
-      "primary_sources": [],
-      "process_boundary_required": false,
-      "redistribution_blocker": "Unverified license.",
-      "release_blockers": [
-        "unverified"
+      "output_terms": "No model output terms; retain applicable code license and notices.",
+      "primary_sources": [
+        "https://www.sqlite.org/copyright.html"
       ],
-      "role": "The system of record (ADR-0028).",
+      "process_boundary_required": false,
+      "redistribution_blocker": "No source-license blocker; retain notices and audit resolved distributions before redistribution.",
+      "release_blockers": [],
+      "role": "SQLite deliverable code used through Python sqlite3; no separate third-party SQLite extension adopted.",
       "test_only": false,
       "v1_path": true,
       "verdict": "evaluate",
-      "verdict_condition": "License verification ticket must close before adoption (P0-9).",
-      "verification_status": "unverified",
-      "weights_license": "n/a"
+      "verdict_condition": "Source license checked for the named version; future adoption must pin compatible dependencies and audit the exact distribution and transitive licenses.",
+      "verification_status": "confirmed",
+      "weights_license": "n/a (no weights)"
     },
     {
       "allowed_lanes": [],
@@ -2916,6 +3324,36 @@
       "verdict_condition": null,
       "verification_status": "confirmed",
       "weights_license": "n/a"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "ui-runtime",
+      "code_license": "BSD-3-Clause",
+      "gated": null,
+      "id": "starlette",
+      "name": "starlette",
+      "notes": "T01 source-license verification 2026-10-29. Version: 1.10.0. Source SHA-256: dcb95677a02240243187e964f941847d19b17821cf99e5afae684fab328c19bf. See docs/research/licenses/stack-sources-2026-10-29.json.",
+      "obligations": [
+        "attribution"
+      ],
+      "output_terms": "No model output terms; retain applicable code license and notices.",
+      "primary_sources": [
+        "https://raw.githubusercontent.com/Kludex/starlette/1.10.0/LICENSE.md"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "No source-license blocker; retain notices and audit resolved distributions before redistribution.",
+      "release_blockers": [],
+      "role": "Planned ASGI framework beneath FastAPI.",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "evaluate",
+      "verdict_condition": "Source license checked for the named version; future adoption must pin compatible dependencies and audit the exact distribution and transitive licenses.",
+      "verification_status": "confirmed",
+      "weights_license": "n/a (no weights)"
     },
     {
       "allowed_lanes": [],
@@ -3163,29 +3601,184 @@
     },
     {
       "allowed_lanes": [
+        "individual",
+        "llc",
         "research"
       ],
       "category": "ui-runtime",
-      "code_license": "UNVERIFIED (assumed permissive; not checked against a primary source)",
+      "code_license": "MIT",
+      "gated": null,
+      "id": "types-react",
+      "name": "types-react",
+      "notes": "T01 source-license verification 2026-10-29. Version: 19.3.0. Source SHA-256: c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383. See docs/research/licenses/stack-sources-2026-10-29.json.",
+      "obligations": [
+        "attribution"
+      ],
+      "output_terms": "No model output terms; retain applicable code license and notices.",
+      "primary_sources": [
+        "https://registry.npmjs.org/@types/react/-/react-19.3.0.tgz"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "No source-license blocker; retain notices and audit resolved distributions before redistribution.",
+      "release_blockers": [],
+      "role": "Build-only React type declarations.",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "adopt-v1",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "n/a (no weights)"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "ui-runtime",
+      "code_license": "MIT",
+      "gated": null,
+      "id": "types-react-dom",
+      "name": "types-react-dom",
+      "notes": "T01 source-license verification 2026-10-29. Version: 19.3.0. Source SHA-256: c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383. See docs/research/licenses/stack-sources-2026-10-29.json.",
+      "obligations": [
+        "attribution"
+      ],
+      "output_terms": "No model output terms; retain applicable code license and notices.",
+      "primary_sources": [
+        "https://registry.npmjs.org/@types/react-dom/-/react-dom-19.3.0.tgz"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "No source-license blocker; retain notices and audit resolved distributions before redistribution.",
+      "release_blockers": [],
+      "role": "Build-only React DOM type declarations.",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "adopt-v1",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "n/a (no weights)"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "ui-runtime",
+      "code_license": "Apache-2.0",
+      "gated": null,
+      "id": "typescript",
+      "name": "typescript",
+      "notes": "T01 source-license verification 2026-10-29. Version: 7.0.2. Source SHA-256: a7d00bfd54525bc694b6e32f64c7ebcf5e6b7ae3657be5cc12767bce74654a47. See docs/research/licenses/stack-sources-2026-10-29.json.",
+      "obligations": [
+        "apache_notice",
+        "attribution"
+      ],
+      "output_terms": "No model output terms; retain applicable code license and notices.",
+      "primary_sources": [
+        "https://raw.githubusercontent.com/microsoft/TypeScript/v7.0.2/LICENSE.txt"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "No source-license blocker; retain notices and audit resolved distributions before redistribution.",
+      "release_blockers": [],
+      "role": "Web compiler and type checker.",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "adopt-v1",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "n/a (no weights)"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "ui-runtime",
+      "code_license": "MIT (option of MIT OR Apache-2.0)",
       "gated": null,
       "id": "uv",
-      "name": "uv (Python environments and locks)",
-      "notes": "RECONCILIATION.md §8.",
-      "obligations": [],
-      "output_terms": "n/a",
-      "primary_sources": [],
-      "process_boundary_required": false,
-      "redistribution_blocker": "Unverified license.",
-      "release_blockers": [
-        "unverified"
+      "name": "uv",
+      "notes": "T01 source-license verification 2026-10-29. Version: 0.11.8. Source SHA-256: 860e3d7a86b84e6a7012c7a635fc64df475cebc6cce34dfeb73a5982ec58176c. See docs/research/licenses/stack-sources-2026-10-29.json.",
+      "obligations": [
+        "attribution"
       ],
-      "role": "Per-engine environments keyed by lock hash.",
+      "output_terms": "No model output terms; retain applicable code license and notices.",
+      "primary_sources": [
+        "https://raw.githubusercontent.com/astral-sh/uv/0.11.8/LICENSE-MIT"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "No source-license blocker; retain notices and audit resolved distributions before redistribution.",
+      "release_blockers": [],
+      "role": "Python package and environment tooling; MIT option selected.",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "adopt-v1",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "n/a (no weights)"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "ui-runtime",
+      "code_license": "MIT (option of MIT OR Apache-2.0)",
+      "gated": null,
+      "id": "uv-build",
+      "name": "uv-build",
+      "notes": "T01 source-license verification 2026-10-29. Version: 0.11.8. Source SHA-256: 860e3d7a86b84e6a7012c7a635fc64df475cebc6cce34dfeb73a5982ec58176c. See docs/research/licenses/stack-sources-2026-10-29.json.",
+      "obligations": [
+        "attribution"
+      ],
+      "output_terms": "No model output terms; retain applicable code license and notices.",
+      "primary_sources": [
+        "https://raw.githubusercontent.com/astral-sh/uv/0.11.8/LICENSE-MIT"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "No source-license blocker; retain notices and audit resolved distributions before redistribution.",
+      "release_blockers": [],
+      "role": "Python package build backend; MIT option selected.",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "adopt-v1",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "n/a (no weights)"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "ui-runtime",
+      "code_license": "BSD-3-Clause",
+      "gated": null,
+      "id": "uvicorn",
+      "name": "uvicorn",
+      "notes": "T01 source-license verification 2026-10-29. Version: 0.54.0. Source SHA-256: efe1acf3e62fb99c288b0ec73e5a773b7268ef4320fe757ea994214e4b63c371. See docs/research/licenses/stack-sources-2026-10-29.json.",
+      "obligations": [
+        "attribution"
+      ],
+      "output_terms": "No model output terms; retain applicable code license and notices.",
+      "primary_sources": [
+        "https://raw.githubusercontent.com/Kludex/uvicorn/0.54.0/LICENSE.md"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "No source-license blocker; retain notices and audit resolved distributions before redistribution.",
+      "release_blockers": [],
+      "role": "Planned ASGI server.",
       "test_only": false,
       "v1_path": true,
       "verdict": "evaluate",
-      "verdict_condition": "License verification ticket must close before adoption (P0-9).",
-      "verification_status": "unverified",
-      "weights_license": "n/a"
+      "verdict_condition": "Source license checked for the named version; future adoption must pin compatible dependencies and audit the exact distribution and transitive licenses.",
+      "verification_status": "confirmed",
+      "weights_license": "n/a (no weights)"
     },
     {
       "allowed_lanes": [],
@@ -3240,29 +3833,63 @@
     },
     {
       "allowed_lanes": [
+        "individual",
+        "llc",
         "research"
       ],
       "category": "ui-runtime",
-      "code_license": "UNVERIFIED (assumed permissive; not checked against a primary source)",
+      "code_license": "MIT",
       "gated": null,
       "id": "vite",
-      "name": "Vite",
-      "notes": "RECONCILIATION.md §8.",
-      "obligations": [],
-      "output_terms": "n/a",
-      "primary_sources": [],
-      "process_boundary_required": false,
-      "redistribution_blocker": "Unverified license.",
-      "release_blockers": [
-        "unverified"
+      "name": "vite",
+      "notes": "T01 source-license verification 2026-10-29. Version: 8.3.5. Source SHA-256: 692057af3d664cbb79ac38293eb50aa3c4987f8182e2a440136e59e08f1b4a54. See docs/research/licenses/stack-sources-2026-10-29.json.",
+      "obligations": [
+        "attribution"
       ],
-      "role": "The web app's build tool.",
+      "output_terms": "No model output terms; retain applicable code license and notices.",
+      "primary_sources": [
+        "https://raw.githubusercontent.com/vitejs/vite/v8.3.5/LICENSE"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "No source-license blocker; retain notices and audit resolved distributions before redistribution.",
+      "release_blockers": [],
+      "role": "Web build tool; not a runtime service.",
       "test_only": false,
       "v1_path": true,
-      "verdict": "evaluate",
-      "verdict_condition": "License verification ticket must close before adoption (P0-9).",
-      "verification_status": "unverified",
-      "weights_license": "n/a"
+      "verdict": "adopt-v1",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "n/a (no weights)"
+    },
+    {
+      "allowed_lanes": [
+        "individual",
+        "llc",
+        "research"
+      ],
+      "category": "ui-runtime",
+      "code_license": "MIT",
+      "gated": null,
+      "id": "vitest",
+      "name": "vitest",
+      "notes": "T01 source-license verification 2026-10-29. Version: 5.0.5. Source SHA-256: 04575fc5bfae19a9b63100f8691f901a2e15a399011ac02db435a9ef27295551. See docs/research/licenses/stack-sources-2026-10-29.json.",
+      "obligations": [
+        "attribution"
+      ],
+      "output_terms": "No model output terms; retain applicable code license and notices.",
+      "primary_sources": [
+        "https://raw.githubusercontent.com/vitest-dev/vitest/v5.0.5/LICENSE"
+      ],
+      "process_boundary_required": false,
+      "redistribution_blocker": "No source-license blocker; retain notices and audit resolved distributions before redistribution.",
+      "release_blockers": [],
+      "role": "Web unit test runner.",
+      "test_only": false,
+      "v1_path": true,
+      "verdict": "adopt-v1",
+      "verdict_condition": null,
+      "verification_status": "confirmed",
+      "weights_license": "n/a (no weights)"
     },
     {
       "allowed_lanes": [
@@ -3735,7 +4362,7 @@
     },
     {
       "path": "scripts/registry/register_overlay.json",
-      "sha256": "c557bf8abee79fc1e9bd284dce7a2ca342e044d9781fb9c069623036aa718d2e"
+      "sha256": "6d7c2fb9f0c8f5d4c97e55973635e33df58bed24f34c16b30455a9c9f36c6b73"
     }
   ],
   "kind": "component-register",
