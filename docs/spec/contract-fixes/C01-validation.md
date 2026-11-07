@@ -13,3 +13,9 @@ Scope: unsupported benchmark-conclusion containment and typed preregistration lo
 Full benchmark functionality remains unavailable. C02 #4 must implement the result binding described in the adjacent contract-fix document before promotion or concluded failure is accepted. No merge or completed capability is claimed here.
 
 Detailed logs and reviewed-file hashes are retained on the studio volume under `evidence/C01/`, including `independent-review.md`, `reviewer-probes.log`, `deliverable-tree-gate.log` and `root-gates.txt`. They are local execution evidence, not store evidence records.
+
+## November 6 integration update
+
+The foundation is merged at `e421699890e80c5fffcc3f36659b3ba4e1587db2`; this branch now includes that actual integration base. The ignored-store-fixture blocker described above is historical. Fresh clean-tree, full software gate, hosted CI and separate independent review are required on this updated branch before merge. P01 email privacy was rechecked enabled; the repository stays private under the revised CI-and-review merge policy.
+
+Fresh full local gate on the updated branch passes (November 6): clean tracked contracts, registry, ticket graph, 37 Python tests, two Vitest tests, two Node tests, production build, policy and actual runtime-license inventory. Log: `/Volumes/STUDIO/evidence/C01/nov06-full-gate.log`. Hosted CI and independent review remain the pre-merge checks. Foundation integration run `42341504038` passed all three hosted operating systems; it is a push run, not scheduled-nightly evidence.
