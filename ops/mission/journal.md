@@ -63,3 +63,16 @@
 - C01 post-merge integration run42341780817 passed Linux, macOS and Windows.
 - T02a tracked separately from full T02; no parent acceptance closure. Existing 310 fixtures remain unchanged.
 - Tests exposed and corrected a legacy-vector validation regression during discovery refactoring; unsupported benchmark conclusions remain inert.
+
+## 2026-11-07T05:21:23.558921+00:00 — T02a integrated and continuation checkpoint
+
+- PR #8 squash-merged at cc846da after current-head PR CI and independent Standards/Spec review. Issue #7 closed; full T02 and C02 remain open.
+- Persisted exact-head review and merge records for #6, #5 and #8. Kept account privacy evidence limited to booleans/account identity.
+- Full local suite: 45 Python tests, nine subtests, two Vitest and two Node tests; 310 pre-existing fixture bytes unchanged. Post-merge integration results are recorded separately.
+- No models, audio generation, playback, owner verdicts or paid runs occurred. Main remains owner-release-only.
+
+## 2026-11-07T05:23:09.691534+00:00 — checkpoint verification
+
+- PR #8 integration push42342305602 passed all three hosted operating systems. All three implementation merges now have post-merge three-OS proof.
+- Independent Spec review found the structured C02 dependency still pointed to full T02. Corrected it to an explicit pending T02b schema slice; next-step text and machine-readable dependencies now agree.
+- T01-code availability is separate from T01 nightly acceptance, so T02/T03 can proceed under the owner's amended merge rule without falsely closing T01. Original specification DAG remains unchanged.
