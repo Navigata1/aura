@@ -51,3 +51,9 @@
 - PR #6 squash-merged to integration e421699 after current-head three-OS CI and separate Standards/Spec reviews. Private visibility, main and noreply author verified.
 - Owner signed in; Chrome settings show both privacy checkboxes enabled for Navigata1. P01 cleared without an agent setting change.
 - PR #5 now includes actual integration; fresh containment review and checks follow. Scheduled nightly remains pending, not waived or counted as a PR run.
+
+## 2026-11-07T05:14:07.830867+00:00 — C01 integrated; T02a implementation started
+
+- PR #5 merged at ab53ab7 after green current-head CI and two independent reviews; issue #3 closed. Unsupported conclusions remain refused/inert, full benchmark binding remains issue #4.
+- Issue #7 isolates T02 golden-vector discovery. Existing contract bytes and containment must be preserved.
+- Documented T02/C02 sequencing: binding-schema subset before C02, concluded route-standing after it, avoiding circular acceptance. No scope or owner gate removed.
