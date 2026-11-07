@@ -1,0 +1,31 @@
+{
+  "description": "An inconclusive hum-benchmark records no conclusion and changes no status.",
+  "expect_rules": [],
+  "id": "SC-EVIDENCE-INCONCLUSIVE-HUM-BENCHMARK-OK",
+  "kind": "fixture.scenario",
+  "overlay": [
+    {
+      "attachments": [],
+      "check": "hum-benchmark",
+      "checks": [],
+      "gate_id": "benchmark.analysis-transcribe-pyin-hmm",
+      "host_class": "mlx/m5pro",
+      "id": "ev_pending_hum-benchmark",
+      "kind": "evidence",
+      "measured": [],
+      "prereg_sha256": "324cb399c8c57f9e9e690dc9efc3eaceffa03643fd7a1115b4acf6de6d1f58e7",
+      "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa",
+      "recorded_at": "2026-10-09T12:00:00Z",
+      "result": "inconclusive",
+      "schemaVersion": "1.0.0",
+      "subject": {
+        "subject_id": "analysis-transcribe-pyin-hmm",
+        "subject_type": "profile"
+      },
+      "synthetic": false,
+      "verdict_ids": []
+    }
+  ],
+  "remove": [],
+  "schemaVersion": "1.0.0"
+}

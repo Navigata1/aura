@@ -241,17 +241,22 @@ def _results_cite(w: World) -> list[Finding]:
     return out
 
 
-@rule("evidence.gates", "Evidence aims only at its subject's gates; synthetic evidence never meets a benchmark gate or a smoke gate that forbids it; preregistration hashes and verdicts resolve; a passing smoke record lists every check its gate declares, passing, and a listening check cites an owner-ui verdict on this revision's own candidates.")
+@rule("evidence.gates", "Evidence aims only at its subject's gates; synthetic evidence never meets a benchmark gate or a smoke gate that forbids it; preregistration hashes resolve only to prereg records and verdicts resolve; concluded benchmark/hum-benchmark results are unsupported until result binding exists; a passing smoke record lists every check its gate declares, passing, and a listening check cites an owner-ui verdict on this revision's own candidates.")
 def _evidence_gates(w: World) -> list[Finding]:
     out = []
+    prereg_hashes = {p["prereg_sha256"] for p in w.by_kind.get("prereg", [])}
     for e in w.by_kind.get("evidence", []):
         sid = e["subject"]["subject_id"]
         subject = w.profiles.get(sid) if e["subject"]["subject_type"] == "profile" else w.capabilities.get(sid)
-        if e["prereg_sha256"] is not None and e["prereg_sha256"] not in w.record_hashes:
+        if e["prereg_sha256"] is not None and e["prereg_sha256"] not in prereg_hashes:
             out.append((at(e), "unknown preregistration hash"))
         for vid in e["verdict_ids"]:
             if vid not in w.ids["verdict"]:
                 out.append((at(e), f"unknown verdict {vid}"))
+        # A hash and verdict ids cannot bind the set, quotas, thresholds, pins and host to a conclusion.
+        # Check before gate routing so a missing/wrong gate cannot bypass this admission refusal.
+        if e["check"] in ("benchmark", "hum-benchmark") and e["result"] != "inconclusive":
+            out.append((at(e), "benchmark conclusion unsupported: a bound concluded-result contract is required"))
         if e["gate_id"] is None:
             continue
         if subject is None:
@@ -679,10 +684,9 @@ def _candidate_origin(w: World) -> list[Finding]:
     return out
 
 
-@rule("request.plan_consistent", "A plan has candidate_count entries whose profiles do their route's task; candidates, jobs and labels match the plan; 'unbenchmarked routes' stays until a benchmark record exists.")
+@rule("request.plan_consistent", "A plan has candidate_count entries whose profiles do their route's task; candidates, jobs and labels match the plan; 'unbenchmarked routes' stays while benchmark conclusions are unsupported.")
 def _plan(w: World) -> list[Finding]:
     out = []
-    benchmarked = {e["subject"]["subject_id"] for e in w.by_kind.get("evidence", []) if e["check"] == "benchmark" and e["result"] == "pass"}
     for r in w.by_kind.get("generation-request", []):
         song = w.songs.get((r["song"]["song_id"], r["song"]["rev"]))
         if song is not None and len(r["plan"]) != song["candidate_count"]:
@@ -705,8 +709,8 @@ def _plan(w: World) -> list[Finding]:
             out.append((at(r), "job_ids differ from the candidates' jobs"))
         if any(c["synthetic_test"] for c in cands) != ("Synthetic test output" in r["labels"]):
             out.append((at(r), "'Synthetic test output' label does not match the candidates"))
-        if not all(p["profile_id"] in benchmarked for p in r["plan"]) and "unbenchmarked routes" not in r["labels"]:
-            out.append((at(r), "plan without benchmark records must be labelled 'unbenchmarked routes'"))
+        if "unbenchmarked routes" not in r["labels"]:
+            out.append((at(r), "plan without supported benchmark conclusions must be labelled 'unbenchmarked routes'"))
     return out
 
 

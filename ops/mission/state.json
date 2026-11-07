@@ -4,13 +4,13 @@
     "name": "Studio implementation",
     "tagline": "Prove the contracts, establish the build volume, then deliver the first complete song flow.",
     "repo": "Navigata1/aura",
-    "repoPath": "/Volumes/STUDIO/worktrees/01-foundation",
+    "repoPath": "/Volumes/STUDIO/worktrees/C01-benchmark-contracts",
     "defaultBranch": "integration",
     "planDoc": "docs/spec/aura-v1-spec.md",
     "northStar": "Owned melody to an editable song, judged by the owner in blind audition.",
     "status": "active",
     "started": "2026-10-29",
-    "updated": "2026-11-06T20:00:00-06:00",
+    "updated": "2026-11-07T05:10:29.336287+00:00",
     "sessionCount": 3
   },
   "policies": {
@@ -50,15 +50,15 @@
         {
           "id": "P01",
           "title": "Owner storage choice, dedicated STUDIO setup and privacy settings",
-          "status": "blocked",
+          "status": "done",
           "dependsOn": [],
           "pr": null,
-          "notes": "Storage setup passes; November 6 email-settings recheck redirected to sign-in. Current settings unverified, owner sign-in requested. Account task remains open separately from revised code-merge eligibility."
+          "notes": "Approved interim STUDIO setup complete. November 6 read-only Chrome verification confirms both email privacy settings enabled for Navigata1; no account change by agent."
         },
         {
           "id": "C01",
           "title": "Repair typed preregistration and benchmark listening validation",
-          "status": "blocked",
+          "status": "in_progress",
           "dependsOn": [
             "T01"
           ],
@@ -67,7 +67,7 @@
             "url": "https://github.com/Navigata1/aura/pull/5",
             "mergedAt": null
           },
-          "notes": "Draft PR #5 at d63f824. Independent containment review passes 288 status/16 admission combinations. Known inherited ignored store fixture blocks clean-tree gate until T01. No merge or benchmark feature completion."
+          "notes": "PR #5 updated by merging actual integration e421699. Awaiting fresh clean-tree gate, current-head CI and independent review. Full result binding remains C02."
         },
         {
           "id": "C02",
@@ -94,9 +94,9 @@
           "title": "Foundation software tests, builds and policy gates",
           "command": "uv run --frozen python scripts/ci/run.py --base 79cd9aff1ee239bd0422e684b4e8d58b73bb7c0f",
           "status": "passed",
-          "evidence": "ops/mission/evidence/T01-three-os-ci.json",
-          "lastRun": "2026-10-29T21:27:48.208084+00:00",
-          "notes": "Hosted Linux/macOS/Windows at d4e0c00. Synthetic/software checks only; no real audio playback or quality evidence. Consult live PR checks after later commits."
+          "evidence": "https://github.com/Navigata1/aura/actions/runs/42341326235",
+          "lastRun": "2026-11-07T05:10:29.336287+00:00",
+          "notes": "All three hosted PR jobs passed at85160f7 before merge; integration push recorded separately. Software-only evidence."
         }
       ],
       "tasks": [
@@ -110,9 +110,9 @@
           "pr": {
             "number": 6,
             "url": "https://github.com/Navigata1/aura/pull/6",
-            "mergedAt": null
+            "mergedAt": "2026-11-07T05:09:18Z"
           },
-          "notes": "PR #6 awaiting fresh CI and independent review of the November 6 owner-policy amendment. Integration merge authorized under that policy; account privacy and scheduled-nightly acceptance remain distinct pending evidence."
+          "notes": "Code merged via PR #6 at e421699890e80c5fffcc3f36659b3ba4e1587db2 after independent Standards/Spec review and hosted three-OS PR run42341326235. First actual integration run42341504038 passed all three OS. P01 cleared. Full acceptance retains scheduled-nightly evidence pending owner main release."
         },
         {
           "id": "T02",
@@ -1317,17 +1317,24 @@
       "note": "GitHub schedules execute from default main; ticket workflows target integration and main remains owner-release-only. Configured schedules and manual equivalents are not an observed scheduled run. Preserve pending evidence until the first owner release; do not change default branch to bypass."
     }
   ],
-  "prLog": [],
+  "prLog": [
+    {
+      "number": 6,
+      "title": "Studio foundation and private integration merge policy",
+      "url": "https://github.com/Navigata1/aura/pull/6",
+      "phase": "BUILD",
+      "mergedAt": "2026-11-07T05:09:18Z"
+    }
+  ],
   "resume": {
     "activePhase": "P0",
     "nextActions": [
-      "Recheck email settings after owner sign-in; preserve P01 as open until both settings are verified.",
-      "Review and validate updated PR #6 exact head, squash-merge into integration with noreply author, then verify integration CI.",
-      "Update PR #5 against merged integration, rerun clean checks and independent review, then merge only if green.",
-      "Advance T02/T03 from integration; keep C02 result binding pending until its dependencies land."
+      "Validate and independently review PR #5 against actual integration e421699, then merge if green.",
+      "First actual integration run42341504038 passed all three jobs. Keep scheduled-nightly acceptance pending owner release to main.",
+      "Advance T02 in bounded contract slices; start convention-discovered golden cases before SongForm/ABC/MIDI additions.",
+      "C02 must bind concluded results before benchmark promotion; no model or listening acceptance inferred."
     ],
     "blockers": [
-      "P01 email settings currently unverified: GitHub settings redirects to sign-in. Owner sign-in requested; no account change made.",
       "T18/T19 storage qualification blocks irreplaceable songs, references, owner acts and evidence records.",
       "Scheduled-nightly acceptance awaits the owner main release; PR and integration runs do not count as a nightly run."
     ],

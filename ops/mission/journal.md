@@ -45,3 +45,9 @@
 - Owner requires private visibility, green current-head CI and independent review before integration merges. Recorded the amendment; no main release or server-side protection claim.
 - Email-settings recheck reached GitHub sign-in. Requested owner login; P01 remains open.
 - Tier 2 execution continues with separate implementation and review agents.
+
+## 2026-11-07T05:10:29.336287+00:00 — foundation integrated and account prerequisite verified
+
+- PR #6 squash-merged to integration e421699 after current-head three-OS CI and separate Standards/Spec reviews. Private visibility, main and noreply author verified.
+- Owner signed in; Chrome settings show both privacy checkboxes enabled for Navigata1. P01 cleared without an agent setting change.
+- PR #5 now includes actual integration; fresh containment review and checks follow. Scheduled nightly remains pending, not waived or counted as a PR run.
