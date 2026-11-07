@@ -4,13 +4,13 @@
     "name": "Studio implementation",
     "tagline": "Prove the contracts, establish the build volume, then deliver the first complete song flow.",
     "repo": "Navigata1/aura",
-    "repoPath": "/Volumes/STUDIO/worktrees/C01-benchmark-contracts",
+    "repoPath": "/Volumes/STUDIO/worktrees/02-vector-discovery",
     "defaultBranch": "integration",
     "planDoc": "docs/spec/aura-v1-spec.md",
     "northStar": "Owned melody to an editable song, judged by the owner in blind audition.",
     "status": "active",
     "started": "2026-10-29",
-    "updated": "2026-11-07T05:10:29.336287+00:00",
+    "updated": "2026-11-07T05:17:26.857675+00:00",
     "sessionCount": 3
   },
   "policies": {
@@ -58,16 +58,16 @@
         {
           "id": "C01",
           "title": "Repair typed preregistration and benchmark listening validation",
-          "status": "in_progress",
+          "status": "done",
           "dependsOn": [
             "T01"
           ],
           "pr": {
             "number": 5,
             "url": "https://github.com/Navigata1/aura/pull/5",
-            "mergedAt": null
+            "mergedAt": "2026-11-07T05:13:04Z"
           },
-          "notes": "PR #5 updated by merging actual integration e421699. Awaiting fresh clean-tree gate, current-head CI and independent review. Full result binding remains C02."
+          "notes": "Merged PR #5 at ab53ab794bfa71a4efc3ab5394df58f485347e59 after independent Standards/Spec reviews and green current-head PR run42341645052. Full result binding remains C02; issue #3 closed. Integration push42341780817 passed Linux/macOS/Windows."
         },
         {
           "id": "C02",
@@ -78,7 +78,7 @@
             "T02"
           ],
           "pr": null,
-          "notes": "Issue #4. Exact set, revision/host, preregistration, quota, threshold and verdict binding required; C01 containment does not complete this functionality."
+          "notes": "Issue #4 remains open. Requires C01 plus the immutable binding-schema/consumer slice of T02, not all T02 acceptance; concluded route-standing in T02 follows C02 to avoid circular sequencing. Exact set, revision/host, preregistration, quota, thresholds and verdict binding required."
         }
       ]
     },
@@ -117,12 +117,12 @@
         {
           "id": "T02",
           "title": "Contract completion: SongForm, ABC and MIDI vectors, every missing v1 field, pre-seeded declarations, price snapshots and the legacy freeze plumbing",
-          "status": "pending",
+          "status": "in_progress",
           "dependsOn": [
             "T01"
           ],
           "pr": null,
-          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+          "notes": "Implementing bounded T02a issue #7: convention-discovered golden-vector cases and scoped consumers. T02 parent remains open for all other acceptance. See docs/spec/T02-continuation-sequencing.md."
         },
         {
           "id": "T03",
@@ -1268,6 +1268,16 @@
           ],
           "pr": null,
           "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T02a",
+          "title": "Convention-discovered golden-vector cases and scoped consumer checks",
+          "status": "in_progress",
+          "dependsOn": [
+            "C01"
+          ],
+          "pr": null,
+          "notes": "Issue #7: bounded slice of T02. Public CLI red-green regressions; all 310 pre-existing fixtures preserved. Full T02 including musical transforms and full field inventory remains open."
         }
       ]
     }
@@ -1302,11 +1312,6 @@
       "note": "Remounted November 6 from the approved Extreme SSD sparse bundle; preflight passed. Every heavy operation still requires a fresh preflight."
     },
     {
-      "title": "Benchmark evidence is under-validated",
-      "severity": "high",
-      "note": "Passing fixture suite misses typed preregistration and listening-free promotion cases."
-    },
-    {
       "title": "Integration branch protection unavailable",
       "severity": "high",
       "note": "November 6 owner amendment requires green CI plus independent exact-head/current-base review procedurally. Repository remains private; server-side enforcement is unavailable."
@@ -1315,6 +1320,11 @@
       "title": "Nightly evidence follows the first owner release",
       "severity": "medium",
       "note": "GitHub schedules execute from default main; ticket workflows target integration and main remains owner-release-only. Configured schedules and manual equivalents are not an observed scheduled run. Preserve pending evidence until the first owner release; do not change default branch to bypass."
+    },
+    {
+      "title": "Benchmark conclusions remain unavailable",
+      "severity": "medium",
+      "note": "C01 blocks unsupported conclusions. C02 binding and later route-standing work are required before any benchmark promotion or demotion."
     }
   ],
   "prLog": [
@@ -1324,15 +1334,22 @@
       "url": "https://github.com/Navigata1/aura/pull/6",
       "phase": "BUILD",
       "mergedAt": "2026-11-07T05:09:18Z"
+    },
+    {
+      "number": 5,
+      "title": "Typed preregistration and benchmark conclusion containment",
+      "url": "https://github.com/Navigata1/aura/pull/5",
+      "phase": "P0",
+      "mergedAt": "2026-11-07T05:13:04Z"
     }
   ],
   "resume": {
-    "activePhase": "P0",
+    "activePhase": "BUILD",
     "nextActions": [
-      "Validate and independently review PR #5 against actual integration e421699, then merge if green.",
-      "First actual integration run42341504038 passed all three jobs. Keep scheduled-nightly acceptance pending owner release to main.",
-      "Advance T02 in bounded contract slices; start convention-discovered golden cases before SongForm/ABC/MIDI additions.",
-      "C02 must bind concluded results before benchmark promotion; no model or listening acceptance inferred."
+      "Complete T02a issue #7 in this external worktree; current-head CI plus independent review required before integration merge.",
+      "Then additive immutable binding schemas/consumers allow C02; only after C02 may route-standing consume concluded results. See T02-continuation-sequencing.md.",
+      "Implement SongForm/ABC/MIDI hand-derived goldens and remaining T02 fields/declarations/transcripts; close the parent only when all acceptance passes.",
+      "C01 integration push42341780817 passed all three hosted operating systems. Scheduled-nightly acceptance still awaits owner main release."
     ],
     "blockers": [
       "T18/T19 storage qualification blocks irreplaceable songs, references, owner acts and evidence records.",

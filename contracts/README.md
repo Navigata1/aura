@@ -117,3 +117,26 @@ the plan-rules order, the remaining job kinds and tasks (isolate, dsp-finish, ds
 per, align, diagnostics, stem-to-midi, a reserved tts), `price-snapshots/`, frozen `legacy/`
 fixtures (they freeze at the first release), the TypeScript twin of the tempo vectors and the Pydantic/TS codegen
 drift check.
+
+
+## Golden-vector discovery (T02a)
+
+Each non-underscore Python module under `reference/studio_ref/vector_cases/` declares one `KIND` (`fixture.<slug>`),
+`build(profiles)` returning its complete JSON vector record, and `evaluate(case, world)` returning `(actual, expected)`.
+Builders contain hand-derived expected values; they never call the implementation under test to construct an oracle.
+The generator discovers modules in sorted filename order and writes `fixtures/vectors/<slug>.json`; it rejects
+missing callables, duplicate/invalid kinds, mismatched producer kinds and empty cases before writing any fixtures.
+The validator discovers schemas by their existing `kind` const/enum and executes the matching evaluator; unknown
+vector kinds fail explicitly. Frozen legacy vectors still execute against current reference functions.
+
+A new family needs its module, schema and an entry in `contracts/consumers.json`, with no shared dispatch-list edit.
+This manifest is deliberately scoped to vector kinds: every discovered family has a nonempty unique list of actual
+`docs/spec/tickets.json` ticket slugs, and no orphan manifest entry is allowed. These slugs name the consuming contract
+or feature ticket; they do not claim that the future feature is implemented. Full field/enum/schema/declaration
+consumer inventory remains T02 work. There is no pending allow-list in this slice: missing consumers fail closed.
+
+`tests/contracts/test_vector_discovery.py` exercises the public generator and validator in disposable tracked-file
+copies: new-family discovery, unchanged existing bytes, corrupt expectations, duplicate kinds, missing evaluator,
+missing/unknown consumer, removed handler, producer-kind mismatch and legacy expectation execution. The production
+schemas and existing fixture bytes are unchanged. SongForm, ABC, MIDI and route-standing implementation remain open;
+C01 benchmark containment remains in force until C02 establishes result binding.

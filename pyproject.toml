@@ -25,4 +25,4 @@ dev = ["pytest==9.2.0", "packaging==26.3"]
 [tool.pytest.ini_options]
 addopts = "--import-mode=importlib"
 pythonpath = ["tests/foundation"]
-testpaths = ["packages", "services", "workers", "tests/foundation"]
+testpaths = ["packages", "services", "workers", "tests/foundation", "tests/contracts"]

@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "scope": "vector-kinds",
+  "consumers": {
+    "fixture.tempo": [
+      "contract-completion",
+      "contracts-codegen"
+    ],
+    "fixture.status": [
+      "contract-completion",
+      "registry"
+    ],
+    "fixture.recommend": [
+      "contract-completion",
+      "compute-sessions"
+    ],
+    "fixture.ledger": [
+      "contract-completion",
+      "paid-run-gate"
+    ],
+    "fixture.audition": [
+      "contract-completion",
+      "audition"
+    ]
+  }
+}

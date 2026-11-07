@@ -39,7 +39,7 @@ sys.path.insert(0, str(CONTRACTS / "reference"))
 
 from jsonschema_subset import SUPPORTED, SchemaError, SchemaSet  # noqa: E402
 
-from studio_ref import audition, ledger, recommend, status, timemodel  # noqa: E402
+from studio_ref import status  # noqa: E402
 from studio_ref.canonical import float_paths, sha256_hex  # noqa: E402
 from studio_ref.rules import RULES, run_all  # noqa: E402
 from studio_ref.world import World, apply_overlay  # noqa: E402
@@ -315,40 +315,37 @@ def check_invalid_records(schemas: SchemaSet, kinds: dict[str, str], docs: dict[
 # ----- 9: golden vectors --------------------------------------------------------------------------------------------
 
 def check_vectors(docs: dict[Path, dict], base: list[dict], rep: Report) -> None:
+    from studio_ref.vector_discovery import discover
+    try:
+        handlers = discover(ROOT)
+    except (ValueError, OSError, ImportError) as exc:
+        rep.fail("vector discovery", str(exc))
+        return
     world = World(base)
-    tiers = world.tiers
+    seen = set()
     for path, doc in sorted(docs.items()):
         kind = doc["kind"]
         if not kind.startswith("fixture.") or kind in ("fixture.scenario", "fixture.invalid-record", "fixture.world-assertions"):
             continue
+        if kind not in handlers:
+            rep.fail(rel(path), f"unknown vector kind: {kind}")
+            continue
+        if "legacy" not in path.relative_to(CONTRACTS).parts:
+            if kind in seen:
+                rep.fail(rel(path), f"duplicate vector kind: {kind}")
+            seen.add(kind)
         for case in doc["cases"]:
             where = f"{rel(path)} [{case['name']}]"
-            if kind == "fixture.tempo":
-                fn = timemodel.ticks_to_frames if case["op"] == "ticks_to_frames" else timemodel.frames_to_ticks
-                got, want = fn(case["input"], case["tempo"], case["sample_rate"]), case["expected"]
-            elif kind == "fixture.status":
-                subject = world.profiles.get(case["profile_id"]) or world.capabilities.get(case["profile_id"])
-                got = status.compute_status(subject, case["evidence"], case["profile_revision"], case["host_class"]) if subject else "unknown profile"
-                want = case["expected"]
-            elif kind == "fixture.recommend":
-                got, want = recommend.recommend(case["snapshots"], tiers), case["expected"]
-            elif kind == "fixture.ledger":
-                mtd = ledger.month_to_date(case["entries"], case["month"], case["before"])
-                from decimal import Decimal
-                got = {"month_to_date_usd": f"{mtd:.2f}",
-                       "allowed": ledger.cap_allows(mtd, Decimal(case["ceiling_usd"]), Decimal(case["cap_usd"])),
-                       "overrun_blocks": ledger.overrun_blocks(case["entries"])}
-                want = case["expected"]
-            elif kind == "fixture.audition" and case["op"] == "gains":
-                got, want = audition.gains(case["loudness"]), case["expected_gains"]
-            else:
-                if sha256_hex(case["preimage"].encode("utf-8")) != case["expected_commitment"]:
-                    rep.fail(where, "the hand-written preimage does not hash to the expected commitment")
-                got, want = audition.commitment(case["mapping"], case["nonce"]), case["expected_commitment"]
-            if got != want:
-                rep.fail(where, f"reference gives {got!r}, fixture expects {want!r}")
-            else:
-                rep.ok(f"{kind} vectors")
+            try:
+                got, want = handlers[kind].evaluate(case, world)
+                if got != want:
+                    rep.fail(where, f"reference gives {got!r}, fixture expects {want!r}")
+                else:
+                    rep.ok(f"{kind} vectors")
+            except (ValueError, KeyError, TypeError) as exc:
+                rep.fail(where, str(exc))
+    for kind in sorted(set(handlers) - seen):
+        rep.fail("vectors", f"missing generated vector kind: {kind}")
 
 
 # ----- 10: computed status of the shipped registry ------------------------------------------------------------------
@@ -456,7 +453,10 @@ def main(argv: list[str]) -> int:
         print("\n".join(rep.failures))
         return 1
     docs = validate_files(schemas, kinds, rep)
-    check_regeneration(rep)
+    try:
+        check_regeneration(rep)
+    except (ValueError, OSError, ImportError) as exc:
+        rep.fail("fixture regeneration", str(exc))
     base = check_world(docs, rep)
     check_scenarios(docs, base, rep)
     check_invalid_records(schemas, kinds, docs, rep)
