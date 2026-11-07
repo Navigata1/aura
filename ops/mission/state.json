@@ -4,7 +4,7 @@
     "name": "Studio implementation",
     "tagline": "Prove the contracts, establish the build volume, then deliver the first complete song flow.",
     "repo": "Navigata1/aura",
-    "repoPath": "/Volumes/STUDIO/worktrees/R01-progress-checkpoint",
+    "repoPath": "/Volumes/STUDIO/worktrees/integration-review",
     "defaultBranch": "integration",
     "planDoc": "docs/spec/aura-v1-spec.md",
     "northStar": "Owned melody to an editable song, judged by the owner in blind audition.",
@@ -1396,7 +1396,8 @@
       "No model inference or owner listening performed.",
       "Tier 2: independent implementer and verifier agents; canonical checkout read-only.",
       "This checkpoint records implementation merges through PR #8. Its documentation-only publication is identified by git history, not a recursively embedded self-merge hash.",
-      "Mission dependencies distinguish T01-code availability from T01 full acceptance and explicitly route C02 through T02b. The original 105-ticket specification remains unchanged."
+      "Mission dependencies distinguish T01-code availability from T01 full acceptance and explicitly route C02 through T02b. The original 105-ticket specification remains unchanged.",
+      "The integration-review worktree is a detached read-only snapshot. Create the next ticket worktree from the external bare clone; do not commit in the snapshot."
     ]
   }
 }
