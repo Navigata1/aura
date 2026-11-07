@@ -10,7 +10,7 @@
     "northStar": "Owned melody to an editable song, judged by the owner in blind audition.",
     "status": "active",
     "started": "2026-10-29",
-    "updated": "2026-11-07T05:14:07.830867+00:00",
+    "updated": "2026-11-07T05:17:26.857675+00:00",
     "sessionCount": 3
   },
   "policies": {
@@ -67,7 +67,7 @@
             "url": "https://github.com/Navigata1/aura/pull/5",
             "mergedAt": "2026-11-07T05:13:04Z"
           },
-          "notes": "Merged PR #5 at ab53ab794bfa71a4efc3ab5394df58f485347e59 after independent Standards/Spec reviews and green current-head PR run42341645052. Full result binding remains C02; issue #3 closed."
+          "notes": "Merged PR #5 at ab53ab794bfa71a4efc3ab5394df58f485347e59 after independent Standards/Spec reviews and green current-head PR run42341645052. Full result binding remains C02; issue #3 closed. Integration push42341780817 passed Linux/macOS/Windows."
         },
         {
           "id": "C02",
@@ -1268,6 +1268,16 @@
           ],
           "pr": null,
           "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T02a",
+          "title": "Convention-discovered golden-vector cases and scoped consumer checks",
+          "status": "in_progress",
+          "dependsOn": [
+            "C01"
+          ],
+          "pr": null,
+          "notes": "Issue #7: bounded slice of T02. Public CLI red-green regressions; all 310 pre-existing fixtures preserved. Full T02 including musical transforms and full field inventory remains open."
         }
       ]
     }
@@ -1339,7 +1349,7 @@
       "Complete T02a issue #7 in this external worktree; current-head CI plus independent review required before integration merge.",
       "Then additive immutable binding schemas/consumers allow C02; only after C02 may route-standing consume concluded results. See T02-continuation-sequencing.md.",
       "Implement SongForm/ABC/MIDI hand-derived goldens and remaining T02 fields/declarations/transcripts; close the parent only when all acceptance passes.",
-      "Observe integration push42341780817; scheduled-nightly still awaits owner main release."
+      "C01 integration push42341780817 passed all three hosted operating systems. Scheduled-nightly acceptance still awaits owner main release."
     ],
     "blockers": [
       "T18/T19 storage qualification blocks irreplaceable songs, references, owner acts and evidence records.",

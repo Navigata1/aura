@@ -57,3 +57,9 @@
 - PR #5 merged at ab53ab7 after green current-head CI and two independent reviews; issue #3 closed. Unsupported conclusions remain refused/inert, full benchmark binding remains issue #4.
 - Issue #7 isolates T02 golden-vector discovery. Existing contract bytes and containment must be preserved.
 - Documented T02/C02 sequencing: binding-schema subset before C02, concluded route-standing after it, avoiding circular acceptance. No scope or owner gate removed.
+
+## 2026-11-07T05:17:26.857675+00:00 — first contract slice under verification
+
+- C01 post-merge integration run42341780817 passed Linux, macOS and Windows.
+- T02a tracked separately from full T02; no parent acceptance closure. Existing 310 fixtures remain unchanged.
+- Tests exposed and corrected a legacy-vector validation regression during discovery refactoring; unsupported benchmark conclusions remain inert.
