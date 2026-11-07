@@ -5,9 +5,10 @@ Issue #11 repairs a software validation failure, not a product/audio capability.
 `scripts/ci/check.py` decoded UTF-8 diff text using cp1252 and encountered undefined byte `0x9d`. Linux/macOS passed.
 The original run and its failure remain recorded in the mission evidence; it was not retried to replace the result.
 
-The policy scanner now explicitly decodes Git diff, log and zero-delimited filenames as UTF-8 with `surrogateescape`,
-preserving otherwise undecodable bytes instead of dropping them. Git log output is explicitly configured UTF-8.
-The clean-contract-copy inventory uses the same filename decoding. The product JSON reader declares UTF-8, and
+The policy scanner explicitly decodes Git diff and log content as UTF-8 with `surrogateescape`, preserving otherwise
+undecodable bytes instead of dropping them. Git log output is explicitly configured UTF-8. Zero-delimited filenames
+use `os.fsdecode` on Git's raw filename bytes in both the scanner and clean-contract-copy inventory. This matches
+Python's filesystem representation, including ASCII filesystem codecs, without silently skipping Unicode files. The product JSON reader declares UTF-8, and
 policy diagnostics escape non-ASCII characters so an ASCII console can report a violation without a second crash.
 The other subprocess reads in these two CI entry points were inspected; none remain locale-dependent. The developer
 worktree helper's bare-repository boolean and run.py's Node version read only ASCII protocol values and are unchanged.
@@ -18,7 +19,10 @@ on Windows it exercises the native legacy code page when present. It also forces
 legacy-default coverage on Linux, not a claim that a Mac emulates Windows cp1252. The original hosted failure is the
 cp1252 evidence. The unchanged baseline checker fails under pinned Python 3.12 separately for UTF-8 diff content,
 Unicode filenames and Unicode commit messages. The repaired checker passes all three and still rejects planted
-credential-shaped content, including an ASCII token beside invalid UTF-8 bytes, without printing the token.
+credential-shaped content, including an ASCII token beside invalid UTF-8 bytes, without printing the token. A valid
+UTF-8 planted file must produce both its own tracked-file finding and a diff finding: the diff cannot mask a silently
+skipped Unicode path. That stronger assertion was added before merge after inspection found the potential mismatch
+between explicit UTF-8 filenames and an ASCII filesystem codec.
 
 Local full gate: 46 Python tests, 12 subtests, two Vitest tests, two Node tests, clean tracked-contract checks, build,
 policy and license inventory pass. Existing contract fixture bytes are unchanged. Red/green logs live under

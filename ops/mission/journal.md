@@ -80,7 +80,7 @@
 ## 2026-11-07T05:33:04.363541+00:00 — C03 Windows encoding repair prepared
 
 - Original integration run42342742232 at d008639 failed Windows job128313805325 decoding a UTF-8 Git diff with cp1252; Linux/macOS passed. The failed run is retained, not retried away.
-- Explicit UTF-8 decoding covers policy diff/log/tracked filenames and the clean-copy file inventory. Diagnostics escape non-ASCII paths on legacy consoles; secret detection still rejects planted credentials, including beside invalid text bytes.
+- Explicit UTF-8 decoding covers policy diff/log content; os.fsdecode preserves OS filename bytes in policy and clean-copy inventories. Diagnostics escape non-ASCII paths on legacy consoles; secret detection still rejects planted credentials, including beside invalid text bytes.
 - Real public CLI regressions force Python legacy defaults using documented runtime environment flags. The unchanged baseline fails separately for diff content, filenames and commit messages under pinned Python3.12; the repair passes locally. This is not yet fresh hosted Windows proof.
 - PR checks now run all three hosted operating systems for every ticket; no assertion or retry policy changed. This is CI matrix work, not paid model inference.
 - No models, audio, owner acts, paid runs, main release or C03 merge. Full T02/C02/nightly acceptance remain open.

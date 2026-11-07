@@ -1,6 +1,7 @@
 """Repository policy checks. Diagnostics name files and rules, never secret values."""
 import argparse
 import json
+import os
 from pathlib import Path
 import re
 import subprocess
@@ -93,7 +94,8 @@ def main():
     parser.add_argument('--bundle',action='store_true',help='Require and scan the actual built web bundle')
     args=parser.parse_args();root=args.root.resolve()
     product=json.loads((root/'contracts/product.json').read_text(encoding='utf-8'))
-    files=set(subprocess.check_output(['git','-C',str(root),'ls-files','-z'],encoding='utf-8',errors='surrogateescape').split('\0'))-{''}
+    # Filenames are OS bytes, unlike UTF-8 diff/log content. Preserve paths under ASCII filesystem codecs too.
+    files={os.fsdecode(name) for name in subprocess.check_output(['git','-C',str(root),'ls-files','-z']).split(b'\0') if name}
     errors=[]
     for relative in sorted(files):
         errors.extend((relative,error) for error in scan_file(root,relative,product['productName'],product['publicContactText']))

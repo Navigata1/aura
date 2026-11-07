@@ -47,6 +47,8 @@ class GitTextEncodingTest(unittest.TestCase):
             self.assertNotEqual(result.returncode, 0)
             self.assertIn('secret: credential-shaped content', result.stdout)
             self.assertIn('PR diff', result.stdout)
+            self.assertTrue(any('secret: credential-shaped content' in line and not line.startswith('PR diff:')
+                                for line in result.stdout.splitlines()), result.stdout)
             self.assertNotIn('Unicode', result.stderr)
             self.assertNotIn('A' * 36, result.stdout + result.stderr)
 
