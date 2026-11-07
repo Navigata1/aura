@@ -10,7 +10,7 @@
     "northStar": "Owned melody to an editable song, judged by the owner in blind audition.",
     "status": "active",
     "started": "2026-10-29",
-    "updated": "2026-11-07T05:33:04.363541+00:00",
+    "updated": "2026-11-07T05:42:46.183524+00:00",
     "sessionCount": 3
   },
   "policies": {
@@ -101,11 +101,11 @@
         {
           "id": "latest-integration-software",
           "title": "Latest actual integration push across Linux, macOS and Windows",
-          "command": "gh run view 42342742232 --repo Navigata1/aura",
-          "status": "failed",
-          "evidence": "ops/mission/evidence/C03-original-integration-failure.json",
-          "lastRun": "2026-11-07T05:33:04.363541+00:00",
-          "notes": "Run42342742232 at d008639: Linux/macOS success, Windows failed UnicodeDecodeError in policy diff decoding. Historical successful integration batches remain historical."
+          "command": "gh run view 42343689947 --repo Navigata1/aura",
+          "status": "passed",
+          "evidence": "ops/mission/evidence/2026-11-06/C03-integration-green.json",
+          "lastRun": "2026-11-07T05:42:46.183524+00:00",
+          "notes": "Fresh actual integration push at fdd588c passed Linux/macOS/Windows. Original d008639 Windows failure42342742232 is preserved in C03-original-integration-failure.json; this does not establish scheduled-nightly or playback evidence."
         }
       ],
       "tasks": [
@@ -1319,12 +1319,16 @@
         {
           "id": "C03",
           "title": "Decode Git policy inputs independent of host locale",
-          "status": "in_progress",
+          "status": "done",
           "dependsOn": [
             "T01-code"
           ],
-          "pr": null,
-          "notes": "Issue #11. Fix plus real Git/CLI regressions prepared; independent review and current-head hosted Windows validation pending. No merge performed."
+          "pr": {
+            "number": 12,
+            "url": "https://github.com/Navigata1/aura/pull/12",
+            "mergedAt": "2026-11-07T05:39:57Z"
+          },
+          "notes": "Issue #11 closed by reviewed PR #12 at fdd588cd2288f193d945e32f31c481b0eeee1607. Exact-head PR run42343511152 and post-merge integration run42343689947 passed all three hosted operating systems. Original failed run42342742232 retained as historical evidence. Software scope only."
         }
       ]
     }
@@ -1353,11 +1357,6 @@
     }
   ],
   "risks": [
-    {
-      "title": "Windows policy scanner fails on UTF-8 Git output",
-      "severity": "high",
-      "note": "Original integration failure retained; explicit decoding and non-UTF-8-locale public CLI regressions prepared in C03. No claim that latest integration is green."
-    },
     {
       "title": "STUDIO must be mounted before work",
       "severity": "high",
@@ -1400,12 +1399,18 @@
       "url": "https://github.com/Navigata1/aura/pull/8",
       "phase": "BUILD",
       "mergedAt": "2026-11-07T05:20:22Z"
+    },
+    {
+      "number": 12,
+      "title": "Locale-independent Git policy scans and three-OS PR gates",
+      "url": "https://github.com/Navigata1/aura/pull/12",
+      "phase": "BUILD",
+      "mergedAt": "2026-11-07T05:39:57Z"
     }
   ],
   "resume": {
     "activePhase": "BUILD",
     "nextActions": [
-      "Resolve C03 issue #11: review UTF-8 Git-input repair, pass current-head hosted CI including Windows, then merge only under the independent-review policy. Original integration run42342742232 remains a recorded failure.",
       "Read docs/spec/T02-continuation-sequencing.md. Create a bounded T02b contract issue/worktree from current integration: additive immutable binding schemas/consumers, with old fixtures unchanged.",
       "Then complete C02 result binding before enabling concluded route-standing effects. Keep C01 refusals/inert folds until exact-set proof is supported.",
       "Implement SongForm assembly with explicit section/full-duration semantics, instrumental intro/outro and lane inheritance; then hand-derived ABC/MIDI vectors.",
@@ -1413,7 +1418,6 @@
       "After the owner releases integration to default main, observe actual scheduled-nightly run and finish T01 acceptance. Do not release main on behalf of the owner."
     ],
     "blockers": [
-      "Latest integration d008639: run42342742232 Windows job128313805325 failed decoding UTF-8 Git diff through cp1252. Fix prepared; fresh hosted Windows proof pending.",
       "T18/T19 storage qualification blocks irreplaceable songs, references, owner acts and evidence records.",
       "Scheduled-nightly acceptance awaits the owner main release; PR and integration runs do not count as a nightly run."
     ],
@@ -1421,7 +1425,7 @@
       "Mission state lives in the external implementation worktree; inspect remote integration before relying on task status.",
       "No model inference or owner listening performed.",
       "Tier 2: independent implementer and verifier agents; canonical checkout read-only.",
-      "This checkpoint records implementation merges through PR #8. Its documentation-only publication is identified by git history, not a recursively embedded self-merge hash.",
+      "This checkpoint records implementation merges through PR #12. Its documentation-only publication is identified by git history, not a recursively embedded self-merge hash.",
       "Mission dependencies distinguish T01-code availability from T01 full acceptance and explicitly route C02 through T02b. The original 105-ticket specification remains unchanged.",
       "The integration-review worktree is a detached read-only snapshot. Create the next ticket worktree from the external bare clone; do not commit in the snapshot."
     ]
