@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-29",
+  "owner_request": "Yes use Extreme SSD for the dedicated STUDIO sparse bundle, go ahead with the setup and continue fixing the contract gaps and building out the app from Claude\u2019s plan.",
+  "image": "/Volumes/Extreme SSD/STUDIO.sparsebundle",
+  "mount": "/Volumes/STUDIO",
+  "backing_uuid": "7C0B31FA-15A6-3963-9994-0848C97363E1",
+  "studio_uuid": "C4EE06E5-E846-499B-9D57-3483FA7820D8",
+  "logical_cap_gib": 900,
+  "band_size_mib": 8,
+  "interim_only": true,
+  "free_bytes": {
+    "/Volumes/STUDIO": 965938163712,
+    "/Volumes/Extreme SSD": 1226290757632,
+    "/System/Volumes/Data": 18532835328
+  },
+  "spotlight": "/System/Volumes/Data/Volumes/STUDIO:\n\tIndexing and searching disabled.",
+  "time_machine_image": "[Excluded]  /Volumes/Extreme SSD/STUDIO.sparsebundle",
+  "privacy_settings": "pending owner confirmation",
+  "limitations": [
+    "T18 band-size/performance comparison not run",
+    "T19 crash/recovery/durability qualification not run",
+    "No irreplaceable project data"
+  ]
+}

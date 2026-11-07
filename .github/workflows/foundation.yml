@@ -1,0 +1,51 @@
+name: Foundation reusable checks
+on:
+  workflow_call:
+    inputs:
+      platforms:
+        required: true
+        type: string
+      base:
+        required: false
+        type: string
+permissions:
+  contents: read
+jobs:
+  foundation:
+    name: foundation (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ${{ fromJSON(inputs.platforms) }}
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Disposable CI environment
+        run: python scripts/ci/bootstrap.py
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+        with:
+          version: 11.1.2
+          dest: ${{ runner.temp }}/studio/tools/pnpm
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          version: 0.11.8
+          enable-cache: false
+      - name: Install managed Python and frozen workspace
+        run: uv sync --frozen
+      - name: Install frozen web workspace
+        run: pnpm install --frozen-lockfile
+      - name: Foundation gate
+        env:
+          STUDIO_CHECK_BASE: ${{ inputs.base }}
+        shell: bash
+        run: |
+          args=()
+          if [[ -n "$STUDIO_CHECK_BASE" ]]; then args+=(--base "$STUDIO_CHECK_BASE"); fi
+          uv run --frozen python scripts/ci/run.py "${args[@]}"

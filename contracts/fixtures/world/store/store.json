@@ -1,0 +1,13 @@
+{
+  "band_size_sectors": null,
+  "created_at": "2026-10-09T08:00:00Z",
+  "kind": "store",
+  "last_clean_detach": null,
+  "layout_version": 1,
+  "schemaVersion": "1.0.0",
+  "store_id": "sto_main",
+  "volume": {
+    "adapter": "macos_sparsebundle",
+    "name": "STUDIO"
+  }
+}

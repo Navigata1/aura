@@ -1,0 +1,28 @@
+[project]
+name = "studio-workspace"
+version = "0.1.0"
+requires-python = ">=3.12,<3.13"
+dependencies = ["studio-contracts", "studio-worker", "studio-control", "studio-analysis", "studio-fake", "studio-conformance"]
+
+[tool.uv]
+package = false
+required-version = "==0.11.8"
+
+[tool.uv.workspace]
+members = ["packages/contracts-py", "packages/worker-sdk", "services/control", "workers/analysis", "workers/fake", "workers/conformance"]
+
+[tool.uv.sources]
+studio-contracts = { workspace = true }
+studio-worker = { workspace = true }
+studio-control = { workspace = true }
+studio-analysis = { workspace = true }
+studio-fake = { workspace = true }
+studio-conformance = { workspace = true }
+
+[dependency-groups]
+dev = ["pytest==9.2.0", "packaging==26.3"]
+
+[tool.pytest.ini_options]
+addopts = "--import-mode=importlib"
+pythonpath = ["tests/foundation"]
+testpaths = ["packages", "services", "workers", "tests/foundation"]

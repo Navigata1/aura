@@ -131,8 +131,8 @@ def generate(register_path: Path = REGISTER, overlay_path: Path = OVERLAY) -> by
         "register_id": "components.v1",
         "overlay": False,
         "generated_from": [
-            {"path": str(register_path.relative_to(ROOT)), "sha256": hashlib.sha256(register_bytes).hexdigest()},
-            {"path": str(overlay_path.relative_to(ROOT)), "sha256": hashlib.sha256(overlay_bytes).hexdigest()},
+            {"path": register_path.relative_to(ROOT).as_posix(), "sha256": hashlib.sha256(register_bytes).hexdigest()},
+            {"path": overlay_path.relative_to(ROOT).as_posix(), "sha256": hashlib.sha256(overlay_bytes).hexdigest()},
         ],
         "components": components,
     }

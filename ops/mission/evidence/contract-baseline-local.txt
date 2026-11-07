@@ -1,0 +1,19 @@
+ok     2  byte-identical regenerations
+ok    53  checker self-tests
+ok   379  files linted
+ok   306  files valid by kind
+ok     4  fixture.audition vectors
+ok    12  fixture.ledger vectors
+ok     8  fixture.recommend vectors
+ok    20  fixture.status vectors
+ok    17  fixture.tempo vectors
+ok    12  hand assertions
+ok    93  invalid records rejected for the named reason
+ok    59  rules exercised
+ok    87  scenarios
+ok    49  schemas
+ok     5  valid scenarios
+ok   107  world records checked
+note  computed status of 21 shipped profiles and 10 capabilities from 0 evidence records: 31 declared
+note  no frozen legacy fixtures yet (they are frozen at the first release)
+PASSED: 0 failure(s), 59 reference rules

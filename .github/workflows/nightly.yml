@@ -1,0 +1,12 @@
+name: Nightly foundation checks
+on:
+  schedule:
+    - cron: '23 9 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  checks:
+    uses: ./.github/workflows/foundation.yml
+    with:
+      platforms: '["ubuntu-latest", "macos-latest", "windows-latest"]'
