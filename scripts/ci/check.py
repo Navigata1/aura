@@ -68,8 +68,8 @@ def scan_file(root,relative,product,contact):
 
 
 def commit_errors(root,base):
-    args=['git','-C',str(root),'log','--format=%H%x00%ae%x00%ce%x00%B%x00', f'{base}..HEAD' if base else '-1']
-    raw=subprocess.check_output(args,text=True)
+    args=['git','-C',str(root),'-c','i18n.logOutputEncoding=UTF-8','log','--format=%H%x00%ae%x00%ce%x00%B%x00', f'{base}..HEAD' if base else '-1']
+    raw=subprocess.check_output(args,encoding='utf-8',errors='surrogateescape')
     allowed=re.compile(r'^(?:\d+\+)?(?:Navigata1|web-flow)@users\.noreply\.github\.com$|^noreply@github\.com$')
     coauthor=re.compile(r'^noreply@anthropic\.com$')
     errors=[]
@@ -92,8 +92,8 @@ def main():
     parser.add_argument('--files-only',action='store_true',help='Local/test fixture scan; CI also checks commits')
     parser.add_argument('--bundle',action='store_true',help='Require and scan the actual built web bundle')
     args=parser.parse_args();root=args.root.resolve()
-    product=json.loads((root/'contracts/product.json').read_text())
-    files=set(subprocess.check_output(['git','-C',str(root),'ls-files','-z'],text=True).split('\0'))-{''}
+    product=json.loads((root/'contracts/product.json').read_text(encoding='utf-8'))
+    files=set(subprocess.check_output(['git','-C',str(root),'ls-files','-z'],encoding='utf-8',errors='surrogateescape').split('\0'))-{''}
     errors=[]
     for relative in sorted(files):
         errors.extend((relative,error) for error in scan_file(root,relative,product['productName'],product['publicContactText']))
@@ -107,10 +107,12 @@ def main():
                     except UnicodeDecodeError:continue
                     if SECRET.search(text): errors.append((str(path.relative_to(root)),'secret: credential-shaped bundle content'))
     if args.base:
-        diff=subprocess.check_output(['git','-C',str(root),'diff','--no-ext-diff',args.base,'--'],text=True)
+        diff=subprocess.check_output(['git','-C',str(root),'diff','--no-ext-diff',args.base,'--'],encoding='utf-8',errors='surrogateescape')
         if SECRET.search(diff): errors.append(('PR diff','secret: credential-shaped content'))
     if not args.files_only: errors.extend(commit_errors(root,args.base))
-    for path,error in errors: print(f'{path}: {error}')
+    for path,error in errors:
+        # Paths may contain Unicode or undecodable filesystem bytes; diagnostics must also work on ASCII consoles.
+        print(f'{path}: {error}'.encode('ascii',errors='backslashreplace').decode('ascii'))
     print(f'Policy scan: {len(files)} tracked files; {len(errors)} violations')
     return bool(errors)
 

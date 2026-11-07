@@ -7,7 +7,7 @@ import sys
 import tempfile
 
 root=Path(__file__).resolve().parents[2]
-files=subprocess.check_output(['git','-C',str(root),'ls-files','-z'],text=True).split('\0')
+files=subprocess.check_output(['git','-C',str(root),'ls-files','-z'],encoding='utf-8',errors='surrogateescape').split('\0')
 with tempfile.TemporaryDirectory(prefix='tracked-contracts-') as temporary:
     target=Path(temporary)
     for name in files:

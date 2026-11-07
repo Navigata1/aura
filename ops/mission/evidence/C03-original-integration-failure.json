@@ -1,0 +1,23 @@
+{
+  "kind": "implementation-checkpoint-not-store-evidence",
+  "run_id": 42342742232,
+  "head_sha": "d008639ac6e133b91521dfbb290c5b01f81f9815",
+  "url": "https://github.com/Navigata1/aura/actions/runs/42342742232",
+  "event": "push",
+  "jobs": {
+    "ubuntu-latest": "success",
+    "macos-latest": "success",
+    "windows-latest": "failure"
+  },
+  "failed_job_id": 128313805325,
+  "failure": {
+    "file": "scripts/ci/check.py",
+    "line": 110,
+    "exception": "UnicodeDecodeError",
+    "codec": "cp1252",
+    "byte": "0x9d",
+    "position": 12194
+  },
+  "raw_log_location": "/Volumes/STUDIO/evidence/R01-windows-failure.log",
+  "retry_performed": false
+}
