@@ -14,6 +14,6 @@ Code integration and full ticket acceptance remain distinct. The first integrati
 
 ## Email-setting recheck
 
-On November 6 the GitHub settings URL redirected to sign-in. The current checkbox values are UNVERIFIED; the October 29 observation is historical, not current confirmation. The owner was asked to sign in for the requested recheck. No account setting was changed. P01 remains open until both privacy settings are verified enabled. Under the revised code-merge rule, this outstanding account task does not imply that CI or independent review may be skipped, nor may it be reported complete. Existing commit-identity gates and explicit noreply squash authors remain mandatory.
+On November 6 the GitHub settings URL redirected to sign-in. The current checkbox values are UNVERIFIED; the October 29 observation is historical, not current confirmation. The owner was asked to sign in for the requested recheck. No account setting was changed. P01 remains open until both privacy settings are verified enabled. Implementation interpretation of the revised code-merge rule (not a claim that the owner waived or completed P01): this outstanding account task does not imply that CI or independent review may be skipped, nor may it be reported complete. Existing commit-identity gates and explicit noreply squash authors remain mandatory.
 
 All storage, license, owner-verdict, paid-run and release boundaries remain in force. This amendment authorizes no model downloads, paid jobs or fabricated owner evidence.
