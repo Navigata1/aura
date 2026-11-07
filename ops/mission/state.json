@@ -4,13 +4,13 @@
     "name": "Studio implementation",
     "tagline": "Prove the contracts, establish the build volume, then deliver the first complete song flow.",
     "repo": "Navigata1/aura",
-    "repoPath": "/Volumes/STUDIO/worktrees/02-vector-discovery",
+    "repoPath": "/Volumes/STUDIO/worktrees/integration-review",
     "defaultBranch": "integration",
     "planDoc": "docs/spec/aura-v1-spec.md",
     "northStar": "Owned melody to an editable song, judged by the owner in blind audition.",
     "status": "active",
     "started": "2026-10-29",
-    "updated": "2026-11-07T05:17:26.857675+00:00",
+    "updated": "2026-11-07T05:23:09.691534+00:00",
     "sessionCount": 3
   },
   "policies": {
@@ -32,18 +32,18 @@
           "title": "Existing contract fixture suite",
           "command": "python3 -B scripts/spec/validate.py",
           "status": "passed",
-          "evidence": "ops/mission/evidence/contract-baseline-local.txt",
-          "lastRun": "2026-10-29T20:57:30.394897+00:00",
-          "notes": "Local foundation worktree check only; not hosted CI or final clean committed-tree acceptance."
+          "evidence": "ops/mission/evidence/2026-11-06/integration-batch.json",
+          "lastRun": "2026-11-07T05:23:09.691534+00:00",
+          "notes": "Executed within the full software gate on integration cc846da in run42342305602, all three hosted OS successful. No nightly, real-device playback or musical-quality proof."
         },
         {
           "id": "ticket-baseline",
           "title": "Draft ticket graph",
           "command": "python3 -B scripts/spec/tickets.py --check",
           "status": "passed",
-          "evidence": "ops/mission/evidence/ticket-baseline-local.txt",
-          "lastRun": "2026-10-29T20:57:30.394897+00:00",
-          "notes": "Local foundation worktree check only; not hosted CI or final clean committed-tree acceptance."
+          "evidence": "ops/mission/evidence/2026-11-06/integration-batch.json",
+          "lastRun": "2026-11-07T05:23:09.691534+00:00",
+          "notes": "Executed within the full software gate on integration cc846da in run42342305602, all three hosted OS successful. No nightly, real-device playback or musical-quality proof."
         }
       ],
       "tasks": [
@@ -75,7 +75,7 @@
           "status": "pending",
           "dependsOn": [
             "C01",
-            "T02"
+            "T02b"
           ],
           "pr": null,
           "notes": "Issue #4 remains open. Requires C01 plus the immutable binding-schema/consumer slice of T02, not all T02 acceptance; concluded route-standing in T02 follows C02 to avoid circular sequencing. Exact set, revision/host, preregistration, quota, thresholds and verdict binding required."
@@ -92,11 +92,11 @@
         {
           "id": "foundation-software",
           "title": "Foundation software tests, builds and policy gates",
-          "command": "uv run --frozen python scripts/ci/run.py --base 79cd9aff1ee239bd0422e684b4e8d58b73bb7c0f",
+          "command": "uv run --frozen python scripts/ci/run.py --base cc846da282744b807ac2f2f7cfb4e845161eb881",
           "status": "passed",
-          "evidence": "https://github.com/Navigata1/aura/actions/runs/42341326235",
-          "lastRun": "2026-11-07T05:10:29.336287+00:00",
-          "notes": "All three hosted PR jobs passed at85160f7 before merge; integration push recorded separately. Software-only evidence."
+          "evidence": "ops/mission/evidence/2026-11-06/integration-batch.json",
+          "lastRun": "2026-11-07T05:23:09.691534+00:00",
+          "notes": "Executed within the full software gate on integration cc846da in run42342305602, all three hosted OS successful. No nightly, real-device playback or musical-quality proof."
         }
       ],
       "tasks": [
@@ -119,17 +119,17 @@
           "title": "Contract completion: SongForm, ABC and MIDI vectors, every missing v1 field, pre-seeded declarations, price snapshots and the legacy freeze plumbing",
           "status": "in_progress",
           "dependsOn": [
-            "T01"
+            "T01-code"
           ],
           "pr": null,
-          "notes": "Implementing bounded T02a issue #7: convention-discovered golden-vector cases and scoped consumers. T02 parent remains open for all other acceptance. See docs/spec/T02-continuation-sequencing.md."
+          "notes": "T02a issue #7 / PR #8 merged. Remaining: additive schemas/full consumers, SongForm/ABC/MIDI, worker transcripts/declarations/gates/prices/legacy plumbing and route standing after C02. Do not close parent based on vector discovery."
         },
         {
           "id": "T03",
           "title": "License verification of the v1-core plumbing (P0-9): close every adoptable row, or leave it explicitly open with its gate",
           "status": "pending",
           "dependsOn": [
-            "T01"
+            "T01-code"
           ],
           "pr": null,
           "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
@@ -1272,12 +1272,40 @@
         {
           "id": "T02a",
           "title": "Convention-discovered golden-vector cases and scoped consumer checks",
-          "status": "in_progress",
+          "status": "done",
           "dependsOn": [
             "C01"
           ],
+          "pr": {
+            "number": 8,
+            "url": "https://github.com/Navigata1/aura/pull/8",
+            "mergedAt": "2026-11-07T05:20:22Z"
+          },
+          "notes": "Merged at cc846da282744b807ac2f2f7cfb4e845161eb881 after exact-head Standards/Spec review and PR CI42342181627. Eight public CLI regressions; 310 pre-existing fixtures preserved. Full T02 remains open."
+        },
+        {
+          "id": "T01-code",
+          "title": "Reviewed foundation code integrated with three-OS push proof",
+          "status": "done",
+          "dependsOn": [
+            "P01"
+          ],
+          "pr": {
+            "number": 6,
+            "url": "https://github.com/Navigata1/aura/pull/6",
+            "mergedAt": "2026-11-07T05:09:18Z"
+          },
+          "notes": "Code-availability prerequisite under the owner November 6 merge amendment. This does not close T01 full acceptance: actual scheduled-nightly evidence remains pending."
+        },
+        {
+          "id": "T02b",
+          "title": "Additive immutable benchmark-binding schemas and consumers",
+          "status": "pending",
+          "dependsOn": [
+            "T02a"
+          ],
           "pr": null,
-          "notes": "Issue #7: bounded slice of T02. Public CLI red-green regressions; all 310 pre-existing fixtures preserved. Full T02 including musical transforms and full field inventory remains open."
+          "notes": "Explicit prerequisite slice for C02; no conclusion effects enabled here. Split of T02 scope, whose full acceptance remains open. Create bounded issue before implementation."
         }
       ]
     }
@@ -1341,15 +1369,23 @@
       "url": "https://github.com/Navigata1/aura/pull/5",
       "phase": "P0",
       "mergedAt": "2026-11-07T05:13:04Z"
+    },
+    {
+      "number": 8,
+      "title": "Convention-discovered golden vectors and consuming-ticket checks",
+      "url": "https://github.com/Navigata1/aura/pull/8",
+      "phase": "BUILD",
+      "mergedAt": "2026-11-07T05:20:22Z"
     }
   ],
   "resume": {
     "activePhase": "BUILD",
     "nextActions": [
-      "Complete T02a issue #7 in this external worktree; current-head CI plus independent review required before integration merge.",
-      "Then additive immutable binding schemas/consumers allow C02; only after C02 may route-standing consume concluded results. See T02-continuation-sequencing.md.",
-      "Implement SongForm/ABC/MIDI hand-derived goldens and remaining T02 fields/declarations/transcripts; close the parent only when all acceptance passes.",
-      "C01 integration push42341780817 passed all three hosted operating systems. Scheduled-nightly acceptance still awaits owner main release."
+      "Read docs/spec/T02-continuation-sequencing.md. Create a bounded T02b contract issue/worktree from current integration: additive immutable binding schemas/consumers, with old fixtures unchanged.",
+      "Then complete C02 result binding before enabling concluded route-standing effects. Keep C01 refusals/inert folds until exact-set proof is supported.",
+      "Implement SongForm assembly with explicit section/full-duration semantics, instrumental intro/outro and lane inheritance; then hand-derived ABC/MIDI vectors.",
+      "Complete remaining T02 acceptance before T04 generated types and T05 ProjectStore/StudioHarness. No runtime feature may bypass missing contracts.",
+      "After the owner releases integration to default main, observe actual scheduled-nightly run and finish T01 acceptance. Do not release main on behalf of the owner."
     ],
     "blockers": [
       "T18/T19 storage qualification blocks irreplaceable songs, references, owner acts and evidence records.",
@@ -1358,7 +1394,10 @@
     "conventions": [
       "Mission state lives in the external implementation worktree; inspect remote integration before relying on task status.",
       "No model inference or owner listening performed.",
-      "Tier 2: independent implementer and verifier agents; canonical checkout read-only."
+      "Tier 2: independent implementer and verifier agents; canonical checkout read-only.",
+      "This checkpoint records implementation merges through PR #8. Its documentation-only publication is identified by git history, not a recursively embedded self-merge hash.",
+      "Mission dependencies distinguish T01-code availability from T01 full acceptance and explicitly route C02 through T02b. The original 105-ticket specification remains unchanged.",
+      "The integration-review worktree is a detached read-only snapshot. Create the next ticket worktree from the external bare clone; do not commit in the snapshot."
     ]
   }
 }

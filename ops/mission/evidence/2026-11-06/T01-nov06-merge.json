@@ -1,0 +1,60 @@
+{
+  "checked_at": "2026-11-07T05:09:16.285369+00:00",
+  "before": {
+    "private": true,
+    "default_branch": "main",
+    "head": "85160f75260f4e587c324bff69a20a5d5a880984",
+    "base": "79cd9aff1ee239bd0422e684b4e8d58b73bb7c0f",
+    "base_ref": "integration",
+    "main": "79cd9aff1ee239bd0422e684b4e8d58b73bb7c0f",
+    "checks": [
+      {
+        "name": "checks / foundation (ubuntu-latest)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "checks / foundation (macos-latest)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "checks / foundation (windows-latest)",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ],
+    "review_state": {
+      "reviewThreads": {
+        "nodes": [],
+        "pageInfo": {
+          "hasNextPage": false
+        }
+      },
+      "reviewRequests": {
+        "totalCount": 0
+      }
+    },
+    "hosted_run": {
+      "id": 42341326235,
+      "head_sha": "85160f75260f4e587c324bff69a20a5d5a880984",
+      "conclusion": "success",
+      "url": "https://github.com/Navigata1/aura/actions/runs/42341326235"
+    },
+    "independent_review_files": [
+      "nov06-standards-review.md",
+      "nov06-spec-review.md"
+    ]
+  },
+  "checks_watch": "checks / foundation (macos-latest)\tpass\t1m1s\thttps://github.com/Navigata1/aura/actions/runs/42341326235/job/128309427709\t\nchecks / foundation (ubuntu-latest)\tpass\t42s\thttps://github.com/Navigata1/aura/actions/runs/42341326235/job/128309427719\t\nchecks / foundation (windows-latest)\tpass\t1m14s\thttps://github.com/Navigata1/aura/actions/runs/42341326235/job/128309427449\t\nchecks / foundation (macos-latest)\tpass\t1m1s\thttps://github.com/Navigata1/aura/actions/runs/42341326235/job/128309427709\t\nchecks / foundation (ubuntu-latest)\tpass\t42s\thttps://github.com/Navigata1/aura/actions/runs/42341326235/job/128309427719\t\nchecks / foundation (windows-latest)\tpass\t1m14s\thttps://github.com/Navigata1/aura/actions/runs/42341326235/job/128309427449\t\n",
+  "after": {
+    "merged": true,
+    "merge_commit_sha": "e421699890e80c5fffcc3f36659b3ba4e1587db2",
+    "merged_at": "2026-11-07T05:09:18Z",
+    "main": "79cd9aff1ee239bd0422e684b4e8d58b73bb7c0f",
+    "private": true,
+    "squash_author_noreply_verified": true,
+    "cli_output": "",
+    "issue_2_state": "open"
+  }
+}
