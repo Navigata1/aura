@@ -7,9 +7,10 @@ The control service and web UI are portable across macOS, Windows and Linux; the
 
 ## Read first
 
+- `docs/research/OWNER-DECISIONS-2026-11-06.md`: current private-repository merge policy: green current-head CI and independent review; integration only.
 - `docs/research/OWNER-DECISIONS-2026-10-29.md`: Jon's latest continuation instruction and O-03 amendment to Extreme SSD.
   Then read `docs/research/OWNER-DECISIONS-2026-10-09.md` for binding O-01…O-11 and owner-pending defaults.
-  The October 29 amendment wins where it changes October 9; all other owner decisions and owner-act gates remain.
+  The November 6 and October 29 amendments win where they change earlier decisions; all other owner decisions and owner-act gates remain.
 - `docs/research/RECONCILIATION.md`: the verified evidence base. §4 is the component register, §6 the decisions
   D-01…D-24 behind the ADRs, §7 the owner's open questions, §8 what remains unverified. `evidence-register.json` is
   its machine-readable form, and `feature-inventory.md` lists every feature with its scope.

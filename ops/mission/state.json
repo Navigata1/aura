@@ -10,14 +10,14 @@
     "northStar": "Owned melody to an editable song, judged by the owner in blind audition.",
     "status": "active",
     "started": "2026-10-29",
-    "updated": "2026-10-29T21:27:48.208084+00:00",
-    "sessionCount": 2
+    "updated": "2026-11-06T20:00:00-06:00",
+    "sessionCount": 3
   },
   "policies": {
     "merge": "review",
     "branchPrefix": "ticket/",
     "maxPrLines": 400,
-    "notes": "Ticket PRs target integration and require independent review plus fresh CI. Only Jon release-merges integration into main. Review policy holds unreviewed PRs; an independent agent review is not an owner listening or license act. T01 is the pre-specified broad foundation ticket; package scaffolding, gates and generated registry/mission files are reviewed together. Later feature changes retain small ticket boundaries."
+    "notes": "Ticket PRs target integration and require independent review plus fresh CI. Only Jon release-merges integration into main. Review policy holds unreviewed PRs; an independent agent review is not an owner listening or license act. T01 is the pre-specified broad foundation ticket; package scaffolding, gates and generated registry/mission files are reviewed together. Later feature changes retain small ticket boundaries. November 6 owner amendment authorizes integration squash merges after green current-head CI and independent current-base review. Server-side branch protection is not required; repository stays private. Main remains owner-release-only. Merged code is distinct from pending full acceptance."
   },
   "phases": [
     {
@@ -53,7 +53,7 @@
           "status": "blocked",
           "dependsOn": [],
           "pr": null,
-          "notes": "Storage setup passes. Browser verified Navigata1 Keep email private enabled; Block command line pushes exposing email is OFF. Owner must enable it per P01. Issue #1."
+          "notes": "Storage setup passes; November 6 email-settings recheck redirected to sign-in. Current settings unverified, owner sign-in requested. Account task remains open separately from revised code-merge eligibility."
         },
         {
           "id": "C01",
@@ -103,7 +103,7 @@
         {
           "id": "T01",
           "title": "Foundation: repository skeleton, the product-name constant, three-OS CI, and the Rule-07, secret, license and weights lints",
-          "status": "blocked",
+          "status": "in_progress",
           "dependsOn": [
             "P01"
           ],
@@ -112,7 +112,7 @@
             "url": "https://github.com/Navigata1/aura/pull/6",
             "mergedAt": null
           },
-          "notes": "Draft PR #6. Reviewed code at d4e0c00 passes hosted Linux, macOS and Windows in run 40957624618; OS-specific test skips remain visible in logs. P01 email-exposure setting, private branch-protection 403 and first scheduled-nightly evidence remain open. No merge or music functionality claim."
+          "notes": "PR #6 awaiting fresh CI and independent review of the November 6 owner-policy amendment. Integration merge authorized under that policy; account privacy and scheduled-nightly acceptance remain distinct pending evidence."
         },
         {
           "id": "T02",
@@ -1297,9 +1297,9 @@
   ],
   "risks": [
     {
-      "title": "STUDIO volume absent",
+      "title": "STUDIO must be mounted before work",
       "severity": "high",
-      "note": "Canonical checkout forbids builds, environments and model caches."
+      "note": "Remounted November 6 from the approved Extreme SSD sparse bundle; preflight passed. Every heavy operation still requires a fresh preflight."
     },
     {
       "title": "Benchmark evidence is under-validated",
@@ -1309,7 +1309,7 @@
     {
       "title": "Integration branch protection unavailable",
       "severity": "high",
-      "note": "GitHub REST PUT rejected with HTTP 403 requiring a paid plan or public visibility. No visibility/subscription change authorized or made; T01 cannot close as written."
+      "note": "November 6 owner amendment requires green CI plus independent exact-head/current-base review procedurally. Repository remains private; server-side enforcement is unavailable."
     },
     {
       "title": "Nightly evidence follows the first owner release",
@@ -1321,21 +1321,20 @@
   "resume": {
     "activePhase": "P0",
     "nextActions": [
-      "Resolve P01 #1: owner enables Block command line pushes that expose my email. Keep email private is already enabled.",
-      "Resolve T01 #2 branch-protection403: GitHub plan support or explicit owner revision of enforced-branch requirement. Keep repository private; do not release-merge main.",
-      "Read PR #6 latest-head CI before any merge. Code at d4e0c00 passed all three hosted operating systems; T01 remains open for external acceptance and scheduled-nightly sequencing.",
-      "After T01 merges into integration, update PR #5 base and rerun clean-tree/CI gates. Disposable combination at foundation 88335e0 plus C01 d63f824 already passed local contract gates, not a merge.",
-      "Then advance T02/T03 frontier. C02 #4 must bind concluded results before benchmark promotion is enabled."
+      "Recheck email settings after owner sign-in; preserve P01 as open until both settings are verified.",
+      "Review and validate updated PR #6 exact head, squash-merge into integration with noreply author, then verify integration CI.",
+      "Update PR #5 against merged integration, rerun clean checks and independent review, then merge only if green.",
+      "Advance T02/T03 from integration; keep C02 result binding pending until its dependencies land."
     ],
     "blockers": [
-      "P01: owner must enable Block command line pushes that expose my email; read-only browser verified it is off (Keep email private is already on).",
-      "T18/T19 storage qualification still blocks all irreplaceable songs, references, acts and evidence records.",
-      "T01: GitHub returned 403 for private-repository branch protection; required-check enforcement unavailable on current account plan. Do not change visibility or waive this gate."
+      "P01 email settings currently unverified: GitHub settings redirects to sign-in. Owner sign-in requested; no account change made.",
+      "T18/T19 storage qualification blocks irreplaceable songs, references, owner acts and evidence records.",
+      "Scheduled-nightly acceptance awaits the owner main release; PR and integration runs do not count as a nightly run."
     ],
     "conventions": [
-      "This state is staged research material, not merged repository state.",
+      "Mission state lives in the external implementation worktree; inspect remote integration before relying on task status.",
       "No model inference or owner listening performed.",
-      "Tier 2: independent audit and source-refresh agents; canonical checkout read-only."
+      "Tier 2: independent implementer and verifier agents; canonical checkout read-only."
     ]
   }
 }

@@ -288,6 +288,8 @@ least 10 GiB, and nothing you are about to do writes to `/System/Volumes/Data`.
 
 ## Repository workflow
 
+The November 6 owner amendment requires green current-head CI and independent review against the current integration base before a ticket merge. Keep the repository private. Branch protection is not available on the current plan; enforce these checks procedurally and match the reviewed head at merge. See `docs/research/OWNER-DECISIONS-2026-11-06.md`.
+
 Ticket worktrees come from a bare clone on the volume, so their commits, indexes and fetched packs never land in the
 canonical checkout's `.git` on the internal disk (`~/Music Gen/aura` stays the docs checkout only).
 

@@ -38,3 +38,10 @@
 - Hosted run 40957624618 at d4e0c00 passed Linux, macOS and Windows after fixes for portable registry provenance, explicit Git Bash/interpreter selection, Windows environment-key casing and normalized bundle ownership. Separate targeted reviews found no open findings.
 - The committed CI JSON preserves host, job and step results. This is scaffold/software evidence only; OS playback, model inference and listening remain unverified.
 - PRs #5 and #6 remain draft and unmerged. Owner email-exposure blocking and private branch protection are still required; scheduled nightly evidence awaits the owner release path.
+
+## 2026-11-06 — resume and owner merge-policy amendment
+
+- Remounted the existing approved STUDIO image; external preflight passes. Canonical checkout unchanged.
+- Owner requires private visibility, green current-head CI and independent review before integration merges. Recorded the amendment; no main release or server-side protection claim.
+- Email-settings recheck reached GitHub sign-in. Requested owner login; P01 remains open.
+- Tier 2 execution continues with separate implementation and review agents.
