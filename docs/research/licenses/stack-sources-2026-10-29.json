@@ -1,0 +1,241 @@
+{
+  "checked": "2026-10-29",
+  "scope": "Pinned upstream source-license verification, not a complete transitive distribution audit. No weights downloaded or owner acts recorded.",
+  "sources": [
+    {
+      "id": "react",
+      "version": "19.3.1",
+      "license": "MIT",
+      "url": "https://raw.githubusercontent.com/react/react/v19.3.1/LICENSE",
+      "sha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
+      "source_file": "react-19.3.1-LICENSE.txt",
+      "bytes": 1088
+    },
+    {
+      "id": "react-dom",
+      "version": "19.3.1",
+      "license": "MIT",
+      "url": "https://raw.githubusercontent.com/react/react/v19.3.1/LICENSE",
+      "sha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
+      "source_file": "react-dom-19.3.1-LICENSE.txt",
+      "bytes": 1088
+    },
+    {
+      "id": "vite",
+      "version": "8.3.5",
+      "license": "MIT",
+      "url": "https://raw.githubusercontent.com/vitejs/vite/v8.3.5/LICENSE",
+      "sha256": "692057af3d664cbb79ac38293eb50aa3c4987f8182e2a440136e59e08f1b4a54",
+      "source_file": "vite-8.3.5-LICENSE.txt",
+      "bytes": 1101
+    },
+    {
+      "id": "vitest",
+      "version": "5.0.5",
+      "license": "MIT",
+      "url": "https://raw.githubusercontent.com/vitest-dev/vitest/v5.0.5/LICENSE",
+      "sha256": "04575fc5bfae19a9b63100f8691f901a2e15a399011ac02db435a9ef27295551",
+      "source_file": "vitest-5.0.5-LICENSE.txt",
+      "bytes": 1102
+    },
+    {
+      "id": "typescript",
+      "version": "7.0.2",
+      "license": "Apache-2.0",
+      "url": "https://raw.githubusercontent.com/microsoft/TypeScript/v7.0.2/LICENSE.txt",
+      "sha256": "a7d00bfd54525bc694b6e32f64c7ebcf5e6b7ae3657be5cc12767bce74654a47",
+      "source_file": "typescript-7.0.2-LICENSE.txt",
+      "bytes": 9197
+    },
+    {
+      "id": "playwright",
+      "version": "1.64.1",
+      "license": "Apache-2.0",
+      "url": "https://raw.githubusercontent.com/microsoft/playwright/v1.64.1/LICENSE",
+      "sha256": "45873d00a0dd243596deb4aa23b2493b3d1f0671921bf2538ea431d7380220eb",
+      "source_file": "playwright-1.64.1-LICENSE.txt",
+      "bytes": 11601
+    },
+    {
+      "id": "uv",
+      "version": "0.11.8",
+      "license": "MIT",
+      "url": "https://raw.githubusercontent.com/astral-sh/uv/0.11.8/LICENSE-MIT",
+      "sha256": "860e3d7a86b84e6a7012c7a635fc64df475cebc6cce34dfeb73a5982ec58176c",
+      "source_file": "uv-0.11.8-LICENSE.txt",
+      "bytes": 1077
+    },
+    {
+      "id": "uv-build",
+      "version": "0.11.8",
+      "license": "MIT",
+      "url": "https://raw.githubusercontent.com/astral-sh/uv/0.11.8/LICENSE-MIT",
+      "sha256": "860e3d7a86b84e6a7012c7a635fc64df475cebc6cce34dfeb73a5982ec58176c",
+      "source_file": "uv-build-0.11.8-LICENSE.txt",
+      "bytes": 1077
+    },
+    {
+      "id": "pnpm",
+      "version": "11.1.2",
+      "license": "MIT",
+      "url": "https://raw.githubusercontent.com/pnpm/pnpm/v11.1.2/LICENSE",
+      "sha256": "4b8e2a57502758b2d034ece9cabf19dd098c5609003ed8dbdafd085274f25bd9",
+      "source_file": "pnpm-11.1.2-LICENSE.txt",
+      "bytes": 1170
+    },
+    {
+      "id": "pytest",
+      "version": "9.2.0",
+      "license": "MIT",
+      "url": "https://raw.githubusercontent.com/pytest-dev/pytest/9.2.0/LICENSE",
+      "sha256": "ca836a5f9ecca3b2f350230faa20a48fb8b145653b5568d784862df864706b9b",
+      "source_file": "pytest-9.2.0-LICENSE.txt",
+      "bytes": 1091
+    },
+    {
+      "id": "fastapi",
+      "version": "0.162.0",
+      "license": "MIT",
+      "url": "https://raw.githubusercontent.com/fastapi/fastapi/0.162.0/LICENSE",
+      "sha256": "4ec89ffc81485b97fec584b2d4a961032eeffe834453894fd9c1274906cc744e",
+      "source_file": "fastapi-0.162.0-LICENSE.txt",
+      "bytes": 1086
+    },
+    {
+      "id": "starlette",
+      "version": "1.10.0",
+      "license": "BSD-3-Clause",
+      "url": "https://raw.githubusercontent.com/Kludex/starlette/1.10.0/LICENSE.md",
+      "sha256": "dcb95677a02240243187e964f941847d19b17821cf99e5afae684fab328c19bf",
+      "source_file": "starlette-1.10.0-LICENSE.txt",
+      "bytes": 1518
+    },
+    {
+      "id": "uvicorn",
+      "version": "0.54.0",
+      "license": "BSD-3-Clause",
+      "url": "https://raw.githubusercontent.com/Kludex/uvicorn/0.54.0/LICENSE.md",
+      "sha256": "efe1acf3e62fb99c288b0ec73e5a773b7268ef4320fe757ea994214e4b63c371",
+      "source_file": "uvicorn-0.54.0-LICENSE.txt",
+      "bytes": 1526
+    },
+    {
+      "id": "pydantic",
+      "version": "2.14.2",
+      "license": "MIT",
+      "url": "https://raw.githubusercontent.com/pydantic/pydantic/v2.14.2/LICENSE",
+      "sha256": "a9e186f3ca16b5eef84318e7a701721351a00cb7b8ae3a4394b67b49e3529ef3",
+      "source_file": "pydantic-2.14.2-LICENSE.txt",
+      "bytes": 1129
+    },
+    {
+      "id": "mlx",
+      "version": "0.32.4",
+      "license": "MIT",
+      "url": "https://raw.githubusercontent.com/ml-explore/mlx/v0.32.4/LICENSE",
+      "sha256": "ccfab7ccb2ea306f71531c8ca77bb55507606cd90768b1e32b8b52ab5b48cf01",
+      "source_file": "mlx-0.32.4-LICENSE.txt",
+      "bytes": 1066
+    },
+    {
+      "id": "numpy",
+      "version": "2.5.4",
+      "license": "BSD-3-Clause",
+      "url": "https://raw.githubusercontent.com/numpy/numpy/v2.5.4/LICENSE.txt",
+      "sha256": "1be1df33863f97a7bc1c4d67980bd6c69c9a6fef0a5ee76e6ad6cb91e56e8491",
+      "source_file": "numpy-2.5.4-LICENSE.txt",
+      "bytes": 1543
+    },
+    {
+      "id": "scipy",
+      "version": "1.18.1",
+      "license": "BSD-3-Clause",
+      "url": "https://raw.githubusercontent.com/scipy/scipy/v1.18.1/LICENSE.txt",
+      "sha256": "221e59f5e910fd7f94e44f0dac77436a11338c285c6346232e4a850a50da0e94",
+      "source_file": "scipy-1.18.1-LICENSE.txt",
+      "bytes": 1531
+    },
+    {
+      "id": "soundfile",
+      "version": "0.14.0",
+      "license": "BSD-3-Clause",
+      "url": "https://raw.githubusercontent.com/bastibe/python-soundfile/0.14.0/LICENSE",
+      "sha256": "0dd2e411fed553ba891845077e5a32c5b726d1bbc46ff31a2118ae1ccf816752",
+      "source_file": "soundfile-0.14.0-LICENSE.txt",
+      "bytes": 1512
+    },
+    {
+      "id": "libsndfile",
+      "version": "1.2.2",
+      "license": "LGPL-2.1-or-later",
+      "url": "https://raw.githubusercontent.com/libsndfile/libsndfile/1.2.2/COPYING",
+      "sha256": "ad01ea5cd2755f6048383c8d54c88459cd6fcb17757c5c8892f8c5ea060f6140",
+      "source_file": "libsndfile-1.2.2-LICENSE.txt",
+      "bytes": 26518,
+      "terms_source_url": "https://raw.githubusercontent.com/libsndfile/libsndfile/1.2.2/src/sndfile.c",
+      "terms_source_sha256": "b49cf1518231195f50a9bd30c154818971dbce51173cf65434edd1b53bf6e672"
+    },
+    {
+      "id": "types-react",
+      "version": "19.3.0",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/@types/react/-/react-19.3.0.tgz",
+      "metadata_url": "https://registry.npmjs.org/@types/react/19.3.0",
+      "archive_sha256": "ffa77ffdbdc82e5f67a0fd74d750990375a7dfd8685ec7f10a27c0db128f7766",
+      "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383",
+      "source_file": "types-react-19.3.0-LICENSE.txt",
+      "archive_member": "react/LICENSE",
+      "bytes": 1141
+    },
+    {
+      "id": "types-react-dom",
+      "version": "19.3.0",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/@types/react-dom/-/react-dom-19.3.0.tgz",
+      "metadata_url": "https://registry.npmjs.org/@types/react-dom/19.3.0",
+      "archive_sha256": "0782e1cd4af4a6a030843235a48e55dc690c36f9428b0b672dc53350806dcf21",
+      "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383",
+      "source_file": "types-react-dom-19.3.0-LICENSE.txt",
+      "archive_member": "react-dom/LICENSE",
+      "bytes": 1141
+    },
+    {
+      "id": "sqlite",
+      "version": "Python-linked runtime version checked at adoption",
+      "license": "Public domain dedication",
+      "url": "https://www.sqlite.org/copyright.html",
+      "sha256": "44ca9f793055c8e32fc65f65a4f5bcf813a33f5bdaaa084067dd617a4ed3cc70",
+      "source_file": "sqlite-copyright.html",
+      "bytes": 8351
+    },
+    {
+      "id": "keyring",
+      "version": "25.7.0",
+      "license": "MIT",
+      "url": "https://files.pythonhosted.org/packages/43/4b/674af6ef2f97d56f0ab5153bf0bfa28ccb6c3ed4d1babf4305449668807b/keyring-25.7.0.tar.gz",
+      "archive_sha256": "fe01bd85eb3f8fb3dd0405defdeac9a5b4f6f0439edbb3149577f244a2e8245b",
+      "sha256": "5a57cb4db85e2a2dd88c290628908add57e3451449e0a9a71fdfb38776fd759d",
+      "source_file": "keyring-25.7.0-LICENSE.txt",
+      "archive_member": "keyring-25.7.0/LICENSE",
+      "bytes": 1076
+    },
+    {
+      "id": "node",
+      "version": "22.22.3",
+      "license": "MIT with bundled dependency notices",
+      "url": "https://raw.githubusercontent.com/nodejs/node/v22.22.3/LICENSE",
+      "sha256": "c738ae413cf561f174e34f6961f8ca458aae2369a73640dda6234c629b98bcc4",
+      "source_file": "node-22.22.3-LICENSE.txt",
+      "bytes": 145485
+    },
+    {
+      "id": "python",
+      "version": "3.12.13",
+      "license": "PSF-2.0 and historical Python licenses",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.13/LICENSE",
+      "sha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf",
+      "source_file": "python-3.12.13-LICENSE.txt",
+      "bytes": 13936
+    }
+  ]
+}

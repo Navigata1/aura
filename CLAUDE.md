@@ -7,8 +7,10 @@ The control service and web UI are portable across macOS, Windows and Linux; the
 
 ## Read first
 
-- `docs/research/OWNER-DECISIONS-2026-10-09.md`: Jon's binding decisions O-01…O-11 and the owner-pending defaults.
-  Where another document disagrees with them, they win.
+- `docs/research/OWNER-DECISIONS-2026-11-06.md`: current private-repository merge policy: green current-head CI and independent review; integration only.
+- `docs/research/OWNER-DECISIONS-2026-10-29.md`: Jon's latest continuation instruction and O-03 amendment to Extreme SSD.
+  Then read `docs/research/OWNER-DECISIONS-2026-10-09.md` for binding O-01…O-11 and owner-pending defaults.
+  The November 6 and October 29 amendments win where they change earlier decisions; all other owner decisions and owner-act gates remain.
 - `docs/research/RECONCILIATION.md`: the verified evidence base. §4 is the component register, §6 the decisions
   D-01…D-24 behind the ADRs, §7 the owner's open questions, §8 what remains unverified. `evidence-register.json` is
   its machine-readable form, and `feature-inventory.md` lists every feature with its scope.
@@ -62,7 +64,7 @@ The control service and web UI are portable across macOS, Windows and Linux; the
    source. No third-party Suno API, and no imitation of Suno's branding or look.
 7. **Storage.** Never write models, caches, interpreters, environments, `node_modules`, build output, worktrees or
    large temp files to the internal disk. They go on the studio volume (`/Volumes/STUDIO`, the APFS sparse bundle on
-   Backup Plus) through the env file. The canonical checkout at `~/Music Gen/aura` holds docs only, with nothing
+   Extreme SSD, per the October 29 owner amendment) through the env file. The canonical checkout at `~/Music Gen/aura` holds docs only, with nothing
    installed. Run the disk preflight before every download, install, environment build, job or export: refuse when the
    studio volume's effective free space minus the estimate is under 10 GiB, put no planned writes on the internal
    disk, and block heavy jobs while it is under 2 GiB free. Never run `sudo`; print the command for Jon. Never delete

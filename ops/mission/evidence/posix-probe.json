@@ -1,0 +1,7 @@
+{
+  "symlink": true,
+  "hardlink": true,
+  "exec_bits": true,
+  "clonefile_command": true,
+  "note": "Only own disposable probe files removed."
+}
