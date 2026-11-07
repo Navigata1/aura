@@ -1,0 +1,33 @@
+{
+  "kind": "implementation-checkpoint-not-store-evidence",
+  "observed_at": "2026-11-07T05:42:46.183524+00:00",
+  "head_sha": "fdd588cd2288f193d945e32f31c481b0eeee1607",
+  "run_id": 42343689947,
+  "url": "https://github.com/Navigata1/aura/actions/runs/42343689947",
+  "event": "push",
+  "status": "completed",
+  "conclusion": "success",
+  "jobs": [
+    {
+      "name": "checks / foundation (macos-latest)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "checks / foundation (ubuntu-latest)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "checks / foundation (windows-latest)",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "original_failure": "ops/mission/evidence/C03-original-integration-failure.json",
+  "limits": [
+    "Hosted software checks only",
+    "No actual scheduled-nightly evidence",
+    "No generation, audio playback, listening or paid model computation"
+  ]
+}

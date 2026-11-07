@@ -1,0 +1,69 @@
+{
+  "checked_at": "2026-11-07T05:39:56.094570+00:00",
+  "before": {
+    "private": true,
+    "default_branch": "main",
+    "head": "322fdb724fa37bac3de11b3f5a4d064a4bb8411c",
+    "base": "d008639ac6e133b91521dfbb290c5b01f81f9815",
+    "base_ref": "integration",
+    "main": "79cd9aff1ee239bd0422e684b4e8d58b73bb7c0f",
+    "checks": [
+      {
+        "name": "checks / foundation (windows-latest)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "checks / foundation (macos-latest)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "checks / foundation (ubuntu-latest)",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ],
+    "review_state": {
+      "reviewThreads": {
+        "nodes": [],
+        "pageInfo": {
+          "hasNextPage": false
+        }
+      },
+      "reviewRequests": {
+        "totalCount": 0
+      }
+    },
+    "hosted_run": {
+      "id": 42343511152,
+      "head_sha": "322fdb724fa37bac3de11b3f5a4d064a4bb8411c",
+      "conclusion": "success",
+      "url": "https://github.com/Navigata1/aura/actions/runs/42343511152"
+    },
+    "independent_review_files": [
+      "standards-review.md",
+      "spec-review.md"
+    ]
+  },
+  "checks_watch": "checks / foundation (macos-latest)\tpass\t1m7s\thttps://github.com/Navigata1/aura/actions/runs/42343511152/job/128316150870\t\nchecks / foundation (ubuntu-latest)\tpass\t57s\thttps://github.com/Navigata1/aura/actions/runs/42343511152/job/128316150742\t\nchecks / foundation (windows-latest)\tpass\t1m38s\thttps://github.com/Navigata1/aura/actions/runs/42343511152/job/128316150876\t\nchecks / foundation (macos-latest)\tpass\t1m7s\thttps://github.com/Navigata1/aura/actions/runs/42343511152/job/128316150870\t\nchecks / foundation (ubuntu-latest)\tpass\t57s\thttps://github.com/Navigata1/aura/actions/runs/42343511152/job/128316150742\t\nchecks / foundation (windows-latest)\tpass\t1m38s\thttps://github.com/Navigata1/aura/actions/runs/42343511152/job/128316150876\t\n",
+  "after": {
+    "merged": true,
+    "merge_commit_sha": "fdd588cd2288f193d945e32f31c481b0eeee1607",
+    "merged_at": "2026-11-07T05:39:57Z",
+    "main": "79cd9aff1ee239bd0422e684b4e8d58b73bb7c0f",
+    "private": true,
+    "squash_author_noreply_verified": true,
+    "cli_output": "",
+    "issue_11_state": "closed",
+    "integration_runs": [
+      {
+        "id": 42343689947,
+        "name": "Integration checks",
+        "status": "in_progress",
+        "conclusion": null,
+        "url": "https://github.com/Navigata1/aura/actions/runs/42343689947"
+      }
+    ]
+  }
+}

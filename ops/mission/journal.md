@@ -84,3 +84,10 @@
 - Real public CLI regressions force Python legacy defaults using documented runtime environment flags. The unchanged baseline fails separately for diff content, filenames and commit messages under pinned Python3.12; the repair passes locally. This is not yet fresh hosted Windows proof.
 - PR checks now run all three hosted operating systems for every ticket; no assertion or retry policy changed. This is CI matrix work, not paid model inference.
 - No models, audio, owner acts, paid runs, main release or C03 merge. Full T02/C02/nightly acceptance remain open.
+
+## 2026-11-07T05:42:46.183524+00:00 — C03 repaired and integration verified
+
+- PR #12 merged at fdd588c after both exact-head reviews and all three PR checks. Fresh integration run42343689947 completed successfully on Linux, macOS and Windows. Issue #11 is closed; C03 is done within its software scope.
+- Original failed integration run42342742232 remains recorded; no failed run was retried to erase its result. Copied the final independent reviews, merge proof and separate completed integration receipt.
+- Full T02, C02 and actual scheduled-nightly acceptance remain open. No models, audio, playback, owner listening or paid jobs occurred; main remains unchanged.
+- This documentation checkpoint publishes that implementation state. Its own eventual publication CI belongs in the external receipt rather than another recursive state commit.
