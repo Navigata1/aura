@@ -915,6 +915,46 @@ def build_scenarios(docs: list[dict], L: dict) -> list[dict]:
     sc("LANE-RECORD-LEGACY-ASSEMBLED-READ-IN-LLC", ["lane.record_eligible"], "An llc job reads the world's 1.0.0 assembled "
        "hymn, whose lineage is by reference only: its lanes still come from the Basic Pitch source through assembled_from.",
        [m1_bp, m2_bp, tr_bp, reads("job_asm_llc", "prj_venture", "llc", get("melody-spec", "mel_hymn_asm", 1))])
+    # --- C07: a transcription's license chain is its transcriber's, the profile its job ran, exactly (no extra entries)
+    bp_components = PROFILES["transcribe-basic-pitch"]["components"]
+    pyin_tr = {"method": "pyin-hmm", "profile_id": "analysis-transcribe-pyin-hmm",
+               "eligible_lanes": lanes_of(PROFILES["analysis-transcribe-pyin-hmm"]["components"]),
+               "license_chain": lic(PROFILES["analysis-transcribe-pyin-hmm"]["components"])}
+
+    def retranscribed(doc, **changes):
+        doc = copy.deepcopy(doc)
+        doc["source"]["transcription"].update(copy.deepcopy(changes))
+        return rehash(doc)
+
+    def bp_lineage(**changes):
+        """Revisions 1 and 2 of Basic Pitch's hymn with one transcription change, and the job that output revision 1."""
+        revs = [retranscribed(m1_bp, **changes), retranscribed(m2_bp, **changes)]
+        return revs + [dict(copy.deepcopy(tr_bp), outputs=[{"role": "melody_spec", "sha256": revs[0]["content_sha256"]}])]
+
+    src_laundered = retranscribed(m2_bp, license_chain=pyin_tr["license_chain"])
+    asm_src_laundered = retranscribed(asm_bp, license_chain=pyin_tr["license_chain"])
+    sc("LANE-RECORD-SOURCE-CHAIN-LAUNDERED", ["lane.record_eligible"], "The reviewer's case: Basic Pitch's corrected hymn, "
+       "the assembly's source revision, carries the all-lanes pYIN transcriber's license chain with Basic Pitch's lanes, and "
+       "its 1.1.0 assembled copy inherits that chain exactly; a transcription's license chain is derived from its "
+       "transcriber, so an exact copy of a wrong chain is still refused.",
+       [m1_bp, src_laundered, tr_bp, asm_src_laundered, reads("job_asm_read", "prj_hymn", "individual", asm_src_laundered)])
+    sc("LANE-RECORD-CHAIN-MISSING", ["lane.record_eligible"], "Every revision Basic Pitch drafted carries an empty license "
+       "chain, so nothing downstream would name Basic Pitch's terms; a transcription's license chain equals its "
+       "transcriber's, with nothing missing.", bp_lineage(license_chain=[]))
+    sc("LANE-RECORD-CHAIN-EXTRA", ["lane.record_eligible"], "Every revision Basic Pitch drafted lists its transcriber's "
+       "license chain plus the studio's own code. The chain must equal the transcriber's, not merely contain it, so an "
+       "extra entry is refused even though every revision agrees.",
+       bp_lineage(license_chain=lic(bp_components + ["studio-own-code"])))
+    altered_terms = lic(bp_components)
+    altered_terms[0]["code_license"] = "MIT"
+    sc("LANE-RECORD-CHAIN-TERMS-ALTERED", ["lane.record_eligible"], "Every revision Basic Pitch drafted rewrites Basic "
+       "Pitch's code license in its license chain instead of copying the register's terms.",
+       bp_lineage(license_chain=altered_terms))
+    misnamed = bp_lineage(**pyin_tr)
+    sc("LANE-RECORD-TRANSCRIBER-MISNAMED", ["lane.record_eligible"], "The hymn's transcription job ran Basic Pitch, but "
+       "every revision it drafted names the all-lanes pYIN transcriber, with pYIN's lanes and license chain, and an llc job "
+       "reads one; the transcriber is the profile its transcription job ran, so naming another would widen the lanes.",
+       misnamed + [reads("job_mis_llc", "prj_venture", "llc", misnamed[1])])
     sc("REGISTRY-UNVERIFIED-IN-LLC", ["registry.lane_policy_consistent"],
        "A component whose license is still UNVERIFIED claims the individual and llc lanes; both forbid an unverified license.",
        [edit(("component-register", "components.fake-overlay"), unverified_everywhere)])

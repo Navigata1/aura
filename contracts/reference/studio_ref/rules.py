@@ -11,6 +11,7 @@ from __future__ import annotations
 import re
 from datetime import datetime, timedelta
 from decimal import Decimal
+from operator import itemgetter
 from typing import Callable
 
 from . import audition, ledger, timemodel
@@ -893,7 +894,32 @@ def _release_blockers(w: World) -> list[Finding]:
     return out
 
 
-@rule("lane.record_eligible", "A transcribed MelodySpec carries its transcriber's lanes, and every revision built on it (corrections, assembly) inherits them; an assembled revision carries its source revision's capture and transcription exactly (a 1.0 record may leave them null, inheriting by reference); no project holds, and no job reads, a melody revision outside its lanes.")
+def _transcription_findings(w: World, m: dict) -> list[Finding]:
+    """A revision's transcription names the profile its transcription job ran (that job records the profile revision)
+    and carries that transcriber's lanes and license chain: the register's terms for exactly its components, in any
+    order, with nothing missing, altered or extra (C07)."""
+    tr = m["source"]["transcription"]
+    if tr is None:
+        return []
+    out = []
+    job = w.ids["job"].get(tr["job_id"])
+    if job is not None and job["profile_id"] != tr["profile_id"]:
+        out.append((at(m), f"transcription names {tr['profile_id']}, but its job {job['id']} ran {job['profile_id']}"))
+    profile = w.profiles.get(tr["profile_id"])
+    if profile is None:
+        return out
+    declared = w.component_lanes(profile["components"])
+    if set(tr["eligible_lanes"]) != declared:
+        out.append((at(m), f"transcription lanes {sorted(tr['eligible_lanes'])} != its transcriber's {sorted(declared)}"))
+    derived = [w.register_entry(c) for c in profile["components"] if c in w.components]
+    by_component = itemgetter("component_id")
+    if sorted(tr["license_chain"], key=by_component) != sorted(derived, key=by_component):
+        out.append((at(m), f"transcription license chain {sorted(map(by_component, tr['license_chain']))} != its transcriber "
+                           f"{profile['id']}'s {sorted(map(by_component, derived))} with the register's terms"))
+    return out
+
+
+@rule("lane.record_eligible", "A transcribed MelodySpec carries its transcriber's lanes and license chain: its transcription names the profile its transcription job ran, with that profile's lanes and the register's terms for exactly its components, nothing extra; every revision built on it (corrections, assembly) inherits them; an assembled revision carries its source revision's capture and transcription exactly (a 1.0 record may leave them null, inheriting by reference); no project holds, and no job reads, a melody revision outside its lanes.")
 def _record_eligible(w: World) -> list[Finding]:
     out = []
     memo: dict[tuple, set] = {}
@@ -916,11 +942,7 @@ def _record_eligible(w: World) -> list[Finding]:
 
     by_sha: dict[str, tuple[dict, set]] = {}
     for m in w.by_kind.get("melody-spec", []):
-        tr = m["source"]["transcription"]
-        if tr is not None and tr["profile_id"] in w.profiles:
-            declared = w.component_lanes(w.profiles[tr["profile_id"]]["components"])
-            if set(tr["eligible_lanes"]) != declared:
-                out.append((at(m), f"transcription lanes {sorted(tr['eligible_lanes'])} != its transcriber's {sorted(declared)}"))
+        out += _transcription_findings(w, m)
         af = m["source"]["assembled_from"]
         origin = w.melodies.get((af["melody"]["melody_id"], af["melody"]["rev"])) if af is not None else None
         legacy = m["schemaVersion"].startswith("1.0.")
