@@ -8,13 +8,15 @@ The control service and web UI are portable across macOS, Windows and Linux; the
 ## Read first
 
 - `docs/research/OWNER-DECISIONS-2026-11-07.md`: the current build. The repository is public for the build phase, so
-  hosted CI stays free, and returns to private at production level. Nothing sensitive goes into the repository, issues,
-  PRs or CI logs. Merges into `integration` need green three-OS CI, enforced by rulesets, plus an independent review bound
-  to the PR's patch. The continuation report's expansion trials are now in the plan.
+  hosted CI stays free, and returns to private at production level. What may never appear on a public surface is hard
+  rule 10. Merges into `integration` need green three-OS CI, enforced by rulesets, plus an independent review bound to
+  the PR's patch. The continuation report's expansion trials are now in the plan.
 - `docs/research/OWNER-DECISIONS-2026-11-06.md`: the merge policy: green current-head CI and independent review,
   integration only. November 7 supersedes its visibility: the repository is public during the build and returns to
   private at production level. November 7 also adds the server-side rulesets in place of its "procedural only" note.
-  Every other rule in it stays.
+  It relaxes the "changed base invalidates the review" clause for clean integration-only updates: the reviewed patch
+  must equal the merged patch (`git patch-id --stable`), with fresh three-OS CI on the new head. Every other rule in it
+  stays.
 - `docs/research/OWNER-DECISIONS-2026-10-29.md`: Jon's continuation instruction and O-03 amendment to Extreme SSD.
   Then read `docs/research/OWNER-DECISIONS-2026-10-09.md` for binding O-01…O-11 and owner-pending defaults.
   The November 7, November 6 and October 29 amendments win where they change earlier decisions; all other owner decisions and owner-act gates remain.
@@ -89,9 +91,11 @@ The control service and web UI are portable across macOS, Windows and Linux; the
 10. **No secrets in the client.** The RunPod API key, the HF token and tailnet pairing secrets live in the OS keychain
     through `keyring`. They never appear in code, the web bundle, API responses, logs, fixtures, evidence or commits.
     Worker tokens and burst URLs never cross the Studio API. No `.env` with real values is ever committed. Because the
-    repository is public during the build (November 7 decision), nothing sensitive goes into commits, issues, PR
-    bodies, review files committed under `ops/`, or CI logs. That means no secrets, personal addresses, audio, weights,
-    or private paths beyond `/Volumes/STUDIO/...`.
+    repository is public during the build (November 7 decision), nothing sensitive goes onto any public surface:
+    tracked files and commit messages, issues, PR bodies, comments and reviews, review and merge files committed under
+    `ops/`, and CI logs. That means no secrets, personal addresses, audio, weights, or private paths beyond
+    `/Volumes/STUDIO/...`. A private path is an absolute path that names a local account, such as one under a home
+    directory. This is the one statement of the rule, and other documents point here.
 11. **Public contact (IDC Rule 07).** The only contact address anywhere is `hello@islanddevcrew.com`, as text (in code
     formatting in Markdown), stored once in `contracts/product.json`. Never a `mailto:` link, never a personal address,
     in code, copy, contracts, manifests, package metadata, docs or commit metadata. Commits use the GitHub noreply
@@ -138,7 +142,7 @@ The control service and web UI are portable across macOS, Windows and Linux; the
 
 GitHub Issues on `Navigata1/aura` via `gh`. The repository is public during the build phase and private again at
 production level (`docs/research/OWNER-DECISIONS-2026-11-07.md`). Issues, PRs, comments, reviews and CI logs are public,
-so none of them may hold secrets, personal addresses, audio, weights or private paths beyond `/Volumes/STUDIO/...`.
+so hard rule 10 applies to all of them.
 Run every `gh` command for this repo as `GH_TOKEN="$(gh auth token --user Navigata1)" gh …` so the machine's default
 account is never switched. See `docs/agents/issue-tracker.md`.
 

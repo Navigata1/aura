@@ -10,7 +10,7 @@ Everything else follows `docs/spec/architecture.md` and the ADRs it cites.
 Work only in the external ticket worktree. The canonical checkout remains docs-only.
 
 ```sh
-source /Users/IDC2.5/.config/studio/env.sh
+source ~/.config/studio/env.sh
 export PATH="/Volumes/STUDIO/envs/node/22.22.3/bin:$PATH"
 cd /Volumes/STUDIO/worktrees/01-foundation
 source scripts/dev/studio-env.sh
@@ -44,7 +44,8 @@ the personal Mac volume adapter or claim physical storage qualification. CI test
 OS mount responses at the subprocess/filesystem boundary. Actual storage probes, playback, listening and paid runs
 remain separate gates. Windows symlink privilege is not assumed; the escape test runs on the Unix runners.
 
-T01 declares Linux PR checks plus macOS/Windows integration and nightly checks. A workflow definition is not an
+T01 declared Linux PR checks plus macOS/Windows integration and nightly checks; since PR #12 (2026-11-06) every PR runs
+on Linux, macOS and Windows, and the `integration` ruleset requires all three. A workflow definition is not an
 executed check. Scheduled and manual workflows become available only when their definition reaches the default
 branch; only Jon release-merges `integration` to `main`. Branch protection and owner prerequisites remain tracked
 separately and must be satisfied before T01 closes.
@@ -288,7 +289,7 @@ least 10 GiB, and nothing you are about to do writes to `/System/Volumes/Data`.
 
 ## Repository workflow
 
-The November 6 owner amendment requires green current-head CI and independent review against the current integration base before a ticket merge. Keep the repository private. Branch protection is not available on the current plan; enforce these checks procedurally and match the reviewed head at merge. See `docs/research/OWNER-DECISIONS-2026-11-06.md`.
+The November 6 owner amendment requires green current-head CI and independent review against the current integration base before a ticket merge. The November 7 decision (`docs/research/OWNER-DECISIONS-2026-11-07.md`) makes the repository public during the build, so `CLAUDE.md` hard rule 10 governs everything posted. Rulesets now enforce PR-only, squash-only merges into `integration`, the three `checks / foundation (…)` jobs and an up-to-date branch. The independent review stays procedural and is bound to the PR's patch (`git diff <merge-base>...<head> | git patch-id --stable`), and `main` takes only Jon's release merge. See also `docs/research/OWNER-DECISIONS-2026-11-06.md`.
 
 Ticket worktrees come from a bare clone on the volume, so their commits, indexes and fetched packs never land in the
 canonical checkout's `.git` on the internal disk (`~/Music Gen/aura` stays the docs checkout only).
@@ -374,9 +375,9 @@ The rest are planned and land with the tickets that build them:
 Run the stdlib scripts with `uv run python`, so they use the workspace's 3.12 rather than whichever `python3` is first
 on `PATH`.
 
-CI (planned): `pr.yml` runs on Linux for every PR (contracts, control, fake and analysis conformance with the mutants,
-headless Playwright, the lints). `integration.yml` and the nightly add macOS and Windows, with Playwright on macOS
-Chromium and screenshots attached. A self-hosted Mac runner produces hardware evidence and never runs paid jobs.
+CI: since PR #12, `pr.yml`, `integration.yml` and the nightly all run the foundation checks on Linux, macOS and Windows.
+Planned additions join as their tickets land: fake and analysis conformance with the mutants, headless Playwright on
+every PR, and Playwright on macOS Chromium with screenshots attached in the nightly. A self-hosted Mac runner produces hardware evidence and never runs paid jobs.
 
 ## Per-OS notes
 
