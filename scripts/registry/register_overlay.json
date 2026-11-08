@@ -1,5 +1,5 @@
 {
-  "description": "The studio's decisions layered over docs/research/evidence-register.json when scripts/registry/sync.py regenerates contracts/registry/components.v1.json. Every entry cites the ADR or document it comes from. Edit this file (or the evidence register), never components.v1.json.",
+  "description": "The studio's decisions layered over docs/research/evidence-register.json when scripts/registry/sync.py regenerates contracts/registry/components.v1.json. Every entry cites the ADR or document it comes from. Edit this file (or the evidence register), never components.v1.json. license_verification replaces named fields of a row from its pinned primary sources; open_rows names the gate and the label of a row that cannot close yet.",
   "lane_rules": {
     "research_includes_individual": "ADR-0011 rule 5: research is the private-experiments lane, so every component allowed in individual is also allowed in research."
   },
@@ -46,12 +46,6 @@
       ],
       "source": "O-06: non-commercial scorers are allowed in individual and research projects (diagnostics only, ADR-0005)."
     },
-    "mir-eval": {
-      "lanes": [
-        "research"
-      ],
-      "source": "lanes.v1.json: individual and llc forbid an unverified license; widened when its license row is verified (T03)."
-    },
     "g2p-phonemizer": {
       "lanes": [
         "research"
@@ -70,21 +64,27 @@
       ],
       "source": "lanes.v1.json: individual and llc forbid an unverified license; widened by the codec license ticket."
     },
-    "mido": {
-      "lanes": [
-        "research"
-      ],
-      "source": "lanes.v1.json: individual and llc forbid an unverified license; widened when T03 verifies it."
-    },
     "codegen-tools": {
       "lanes": [
         "research"
       ],
       "source": "lanes.v1.json: stack row, widened when T01 verifies the stack rows."
+    },
+    "mp3-encoder": {
+      "lanes": [
+        "research"
+      ],
+      "source": "lanes.v1.json: individual and llc forbid an unverified license; widened when T102 codec-checks verifies an encoder."
+    },
+    "lyric-aligner": {
+      "lanes": [
+        "research"
+      ],
+      "source": "lanes.v1.json: individual and llc forbid an unverified license; widened when T84 lyric-alignment verifies an aligner."
     }
   },
   "release_blockers": {
-    "source": "ADR-0011 rule 7 and RECONCILIATION.md §6 D-11 item 6, plus copyleft rows from §4.",
+    "source": "ADR-0011 rule 7 and RECONCILIATION.md §6 D-11 item 6, plus copyleft rows from §4. T03 (2026-11-07) verified mir_eval and mido, added the MP3 encoder and the lyric aligner as unverified rows, and classed waveform-playlist copyleft for its LGPL-3.0 waveform-data dependency.",
     "non_commercial_weights": [
       "yue2-3b",
       "yue2-cpp",
@@ -154,17 +154,18 @@
       "roformer-community-ckpts",
       "scipy",
       "soundfile",
-      "libsndfile"
+      "libsndfile",
+      "waveform-playlist"
     ],
     "unverified": [
-      "mir-eval",
       "g2p-phonemizer",
       "midi-synth-soundfont",
       "audio-decoder",
       "vocalparse",
       "songecho",
-      "mido",
-      "codegen-tools"
+      "codegen-tools",
+      "mp3-encoder",
+      "lyric-aligner"
     ],
     "obligations": [
       "minimax-music3",
@@ -174,7 +175,7 @@
     ]
   },
   "obligations": {
-    "source": "RECONCILIATION.md §4 (output terms and redistribution columns).",
+    "source": "RECONCILIATION.md §4 (output terms and redistribution columns). T03 rows from their pinned license texts (2026-11-07).",
     "ace-step-1.5-2b": [
       "apache_notice"
     ],
@@ -296,10 +297,51 @@
     ],
     "vite": [
       "attribution"
+    ],
+    "mido": [
+      "attribution"
+    ],
+    "mir-eval": [
+      "attribution"
+    ],
+    "axe-core": [
+      "attribution"
+    ],
+    "lucide": [
+      "attribution"
+    ],
+    "wavesurfer-core": [
+      "attribution"
+    ],
+    "waveform-playlist": [
+      "attribution"
+    ],
+    "signalsmith-stretch": [
+      "attribution"
+    ],
+    "newsreader": [
+      "attribution",
+      "share_alike"
+    ],
+    "ibm-plex-sans": [
+      "attribution",
+      "share_alike"
+    ],
+    "ibm-plex-mono": [
+      "attribution",
+      "share_alike"
+    ],
+    "bravura-text": [
+      "attribution",
+      "share_alike"
+    ],
+    "yue-abc-tools": [
+      "attribution",
+      "apache_notice"
     ]
   },
   "v1_path": {
-    "source": "architecture.md §3-§4, §7.3, §10; ADR-0002, ADR-0004, ADR-0005, ADR-0011 rule 6.",
+    "source": "architecture.md §3-§4, §7.3, §10; ADR-0002, ADR-0004, ADR-0005, ADR-0011 rule 6. T03: screens.md section 0.1 (fonts and icons), the accessibility audit, T56, T84, T102.",
     "ids": [
       "ace-step-1.5-2b",
       "ace-step-1.5-xl",
@@ -355,11 +397,20 @@
       "types-react-dom",
       "keyring",
       "node",
-      "python"
+      "python",
+      "axe-core",
+      "newsreader",
+      "ibm-plex-sans",
+      "ibm-plex-mono",
+      "bravura-text",
+      "lucide",
+      "yue-abc-tools",
+      "mp3-encoder",
+      "lyric-aligner"
     ]
   },
   "supplement": {
-    "source": "Components on the v1 path that the evidence register has no row for: the studio's own code and the stack libraries whose licenses RECONCILIATION.md §8 lists as never checked. Their licenses are recorded as UNVERIFIED, not assumed. T01 stack rows updated from pinned primary sources on 2026-10-29; source license verification does not imply installed artifact or transitive-license verification.",
+    "source": "Components on the v1 path that the evidence register has no row for: the studio's own code and the stack libraries whose licenses RECONCILIATION.md §8 lists as never checked. Their licenses are recorded as UNVERIFIED, not assumed. T01 stack rows updated from pinned primary sources on 2026-10-29; source license verification does not imply installed artifact or transitive-license verification. T03 rows (interface fonts and icons, the accessibility audit, the YuE skill's abc_tools.py, the MP3 encoder and the lyric aligner) added on 2026-11-07 from pinned primary sources; open rows stay UNVERIFIED.",
     "rows": [
       {
         "id": "neutralvoice",
@@ -406,20 +457,23 @@
         "name": "mido (MIDI import and export in Score)",
         "category": "dsp",
         "role": "Standard MIDI File read and write for MelodySpec round trips (architecture.md §4.6).",
-        "code_license": "UNVERIFIED (not checked against a primary source)",
+        "code_license": "MIT",
         "weights_license": "n/a",
         "output_terms": "n/a",
         "gated": null,
         "verdict": "evaluate",
-        "verdict_condition": "Its license row must be verified before adoption (P0-9).",
+        "verdict_condition": "License verified at 1.3.3 (T03); the adopting ticket pins its version and audits its resolved dependencies.",
         "operator_lanes": [
           "individual",
           "llc"
         ],
-        "redistribution_blocker": "Unverified license.",
-        "evidence_status": "unverified",
-        "primary_sources": [],
-        "notes": "Named in the D-11 unverified list."
+        "redistribution_blocker": "None (MIT); retain the copyright and permission notice.",
+        "evidence_status": "confirmed",
+        "primary_sources": [
+          "https://raw.githubusercontent.com/mido/mido/7313549206d95ab8e14d24f91b502fac0264a8e2/LICENSE",
+          "https://pypi.org/pypi/mido/1.3.3/json"
+        ],
+        "notes": "Named in the D-11 unverified list. T03 license verification 2026-11-07: version 1.3.3 (tag 1.3.3, commit 7313549); LICENSE SHA-256 bd038e5ad24b8d703970b51c070669e8ab0d06f4efb008665261b0183af7eb1c (MIT); PyPI 1.3.3 declares MIT and requires packaging and importlib-metadata. See docs/research/licenses/plumbing-sources-2026-11-07.json."
       },
       {
         "id": "fastapi",
@@ -991,7 +1045,379 @@
           "https://raw.githubusercontent.com/python/cpython/v3.12.13/LICENSE"
         ],
         "notes": "T01 source-license verification 2026-10-29. Version: 3.12.13. Source SHA-256: 3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf. See docs/research/licenses/stack-sources-2026-10-29.json. Upstream CPython source license verified; python-build-standalone distribution has additional bundled dependencies, requiring separate artifact inventory before redistribution."
+      },
+      {
+        "id": "axe-core",
+        "name": "axe-core 4.14.0 and @axe-core/playwright 4.14.0 (accessibility audit, development only)",
+        "category": "ui-runtime",
+        "role": "Rule engine of the Playwright accessibility audit over every screen (CLAUDE.md rule 14). Development and CI only: never in the web bundle or the control service.",
+        "code_license": "MPL-2.0",
+        "weights_license": "n/a (no weights)",
+        "output_terms": "Audit reports only; no model output terms.",
+        "gated": null,
+        "verdict": "evaluate",
+        "verdict_condition": "License verified (T03). Its adopting ticket pins 4.14.0 or re-verifies a later pin and keeps it a development dependency: the web-bundle license allowlist refuses MPL-2.0.",
+        "operator_lanes": [
+          "individual",
+          "llc"
+        ],
+        "redistribution_blocker": "None for use as a test tool: MPL-2.0 is file-level copyleft, so only modified axe-core files would have to stay MPL-2.0, and none are vendored, modified or shipped (interpretation, not legal advice).",
+        "evidence_status": "confirmed",
+        "primary_sources": [
+          "https://raw.githubusercontent.com/dequelabs/axe-core/e797173108eadfa4355fe06af331791734e1757f/LICENSE",
+          "https://raw.githubusercontent.com/dequelabs/axe-core/e797173108eadfa4355fe06af331791734e1757f/LICENSE-3RD-PARTY.txt",
+          "https://raw.githubusercontent.com/dequelabs/axe-core-npm/2375f7f5523a2accaeef91a3cb12e30a46e7fbea/LICENSE",
+          "https://registry.npmjs.org/axe-core/4.14.0",
+          "https://registry.npmjs.org/@axe-core/playwright/4.14.0"
+        ],
+        "notes": "T03 license verification 2026-11-07: axe-core 4.14.0 (tag v4.14.0, commit e797173), LICENSE SHA-256 af175b9d96ee93c21a036152e1b905b0b95304d4ae8c2c921c7609100ba8df7e (MPL-2.0); it bundles MIT and ISC code listed in LICENSE-3RD-PARTY.txt (SHA-256 4f8563870d0fca38bbc3e00b6f670cb7fa9f380ba9f26a7f7d1184a6b18b1653). @axe-core/playwright 4.14.0 (axe-core-npm tag v4.14.0, commit 2375f7f, the npm gitHead), LICENSE SHA-256 812e9d96e900a093ae4d1d3f22c5f82f568a0a0461c3007a99d00573d41c5461 (MPL-2.0), depends on axe-core ~4.14.0. npm declares MPL-2.0 for both. See docs/research/licenses/plumbing-sources-2026-11-07.json."
+      },
+      {
+        "id": "newsreader",
+        "name": "Newsreader (variable, optical sizes; Google Fonts build)",
+        "category": "ui-runtime",
+        "role": "Display and heading face: song titles, screen titles, movement numerals, the reveal (screens.md section 0.1, Type). Self-hosted from the control service's origin and subset.",
+        "code_license": "OFL-1.1 (no Reserved Font Name)",
+        "weights_license": "n/a (no weights)",
+        "output_terms": "None for documents and screens set in it; the font files themselves stay under OFL-1.1.",
+        "gated": null,
+        "verdict": "evaluate",
+        "verdict_condition": "License verified (T03). The adopting ticket self-hosts the pinned files with OFL.txt beside them; with no Reserved Font Name declared, a subset may keep the family name (interpretation, not legal advice).",
+        "operator_lanes": [
+          "individual",
+          "llc"
+        ],
+        "redistribution_blocker": "None: OFL-1.1 allows bundling and redistribution with the license text, but not selling the fonts by themselves.",
+        "evidence_status": "confirmed",
+        "primary_sources": [
+          "https://raw.githubusercontent.com/google/fonts/8b0a1d0f5983c89bc2b93f1b5fb55f9e252744b5/ofl/newsreader/OFL.txt",
+          "https://raw.githubusercontent.com/google/fonts/8b0a1d0f5983c89bc2b93f1b5fb55f9e252744b5/ofl/newsreader/METADATA.pb",
+          "https://raw.githubusercontent.com/productiontype/Newsreader/cfcb4f7af0e52c25e8df2a2431814c8e5fe2e155/OFL.txt"
+        ],
+        "notes": "T03 license verification 2026-11-07: pinned to google/fonts commit 8b0a1d0, whose ofl/newsreader holds the variable Newsreader[opsz,wght] and Newsreader-Italic[opsz,wght] fonts; its METADATA.pb (SHA-256 dc0bcb264c09d663c9a4f559e4f5392fd7d9f62139ad9cbba39253ec43aa315b) names the license OFL and the upstream productiontype/Newsreader repository. OFL.txt SHA-256 fdfad38143ec470553cae82a1e45320bdd1b9ec70415d37bd0171051d8a4ded8, byte-identical upstream at commit cfcb4f7. No Reserved Font Name is declared. See docs/research/licenses/plumbing-sources-2026-11-07.json."
+      },
+      {
+        "id": "ibm-plex-sans",
+        "name": "IBM Plex Sans 1.1.0",
+        "category": "ui-runtime",
+        "role": "All interface text, controls and body copy (screens.md section 0.1, Type). Self-hosted and subset; only Plex Sans 400 is preloaded.",
+        "code_license": "OFL-1.1 with Reserved Font Name \"Plex\"",
+        "weights_license": "n/a (no weights)",
+        "output_terms": "None for documents and screens set in it; the font files themselves stay under OFL-1.1.",
+        "gated": null,
+        "verdict": "evaluate",
+        "verdict_condition": "License verified (T03). A subset is a Modified Version (OFL-FAQ 2.6), which may not use the Reserved Font Name \"Plex\" without IBM's written permission (OFL-1.1 condition 3): the adopting ticket renames subset files or ships them unmodified, and takes the files from the pinned tag rather than the npm package (interpretation, not legal advice).",
+        "operator_lanes": [
+          "individual",
+          "llc"
+        ],
+        "redistribution_blocker": "None: OFL-1.1 allows bundling with the license text; a modified version must drop the Reserved Font Name \"Plex\".",
+        "evidence_status": "confirmed",
+        "primary_sources": [
+          "https://raw.githubusercontent.com/IBM/plex/1da12f02587b630c07e92692d21492d722f53614/packages/plex-sans/LICENSE.txt",
+          "https://registry.npmjs.org/@ibm/plex-sans/1.1.0"
+        ],
+        "notes": "T03 license verification 2026-11-07: version 1.1.0 (tag @ibm/plex-sans@1.1.0, commit 1da12f0, the npm gitHead); packages/plex-sans/LICENSE.txt SHA-256 7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da (OFL-1.1, Reserved Font Name \"Plex\"). npm 1.1.0 declares OFL-1.1, depends on @ibm/telemetry-js and runs an ibmtelemetry postinstall script, so the files come from the pinned tag or an install with scripts disabled. See docs/research/licenses/plumbing-sources-2026-11-07.json."
+      },
+      {
+        "id": "ibm-plex-mono",
+        "name": "IBM Plex Mono 2.5.0",
+        "category": "ui-runtime",
+        "role": "Tabular figures: timecode, hashes, LUFS, dBTP, cents, money, sizes (screens.md section 0.1, Type). Self-hosted and subset.",
+        "code_license": "OFL-1.1 with Reserved Font Name \"Plex\"",
+        "weights_license": "n/a (no weights)",
+        "output_terms": "None for documents and screens set in it; the font files themselves stay under OFL-1.1.",
+        "gated": null,
+        "verdict": "evaluate",
+        "verdict_condition": "License verified (T03). A subset is a Modified Version (OFL-FAQ 2.6), which may not use the Reserved Font Name \"Plex\" without IBM's written permission (OFL-1.1 condition 3): the adopting ticket renames subset files or ships them unmodified, and takes the files from the pinned tag rather than the npm package (interpretation, not legal advice).",
+        "operator_lanes": [
+          "individual",
+          "llc"
+        ],
+        "redistribution_blocker": "None: OFL-1.1 allows bundling with the license text; a modified version must drop the Reserved Font Name \"Plex\".",
+        "evidence_status": "confirmed",
+        "primary_sources": [
+          "https://raw.githubusercontent.com/IBM/plex/2f9ba1b25957d958db71a849e85d72e3ecfb845a/packages/plex-mono/LICENSE.txt",
+          "https://registry.npmjs.org/@ibm/plex-mono/2.5.0"
+        ],
+        "notes": "T03 license verification 2026-11-07: version 2.5.0 (tag @ibm/plex-mono@2.5.0, commit 2f9ba1b, the npm gitHead); packages/plex-mono/LICENSE.txt SHA-256 7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da (OFL-1.1, Reserved Font Name \"Plex\"; identical to Plex Sans 1.1.0). npm 2.5.0 declares OFL-1.1, depends on @ibm/telemetry-js and runs an ibmtelemetry postinstall script, so the files come from the pinned tag or an install with scripts disabled. See docs/research/licenses/plumbing-sources-2026-11-07.json."
+      },
+      {
+        "id": "bravura-text",
+        "name": "Bravura Text 1.482 (SMuFL text font from the Bravura repository)",
+        "category": "ui-runtime",
+        "role": "Music glyphs only (note values, accidentals, time signatures), subset to the glyphs used (screens.md section 0.1, Type).",
+        "code_license": "OFL-1.1 with Reserved Font Name \"Bravura\"",
+        "weights_license": "n/a (no weights)",
+        "output_terms": "None for documents and screens set in it; the font files themselves stay under OFL-1.1.",
+        "gated": null,
+        "verdict": "evaluate",
+        "verdict_condition": "License verified (T03). The planned subset is a Modified Version (OFL-FAQ 2.6), which may not use the Reserved Font Name \"Bravura\" without Steinberg's written permission (OFL-1.1 condition 3): the adopting ticket renames the subset or ships the unmodified BravuraText.otf (interpretation, not legal advice).",
+        "operator_lanes": [
+          "individual",
+          "llc"
+        ],
+        "redistribution_blocker": "None: OFL-1.1 allows bundling with the license text; a modified version must drop the Reserved Font Name \"Bravura\".",
+        "evidence_status": "confirmed",
+        "primary_sources": [
+          "https://raw.githubusercontent.com/steinbergmedia/bravura/37b194378b710cc40e406ab6c4b07608bb9548ae/LICENSE.txt",
+          "https://raw.githubusercontent.com/steinbergmedia/bravura/37b194378b710cc40e406ab6c4b07608bb9548ae/redist/OFL.txt",
+          "https://raw.githubusercontent.com/steinbergmedia/bravura/37b194378b710cc40e406ab6c4b07608bb9548ae/redist/OFL-FAQ.txt"
+        ],
+        "notes": "T03 license verification 2026-11-07: tag bravura-1.482 (commit 37b1943) ships redist/otf/BravuraText.otf. LICENSE.txt SHA-256 bdca252186865f3b2c0e76da4a4e335c14ba1d37f80194fca254ddfa88e84fbf and redist/OFL.txt SHA-256 c24929be7028026a65ee8894da1e3c36d2a4ccce0548d9ba8ba64509f46319ee carry the same OFL-1.1 terms and the Reserved Font Name \"Bravura\" (they differ in the copyright year and whitespace); redist/OFL-FAQ.txt (version 1.1-update6), SHA-256 8acd621722e71dc89de0087a264497b8964d240eedc53677f6344ab20ce36fd7, treats web-font subsetting as modification (section 2.6). See docs/research/licenses/plumbing-sources-2026-11-07.json."
+      },
+      {
+        "id": "lucide",
+        "name": "Lucide 1.70.0 (lucide-react 1.70.0)",
+        "category": "ui-runtime",
+        "role": "Generic action icons at a 1.5 px stroke; meaning uses the studio's own glyphs beside words (screens.md section 0.1, Iconography).",
+        "code_license": "ISC (icons derived from Feather are MIT)",
+        "weights_license": "n/a (no weights)",
+        "output_terms": "Icon graphics only; no output terms beyond the license notices.",
+        "gated": null,
+        "verdict": "evaluate",
+        "verdict_condition": "License verified (T03); the adopting ticket pins lucide-react 1.70.0 or re-verifies a later pin.",
+        "operator_lanes": [
+          "individual",
+          "llc"
+        ],
+        "redistribution_blocker": "None: retain the ISC notice and the MIT notice for the Feather-derived icons.",
+        "evidence_status": "confirmed",
+        "primary_sources": [
+          "https://raw.githubusercontent.com/lucide-icons/lucide/b826f0c527e1498f5e46f41ca0277ccab144bf31/LICENSE",
+          "https://registry.npmjs.org/lucide-react/1.70.0",
+          "https://registry.npmjs.org/lucide/1.70.0"
+        ],
+        "notes": "T03 license verification 2026-11-07: tag 1.70.0 (commit b826f0c); LICENSE SHA-256 b495047bd93a9b06913511076f504daba17d5bbeb3e0650f3bb53a4220329c57 carries ISC for Lucide and the MIT notice for the Feather-derived icons it lists. npm lucide and lucide-react 1.70.0 declare ISC and have no runtime dependencies. See docs/research/licenses/plumbing-sources-2026-11-07.json."
+      },
+      {
+        "id": "yue-abc-tools",
+        "name": "YuE2 skill abc_tools.py (yue2-music skill 1.2.0)",
+        "category": "transcription",
+        "role": "Validates the two-voice YuE2 ABC that Score.to_abc emits; T56 runs it over the ABC goldens in CI.",
+        "code_license": "Apache-2.0",
+        "weights_license": "n/a (no weights)",
+        "output_terms": "Validation reports only.",
+        "gated": null,
+        "verdict": "evaluate",
+        "verdict_condition": "License verified (T03). The adopting ticket (T56) pins this commit and the file's SHA-256 and keeps the Apache-2.0 license with any copy.",
+        "operator_lanes": [
+          "individual",
+          "llc"
+        ],
+        "redistribution_blocker": "None: Apache-2.0; keep the license text and notices with a copy.",
+        "evidence_status": "confirmed",
+        "primary_sources": [
+          "https://raw.githubusercontent.com/multimodal-art-projection/YuE/72272f907522dcca2e97c848d6c8f0d343999183/skills/yue2-music/LICENSE",
+          "https://raw.githubusercontent.com/multimodal-art-projection/YuE/72272f907522dcca2e97c848d6c8f0d343999183/skills/yue2-music/SKILL.md",
+          "https://raw.githubusercontent.com/multimodal-art-projection/YuE/72272f907522dcca2e97c848d6c8f0d343999183/skills/yue2-music/scripts/abc_tools.py"
+        ],
+        "notes": "T03 license verification 2026-11-07: tag yue2-music-v1.2.0 (commit 72272f9). skills/yue2-music/LICENSE is Apache-2.0, SHA-256 cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30, byte-identical to the repository LICENSE; SKILL.md (SHA-256 49909582781c3c144dd2b71f0830ce45901d6a03d645a0b6dff0a35669440152) states the skill is Apache 2.0, its instrumental helpers MIT, and that model weights keep their own licenses. abc_tools.py is 15,734 bytes, SHA-256 ea04b922dacebec7ad257a2f8d83bdb5dfecb7a23110c1a3121c5c41c313930e, standard library only. The YuE2 weights' MODEL_LICENSE governs the weights, not this file (interpretation, not legal advice). See docs/research/licenses/plumbing-sources-2026-11-07.json."
+      },
+      {
+        "id": "mp3-encoder",
+        "name": "MP3 encoder for export bundles (to choose)",
+        "category": "dsp",
+        "role": "An optional MP3 deliverable beside WAV and MIDI in the export bundle (feature inventory I1; T102).",
+        "code_license": "UNVERIFIED (no candidate chosen)",
+        "weights_license": "n/a",
+        "output_terms": "n/a",
+        "gated": null,
+        "verdict": "evaluate",
+        "verdict_condition": null,
+        "operator_lanes": [
+          "individual",
+          "llc"
+        ],
+        "redistribution_blocker": "Unverified license.",
+        "evidence_status": "unverified",
+        "primary_sources": [],
+        "notes": "No candidate in the register (the spec's Unverified capabilities table). T102 chooses one, records its exact build and checks its license; a GPL or LGPL encoder would run only in a worker process."
+      },
+      {
+        "id": "lyric-aligner",
+        "name": "Lyric word-alignment model for singing (to choose)",
+        "category": "alignment",
+        "role": "Word timings for the S10 lyrics strip and for line or word replace (T84).",
+        "code_license": "UNVERIFIED (no candidate chosen)",
+        "weights_license": "UNVERIFIED",
+        "output_terms": "n/a",
+        "gated": null,
+        "verdict": "evaluate",
+        "verdict_condition": null,
+        "operator_lanes": [
+          "individual",
+          "llc"
+        ],
+        "redistribution_blocker": "Unverified license.",
+        "evidence_status": "unverified",
+        "primary_sources": [],
+        "notes": "No candidate chosen. WhisperX, SOFA and the Montreal Forced Aligner have their own rows; T84 chooses an aligner after its license row, declares it by a named contract-fix PR and evaluates it on singing."
       }
     ]
+  },
+  "license_verification": {
+    "source": "T03 (P0-9), 2026-11-07: pinned primary-source checks recorded in docs/research/licenses/plumbing-verification-2026-11-07.md and plumbing-sources-2026-11-07.json (license-text SHA-256 per source). Each entry replaces the named fields of an evidence-register row; rows bound to engine profiles keep their copied terms. Interpretation, not legal advice.",
+    "rows": {
+      "mir-eval": {
+        "code_license": "MIT",
+        "verdict_condition": "License verified at 0.8.2 (T03); the hum-benchmark ticket pins its version and audits its resolved dependencies.",
+        "redistribution_blocker": "None (MIT); retain the copyright and permission notice.",
+        "evidence_status": "confirmed",
+        "primary_sources": [
+          "https://raw.githubusercontent.com/mir-evaluation/mir_eval/8db0b3812e2032544c1fc00d02d4256cab043f3d/LICENSE.txt",
+          "https://pypi.org/pypi/mir_eval/0.8.2/json"
+        ],
+        "notes": "Named by GAP-01. T03 license verification 2026-11-07: version 0.8.2 (tag 0.8.2, commit 8db0b38); LICENSE.txt SHA-256 220f461a41157a81832520a84d95bfa5c4616f553dbf3ef8ac1fb9562244c069 (MIT); PyPI 0.8.2 declares MIT and requires numpy, scipy and decorator. See docs/research/licenses/plumbing-sources-2026-11-07.json."
+      },
+      "librosa-pyin": {
+        "evidence_status": "confirmed",
+        "primary_sources": [
+          "https://raw.githubusercontent.com/librosa/librosa/3e4ff7bf5898ac5b326e7dee56463b4b325b91cb/LICENSE.md",
+          "https://pypi.org/pypi/librosa/1.0.0/json",
+          "https://github.com/librosa/librosa/releases/tag/1.0.0"
+        ],
+        "notes": "Vocadito pitch F1 0.653 (author-run benchmark). Whether librosa's DTW is adequate for the adherence metric is UNVERIFIED. T03 license verification 2026-11-07: version 1.0.0 (tag 1.0.0, commit 3e4ff7b); LICENSE.md SHA-256 79aa4a8086d51ac89f9a7322f546670cdef73e758c67f04587b7af8afafd6df8 (ISC); PyPI 1.0.0 declares ISC. It requires soundfile (over libsndfile, LGPL-2.1-or-later) and soxr>=1.0.0 (PyPI soxr 1.1.0 declares LGPL-2.1-or-later), so its environment stays in a worker process; the adopting ticket audits the resolved dependency licenses. See docs/research/licenses/plumbing-sources-2026-11-07.json."
+      },
+      "pyloudnorm": {
+        "evidence_status": "corrected",
+        "primary_sources": [
+          "https://raw.githubusercontent.com/csteinmetz1/pyloudnorm/b8d67bfd3ce5deef872f688fcfa491a0ca69fddd/LICENSE",
+          "https://pypi.org/pypi/pyloudnorm/0.2.0/json",
+          "https://github.com/csteinmetz1/pyloudnorm"
+        ],
+        "notes": "Implements BS.1770-4; no true-peak meter (normalize.peak is sample peak). Add own >=4x oversampled TP meter. Whether BS.1770-5 changes integrated loudness for stereo programme relative to -4 is UNVERIFIED (X-47); label results 'BS.1770-4 (pyloudnorm)' until checked. T03 license verification 2026-11-07: version 0.2.0 (tag v0.2.0, commit b8d67bf); LICENSE SHA-256 1616faebaa2add8b57d4f76403c0c4aa427fdb0d241d8e52b7a12dce4906beaa (MIT); PyPI 0.2.0 declares MIT and requires numpy and scipy. See docs/research/licenses/plumbing-sources-2026-11-07.json."
+      },
+      "swiftf0": {
+        "verdict_condition": "Individual and research until T54's provenance review: the MIT-labelled bundled ONNX was trained on CC BY-NC-SA 4.0 data.",
+        "evidence_status": "confirmed",
+        "primary_sources": [
+          "https://raw.githubusercontent.com/lars76/swift-f0/d1ba77fe5331310b778ebe126b6cb3656d41d24f/LICENSE",
+          "https://pypi.org/pypi/swift-f0/0.3.0/json",
+          "https://raw.githubusercontent.com/lars76/swift-f0-training/a3095d23d79097ed7f5fad59d1cb2e2a826501a8/README.md",
+          "https://huggingface.co/datasets/lars1234/pitch-benchmark/blob/e98642fc2cb82e4dc201421b24f24c523989d344/README.md",
+          "https://github.com/lars76/swift-f0",
+          "https://github.com/lars76/swift-f0-training",
+          "https://github.com/lars76/pitch-benchmark"
+        ],
+        "notes": "Frame-level pitch F1@50c on Vocadito 0.847 (RMVPE 0.862, pYIN 0.653) in a benchmark run by SwiftF0's own author (VENDOR). LLC use pending a provenance review. T03 license verification 2026-11-07: version 0.3.0 (tag v0.3.0, commit d1ba77f); LICENSE SHA-256 5f4711c748cf616e894fbab28144ee74f1650dfe1bbd6801c44f11e054508c18 (MIT); PyPI 0.3.0 declares MIT and requires onnxruntime and numpy. The package bundles swift_f0/model.onnx (135,090 bytes, git blob 3619f9ab7ad7c852b995550c74d971be236225d7). The training README (lars76/swift-f0-training commit a3095d2, SHA-256 3633675c5402159ef9c1b7b7b8276594dc6903a887ecefafea983e5796e69f10) and the lars1234/pitch-benchmark dataset card (revision e98642f, SHA-256 cb67633ffe1602342ab560275426094c49fb5dfe4aa8400efc2fe5fbbbb460cc) state CC BY-NC-SA 4.0 for research use: the training-data caveat stands until T54. See docs/research/licenses/plumbing-sources-2026-11-07.json."
+      },
+      "basic-pitch": {
+        "verdict_condition": "Provisional: a local hum benchmark (Basic Pitch vs SwiftF0.segment_notes vs pYIN+HMM, mir_eval COn/COnP/COnPOff) decides the A4 transcriber. LLC use waits on T54: three of its five training datasets carry non-commercial or academic-only terms.",
+        "evidence_status": "confirmed",
+        "primary_sources": [
+          "https://raw.githubusercontent.com/spotify/basic-pitch/9991303bba609a3b93089d13ec80d1d495083596/LICENSE",
+          "https://raw.githubusercontent.com/spotify/basic-pitch/9991303bba609a3b93089d13ec80d1d495083596/NOTICE",
+          "https://raw.githubusercontent.com/spotify/basic-pitch/9991303bba609a3b93089d13ec80d1d495083596/basic_pitch/data/README.md",
+          "https://pypi.org/pypi/basic-pitch/0.4.0/json",
+          "https://arxiv.org/abs/2203.09893",
+          "https://zenodo.org/records/3371780",
+          "https://magenta.tensorflow.org/datasets/maestro",
+          "https://zenodo.org/records/4599666",
+          "https://web.archive.org/web/20170315154633/http://mac.citi.sinica.edu.tw/ikala/EULA.pdf",
+          "https://zenodo.org/records/2620624",
+          "https://arxiv.org/abs/2410.05455",
+          "https://github.com/spotify/basic-pitch",
+          "https://github.com/spotify/basic-pitch/issues/194",
+          "https://github.com/spotify/basic-pitch/issues/203"
+        ],
+        "notes": "Last release 0.4.0 (2024-08-16). Works best on one instrument; trained partly on iKala singing. No hum benchmark. Only humming figure: onset+pitch F1 0.434 octave-invariant / 0.268 octave-aware, no offsets (arXiv 2410.05455, course project, COMMUNITY). Main has unreleased 2025-11 fixes (#179). T03 license verification 2026-11-07: version 0.4.0 (tag v0.4.0, commit 9991303); LICENSE SHA-256 929c910bae2152fa87199a5d0660e09263419b7eee6d4b301d05ee2aaf211c37 (Apache-2.0) and NOTICE SHA-256 b810e55c0e3b520fabb45fc2ccc74880187bf84e309971968541cc812dcde905, which a redistribution carries; PyPI 0.4.0 declares no license. The bundled models sit under basic_pitch/saved_models/icassp_2022 (nmp.onnx git blob c30e5f9438e798604b7177aa26be1fe64482f767). Training datasets, the input to T54 (Table 1 of arXiv 2203.09893v2, PDF SHA-256 63040c77ce170c4c353f287ee5b777a57615098d799e998ec618a4f5de7d5b36, and the v0.4.0 data scripts): GuitarSet (CC BY 4.0), MAESTRO (CC BY-NC-SA 4.0), Slakh2100 redux (CC BY 4.0), iKala (end-user agreement: academic purposes only, no profit; the official host no longer resolves, so the archived copy is cited) and the MedleyDB pitch-tracking subset (CC BY-NC-SA 4.0, non-commercial research only). Molina and Phenicx were test-only. The v0.4.0 data README calls its scripts a selection of the datasets used to train the original model. See docs/research/licenses/plumbing-sources-2026-11-07.json."
+      },
+      "demucs-4.1.0": {
+        "evidence_status": "corrected",
+        "primary_sources": [
+          "https://raw.githubusercontent.com/adefossez/demucs/6a604bb002d12c4fbabb303ba64db40b5c5743f0/LICENSE",
+          "https://raw.githubusercontent.com/adefossez/demucs/6a604bb002d12c4fbabb303ba64db40b5c5743f0/demucs/hf.py",
+          "https://pypi.org/pypi/demucs/4.1.0/json",
+          "https://github.com/facebookresearch/demucs/issues/327#issuecomment-1134828611",
+          "https://github.com/facebookresearch/demucs/issues/384#issuecomment-1262197483",
+          "https://github.com/facebookresearch/demucs/issues/508#issuecomment-1663033356",
+          "https://huggingface.co/adefossez/HTDemucs/blob/cbc8a9b1a87023b7fd74e7b3412e6321c0eab003/README.md",
+          "https://huggingface.co/adefossez/HTDemucs-ft/blob/d74ac89c3a1e874fc78f152555cf4d8533f06cd4/README.md",
+          "https://huggingface.co/adefossez/HTDemucs-6s/blob/3c5ee475be622df764938de97e4281a7b07ffa58/README.md",
+          "https://github.com/adefossez/demucs",
+          "https://github.com/facebookresearch/demucs"
+        ],
+        "notes": "htdemucs and ft = 4 stems; 6s = 6 (guitar, piano; piano weak); no backing vocals. facebookresearch repo archived 2025-01-01; adefossez fork is the maintained one (v4.1.0, 2026-07-11). REVISION (GAP-06): license moved from 'unknown' to 'non-commercial (author statement)'. T03 license verification 2026-11-07: code version 4.1.0 (tag v4.1.0, commit 6a604bb); LICENSE SHA-256 cf9b17822d1fcd4ff32ccbe14183386fb3adf6f2ff92dc184130823f7fc28173 (MIT); PyPI 4.1.0 declares MIT. It loads weights from the Hugging Face namespace adefossez (HTDemucs at cbc8a9b, HTDemucs-ft at d74ac89, HTDemucs-6s at 3c5ee47; their cards state no license) and falls back to dl.fbaipublicfiles.com. The author's statements stand: the weights are not covered by MIT and are provided only for scientific purposes (#327, comment SHA-256 6c270699f34a907672c3f908bd88a6e6e095582ade08fa85cd27eea0dc38560e), for personal or research usage because MusDB is research-only (#384, c295bafc3c375f4e51896fc4f067be2f2a0f59a0b708d3bff256790d0e01a78f), for research purposes (#508, 89302c88686241aa31c78496265aa9e3ec075c7802eb19771eb598697f9f95d2). It requires lameenc>=1.2 (PyPI lameenc 1.9.0 declares LGPL-3.0-or-later), which also keeps it in a worker process. See docs/research/licenses/plumbing-sources-2026-11-07.json."
+      },
+      "demucs-mlx": {
+        "evidence_status": "corrected",
+        "primary_sources": [
+          "https://raw.githubusercontent.com/ssmall256/demucs-mlx/9950c7daaa6ee3cf9622005e8be350c6c0163142/LICENSE",
+          "https://pypi.org/pypi/demucs-mlx/1.6.1/json",
+          "https://huggingface.co/ssmall256/demucs-mlx/blob/35ecb1a906ec420b1a28069db575ad070d35860e/README.md",
+          "https://github.com/ssmall256/demucs-mlx",
+          "https://pypi.org/project/demucs-mlx/",
+          "https://huggingface.co/ssmall256/demucs-mlx"
+        ],
+        "notes": "Swift package demucs-mlx-swift (MIT) also exists. T03 license verification 2026-11-07: version 1.6.1 (tag v1.6.1, commit 9950c7d); LICENSE SHA-256 15086279d32c0f00c577c0f52ff428daf98b8a1fec0264da1c717c88ad464f51 (MIT, with Meta's copyright line); PyPI 1.6.1 declares MIT. The Hugging Face card (revision 35ecb1a, SHA-256 2388b971e9ce0fa29f19618ee456713771bcedd9702c678b892b6b50175d363d) tags the converted weights MIT, the same license as Demucs, and credits Meta's training; the Demucs author's research and personal restriction on those weights still applies (interpretation, not legal advice). See docs/research/licenses/plumbing-sources-2026-11-07.json."
+      },
+      "wavesurfer-core": {
+        "redistribution_blocker": "None: retain the BSD-3-Clause notice.",
+        "evidence_status": "confirmed",
+        "primary_sources": [
+          "https://raw.githubusercontent.com/katspaugh/wavesurfer.js/b0ce8810d564af06a60070b14a4a54901baabd48/LICENSE",
+          "https://registry.npmjs.org/wavesurfer.js/8.0.5",
+          "https://github.com/katspaugh/wavesurfer.js",
+          "https://github.com/katspaugh/wavesurfer.js/releases/tag/8.0.0"
+        ],
+        "notes": "8.0.0 2026-09-23; 8.0.2 2026-10-07. T03 license verification 2026-11-07: version 8.0.5 (tag 8.0.5, commit b0ce881, the npm gitHead); LICENSE SHA-256 0fc992dc27cc34dde78bfeb024b4cadff6320f0dcbee2f1228efaeb533ca1364 (BSD-3-Clause); npm 8.0.5 declares BSD-3-Clause and has no runtime dependencies. See docs/research/licenses/plumbing-sources-2026-11-07.json."
+      },
+      "waveform-playlist": {
+        "name": "waveform-playlist v16 (@waveform-playlist/browser 16.0.1, + Tone.js)",
+        "code_license": "MIT (waveform-playlist packages); @waveform-playlist/browser 16.0.1 requires waveform-data ^4.5.2, which is LGPL-3.0",
+        "redistribution_blocker": "As published it pulls waveform-data (LGPL-3.0) into the web bundle, which the bundle's license deny-list refuses: adopting it needs that dependency removed or replaced (interpretation, not legal advice).",
+        "verdict_condition": "Evaluated against the studio's own timeline (T77) only with waveform-data kept out of the web bundle.",
+        "evidence_status": "corrected",
+        "primary_sources": [
+          "https://raw.githubusercontent.com/naomiaro/waveform-playlist/f1739abdedfcdf350dbc2e63276987a5b8a9381c/LICENSE.md",
+          "https://raw.githubusercontent.com/naomiaro/waveform-playlist/f1739abdedfcdf350dbc2e63276987a5b8a9381c/packages/browser/package.json",
+          "https://registry.npmjs.org/@waveform-playlist/browser/16.0.1",
+          "https://raw.githubusercontent.com/bbc/waveform-data.js/de3b1c375eb60b7df439e5c1c5b7687d7401fd1b/LICENSE",
+          "https://registry.npmjs.org/waveform-data/4.5.2",
+          "https://raw.githubusercontent.com/Tonejs/Tone.js/d2d52ffa8803b35debd9f19f2da08ad1c3540de0/LICENSE.md",
+          "https://registry.npmjs.org/tone/15.1.22",
+          "https://github.com/naomiaro/waveform-playlist"
+        ],
+        "notes": "v16.0.0 2026-09-28: multiple clips per track, sample-based positions, per-clip gain/fades, crossfade overlaps, AudioWorklet recording, WAV export. T03 license verification 2026-11-07: v16 is @waveform-playlist/browser 16.0.1 (release tag transport-engine-improvements, commit f1739ab); LICENSE.md SHA-256 cf78dfc294dda03fd5aff1f0bbe986c271bcfb7b0d22ab17ef5f8bb70f90e355 (MIT). Its package.json (SHA-256 8368ab543fddefbb7b4ed6df7bbc1de49a7846ad557f60b235240ba0ab4d0e68) requires waveform-data ^4.5.2, as does @waveform-playlist/ui-components 14.0.1; waveform-data 4.5.2 (tag v4.5.2, commit de3b1c3, the npm gitHead) is LGPL-3.0, LICENSE SHA-256 888134436f08d197516da9d7891700f5c332f76d2241aa8ff15892690183a9ee. The Tone.js 15.1.22 peer is MIT (commit d2d52ff, the npm gitHead; LICENSE.md SHA-256 391ed5af60b7b5d1f74b31040c5fa645e6e238f3d9b4c971941a262a675bbdcd); the other peers (styled-components 6, @dnd-kit 0.5) declare MIT on npm. See docs/research/licenses/plumbing-sources-2026-11-07.json."
+      },
+      "signalsmith-stretch": {
+        "redistribution_blocker": "None: retain the MIT notices of Stretch and Signalsmith Linear.",
+        "evidence_status": "confirmed",
+        "primary_sources": [
+          "https://raw.githubusercontent.com/Signalsmith-Audio/signalsmith-stretch/a670068d9aeb64913331d5cc29337b19a457a7df/LICENSE.txt",
+          "https://raw.githubusercontent.com/Signalsmith-Audio/signalsmith-stretch/a670068d9aeb64913331d5cc29337b19a457a7df/CMakeLists.txt",
+          "https://raw.githubusercontent.com/Signalsmith-Audio/linear/de55e6a50ffcf6f8f43f649692d94691c7025151/LICENSE.txt",
+          "https://registry.npmjs.org/signalsmith-stretch/1.3.2",
+          "https://github.com/Signalsmith-Audio/signalsmith-stretch"
+        ],
+        "notes": "Quality unmeasured. T03 license verification 2026-11-07: version 1.4.0 (tag 1.4.0, commit a670068); LICENSE.txt SHA-256 ee2ef82481ffb445ecdd4b3a4c1f82c0cddb2da8fe39d8e8dc384fffb3e7f06f (MIT). Its CMake build fetches Signalsmith Linear 0.6.4 (commit de55e6a, MIT, LICENSE.txt SHA-256 072b5e9eb5b22880bdf6256324654cf3ce53dba828edb911921121e1be09d9c3). The WASM/AudioWorklet build at that tag is web/release version 1.3.2, published on npm as signalsmith-stretch 1.3.2 (MIT, its repository on the author's own host); the adopting ticket pins the build it uses. See docs/research/licenses/plumbing-sources-2026-11-07.json."
+      }
+    }
+  },
+  "open_rows": {
+    "source": "T03 (P0-9) and the spec's Unverified capabilities table: a row that cannot close today names the ticket that closes it and the label shown until then, and stays unverified and research-only (lanes.v1.json).",
+    "rows": {
+      "audio-decoder": {
+        "gate": "T102 codec-checks records the decoder's exact build (PyAV or an ffmpeg build with its configure flags) and verifies its license",
+        "label": "Hums arrive as WAV only"
+      },
+      "mp3-encoder": {
+        "gate": "T102 codec-checks chooses an MP3 encoder, records its exact build and verifies its license",
+        "label": "Export bundles carry WAV and MIDI only"
+      },
+      "g2p-phonemizer": {
+        "gate": "T72 lyric-per verifies the chosen G2P's license before adoption (an espeak-ng-backed G2P is GPL and stays in the ASR/PER worker), then T73 lyric-per-on-mac validates the lyric error rate",
+        "label": "No lyric-error badge"
+      },
+      "midi-synth-soundfont": {
+        "gate": "T101 midi-synth-eval records each candidate synth's and soundfont's license, including any restriction on rendered audio",
+        "label": "No instrument rendering; NeutralVoice is the only guide"
+      },
+      "lyric-aligner": {
+        "gate": "T84 lyric-alignment chooses an aligner after its license row and records its evaluation on singing",
+        "label": "No line or word replace"
+      }
+    }
   }
 }

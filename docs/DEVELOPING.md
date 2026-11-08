@@ -355,7 +355,7 @@ worktree:
 |---|---|
 | `python3 scripts/spec/validate.py` | The contract gate (below). |
 | `python3 contracts/reference/generate_fixtures.py` | Regenerates the golden fixtures deterministically. Contract tickets only. |
-| `python3 scripts/registry/sync.py` | Regenerates `contracts/registry/components.v1.json`. |
+| `python3 scripts/registry/sync.py` | Regenerates `contracts/registry/components.v1.json` and the open-source-readiness register in `docs/research/licenses/`; `--check` also fails when a release blocker is missing from that register. |
 | `python3 scripts/spec/tickets.py --check` | The ticket DAG: shape, edges, reduction, story and inventory traceability, owner gates, path conflicts and slot ancestry. |
 
 The rest are planned and land with the tickets that build them:
@@ -364,7 +364,7 @@ The rest are planned and land with the tickets that build them:
 |---|---|
 | `uv run python scripts/spec/validate.py` | The contract gate: schemas use only keywords the bundled checker implements, every fixture and registry file validates, the stdlib reference re-run matches exactly, seeded-bad fixtures fail, `components.v1.json` regenerates byte-identically, every `legacy/` fixture loads, and `claims_published` holds no MEASURED-LOCAL. |
 | `uv run python contracts/reference/generate_fixtures.py` | Regenerates the golden fixtures deterministically. Contract tickets only. |
-| `uv run python scripts/registry/sync.py` | Regenerates `contracts/registry/components.v1.json` from `docs/research/evidence-register.json`. |
+| `uv run python scripts/registry/sync.py` | Regenerates `contracts/registry/components.v1.json` from `docs/research/evidence-register.json` and the register overlay, and the open-source-readiness register from the same rows. |
 | `uv run pytest services/control` | StudioHarness: the real app on an ephemeral port, a temp store (a 2 GB temp sparse bundle on macOS for the preflight and mount cases), FakeEngine and the analysis worker as real subprocesses, FakeBurstProvider, recorded hardware probes and an injectable clock. Ten minutes or less on a PR. |
 | `uv run pytest workers/conformance --worker <url> --token <token>` | Worker-protocol conformance. Each of the eight mutants in `workers/conformance/mutants/` must fail it. The `--paid` marker goes through the real quote, Jon's UI approval and the reservation; an agent never starts it. |
 | `pnpm --dir apps/web test` | vitest, including the TimeModel twin against `contracts/fixtures/tempo`. |
