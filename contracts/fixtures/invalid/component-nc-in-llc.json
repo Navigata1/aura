@@ -53,7 +53,7 @@
       },
       {
         "path": "scripts/registry/register_overlay.json",
-        "sha256": "73697e896bf8e14e00b5db9c5292611566296937740791e2be7875cb17661fd7"
+        "sha256": "c286b4da118f2f19d4c6518729c4d6441e7c56c68ad90e6b53da8cbfa94eadb3"
       }
     ],
     "kind": "component-register",
