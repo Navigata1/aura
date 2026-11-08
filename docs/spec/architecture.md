@@ -130,7 +130,9 @@ aura/
 │   ├── store/                    hdiutil helpers, band-size measurement
 │   └── ci/                       Rule-07 lint (no mailto link, no address but `hello@islanddevcrew.com`, noreply author),
 │                                 secret scan of the built web bundle, license deny-list (GPL/AGPL/NC) over the control
-│                                 env and web bundle, no-weights check (size + extension)
+│                                 env and web bundle, no-weights check (size + extension), private-path lint (no home
+│                                 that names an account, no home folder but a hidden one, Library or AppData; skips
+│                                 docs/research/sources/; allowed forms listed beside the rule in check.py)
 ├── docs/{adr/, spec/, research/, agents/, evidence/, FORMAT.md, DEVELOPING.md}
 │                                 FORMAT.md documents the store layout so a project is readable without AURA's code;
 │                                 docs/evidence/ holds committed EvidenceRecord JSON + hashes (never audio)
@@ -819,7 +821,7 @@ hdiutil attach -nobrowse -owners on -mountpoint /Volumes/STUDIO "/Volumes/Backup
   evidence/                  hashed captures awaiting commit to docs/evidence/
 ```
 
-The internal disk holds only the OS, the browser, the canonical git checkout at `~/Music Gen/aura` (docs and coordination, no dependencies installed), `~/.config/studio/` (a few KB: volume path, roots, automation token), and keychain entries.
+The internal disk holds only the OS, the browser, the canonical git checkout (docs and coordination, no dependencies installed), `~/.config/studio/` (a few KB: volume path, roots, automation token), and keychain entries.
 
 ### 8.3 The one-volume rule
 

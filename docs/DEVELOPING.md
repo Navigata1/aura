@@ -61,7 +61,7 @@ separately and must be satisfied before T01 closes.
 | pnpm | pinned with `packageManager` (planned) | 11.1.2 | Takes its store and cache from `pnpm-workspace.yaml`, not `.npmrc` (see Environment). |
 | Chromium-based browser | required for the Studio (ADR-0012, Q10 default) | Google Chrome 154.0.8037.98 | The playback gate reads Chrome's `playbackStats` (Chrome 146 and later). Safari is not supported for Studio playback. |
 | ffmpeg | not on the v1-core path | 9.0.1 (Homebrew), configured with `--enable-gpl --enable-version3` | That is a **GPL-3.0 build**. It may only ever run as a separate process inside a worker: never linked, bundled or called by the control service. The decoder choice is an open license ticket (RECONCILIATION §4.9). Captures arrive as WAV, so the core path needs no decoder. |
-| git | | 2.50.1 (Apple Git-155) | `~/Music Gen/aura` and `/Volumes/Backup Plus` contain spaces: always quote them. |
+| git | | 2.50.1 (Apple Git-155) | The canonical checkout's path and `/Volumes/Backup Plus` contain spaces: always quote them. |
 | gh | | 2.92.0 | Older than 2.94, so add sub-issues with the `gh api` fallback in `docs/agents/issue-tracker.md`. |
 | `hdiutil`, `diskutil`, `tmutil`, `launchctl` | macOS built-ins | | Used only by the macOS store adapter and `scripts/store/`. |
 | Containers | none on the Mac in v1 | Colima (Docker 29.4.1): an aarch64 VM with 32 GiB memory and a 100 GiB disk; `~/.colima` holds 33 GiB on the internal disk | Do not pull or build images into this VM, because its disk is internal. The yue2 image is built in CI or on a Linux host (planned). A running VM may hold unified memory that MLX needs (INFERRED); Jon decides whether to stop it during heavy jobs. |
@@ -83,7 +83,7 @@ Per the October 29 owner amendment, everything heavy lives in a dedicated APFS s
 mounted as `/Volumes/STUDIO`:
 models, the Hugging Face, uv, pnpm, pip, torch and Playwright caches, Python interpreters, engine environments,
 worktrees, scratch, logs, evidence captures and, by default, the project store. The internal disk holds only the OS,
-the browser, the canonical docs checkout at `~/Music Gen/aura` (nothing installed), `~/.config/studio/` and keychain
+the browser, the canonical docs checkout (nothing installed), `~/.config/studio/` and keychain
 entries.
 
 Why: the internal Data volume read between 2.0 and 57 GiB free on 2026-10-09 (MEASURED-LOCAL). It fluctuates, and the
@@ -292,7 +292,7 @@ least 10 GiB, and nothing you are about to do writes to `/System/Volumes/Data`.
 The November 6 owner amendment requires green current-head CI and independent review against the current integration base before a ticket merge. The November 7 decision (`docs/research/OWNER-DECISIONS-2026-11-07.md`) makes the repository public during the build, so `CLAUDE.md` hard rule 10 governs everything posted. Rulesets now enforce PR-only, squash-only merges into `integration`, the three `checks / foundation (…)` jobs and an up-to-date branch. The independent review stays procedural and is bound to the PR's patch (`git diff <merge-base>...<head> | git patch-id --stable`), and `main` takes only Jon's release merge. See also `docs/research/OWNER-DECISIONS-2026-11-06.md`.
 
 Ticket worktrees come from a bare clone on the volume, so their commits, indexes and fetched packs never land in the
-canonical checkout's `.git` on the internal disk (`~/Music Gen/aura` stays the docs checkout only).
+canonical checkout's `.git` on the internal disk (that checkout stays docs only).
 
 ```sh
 # once, after the volume exists
@@ -370,7 +370,7 @@ The rest are planned and land with the tickets that build them:
 | `uv run pytest workers/conformance --worker <url> --token <token>` | Worker-protocol conformance. Each of the eight mutants in `workers/conformance/mutants/` must fail it. The `--paid` marker goes through the real quote, Jon's UI approval and the reservation; an agent never starts it. |
 | `pnpm --dir apps/web test` | vitest, including the TimeModel twin against `contracts/fixtures/tempo`. |
 | `pnpm --dir apps/web exec playwright test` | Chromium with `--use-fake-device-for-media-stream --use-file-for-fake-audio-capture=<NeutralVoice hum>.wav`: the UI drives the API, no blind label or hash reaches the DOM or the network, the approval-card copy, keyboard-only operation and an accessibility audit on every screen. |
-| `scripts/ci/` | The Rule-07 lint (no `mailto:`, no address but the public contact, no bare address in Markdown prose, noreply authors only, no author email in a package manifest; on every PR and every push to `integration`), a repo-wide secret scan (tracked files, the PR diff, `docs/evidence/**`) plus a scan of the built web bundle, the license allowlist over the control environment and the web bundle (unknown fails; LGPL, GPL, AGPL, NC, CC-BY-SA, SSPL and BUSL denied), and the no-weights check (size and extension). Each must fail on a planted violation (P0-7). |
+| `scripts/ci/` | The Rule-07 lint (no `mailto:`, no address but the public contact, no bare address in Markdown prose, noreply authors only, no author email in a package manifest; on every PR and every push to `integration`), a repo-wide secret scan (tracked files, the PR diff, `docs/evidence/**`) plus a scan of the built web bundle, the license allowlist over the control environment and the web bundle (unknown fails; LGPL, GPL, AGPL, NC, CC-BY-SA, SSPL and BUSL denied), the no-weights check (size and extension), and the private-path lint (no home path that names an account, and no home-relative path outside a hidden folder, `Library` or `AppData`; `/Volumes/STUDIO/...` and placeholders such as `/Users/<name>/` pass; like the Rule-07 lint it skips `docs/research/sources/`; the full list of forms is beside the rule in `check.py`). Each must fail on a planted violation (P0-7). |
 
 Run the stdlib scripts with `uv run python`, so they use the workspace's 3.12 rather than whichever `python3` is first
 on `PATH`.

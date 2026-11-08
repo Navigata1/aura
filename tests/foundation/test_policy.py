@@ -11,6 +11,34 @@ ROOT = Path(__file__).resolve().parents[2]
 CHECK = ROOT / 'scripts/ci/check.py'
 CONTACT = json.loads((ROOT/'contracts/product.json').read_text())['publicContactText']
 
+def joined(separator,*parts):
+    # Planted paths are assembled at run time, so this file never holds a form it plants.
+    return separator.join(parts)
+
+PRIVATE_PATHS = {
+    'macOS home': joined('/','','Users','someone','notes.txt'),
+    'Linux home': joined('/','','home','someone','notes.txt'),
+    'Windows home': joined('\\','C:','Users','someone','notes.txt'),
+    'Windows home, JSON-escaped': joined('\\\\','D:','Users','someone','notes.txt'),
+    'Windows home, forward slashes': joined('/','c:','users','someone','notes.txt'),
+    'Git Bash home': joined('/','','c','Users','someone','notes.txt'),
+    'WSL home': joined('/','','mnt','c','Users','someone','notes.txt'),
+    'file URL': 'file://'+joined('/','','home','someone','notes.txt'),
+    'tilde into a machine folder': joined('/','~','Projects','notes.txt'),
+    'canonical checkout shape': joined('/','~','Some Folder','checkout'),
+    'home variable into a machine folder': joined('/','$HOME','Some Folder','checkout'),
+    'Windows profile into a machine folder': joined('\\','%USERPROFILE%','Some Folder','checkout'),
+    'placeholder account into a machine folder': joined('/','','Users','<name>','Some Folder','checkout'),
+    'cloud drive under Library': joined('/','~','Library','Mobile Documents','com~apple~CloudDocs','Some Folder'),
+}
+DOCUMENTED_PATHS = '\n'.join([
+    'Studio volume: /Volumes/STUDIO/worktrees/C05-private-path-lint/',
+    'Tool folders: `~/.config/studio/env.sh`, `$HOME/.cache/uv`, `~/Library/Caches/pnpm`, `%USERPROFILE%\\AppData\\Local`',
+    'Placeholders: /Users/<name>/, /home/<user>/.cache/uv, C:\\Users\\<name>\\AppData\\Local, `~/`, `/Users/`',
+    'Not home paths: apps/web/src/home/Home.tsx, ./home/Home, src/Users/List.tsx, https://example.com/home/page, ~400 lines',
+    'Web routes: fetch(`/users/${id}`), GET /users/{id}/orders',
+])
+
 class PolicyTest(unittest.TestCase):
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory()
@@ -22,7 +50,9 @@ class PolicyTest(unittest.TestCase):
     def tearDown(self): self.temp.cleanup()
 
     def scan(self,path,content):
-        p=self.root/path;p.parent.mkdir(parents=True,exist_ok=True);p.write_text(content)
+        p=self.root/path;p.parent.mkdir(parents=True,exist_ok=True)
+        if isinstance(content,bytes):p.write_bytes(content)
+        else:p.write_text(content)
         subprocess.run(['git','-C',str(self.root),'add','-A'],check=True)
         return subprocess.run([sys.executable,str(CHECK),'--root',str(self.root),'--files-only'],text=True,capture_output=True)
 
@@ -57,6 +87,27 @@ class PolicyTest(unittest.TestCase):
 
     def test_lowercase_code_identifier_rejected(self): self.rejected('source.py','testproduct_cache = 1','product-name')
     def test_lowercase_store_format_rejected(self): self.rejected('source.py','format = "testproduct-store"','product-name')
+
+    def test_each_private_path_form_rejected_without_echo(self):
+        for form,text in PRIVATE_PATHS.items():
+            with self.subTest(form=form):
+                result=self.scan('docs/research/notes.md','See '+text+' for details.\n')
+                self.assertNotEqual(result.returncode,0,result.stdout)
+                self.assertIn('docs/research/notes.md: private-path: line 1:',result.stdout)
+                self.assertNotIn('someone',result.stdout+result.stderr)
+    def test_documented_path_forms_allowed(self):
+        result=self.scan('docs/research/notes.md',DOCUMENTED_PATHS)
+        self.assertEqual(result.returncode,0,result.stdout)
+    def test_verbatim_source_archive_is_excluded(self):
+        self.assertEqual(self.scan('docs/research/sources/notes.md',PRIVATE_PATHS['macOS home']).returncode,0)
+    def test_private_path_in_undecodable_bytes_rejected(self):
+        for form,raw in [('invalid UTF-8',b'\xff'+PRIVATE_PATHS['Linux home'].encode()),
+                         ('UTF-16 with a byte-order mark',PRIVATE_PATHS['Windows home'].encode('utf-16'))]:
+            with self.subTest(form=form): self.rejected('evidence.log',raw,'evidence.log: private-path')
+    @unittest.skipIf(os.name=='nt','Windows checkouts store a tracked symlink as a text file, which the text scan reads')
+    def test_private_symlink_target_rejected(self):
+        (self.root/'models').symlink_to(joined('/','','Users','someone','models'))
+        self.rejected('readme.txt','probe','models: private-path')
 
 
 class InstalledLicenseTest(unittest.TestCase):

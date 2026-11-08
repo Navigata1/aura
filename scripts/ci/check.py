@@ -12,6 +12,23 @@ ALLOWED = {'MIT', 'BSD-2-Clause', 'BSD-3-Clause', 'Apache-2.0', 'ISC', '0BSD', '
 DENIED = re.compile(r'(?:L?GPL|AGPL|CC-BY-NC|CC-BY-SA|SSPL|BUSL)', re.I)
 WEIGHTS = {'.safetensors','.ckpt','.pt','.pth','.onnx','.gguf','.bin','.h5','.hdf5'}
 AUDIO = {'.wav','.flac','.mp3','.aif','.aiff','.ogg','.opus','.m4a','.aac','.aifc'}
+# Verbatim source documents. Only the Rule-07 lint and the private-path rule skip this archive; every other rule scans it.
+ARCHIVE = 'docs/research/sources/'
+# Private paths (the public build): tracked content never locates an account's home or a private folder in it.
+# Refused: a home root followed by an account, /Users/<name>/ or /home/<name>/ (case-sensitive, so web routes such as
+# /users/{id} pass; also after /c/, /mnt/c/ or file://) and C:\Users\<name>\ (any drive letter or case, either
+# separator, any escaping). Refused too: a home-relative path (~/, $HOME/, ${HOME}/, $env:USERPROFILE\, %USERPROFILE%\
+# or a placeholder home) into any folder but a hidden one, Library or AppData, and into Library's cloud drives (Mobile
+# Documents, CloudStorage). That covers the internal canonical checkout without this file naming it.
+# Allowed: /Volumes/STUDIO/..., hidden tool folders such as ~/.config/studio/env.sh, ~/Library/Caches/... and
+# angle-bracket placeholders such as /Users/<name>/ (no account has that name). A variable or Shared or runner in the
+# account place is refused. Every tracked file is read, its undecodable bytes and symlink target included. Diagnostics
+# give the line.
+HOME_ROOT = re.compile(r'(?:(?<![\w.~])(?:/mnt/[A-Za-z]|/[A-Za-z])?/(?:Users|home)|(?<!\w)[A-Za-z]:[\\/]+(?i:users))[\\/]+')
+HOME_ALIAS = re.compile(r'(?<![\w~])~|(?i:\$HOME(?!\w)|\$\{HOME\}|\$env:(?:HOME|USERPROFILE)(?!\w)|%USERPROFILE%)')
+PLACEHOLDER = re.compile(r'<[^<>\\/\s]*>')
+NAME = re.compile(r'[\w$%{]')
+PRIVATE_FOLDER = re.compile(r'[\\/]+["\x27]?(?!(?:Library|AppData)(?![\w.-])(?![\\/]+(?:Mobile Documents|CloudStorage)))[\w$%{]')
 
 
 def license_allowed(value):
@@ -40,16 +57,36 @@ def contact_errors(path,text,allowed):
     return problems
 
 
+def private_path_errors(text):
+    problems=[]
+    for number,line in enumerate(text.splitlines(),1):
+        homes=[match.end() for match in HOME_ALIAS.finditer(line)]
+        for match in HOME_ROOT.finditer(line):
+            if placeholder:=PLACEHOLDER.match(line,match.end()): homes.append(placeholder.end())
+            elif NAME.match(line,match.end()): problems.append(f'private-path: line {number}: home directory names an account')
+        problems.extend(f'private-path: line {number}: home path into a machine-specific folder' for end in homes if PRIVATE_FOLDER.match(line,end))
+    return problems
+
+
+def readable(raw):
+    # Undecodable bytes never hide a path: UTF-16 with a byte-order mark (Windows PowerShell 5 output) decodes as such.
+    return raw.decode('utf-16' if raw[:2] in (b'\xff\xfe',b'\xfe\xff') else 'utf-8',errors='replace')
+
+
 def scan_file(root,relative,product,contact):
-    path=root/relative; errors=[]
+    path=root/relative; errors=[]; archived=relative.startswith(ARCHIVE)
+    # A tracked symlink's content is its target, which the checkout may not have.
+    if path.is_symlink() and not archived: errors.extend(private_path_errors(os.readlink(path)))
     if not path.is_file(): return errors
     if path.suffix.lower() in WEIGHTS or path.stat().st_size>=50*1024**2: errors.append('weights: prohibited extension or large tracked file')
     if path.suffix.lower() in AUDIO: errors.append('audio: audio must not be committed')
     if path.stat().st_size>50*1024**2: return errors
-    try: text=path.read_text(encoding='utf-8')
+    raw=path.read_bytes()
+    if not archived: errors.extend(private_path_errors(readable(raw)))
+    try: text=raw.decode('utf-8')
     except UnicodeDecodeError: return errors
     if SECRET.search(text): errors.append('secret: credential-shaped content')
-    if not relative.startswith('docs/research/sources/'):
+    if not archived:
         errors.extend(contact_errors(path,text,contact))
     if path.name in {'package.json','pyproject.toml'}:
         if re.search(r'\bauthors?\b',text,re.I) and EMAIL.search(text): errors.append('manifest: author email forbidden')

@@ -226,7 +226,7 @@ stories 414–422 in group 21 of the spec.
   at `694a545e4ba0b88bf1150137b129582166d3e07f` (2026-07-30) is still the head, under Apache-2.0.
   - Its [README](https://github.com/magenta/magenta-realtime/blob/694a545e4ba0b88bf1150137b129582166d3e07f/README.md)
     says base requires a Pro Max chip for real time, yet marks the M4 Pro as real-time. It lists no M5 Pro.
-  - It downloads models by default to `~/Documents/Magenta/magenta-rt-v2/`, which is on the internal disk, unless
+  - It downloads models by default to `Magenta/magenta-rt-v2/` in the user's Documents folder, which is on the internal disk, unless
     `MAGENTA_HOME` points elsewhere ([paths.py](https://github.com/magenta/magenta-realtime/blob/694a545e4ba0b88bf1150137b129582166d3e07f/magenta_rt/paths.py)).
   - Two runtimes ship: the Python library (`magenta-rt` with its `mlx` extra, streaming through `MagentaRT2Sampler`) and
     the C++ `RealtimeRunner` that the bundled apps use. The vendor's real-time table and its 200 ms figure describe the

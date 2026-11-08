@@ -59,6 +59,13 @@ class GitTextEncodingTest(unittest.TestCase):
             self.assertIn('PR diff: secret: credential-shaped content', result.stdout)
             self.assertNotIn('B' * 36, result.stdout + result.stderr)
 
+            # Neither Unicode text nor a Unicode filename may hide a home path; its account is never echoed.
+            note.write_text('“Evidence” ' + '/'.join(['', 'home', 'someone', 'notes.txt']) + '\n', encoding='utf-8')
+            result = scan()
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn('private-path: line 1:', result.stdout)
+            self.assertNotIn('someone', result.stdout + result.stderr)
+
     def test_unicode_git_inputs_keep_policy_checks_effective(self):
         for filename, content, message in [
             ('notes.md', '\u201cUnicode evidence\u201d\n', 'ASCII subject'),
