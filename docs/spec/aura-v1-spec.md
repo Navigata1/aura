@@ -583,7 +583,7 @@ _Scope: v1-core (stories 361–364, 366–371, 374–375); P6 (stories 365, 372,
 
 361. As Jon, I want the control service and the localhost UI to run on macOS, Windows and Linux, so that I can choose the studio host whenever I need to (O-11) [J19].
 362. As Jon, I want the control service to carry no macOS-only dependency (no `afconvert`, for example), with macOS-only code confined to the sparse-bundle volume adapter and the store's helper scripts, so that porting is configuration, not a rewrite.
-363. As Jon, I want the control service's tests to run on Linux for every pull request and on macOS and Windows for integration and nightly builds, from the first ticket, so that a portability break is caught the day it happens.
+363. As Jon, I want the control service's tests to run on Linux, macOS and Windows for every pull request (since PR #12, 2026-11-06) and for every integration push and nightly build, from the first ticket, so that a portability break is caught the day it happens.
 364. As Jon, I want an operating system labelled "unverified" until the harness and the playback gate pass on a real host running it, not only in CI, so that AURA is never called three-platform ready from one machine.
 365. As Jon, I want a Linux or WSL2 CUDA box on my tailnet to become a worker host that passes conformance on its own host class, with tier 1–3 recommendations made from its real snapshot, so that the second engine can run at home once the hardware is reachable (P6).
 366. As Jon, I want a Linux machine to be able to act as the studio host, with the store as a plain directory, Chromium and local workers, so that I am not tied to the Mac.
@@ -644,6 +644,20 @@ _Scope: v1-core (stories 392–413). Covers [F14, J7]; ADR-0012, ADR-0028, ADR-0
 411. As Jon, I want everything except burst runs and weight downloads to work with no network connection, so that a dead connection never stops me working on a song.
 412. As the maintainer agent, I want frozen legacy fixtures from the first release to load at HEAD forever, so that a format break is caught in CI before it reaches Jon's store.
 413. As the maintainer agent, I want the harness to wait on event sequence numbers, never on sleeps, and to use an injectable clock, so that reliability tests are deterministic and fast.
+
+### 21. Supply-chain pins and expansion trials (added 2026-11-07)
+
+_Scope: v1-core (stories 414–416: the lock advisory check and YuE2's exact pins); research (stories 417–422: the transcription, decoder and instrument trials, run only in research projects). Touches [A4] and [J13] (the decoder trial is one slice of the codec round-trip study), and [A8, C11] without building them. Covers ADR-0002, ADR-0005, ADR-0010, ADR-0011, ADR-0016, ADR-0027; O-06; `docs/research/OWNER-DECISIONS-2026-11-07.md`, which cites each item's pinned primary sources._
+
+414. As Jon, I want an engine environment refused before it is built when its lock resolves a package version that a recorded security advisory lists as vulnerable (the first is GHSA-4prv-5hj7-c2xr: Diffusers 0.42.0 and earlier, patched in 0.42.1), and the versions it did resolve recorded in the environment's evidence, so that a known-vulnerable model loader never runs on my machine and the patched loader is on record.
+415. As the maintainer agent, I want CI to fail when a committed worker lock pins a version inside a recorded advisory's vulnerable range, naming the lock, the package and the advisory, so that a vulnerable loader is caught at the pull request rather than at install.
+416. As Jon, I want YuE2 pinned by an exact source commit, never by a version label or tag, with its code license, its individual-creator permission, its weights license and its VAE license each recorded at its own pinned revision and hashed into my license acceptance, so that I know exactly which terms cover the code and weights behind my R1 candidates (the label 0.1.6 names Apache-2.0 code on main and CC BY-NC 4.0 code at the 0.1.6 tag).
+417. As Jon, I want four hard hum kinds (a one-note phrase with a single duration, adjacent fixed word boundaries, a long melisma, and a noisy vocal standing in for a separated one) generated with known notes and scored for onsets and offsets in a research project, so that I learn where each transcriber breaks before I rely on one.
+418. As Jon, I want GAME and SheetSage2 runnable only as pinned, research-only transcribers behind the process boundary, after I accept their non-commercial terms, with their scores kept out of the default-transcriber decision and out of every register row, so that a research result never widens what my songs may use.
+419. As Jon the listener, I want the same saved ACE latents decoded by the official decoder and by a compatible alternate decoder (ScragVAE first) and auditioned as two blind, level-matched candidates, with problem intervals whose notes name transients, sibilance, stereo image or quiet tails, so that a fidelity claim is decided by my ears and not by a card's spectral figures.
+420. As Jon, I want an alternate decoder used only after its terms are in the component register and I have accepted them, loaded only from its verified, pinned download on the studio volume (never through an engine's own downloader or mirror), and only in research projects until a review widens its lanes, so that a decoder swap never brings unreviewed rights into my songs.
+421. As Jon, I want Magenta RealTime 2 tried on my Mac as a playable instrument worker in a research project, with its code and weights terms recorded at pinned revisions and accepted by me before any download, and with no Studio control, so that I can judge a playable instrument without it touching my v1 songs.
+422. As Jon, I want that trial to pass a smoke gate measured on my own Mac with the worker's own timings on the official Python MLX runtime, not the C++ runner the vendor's figures describe (faster than real time with no underruns over a fixed duration, and a control latency from a MIDI change to the changed audio under a threshold committed before the first measurement, the small checkpoint first) plus my "not garbled" check, with every model and cache file on the studio volume rather than the runtime's default folder in my home directory, so that a vendor's real-time claim becomes a measured fact or an honest failure.
 
 ## Implementation Decisions
 
@@ -1340,12 +1354,14 @@ host is reachable). Each phase's exit criteria are checks that could fail, recor
   A tolerance is never loosened in the same change that makes a failing test pass; widening one is its own fixture
   change with a written reason. Floats appear only where a fixture states a tolerance. Every fixture listed in the
   fixture manifest must be consumed, or a manifest test fails.
-- **Per-OS CI** (ADR-0024): the control service and StudioHarness on Linux for every PR; macOS and Windows on the
-  integration branch and nightly, from the first tickets; Playwright Chromium on Linux per PR and macOS nightly. A
+- **Per-OS CI** (ADR-0024, as noted 2026-11-07): the control service and StudioHarness on Linux, macOS and Windows for
+  every PR (since PR #12; the `integration` ruleset requires all three), every integration push and nightly, from the
+  first tickets; Playwright Chromium on Linux per PR and macOS nightly. A
   self-hosted Mac runner produces hardware evidence (ACE conformance and smoke, store throughput, the playback gate) and
   never runs paid jobs. Lints on every PR, each proven by a planted violation: a mailto link, a personal address, a
   non-noreply author, a 50 MB dummy weight file, a GPL dependency in the control environment, a secret in the web bundle.
-  CI minute rates on a private repo are UNVERIFIED, which is why macOS and Windows run on integration and nightly only.
+  CI minute rates on a private repo are UNVERIFIED. The repository is public for the build so hosted CI stays free (Jon's
+  reason, OWNER-DECISIONS-2026-11-07.md), and the rates matter again before it returns to private.
 - **Evidence gates (real checks, not test seams).** What no fake can show, each producing an evidence record: ACE and
   YuE2 install, conformance and smoke on real host classes with cold and warm timings; Jon's recorded "not garbled"
   checks; store throughput, IOPS and band size on Backup Plus; Jon's blind verdicts; the per-OS Chrome `playbackStats`
@@ -1442,7 +1458,7 @@ host is reachable). Each phase's exit criteria are checks that could fail, recor
 
 | ID | Decision | Where it lands |
 |---|---|---|
-| O-01 | Private `Navigata1/aura`; one issue, one branch and one PR per ticket into an integration branch; native blocking edges | `/to-tickets` and `/implement-spec` workflow; evidence conventions |
+| O-01 | Private `Navigata1/aura`; one issue, one branch and one PR per ticket into an integration branch; native blocking edges (amended 2026-11-07: public for the build phase, private again at production level) | `/to-tickets` and `/implement-spec` workflow; evidence conventions; `docs/research/OWNER-DECISIONS-2026-11-07.md` |
 | O-02 | Four compute tiers, recommended from detected hardware, chosen at install and every session, switchable; tier 4 on this Mac; a rented burst is approved | Install and compute profile stories; Placement; compute profile decisions; YuE2 via burst (R1) |
 | O-03 | Weights and the store on Backup Plus in an APFS sparse bundle; preflight on every volume | Store and disk stories; Storage decisions |
 | O-04 | Hum or sing into a mic, and MIDI (file or live), both becoming an editable MelodySpec | Capture and transcription stories; Score |
@@ -1460,7 +1476,9 @@ host is reachable). Each phase's exit criteria are checks that could fail, recor
   designed and tested only against recorded `nvidia-smi` output, labelled unverified until a host is reachable (P6).
 - **Q4, release plans for the first song.** Default: personal; every export carries an AI-disclosure-ready manifest.
 - **Q5, AURA's code license.** Default: all rights reserved until Jon chooses MIT or Apache-2.0 before the repo goes
-  public; every component must already pass the open-source-readiness register.
+  public; every component must already pass the open-source-readiness register. The repository became public for the
+  build on 2026-11-07 without a license grant, so the default still holds: public visibility is not a license, and Q5
+  stays open (Jon may later choose an open-core or open-source strategy; that is not yet a decision).
 - **Q6, the melody and lyric language.** Default: English lyrics; Jon records his melody as the first hum fixture (it
   becomes an irreplaceable capture and seeds the hum benchmark).
 - **Q8, the listening gate owner.** Default: Jon is the named gate owner and the only voter.
@@ -1518,7 +1536,10 @@ gate passes, the capability is labelled as shown and nothing depends on it silen
 | HeartMuLa and MiniMax on consumer cards (VRAM, one or two GPUs, 32 or 44.1 kHz) | CONTESTED / UNVERIFIED | LLC smoke with license-chain checks (P6-3): `llc-smoke` | LLC pairs are ACE-only |
 | Real diagnostic scorers (audiobox-aesthetics, LAION-CLAP) | Licenses and smoke pending | `diagnostic-scores` (named contract-fix PRs, then smoke) | Fake diagnostics in CI only |
 | An MP3 encoder | No candidate in the register [I1 lists MP3] | Encoder license ticket: `codec-checks` | Export bundles carry WAV and MIDI only |
-| CI minute rates on a private repo | UNVERIFIED | Observed billing, reported in the release-readiness pass: `final-qa` | macOS and Windows on integration and nightly only |
+| CI minute rates on a private repo | UNVERIFIED; the repository is public for the build from 2026-11-07, so Jon can keep hosted CI free (OWNER-DECISIONS-2026-11-07.md) | Observed billing, reported in the release-readiness pass before the return to private: `final-qa` | Three-OS checks on every pull request while the repository is public |
+| GAME and SheetSage2 on one-note, fixed-boundary, melisma and noisy separated-vocal hums | UNVERIFIED; their October fixes are code fixes, not accuracy evidence (GAME's released ONNX graphs predate both, so the trial runs its PyTorch path), and their weights are non-commercial | Research-lane trial with Jon's license acceptances: `transcription-trial` | Not installed; research projects only once they are |
+| A compatible alternate ACE decoder (ScragVAE) improving fidelity | UNVERIFIED; the card's figures are VENDOR, it has no LICENSE file and names no training data | Rights review, then Jon's blind, level-matched verdicts on identical latents: `decoder-trial` | The official decoder only |
+| Magenta RealTime 2 streaming in real time with low control latency on the M5 Pro | VENDOR only, for the C++ runner: the README lists no M5 Pro and says base needs a Pro Max chip, while the introduction says M3 Pro or higher | Smoke gate with latency checks measured on `mlx/m5pro`: `magenta-realtime-trial` | Not installed; no instrument control in the Studio |
 
 ### Interpretations to confirm
 
@@ -1547,6 +1568,8 @@ gate passes, the capability is labelled as shown and nothing depends on it silen
 This spec uses `GLOSSARY.md` as written. Terms it relies on that the glossary does not yet define, offered as input for
 `/domain-modeling`: **owner-ui scope** and **automation token** (ADR-0031), **challenge nonce**, **StudioHarness**,
 **FakeEngine** and **FakeBurstProvider**, **mutant worker**, **declined route**, **egress list**, **figure label** (already
-defined) applied to the registry's two columns, and **next useful action**.
+defined) applied to the registry's two columns, and **next useful action**. Group 21 (2026-11-07) adds **security
+advisory** (a published vulnerability with its package, vulnerable range and patched version), **decoder** and **latents**
+(an engine's VAE and the representation it decodes), and **control latency** (from a MIDI change to the changed audio).
 
 Contact for the project, as text only: `hello@islanddevcrew.com`.

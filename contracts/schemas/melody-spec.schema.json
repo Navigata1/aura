@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "melody-spec/1",
-  "description": "The owned, editable melody from a hum, a MIDI file or live MIDI (GLOSSARY: MelodySpec; ADR-0004, ADR-0033). 960 PPQ, tempo as integer microseconds per quarter note, one half-up rounding function for tick<->frame. Revisions are immutable; an edit makes rev+1 on a named base. The tempo map carries its own revision, which rises exactly when the tempo or meter changes (tempo.rev_on_change). spec_kind assembled is the full-length melody laid out along a SongForm (ADR-0032). content_sha256 is the sha256 of the canonical JSON of this record without that field (record.content_hash).",
+  "description": "The owned, editable melody from a hum, a MIDI file or live MIDI (GLOSSARY: MelodySpec; ADR-0004, ADR-0033). 960 PPQ, tempo as integer microseconds per quarter note, one half-up rounding function for tick<->frame. Revisions are immutable; an edit makes rev+1 on a named base. The tempo map carries its own revision, which rises exactly when the tempo or meter changes (tempo.rev_on_change). spec_kind assembled is the full-length melody laid out along a SongForm (ADR-0032); minor 1.1.0 adds its explicit form (contracts/README.md, SongForm assembly). content_sha256 is the sha256 of the canonical JSON of this record without that field (record.content_hash).",
   "type": "object",
   "required": ["kind", "schemaVersion", "melody_id", "rev", "base_rev", "project_id", "created_at", "spec_kind", "ppq",
                "tempo_map", "key", "notes", "phrases", "source", "quantize", "content_sha256"],
@@ -82,9 +82,18 @@
         }
       ]
     },
+    "form": {"$comment": "added in 1.1.0", "$ref": "#/$defs/assembledForm"},
     "content_sha256": {"$ref": "common.schema.json#/$defs/sha256"}
   },
   "allOf": [
+    {
+      "if": {"required": ["form"]},
+      "then": {"properties": {"spec_kind": {"const": "assembled"}, "schemaVersion": {"pattern": "^1\\.[1-9][0-9]*\\.[0-9]+$"}}}
+    },
+    {
+      "if": {"properties": {"spec_kind": {"const": "assembled"}, "schemaVersion": {"pattern": "^1\\.[1-9][0-9]*\\.[0-9]+$"}}},
+      "then": {"required": ["form"]}
+    },
     {
       "if": {"properties": {"rev": {"const": 1}}},
       "then": {"properties": {"base_rev": {"type": "null"}}},
@@ -101,6 +110,45 @@
     }
   ],
   "$defs": {
+    "assembledForm": {
+      "description": "Explicit, never inferred from the last note: end_tick is the full-form duration (an instrumental outro keeps its bars) and sections lists every repeat of every SongForm section in form order, tiling [0, end_tick), with the phrases each repeat places at their assembled spans. Section names survive for the timeline and MIDI markers.",
+      "type": "object",
+      "required": ["end_tick", "sections"],
+      "additionalProperties": false,
+      "properties": {
+        "end_tick": {"type": "integer", "minimum": 1},
+        "sections": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["section_id", "name", "section_kind", "repeat", "start_tick", "end_tick", "phrases"],
+            "additionalProperties": false,
+            "properties": {
+              "section_id": {"$ref": "song-spec.schema.json#/properties/form/properties/sections/items/properties/id"},
+              "name": {"$ref": "song-spec.schema.json#/properties/form/properties/sections/items/properties/name"},
+              "section_kind": {"$ref": "song-spec.schema.json#/properties/form/properties/sections/items/properties/section_kind"},
+              "repeat": {"type": "integer", "minimum": 1, "maximum": 16},
+              "start_tick": {"type": "integer", "minimum": 0},
+              "end_tick": {"type": "integer", "minimum": 1},
+              "phrases": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["phrase_id", "start_tick", "end_tick"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "phrase_id": {"$ref": "#/$defs/phrase/properties/id"},
+                    "start_tick": {"type": "integer", "minimum": 0},
+                    "end_tick": {"type": "integer", "minimum": 1}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "tempoMap": {
       "type": "object",
       "required": ["rev", "tempo", "meter"],

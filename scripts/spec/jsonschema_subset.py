@@ -4,6 +4,12 @@ Copied from the owner's JOVRA project (scripts/spec/jsonschema_subset.py, same o
 keyword it does not implement (``check_all``), so a schema can never rely on a keyword that is silently ignored here.
 ``format`` is treated as an annotation, as 2020-12 allows. Python 3.10+ standard library only, so the worker SDK can
 bundle the same file (architecture.md §4.8).
+
+``pattern`` and ``patternProperties`` are ECMA-262 regular expressions with no flags, so ``$`` matches only at the end
+of input (``^`` only at its start, as in Python). Python's ``$`` also matches just before a trailing newline, which
+would let ``^[a-z]+$`` accept ``"verse\\n"``, so every ``$`` that is neither escaped nor inside a character class is
+compiled as ``\\Z`` (``_ecma_anchors``). No other ECMA-262 difference is bridged, such as exactly which characters
+``\\s`` matches.
 """
 
 from __future__ import annotations
@@ -58,6 +64,27 @@ def json_equal(a, b) -> bool:
     return a == b
 
 
+def _ecma_anchors(pattern: str) -> str:
+    """Spell each ECMA-262 end anchor in ``pattern`` as Python's ``\\Z``; nothing else changes.
+
+    An escaped ``$`` and a ``$`` inside a character class are literals and are copied as they are. A class ends at its
+    first unescaped ``]``, as in ECMA-262. Python reads a leading ``]`` as a member instead, so a pattern such as
+    ``[]$]`` translates to one that does not compile, and ``check_all`` refuses it rather than guess.
+    """
+    out, i = [], 0
+    while i < len(pattern):
+        end = i + 1
+        if pattern[i] == "\\":
+            end = i + 2
+        elif pattern[i] == "[":
+            while end < len(pattern) and pattern[end] != "]":
+                end += 2 if pattern[end] == "\\" else 1
+            end += 1
+        out.append(r"\Z" if pattern[i:end] == "$" else pattern[i:end])
+        i = end
+    return "".join(out)
+
+
 def _type_matches(value, expected: str) -> bool:
     actual = json_type(value)
     if expected == "number":
@@ -98,7 +125,7 @@ class SchemaSet:
                 problems.append(f"{file}{where}: {exc}")
         if "pattern" in schema:
             try:
-                re.compile(schema["pattern"])
+                self._pattern(schema["pattern"])
             except re.error as exc:
                 problems.append(f"{file}{where}: bad pattern ({exc})")
         for key in ("$defs", "properties", "patternProperties"):
@@ -132,7 +159,7 @@ class SchemaSet:
 
     def _pattern(self, pattern: str) -> re.Pattern:
         if pattern not in self._patterns:
-            self._patterns[pattern] = re.compile(pattern)
+            self._patterns[pattern] = re.compile(_ecma_anchors(pattern))
         return self._patterns[pattern]
 
     def _validate(self, value, schema, file: str, path: str) -> list[str]:

@@ -47,12 +47,22 @@ Used by `/wayfinder`. The **map** is a single issue with **child** issues as tic
 
 ## This repo
 
-- Repo: `Navigata1/aura` (private). The default `gh` account on this machine is `IslandDevCrew`; run every
-  `gh` command for this repo with `GH_TOKEN="$(gh auth token --user Navigata1)"` so the global active account
-  is never switched.
+- Repo: `Navigata1/aura`, public during the build phase from 2026-11-07 and private again at production level
+  (`docs/research/OWNER-DECISIONS-2026-11-07.md`). The repository and its issues, PRs, comments, reviews and CI logs
+  are public, so `CLAUDE.md` hard rule 10 applies to all of them. The default
+  `gh` account on this machine is `IslandDevCrew`; run every `gh` command for this repo with
+  `GH_TOKEN="$(gh auth token --user Navigata1)"` so the global active account is never switched.
 - Ticket workflow: one issue per ticket → one branch `ticket/<NN>-<slug>` → one PR into `integration` (O-01) with
-  `Closes #<issue>` → required CI checks green → squash-merge → issue closed by the merge. `main` advances only by
-  Jon's release merge from `integration`. Preconditions (P01…) are `ready-for-human` issues that block T01.
+  `Closes #<issue>` → the three `checks / foundation (…)` jobs green on the current head → an independent review of that
+  head → squash-merge → the merger closes the issue with a comment linking the merge commit. GitHub acts on closing
+  keywords such as `Closes #<issue>` only for merges into the default branch (`main`), so a merge into `integration`
+  closes nothing by itself. The `integration` ruleset enforces PR-only, squash-only, the three
+  checks and an up-to-date branch. The review is procedural, because the rulesets require no approving review. `main`
+  advances only by Jon's release merge from `integration`. Preconditions (P01…) are `ready-for-human` issues that block
+  T01.
+- Review binding: a review covers the PR's patch, `git diff <merge-base>...<head> | git patch-id --stable`. If an update
+  only merges the current `integration` tip and leaves the patch-id unchanged, the review stands. It still needs fresh
+  green three-OS CI on the new head, with both patch-ids in the merge record. Any other change needs a fresh review.
 - Labels in use: `ready-for-agent`, `ready-for-human`, `needs-info`, `needs-triage`, `wontfix`, plus
   `stream:engine`, `stream:studio`, `stream:voice`, `stream:eval`, `stream:shared`, `area:<name>`, `spec`, `gate:evidence`.
   The `stream:*` labels name work streams; "lane" alone always means operator lane (GLOSSARY).
