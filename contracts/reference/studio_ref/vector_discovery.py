@@ -5,8 +5,9 @@ import json
 from pathlib import Path
 import re
 
-ADDED = re.compile(r'added in 1\.[0-9]+\.[0-9]+')
+ADDED = re.compile(r'added in 1\.[1-9][0-9]*\.[0-9]+')  # a minor version above 1.0.0
 MANIFEST_KEYS = {'version', 'scope', 'consumers', 'fields', 'records', 'pending'}
+SCOPE = 'vector-kinds, record fields and added fields'
 # The record kinds that predate T02b (integration 7cb7bbd). pending may only shrink: a kind leaves it by being mapped
 # field by field in records, and no new kind can be parked on it.
 PRE_T02B_RECORD_KINDS = frozenset({
@@ -55,7 +56,7 @@ def discover(root: Path):
         raise ValueError('no vector case modules discovered')
     manifest = json.loads((root / 'contracts/consumers.json').read_text(encoding='utf-8'))
     if (not isinstance(manifest, dict) or set(manifest) != MANIFEST_KEYS or type(manifest['version']) is not int
-            or manifest['version'] != 2 or manifest['scope'] != 'vector-kinds and record fields'):
+            or manifest['version'] != 2 or manifest['scope'] != SCOPE):
         raise ValueError('invalid vector consumers manifest')
     consumers, fields = manifest['consumers'], manifest['fields']
     if not isinstance(consumers, dict) or set(consumers) != set(modules):
