@@ -278,6 +278,10 @@ def build(profiles):
                                                         note(0, 960, 60, 100)), None,
          "tempo_map_ambiguous", None, "Written as is, a reader would hear the SMF default 4/4 before 960, a meter the "
          "MelodySpec never stated. The list as a whole is refused, so no tick."),
+        ("two meters at one tick", melody(T120, [{"tick": 0, "numerator": 4, "denominator": 4},
+                                                  {"tick": 0, "numerator": 3, "denominator": 4}], note(0, 960, 60, 100)), None,
+         "tempo_map_ambiguous", None, "The meter list repeats tick 0, so it does not strictly increase: the time model's "
+         "meter check refuses the list as a whole, so no tick."),
         ("a meter change inside a bar", melody(T120, [{"tick": 0, "numerator": 4, "denominator": 4},
                                                        {"tick": 1920, "numerator": 3, "denominator": 4}],
                                                       note(0, 960, 60, 100)), None,

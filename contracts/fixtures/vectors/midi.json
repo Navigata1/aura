@@ -1147,6 +1147,48 @@
       }
     },
     {
+      "derivation": "The meter list repeats tick 0, so it does not strictly increase: the time model's meter check refuses the list as a whole, so no tick.",
+      "end_tick": null,
+      "markers": [],
+      "melody": {
+        "notes": [
+          {
+            "duration_ticks": 960,
+            "pitch": 60,
+            "start_tick": 0,
+            "velocity": 100
+          }
+        ],
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            },
+            {
+              "denominator": 4,
+              "numerator": 3,
+              "tick": 0
+            }
+          ],
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "two meters at one tick",
+      "op": "refuse_write",
+      "refusal": {
+        "code": "tempo_map_ambiguous",
+        "smf_track": null,
+        "tick": null
+      }
+    },
+    {
       "derivation": "3/4 starts at 1920, half a 3840-tick 4/4 bar; written as is, the file would put a bar line where the MelodySpec's own bars do not.",
       "end_tick": null,
       "markers": [],
