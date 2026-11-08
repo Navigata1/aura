@@ -148,6 +148,11 @@ def build(profiles):
                     "00ff580403021808" "00ff2f00", "tempo_map_ambiguous", 0, 0,
                     "4/4 and then 3/4 at tick 0: a meter holds one time signature per tick, so the reader refuses rather "
                     "than keep one."),
+        refuse_read("a time signature inside a bar", FORMAT0 + "4d54726b" "00000015" "00ff580404021808" "8f00ff580403021808"
+                    "00ff2f00", "meter_change_inside_bar", 0, 1920,
+                    "4/4 at 0, then 3/4 at 1920 (8f 00), half a bar: a 4/4 bar is 4 x 3840 / 4 = 3840 ticks, and ADR-0033 "
+                    "counts bars and beats across meter segments only from bar lines, so the change must fall on 3840, 7680 "
+                    "and so on."),
         refuse_read("a second note-on for a sounding pitch", FORMAT0 + "4d54726b" "00000016" "00903c64" "8360903c64"
                     "8360803c40" "00803c40" "00ff2f00", "same_pitch_overlap", 0, 480,
                     "C4 starts at 0 and again at 480 (83 60) before any note-off, so which note-off ends which note is "
@@ -228,6 +233,11 @@ def build(profiles):
                                                         note(0, 960, 60, 100)), None,
          "tempo_map_ambiguous", None, "Written as is, a reader would hear the SMF default 4/4 before 960, a meter the "
          "MelodySpec never stated. The list as a whole is refused, so no tick."),
+        ("a meter change inside a bar", melody(T120, [{"tick": 0, "numerator": 4, "denominator": 4},
+                                                       {"tick": 1920, "numerator": 3, "denominator": 4}],
+                                                      note(0, 960, 60, 100)), None,
+         "meter_change_inside_bar", 1920, "3/4 starts at 1920, half a 3840-tick 4/4 bar; written as is, the file would put "
+         "a bar line where the MelodySpec's own bars do not."),
         ("a gap longer than the SMF delta-time maximum", melody(T120, M44, note(268435456, 960, 60, 100)), None,
          "tick_not_representable", 268435456, "The first note-on is 268435456 = 2^28 ticks after 0, one more than the "
          "largest four-byte delta time, 0x0fffffff."),

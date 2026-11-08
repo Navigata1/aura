@@ -529,6 +529,17 @@
       "smf_hex": "4d546864000000060000000103c04d54726b0000001400ff58040402180800ff58040302180800ff2f00"
     },
     {
+      "derivation": "4/4 at 0, then 3/4 at 1920 (8f 00), half a bar: a 4/4 bar is 4 x 3840 / 4 = 3840 ticks, and ADR-0033 counts bars and beats across meter segments only from bar lines, so the change must fall on 3840, 7680 and so on.",
+      "name": "a time signature inside a bar",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "meter_change_inside_bar",
+        "smf_track": 0,
+        "tick": 1920
+      },
+      "smf_hex": "4d546864000000060000000103c04d54726b0000001500ff5804040218088f00ff58040302180800ff2f00"
+    },
+    {
       "derivation": "C4 starts at 0 and again at 480 (83 60) before any note-off, so which note-off ends which note is ambiguous.",
       "name": "a second note-on for a sounding pitch",
       "op": "refuse_read",
@@ -959,6 +970,48 @@
         "code": "tempo_map_ambiguous",
         "smf_track": null,
         "tick": null
+      }
+    },
+    {
+      "derivation": "3/4 starts at 1920, half a 3840-tick 4/4 bar; written as is, the file would put a bar line where the MelodySpec's own bars do not.",
+      "end_tick": null,
+      "markers": [],
+      "melody": {
+        "notes": [
+          {
+            "duration_ticks": 960,
+            "pitch": 60,
+            "start_tick": 0,
+            "velocity": 100
+          }
+        ],
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            },
+            {
+              "denominator": 4,
+              "numerator": 3,
+              "tick": 1920
+            }
+          ],
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "a meter change inside a bar",
+      "op": "refuse_write",
+      "refusal": {
+        "code": "meter_change_inside_bar",
+        "smf_track": null,
+        "tick": 1920
       }
     },
     {

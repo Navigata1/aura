@@ -80,6 +80,16 @@ def _check_order(segments: list[dict]) -> None:
         raise MidiRefusal("tempo_map_ambiguous") from None
 
 
+def _off_bar_line(meter: list[dict]) -> int | None:
+    """The first meter change that is not on a bar line of the meter before it, or None. ADR-0033 counts bars and beats
+    across meter segments only from bar lines; a bar of n/d is n x 3840 / d ticks at 960 PPQ, exact for every allowed
+    denominator (the rule #131 adds to melody.wellformed)."""
+    for before, after in zip(meter, meter[1:]):
+        if (after["tick"] - before["tick"]) % (before["numerator"] * 4 * timemodel.PPQ // before["denominator"]):
+            return after["tick"]
+    return None
+
+
 def to_smf(melody: dict, markers: list[dict] = (), end_tick: int | None = None) -> bytes:
     """Format 1, 960 PPQ: SMF track 0, the conductor (per tick: meter, tempo, section markers), and SMF track 1, the
     notes on MIDI channel 1. Takes any dict with a MelodySpec's tempo_map and notes (a whole record included), the
@@ -89,6 +99,8 @@ def to_smf(melody: dict, markers: list[dict] = (), end_tick: int | None = None) 
     tm = melody["tempo_map"]
     for segments in (tm["meter"], tm["tempo"]):
         _check_order(segments)
+    if (off := _off_bar_line(tm["meter"])) is not None:
+        raise MidiRefusal("meter_change_inside_bar", None, off)
     conductor = [(m["tick"], 0, bytes([0xFF, 0x58, 4, m["numerator"], m["denominator"].bit_length() - 1,
                                        96 // m["denominator"], 8])) for m in tm["meter"]]
     conductor += [(t["tick"], 1, b"\xff\x51\x03" + t["us_per_quarter"].to_bytes(3, "big")) for t in tm["tempo"]]
@@ -223,8 +235,19 @@ def _file_end(ends: list[tuple[int, int, int]], not_carried: list[dict]) -> tupl
     return end_tick, sorted(not_carried + inner, key=lambda entry: entry["smf_track"])
 
 
+def _melody(tempo: dict, meter: dict, meter_at: dict, notes: list[dict]) -> dict:
+    """The MIDI-carried MelodySpec fields. The SMF defaults (120 BPM, 4/4) hold until the first tempo and time
+    signature, and a time signature off a bar line of the meter before it is refused where it stands in the file."""
+    tempo, meter = {0: 500000, **tempo}, {0: (4, 4), **meter}
+    tempo_map = {"tempo": [{"tick": t, "us_per_quarter": us} for t, us in sorted(tempo.items())],
+                 "meter": [{"tick": t, "numerator": n, "denominator": d} for t, (n, d) in sorted(meter.items())]}
+    if (off := _off_bar_line(tempo_map["meter"])) is not None:
+        raise MidiRefusal("meter_change_inside_bar", *meter_at[off])
+    return {"tempo_map": tempo_map, "notes": sorted(notes, key=lambda n: (n["start_tick"], n["pitch"]))}
+
+
 def _carry(tracks: list, division: int) -> dict:
-    tempo, meter, notes, markers, not_carried, ends = {}, {}, [], [], [], []
+    tempo, meter, meter_at, notes, markers, not_carried, ends = {}, {}, {}, [], [], [], []
     melody_channel, pending = None, {}  # the (SMF track, channel) holding the melody; sounding pitch -> its note-on
     for smf_track, (events, source_end) in enumerate(tracks):
         last = 0
@@ -240,6 +263,7 @@ def _carry(tracks: list, division: int) -> dict:
                 if not 1 <= data[0] <= 32 or data[1] > 5:
                     raise MidiRefusal("meter_outside_model", smf_track, source_tick)
                 _put(meter, tick, (data[0], 1 << data[1]), smf_track, source_tick)
+                meter_at.setdefault(tick, (smf_track, source_tick))
             elif event == "ff06" and SECTION_NAME.fullmatch(data):
                 markers.append({"name": data.decode("ascii"), "tick": tick})
             elif event[0] == "9" and data[1]:
@@ -260,11 +284,5 @@ def _carry(tracks: list, division: int) -> dict:
         if pending:
             raise MidiRefusal("unterminated_note", smf_track, min(source for _, _, source in pending.values()))
     end_tick, not_carried = _file_end(ends, not_carried)
-    tempo.setdefault(0, 500000)  # SMF 1.0: 120 BPM and 4/4 until the first tempo and time signature
-    meter.setdefault(0, (4, 4))
-    notes.sort(key=lambda n: (n["start_tick"], n["pitch"]))
-    markers.sort(key=lambda m: m["tick"])
-    tempo_map = {"tempo": [{"tick": t, "us_per_quarter": us} for t, us in sorted(tempo.items())],
-                 "meter": [{"tick": t, "numerator": n, "denominator": d} for t, (n, d) in sorted(meter.items())]}
-    return {"melody": {"tempo_map": tempo_map, "notes": notes}, "markers": markers, "end_tick": end_tick,
-            "not_carried": not_carried}
+    return {"melody": _melody(tempo, meter, meter_at, notes), "markers": sorted(markers, key=lambda m: m["tick"]),
+            "end_tick": end_tick, "not_carried": not_carried}

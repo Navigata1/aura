@@ -72,7 +72,8 @@
       "properties": {
         "code": {"enum": ["smpte_division", "tempo_outside_model", "meter_outside_model", "tempo_map_ambiguous",
                           "same_pitch_overlap", "track_layout_unsupported", "tick_not_representable",
-                          "zero_length_note", "unterminated_note", "end_before_last_event", "malformed_smf"]},
+                          "zero_length_note", "unterminated_note", "meter_change_inside_bar", "end_before_last_event",
+                          "malformed_smf"]},
         "smf_track": {"type": ["integer", "null"], "minimum": 0, "description": "The MTrk chunk's index in the file (an SMF track, not a timeline track); null outside every chunk, and on write."},
         "tick": {"type": ["integer", "null"], "minimum": 0, "description": "The tick of the event to blame: on read in the file's own division, once that event's delta time is read; on write in MelodySpec ticks. Null where no event is to blame: the header, a chunk header, a delta time, or a tempo or meter list as a whole."}
       }

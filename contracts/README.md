@@ -160,8 +160,9 @@ section markers (`FF 06`, the section name), in that order. SMF track 1 holds th
 `90 kk vv` (the note's velocity) and `80 kk 40`; at one tick note-offs come first, then ascending pitch, so touching
 notes of one pitch stay two notes. The writer reads only `tempo_map.tempo`, `tempo_map.meter` and each note's start,
 duration, pitch and velocity, so a whole `melody-spec` record works. Beyond the schemas' field rules it refuses what a
-schema cannot see: a tempo or meter list that breaks the time model's ordering rule (`timemodel._segments`),
-overlapping notes of one pitch, an end before the last event, and a gap beyond the delta-time maximum.
+schema cannot see: a tempo or meter list that breaks the time model's ordering rule (`timemodel._segments`), a meter
+change off a bar line, overlapping notes of one pitch, an end before the last event, and a gap beyond the delta-time
+maximum.
 
 **End of Track and `end_tick`.** `end_tick` is where the file ends, at 960 PPQ. On write, the conductor's End of
 Track goes at `end_tick` when that is later than every event, so trailing bars such as an instrumental outro keep
@@ -203,6 +204,7 @@ SMF marker is a point, and GLOSSARY keeps phrases apart from sections.
 | `tick_not_representable` | a tick, End of Track included, that is not a whole 960 PPQ tick; on write, a gap over the four-byte delta-time maximum, `0x0FFFFFFF` |
 | `zero_length_note` | a note-off at its own note-on's tick |
 | `unterminated_note` | a note still sounding when its SMF track ends |
+| `meter_change_inside_bar` | a time signature (on write, a meter segment) that does not fall on a bar line of the meter before it, the SMF default 4/4 included: ADR-0033 counts bars and beats across meter segments only from bar lines, and a bar of n/d is n x 3840 / d ticks (the same rule as SongForm's `melody.wellformed`, #131) |
 | `end_before_last_event` | on write, an `end_tick` earlier than the last event (the refusal names that event's tick) |
 | `malformed_smf` | no `MThd` of length 6; format 0 without exactly one SMF track, no tracks, a format above 2 or a division of 0; a chunk that is not `MTrk` (unknown chunks are refused, not skipped), a short chunk, or bytes after the last one; a delta time over four bytes; a data byte with no status (meta and SysEx events cancel running status), a status byte where data belongs, or a system message; a tempo or time signature of the wrong length; an SMF track without End of Track, or anything after it |
 
