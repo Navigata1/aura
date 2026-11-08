@@ -167,7 +167,7 @@ aura/
 | **Rented burst pod** | RunPod GPU pod (secure cloud preferred over community hosts for unreleased melody and lyrics), 24 GB class with a fallback list | Started from the pinned yue2 image digest. It exists only after Jon's approval and a written ledger reservation. Weights download at boot onto pod disk under a recorded license acceptance. A network volume is adopted only if measurements show it is cheaper (§7.6). The pod serves the worker protocol through the provider's HTTPS proxy with a per-lease bearer token. The control service polls it. An in-image deadline (`shutdown -h` at the lease's hard maximum) backs up the control-side reaper. The pod is tagged `studio-burst` plus the run id. |
 | **Store mount** | macOS (`hdiutil`), with an optional LaunchAgent at login | `studioctl store attach` mounts the sparse bundle. `detach` stops the control service and workers first. An unclean-detach marker triggers `diskutil verifyVolume`. `compact` runs offline. |
 | **Eval harness CLI** (P4+) | The studio host | A Studio API client. It runs preregistered briefs, opens eval-mode audition sessions and posts EvidenceRecords. It can request quotes but never approve them. |
-| **CI runners** | GitHub Actions (Linux on every PR; macOS and Windows on integration and nightly) plus a self-hosted Mac runner | Contract gate, StudioHarness suite, conformance against fake and analysis workers plus mutants, Playwright, and the lints. The self-hosted Mac runner produces hardware evidence. It never runs paid jobs. |
+| **CI runners** | GitHub Actions (Linux, macOS and Windows on every PR since PR #12, integration and nightly) plus a self-hosted Mac runner | Contract gate, StudioHarness suite, conformance against fake and analysis workers plus mutants, Playwright, and the lints. The self-hosted Mac runner produces hardware evidence. It never runs paid jobs. |
 
 ### 3.2 Topology per compute tier
 
@@ -579,7 +579,7 @@ There are two behaviour seams, and both are as high as they can be. A data gate 
 - NeutralVoice hum fixtures generated at test time from golden MelodySpecs, so ground truth is known. They are never committed.
 - Golden JSON from `contracts/fixtures`.
 
-Tests wait on event `seq`, never on sleeps. The suite runs on Linux for every PR and on macOS and Windows for integration and nightly, with a PR budget of 10 minutes or less.
+Tests wait on event `seq`, never on sleeps. The suite runs on Linux, macOS and Windows for every PR (since PR #12), integration and nightly, with a PR budget of 10 minutes or less.
 
 **Browser entry to the same seam (Playwright, not a new seam).** It covers:
 
@@ -1097,7 +1097,7 @@ Every exit criterion is a check that could fail, recorded as an EvidenceRecord o
 | **Format churn**: schemas frozen too early, or upcasters that grow unmanageable. | Small v1 schemas. Additive minor versions. Majors upcast on read, never rewritten. Frozen legacy fixtures make a break visible in CI. Snapshot records avoid tying old projects to old replay code. |
 | **SongForm assembly sounds repetitive**, or ACE misbehaves over rests and instrumental sections. | The form editor supports instrumental sections. `render_mode: per_section` (each section with one profile and seed, stitched at the markers) is built with the R2 routes, so P4 smoke compares whole-form against per-section renders. Jon's verdicts decide the default. |
 | **Windows and Linux hosting claimed from CI alone.** | Labelled unverified until a real host passes StudioHarness and the playback gate (P6). AURA is never called three-platform ready from one OS. |
-| **CI minutes** on a private repo (macOS and Windows multipliers; current rates UNVERIFIED). | Linux runs on every PR. macOS and Windows run on integration and nightly. A self-hosted Mac runner produces hardware evidence. |
+| **CI minutes** on a private repo (macOS and Windows multipliers; current rates UNVERIFIED). | Since PR #12 all three OSes run on every PR, integration and nightly; the repository is public for the build so hosted CI stays free (2026-11-07). A self-hosted Mac runner produces hardware evidence. |
 
 ---
 
@@ -1278,7 +1278,7 @@ prose that way is fragile; reviewers keep that rule.
 
 **Licensing safety (24 applied).** Imports are owner acts whose uses follow their source, DAW bounces inherit the lanes
 and license chains of the exports they contain, and detected Suno marks force source Suno (`use.import_terms`);
-`license-acceptance/1` records every weights acceptance, gated or not, with YuE2's two documents; weights sources cover
+`license-acceptance/1` records every weights acceptance, gated or not, with YuE2's four pinned documents (amended 2026-11-07); weights sources cover
 pinned URLs and packages (`license.weights_pin`); individual and llc forbid an UNVERIFIED license; transcribed melodies
 carry lanes (`lane.record_eligible`); manifests carry release blockers (`release.manifest_blockers`); internal
 `separate` and exportable `isolate` profiles are distinct; owner-ui sessions cannot leak to agents (TTY-only token, test

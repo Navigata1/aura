@@ -19,6 +19,9 @@ browser latency evidence comes from one 2021 MacBook Pro (X-49).
   only in CI.
 - **CI**: the control service's tests run on Linux for every PR and on macOS and Windows for integration and nightly
   builds, from the first tickets. A self-hosted Mac runner produces hardware evidence and never runs paid jobs.
+  **Note (2026-11-07):** since PR #12 (2026-11-06) every pull request runs on Linux, macOS and Windows, and the
+  `integration` ruleset requires all three (`docs/research/OWNER-DECISIONS-2026-11-07.md`). An OS still stays
+  unverified until a real host passes.
 - **Delivery order**: the Mac first, because it is the only reachable machine. Windows and Linux hosting is verified as
   soon as either machine is reachable (P6), followed by the DAW round trip (MG-E15) and the recovery test (MG-E16) on
   each OS.

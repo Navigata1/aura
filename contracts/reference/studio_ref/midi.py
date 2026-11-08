@@ -71,23 +71,29 @@ def _check_input(melody: dict, markers, end_tick) -> None:
         raise MidiInputError(f"outside the melody-spec or timeline/1 schema: {bad[:1] or end_tick}")
 
 
-def _check_order(segments: list[dict]) -> None:
-    """The time model's one ordering rule (ADR-0033): segments start at tick 0 and strictly increase. It judges the list
-    as a whole, so the refusal names no tick."""
-    try:
-        timemodel._segments([{"tick": segment["tick"], "us_per_quarter": 1} for segment in segments])
-    except ValueError:
-        raise MidiRefusal("tempo_map_ambiguous") from None
-
-
-def _off_bar_line(meter: list[dict]) -> int | None:
-    """The first meter change that is not on a bar line of the meter before it, or None. ADR-0033 counts bars and beats
-    across meter segments only from bar lines; a bar of n/d is n x 3840 / d ticks at 960 PPQ, exact for every allowed
-    denominator (the rule #131 adds to melody.wellformed)."""
-    for before, after in zip(meter, meter[1:]):
-        if (after["tick"] - before["tick"]) % (before["numerator"] * 4 * timemodel.PPQ // before["denominator"]):
-            return after["tick"]
+def _meter_refused(meter: list[dict]) -> tuple[str, int] | None:
+    """The time model's own meter check, timemodel.bar_segments: segments start at tick 0, strictly increase and change
+    only on a bar line of the meter before them (timemodel's invariant, rule melody.wellformed). Returns the code and
+    tick of the first segment it refuses, found as the shortest prefix it refuses, or None."""
+    for end in range(1, len(meter) + 1):
+        try:
+            timemodel.bar_segments(meter[:end])
+        except timemodel.TimeModelError as error:
+            return error.code, meter[end - 1]["tick"]
     return None
+
+
+def _check_time_model(tempo_map: dict) -> None:
+    """Tempo and meter pass the time model's own checks (timemodel.bar_segments, tempo_segments). A list out of order is
+    refused as a whole, with no tick; a meter change off a bar line names its segment's tick."""
+    refused = _meter_refused(tempo_map["meter"])
+    if refused is not None:
+        code, tick = refused
+        raise MidiRefusal(code, None, tick) if code == "meter_change_inside_bar" else MidiRefusal("tempo_map_ambiguous")
+    try:
+        timemodel.tempo_segments(tempo_map["tempo"])
+    except timemodel.TimeModelError:
+        raise MidiRefusal("tempo_map_ambiguous") from None
 
 
 def to_smf(melody: dict, markers: list[dict] = (), end_tick: int | None = None) -> bytes:
@@ -97,10 +103,7 @@ def to_smf(melody: dict, markers: list[dict] = (), end_tick: int | None = None) 
     event (an outro keeps its bars); left out, every SMF track ends at its own last event."""
     _check_input(melody, markers, end_tick)
     tm = melody["tempo_map"]
-    for segments in (tm["meter"], tm["tempo"]):
-        _check_order(segments)
-    if (off := _off_bar_line(tm["meter"])) is not None:
-        raise MidiRefusal("meter_change_inside_bar", None, off)
+    _check_time_model(tm)
     conductor = [(m["tick"], 0, bytes([0xFF, 0x58, 4, m["numerator"], m["denominator"].bit_length() - 1,
                                        96 // m["denominator"], 8])) for m in tm["meter"]]
     conductor += [(t["tick"], 1, b"\xff\x51\x03" + t["us_per_quarter"].to_bytes(3, "big")) for t in tm["tempo"]]
@@ -241,8 +244,8 @@ def _melody(tempo: dict, meter: dict, meter_at: dict, notes: list[dict]) -> dict
     tempo, meter = {0: 500000, **tempo}, {0: (4, 4), **meter}
     tempo_map = {"tempo": [{"tick": t, "us_per_quarter": us} for t, us in sorted(tempo.items())],
                  "meter": [{"tick": t, "numerator": n, "denominator": d} for t, (n, d) in sorted(meter.items())]}
-    if (off := _off_bar_line(tempo_map["meter"])) is not None:
-        raise MidiRefusal("meter_change_inside_bar", *meter_at[off])
+    if (refused := _meter_refused(tempo_map["meter"])) is not None:  # read maps start at 0 and increase: a bar line
+        raise MidiRefusal("meter_change_inside_bar", *meter_at[refused[1]])
     return {"tempo_map": tempo_map, "notes": sorted(notes, key=lambda n: (n["start_tick"], n["pitch"]))}
 
 
