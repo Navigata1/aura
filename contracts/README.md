@@ -112,7 +112,8 @@ benchmark conclusions and coordinated with T02's route-standing work.
 
 ## Not covered yet (needs vectors before code relies on it)
 
-SongForm assembly, MelodySpec -> YuE2 ABC emission, the MIDI round trip, `render_mode` stitching, route standing and
+SongForm assembly beyond its bounded T02c semantics (below), MelodySpec -> YuE2 ABC emission,
+the MIDI round trip, `render_mode` stitching, route standing and
 the plan-rules order, the remaining job kinds and tasks (isolate, dsp-finish, dsp-edit, offline-render, preservation,
 per, align, diagnostics, stem-to-midi, a reserved tts), `price-snapshots/`, frozen `legacy/`
 fixtures (they freeze at the first release), the TypeScript twin of the tempo vectors and the Pydantic/TS codegen
@@ -130,13 +131,108 @@ The validator discovers schemas by their existing `kind` const/enum and executes
 vector kinds fail explicitly. Frozen legacy vectors still execute against current reference functions.
 
 A new family needs its module, schema and an entry in `contracts/consumers.json`, with no shared dispatch-list edit.
-This manifest is deliberately scoped to vector kinds: every discovered family has a nonempty unique list of actual
-`docs/spec/tickets.json` ticket slugs, and no orphan manifest entry is allowed. These slugs name the consuming contract
-or feature ticket; they do not claim that the future feature is implemented. Full field/enum/schema/declaration
-consumer inventory remains T02 work. There is no pending allow-list in this slice: missing consumers fail closed.
+Its `consumers` map is deliberately scoped to vector kinds: every discovered family has a nonempty unique list of
+actual `docs/spec/tickets.json` ticket slugs, and no orphan manifest entry is allowed. T02c adds a `fields` map for
+schema locations a minor version adds (see "Minor versions" below), so the manifest's scope reads "vector-kinds and
+added fields". These slugs name the consuming contract or feature ticket; they do not claim that the future feature
+is implemented. Full field/enum/schema/declaration consumer inventory remains T02 work. There is no pending
+allow-list in this slice: missing consumers fail closed.
 
 `tests/contracts/test_vector_discovery.py` exercises the public generator and validator in disposable tracked-file
 copies: new-family discovery, unchanged existing bytes, corrupt expectations, duplicate kinds, missing evaluator,
 missing/unknown consumer, removed handler, producer-kind mismatch and legacy expectation execution. The production
-schemas and existing fixture bytes are unchanged. SongForm, ABC, MIDI and route-standing implementation remain open;
+schemas and existing fixture bytes are unchanged. ABC, MIDI and route-standing implementation remain open
+(SongForm: T02c below);
 C01 benchmark containment remains in force until C02 establishes result binding.
+
+
+## SongForm assembly (T02c)
+
+`reference/studio_ref/songform.py` is the language-neutral reference for `Score.assemble` (ADR-0032, architecture
+§4.6). `assemble(melody, song, output)` lays the phrases of the MelodySpec revision a SongSpec names along its
+SongForm and returns `{"assembled": <melody-spec 1.1.0>}` or `{"refused": {code, section_id, phrase_id, note_id}}`;
+`output` names the new record's `melody_id`, `rev`, `base_rev`, `tempo_map_rev` and `created_at`, and its project is
+the source's. The vectors (`fixtures/vectors/songform.json`, hand-derived in `vector_cases/songform.py`) fix the
+semantics below. The runtime Score module and every consumer (the guide, ABC emission, MIDI export, the timeline,
+R2-raw's `assemble-audio`) must honour them and their refusals: refuse, never truncate, stretch, retime or pick.
+
+- **Time.** Integer ticks at 960 PPQ, in the TimeModel's bars and beats (**Meter**, below). A bar of n/d lasts n x
+  3840 / d ticks, exact for every allowed denominator, so assembly never rounds; ADR-0033's one half-up rounding
+  applies only when a consumer converts ticks to frames (each vector also states its form's end frame at 48 kHz).
+- **Sections and repeats.** Sections play in form order from tick 0, each `repeats` times. One repeat lasts `bars`
+  bars of the section's meter whether or not its phrases fill it; the bars after its last phrase are rest.
+- **Phrases.** A placed phrase occupies every bar its span touches, counted from the bar line at or before its start
+  in the source meter and rounded up to whole bars, and moves by a whole number of bars, so every note keeps its place
+  in the bar. A phrase that starts mid-bar (a pickup) keeps its offset: its first bar is rest until the pickup, its
+  downbeat lands on the next bar line, and it stays inside its own section. The phrases of one repeat take consecutive
+  bar slots in `phrase_ids` order; two phrases never share a bar, so a phrase that starts in the bar where the
+  previous one ended moves to the next bar line (a vector pins this; T28's default form of one section per phrase
+  behaves the same way). A note belongs to a phrase when it lies inside the phrase's span; it keeps its duration,
+  pitch and velocity, with `origin` `assembled` and `confidence` null (the confidence stays on the source revision).
+  Notes outside every placed phrase are left out with their phrase, as the SongForm chose.
+- **Tempo and meter.** Each placed phrase has one tempo and one meter over every bar it occupies in the source, its
+  leading and trailing rest included: a change anywhere in those bars, even after its last note, is refused, never
+  dropped, because dropping it would retime that bar. A section takes its phrases' tempo and meter; a section that
+  places no phrase continues the previous section's, and leading ones take the first phrase-bearing section's (the
+  source's tick-0 values if none places a phrase). The assembled tempo map starts a tempo or meter segment at a
+  section's first tick only when the value changes, so a reordered or repeated phrase carries its tempo and meter with
+  it.
+- **Explicit form** (melody-spec 1.1.0, `form`, assembled records only, and required on them from 1.1.0). `end_tick`
+  is the full-form duration and `sections` lists every repeat of every section in order (`section_id`, `name`,
+  `section_kind`, `repeat`, `start_tick`, `end_tick`, and the phrases it places at their assembled spans). Repeats
+  tile [0, `end_tick`); instrumental intros and outros keep their bars; section names survive for the timeline and
+  MIDI markers. Consumers read duration and boundaries here and never infer them from the last note; a 1.0 assembled
+  record has no form, so a consumer refuses it instead of inferring one. The phrase marks (`phrases`) of an assembled
+  record are empty.
+- **Lineage.** The assembled record copies its source revision's `capture_sha256`, `transcription` (the transcriber's
+  eligible lanes and license chain), `key` and `quantize`; `assembled_from` names the melody and song revisions. Rule
+  `lane.record_eligible` requires a 1.1 assembled record to carry its source's capture and transcription exactly, and
+  still computes every assembled record's lanes through `assembled_from`, so a 1.0 record whose lineage is by
+  reference only cannot widen a lane (scenarios `lane-record-assembled-*`,
+  `lane-record-legacy-assembled-read-in-llc`).
+
+**Refusals**, reported in this scan order: `source_not_melody` (the source is itself assembled);
+`song_melody_mismatch` (the SongSpec names another revision or tempo-map revision, or lives in another project);
+`duplicate_section`; `duplicate_phrase` (the source marks one id twice); then for each section in form order
+`section_kind_mismatch` (an instrumental section places a phrase, or a vocal one places none), then for each of its
+phrases `missing_phrase`, `empty_phrase` (it ends at or before its start), `meter_conflict` and `tempo_conflict` (a
+change inside the bars it occupies, from its first bar line to the end of its last bar), `note_crosses_phrase_edge` (a
+note overlaps its span without lying inside it), then `meter_conflict` and `tempo_conflict` (the section's phrases
+disagree) and `phrase_overflow` (they need more bars than the section has); finally, per section,
+`chord_symbol_misplaced`. A source the time model cannot measure breaks `melody.wellformed` and is an input error, not
+a refusal: the reference raises `TimeModelError` with `tempo_segments_invalid` (the tempo map does not start at tick 0
+or strictly increase), `meter_segments_invalid` or `meter_change_inside_bar`, and the vectors pin each code
+(`{"invalid": code}`). An all-instrumental form takes the source's tick-0 tempo and meter, also pinned.
+
+**Meter** (`timemodel.bar_segments`, `position`, `tick_at`; vectors `fixtures/vectors/meter.json`, hand-derived in
+`vector_cases/meter.py`, consumed by the TypeScript TimeModel twin, song intent, the piano roll, ABC emission, the
+timeline and MIDI in and out). Bars and beats count from 1 across every meter change, and a beat is one denominator
+note (3840 / d ticks), so 6/8 counts six 480-tick beats; a felt dotted-quarter pulse is not modelled. Meter segments
+start at tick 0, strictly increase and change only on a bar line of the meter before them (rule `melody.wellformed`,
+scenario `melody-meter-inside-bar`); the last meter runs on past the form. `position(tick)` gives `{bar, beat,
+offset}` and `tick_at(bar, beat)` the first tick of that beat. An unrepresentable map or beat raises `TimeModelError`
+with `meter_segments_invalid`, `meter_change_inside_bar` or `beat_outside_bar` (and `tempo_segments`, behind
+tick-to-frame conversion, raises `tempo_segments_invalid`); the twin must reproduce these codes. Arguments outside the
+vectors' domain (a negative tick or frame, a bar or beat below 1) are input errors that raise a plain `ValueError`.
+The vectors walk the bar and beat boundaries of two maps: the assembled meter map of the SongForm case whose sections
+run 4/4, 3/4, 6/8, and 2/2, 1/1, 7/16, 5/32 for the remaining denominators.
+
+**Chord symbols** (song-spec 1.1.0, spec interpretation 2): an optional, non-empty `chord_symbols` list on a SongForm
+section, each `{offset_ticks, symbol}` measured from the start of every repeat, strictly increasing and inside one
+repeat. Assembly checks their placement but does not copy them; ABC emission reads them from the SongSpec by
+`section_id`, keeping them for `cot='full'` and stripping them for `cot='melody'`.
+
+**Minor versions.** A schema location a minor version adds carries `"$comment": "added in 1.x.y"` and is accepted only
+on records that claim that minor or later, so every 1.0.0 record still validates and a 1.0.0 record carrying a 1.1
+field fails (`fixtures/invalid/*-before-1-1.json`). `consumers.json` `fields` maps every such location to its
+consuming tickets; discovery fails on a location without consumers, an orphan entry or an unknown ticket slug.
+
+**Still open.** Tempo or meter changes inside the bars a phrase occupies, an instrumental section that places a phrase
+and re-assembling an assembled melody are refused, not supported. A pickup always stays inside its own section (it
+never reaches back into the previous one), and two phrases that share a source bar take separate bars; supporting
+either otherwise is a later minor version. The world's two 1.0 assembled records predate these semantics (their bytes
+are frozen), so no rule yet requires a stored assembled record to equal `assemble()` of its sources; the runtime Score
+module, its API refusal type and that consistency check belong to the song-intent ticket, which also reconciles
+architecture §4.6's `assemble(melody, form) -> melody` with this reference's `assemble(melody, song, output)` (the
+SongSpec supplies the form and names the source revision; `output` names the new record). Fixtures are synthetic:
+nothing was rendered or listened to.

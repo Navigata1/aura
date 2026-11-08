@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "song-spec/1 (with SongForm)",
-  "description": "What Jon asks for in a song (GLOSSARY: SongSpec, SongForm, Approved lyrics; ADR-0004, ADR-0018). Approved lyrics are kept apart from any ASR transcript, and ASR never overwrites them. Each control records what was requested, what each engine profile supports and what was observed (intent vs actual). Revisions are immutable. content_sha256 covers the record without that field.",
+  "description": "What Jon asks for in a song (GLOSSARY: SongSpec, SongForm, Approved lyrics; ADR-0004, ADR-0018). Approved lyrics are kept apart from any ASR transcript, and ASR never overwrites them. Each control records what was requested, what each engine profile supports and what was observed (intent vs actual). Revisions are immutable. content_sha256 covers the record without that field. Minor 1.1.0 adds optional chord symbols on SongForm sections (spec interpretation 2).",
   "type": "object",
   "required": ["kind", "schemaVersion", "song_id", "rev", "base_rev", "project_id", "created_at", "melody", "approved_lyrics",
                "asr_transcripts", "controls", "form", "references", "candidate_count", "larger_n_budget", "render_routes",
@@ -78,7 +78,23 @@
               "section_kind": {"enum": ["vocal", "instrumental"]},
               "phrase_ids": {"type": "array", "items": {"type": "string", "pattern": "^ph[0-9]{1,4}$"}},
               "bars": {"type": "integer", "minimum": 1, "maximum": 256},
-              "repeats": {"type": "integer", "minimum": 1, "maximum": 16}
+              "repeats": {"type": "integer", "minimum": 1, "maximum": 16},
+              "chord_symbols": {
+                "$comment": "added in 1.1.0",
+                "description": "Optional chord symbols (spec interpretation 2) at tick offsets from the start of each repeat of the section, strictly increasing and inside one repeat (SongForm assembly refuses otherwise). ABC emission keeps them for cot='full' and strips them for cot='melody'.",
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 512,
+                "items": {
+                  "type": "object",
+                  "required": ["offset_ticks", "symbol"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "offset_ticks": {"type": "integer", "minimum": 0},
+                    "symbol": {"type": "string", "pattern": "^[A-G](#|b)?[A-Za-z0-9#+()-]{0,12}(/[A-G](#|b)?)?$"}
+                  }
+                }
+              }
             }
           }
         }
@@ -151,6 +167,10 @@
     "content_sha256": {"$ref": "common.schema.json#/$defs/sha256"}
   },
   "allOf": [
+    {
+      "if": {"properties": {"form": {"properties": {"sections": {"contains": {"required": ["chord_symbols"]}}}}}},
+      "then": {"properties": {"schemaVersion": {"pattern": "^1\\.[1-9][0-9]*\\.[0-9]+$"}}}
+    },
     {
       "if": {"properties": {"rev": {"const": 1}}},
       "then": {"properties": {"base_rev": {"type": "null"}}},
