@@ -30,13 +30,13 @@ an unhashed source.
    training code and configuration.
 3. Read each input's terms from its own primary source.
 
-Every source was fetched once, on 2026-11-08 between 02:37 and 02:50 UTC. Its URL, size and SHA-256 are in the
+Every source was fetched once, on 2026-11-08 between 02:37 and 02:52 UTC. Its URL, size and SHA-256 are in the
 record, and every hash was re-checked against the kept copy. The copies stay on the studio volume under
 `evidence/T54`, not in this repository.
 
 ## SwiftF0 0.3.0: fail
 
-**Model.** The wheel's `swift_f0/model.onnx` (git blob `3619f9ab`) is byte-identical to `runs/seed1/model.onnx` in
+**Model.** `swift_f0/model.onnx` at tag `v0.3.0` (git blob `3619f9ab`) is byte-identical to `runs/seed1/model.onnx` in
 `lars76/swift-f0-training` at `a3095d2` ("Release 0.3.0"), whose README calls `runs/seed1` the shipped model. The
 paper (arXiv 2508.18440v1) describes SwiftF0 0.1.x, and its training mix (NSynth, PTDB-TUG, MIR-1K, MDB-stem-synth,
 SpeechSynth, CHiME-Home noise) is not this model's. `config.py` trains on five corpora from the `train.tar` split of
