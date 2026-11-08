@@ -1,0 +1,146 @@
+{
+  "kind": "implementation-checkpoint-not-store-evidence",
+  "observed_at": "2026-11-08T03:33:12.741690+00:00",
+  "repository": "Navigata1/aura",
+  "visibility": "public",
+  "default_branch": "main",
+  "main_unchanged": "79cd9aff1ee239bd0422e684b4e8d58b73bb7c0f",
+  "integration_runs": [
+    {
+      "pr": 129,
+      "ticket": "T03",
+      "state": "MERGED",
+      "merged_at": "2026-11-08T02:29:09Z",
+      "head_sha": "dee28e2fd2b7a79ca2773e639a4a714af5c356b8",
+      "run_id": 42438742621,
+      "url": "https://github.com/Navigata1/aura/actions/runs/42438742621",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "success",
+      "jobs": {
+        "macos-latest": "success",
+        "ubuntu-latest": "success",
+        "windows-latest": "success"
+      }
+    },
+    {
+      "pr": 127,
+      "ticket": "S01",
+      "state": "MERGED",
+      "merged_at": "2026-11-08T03:03:53Z",
+      "head_sha": "0e02d7290bf29979ece63da5952ffc11157186d9",
+      "run_id": 42441114008,
+      "url": "https://github.com/Navigata1/aura/actions/runs/42441114008",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "success",
+      "jobs": {
+        "macos-latest": "success",
+        "ubuntu-latest": "success",
+        "windows-latest": "success"
+      }
+    },
+    {
+      "pr": 131,
+      "ticket": "T02c",
+      "state": "MERGED",
+      "merged_at": "2026-11-08T03:11:20Z",
+      "head_sha": "910910a594f131a8082c355412aefed2b9348e41",
+      "run_id": 42441652777,
+      "url": "https://github.com/Navigata1/aura/actions/runs/42441652777",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "success",
+      "jobs": {
+        "macos-latest": "success",
+        "ubuntu-latest": "success",
+        "windows-latest": "success"
+      }
+    },
+    {
+      "pr": 136,
+      "ticket": "C04",
+      "state": "MERGED",
+      "merged_at": "2026-11-08T03:22:50Z",
+      "head_sha": "a30bbad18b5d58a8f68afddc0abf6867e8c15102",
+      "run_id": 42442475484,
+      "url": "https://github.com/Navigata1/aura/actions/runs/42442475484",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "success",
+      "jobs": {
+        "macos-latest": "success",
+        "ubuntu-latest": "success",
+        "windows-latest": "success"
+      }
+    }
+  ],
+  "rulesets": [
+    {
+      "name": "integration: PR-only, green three-OS CI, up to date",
+      "enforcement": "active",
+      "bypass_actors": 0,
+      "include": [
+        "refs/heads/integration"
+      ],
+      "rules": {
+        "deletion": true,
+        "non_fast_forward": true,
+        "pull_request": {
+          "allowed_merge_methods": [
+            "squash"
+          ],
+          "required_review_thread_resolution": true,
+          "required_approving_review_count": 0
+        },
+        "required_status_checks": {
+          "contexts": [
+            "checks / foundation (macos-latest)",
+            "checks / foundation (ubuntu-latest)",
+            "checks / foundation (windows-latest)"
+          ],
+          "strict": true
+        }
+      }
+    },
+    {
+      "name": "main: owner release only via PR, green three-OS CI",
+      "enforcement": "active",
+      "bypass_actors": 0,
+      "include": [
+        "refs/heads/main"
+      ],
+      "rules": {
+        "deletion": true,
+        "non_fast_forward": true,
+        "pull_request": {
+          "allowed_merge_methods": [
+            "merge",
+            "squash"
+          ],
+          "required_review_thread_resolution": true,
+          "required_approving_review_count": 0
+        },
+        "required_status_checks": {
+          "contexts": [
+            "checks / foundation (macos-latest)",
+            "checks / foundation (ubuntu-latest)",
+            "checks / foundation (windows-latest)"
+          ],
+          "strict": false
+        }
+      }
+    }
+  ],
+  "actions": {
+    "sha_pinning_required": true,
+    "fork_pr_approval_policy": "all_external_contributors",
+    "default_workflow_permissions": "read"
+  },
+  "limits": [
+    "Hosted software checks only",
+    "No actual scheduled-nightly observation",
+    "No real generation, playback, owner listening or paid model computation",
+    "Full T02, C02 and T01 acceptance not complete"
+  ]
+}

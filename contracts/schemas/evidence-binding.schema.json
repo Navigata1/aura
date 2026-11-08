@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "evidence-binding/1",
+  "description": "The input C02 validates before a concluded benchmark or hum-benchmark evidence record may count (GLOSSARY: Evidence record, Preregistration; ADR-0027): that record, the one subject (profile revision and host class) it speaks for, its typed preregistration and the membership of the set. It is a claim to be checked, never a proof: it carries no validated flag, and until C02 lands evidence.gates refuses concluded benchmark and hum-benchmark records and the status fold ignores them (C01).",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "id", "set", "evidence_id", "subject", "prereg_sha256", "membership_id"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "evidence-binding"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "id": {"$ref": "common.schema.json#/$defs/id"},
+    "set": {"$ref": "benchmark-prereg.schema.json#/$defs/benchmarkSet"},
+    "evidence_id": {"$ref": "common.schema.json#/$defs/id"},
+    "subject": {"$ref": "benchmark-prereg.schema.json#/$defs/subject"},
+    "prereg_sha256": {"$ref": "common.schema.json#/$defs/sha256"},
+    "membership_id": {"$ref": "common.schema.json#/$defs/id"}
+  }
+}
