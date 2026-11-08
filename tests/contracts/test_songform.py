@@ -38,7 +38,9 @@ class SongFormContractTests(unittest.TestCase):
         self.assertEqual(text.count('(6720, 480, 67, 90)'), 1)
         cases.write_text(text.replace('(6720, 480, 67, 90)', '(6721, 480, 67, 90)'))
         self.run_cli('contracts/reference/generate_fixtures.py')
-        self.run_cli('scripts/spec/validate.py', '-v', ok=False, contains='contracts/fixtures/vectors/songform.json [intro, pickup')
+        # The validator prints OS-native paths, so match the file name, case name and mismatch, not the separators.
+        self.run_cli('scripts/spec/validate.py', '-v', ok=False,
+                     contains='songform.json [intro, pickup, two phrases in one repeat, outro]: reference gives')
 
     def test_added_fields_and_their_consumers_match_both_ways(self):
         manifest_path = self.root / 'contracts/consumers.json'
