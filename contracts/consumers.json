@@ -21,6 +21,11 @@
     "fixture.audition": [
       "contract-completion",
       "audition"
+    ],
+    "fixture.midi": [
+      "contract-completion",
+      "midi-in-out",
+      "export"
     ]
   }
 }

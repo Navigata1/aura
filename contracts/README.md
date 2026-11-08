@@ -112,7 +112,7 @@ benchmark conclusions and coordinated with T02's route-standing work.
 
 ## Not covered yet (needs vectors before code relies on it)
 
-SongForm assembly, MelodySpec -> YuE2 ABC emission, the MIDI round trip, `render_mode` stitching, route standing and
+SongForm assembly, MelodySpec -> YuE2 ABC emission, `render_mode` stitching, route standing and
 the plan-rules order, the remaining job kinds and tasks (isolate, dsp-finish, dsp-edit, offline-render, preservation,
 per, align, diagnostics, stem-to-midi, a reserved tts), `price-snapshots/`, frozen `legacy/`
 fixtures (they freeze at the first release), the TypeScript twin of the tempo vectors and the Pydantic/TS codegen
@@ -140,3 +140,60 @@ copies: new-family discovery, unchanged existing bytes, corrupt expectations, du
 missing/unknown consumer, removed handler, producer-kind mismatch and legacy expectation execution. The production
 schemas and existing fixture bytes are unchanged. SongForm, ABC, MIDI and route-standing implementation remain open;
 C01 benchmark containment remains in force until C02 establishes result binding.
+
+## MIDI round trip (T02d)
+
+`reference/studio_ref/midi.py` is the stdlib reference for MelodySpec <-> Standard MIDI File (SMF 1.0): the behaviour
+`Score.to_midi(melody, form)` and `Score.from_midi(bytes)` (architecture §4.6) must reproduce. `fixture.midi`
+(`fixtures/vectors/midi.json`, schema `fixture-midi.schema.json`) holds its hand-derived vectors; expected bytes are
+lowercase hex inside the JSON, and no binary file is committed. `to_smf(melody, markers)` writes, `from_smf(bytes)`
+reads, and anything the mapping cannot represent raises a typed `MidiRefusal` (`{code, smf_track, tick}`). Nothing is
+retimed or rounded, and nothing is dropped silently.
+
+**Written: one canonical file.** Format 1, two tracks, 960 PPQ, no running status. Track 0 (the conductor) holds, at
+each tick, the time signature (`FF 58 04 nn dd cc 08`: `dd` is log2 of the denominator, `cc` is 96 / denominator, one
+click per beat unit), the tempo (`FF 51 03`, the integer microseconds per quarter) and the section markers (`FF 06`,
+the section name), in that order. Track 1 holds the notes on MIDI channel 1 as `90 kk vv` (the note's velocity) and
+`80 kk 40`; at one tick note-offs come first, then ascending pitch, so touching notes of one pitch stay two notes.
+Each track ends with `FF 2F 00` at its last event. The writer reads only `tempo_map.tempo`, `tempo_map.meter` and each
+note's start, duration, pitch and velocity, so a whole `melody-spec` record works; per-field validity is the schema's
+job, and the writer refuses only what a schema cannot see.
+
+**Read.** Formats 0 and 1, at any division whose ticks convert exactly (`960 x tick / division` is whole, so a 480 PPQ
+file doubles every tick). Running status, a note-on with velocity 0 as a note-off, and tempo, meter and markers in any
+track. Until the first tempo or time signature the SMF defaults hold (500000 us, 120 BPM; 4/4). The same tempo or time
+signature repeated at one tick, as notation programs write it in every track, is one entry. Notes come back in
+(start_tick, pitch) order and markers in tick order, so `from_smf(to_smf(m, k))` gives `m` and `k` back exactly, with
+nothing listed as not carried.
+
+**Not carried, and never silently.** MelodySpec-only fields are not written: note ids, confidence and origin, key,
+phrases, quantize, source and revisions. On import the MIDI in-and-out ticket assigns ids `n1`, `n2`, ... in that
+order, the origin and a null confidence, and keeps the original bytes as the capture. Read but not kept: release
+velocity, the time signature's `cc` and `bb`, and the MIDI channel number. Every other event is listed in
+`not_carried` as `{smf_track, tick, event}`, where `event` is the status byte in hex or `ff` and the meta type: names,
+text, lyrics, cue points, key signatures, a marker whose text is not a section name, program and control changes,
+pitch bend, aftertouch, SysEx and a note-off with no note sounding.
+
+**Section markers** use the `timeline/1` marker shape (`{name, tick}`, a SongForm section name) and travel beside the
+MelodySpec, as `to_midi(melody, form)` implies. Phrases are not written as markers: a phrase is a span with an end, an
+SMF marker is a point, and GLOSSARY keeps phrases apart from sections. Deriving the markers from a SongForm, and
+writing the full form's end as the End of Track, wait for the SongForm assembly slice (T02c), which defines section
+boundaries and form duration.
+
+| Code | Refused when |
+| --- | --- |
+| `smpte_division` | the division word counts SMPTE frames (its top bit is set) |
+| `tempo_outside_model` | a tempo of 0 us per quarter |
+| `meter_outside_model` | a time signature numerator of 0 or above 32, or a denominator above 32 |
+| `tempo_map_ambiguous` | two different tempos, or two different time signatures, at one tick; on write, a tempo or meter list that does not start at tick 0 and strictly increase |
+| `same_pitch_overlap` | a note-on for a pitch already sounding on the melody's channel; on write, two overlapping notes of one pitch |
+| `track_layout_unsupported` | format 2; note-ons in more than one track, or on more than one channel (the importer's chooser names one) |
+| `tick_not_representable` | a tick that is not a whole 960 PPQ tick; on write, a gap over the four-byte delta-time maximum, `0x0FFFFFFF` |
+| `zero_length_note` | a note-off at its own note-on's tick |
+| `unterminated_note` | a note still sounding when its track ends |
+| `malformed_smf` | no `MThd` of length 6; format 0 without exactly one track, no tracks, a format above 2 or a division of 0; a chunk that is not `MTrk` (unknown chunks are refused, not skipped), a short chunk, or bytes after the last one; a delta time over four bytes; a data byte with no status (meta and SysEx events cancel running status), a status byte where data belongs, or a system message; a tempo or time signature of the wrong length; a track without End of Track, or anything after it |
+
+On read, a refusal's tick is in the file's own division; a write refusal carries no track. The Studio API's MIDI
+route already answers with `Ineligible{reasons}` (architecture §4.1), and a write refusal is such a reason. Not in
+this slice: mapping key signatures to the MelodySpec key (they are listed, not mapped), live event lists
+(`from_midi_events`) and the track chooser, which belong to the MIDI in-and-out ticket.
