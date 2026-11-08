@@ -174,6 +174,17 @@ def evaluate(case, world):
         self.edit_manifest(lambda m: m['fields'].update({'eval-set.schema.json#/properties/set': ['registry']}))
         self.run_cli('scripts/spec/validate.py', ok=False, contains="orphan ['eval-set.schema.json#/properties/set']")
 
+    def test_malformed_added_in_annotation_is_refused(self):
+        path = self.root / 'contracts/schemas/eval-set.schema.json'
+        original = path.read_text()
+        for comment in ('Added in 1.1.0', 'added in 1.1.0 (T02c)', 'added in 1.0.1'):
+            with self.subTest(comment=comment):
+                schema = json.loads(original)
+                schema['properties']['brief_ids']['$comment'] = comment
+                path.write_text(json.dumps(schema))
+                self.run_cli('contracts/reference/generate_fixtures.py', ok=False, contains='malformed added-in annotation')
+                self.run_cli('scripts/spec/validate.py', ok=False, contains='malformed added-in annotation')
+
     def test_binding_vectors_hold_hand_derived_findings(self):
         self.run_cli('scripts/spec/validate.py', '-v', contains='fixture.binding vectors')
         path = self.root / 'contracts/fixtures/vectors/binding.json'

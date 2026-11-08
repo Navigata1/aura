@@ -33,6 +33,9 @@ These come from the independent review of PR #130 (P-N1, P-N2, P-N6, S-N2). T02b
 - **The conclusion.** Evaluate quota, coverage, repeat pairs and thresholds deterministically (unknown metrics fail
   closed), apply the hum decision rule per lane, wire typed resolution into `evidence.gates` and registry admission, and
   only then conclude, promote or demote.
+- **Residuals from the round-2 review (P2-N1), also for T70 and T53.** The equal-compute track is a total cap plus a
+  per-run ceiling (`prereg/1`'s `budgets` shape), not a budget per arm. No field marks which protocol metric is the
+  correction-effort measure the hum decision reads.
 - **GLOSSARY gap (S-N2), for `/domain-modeling`.** "Subject", "membership" and "evidence binding" have no GLOSSARY
   entries. A binding's `subject` (`profile_id`, `profile_revision`, `host_class`) has a different shape from
   `evidence/1`'s `subject` (`subject_type`, `subject_id`, with revision and host class beside it).

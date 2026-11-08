@@ -8,8 +8,8 @@ import re
 ADDED = re.compile(r'added in 1\.[1-9][0-9]*\.[0-9]+')  # a minor version above 1.0.0
 MANIFEST_KEYS = {'version', 'scope', 'consumers', 'fields', 'records', 'pending'}
 SCOPE = 'vector-kinds, record fields and added fields'
-# The record kinds that predate T02b (integration 7cb7bbd). pending may only shrink: a kind leaves it by being mapped
-# field by field in records, and no new kind can be parked on it.
+# The record kinds that predate T02b (integration 7cb7bbd). pending never holds a kind outside these 44: a kind leaves
+# it by being mapped field by field in records, and no new kind can be parked on it.
 PRE_T02B_RECORD_KINDS = frozenset({
     'approval', 'artifact', 'audition', 'burst-run', 'candidate', 'capability-registry', 'component-register', 'compute-profile',
     'compute-tiers', 'correction-log', 'edit-operation', 'engine-profile-registry', 'eval-brief', 'eval-set', 'event', 'evidence',
@@ -20,12 +20,16 @@ PRE_T02B_RECORD_KINDS = frozenset({
 
 
 def added_fields(root: Path) -> set[str]:
-    """Every schema location a minor version added, marked with the annotation $comment 'added in 1.x.y'."""
+    """Every schema location a minor version added, marked with the annotation $comment 'added in 1.x.y'. A comment that
+    starts with 'added in' but does not match exactly (another case, a suffix, 1.0.x) is refused, never skipped."""
     found = set()
 
     def walk(node, where):
         if isinstance(node, dict):
-            if isinstance(node.get('$comment'), str) and ADDED.fullmatch(node['$comment']):
+            comment = node.get('$comment')
+            if isinstance(comment, str) and comment.lower().startswith('added in'):
+                if not ADDED.fullmatch(comment):
+                    raise ValueError(f'{where}: malformed added-in annotation {comment!r}')
                 found.add(where)
             for key, value in node.items():
                 walk(value, f'{where}/{key}')
@@ -101,8 +105,9 @@ def record_fields(root: Path) -> dict:
 
 def check_records(root: Path, records, pending, slugs: set) -> None:
     """Each record kind is either mapped field by field (top-level fields) to real consuming tickets, or pending: one of
-    PRE_T02B_RECORD_KINDS, whose consumer inventory is remaining T02 work. pending can only shrink. An orphan kind or
-    field entry, an unmapped field, a kind on neither list or on both, and a new kind parked on pending all fail closed."""
+    PRE_T02B_RECORD_KINDS, whose consumer inventory is remaining T02 work. pending never holds a kind outside the 44. An
+    orphan kind or field entry, an unmapped field, a kind on neither list or on both, and a new kind parked on pending all
+    fail closed."""
     known = record_fields(root)
     if not isinstance(records, dict) or not isinstance(pending, list) or any(not isinstance(k, str) for k in pending):
         raise ValueError('invalid vector consumers manifest')

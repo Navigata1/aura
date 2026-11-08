@@ -176,12 +176,14 @@ record present twice, an unregistered subject or case, a missing or edited brief
 unlisted seed, an arm off the candidate budget, a job that does not resolve to its arm's subject and host class or was
 queued at or before the commit, and an expected verdict or correction that does not resolve or was given over
 synthetic test output. The `fixture.binding` vectors hold hand-derived findings for valid mixed-profile engine and hum
-preregistrations and bindings, and one negative for each condition the reference checks.
+preregistrations and bindings, a seedless brief that binds, and one negative for each condition the reference checks,
+profile revision and host class separately. The one exception is the eval-mode guard: no schema-valid record reaches it
+alone, because `audition/1` lets only eval auditions carry a preregistration hash, so no vector can tell it apart.
 
 `contracts/consumers.json` (version 2) maps every top-level field of these kinds to real consuming tickets in
 `records`. A ticket is a `docs/spec/tickets.json` slug or a contract-fix id registered by a
 `docs/spec/contract-fixes/Cnn-*.md` file, which is how C02 is named. Each record kind that predates T02b sits on the
-`pending` allow-list, which code freezes to exactly those 44 kinds, so it can only shrink; a new kind must be mapped field
+`pending` allow-list, which code freezes so that it never holds a kind outside those 44; a new kind must be mapped field
 by field. `fields` maps schema locations marked `$comment: "added in 1.x.y"` to their consumers and must match them
 exactly (T02c, "Minor versions" below). The scope string is "vector-kinds, record fields and added fields". An orphan
 kind or field entry, an unmapped field, an unknown ticket, a new kind on
@@ -272,7 +274,8 @@ repeat. Assembly checks their placement but does not copy them; ABC emission rea
 **Minor versions.** A schema location a minor version adds carries `"$comment": "added in 1.x.y"` and is accepted only
 on records that claim that minor or later, so every 1.0.0 record still validates and a 1.0.0 record carrying a 1.1
 field fails (`fixtures/invalid/*-before-1-1.json`). `consumers.json` `fields` maps every such location to its
-consuming tickets; discovery fails on a location without consumers, an orphan entry or an unknown ticket slug.
+consuming tickets; discovery fails on a location without consumers, an orphan entry, an unknown ticket slug or a
+`$comment` that starts with "added in" without matching exactly (T02b).
 
 **Still open.** Tempo or meter changes inside the bars a phrase occupies, an instrumental section that places a phrase
 and re-assembling an assembled melody are refused, not supported. A pickup always stays inside its own section (it

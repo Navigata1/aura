@@ -144,15 +144,17 @@ def _arm_findings(arm: dict, prereg: dict, subjects: set, get) -> set:
 
 def _verdict_findings(case: dict, brief_id: str | None, prereg_sha: str, get) -> set:
     """Each expected verdict is a preregistered listening verdict on an eval audition of this preregistration for the
-    case's brief, over the case's own candidates only, none of them synthetic test output. Only an eval audition can
-    carry a preregistration hash (audition/1), so matching the hash already implies eval mode."""
+    case's brief, over the case's own candidates only, none of them synthetic test output. The eval-mode test is a
+    fail-closed guard: audition/1 already lets only eval auditions carry a preregistration hash, so no schema-valid
+    record reaches it on its own (an equivalent mutant)."""
     out = set()
     own = {c for arm in case["arms"] for c in arm["candidate_ids"]}
     for verdict_id in case["verdict_ids"]:
         verdict = get("verdict", verdict_id)
         audition = get("audition", verdict["audition_id"]) if verdict else None
         heard = [get("candidate", c) for c in audition["candidate_ids"]] if audition else [None]
-        if (None in heard or verdict["evidence_kind"] != "listening-preregistered" or audition["prereg_sha256"] != prereg_sha
+        if (None in heard or verdict["evidence_kind"] != "listening-preregistered" or audition["mode"] != "eval"
+                or audition["prereg_sha256"] != prereg_sha
                 or audition["brief_id"] != brief_id or not set(audition["candidate_ids"]) <= own):
             out.add("verdict_unresolved")
         elif any(c["synthetic_test"] for c in heard):

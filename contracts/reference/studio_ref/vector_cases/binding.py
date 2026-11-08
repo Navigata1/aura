@@ -189,6 +189,13 @@ def second_basic_pitch_melody(recs):
     return edit(recs, "bm_hum", lambda m: m["cases"][0]["arms"][1]["melody_ids"].append("mel_h01_bp2"))
 
 
+def seedless_brief():
+    """The valid engine binding with brief_b01 seedless (seed_kind none), pinned by its own hash and no asset to list."""
+    seedless = {"seed_kind": "none", "sha256": None}
+    pinned = dict(BRIEF_CASE, brief_sha256=sha_of(dict(brief(), seed=seedless)))
+    return edit(engine(cases=[pinned], asset_hashes=[]), "brief_b01", lambda b: b.update(seed=seedless))
+
+
 def build(profiles):
     def case(name, op, check_id, recs, expected, why):
         return {"name": name, "derivation": why, "op": op, "check_id": check_id, "records": recs, "expected": expected}
@@ -222,6 +229,8 @@ def build(profiles):
              "note_count is not among the four protocol metrics, so it has no preregistered threshold to rank passing subjects by."),
         case("a hum case whose ground truth is not among the asset hashes", "prereg", "bp_hum", [hum_prereg(asset_hashes=[H("hum:h01")])],
              ["asset_unlisted"], "case_h01's MIDI ground truth is missing from asset_hashes, so it is not pinned by the preregistration."),
+        case("a hum missing from the asset hashes", "prereg", "bp_hum", [hum_prereg(asset_hashes=[H("midi:h01")])], ["asset_unlisted"],
+             "case_h01's MIDI ground truth is listed, but the hum itself is missing from asset_hashes."),
         case("a burst-run ceiling above the compute cap", "prereg", "bp_engine", [engine_prereg(burst_run_ceiling_usd="6.00")],
              ["ceiling_exceeds_cap"], "One burst run could carry a 6.00 ceiling while the whole evaluation is capped at 5.00."),
         case("coverage the case set cannot reach", "prereg", "bp_engine", [engine_prereg(coverage={"cases_complete_min": 2})],
@@ -255,6 +264,13 @@ def build(profiles):
         case("binding for an unpreregistered host class", "binding", "eb_hum",
              edit(hum(), "eb_hum", lambda b: b["subject"].update(host_class=linux)), ["subject_unregistered"],
              "pYIN was preregistered on cpu/m5pro; evidence from cpu/linux-ci would credit a host class that was never under test."),
+        case("a binding subject at another profile revision", "binding", "eb_hum",
+             edit(hum(), "eb_hum", lambda b: b["subject"].update(profile_revision=R("analysis-transcribe-pyin-hmm@pin2"))),
+             ["subject_unregistered"], "pYIN was preregistered at one profile revision; a pin change is a new revision (ADR-0027), so "
+             "evidence from the other revision would credit a subject that was never under test."),
+        case("an arm's job at another profile revision", "binding", "eb_hum",
+             edit(hum(), "job_bp", lambda j: j.update(profile_revision=R("transcribe-basic-pitch@pin2"))), ["job_unresolved"],
+             "job_bp ran Basic Pitch at a different profile revision from its arm's, so the job is not that arm's."),
         case("an arm whose subject was not preregistered", "binding", "eb_hum",
              edit(edit(hum(), "bm_hum", lambda m: m["cases"][0]["arms"][1]["subject"].update(host_class=linux)),
                   "job_bp", lambda j: j["placement"].update(host_class=linux)), ["subject_unregistered"],
@@ -293,6 +309,11 @@ def build(profiles):
         case("a brief edited after the commit", "binding", "eb_engine",
              edit(engine(), "brief_b01", lambda b: b.update(notes="Edited after the commit.")), ["brief_unresolved"],
              "brief_b01's notes changed after the preregistration pinned its content, so it no longer hashes to brief_sha256."),
+        case("a brief without its record", "binding", "eb_engine", drop(engine(), "brief_b01"), ["brief_unresolved"],
+             "No eval-brief record brief_b01 exists, so its pinned content cannot be checked."),
+        case("a seedless brief that binds", "binding", "eb_engine", seedless_brief(), [],
+             "brief_b01 has no seed (seed_kind none), so no seed hash needs listing; its case pins this seedless content, and "
+             "everything else binds as in the valid engine binding." + C02_WILL_CHANGE),
         case("a case lane that differs from its brief", "binding", "eb_engine", engine(cases=[dict(BRIEF_CASE, lane="research")]),
              ["brief_unresolved"], "case_b01 is preregistered in research, but brief_b01 runs in individual. Both profiles allow research."),
         case("a brief seed missing from the asset hashes", "binding", "eb_engine", engine(asset_hashes=[]), ["asset_unlisted"],
