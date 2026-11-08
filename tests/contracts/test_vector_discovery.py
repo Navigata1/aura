@@ -44,7 +44,7 @@ def evaluate(case, world):
                                  'cases': {'type': 'array', 'minItems': 1, 'items': {'type': 'object'}}}}
         (self.root / 'contracts/schemas/fixture-probe.schema.json').write_text(json.dumps(schema))
         manifest_path = self.root / 'contracts/consumers.json'
-        manifest = json.loads(manifest_path.read_text()) if manifest_path.exists() else {'version': 1, 'scope': 'vector-kinds', 'consumers': {}}
+        manifest = json.loads(manifest_path.read_text())
         manifest['consumers']['fixture.probe'] = ['contract-completion']
         manifest_path.write_text(json.dumps(manifest))
         return folder / 'probe.py', manifest_path
@@ -113,10 +113,83 @@ def evaluate(case, world):
         (legacy / 'tempo.json').write_text(json.dumps(vector))
         self.run_cli('scripts/spec/validate.py', ok=False, contains='reference gives 0, fixture expects 1')
 
-    def test_boolean_manifest_version_is_not_integer_version_one(self):
+    def test_non_integer_manifest_version_is_refused(self):
         _, manifest_path = self.install_probe()
         manifest = json.loads(manifest_path.read_text())
-        manifest['version'] = True
-        manifest_path.write_text(json.dumps(manifest))
-        self.run_cli('contracts/reference/generate_fixtures.py', ok=False, contains='invalid vector consumers manifest')
-        self.run_cli('scripts/spec/validate.py', ok=False, contains='invalid vector consumers manifest')
+        for version in (2.0, True):  # 2.0 == 2, so only the strict-int guard refuses it
+            with self.subTest(version=version):
+                manifest['version'] = version
+                manifest_path.write_text(json.dumps(manifest))
+                self.run_cli('contracts/reference/generate_fixtures.py', ok=False, contains='invalid vector consumers manifest')
+                self.run_cli('scripts/spec/validate.py', ok=False, contains='invalid vector consumers manifest')
+
+    def edit_manifest(self, change):
+        path = self.root / 'contracts/consumers.json'
+        manifest = json.loads(path.read_text())
+        change(manifest)
+        path.write_text(json.dumps(manifest))
+
+    def test_record_consumers_refuse_orphans_gaps_and_unknown_tickets(self):
+        original = (self.root / 'contracts/consumers.json').read_text()
+        for change, message in [
+                (lambda m: m['records']['benchmark-prereg'].update(no_such_field=['registry']), 'orphan consumer entry'),
+                (lambda m: m['records'].update({'no-such-kind': {'id': ['registry']}}), 'orphan consumer entry'),
+                (lambda m: m['records']['evidence-binding'].pop('membership_id'), 'field has no consumer'),
+                (lambda m: m['records']['benchmark-membership'].update(cases=['not-a-ticket']), 'unknown consumer ticket slug'),
+                (lambda m: m['records']['benchmark-prereg'].update(id=['C09']), 'unknown consumer ticket slug'),
+                (lambda m: m['pending'].remove('verdict'), 'mapped or pending exactly once')]:
+            with self.subTest(message=message):
+                (self.root / 'contracts/consumers.json').write_text(original)
+                self.edit_manifest(change)
+                self.run_cli('contracts/reference/generate_fixtures.py', ok=False, contains=message)
+                self.run_cli('scripts/spec/validate.py', ok=False, contains=message)
+
+    def test_new_record_kind_cannot_be_parked_on_pending(self):
+        schema = {'type': 'object', 'required': ['kind', 'schemaVersion'], 'additionalProperties': False,
+                  'properties': {'kind': {'const': 'hidden-kind'}, 'schemaVersion': {'const': '1.0.0'}, 'note': {'type': 'string'}}}
+        (self.root / 'contracts/schemas/hidden-kind.schema.json').write_text(json.dumps(schema))
+        self.edit_manifest(lambda m: m['pending'].append('hidden-kind'))
+        self.run_cli('contracts/reference/generate_fixtures.py', ok=False, contains='hidden-kind: pending is frozen')
+        self.run_cli('scripts/spec/validate.py', ok=False, contains='hidden-kind: pending is frozen')
+
+    def test_new_record_kind_needs_a_consumer_entry(self):
+        schema = {'type': 'object', 'required': ['kind', 'schemaVersion'], 'additionalProperties': False,
+                  'properties': {'kind': {'const': 'probe-record'}, 'schemaVersion': {'const': '1.0.0'}, 'note': {'type': 'string'}}}
+        (self.root / 'contracts/schemas/probe-record.schema.json').write_text(json.dumps(schema))
+        self.run_cli('scripts/spec/validate.py', ok=False, contains='probe-record: every record kind must be mapped or pending exactly once')
+        self.edit_manifest(lambda m: m['records'].update({'probe-record': {'note': ['C02', 'registry']}}))
+        self.run_cli('scripts/spec/validate.py')
+
+    def test_added_schema_fields_need_consumers(self):
+        path = self.root / 'contracts/schemas/eval-set.schema.json'
+        schema = json.loads(path.read_text())
+        schema['properties']['brief_ids']['$comment'] = 'added in 1.1.0'
+        path.write_text(json.dumps(schema))
+        where = 'eval-set.schema.json#/properties/brief_ids'
+        self.run_cli('scripts/spec/validate.py', ok=False, contains=f"missing ['{where}']")
+        for tickets, ok, message in [(['not-a-ticket'], False, 'unknown consumer ticket slug'), (['C02', 'eval-prereg'], True, None)]:
+            with self.subTest(tickets=tickets):
+                self.edit_manifest(lambda m, t=tickets: m['fields'].update({where: t}))
+                self.run_cli('scripts/spec/validate.py', ok=ok, contains=message)
+        self.edit_manifest(lambda m: m['fields'].update({'eval-set.schema.json#/properties/set': ['registry']}))
+        self.run_cli('scripts/spec/validate.py', ok=False, contains="orphan ['eval-set.schema.json#/properties/set']")
+
+    def test_malformed_added_in_annotation_is_refused(self):
+        path = self.root / 'contracts/schemas/eval-set.schema.json'
+        original = path.read_text()
+        for comment in ('Added in 1.1.0', 'added in 1.1.0 (T02c)', 'added in 1.0.1'):
+            with self.subTest(comment=comment):
+                schema = json.loads(original)
+                schema['properties']['brief_ids']['$comment'] = comment
+                path.write_text(json.dumps(schema))
+                self.run_cli('contracts/reference/generate_fixtures.py', ok=False, contains='malformed added-in annotation')
+                self.run_cli('scripts/spec/validate.py', ok=False, contains='malformed added-in annotation')
+
+    def test_binding_vectors_hold_hand_derived_findings(self):
+        self.run_cli('scripts/spec/validate.py', '-v', contains='fixture.binding vectors')
+        path = self.root / 'contracts/fixtures/vectors/binding.json'
+        vector = json.loads(path.read_text())
+        case = next(c for c in vector['cases'] if c['op'] == 'binding' and c['expected'] == [])
+        case['expected'] = ['committed_after_run']
+        path.write_text(json.dumps(vector))
+        self.run_cli('scripts/spec/validate.py', ok=False, contains="reference gives [], fixture expects ['committed_after_run']")

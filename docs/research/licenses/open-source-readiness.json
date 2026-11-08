@@ -3,7 +3,7 @@
   "generated_from": [
     {
       "path": "contracts/registry/components.v1.json",
-      "sha256": "c40e402cd7d03eabb8b790ac11afb0ae213fd2d45a71c475a4f63bf7cbf4be09"
+      "sha256": "1b4f0d384d6207e0b03ff51c684610d55adaf833e99fc45fe98a72e4c0514cb3"
     }
   ],
   "register_id": "open-source-readiness.v1",
@@ -78,13 +78,14 @@
         "individual",
         "research"
       ],
-      "condition": "Provisional: a local hum benchmark (Basic Pitch vs SwiftF0.segment_notes vs pYIN+HMM, mir_eval COn/COnP/COnPOff) decides the A4 transcriber. LLC use waits on T54: three of its five training datasets carry non-commercial or academic-only terms.",
+      "condition": "Provisional: a local hum benchmark (Basic Pitch vs SwiftF0.segment_notes vs pYIN+HMM, mir_eval COn/COnP/COnPOff) decides the A4 transcriber. Individual and research: T54's provenance review prv_basic-pitch-0.4.0 failed llc eligibility. MAESTRO and the MedleyDB pitch-tracking subset (CC BY-NC-SA 4.0) and iKala (academic use only) bar commercial use, and its augmentation sources are unidentified. Interpretation, not legal advice.",
       "gate": null,
       "id": "basic-pitch",
       "label": null,
       "name": "Spotify Basic Pitch",
       "process_boundary_required": false,
       "release_blockers": [
+        "permissive_label_nc_data",
         "unverified_training_data"
       ],
       "v1_path": true,
@@ -985,7 +986,7 @@
         "individual",
         "research"
       ],
-      "condition": "Individual and research until T54's provenance review: the MIT-labelled bundled ONNX was trained on CC BY-NC-SA 4.0 data.",
+      "condition": "Individual and research: T54's provenance review prv_swiftf0-0.3.0 failed llc eligibility. The bundled ONNX was trained on the CC BY-NC-SA 4.0 pitch-benchmark train split, whose MDB-stem-synth, MOCHA-TIMIT, MUSDB18 and TAU Urban Acoustic Scenes 2019 sources bar commercial use. Interpretation, not legal advice.",
       "gate": null,
       "id": "swiftf0",
       "label": null,
@@ -1126,7 +1127,7 @@
       "non_commercial_by_author": 2,
       "non_commercial_weights": 19,
       "obligations": 4,
-      "permissive_label_nc_data": 2,
+      "permissive_label_nc_data": 3,
       "research_or_academic": 4,
       "unknown_license": 6,
       "unverified": 8,

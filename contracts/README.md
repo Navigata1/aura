@@ -45,8 +45,9 @@ python3 scripts/spec/validate.py                  # the gate; -v for detail, --r
    attested, a risk acceptance that would make a Suno import an audition arm, a YuE2 license acceptance without its
    GitHub permission document, and so on).
 7. **Vectors**: tick<->frame (960 PPQ, integer tempo, one half-up rounding), the status fold, `recommend()`, ledger
-   arithmetic, audition gains and commitments, and the MIDI round trip (`fixture.midi`: written bytes, read MelodySpec
-   fields, markers and `end_tick`, and every typed refusal) match hand-derived values exactly.
+   arithmetic, audition gains and commitments, the evidence-binding input findings, and the MIDI round trip
+   (`fixture.midi`: written bytes, read MelodySpec fields, markers and `end_tick`, and every typed refusal) match
+   hand-derived values exactly.
 8. `docs/evidence/` (a hash-checked export of the store: evidence plus the verdicts and preregistrations it cites)
    validates by kind and breaks no reference rule, so a hand-committed passing record cannot become a status; then the
    computed status of the shipped registry from it (none yet: every profile and capability is `declared`), plus the
@@ -132,12 +133,13 @@ The validator discovers schemas by their existing `kind` const/enum and executes
 vector kinds fail explicitly. Frozen legacy vectors still execute against current reference functions.
 
 A new family needs its module, schema and an entry in `contracts/consumers.json`, with no shared dispatch-list edit.
-Its `consumers` map is deliberately scoped to vector kinds: every discovered family has a nonempty unique list of
-actual `docs/spec/tickets.json` ticket slugs, and no orphan manifest entry is allowed. T02c adds a `fields` map for
-schema locations a minor version adds (see "Minor versions" below), so the manifest's scope reads "vector-kinds and
-added fields". These slugs name the consuming contract or feature ticket; they do not claim that the future feature
-is implemented. Full field/enum/schema/declaration consumer inventory remains T02 work. There is no pending
-allow-list in this slice: missing consumers fail closed.
+Its `consumers` map covers vector kinds: every discovered family has a nonempty unique list of real consuming tickets
+(a `docs/spec/tickets.json` slug or a registered contract-fix id, see T02b below), and no orphan manifest entry is
+allowed. These name the consuming contract or feature ticket; they do not claim that the future feature is implemented.
+Vector kinds have no pending allow-list: missing consumers fail closed. T02b adds `records` and `pending` for record
+kinds and T02c adds `fields` for schema locations a minor version adds (see "Minor versions" below), so the manifest's
+scope reads "vector-kinds, record fields and added fields". The rest of the field/enum/declaration consumer inventory
+remains T02 work.
 
 `tests/contracts/test_vector_discovery.py` exercises the public generator and validator in disposable tracked-file
 copies: new-family discovery, unchanged existing bytes, corrupt expectations, duplicate kinds, missing evaluator,
@@ -145,6 +147,55 @@ missing/unknown consumer, removed handler, producer-kind mismatch and legacy exp
 schemas and existing fixture bytes are unchanged. ABC and route-standing implementation remain open (SongForm:
 T02c below); for MIDI only the runtime does (the MIDI in-and-out ticket, T25), since T02d added its reference
 below. C01 benchmark containment remains in force until C02 establishes result binding.
+
+## Evidence-binding inputs (T02b)
+
+C02 (#4) needs exact inputs to bind concluded benchmark evidence to, not the existence of a hash. Three closed record
+kinds hold them. None of them concludes, promotes or demotes anything, and none is read by `evidence.gates` or the status
+fold: C01's refusal of concluded `benchmark` and `hum-benchmark` records and its inert fold are unchanged.
+
+- `benchmark-prereg/1`, the typed preregistration. `set` is the benchmark gate's set (`benchmark-48` or
+  `hum-benchmark`). It holds every part of a preregistration (GLOSSARY): the cases (each brief pinned by
+  `brief_sha256`, the sha256 of its canonical JSON, inside the benchmark set named by `eval_set_id`; or each hum with
+  its MIDI ground truth), `asset_hashes`, the subjects under test (profile revision and host class), `budgets`
+  (candidates per arm, compute cap and listening minutes) with `burst_run_ceiling_usd`, `listening_quota`, `coverage`,
+  exactly one threshold per protocol metric, and for the hum benchmark a `decision` rule in which manual entry wins
+  when no subject passes. `asset_hashes`, `budgets`, `listening_quota` and `thresholds` reuse `prereg/1`'s shapes.
+  `prereg_sha256` is the record's own canonical hash, and `committed_at` must precede every job it governs. `prereg/1`
+  stays the preregistration of smoke-set eval auditions.
+- `benchmark-membership/1`: per case, each arm's subject with its jobs and candidates, or the MelodySpecs those jobs
+  transcribed, whose correction logs hold Jon's blind correction; the owner verdict ids each engine case expects.
+- `evidence-binding/1`: one evidence record, its subject, its typed preregistration and the membership. It carries no
+  validated flag (`IR-EVIDENCE-BINDING-VALIDATED-FLAG`).
+
+`studio_ref/binding.py` is the reference. `resolve_prereg` is typed: only one `benchmark-prereg` of the same set whose
+own hash matches resolves, so a MelodySpec, a `prereg/1` or the other set's preregistration never does.
+`prereg_findings` reports, for a preregistration on its own: a hash mismatch, duplicate case ids, a protocol metric
+without a threshold or with two, a decision ranked by an undeclared metric, a hum or ground truth missing from the asset
+hashes, a burst-run ceiling above the compute cap, coverage beyond the case count, a subject without a gate of that set
+and a forbidden case lane (ADR-0029 point 6). `binding_findings` adds: an unresolved preregistration or membership, a
+record present twice, an unregistered subject or case, a missing or edited brief or one outside the benchmark set, an
+unlisted seed, an arm off the candidate budget, a job that does not resolve to its arm's subject and host class or was
+queued at or before the commit, and an expected verdict or correction that does not resolve or was given over
+synthetic test output. The `fixture.binding` vectors hold hand-derived findings for valid mixed-profile engine and hum
+preregistrations and bindings, a seedless brief that binds, and one negative for each condition the reference checks,
+profile revision and host class separately. The one exception is the eval-mode guard: no schema-valid record reaches it
+alone, because `audition/1` lets only eval auditions carry a preregistration hash, so no vector can tell it apart.
+
+`contracts/consumers.json` (version 2) maps every top-level field of these kinds to real consuming tickets in
+`records`. A ticket is a `docs/spec/tickets.json` slug or a contract-fix id registered by a
+`docs/spec/contract-fixes/Cnn-*.md` file, which is how C02 is named. Each record kind that predates T02b sits on the
+`pending` allow-list, which code freezes so that it never holds a kind outside those 44; a new kind must be mapped field
+by field. `fields` maps schema locations marked `$comment: "added in 1.x.y"` to their consumers and must match them
+exactly (T02c, "Minor versions" below). The scope string is "vector-kinds, record fields and added fields". An orphan
+kind or field entry, an unmapped field, an unknown ticket, a new kind on
+neither list and a new kind parked on `pending` fail both the generator and the validator. Nested fields and enum values
+are not yet inventoried; that remains T02 work (T02h).
+
+Still open, for C02: everything in [its to-do](../docs/spec/contract-fixes/C02-concluded-benchmark-binding.md), from
+wiring typed resolution into `evidence.gates` and registry admission and resolving `evidence_id`, to the full 48-brief
+set, quota, coverage and threshold evaluation and the conclusion itself. Fields of the pending kinds, nested fields, enum
+values and route standing remain T02 work.
 
 ## SongForm assembly (T02c)
 
@@ -225,7 +276,8 @@ repeat. Assembly checks their placement but does not copy them; ABC emission rea
 **Minor versions.** A schema location a minor version adds carries `"$comment": "added in 1.x.y"` and is accepted only
 on records that claim that minor or later, so every 1.0.0 record still validates and a 1.0.0 record carrying a 1.1
 field fails (`fixtures/invalid/*-before-1-1.json`). `consumers.json` `fields` maps every such location to its
-consuming tickets; discovery fails on a location without consumers, an orphan entry or an unknown ticket slug.
+consuming tickets; discovery fails on a location without consumers, an orphan entry, an unknown ticket slug or a
+`$comment` that starts with "added in" without matching exactly (T02b).
 
 **Still open.** Tempo or meter changes inside the bars a phrase occupies, an instrumental section that places a phrase
 and re-assembling an assembled melody are refused, not supported. A pickup always stays inside its own section (it
