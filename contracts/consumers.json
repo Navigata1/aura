@@ -21,6 +21,36 @@
     "fixture.audition": [
       "contract-completion",
       "audition"
+    ],
+    "fixture.songform": [
+      "contract-completion",
+      "song-spec",
+      "guide",
+      "abc-emission"
+    ],
+    "fixture.meter": [
+      "contract-completion",
+      "contracts-codegen",
+      "song-spec",
+      "guide",
+      "piano-roll"
+    ]
+  },
+  "fields": {
+    "melody-spec.schema.json#/properties/form": [
+      "contract-completion",
+      "song-spec",
+      "guide",
+      "abc-emission",
+      "midi-in-out",
+      "export",
+      "ace-routes",
+      "timeline"
+    ],
+    "song-spec.schema.json#/properties/form/properties/sections/items/properties/chord_symbols": [
+      "contract-completion",
+      "chord-symbols",
+      "abc-emission"
     ]
   }
 }

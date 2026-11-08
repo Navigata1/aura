@@ -1,0 +1,6353 @@
+{
+  "cases": [
+    {
+      "derivation": "The 8-bar verse [0, 30720) places ph1 at its own ticks (1 bar, then 7 bars of rest). The chorus repeats twice, [30720, 61440) and [61440, 92160), placing ph2 (bar line 3840, 100 BPM in the source) at +26880 and +57600, so the tempo changes at 30720. The Basic Pitch transcription (individual and research) and the capture are carried unchanged. 30720 ticks at 0.5 s per quarter = 16 s, plus 61440 at 0.6 s = 38.4 s; 54.4 s = 2611200 frames.",
+      "expected": {
+        "assembled": {
+          "base_rev": null,
+          "content_sha256": "daf0dd8ce6056428c2c837feecbaf551f64ae3fe017a6322c1f4406644c97acc",
+          "created_at": "2026-11-07T12:05:00Z",
+          "form": {
+            "end_tick": 92160,
+            "sections": [
+              {
+                "end_tick": 30720,
+                "name": "verse",
+                "phrases": [
+                  {
+                    "end_tick": 3840,
+                    "phrase_id": "ph1",
+                    "start_tick": 0
+                  }
+                ],
+                "repeat": 1,
+                "section_id": "s1",
+                "section_kind": "vocal",
+                "start_tick": 0
+              },
+              {
+                "end_tick": 61440,
+                "name": "chorus",
+                "phrases": [
+                  {
+                    "end_tick": 34560,
+                    "phrase_id": "ph2",
+                    "start_tick": 30720
+                  }
+                ],
+                "repeat": 1,
+                "section_id": "s2",
+                "section_kind": "vocal",
+                "start_tick": 30720
+              },
+              {
+                "end_tick": 92160,
+                "name": "chorus",
+                "phrases": [
+                  {
+                    "end_tick": 65280,
+                    "phrase_id": "ph2",
+                    "start_tick": 61440
+                  }
+                ],
+                "repeat": 2,
+                "section_id": "s2",
+                "section_kind": "vocal",
+                "start_tick": 61440
+              }
+            ]
+          },
+          "key": {
+            "mode": "major",
+            "tonic": "C"
+          },
+          "kind": "melody-spec",
+          "melody_id": "mel_case_asm",
+          "notes": [
+            {
+              "confidence": null,
+              "duration_ticks": 960,
+              "id": "n1",
+              "origin": "assembled",
+              "pitch": 60,
+              "start_tick": 0,
+              "velocity": 90
+            },
+            {
+              "confidence": null,
+              "duration_ticks": 960,
+              "id": "n2",
+              "origin": "assembled",
+              "pitch": 63,
+              "start_tick": 960,
+              "velocity": 90
+            },
+            {
+              "confidence": null,
+              "duration_ticks": 1920,
+              "id": "n3",
+              "origin": "assembled",
+              "pitch": 64,
+              "start_tick": 1920,
+              "velocity": 90
+            },
+            {
+              "confidence": null,
+              "duration_ticks": 1920,
+              "id": "n4",
+              "origin": "assembled",
+              "pitch": 65,
+              "start_tick": 30720,
+              "velocity": 90
+            },
+            {
+              "confidence": null,
+              "duration_ticks": 1920,
+              "id": "n5",
+              "origin": "assembled",
+              "pitch": 67,
+              "start_tick": 32640,
+              "velocity": 90
+            },
+            {
+              "confidence": null,
+              "duration_ticks": 1920,
+              "id": "n6",
+              "origin": "assembled",
+              "pitch": 65,
+              "start_tick": 61440,
+              "velocity": 90
+            },
+            {
+              "confidence": null,
+              "duration_ticks": 1920,
+              "id": "n7",
+              "origin": "assembled",
+              "pitch": 67,
+              "start_tick": 63360,
+              "velocity": 90
+            }
+          ],
+          "phrases": [],
+          "ppq": 960,
+          "project_id": "prj_case",
+          "quantize": null,
+          "rev": 1,
+          "schemaVersion": "1.1.0",
+          "source": {
+            "assembled_from": {
+              "melody": {
+                "melody_id": "mel_case",
+                "rev": 1,
+                "tempo_map_rev": 1
+              },
+              "song": {
+                "rev": 1,
+                "song_id": "song_case"
+              }
+            },
+            "capture_sha256": "0017589b0173c7a3d8d0285fc35383271945ff1b97110fa159339a9bb78d5787",
+            "seed_kind": "assembled",
+            "transcription": {
+              "eligible_lanes": [
+                "individual",
+                "research"
+              ],
+              "job_id": "job_case_tr",
+              "license_chain": [
+                {
+                  "code_license": "Apache-2.0",
+                  "component_id": "basic-pitch",
+                  "obligations": [],
+                  "weights_license": "Apache-2.0 (bundled TF SavedModel, CoreML, TFLite, ONNX)"
+                }
+              ],
+              "method": "basic-pitch",
+              "note": "unverified on real hums",
+              "profile_id": "transcribe-basic-pitch"
+            }
+          },
+          "spec_kind": "assembled",
+          "tempo_map": {
+            "meter": [
+              {
+                "denominator": 4,
+                "numerator": 4,
+                "tick": 0
+              }
+            ],
+            "rev": 1,
+            "tempo": [
+              {
+                "tick": 0,
+                "us_per_quarter": 500000
+              },
+              {
+                "tick": 30720,
+                "us_per_quarter": 600000
+              }
+            ]
+          }
+        },
+        "end_frame": 2611200
+      },
+      "melody": {
+        "base_rev": null,
+        "content_sha256": "ab589ffea1c1213fa7b112dc7d340a0648bb0605260e8c7bc749828466053d4e",
+        "created_at": "2026-11-07T12:00:00Z",
+        "key": {
+          "mode": "major",
+          "tonic": "C"
+        },
+        "kind": "melody-spec",
+        "melody_id": "mel_case",
+        "notes": [
+          {
+            "confidence": "0.80",
+            "duration_ticks": 960,
+            "id": "n1",
+            "origin": "transcribed",
+            "pitch": 60,
+            "start_tick": 0,
+            "velocity": 90
+          },
+          {
+            "confidence": "0.80",
+            "duration_ticks": 960,
+            "id": "n2",
+            "origin": "transcribed",
+            "pitch": 63,
+            "start_tick": 960,
+            "velocity": 90
+          },
+          {
+            "confidence": "0.80",
+            "duration_ticks": 1920,
+            "id": "n3",
+            "origin": "transcribed",
+            "pitch": 64,
+            "start_tick": 1920,
+            "velocity": 90
+          },
+          {
+            "confidence": "0.80",
+            "duration_ticks": 1920,
+            "id": "n4",
+            "origin": "transcribed",
+            "pitch": 65,
+            "start_tick": 3840,
+            "velocity": 90
+          },
+          {
+            "confidence": "0.80",
+            "duration_ticks": 1920,
+            "id": "n5",
+            "origin": "transcribed",
+            "pitch": 67,
+            "start_tick": 5760,
+            "velocity": 90
+          }
+        ],
+        "phrases": [
+          {
+            "end_tick": 3840,
+            "id": "ph1",
+            "name": "opening line",
+            "start_tick": 0
+          },
+          {
+            "end_tick": 7680,
+            "id": "ph2",
+            "name": "answer line",
+            "start_tick": 3840
+          }
+        ],
+        "ppq": 960,
+        "project_id": "prj_case",
+        "quantize": null,
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "source": {
+          "assembled_from": null,
+          "capture_sha256": "0017589b0173c7a3d8d0285fc35383271945ff1b97110fa159339a9bb78d5787",
+          "seed_kind": "hum",
+          "transcription": {
+            "eligible_lanes": [
+              "individual",
+              "research"
+            ],
+            "job_id": "job_case_tr",
+            "license_chain": [
+              {
+                "code_license": "Apache-2.0",
+                "component_id": "basic-pitch",
+                "obligations": [],
+                "weights_license": "Apache-2.0 (bundled TF SavedModel, CoreML, TFLite, ONNX)"
+              }
+            ],
+            "method": "basic-pitch",
+            "note": "unverified on real hums",
+            "profile_id": "transcribe-basic-pitch"
+          }
+        },
+        "spec_kind": "melody",
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            }
+          ],
+          "rev": 1,
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            },
+            {
+              "tick": 3840,
+              "us_per_quarter": 600000
+            }
+          ]
+        }
+      },
+      "name": "world hymn: repeated chorus and a tempo change",
+      "output": {
+        "base_rev": null,
+        "created_at": "2026-11-07T12:05:00Z",
+        "melody_id": "mel_case_asm",
+        "rev": 1,
+        "tempo_map_rev": 1
+      },
+      "sample_rate": 48000,
+      "song": {
+        "approved_lyrics": {
+          "approved_at": "2026-11-07T12:00:00Z",
+          "language": "en",
+          "source": "written",
+          "text": "[verse]\nLa la la"
+        },
+        "asr_transcripts": [],
+        "base_rev": null,
+        "candidate_count": 2,
+        "content_sha256": "65bd4adec82ef5029a2d6d6aa51f2f72845c0f7e788c0b7c4a3f98c35f94cf03",
+        "controls": {
+          "duration_s": {
+            "observed": [],
+            "requested": 60,
+            "support": []
+          },
+          "exclude_styles": {
+            "observed": [],
+            "requested": [],
+            "support": []
+          },
+          "style": {
+            "observed": [],
+            "requested": "plain test song",
+            "support": []
+          },
+          "vocal_mode": {
+            "observed": [],
+            "requested": "vocal",
+            "support": []
+          }
+        },
+        "created_at": "2026-11-07T12:00:00Z",
+        "form": {
+          "sections": [
+            {
+              "bars": 8,
+              "id": "s1",
+              "name": "verse",
+              "phrase_ids": [
+                "ph1"
+              ],
+              "repeats": 1,
+              "section_kind": "vocal"
+            },
+            {
+              "bars": 8,
+              "id": "s2",
+              "name": "chorus",
+              "phrase_ids": [
+                "ph2"
+              ],
+              "repeats": 2,
+              "section_kind": "vocal"
+            }
+          ]
+        },
+        "kind": "song-spec",
+        "larger_n_budget": null,
+        "melody": {
+          "melody_id": "mel_case",
+          "rev": 1,
+          "tempo_map_rev": 1
+        },
+        "project_id": "prj_case",
+        "references": [],
+        "render_routes": {
+          "mode": "auto",
+          "routes": []
+        },
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "song_id": "song_case",
+        "validation": {
+          "conflicts": [],
+          "unsupported_by_profile": []
+        }
+      }
+    },
+    {
+      "derivation": "The intro is one empty 4/4 bar [0, 3840) at the verse's tempo. ph1 starts on beat 4 (2880), so it fills the bars from its bar line 0: ceil(7680 / 3840) = 2; ph2 fills 1. In the 4-bar verse [3840, 19200) both move by +3840: the pickup stays on beat 4 (6720), its downbeat lands on the bar line 7680, ph2's half-note triplet keeps its 1280-tick notes (11520, 12800, 14080) in bar 3 and bar 4 is rest. The 2-bar outro [19200, 26880) ends 11520 ticks after the last note. 26880 ticks = 28 quarters x 0.5 s = 14 s = 672000 frames.",
+      "expected": {
+        "assembled": {
+          "base_rev": null,
+          "content_sha256": "6523524d6a1f3a0cf0763dc9ee5f5b893dfe9d75a82aef2284ed01a6bdd0c458",
+          "created_at": "2026-11-07T12:05:00Z",
+          "form": {
+            "end_tick": 26880,
+            "sections": [
+              {
+                "end_tick": 3840,
+                "name": "intro",
+                "phrases": [],
+                "repeat": 1,
+                "section_id": "s1",
+                "section_kind": "instrumental",
+                "start_tick": 0
+              },
+              {
+                "end_tick": 19200,
+                "name": "verse",
+                "phrases": [
+                  {
+                    "end_tick": 11520,
+                    "phrase_id": "ph1",
+                    "start_tick": 6720
+                  },
+                  {
+                    "end_tick": 15360,
+                    "phrase_id": "ph2",
+                    "start_tick": 11520
+                  }
+                ],
+                "repeat": 1,
+                "section_id": "s2",
+                "section_kind": "vocal",
+                "start_tick": 3840
+              },
+              {
+                "end_tick": 26880,
+                "name": "outro",
+                "phrases": [],
+                "repeat": 1,
+                "section_id": "s3",
+                "section_kind": "instrumental",
+                "start_tick": 19200
+              }
+            ]
+          },
+          "key": {
+            "mode": "major",
+            "tonic": "C"
+          },
+          "kind": "melody-spec",
+          "melody_id": "mel_case_asm",
+          "notes": [
+            {
+              "confidence": null,
+              "duration_ticks": 480,
+              "id": "n1",
+              "origin": "assembled",
+              "pitch": 67,
+              "start_tick": 6720,
+              "velocity": 90
+            },
+            {
+              "confidence": null,
+              "duration_ticks": 480,
+              "id": "n2",
+              "origin": "assembled",
+              "pitch": 67,
+              "start_tick": 7200,
+              "velocity": 80
+            },
+            {
+              "confidence": null,
+              "duration_ticks": 960,
+              "id": "n3",
+              "origin": "assembled",
+              "pitch": 69,
+              "start_tick": 7680,
+              "velocity": 100
+            },
+            {
+              "confidence": null,
+              "duration_ticks": 960,
+              "id": "n4",
+              "origin": "assembled",
+              "pitch": 67,
+              "start_tick": 8640,
+              "velocity": 90
+            },
+            {
+              "confidence": null,
+              "duration_ticks": 1920,
+              "id": "n5",
+              "origin": "assembled",
+              "pitch": 72,
+              "start_tick": 9600,
+              "velocity": 90
+            },
+            {
+              "confidence": null,
+              "duration_ticks": 1280,
+              "id": "n6",
+              "origin": "assembled",
+              "pitch": 71,
+              "start_tick": 11520,
+              "velocity": 90
+            },
+            {
+              "confidence": null,
+              "duration_ticks": 1280,
+              "id": "n7",
+              "origin": "assembled",
+              "pitch": 69,
+              "start_tick": 12800,
+              "velocity": 90
+            },
+            {
+              "confidence": null,
+              "duration_ticks": 1280,
+              "id": "n8",
+              "origin": "assembled",
+              "pitch": 67,
+              "start_tick": 14080,
+              "velocity": 90
+            }
+          ],
+          "phrases": [],
+          "ppq": 960,
+          "project_id": "prj_case",
+          "quantize": null,
+          "rev": 1,
+          "schemaVersion": "1.1.0",
+          "source": {
+            "assembled_from": {
+              "melody": {
+                "melody_id": "mel_case",
+                "rev": 1,
+                "tempo_map_rev": 1
+              },
+              "song": {
+                "rev": 1,
+                "song_id": "song_case"
+              }
+            },
+            "capture_sha256": "0017589b0173c7a3d8d0285fc35383271945ff1b97110fa159339a9bb78d5787",
+            "seed_kind": "assembled",
+            "transcription": null
+          },
+          "spec_kind": "assembled",
+          "tempo_map": {
+            "meter": [
+              {
+                "denominator": 4,
+                "numerator": 4,
+                "tick": 0
+              }
+            ],
+            "rev": 1,
+            "tempo": [
+              {
+                "tick": 0,
+                "us_per_quarter": 500000
+              }
+            ]
+          }
+        },
+        "end_frame": 672000
+      },
+      "melody": {
+        "base_rev": null,
+        "content_sha256": "953a47770bf45e053c3350fab1a49ee5f4f3d33b48cba04d5312fd6305a7bbc1",
+        "created_at": "2026-11-07T12:00:00Z",
+        "key": {
+          "mode": "major",
+          "tonic": "C"
+        },
+        "kind": "melody-spec",
+        "melody_id": "mel_case",
+        "notes": [
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n1",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 2880,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n2",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 3360,
+            "velocity": 80
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n3",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 3840,
+            "velocity": 100
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n4",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 4800,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1920,
+            "id": "n5",
+            "origin": "midi_file",
+            "pitch": 72,
+            "start_tick": 5760,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n6",
+            "origin": "midi_file",
+            "pitch": 71,
+            "start_tick": 7680,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n7",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 8960,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n8",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 10240,
+            "velocity": 90
+          }
+        ],
+        "phrases": [
+          {
+            "end_tick": 7680,
+            "id": "ph1",
+            "name": "pickup line",
+            "start_tick": 2880
+          },
+          {
+            "end_tick": 11520,
+            "id": "ph2",
+            "name": "triplet answer",
+            "start_tick": 7680
+          }
+        ],
+        "ppq": 960,
+        "project_id": "prj_case",
+        "quantize": null,
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "source": {
+          "assembled_from": null,
+          "capture_sha256": "0017589b0173c7a3d8d0285fc35383271945ff1b97110fa159339a9bb78d5787",
+          "seed_kind": "midi_file",
+          "transcription": null
+        },
+        "spec_kind": "melody",
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            }
+          ],
+          "rev": 1,
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "intro, pickup, two phrases in one repeat, outro",
+      "output": {
+        "base_rev": null,
+        "created_at": "2026-11-07T12:05:00Z",
+        "melody_id": "mel_case_asm",
+        "rev": 1,
+        "tempo_map_rev": 1
+      },
+      "sample_rate": 48000,
+      "song": {
+        "approved_lyrics": {
+          "approved_at": "2026-11-07T12:00:00Z",
+          "language": "en",
+          "source": "written",
+          "text": "[verse]\nLa la la"
+        },
+        "asr_transcripts": [],
+        "base_rev": null,
+        "candidate_count": 2,
+        "content_sha256": "6811dc6873fb7560ac8b3dba311ea0b4e65d379f59244e97ed1edc825d674631",
+        "controls": {
+          "duration_s": {
+            "observed": [],
+            "requested": 60,
+            "support": []
+          },
+          "exclude_styles": {
+            "observed": [],
+            "requested": [],
+            "support": []
+          },
+          "style": {
+            "observed": [],
+            "requested": "plain test song",
+            "support": []
+          },
+          "vocal_mode": {
+            "observed": [],
+            "requested": "vocal",
+            "support": []
+          }
+        },
+        "created_at": "2026-11-07T12:00:00Z",
+        "form": {
+          "sections": [
+            {
+              "bars": 1,
+              "id": "s1",
+              "name": "intro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            },
+            {
+              "bars": 4,
+              "id": "s2",
+              "name": "verse",
+              "phrase_ids": [
+                "ph1",
+                "ph2"
+              ],
+              "repeats": 1,
+              "section_kind": "vocal"
+            },
+            {
+              "bars": 2,
+              "id": "s3",
+              "name": "outro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            }
+          ]
+        },
+        "kind": "song-spec",
+        "larger_n_budget": null,
+        "melody": {
+          "melody_id": "mel_case",
+          "rev": 1,
+          "tempo_map_rev": 1
+        },
+        "project_id": "prj_case",
+        "references": [],
+        "render_routes": {
+          "mode": "auto",
+          "routes": []
+        },
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "song_id": "song_case",
+        "validation": {
+          "conflicts": [],
+          "unsupported_by_profile": []
+        }
+      }
+    },
+    {
+      "derivation": "ph2 (3/4, 100 BPM) plays first: its bar line is its start 3840, so it moves by -3840 in repeat 1 [0, 5760) and by +1920 in repeat 2 [5760, 11520), each 2 bars of 2880 with the second bar rest. The bridge places no phrase and continues 3/4 at 100 BPM [11520, 14400). The march places ph1 at +14400, where tempo and meter change; the outro continues 4/4 at 120 [18240, 22080). Quantize 240 is copied. 14400 ticks at 0.6 s per quarter = 9 s, plus 7680 at 0.5 s = 4 s: 624000 frames.",
+      "expected": {
+        "assembled": {
+          "base_rev": null,
+          "content_sha256": "6d5d2f6cc0beeda1530a82d6eb18a86f89db1e51f2251ce8942ff37ac3449738",
+          "created_at": "2026-11-07T12:05:00Z",
+          "form": {
+            "end_tick": 22080,
+            "sections": [
+              {
+                "end_tick": 5760,
+                "name": "waltz",
+                "phrases": [
+                  {
+                    "end_tick": 2880,
+                    "phrase_id": "ph2",
+                    "start_tick": 0
+                  }
+                ],
+                "repeat": 1,
+                "section_id": "s1",
+                "section_kind": "vocal",
+                "start_tick": 0
+              },
+              {
+                "end_tick": 11520,
+                "name": "waltz",
+                "phrases": [
+                  {
+                    "end_tick": 8640,
+                    "phrase_id": "ph2",
+                    "start_tick": 5760
+                  }
+                ],
+                "repeat": 2,
+                "section_id": "s1",
+                "section_kind": "vocal",
+                "start_tick": 5760
+              },
+              {
+                "end_tick": 14400,
+                "name": "bridge",
+                "phrases": [],
+                "repeat": 1,
+                "section_id": "s2",
+                "section_kind": "instrumental",
+                "start_tick": 11520
+              },
+              {
+                "end_tick": 18240,
+                "name": "march",
+                "phrases": [
+                  {
+                    "end_tick": 18240,
+                    "phrase_id": "ph1",
+                    "start_tick": 14400
+                  }
+                ],
+                "repeat": 1,
+                "section_id": "s3",
+                "section_kind": "vocal",
+                "start_tick": 14400
+              },
+              {
+                "end_tick": 22080,
+                "name": "outro",
+                "phrases": [],
+                "repeat": 1,
+                "section_id": "s4",
+                "section_kind": "instrumental",
+                "start_tick": 18240
+              }
+            ]
+          },
+          "key": {
+            "mode": "major",
+            "tonic": "C"
+          },
+          "kind": "melody-spec",
+          "melody_id": "mel_case_asm",
+          "notes": [
+            {
+              "confidence": null,
+              "duration_ticks": 960,
+              "id": "n1",
+              "origin": "assembled",
+              "pitch": 67,
+              "start_tick": 0,
+              "velocity": 90
+            },
+            {
+              "confidence": null,
+              "duration_ticks": 1920,
+              "id": "n2",
+              "origin": "assembled",
+              "pitch": 65,
+              "start_tick": 960,
+              "velocity": 90
+            },
+            {
+              "confidence": null,
+              "duration_ticks": 960,
+              "id": "n3",
+              "origin": "assembled",
+              "pitch": 67,
+              "start_tick": 5760,
+              "velocity": 90
+            },
+            {
+              "confidence": null,
+              "duration_ticks": 1920,
+              "id": "n4",
+              "origin": "assembled",
+              "pitch": 65,
+              "start_tick": 6720,
+              "velocity": 90
+            },
+            {
+              "confidence": null,
+              "duration_ticks": 1920,
+              "id": "n5",
+              "origin": "assembled",
+              "pitch": 60,
+              "start_tick": 14400,
+              "velocity": 90
+            },
+            {
+              "confidence": null,
+              "duration_ticks": 1920,
+              "id": "n6",
+              "origin": "assembled",
+              "pitch": 64,
+              "start_tick": 16320,
+              "velocity": 90
+            }
+          ],
+          "phrases": [],
+          "ppq": 960,
+          "project_id": "prj_case",
+          "quantize": {
+            "grid_ticks": 240
+          },
+          "rev": 1,
+          "schemaVersion": "1.1.0",
+          "source": {
+            "assembled_from": {
+              "melody": {
+                "melody_id": "mel_case",
+                "rev": 1,
+                "tempo_map_rev": 1
+              },
+              "song": {
+                "rev": 1,
+                "song_id": "song_case"
+              }
+            },
+            "capture_sha256": "0017589b0173c7a3d8d0285fc35383271945ff1b97110fa159339a9bb78d5787",
+            "seed_kind": "assembled",
+            "transcription": null
+          },
+          "spec_kind": "assembled",
+          "tempo_map": {
+            "meter": [
+              {
+                "denominator": 4,
+                "numerator": 3,
+                "tick": 0
+              },
+              {
+                "denominator": 4,
+                "numerator": 4,
+                "tick": 14400
+              }
+            ],
+            "rev": 1,
+            "tempo": [
+              {
+                "tick": 0,
+                "us_per_quarter": 600000
+              },
+              {
+                "tick": 14400,
+                "us_per_quarter": 500000
+              }
+            ]
+          }
+        },
+        "end_frame": 624000
+      },
+      "melody": {
+        "base_rev": null,
+        "content_sha256": "cfe2c3e80c4621458ef2adda3e5ef5f534a043153d5095d4fbc5494fdc4b43b7",
+        "created_at": "2026-11-07T12:00:00Z",
+        "key": {
+          "mode": "major",
+          "tonic": "C"
+        },
+        "kind": "melody-spec",
+        "melody_id": "mel_case",
+        "notes": [
+          {
+            "confidence": null,
+            "duration_ticks": 1920,
+            "id": "n1",
+            "origin": "midi_file",
+            "pitch": 60,
+            "start_tick": 0,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1920,
+            "id": "n2",
+            "origin": "midi_file",
+            "pitch": 64,
+            "start_tick": 1920,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n3",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 3840,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1920,
+            "id": "n4",
+            "origin": "midi_file",
+            "pitch": 65,
+            "start_tick": 4800,
+            "velocity": 90
+          }
+        ],
+        "phrases": [
+          {
+            "end_tick": 3840,
+            "id": "ph1",
+            "name": "four",
+            "start_tick": 0
+          },
+          {
+            "end_tick": 6720,
+            "id": "ph2",
+            "name": "three",
+            "start_tick": 3840
+          }
+        ],
+        "ppq": 960,
+        "project_id": "prj_case",
+        "quantize": {
+          "grid_ticks": 240
+        },
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "source": {
+          "assembled_from": null,
+          "capture_sha256": "0017589b0173c7a3d8d0285fc35383271945ff1b97110fa159339a9bb78d5787",
+          "seed_kind": "midi_file",
+          "transcription": null
+        },
+        "spec_kind": "melody",
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            },
+            {
+              "denominator": 4,
+              "numerator": 3,
+              "tick": 3840
+            }
+          ],
+          "rev": 1,
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            },
+            {
+              "tick": 3840,
+              "us_per_quarter": 600000
+            }
+          ]
+        }
+      },
+      "name": "reordered phrases carry their meter and tempo",
+      "output": {
+        "base_rev": null,
+        "created_at": "2026-11-07T12:05:00Z",
+        "melody_id": "mel_case_asm",
+        "rev": 1,
+        "tempo_map_rev": 1
+      },
+      "sample_rate": 48000,
+      "song": {
+        "approved_lyrics": {
+          "approved_at": "2026-11-07T12:00:00Z",
+          "language": "en",
+          "source": "written",
+          "text": "[verse]\nLa la la"
+        },
+        "asr_transcripts": [],
+        "base_rev": null,
+        "candidate_count": 2,
+        "content_sha256": "eee11f8f714e72a097147d9bce4644ea0bf819d6026b33101a56828f2495f965",
+        "controls": {
+          "duration_s": {
+            "observed": [],
+            "requested": 60,
+            "support": []
+          },
+          "exclude_styles": {
+            "observed": [],
+            "requested": [],
+            "support": []
+          },
+          "style": {
+            "observed": [],
+            "requested": "plain test song",
+            "support": []
+          },
+          "vocal_mode": {
+            "observed": [],
+            "requested": "vocal",
+            "support": []
+          }
+        },
+        "created_at": "2026-11-07T12:00:00Z",
+        "form": {
+          "sections": [
+            {
+              "bars": 2,
+              "id": "s1",
+              "name": "waltz",
+              "phrase_ids": [
+                "ph2"
+              ],
+              "repeats": 2,
+              "section_kind": "vocal"
+            },
+            {
+              "bars": 1,
+              "id": "s2",
+              "name": "bridge",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            },
+            {
+              "bars": 1,
+              "id": "s3",
+              "name": "march",
+              "phrase_ids": [
+                "ph1"
+              ],
+              "repeats": 1,
+              "section_kind": "vocal"
+            },
+            {
+              "bars": 1,
+              "id": "s4",
+              "name": "outro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            }
+          ]
+        },
+        "kind": "song-spec",
+        "larger_n_budget": null,
+        "melody": {
+          "melody_id": "mel_case",
+          "rev": 1,
+          "tempo_map_rev": 1
+        },
+        "project_id": "prj_case",
+        "references": [],
+        "render_routes": {
+          "mode": "auto",
+          "routes": []
+        },
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "song_id": "song_case",
+        "validation": {
+          "conflicts": [],
+          "unsupported_by_profile": []
+        }
+      }
+    },
+    {
+      "derivation": "The intro takes the verse's 4/4 [0, 3840). The 2-bar verse [3840, 11520) places ph1 at +3840; the 2-bar 3/4 waltz (2880-tick bars) [11520, 17280) places ph2 (bar line 3840) at +7680; the 6/8 jig (six 480-tick beats, 2880-tick bars) repeats [17280, 20160) and [20160, 23040), placing ph3 (bar line 6720) at +10560 and +13440; the outro continues 6/8 [23040, 25920). Meter segments start at 11520 and 17280, the map fixture.meter walks. 25920 ticks at 0.5 s per quarter = 13.5 s = 648000 frames.",
+      "expected": {
+        "assembled": {
+          "base_rev": null,
+          "content_sha256": "9258dc0843ea9fff52bd89977a3109da9bb0552c9b4a2999b68574916515a729",
+          "created_at": "2026-11-07T12:05:00Z",
+          "form": {
+            "end_tick": 25920,
+            "sections": [
+              {
+                "end_tick": 3840,
+                "name": "intro",
+                "phrases": [],
+                "repeat": 1,
+                "section_id": "s1",
+                "section_kind": "instrumental",
+                "start_tick": 0
+              },
+              {
+                "end_tick": 11520,
+                "name": "verse",
+                "phrases": [
+                  {
+                    "end_tick": 7680,
+                    "phrase_id": "ph1",
+                    "start_tick": 3840
+                  }
+                ],
+                "repeat": 1,
+                "section_id": "s2",
+                "section_kind": "vocal",
+                "start_tick": 3840
+              },
+              {
+                "end_tick": 17280,
+                "name": "waltz",
+                "phrases": [
+                  {
+                    "end_tick": 14400,
+                    "phrase_id": "ph2",
+                    "start_tick": 11520
+                  }
+                ],
+                "repeat": 1,
+                "section_id": "s3",
+                "section_kind": "vocal",
+                "start_tick": 11520
+              },
+              {
+                "end_tick": 20160,
+                "name": "jig",
+                "phrases": [
+                  {
+                    "end_tick": 20160,
+                    "phrase_id": "ph3",
+                    "start_tick": 17280
+                  }
+                ],
+                "repeat": 1,
+                "section_id": "s4",
+                "section_kind": "vocal",
+                "start_tick": 17280
+              },
+              {
+                "end_tick": 23040,
+                "name": "jig",
+                "phrases": [
+                  {
+                    "end_tick": 23040,
+                    "phrase_id": "ph3",
+                    "start_tick": 20160
+                  }
+                ],
+                "repeat": 2,
+                "section_id": "s4",
+                "section_kind": "vocal",
+                "start_tick": 20160
+              },
+              {
+                "end_tick": 25920,
+                "name": "outro",
+                "phrases": [],
+                "repeat": 1,
+                "section_id": "s5",
+                "section_kind": "instrumental",
+                "start_tick": 23040
+              }
+            ]
+          },
+          "key": {
+            "mode": "major",
+            "tonic": "C"
+          },
+          "kind": "melody-spec",
+          "melody_id": "mel_case_asm",
+          "notes": [
+            {
+              "confidence": null,
+              "duration_ticks": 1920,
+              "id": "n1",
+              "origin": "assembled",
+              "pitch": 60,
+              "start_tick": 3840,
+              "velocity": 90
+            },
+            {
+              "confidence": null,
+              "duration_ticks": 1920,
+              "id": "n2",
+              "origin": "assembled",
+              "pitch": 62,
+              "start_tick": 5760,
+              "velocity": 90
+            },
+            {
+              "confidence": null,
+              "duration_ticks": 960,
+              "id": "n3",
+              "origin": "assembled",
+              "pitch": 64,
+              "start_tick": 11520,
+              "velocity": 90
+            },
+            {
+              "confidence": null,
+              "duration_ticks": 1920,
+              "id": "n4",
+              "origin": "assembled",
+              "pitch": 65,
+              "start_tick": 12480,
+              "velocity": 90
+            },
+            {
+              "confidence": null,
+              "duration_ticks": 1440,
+              "id": "n5",
+              "origin": "assembled",
+              "pitch": 67,
+              "start_tick": 17280,
+              "velocity": 90
+            },
+            {
+              "confidence": null,
+              "duration_ticks": 1440,
+              "id": "n6",
+              "origin": "assembled",
+              "pitch": 69,
+              "start_tick": 18720,
+              "velocity": 90
+            },
+            {
+              "confidence": null,
+              "duration_ticks": 1440,
+              "id": "n7",
+              "origin": "assembled",
+              "pitch": 67,
+              "start_tick": 20160,
+              "velocity": 90
+            },
+            {
+              "confidence": null,
+              "duration_ticks": 1440,
+              "id": "n8",
+              "origin": "assembled",
+              "pitch": 69,
+              "start_tick": 21600,
+              "velocity": 90
+            }
+          ],
+          "phrases": [],
+          "ppq": 960,
+          "project_id": "prj_case",
+          "quantize": null,
+          "rev": 1,
+          "schemaVersion": "1.1.0",
+          "source": {
+            "assembled_from": {
+              "melody": {
+                "melody_id": "mel_case",
+                "rev": 1,
+                "tempo_map_rev": 1
+              },
+              "song": {
+                "rev": 1,
+                "song_id": "song_case"
+              }
+            },
+            "capture_sha256": "0017589b0173c7a3d8d0285fc35383271945ff1b97110fa159339a9bb78d5787",
+            "seed_kind": "assembled",
+            "transcription": null
+          },
+          "spec_kind": "assembled",
+          "tempo_map": {
+            "meter": [
+              {
+                "denominator": 4,
+                "numerator": 4,
+                "tick": 0
+              },
+              {
+                "denominator": 4,
+                "numerator": 3,
+                "tick": 11520
+              },
+              {
+                "denominator": 8,
+                "numerator": 6,
+                "tick": 17280
+              }
+            ],
+            "rev": 1,
+            "tempo": [
+              {
+                "tick": 0,
+                "us_per_quarter": 500000
+              }
+            ]
+          }
+        },
+        "end_frame": 648000
+      },
+      "melody": {
+        "base_rev": null,
+        "content_sha256": "805038372011ccf9e1b189596abcc780684a5aefe3e36704c6982ddfcf907120",
+        "created_at": "2026-11-07T12:00:00Z",
+        "key": {
+          "mode": "major",
+          "tonic": "C"
+        },
+        "kind": "melody-spec",
+        "melody_id": "mel_case",
+        "notes": [
+          {
+            "confidence": null,
+            "duration_ticks": 1920,
+            "id": "n1",
+            "origin": "midi_file",
+            "pitch": 60,
+            "start_tick": 0,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1920,
+            "id": "n2",
+            "origin": "midi_file",
+            "pitch": 62,
+            "start_tick": 1920,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n3",
+            "origin": "midi_file",
+            "pitch": 64,
+            "start_tick": 3840,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1920,
+            "id": "n4",
+            "origin": "midi_file",
+            "pitch": 65,
+            "start_tick": 4800,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1440,
+            "id": "n5",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 6720,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1440,
+            "id": "n6",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 8160,
+            "velocity": 90
+          }
+        ],
+        "phrases": [
+          {
+            "end_tick": 3840,
+            "id": "ph1",
+            "name": "common",
+            "start_tick": 0
+          },
+          {
+            "end_tick": 6720,
+            "id": "ph2",
+            "name": "waltz",
+            "start_tick": 3840
+          },
+          {
+            "end_tick": 9600,
+            "id": "ph3",
+            "name": "jig",
+            "start_tick": 6720
+          }
+        ],
+        "ppq": 960,
+        "project_id": "prj_case",
+        "quantize": null,
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "source": {
+          "assembled_from": null,
+          "capture_sha256": "0017589b0173c7a3d8d0285fc35383271945ff1b97110fa159339a9bb78d5787",
+          "seed_kind": "midi_file",
+          "transcription": null
+        },
+        "spec_kind": "melody",
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            },
+            {
+              "denominator": 4,
+              "numerator": 3,
+              "tick": 3840
+            },
+            {
+              "denominator": 8,
+              "numerator": 6,
+              "tick": 6720
+            }
+          ],
+          "rev": 1,
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "sections change meter: 4/4, 3/4, 6/8",
+      "output": {
+        "base_rev": null,
+        "created_at": "2026-11-07T12:05:00Z",
+        "melody_id": "mel_case_asm",
+        "rev": 1,
+        "tempo_map_rev": 1
+      },
+      "sample_rate": 48000,
+      "song": {
+        "approved_lyrics": {
+          "approved_at": "2026-11-07T12:00:00Z",
+          "language": "en",
+          "source": "written",
+          "text": "[verse]\nLa la la"
+        },
+        "asr_transcripts": [],
+        "base_rev": null,
+        "candidate_count": 2,
+        "content_sha256": "b6db7ef9c3f8c27615b4742ee33f44f65037389ad232b01f0308d755c9274ab1",
+        "controls": {
+          "duration_s": {
+            "observed": [],
+            "requested": 60,
+            "support": []
+          },
+          "exclude_styles": {
+            "observed": [],
+            "requested": [],
+            "support": []
+          },
+          "style": {
+            "observed": [],
+            "requested": "plain test song",
+            "support": []
+          },
+          "vocal_mode": {
+            "observed": [],
+            "requested": "vocal",
+            "support": []
+          }
+        },
+        "created_at": "2026-11-07T12:00:00Z",
+        "form": {
+          "sections": [
+            {
+              "bars": 1,
+              "id": "s1",
+              "name": "intro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            },
+            {
+              "bars": 2,
+              "id": "s2",
+              "name": "verse",
+              "phrase_ids": [
+                "ph1"
+              ],
+              "repeats": 1,
+              "section_kind": "vocal"
+            },
+            {
+              "bars": 2,
+              "id": "s3",
+              "name": "waltz",
+              "phrase_ids": [
+                "ph2"
+              ],
+              "repeats": 1,
+              "section_kind": "vocal"
+            },
+            {
+              "bars": 1,
+              "id": "s4",
+              "name": "jig",
+              "phrase_ids": [
+                "ph3"
+              ],
+              "repeats": 2,
+              "section_kind": "vocal"
+            },
+            {
+              "bars": 1,
+              "id": "s5",
+              "name": "outro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            }
+          ]
+        },
+        "kind": "song-spec",
+        "larger_n_budget": null,
+        "melody": {
+          "melody_id": "mel_case",
+          "rev": 1,
+          "tempo_map_rev": 1
+        },
+        "project_id": "prj_case",
+        "references": [],
+        "render_routes": {
+          "mode": "auto",
+          "routes": []
+        },
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "song_id": "song_case",
+        "validation": {
+          "conflicts": [],
+          "unsupported_by_profile": []
+        }
+      }
+    },
+    {
+      "derivation": "song-spec 1.1.0 chord symbols at 0, 3840, 7680 and 11520 increase and lie inside the verse's 15360-tick repeat. Assembly reads, but does not copy, them (ABC emission reads them from the SongSpec by section id), so the result is the pickup case's.",
+      "expected": {
+        "assembled": {
+          "base_rev": null,
+          "content_sha256": "6523524d6a1f3a0cf0763dc9ee5f5b893dfe9d75a82aef2284ed01a6bdd0c458",
+          "created_at": "2026-11-07T12:05:00Z",
+          "form": {
+            "end_tick": 26880,
+            "sections": [
+              {
+                "end_tick": 3840,
+                "name": "intro",
+                "phrases": [],
+                "repeat": 1,
+                "section_id": "s1",
+                "section_kind": "instrumental",
+                "start_tick": 0
+              },
+              {
+                "end_tick": 19200,
+                "name": "verse",
+                "phrases": [
+                  {
+                    "end_tick": 11520,
+                    "phrase_id": "ph1",
+                    "start_tick": 6720
+                  },
+                  {
+                    "end_tick": 15360,
+                    "phrase_id": "ph2",
+                    "start_tick": 11520
+                  }
+                ],
+                "repeat": 1,
+                "section_id": "s2",
+                "section_kind": "vocal",
+                "start_tick": 3840
+              },
+              {
+                "end_tick": 26880,
+                "name": "outro",
+                "phrases": [],
+                "repeat": 1,
+                "section_id": "s3",
+                "section_kind": "instrumental",
+                "start_tick": 19200
+              }
+            ]
+          },
+          "key": {
+            "mode": "major",
+            "tonic": "C"
+          },
+          "kind": "melody-spec",
+          "melody_id": "mel_case_asm",
+          "notes": [
+            {
+              "confidence": null,
+              "duration_ticks": 480,
+              "id": "n1",
+              "origin": "assembled",
+              "pitch": 67,
+              "start_tick": 6720,
+              "velocity": 90
+            },
+            {
+              "confidence": null,
+              "duration_ticks": 480,
+              "id": "n2",
+              "origin": "assembled",
+              "pitch": 67,
+              "start_tick": 7200,
+              "velocity": 80
+            },
+            {
+              "confidence": null,
+              "duration_ticks": 960,
+              "id": "n3",
+              "origin": "assembled",
+              "pitch": 69,
+              "start_tick": 7680,
+              "velocity": 100
+            },
+            {
+              "confidence": null,
+              "duration_ticks": 960,
+              "id": "n4",
+              "origin": "assembled",
+              "pitch": 67,
+              "start_tick": 8640,
+              "velocity": 90
+            },
+            {
+              "confidence": null,
+              "duration_ticks": 1920,
+              "id": "n5",
+              "origin": "assembled",
+              "pitch": 72,
+              "start_tick": 9600,
+              "velocity": 90
+            },
+            {
+              "confidence": null,
+              "duration_ticks": 1280,
+              "id": "n6",
+              "origin": "assembled",
+              "pitch": 71,
+              "start_tick": 11520,
+              "velocity": 90
+            },
+            {
+              "confidence": null,
+              "duration_ticks": 1280,
+              "id": "n7",
+              "origin": "assembled",
+              "pitch": 69,
+              "start_tick": 12800,
+              "velocity": 90
+            },
+            {
+              "confidence": null,
+              "duration_ticks": 1280,
+              "id": "n8",
+              "origin": "assembled",
+              "pitch": 67,
+              "start_tick": 14080,
+              "velocity": 90
+            }
+          ],
+          "phrases": [],
+          "ppq": 960,
+          "project_id": "prj_case",
+          "quantize": null,
+          "rev": 1,
+          "schemaVersion": "1.1.0",
+          "source": {
+            "assembled_from": {
+              "melody": {
+                "melody_id": "mel_case",
+                "rev": 1,
+                "tempo_map_rev": 1
+              },
+              "song": {
+                "rev": 1,
+                "song_id": "song_case"
+              }
+            },
+            "capture_sha256": "0017589b0173c7a3d8d0285fc35383271945ff1b97110fa159339a9bb78d5787",
+            "seed_kind": "assembled",
+            "transcription": null
+          },
+          "spec_kind": "assembled",
+          "tempo_map": {
+            "meter": [
+              {
+                "denominator": 4,
+                "numerator": 4,
+                "tick": 0
+              }
+            ],
+            "rev": 1,
+            "tempo": [
+              {
+                "tick": 0,
+                "us_per_quarter": 500000
+              }
+            ]
+          }
+        },
+        "end_frame": 672000
+      },
+      "melody": {
+        "base_rev": null,
+        "content_sha256": "953a47770bf45e053c3350fab1a49ee5f4f3d33b48cba04d5312fd6305a7bbc1",
+        "created_at": "2026-11-07T12:00:00Z",
+        "key": {
+          "mode": "major",
+          "tonic": "C"
+        },
+        "kind": "melody-spec",
+        "melody_id": "mel_case",
+        "notes": [
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n1",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 2880,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n2",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 3360,
+            "velocity": 80
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n3",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 3840,
+            "velocity": 100
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n4",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 4800,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1920,
+            "id": "n5",
+            "origin": "midi_file",
+            "pitch": 72,
+            "start_tick": 5760,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n6",
+            "origin": "midi_file",
+            "pitch": 71,
+            "start_tick": 7680,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n7",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 8960,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n8",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 10240,
+            "velocity": 90
+          }
+        ],
+        "phrases": [
+          {
+            "end_tick": 7680,
+            "id": "ph1",
+            "name": "pickup line",
+            "start_tick": 2880
+          },
+          {
+            "end_tick": 11520,
+            "id": "ph2",
+            "name": "triplet answer",
+            "start_tick": 7680
+          }
+        ],
+        "ppq": 960,
+        "project_id": "prj_case",
+        "quantize": null,
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "source": {
+          "assembled_from": null,
+          "capture_sha256": "0017589b0173c7a3d8d0285fc35383271945ff1b97110fa159339a9bb78d5787",
+          "seed_kind": "midi_file",
+          "transcription": null
+        },
+        "spec_kind": "melody",
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            }
+          ],
+          "rev": 1,
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "chord symbols leave the assembled melody unchanged",
+      "output": {
+        "base_rev": null,
+        "created_at": "2026-11-07T12:05:00Z",
+        "melody_id": "mel_case_asm",
+        "rev": 1,
+        "tempo_map_rev": 1
+      },
+      "sample_rate": 48000,
+      "song": {
+        "approved_lyrics": {
+          "approved_at": "2026-11-07T12:00:00Z",
+          "language": "en",
+          "source": "written",
+          "text": "[verse]\nLa la la"
+        },
+        "asr_transcripts": [],
+        "base_rev": null,
+        "candidate_count": 2,
+        "content_sha256": "bb40871f6b7a5c570a0cc1932a9c7df7b21c2a8d00316b5468033b2eed181002",
+        "controls": {
+          "duration_s": {
+            "observed": [],
+            "requested": 60,
+            "support": []
+          },
+          "exclude_styles": {
+            "observed": [],
+            "requested": [],
+            "support": []
+          },
+          "style": {
+            "observed": [],
+            "requested": "plain test song",
+            "support": []
+          },
+          "vocal_mode": {
+            "observed": [],
+            "requested": "vocal",
+            "support": []
+          }
+        },
+        "created_at": "2026-11-07T12:00:00Z",
+        "form": {
+          "sections": [
+            {
+              "bars": 1,
+              "id": "s1",
+              "name": "intro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            },
+            {
+              "bars": 4,
+              "chord_symbols": [
+                {
+                  "offset_ticks": 0,
+                  "symbol": "G"
+                },
+                {
+                  "offset_ticks": 3840,
+                  "symbol": "C"
+                },
+                {
+                  "offset_ticks": 7680,
+                  "symbol": "D7"
+                },
+                {
+                  "offset_ticks": 11520,
+                  "symbol": "G/B"
+                }
+              ],
+              "id": "s2",
+              "name": "verse",
+              "phrase_ids": [
+                "ph1",
+                "ph2"
+              ],
+              "repeats": 1,
+              "section_kind": "vocal"
+            },
+            {
+              "bars": 2,
+              "id": "s3",
+              "name": "outro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            }
+          ]
+        },
+        "kind": "song-spec",
+        "larger_n_budget": null,
+        "melody": {
+          "melody_id": "mel_case",
+          "rev": 1,
+          "tempo_map_rev": 1
+        },
+        "project_id": "prj_case",
+        "references": [],
+        "render_routes": {
+          "mode": "auto",
+          "routes": []
+        },
+        "rev": 1,
+        "schemaVersion": "1.1.0",
+        "song_id": "song_case",
+        "validation": {
+          "conflicts": [],
+          "unsupported_by_profile": []
+        }
+      }
+    },
+    {
+      "derivation": "Assembly lays out a source melody; an assembled one is never re-assembled.",
+      "expected": {
+        "refused": {
+          "code": "source_not_melody",
+          "note_id": null,
+          "phrase_id": null,
+          "section_id": null
+        }
+      },
+      "melody": {
+        "base_rev": null,
+        "content_sha256": "6523524d6a1f3a0cf0763dc9ee5f5b893dfe9d75a82aef2284ed01a6bdd0c458",
+        "created_at": "2026-11-07T12:05:00Z",
+        "form": {
+          "end_tick": 26880,
+          "sections": [
+            {
+              "end_tick": 3840,
+              "name": "intro",
+              "phrases": [],
+              "repeat": 1,
+              "section_id": "s1",
+              "section_kind": "instrumental",
+              "start_tick": 0
+            },
+            {
+              "end_tick": 19200,
+              "name": "verse",
+              "phrases": [
+                {
+                  "end_tick": 11520,
+                  "phrase_id": "ph1",
+                  "start_tick": 6720
+                },
+                {
+                  "end_tick": 15360,
+                  "phrase_id": "ph2",
+                  "start_tick": 11520
+                }
+              ],
+              "repeat": 1,
+              "section_id": "s2",
+              "section_kind": "vocal",
+              "start_tick": 3840
+            },
+            {
+              "end_tick": 26880,
+              "name": "outro",
+              "phrases": [],
+              "repeat": 1,
+              "section_id": "s3",
+              "section_kind": "instrumental",
+              "start_tick": 19200
+            }
+          ]
+        },
+        "key": {
+          "mode": "major",
+          "tonic": "C"
+        },
+        "kind": "melody-spec",
+        "melody_id": "mel_case_asm",
+        "notes": [
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n1",
+            "origin": "assembled",
+            "pitch": 67,
+            "start_tick": 6720,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n2",
+            "origin": "assembled",
+            "pitch": 67,
+            "start_tick": 7200,
+            "velocity": 80
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n3",
+            "origin": "assembled",
+            "pitch": 69,
+            "start_tick": 7680,
+            "velocity": 100
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n4",
+            "origin": "assembled",
+            "pitch": 67,
+            "start_tick": 8640,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1920,
+            "id": "n5",
+            "origin": "assembled",
+            "pitch": 72,
+            "start_tick": 9600,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n6",
+            "origin": "assembled",
+            "pitch": 71,
+            "start_tick": 11520,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n7",
+            "origin": "assembled",
+            "pitch": 69,
+            "start_tick": 12800,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n8",
+            "origin": "assembled",
+            "pitch": 67,
+            "start_tick": 14080,
+            "velocity": 90
+          }
+        ],
+        "phrases": [],
+        "ppq": 960,
+        "project_id": "prj_case",
+        "quantize": null,
+        "rev": 1,
+        "schemaVersion": "1.1.0",
+        "source": {
+          "assembled_from": {
+            "melody": {
+              "melody_id": "mel_case",
+              "rev": 1,
+              "tempo_map_rev": 1
+            },
+            "song": {
+              "rev": 1,
+              "song_id": "song_case"
+            }
+          },
+          "capture_sha256": "0017589b0173c7a3d8d0285fc35383271945ff1b97110fa159339a9bb78d5787",
+          "seed_kind": "assembled",
+          "transcription": null
+        },
+        "spec_kind": "assembled",
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            }
+          ],
+          "rev": 1,
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "source already assembled",
+      "output": {
+        "base_rev": null,
+        "created_at": "2026-11-07T12:05:00Z",
+        "melody_id": "mel_case_asm",
+        "rev": 1,
+        "tempo_map_rev": 1
+      },
+      "sample_rate": 48000,
+      "song": {
+        "approved_lyrics": {
+          "approved_at": "2026-11-07T12:00:00Z",
+          "language": "en",
+          "source": "written",
+          "text": "[verse]\nLa la la"
+        },
+        "asr_transcripts": [],
+        "base_rev": null,
+        "candidate_count": 2,
+        "content_sha256": "6811dc6873fb7560ac8b3dba311ea0b4e65d379f59244e97ed1edc825d674631",
+        "controls": {
+          "duration_s": {
+            "observed": [],
+            "requested": 60,
+            "support": []
+          },
+          "exclude_styles": {
+            "observed": [],
+            "requested": [],
+            "support": []
+          },
+          "style": {
+            "observed": [],
+            "requested": "plain test song",
+            "support": []
+          },
+          "vocal_mode": {
+            "observed": [],
+            "requested": "vocal",
+            "support": []
+          }
+        },
+        "created_at": "2026-11-07T12:00:00Z",
+        "form": {
+          "sections": [
+            {
+              "bars": 1,
+              "id": "s1",
+              "name": "intro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            },
+            {
+              "bars": 4,
+              "id": "s2",
+              "name": "verse",
+              "phrase_ids": [
+                "ph1",
+                "ph2"
+              ],
+              "repeats": 1,
+              "section_kind": "vocal"
+            },
+            {
+              "bars": 2,
+              "id": "s3",
+              "name": "outro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            }
+          ]
+        },
+        "kind": "song-spec",
+        "larger_n_budget": null,
+        "melody": {
+          "melody_id": "mel_case",
+          "rev": 1,
+          "tempo_map_rev": 1
+        },
+        "project_id": "prj_case",
+        "references": [],
+        "render_routes": {
+          "mode": "auto",
+          "routes": []
+        },
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "song_id": "song_case",
+        "validation": {
+          "conflicts": [],
+          "unsupported_by_profile": []
+        }
+      }
+    },
+    {
+      "derivation": "The SongSpec places mel_case rev 2; the source is rev 1.",
+      "expected": {
+        "refused": {
+          "code": "song_melody_mismatch",
+          "note_id": null,
+          "phrase_id": null,
+          "section_id": null
+        }
+      },
+      "melody": {
+        "base_rev": null,
+        "content_sha256": "953a47770bf45e053c3350fab1a49ee5f4f3d33b48cba04d5312fd6305a7bbc1",
+        "created_at": "2026-11-07T12:00:00Z",
+        "key": {
+          "mode": "major",
+          "tonic": "C"
+        },
+        "kind": "melody-spec",
+        "melody_id": "mel_case",
+        "notes": [
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n1",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 2880,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n2",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 3360,
+            "velocity": 80
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n3",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 3840,
+            "velocity": 100
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n4",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 4800,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1920,
+            "id": "n5",
+            "origin": "midi_file",
+            "pitch": 72,
+            "start_tick": 5760,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n6",
+            "origin": "midi_file",
+            "pitch": 71,
+            "start_tick": 7680,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n7",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 8960,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n8",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 10240,
+            "velocity": 90
+          }
+        ],
+        "phrases": [
+          {
+            "end_tick": 7680,
+            "id": "ph1",
+            "name": "pickup line",
+            "start_tick": 2880
+          },
+          {
+            "end_tick": 11520,
+            "id": "ph2",
+            "name": "triplet answer",
+            "start_tick": 7680
+          }
+        ],
+        "ppq": 960,
+        "project_id": "prj_case",
+        "quantize": null,
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "source": {
+          "assembled_from": null,
+          "capture_sha256": "0017589b0173c7a3d8d0285fc35383271945ff1b97110fa159339a9bb78d5787",
+          "seed_kind": "midi_file",
+          "transcription": null
+        },
+        "spec_kind": "melody",
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            }
+          ],
+          "rev": 1,
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "SongSpec names another revision",
+      "output": {
+        "base_rev": null,
+        "created_at": "2026-11-07T12:05:00Z",
+        "melody_id": "mel_case_asm",
+        "rev": 1,
+        "tempo_map_rev": 1
+      },
+      "sample_rate": 48000,
+      "song": {
+        "approved_lyrics": {
+          "approved_at": "2026-11-07T12:00:00Z",
+          "language": "en",
+          "source": "written",
+          "text": "[verse]\nLa la la"
+        },
+        "asr_transcripts": [],
+        "base_rev": null,
+        "candidate_count": 2,
+        "content_sha256": "4c8bea7b187029587da51e7e9c4a7eb25ed3ead746cb23bd4fd1743d0947503e",
+        "controls": {
+          "duration_s": {
+            "observed": [],
+            "requested": 60,
+            "support": []
+          },
+          "exclude_styles": {
+            "observed": [],
+            "requested": [],
+            "support": []
+          },
+          "style": {
+            "observed": [],
+            "requested": "plain test song",
+            "support": []
+          },
+          "vocal_mode": {
+            "observed": [],
+            "requested": "vocal",
+            "support": []
+          }
+        },
+        "created_at": "2026-11-07T12:00:00Z",
+        "form": {
+          "sections": [
+            {
+              "bars": 1,
+              "id": "s1",
+              "name": "intro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            },
+            {
+              "bars": 4,
+              "id": "s2",
+              "name": "verse",
+              "phrase_ids": [
+                "ph1",
+                "ph2"
+              ],
+              "repeats": 1,
+              "section_kind": "vocal"
+            },
+            {
+              "bars": 2,
+              "id": "s3",
+              "name": "outro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            }
+          ]
+        },
+        "kind": "song-spec",
+        "larger_n_budget": null,
+        "melody": {
+          "melody_id": "mel_case",
+          "rev": 2,
+          "tempo_map_rev": 1
+        },
+        "project_id": "prj_case",
+        "references": [],
+        "render_routes": {
+          "mode": "auto",
+          "routes": []
+        },
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "song_id": "song_case",
+        "validation": {
+          "conflicts": [],
+          "unsupported_by_profile": []
+        }
+      }
+    },
+    {
+      "derivation": "The SongSpec lives in prj_other; the source in prj_case.",
+      "expected": {
+        "refused": {
+          "code": "song_melody_mismatch",
+          "note_id": null,
+          "phrase_id": null,
+          "section_id": null
+        }
+      },
+      "melody": {
+        "base_rev": null,
+        "content_sha256": "953a47770bf45e053c3350fab1a49ee5f4f3d33b48cba04d5312fd6305a7bbc1",
+        "created_at": "2026-11-07T12:00:00Z",
+        "key": {
+          "mode": "major",
+          "tonic": "C"
+        },
+        "kind": "melody-spec",
+        "melody_id": "mel_case",
+        "notes": [
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n1",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 2880,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n2",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 3360,
+            "velocity": 80
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n3",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 3840,
+            "velocity": 100
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n4",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 4800,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1920,
+            "id": "n5",
+            "origin": "midi_file",
+            "pitch": 72,
+            "start_tick": 5760,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n6",
+            "origin": "midi_file",
+            "pitch": 71,
+            "start_tick": 7680,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n7",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 8960,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n8",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 10240,
+            "velocity": 90
+          }
+        ],
+        "phrases": [
+          {
+            "end_tick": 7680,
+            "id": "ph1",
+            "name": "pickup line",
+            "start_tick": 2880
+          },
+          {
+            "end_tick": 11520,
+            "id": "ph2",
+            "name": "triplet answer",
+            "start_tick": 7680
+          }
+        ],
+        "ppq": 960,
+        "project_id": "prj_case",
+        "quantize": null,
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "source": {
+          "assembled_from": null,
+          "capture_sha256": "0017589b0173c7a3d8d0285fc35383271945ff1b97110fa159339a9bb78d5787",
+          "seed_kind": "midi_file",
+          "transcription": null
+        },
+        "spec_kind": "melody",
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            }
+          ],
+          "rev": 1,
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "SongSpec from another project",
+      "output": {
+        "base_rev": null,
+        "created_at": "2026-11-07T12:05:00Z",
+        "melody_id": "mel_case_asm",
+        "rev": 1,
+        "tempo_map_rev": 1
+      },
+      "sample_rate": 48000,
+      "song": {
+        "approved_lyrics": {
+          "approved_at": "2026-11-07T12:00:00Z",
+          "language": "en",
+          "source": "written",
+          "text": "[verse]\nLa la la"
+        },
+        "asr_transcripts": [],
+        "base_rev": null,
+        "candidate_count": 2,
+        "content_sha256": "39b60a8bcd95c7227aa8681f281c375b868defbc6eceaaaff59799f33baeea93",
+        "controls": {
+          "duration_s": {
+            "observed": [],
+            "requested": 60,
+            "support": []
+          },
+          "exclude_styles": {
+            "observed": [],
+            "requested": [],
+            "support": []
+          },
+          "style": {
+            "observed": [],
+            "requested": "plain test song",
+            "support": []
+          },
+          "vocal_mode": {
+            "observed": [],
+            "requested": "vocal",
+            "support": []
+          }
+        },
+        "created_at": "2026-11-07T12:00:00Z",
+        "form": {
+          "sections": [
+            {
+              "bars": 1,
+              "id": "s1",
+              "name": "intro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            },
+            {
+              "bars": 4,
+              "id": "s2",
+              "name": "verse",
+              "phrase_ids": [
+                "ph1",
+                "ph2"
+              ],
+              "repeats": 1,
+              "section_kind": "vocal"
+            },
+            {
+              "bars": 2,
+              "id": "s3",
+              "name": "outro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            }
+          ]
+        },
+        "kind": "song-spec",
+        "larger_n_budget": null,
+        "melody": {
+          "melody_id": "mel_case",
+          "rev": 1,
+          "tempo_map_rev": 1
+        },
+        "project_id": "prj_other",
+        "references": [],
+        "render_routes": {
+          "mode": "auto",
+          "routes": []
+        },
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "song_id": "song_case",
+        "validation": {
+          "conflicts": [],
+          "unsupported_by_profile": []
+        }
+      }
+    },
+    {
+      "derivation": "Two sections are s2; neither is chosen.",
+      "expected": {
+        "refused": {
+          "code": "duplicate_section",
+          "note_id": null,
+          "phrase_id": null,
+          "section_id": "s2"
+        }
+      },
+      "melody": {
+        "base_rev": null,
+        "content_sha256": "953a47770bf45e053c3350fab1a49ee5f4f3d33b48cba04d5312fd6305a7bbc1",
+        "created_at": "2026-11-07T12:00:00Z",
+        "key": {
+          "mode": "major",
+          "tonic": "C"
+        },
+        "kind": "melody-spec",
+        "melody_id": "mel_case",
+        "notes": [
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n1",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 2880,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n2",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 3360,
+            "velocity": 80
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n3",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 3840,
+            "velocity": 100
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n4",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 4800,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1920,
+            "id": "n5",
+            "origin": "midi_file",
+            "pitch": 72,
+            "start_tick": 5760,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n6",
+            "origin": "midi_file",
+            "pitch": 71,
+            "start_tick": 7680,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n7",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 8960,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n8",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 10240,
+            "velocity": 90
+          }
+        ],
+        "phrases": [
+          {
+            "end_tick": 7680,
+            "id": "ph1",
+            "name": "pickup line",
+            "start_tick": 2880
+          },
+          {
+            "end_tick": 11520,
+            "id": "ph2",
+            "name": "triplet answer",
+            "start_tick": 7680
+          }
+        ],
+        "ppq": 960,
+        "project_id": "prj_case",
+        "quantize": null,
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "source": {
+          "assembled_from": null,
+          "capture_sha256": "0017589b0173c7a3d8d0285fc35383271945ff1b97110fa159339a9bb78d5787",
+          "seed_kind": "midi_file",
+          "transcription": null
+        },
+        "spec_kind": "melody",
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            }
+          ],
+          "rev": 1,
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "duplicate section id",
+      "output": {
+        "base_rev": null,
+        "created_at": "2026-11-07T12:05:00Z",
+        "melody_id": "mel_case_asm",
+        "rev": 1,
+        "tempo_map_rev": 1
+      },
+      "sample_rate": 48000,
+      "song": {
+        "approved_lyrics": {
+          "approved_at": "2026-11-07T12:00:00Z",
+          "language": "en",
+          "source": "written",
+          "text": "[verse]\nLa la la"
+        },
+        "asr_transcripts": [],
+        "base_rev": null,
+        "candidate_count": 2,
+        "content_sha256": "788ebaf591d3ddcc4a116d33735faff8adbb1af7110658184d0fe2d6de37a89b",
+        "controls": {
+          "duration_s": {
+            "observed": [],
+            "requested": 60,
+            "support": []
+          },
+          "exclude_styles": {
+            "observed": [],
+            "requested": [],
+            "support": []
+          },
+          "style": {
+            "observed": [],
+            "requested": "plain test song",
+            "support": []
+          },
+          "vocal_mode": {
+            "observed": [],
+            "requested": "vocal",
+            "support": []
+          }
+        },
+        "created_at": "2026-11-07T12:00:00Z",
+        "form": {
+          "sections": [
+            {
+              "bars": 1,
+              "id": "s1",
+              "name": "intro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            },
+            {
+              "bars": 4,
+              "id": "s2",
+              "name": "verse",
+              "phrase_ids": [
+                "ph1",
+                "ph2"
+              ],
+              "repeats": 1,
+              "section_kind": "vocal"
+            },
+            {
+              "bars": 2,
+              "id": "s2",
+              "name": "outro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            }
+          ]
+        },
+        "kind": "song-spec",
+        "larger_n_budget": null,
+        "melody": {
+          "melody_id": "mel_case",
+          "rev": 1,
+          "tempo_map_rev": 1
+        },
+        "project_id": "prj_case",
+        "references": [],
+        "render_routes": {
+          "mode": "auto",
+          "routes": []
+        },
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "song_id": "song_case",
+        "validation": {
+          "conflicts": [],
+          "unsupported_by_profile": []
+        }
+      }
+    },
+    {
+      "derivation": "The source marks ph2 twice; the first match is never picked.",
+      "expected": {
+        "refused": {
+          "code": "duplicate_phrase",
+          "note_id": null,
+          "phrase_id": "ph2",
+          "section_id": null
+        }
+      },
+      "melody": {
+        "base_rev": null,
+        "content_sha256": "454f8c914b87d9d8e61149633679d6d122ef0cf79fb13bdcffc4294ca40284cd",
+        "created_at": "2026-11-07T12:00:00Z",
+        "key": {
+          "mode": "major",
+          "tonic": "C"
+        },
+        "kind": "melody-spec",
+        "melody_id": "mel_case",
+        "notes": [
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n1",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 2880,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n2",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 3360,
+            "velocity": 80
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n3",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 3840,
+            "velocity": 100
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n4",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 4800,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1920,
+            "id": "n5",
+            "origin": "midi_file",
+            "pitch": 72,
+            "start_tick": 5760,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n6",
+            "origin": "midi_file",
+            "pitch": 71,
+            "start_tick": 7680,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n7",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 8960,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n8",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 10240,
+            "velocity": 90
+          }
+        ],
+        "phrases": [
+          {
+            "end_tick": 7680,
+            "id": "ph1",
+            "name": "pickup line",
+            "start_tick": 2880
+          },
+          {
+            "end_tick": 11520,
+            "id": "ph2",
+            "name": "triplet answer",
+            "start_tick": 7680
+          },
+          {
+            "end_tick": 15360,
+            "id": "ph2",
+            "name": "second answer",
+            "start_tick": 11520
+          }
+        ],
+        "ppq": 960,
+        "project_id": "prj_case",
+        "quantize": null,
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "source": {
+          "assembled_from": null,
+          "capture_sha256": "0017589b0173c7a3d8d0285fc35383271945ff1b97110fa159339a9bb78d5787",
+          "seed_kind": "midi_file",
+          "transcription": null
+        },
+        "spec_kind": "melody",
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            }
+          ],
+          "rev": 1,
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "duplicate phrase id",
+      "output": {
+        "base_rev": null,
+        "created_at": "2026-11-07T12:05:00Z",
+        "melody_id": "mel_case_asm",
+        "rev": 1,
+        "tempo_map_rev": 1
+      },
+      "sample_rate": 48000,
+      "song": {
+        "approved_lyrics": {
+          "approved_at": "2026-11-07T12:00:00Z",
+          "language": "en",
+          "source": "written",
+          "text": "[verse]\nLa la la"
+        },
+        "asr_transcripts": [],
+        "base_rev": null,
+        "candidate_count": 2,
+        "content_sha256": "6811dc6873fb7560ac8b3dba311ea0b4e65d379f59244e97ed1edc825d674631",
+        "controls": {
+          "duration_s": {
+            "observed": [],
+            "requested": 60,
+            "support": []
+          },
+          "exclude_styles": {
+            "observed": [],
+            "requested": [],
+            "support": []
+          },
+          "style": {
+            "observed": [],
+            "requested": "plain test song",
+            "support": []
+          },
+          "vocal_mode": {
+            "observed": [],
+            "requested": "vocal",
+            "support": []
+          }
+        },
+        "created_at": "2026-11-07T12:00:00Z",
+        "form": {
+          "sections": [
+            {
+              "bars": 1,
+              "id": "s1",
+              "name": "intro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            },
+            {
+              "bars": 4,
+              "id": "s2",
+              "name": "verse",
+              "phrase_ids": [
+                "ph1",
+                "ph2"
+              ],
+              "repeats": 1,
+              "section_kind": "vocal"
+            },
+            {
+              "bars": 2,
+              "id": "s3",
+              "name": "outro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            }
+          ]
+        },
+        "kind": "song-spec",
+        "larger_n_budget": null,
+        "melody": {
+          "melody_id": "mel_case",
+          "rev": 1,
+          "tempo_map_rev": 1
+        },
+        "project_id": "prj_case",
+        "references": [],
+        "render_routes": {
+          "mode": "auto",
+          "routes": []
+        },
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "song_id": "song_case",
+        "validation": {
+          "conflicts": [],
+          "unsupported_by_profile": []
+        }
+      }
+    },
+    {
+      "derivation": "The intro is instrumental but places ph2.",
+      "expected": {
+        "refused": {
+          "code": "section_kind_mismatch",
+          "note_id": null,
+          "phrase_id": null,
+          "section_id": "s1"
+        }
+      },
+      "melody": {
+        "base_rev": null,
+        "content_sha256": "953a47770bf45e053c3350fab1a49ee5f4f3d33b48cba04d5312fd6305a7bbc1",
+        "created_at": "2026-11-07T12:00:00Z",
+        "key": {
+          "mode": "major",
+          "tonic": "C"
+        },
+        "kind": "melody-spec",
+        "melody_id": "mel_case",
+        "notes": [
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n1",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 2880,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n2",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 3360,
+            "velocity": 80
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n3",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 3840,
+            "velocity": 100
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n4",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 4800,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1920,
+            "id": "n5",
+            "origin": "midi_file",
+            "pitch": 72,
+            "start_tick": 5760,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n6",
+            "origin": "midi_file",
+            "pitch": 71,
+            "start_tick": 7680,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n7",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 8960,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n8",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 10240,
+            "velocity": 90
+          }
+        ],
+        "phrases": [
+          {
+            "end_tick": 7680,
+            "id": "ph1",
+            "name": "pickup line",
+            "start_tick": 2880
+          },
+          {
+            "end_tick": 11520,
+            "id": "ph2",
+            "name": "triplet answer",
+            "start_tick": 7680
+          }
+        ],
+        "ppq": 960,
+        "project_id": "prj_case",
+        "quantize": null,
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "source": {
+          "assembled_from": null,
+          "capture_sha256": "0017589b0173c7a3d8d0285fc35383271945ff1b97110fa159339a9bb78d5787",
+          "seed_kind": "midi_file",
+          "transcription": null
+        },
+        "spec_kind": "melody",
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            }
+          ],
+          "rev": 1,
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "instrumental section places a phrase",
+      "output": {
+        "base_rev": null,
+        "created_at": "2026-11-07T12:05:00Z",
+        "melody_id": "mel_case_asm",
+        "rev": 1,
+        "tempo_map_rev": 1
+      },
+      "sample_rate": 48000,
+      "song": {
+        "approved_lyrics": {
+          "approved_at": "2026-11-07T12:00:00Z",
+          "language": "en",
+          "source": "written",
+          "text": "[verse]\nLa la la"
+        },
+        "asr_transcripts": [],
+        "base_rev": null,
+        "candidate_count": 2,
+        "content_sha256": "5f4ead73fae187c5ff8418057b867e049d50c3eea9a20b27343bada1b0668e00",
+        "controls": {
+          "duration_s": {
+            "observed": [],
+            "requested": 60,
+            "support": []
+          },
+          "exclude_styles": {
+            "observed": [],
+            "requested": [],
+            "support": []
+          },
+          "style": {
+            "observed": [],
+            "requested": "plain test song",
+            "support": []
+          },
+          "vocal_mode": {
+            "observed": [],
+            "requested": "vocal",
+            "support": []
+          }
+        },
+        "created_at": "2026-11-07T12:00:00Z",
+        "form": {
+          "sections": [
+            {
+              "bars": 1,
+              "id": "s1",
+              "name": "intro",
+              "phrase_ids": [
+                "ph2"
+              ],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            },
+            {
+              "bars": 4,
+              "id": "s2",
+              "name": "verse",
+              "phrase_ids": [
+                "ph1",
+                "ph2"
+              ],
+              "repeats": 1,
+              "section_kind": "vocal"
+            },
+            {
+              "bars": 2,
+              "id": "s3",
+              "name": "outro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            }
+          ]
+        },
+        "kind": "song-spec",
+        "larger_n_budget": null,
+        "melody": {
+          "melody_id": "mel_case",
+          "rev": 1,
+          "tempo_map_rev": 1
+        },
+        "project_id": "prj_case",
+        "references": [],
+        "render_routes": {
+          "mode": "auto",
+          "routes": []
+        },
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "song_id": "song_case",
+        "validation": {
+          "conflicts": [],
+          "unsupported_by_profile": []
+        }
+      }
+    },
+    {
+      "derivation": "The outro is marked vocal but places no phrase.",
+      "expected": {
+        "refused": {
+          "code": "section_kind_mismatch",
+          "note_id": null,
+          "phrase_id": null,
+          "section_id": "s3"
+        }
+      },
+      "melody": {
+        "base_rev": null,
+        "content_sha256": "953a47770bf45e053c3350fab1a49ee5f4f3d33b48cba04d5312fd6305a7bbc1",
+        "created_at": "2026-11-07T12:00:00Z",
+        "key": {
+          "mode": "major",
+          "tonic": "C"
+        },
+        "kind": "melody-spec",
+        "melody_id": "mel_case",
+        "notes": [
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n1",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 2880,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n2",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 3360,
+            "velocity": 80
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n3",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 3840,
+            "velocity": 100
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n4",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 4800,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1920,
+            "id": "n5",
+            "origin": "midi_file",
+            "pitch": 72,
+            "start_tick": 5760,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n6",
+            "origin": "midi_file",
+            "pitch": 71,
+            "start_tick": 7680,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n7",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 8960,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n8",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 10240,
+            "velocity": 90
+          }
+        ],
+        "phrases": [
+          {
+            "end_tick": 7680,
+            "id": "ph1",
+            "name": "pickup line",
+            "start_tick": 2880
+          },
+          {
+            "end_tick": 11520,
+            "id": "ph2",
+            "name": "triplet answer",
+            "start_tick": 7680
+          }
+        ],
+        "ppq": 960,
+        "project_id": "prj_case",
+        "quantize": null,
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "source": {
+          "assembled_from": null,
+          "capture_sha256": "0017589b0173c7a3d8d0285fc35383271945ff1b97110fa159339a9bb78d5787",
+          "seed_kind": "midi_file",
+          "transcription": null
+        },
+        "spec_kind": "melody",
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            }
+          ],
+          "rev": 1,
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "vocal section places none",
+      "output": {
+        "base_rev": null,
+        "created_at": "2026-11-07T12:05:00Z",
+        "melody_id": "mel_case_asm",
+        "rev": 1,
+        "tempo_map_rev": 1
+      },
+      "sample_rate": 48000,
+      "song": {
+        "approved_lyrics": {
+          "approved_at": "2026-11-07T12:00:00Z",
+          "language": "en",
+          "source": "written",
+          "text": "[verse]\nLa la la"
+        },
+        "asr_transcripts": [],
+        "base_rev": null,
+        "candidate_count": 2,
+        "content_sha256": "249ca653d113e8d8ad90109cd4bde2272a1388bb4810ab79aff357777bc9410c",
+        "controls": {
+          "duration_s": {
+            "observed": [],
+            "requested": 60,
+            "support": []
+          },
+          "exclude_styles": {
+            "observed": [],
+            "requested": [],
+            "support": []
+          },
+          "style": {
+            "observed": [],
+            "requested": "plain test song",
+            "support": []
+          },
+          "vocal_mode": {
+            "observed": [],
+            "requested": "vocal",
+            "support": []
+          }
+        },
+        "created_at": "2026-11-07T12:00:00Z",
+        "form": {
+          "sections": [
+            {
+              "bars": 1,
+              "id": "s1",
+              "name": "intro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            },
+            {
+              "bars": 4,
+              "id": "s2",
+              "name": "verse",
+              "phrase_ids": [
+                "ph1",
+                "ph2"
+              ],
+              "repeats": 1,
+              "section_kind": "vocal"
+            },
+            {
+              "bars": 2,
+              "id": "s3",
+              "name": "outro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "vocal"
+            }
+          ]
+        },
+        "kind": "song-spec",
+        "larger_n_budget": null,
+        "melody": {
+          "melody_id": "mel_case",
+          "rev": 1,
+          "tempo_map_rev": 1
+        },
+        "project_id": "prj_case",
+        "references": [],
+        "render_routes": {
+          "mode": "auto",
+          "routes": []
+        },
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "song_id": "song_case",
+        "validation": {
+          "conflicts": [],
+          "unsupported_by_profile": []
+        }
+      }
+    },
+    {
+      "derivation": "The verse places ph9, which the source does not mark.",
+      "expected": {
+        "refused": {
+          "code": "missing_phrase",
+          "note_id": null,
+          "phrase_id": "ph9",
+          "section_id": "s2"
+        }
+      },
+      "melody": {
+        "base_rev": null,
+        "content_sha256": "953a47770bf45e053c3350fab1a49ee5f4f3d33b48cba04d5312fd6305a7bbc1",
+        "created_at": "2026-11-07T12:00:00Z",
+        "key": {
+          "mode": "major",
+          "tonic": "C"
+        },
+        "kind": "melody-spec",
+        "melody_id": "mel_case",
+        "notes": [
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n1",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 2880,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n2",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 3360,
+            "velocity": 80
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n3",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 3840,
+            "velocity": 100
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n4",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 4800,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1920,
+            "id": "n5",
+            "origin": "midi_file",
+            "pitch": 72,
+            "start_tick": 5760,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n6",
+            "origin": "midi_file",
+            "pitch": 71,
+            "start_tick": 7680,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n7",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 8960,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n8",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 10240,
+            "velocity": 90
+          }
+        ],
+        "phrases": [
+          {
+            "end_tick": 7680,
+            "id": "ph1",
+            "name": "pickup line",
+            "start_tick": 2880
+          },
+          {
+            "end_tick": 11520,
+            "id": "ph2",
+            "name": "triplet answer",
+            "start_tick": 7680
+          }
+        ],
+        "ppq": 960,
+        "project_id": "prj_case",
+        "quantize": null,
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "source": {
+          "assembled_from": null,
+          "capture_sha256": "0017589b0173c7a3d8d0285fc35383271945ff1b97110fa159339a9bb78d5787",
+          "seed_kind": "midi_file",
+          "transcription": null
+        },
+        "spec_kind": "melody",
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            }
+          ],
+          "rev": 1,
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "missing phrase",
+      "output": {
+        "base_rev": null,
+        "created_at": "2026-11-07T12:05:00Z",
+        "melody_id": "mel_case_asm",
+        "rev": 1,
+        "tempo_map_rev": 1
+      },
+      "sample_rate": 48000,
+      "song": {
+        "approved_lyrics": {
+          "approved_at": "2026-11-07T12:00:00Z",
+          "language": "en",
+          "source": "written",
+          "text": "[verse]\nLa la la"
+        },
+        "asr_transcripts": [],
+        "base_rev": null,
+        "candidate_count": 2,
+        "content_sha256": "c759d1f834fbc9910c19fd4be37f330d95219353f72b341c5975042bb999e3de",
+        "controls": {
+          "duration_s": {
+            "observed": [],
+            "requested": 60,
+            "support": []
+          },
+          "exclude_styles": {
+            "observed": [],
+            "requested": [],
+            "support": []
+          },
+          "style": {
+            "observed": [],
+            "requested": "plain test song",
+            "support": []
+          },
+          "vocal_mode": {
+            "observed": [],
+            "requested": "vocal",
+            "support": []
+          }
+        },
+        "created_at": "2026-11-07T12:00:00Z",
+        "form": {
+          "sections": [
+            {
+              "bars": 1,
+              "id": "s1",
+              "name": "intro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            },
+            {
+              "bars": 4,
+              "id": "s2",
+              "name": "verse",
+              "phrase_ids": [
+                "ph1",
+                "ph9"
+              ],
+              "repeats": 1,
+              "section_kind": "vocal"
+            },
+            {
+              "bars": 2,
+              "id": "s3",
+              "name": "outro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            }
+          ]
+        },
+        "kind": "song-spec",
+        "larger_n_budget": null,
+        "melody": {
+          "melody_id": "mel_case",
+          "rev": 1,
+          "tempo_map_rev": 1
+        },
+        "project_id": "prj_case",
+        "references": [],
+        "render_routes": {
+          "mode": "auto",
+          "routes": []
+        },
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "song_id": "song_case",
+        "validation": {
+          "conflicts": [],
+          "unsupported_by_profile": []
+        }
+      }
+    },
+    {
+      "derivation": "ph2 starts and ends at 7680.",
+      "expected": {
+        "refused": {
+          "code": "empty_phrase",
+          "note_id": null,
+          "phrase_id": "ph2",
+          "section_id": "s2"
+        }
+      },
+      "melody": {
+        "base_rev": null,
+        "content_sha256": "095775447e76ebf46dbec67b06742e2bdb554f468fbc1970f6c457c0d144be58",
+        "created_at": "2026-11-07T12:00:00Z",
+        "key": {
+          "mode": "major",
+          "tonic": "C"
+        },
+        "kind": "melody-spec",
+        "melody_id": "mel_case",
+        "notes": [
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n1",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 2880,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n2",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 3360,
+            "velocity": 80
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n3",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 3840,
+            "velocity": 100
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n4",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 4800,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1920,
+            "id": "n5",
+            "origin": "midi_file",
+            "pitch": 72,
+            "start_tick": 5760,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n6",
+            "origin": "midi_file",
+            "pitch": 71,
+            "start_tick": 7680,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n7",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 8960,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n8",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 10240,
+            "velocity": 90
+          }
+        ],
+        "phrases": [
+          {
+            "end_tick": 7680,
+            "id": "ph1",
+            "name": "pickup line",
+            "start_tick": 2880
+          },
+          {
+            "end_tick": 7680,
+            "id": "ph2",
+            "name": "triplet answer",
+            "start_tick": 7680
+          }
+        ],
+        "ppq": 960,
+        "project_id": "prj_case",
+        "quantize": null,
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "source": {
+          "assembled_from": null,
+          "capture_sha256": "0017589b0173c7a3d8d0285fc35383271945ff1b97110fa159339a9bb78d5787",
+          "seed_kind": "midi_file",
+          "transcription": null
+        },
+        "spec_kind": "melody",
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            }
+          ],
+          "rev": 1,
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "zero-length phrase",
+      "output": {
+        "base_rev": null,
+        "created_at": "2026-11-07T12:05:00Z",
+        "melody_id": "mel_case_asm",
+        "rev": 1,
+        "tempo_map_rev": 1
+      },
+      "sample_rate": 48000,
+      "song": {
+        "approved_lyrics": {
+          "approved_at": "2026-11-07T12:00:00Z",
+          "language": "en",
+          "source": "written",
+          "text": "[verse]\nLa la la"
+        },
+        "asr_transcripts": [],
+        "base_rev": null,
+        "candidate_count": 2,
+        "content_sha256": "6811dc6873fb7560ac8b3dba311ea0b4e65d379f59244e97ed1edc825d674631",
+        "controls": {
+          "duration_s": {
+            "observed": [],
+            "requested": 60,
+            "support": []
+          },
+          "exclude_styles": {
+            "observed": [],
+            "requested": [],
+            "support": []
+          },
+          "style": {
+            "observed": [],
+            "requested": "plain test song",
+            "support": []
+          },
+          "vocal_mode": {
+            "observed": [],
+            "requested": "vocal",
+            "support": []
+          }
+        },
+        "created_at": "2026-11-07T12:00:00Z",
+        "form": {
+          "sections": [
+            {
+              "bars": 1,
+              "id": "s1",
+              "name": "intro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            },
+            {
+              "bars": 4,
+              "id": "s2",
+              "name": "verse",
+              "phrase_ids": [
+                "ph1",
+                "ph2"
+              ],
+              "repeats": 1,
+              "section_kind": "vocal"
+            },
+            {
+              "bars": 2,
+              "id": "s3",
+              "name": "outro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            }
+          ]
+        },
+        "kind": "song-spec",
+        "larger_n_budget": null,
+        "melody": {
+          "melody_id": "mel_case",
+          "rev": 1,
+          "tempo_map_rev": 1
+        },
+        "project_id": "prj_case",
+        "references": [],
+        "render_routes": {
+          "mode": "auto",
+          "routes": []
+        },
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "song_id": "song_case",
+        "validation": {
+          "conflicts": [],
+          "unsupported_by_profile": []
+        }
+      }
+    },
+    {
+      "derivation": "The source tempo changes at 4800, inside ph1's bars [0, 7680).",
+      "expected": {
+        "refused": {
+          "code": "tempo_conflict",
+          "note_id": null,
+          "phrase_id": "ph1",
+          "section_id": "s2"
+        }
+      },
+      "melody": {
+        "base_rev": null,
+        "content_sha256": "ee353a298a81a60f9cda10a31114dcb8dab0c4bc70713259114e145df43cc3d5",
+        "created_at": "2026-11-07T12:00:00Z",
+        "key": {
+          "mode": "major",
+          "tonic": "C"
+        },
+        "kind": "melody-spec",
+        "melody_id": "mel_case",
+        "notes": [
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n1",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 2880,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n2",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 3360,
+            "velocity": 80
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n3",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 3840,
+            "velocity": 100
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n4",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 4800,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1920,
+            "id": "n5",
+            "origin": "midi_file",
+            "pitch": 72,
+            "start_tick": 5760,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n6",
+            "origin": "midi_file",
+            "pitch": 71,
+            "start_tick": 7680,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n7",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 8960,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n8",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 10240,
+            "velocity": 90
+          }
+        ],
+        "phrases": [
+          {
+            "end_tick": 7680,
+            "id": "ph1",
+            "name": "pickup line",
+            "start_tick": 2880
+          },
+          {
+            "end_tick": 11520,
+            "id": "ph2",
+            "name": "triplet answer",
+            "start_tick": 7680
+          }
+        ],
+        "ppq": 960,
+        "project_id": "prj_case",
+        "quantize": null,
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "source": {
+          "assembled_from": null,
+          "capture_sha256": "0017589b0173c7a3d8d0285fc35383271945ff1b97110fa159339a9bb78d5787",
+          "seed_kind": "midi_file",
+          "transcription": null
+        },
+        "spec_kind": "melody",
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            }
+          ],
+          "rev": 1,
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            },
+            {
+              "tick": 4800,
+              "us_per_quarter": 600000
+            }
+          ]
+        }
+      },
+      "name": "tempo change inside a phrase",
+      "output": {
+        "base_rev": null,
+        "created_at": "2026-11-07T12:05:00Z",
+        "melody_id": "mel_case_asm",
+        "rev": 1,
+        "tempo_map_rev": 1
+      },
+      "sample_rate": 48000,
+      "song": {
+        "approved_lyrics": {
+          "approved_at": "2026-11-07T12:00:00Z",
+          "language": "en",
+          "source": "written",
+          "text": "[verse]\nLa la la"
+        },
+        "asr_transcripts": [],
+        "base_rev": null,
+        "candidate_count": 2,
+        "content_sha256": "6811dc6873fb7560ac8b3dba311ea0b4e65d379f59244e97ed1edc825d674631",
+        "controls": {
+          "duration_s": {
+            "observed": [],
+            "requested": 60,
+            "support": []
+          },
+          "exclude_styles": {
+            "observed": [],
+            "requested": [],
+            "support": []
+          },
+          "style": {
+            "observed": [],
+            "requested": "plain test song",
+            "support": []
+          },
+          "vocal_mode": {
+            "observed": [],
+            "requested": "vocal",
+            "support": []
+          }
+        },
+        "created_at": "2026-11-07T12:00:00Z",
+        "form": {
+          "sections": [
+            {
+              "bars": 1,
+              "id": "s1",
+              "name": "intro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            },
+            {
+              "bars": 4,
+              "id": "s2",
+              "name": "verse",
+              "phrase_ids": [
+                "ph1",
+                "ph2"
+              ],
+              "repeats": 1,
+              "section_kind": "vocal"
+            },
+            {
+              "bars": 2,
+              "id": "s3",
+              "name": "outro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            }
+          ]
+        },
+        "kind": "song-spec",
+        "larger_n_budget": null,
+        "melody": {
+          "melody_id": "mel_case",
+          "rev": 1,
+          "tempo_map_rev": 1
+        },
+        "project_id": "prj_case",
+        "references": [],
+        "render_routes": {
+          "mode": "auto",
+          "routes": []
+        },
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "song_id": "song_case",
+        "validation": {
+          "conflicts": [],
+          "unsupported_by_profile": []
+        }
+      }
+    },
+    {
+      "derivation": "The tempo changes at 7680, ph2's bar line: ph1 is 120 BPM and ph2 100 BPM in the one verse.",
+      "expected": {
+        "refused": {
+          "code": "tempo_conflict",
+          "note_id": null,
+          "phrase_id": "ph2",
+          "section_id": "s2"
+        }
+      },
+      "melody": {
+        "base_rev": null,
+        "content_sha256": "bdf64e4f2552a7b441ccd2353af738d332d2f85e43605c6887eaf0ef115cdb0b",
+        "created_at": "2026-11-07T12:00:00Z",
+        "key": {
+          "mode": "major",
+          "tonic": "C"
+        },
+        "kind": "melody-spec",
+        "melody_id": "mel_case",
+        "notes": [
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n1",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 2880,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n2",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 3360,
+            "velocity": 80
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n3",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 3840,
+            "velocity": 100
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n4",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 4800,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1920,
+            "id": "n5",
+            "origin": "midi_file",
+            "pitch": 72,
+            "start_tick": 5760,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n6",
+            "origin": "midi_file",
+            "pitch": 71,
+            "start_tick": 7680,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n7",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 8960,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n8",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 10240,
+            "velocity": 90
+          }
+        ],
+        "phrases": [
+          {
+            "end_tick": 7680,
+            "id": "ph1",
+            "name": "pickup line",
+            "start_tick": 2880
+          },
+          {
+            "end_tick": 11520,
+            "id": "ph2",
+            "name": "triplet answer",
+            "start_tick": 7680
+          }
+        ],
+        "ppq": 960,
+        "project_id": "prj_case",
+        "quantize": null,
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "source": {
+          "assembled_from": null,
+          "capture_sha256": "0017589b0173c7a3d8d0285fc35383271945ff1b97110fa159339a9bb78d5787",
+          "seed_kind": "midi_file",
+          "transcription": null
+        },
+        "spec_kind": "melody",
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            }
+          ],
+          "rev": 1,
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            },
+            {
+              "tick": 7680,
+              "us_per_quarter": 600000
+            }
+          ]
+        }
+      },
+      "name": "phrases of one section disagree on tempo",
+      "output": {
+        "base_rev": null,
+        "created_at": "2026-11-07T12:05:00Z",
+        "melody_id": "mel_case_asm",
+        "rev": 1,
+        "tempo_map_rev": 1
+      },
+      "sample_rate": 48000,
+      "song": {
+        "approved_lyrics": {
+          "approved_at": "2026-11-07T12:00:00Z",
+          "language": "en",
+          "source": "written",
+          "text": "[verse]\nLa la la"
+        },
+        "asr_transcripts": [],
+        "base_rev": null,
+        "candidate_count": 2,
+        "content_sha256": "6811dc6873fb7560ac8b3dba311ea0b4e65d379f59244e97ed1edc825d674631",
+        "controls": {
+          "duration_s": {
+            "observed": [],
+            "requested": 60,
+            "support": []
+          },
+          "exclude_styles": {
+            "observed": [],
+            "requested": [],
+            "support": []
+          },
+          "style": {
+            "observed": [],
+            "requested": "plain test song",
+            "support": []
+          },
+          "vocal_mode": {
+            "observed": [],
+            "requested": "vocal",
+            "support": []
+          }
+        },
+        "created_at": "2026-11-07T12:00:00Z",
+        "form": {
+          "sections": [
+            {
+              "bars": 1,
+              "id": "s1",
+              "name": "intro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            },
+            {
+              "bars": 4,
+              "id": "s2",
+              "name": "verse",
+              "phrase_ids": [
+                "ph1",
+                "ph2"
+              ],
+              "repeats": 1,
+              "section_kind": "vocal"
+            },
+            {
+              "bars": 2,
+              "id": "s3",
+              "name": "outro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            }
+          ]
+        },
+        "kind": "song-spec",
+        "larger_n_budget": null,
+        "melody": {
+          "melody_id": "mel_case",
+          "rev": 1,
+          "tempo_map_rev": 1
+        },
+        "project_id": "prj_case",
+        "references": [],
+        "render_routes": {
+          "mode": "auto",
+          "routes": []
+        },
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "song_id": "song_case",
+        "validation": {
+          "conflicts": [],
+          "unsupported_by_profile": []
+        }
+      }
+    },
+    {
+      "derivation": "The source turns 2/4 at the bar line 3840, inside ph1's bars [0, 7680).",
+      "expected": {
+        "refused": {
+          "code": "meter_conflict",
+          "note_id": null,
+          "phrase_id": "ph1",
+          "section_id": "s2"
+        }
+      },
+      "melody": {
+        "base_rev": null,
+        "content_sha256": "987d45ff85ba6c28102b6e70732cad83e613561cdfa94f955d7bc2c54398551a",
+        "created_at": "2026-11-07T12:00:00Z",
+        "key": {
+          "mode": "major",
+          "tonic": "C"
+        },
+        "kind": "melody-spec",
+        "melody_id": "mel_case",
+        "notes": [
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n1",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 2880,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n2",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 3360,
+            "velocity": 80
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n3",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 3840,
+            "velocity": 100
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n4",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 4800,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1920,
+            "id": "n5",
+            "origin": "midi_file",
+            "pitch": 72,
+            "start_tick": 5760,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n6",
+            "origin": "midi_file",
+            "pitch": 71,
+            "start_tick": 7680,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n7",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 8960,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n8",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 10240,
+            "velocity": 90
+          }
+        ],
+        "phrases": [
+          {
+            "end_tick": 7680,
+            "id": "ph1",
+            "name": "pickup line",
+            "start_tick": 2880
+          },
+          {
+            "end_tick": 11520,
+            "id": "ph2",
+            "name": "triplet answer",
+            "start_tick": 7680
+          }
+        ],
+        "ppq": 960,
+        "project_id": "prj_case",
+        "quantize": null,
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "source": {
+          "assembled_from": null,
+          "capture_sha256": "0017589b0173c7a3d8d0285fc35383271945ff1b97110fa159339a9bb78d5787",
+          "seed_kind": "midi_file",
+          "transcription": null
+        },
+        "spec_kind": "melody",
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            },
+            {
+              "denominator": 4,
+              "numerator": 2,
+              "tick": 3840
+            }
+          ],
+          "rev": 1,
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "meter change inside a phrase",
+      "output": {
+        "base_rev": null,
+        "created_at": "2026-11-07T12:05:00Z",
+        "melody_id": "mel_case_asm",
+        "rev": 1,
+        "tempo_map_rev": 1
+      },
+      "sample_rate": 48000,
+      "song": {
+        "approved_lyrics": {
+          "approved_at": "2026-11-07T12:00:00Z",
+          "language": "en",
+          "source": "written",
+          "text": "[verse]\nLa la la"
+        },
+        "asr_transcripts": [],
+        "base_rev": null,
+        "candidate_count": 2,
+        "content_sha256": "6811dc6873fb7560ac8b3dba311ea0b4e65d379f59244e97ed1edc825d674631",
+        "controls": {
+          "duration_s": {
+            "observed": [],
+            "requested": 60,
+            "support": []
+          },
+          "exclude_styles": {
+            "observed": [],
+            "requested": [],
+            "support": []
+          },
+          "style": {
+            "observed": [],
+            "requested": "plain test song",
+            "support": []
+          },
+          "vocal_mode": {
+            "observed": [],
+            "requested": "vocal",
+            "support": []
+          }
+        },
+        "created_at": "2026-11-07T12:00:00Z",
+        "form": {
+          "sections": [
+            {
+              "bars": 1,
+              "id": "s1",
+              "name": "intro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            },
+            {
+              "bars": 4,
+              "id": "s2",
+              "name": "verse",
+              "phrase_ids": [
+                "ph1",
+                "ph2"
+              ],
+              "repeats": 1,
+              "section_kind": "vocal"
+            },
+            {
+              "bars": 2,
+              "id": "s3",
+              "name": "outro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            }
+          ]
+        },
+        "kind": "song-spec",
+        "larger_n_budget": null,
+        "melody": {
+          "melody_id": "mel_case",
+          "rev": 1,
+          "tempo_map_rev": 1
+        },
+        "project_id": "prj_case",
+        "references": [],
+        "render_routes": {
+          "mode": "auto",
+          "routes": []
+        },
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "song_id": "song_case",
+        "validation": {
+          "conflicts": [],
+          "unsupported_by_profile": []
+        }
+      }
+    },
+    {
+      "derivation": "The source turns 2/4 at 7680: ph1 is 4/4 and ph2 2/4 in the one verse.",
+      "expected": {
+        "refused": {
+          "code": "meter_conflict",
+          "note_id": null,
+          "phrase_id": "ph2",
+          "section_id": "s2"
+        }
+      },
+      "melody": {
+        "base_rev": null,
+        "content_sha256": "6cd473222b36fd384e262052466ea873e3550ca290998e4a6b56c27a1b78d192",
+        "created_at": "2026-11-07T12:00:00Z",
+        "key": {
+          "mode": "major",
+          "tonic": "C"
+        },
+        "kind": "melody-spec",
+        "melody_id": "mel_case",
+        "notes": [
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n1",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 2880,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n2",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 3360,
+            "velocity": 80
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n3",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 3840,
+            "velocity": 100
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n4",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 4800,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1920,
+            "id": "n5",
+            "origin": "midi_file",
+            "pitch": 72,
+            "start_tick": 5760,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n6",
+            "origin": "midi_file",
+            "pitch": 71,
+            "start_tick": 7680,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n7",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 8960,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n8",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 10240,
+            "velocity": 90
+          }
+        ],
+        "phrases": [
+          {
+            "end_tick": 7680,
+            "id": "ph1",
+            "name": "pickup line",
+            "start_tick": 2880
+          },
+          {
+            "end_tick": 11520,
+            "id": "ph2",
+            "name": "triplet answer",
+            "start_tick": 7680
+          }
+        ],
+        "ppq": 960,
+        "project_id": "prj_case",
+        "quantize": null,
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "source": {
+          "assembled_from": null,
+          "capture_sha256": "0017589b0173c7a3d8d0285fc35383271945ff1b97110fa159339a9bb78d5787",
+          "seed_kind": "midi_file",
+          "transcription": null
+        },
+        "spec_kind": "melody",
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            },
+            {
+              "denominator": 4,
+              "numerator": 2,
+              "tick": 7680
+            }
+          ],
+          "rev": 1,
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "phrases of one section disagree on meter",
+      "output": {
+        "base_rev": null,
+        "created_at": "2026-11-07T12:05:00Z",
+        "melody_id": "mel_case_asm",
+        "rev": 1,
+        "tempo_map_rev": 1
+      },
+      "sample_rate": 48000,
+      "song": {
+        "approved_lyrics": {
+          "approved_at": "2026-11-07T12:00:00Z",
+          "language": "en",
+          "source": "written",
+          "text": "[verse]\nLa la la"
+        },
+        "asr_transcripts": [],
+        "base_rev": null,
+        "candidate_count": 2,
+        "content_sha256": "6811dc6873fb7560ac8b3dba311ea0b4e65d379f59244e97ed1edc825d674631",
+        "controls": {
+          "duration_s": {
+            "observed": [],
+            "requested": 60,
+            "support": []
+          },
+          "exclude_styles": {
+            "observed": [],
+            "requested": [],
+            "support": []
+          },
+          "style": {
+            "observed": [],
+            "requested": "plain test song",
+            "support": []
+          },
+          "vocal_mode": {
+            "observed": [],
+            "requested": "vocal",
+            "support": []
+          }
+        },
+        "created_at": "2026-11-07T12:00:00Z",
+        "form": {
+          "sections": [
+            {
+              "bars": 1,
+              "id": "s1",
+              "name": "intro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            },
+            {
+              "bars": 4,
+              "id": "s2",
+              "name": "verse",
+              "phrase_ids": [
+                "ph1",
+                "ph2"
+              ],
+              "repeats": 1,
+              "section_kind": "vocal"
+            },
+            {
+              "bars": 2,
+              "id": "s3",
+              "name": "outro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            }
+          ]
+        },
+        "kind": "song-spec",
+        "larger_n_budget": null,
+        "melody": {
+          "melody_id": "mel_case",
+          "rev": 1,
+          "tempo_map_rev": 1
+        },
+        "project_id": "prj_case",
+        "references": [],
+        "render_routes": {
+          "mode": "auto",
+          "routes": []
+        },
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "song_id": "song_case",
+        "validation": {
+          "conflicts": [],
+          "unsupported_by_profile": []
+        }
+      }
+    },
+    {
+      "derivation": "n5 [5760, 8640) runs past ph1's end 7680; it is never truncated.",
+      "expected": {
+        "refused": {
+          "code": "note_crosses_phrase_edge",
+          "note_id": "n5",
+          "phrase_id": "ph1",
+          "section_id": "s2"
+        }
+      },
+      "melody": {
+        "base_rev": null,
+        "content_sha256": "355e7fb2888deb88e8ab66b8a5eca040276c1d0f163d2be726e26e1f0e4ad63d",
+        "created_at": "2026-11-07T12:00:00Z",
+        "key": {
+          "mode": "major",
+          "tonic": "C"
+        },
+        "kind": "melody-spec",
+        "melody_id": "mel_case",
+        "notes": [
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n1",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 2880,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n2",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 3360,
+            "velocity": 80
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n3",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 3840,
+            "velocity": 100
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n4",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 4800,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 2880,
+            "id": "n5",
+            "origin": "midi_file",
+            "pitch": 72,
+            "start_tick": 5760,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n6",
+            "origin": "midi_file",
+            "pitch": 71,
+            "start_tick": 7680,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n7",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 8960,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n8",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 10240,
+            "velocity": 90
+          }
+        ],
+        "phrases": [
+          {
+            "end_tick": 7680,
+            "id": "ph1",
+            "name": "pickup line",
+            "start_tick": 2880
+          },
+          {
+            "end_tick": 11520,
+            "id": "ph2",
+            "name": "triplet answer",
+            "start_tick": 7680
+          }
+        ],
+        "ppq": 960,
+        "project_id": "prj_case",
+        "quantize": null,
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "source": {
+          "assembled_from": null,
+          "capture_sha256": "0017589b0173c7a3d8d0285fc35383271945ff1b97110fa159339a9bb78d5787",
+          "seed_kind": "midi_file",
+          "transcription": null
+        },
+        "spec_kind": "melody",
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            }
+          ],
+          "rev": 1,
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "note crosses a phrase end",
+      "output": {
+        "base_rev": null,
+        "created_at": "2026-11-07T12:05:00Z",
+        "melody_id": "mel_case_asm",
+        "rev": 1,
+        "tempo_map_rev": 1
+      },
+      "sample_rate": 48000,
+      "song": {
+        "approved_lyrics": {
+          "approved_at": "2026-11-07T12:00:00Z",
+          "language": "en",
+          "source": "written",
+          "text": "[verse]\nLa la la"
+        },
+        "asr_transcripts": [],
+        "base_rev": null,
+        "candidate_count": 2,
+        "content_sha256": "6811dc6873fb7560ac8b3dba311ea0b4e65d379f59244e97ed1edc825d674631",
+        "controls": {
+          "duration_s": {
+            "observed": [],
+            "requested": 60,
+            "support": []
+          },
+          "exclude_styles": {
+            "observed": [],
+            "requested": [],
+            "support": []
+          },
+          "style": {
+            "observed": [],
+            "requested": "plain test song",
+            "support": []
+          },
+          "vocal_mode": {
+            "observed": [],
+            "requested": "vocal",
+            "support": []
+          }
+        },
+        "created_at": "2026-11-07T12:00:00Z",
+        "form": {
+          "sections": [
+            {
+              "bars": 1,
+              "id": "s1",
+              "name": "intro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            },
+            {
+              "bars": 4,
+              "id": "s2",
+              "name": "verse",
+              "phrase_ids": [
+                "ph1",
+                "ph2"
+              ],
+              "repeats": 1,
+              "section_kind": "vocal"
+            },
+            {
+              "bars": 2,
+              "id": "s3",
+              "name": "outro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            }
+          ]
+        },
+        "kind": "song-spec",
+        "larger_n_budget": null,
+        "melody": {
+          "melody_id": "mel_case",
+          "rev": 1,
+          "tempo_map_rev": 1
+        },
+        "project_id": "prj_case",
+        "references": [],
+        "render_routes": {
+          "mode": "auto",
+          "routes": []
+        },
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "song_id": "song_case",
+        "validation": {
+          "conflicts": [],
+          "unsupported_by_profile": []
+        }
+      }
+    },
+    {
+      "derivation": "With only ph2 placed, n5 [5760, 8640) starts before ph2's start 7680.",
+      "expected": {
+        "refused": {
+          "code": "note_crosses_phrase_edge",
+          "note_id": "n5",
+          "phrase_id": "ph2",
+          "section_id": "s2"
+        }
+      },
+      "melody": {
+        "base_rev": null,
+        "content_sha256": "355e7fb2888deb88e8ab66b8a5eca040276c1d0f163d2be726e26e1f0e4ad63d",
+        "created_at": "2026-11-07T12:00:00Z",
+        "key": {
+          "mode": "major",
+          "tonic": "C"
+        },
+        "kind": "melody-spec",
+        "melody_id": "mel_case",
+        "notes": [
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n1",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 2880,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n2",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 3360,
+            "velocity": 80
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n3",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 3840,
+            "velocity": 100
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n4",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 4800,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 2880,
+            "id": "n5",
+            "origin": "midi_file",
+            "pitch": 72,
+            "start_tick": 5760,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n6",
+            "origin": "midi_file",
+            "pitch": 71,
+            "start_tick": 7680,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n7",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 8960,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n8",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 10240,
+            "velocity": 90
+          }
+        ],
+        "phrases": [
+          {
+            "end_tick": 7680,
+            "id": "ph1",
+            "name": "pickup line",
+            "start_tick": 2880
+          },
+          {
+            "end_tick": 11520,
+            "id": "ph2",
+            "name": "triplet answer",
+            "start_tick": 7680
+          }
+        ],
+        "ppq": 960,
+        "project_id": "prj_case",
+        "quantize": null,
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "source": {
+          "assembled_from": null,
+          "capture_sha256": "0017589b0173c7a3d8d0285fc35383271945ff1b97110fa159339a9bb78d5787",
+          "seed_kind": "midi_file",
+          "transcription": null
+        },
+        "spec_kind": "melody",
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            }
+          ],
+          "rev": 1,
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "note crosses a phrase start",
+      "output": {
+        "base_rev": null,
+        "created_at": "2026-11-07T12:05:00Z",
+        "melody_id": "mel_case_asm",
+        "rev": 1,
+        "tempo_map_rev": 1
+      },
+      "sample_rate": 48000,
+      "song": {
+        "approved_lyrics": {
+          "approved_at": "2026-11-07T12:00:00Z",
+          "language": "en",
+          "source": "written",
+          "text": "[verse]\nLa la la"
+        },
+        "asr_transcripts": [],
+        "base_rev": null,
+        "candidate_count": 2,
+        "content_sha256": "d4a35b73f8ec9a86a933da7d080027227cd31757043a7042e47c5da129bd9e90",
+        "controls": {
+          "duration_s": {
+            "observed": [],
+            "requested": 60,
+            "support": []
+          },
+          "exclude_styles": {
+            "observed": [],
+            "requested": [],
+            "support": []
+          },
+          "style": {
+            "observed": [],
+            "requested": "plain test song",
+            "support": []
+          },
+          "vocal_mode": {
+            "observed": [],
+            "requested": "vocal",
+            "support": []
+          }
+        },
+        "created_at": "2026-11-07T12:00:00Z",
+        "form": {
+          "sections": [
+            {
+              "bars": 1,
+              "id": "s1",
+              "name": "intro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            },
+            {
+              "bars": 4,
+              "id": "s2",
+              "name": "verse",
+              "phrase_ids": [
+                "ph2"
+              ],
+              "repeats": 1,
+              "section_kind": "vocal"
+            },
+            {
+              "bars": 2,
+              "id": "s3",
+              "name": "outro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            }
+          ]
+        },
+        "kind": "song-spec",
+        "larger_n_budget": null,
+        "melody": {
+          "melody_id": "mel_case",
+          "rev": 1,
+          "tempo_map_rev": 1
+        },
+        "project_id": "prj_case",
+        "references": [],
+        "render_routes": {
+          "mode": "auto",
+          "routes": []
+        },
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "song_id": "song_case",
+        "validation": {
+          "conflicts": [],
+          "unsupported_by_profile": []
+        }
+      }
+    },
+    {
+      "derivation": "ph1 needs 2 bars and ph2 1: 3 bars in a 2-bar verse; nothing is truncated.",
+      "expected": {
+        "refused": {
+          "code": "phrase_overflow",
+          "note_id": null,
+          "phrase_id": "ph2",
+          "section_id": "s2"
+        }
+      },
+      "melody": {
+        "base_rev": null,
+        "content_sha256": "953a47770bf45e053c3350fab1a49ee5f4f3d33b48cba04d5312fd6305a7bbc1",
+        "created_at": "2026-11-07T12:00:00Z",
+        "key": {
+          "mode": "major",
+          "tonic": "C"
+        },
+        "kind": "melody-spec",
+        "melody_id": "mel_case",
+        "notes": [
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n1",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 2880,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n2",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 3360,
+            "velocity": 80
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n3",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 3840,
+            "velocity": 100
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n4",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 4800,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1920,
+            "id": "n5",
+            "origin": "midi_file",
+            "pitch": 72,
+            "start_tick": 5760,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n6",
+            "origin": "midi_file",
+            "pitch": 71,
+            "start_tick": 7680,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n7",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 8960,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n8",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 10240,
+            "velocity": 90
+          }
+        ],
+        "phrases": [
+          {
+            "end_tick": 7680,
+            "id": "ph1",
+            "name": "pickup line",
+            "start_tick": 2880
+          },
+          {
+            "end_tick": 11520,
+            "id": "ph2",
+            "name": "triplet answer",
+            "start_tick": 7680
+          }
+        ],
+        "ppq": 960,
+        "project_id": "prj_case",
+        "quantize": null,
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "source": {
+          "assembled_from": null,
+          "capture_sha256": "0017589b0173c7a3d8d0285fc35383271945ff1b97110fa159339a9bb78d5787",
+          "seed_kind": "midi_file",
+          "transcription": null
+        },
+        "spec_kind": "melody",
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            }
+          ],
+          "rev": 1,
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "phrases overflow their bars",
+      "output": {
+        "base_rev": null,
+        "created_at": "2026-11-07T12:05:00Z",
+        "melody_id": "mel_case_asm",
+        "rev": 1,
+        "tempo_map_rev": 1
+      },
+      "sample_rate": 48000,
+      "song": {
+        "approved_lyrics": {
+          "approved_at": "2026-11-07T12:00:00Z",
+          "language": "en",
+          "source": "written",
+          "text": "[verse]\nLa la la"
+        },
+        "asr_transcripts": [],
+        "base_rev": null,
+        "candidate_count": 2,
+        "content_sha256": "de8e0ff8010f486801b28d81c15507ae1f53cf6662c84ee360ee15768d618298",
+        "controls": {
+          "duration_s": {
+            "observed": [],
+            "requested": 60,
+            "support": []
+          },
+          "exclude_styles": {
+            "observed": [],
+            "requested": [],
+            "support": []
+          },
+          "style": {
+            "observed": [],
+            "requested": "plain test song",
+            "support": []
+          },
+          "vocal_mode": {
+            "observed": [],
+            "requested": "vocal",
+            "support": []
+          }
+        },
+        "created_at": "2026-11-07T12:00:00Z",
+        "form": {
+          "sections": [
+            {
+              "bars": 1,
+              "id": "s1",
+              "name": "intro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            },
+            {
+              "bars": 2,
+              "id": "s2",
+              "name": "verse",
+              "phrase_ids": [
+                "ph1",
+                "ph2"
+              ],
+              "repeats": 1,
+              "section_kind": "vocal"
+            },
+            {
+              "bars": 2,
+              "id": "s3",
+              "name": "outro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            }
+          ]
+        },
+        "kind": "song-spec",
+        "larger_n_budget": null,
+        "melody": {
+          "melody_id": "mel_case",
+          "rev": 1,
+          "tempo_map_rev": 1
+        },
+        "project_id": "prj_case",
+        "references": [],
+        "render_routes": {
+          "mode": "auto",
+          "routes": []
+        },
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "song_id": "song_case",
+        "validation": {
+          "conflicts": [],
+          "unsupported_by_profile": []
+        }
+      }
+    },
+    {
+      "derivation": "The verse repeat is 4 x 3840 = 15360 ticks; a chord at 15360 lies outside it.",
+      "expected": {
+        "refused": {
+          "code": "chord_symbol_misplaced",
+          "note_id": null,
+          "phrase_id": null,
+          "section_id": "s2"
+        }
+      },
+      "melody": {
+        "base_rev": null,
+        "content_sha256": "953a47770bf45e053c3350fab1a49ee5f4f3d33b48cba04d5312fd6305a7bbc1",
+        "created_at": "2026-11-07T12:00:00Z",
+        "key": {
+          "mode": "major",
+          "tonic": "C"
+        },
+        "kind": "melody-spec",
+        "melody_id": "mel_case",
+        "notes": [
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n1",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 2880,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n2",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 3360,
+            "velocity": 80
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n3",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 3840,
+            "velocity": 100
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n4",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 4800,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1920,
+            "id": "n5",
+            "origin": "midi_file",
+            "pitch": 72,
+            "start_tick": 5760,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n6",
+            "origin": "midi_file",
+            "pitch": 71,
+            "start_tick": 7680,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n7",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 8960,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n8",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 10240,
+            "velocity": 90
+          }
+        ],
+        "phrases": [
+          {
+            "end_tick": 7680,
+            "id": "ph1",
+            "name": "pickup line",
+            "start_tick": 2880
+          },
+          {
+            "end_tick": 11520,
+            "id": "ph2",
+            "name": "triplet answer",
+            "start_tick": 7680
+          }
+        ],
+        "ppq": 960,
+        "project_id": "prj_case",
+        "quantize": null,
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "source": {
+          "assembled_from": null,
+          "capture_sha256": "0017589b0173c7a3d8d0285fc35383271945ff1b97110fa159339a9bb78d5787",
+          "seed_kind": "midi_file",
+          "transcription": null
+        },
+        "spec_kind": "melody",
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            }
+          ],
+          "rev": 1,
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "chord symbol beyond its repeat",
+      "output": {
+        "base_rev": null,
+        "created_at": "2026-11-07T12:05:00Z",
+        "melody_id": "mel_case_asm",
+        "rev": 1,
+        "tempo_map_rev": 1
+      },
+      "sample_rate": 48000,
+      "song": {
+        "approved_lyrics": {
+          "approved_at": "2026-11-07T12:00:00Z",
+          "language": "en",
+          "source": "written",
+          "text": "[verse]\nLa la la"
+        },
+        "asr_transcripts": [],
+        "base_rev": null,
+        "candidate_count": 2,
+        "content_sha256": "cc10bb6177efdfd37362dbbbd7da5298a369a3d524aa5fd2c8dcffa937c5f66c",
+        "controls": {
+          "duration_s": {
+            "observed": [],
+            "requested": 60,
+            "support": []
+          },
+          "exclude_styles": {
+            "observed": [],
+            "requested": [],
+            "support": []
+          },
+          "style": {
+            "observed": [],
+            "requested": "plain test song",
+            "support": []
+          },
+          "vocal_mode": {
+            "observed": [],
+            "requested": "vocal",
+            "support": []
+          }
+        },
+        "created_at": "2026-11-07T12:00:00Z",
+        "form": {
+          "sections": [
+            {
+              "bars": 1,
+              "id": "s1",
+              "name": "intro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            },
+            {
+              "bars": 4,
+              "chord_symbols": [
+                {
+                  "offset_ticks": 0,
+                  "symbol": "G"
+                },
+                {
+                  "offset_ticks": 15360,
+                  "symbol": "D7"
+                }
+              ],
+              "id": "s2",
+              "name": "verse",
+              "phrase_ids": [
+                "ph1",
+                "ph2"
+              ],
+              "repeats": 1,
+              "section_kind": "vocal"
+            },
+            {
+              "bars": 2,
+              "id": "s3",
+              "name": "outro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            }
+          ]
+        },
+        "kind": "song-spec",
+        "larger_n_budget": null,
+        "melody": {
+          "melody_id": "mel_case",
+          "rev": 1,
+          "tempo_map_rev": 1
+        },
+        "project_id": "prj_case",
+        "references": [],
+        "render_routes": {
+          "mode": "auto",
+          "routes": []
+        },
+        "rev": 1,
+        "schemaVersion": "1.1.0",
+        "song_id": "song_case",
+        "validation": {
+          "conflicts": [],
+          "unsupported_by_profile": []
+        }
+      }
+    },
+    {
+      "derivation": "Offsets 3840 then 0 do not increase.",
+      "expected": {
+        "refused": {
+          "code": "chord_symbol_misplaced",
+          "note_id": null,
+          "phrase_id": null,
+          "section_id": "s2"
+        }
+      },
+      "melody": {
+        "base_rev": null,
+        "content_sha256": "953a47770bf45e053c3350fab1a49ee5f4f3d33b48cba04d5312fd6305a7bbc1",
+        "created_at": "2026-11-07T12:00:00Z",
+        "key": {
+          "mode": "major",
+          "tonic": "C"
+        },
+        "kind": "melody-spec",
+        "melody_id": "mel_case",
+        "notes": [
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n1",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 2880,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 480,
+            "id": "n2",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 3360,
+            "velocity": 80
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n3",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 3840,
+            "velocity": 100
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n4",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 4800,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1920,
+            "id": "n5",
+            "origin": "midi_file",
+            "pitch": 72,
+            "start_tick": 5760,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n6",
+            "origin": "midi_file",
+            "pitch": 71,
+            "start_tick": 7680,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n7",
+            "origin": "midi_file",
+            "pitch": 69,
+            "start_tick": 8960,
+            "velocity": 90
+          },
+          {
+            "confidence": null,
+            "duration_ticks": 1280,
+            "id": "n8",
+            "origin": "midi_file",
+            "pitch": 67,
+            "start_tick": 10240,
+            "velocity": 90
+          }
+        ],
+        "phrases": [
+          {
+            "end_tick": 7680,
+            "id": "ph1",
+            "name": "pickup line",
+            "start_tick": 2880
+          },
+          {
+            "end_tick": 11520,
+            "id": "ph2",
+            "name": "triplet answer",
+            "start_tick": 7680
+          }
+        ],
+        "ppq": 960,
+        "project_id": "prj_case",
+        "quantize": null,
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "source": {
+          "assembled_from": null,
+          "capture_sha256": "0017589b0173c7a3d8d0285fc35383271945ff1b97110fa159339a9bb78d5787",
+          "seed_kind": "midi_file",
+          "transcription": null
+        },
+        "spec_kind": "melody",
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            }
+          ],
+          "rev": 1,
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "chord symbols out of order",
+      "output": {
+        "base_rev": null,
+        "created_at": "2026-11-07T12:05:00Z",
+        "melody_id": "mel_case_asm",
+        "rev": 1,
+        "tempo_map_rev": 1
+      },
+      "sample_rate": 48000,
+      "song": {
+        "approved_lyrics": {
+          "approved_at": "2026-11-07T12:00:00Z",
+          "language": "en",
+          "source": "written",
+          "text": "[verse]\nLa la la"
+        },
+        "asr_transcripts": [],
+        "base_rev": null,
+        "candidate_count": 2,
+        "content_sha256": "2e7abdbce72106e299c6366ea7c7257d265df8ce93a6ea606bd450b048bb20c2",
+        "controls": {
+          "duration_s": {
+            "observed": [],
+            "requested": 60,
+            "support": []
+          },
+          "exclude_styles": {
+            "observed": [],
+            "requested": [],
+            "support": []
+          },
+          "style": {
+            "observed": [],
+            "requested": "plain test song",
+            "support": []
+          },
+          "vocal_mode": {
+            "observed": [],
+            "requested": "vocal",
+            "support": []
+          }
+        },
+        "created_at": "2026-11-07T12:00:00Z",
+        "form": {
+          "sections": [
+            {
+              "bars": 1,
+              "id": "s1",
+              "name": "intro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            },
+            {
+              "bars": 4,
+              "chord_symbols": [
+                {
+                  "offset_ticks": 3840,
+                  "symbol": "C"
+                },
+                {
+                  "offset_ticks": 0,
+                  "symbol": "G"
+                }
+              ],
+              "id": "s2",
+              "name": "verse",
+              "phrase_ids": [
+                "ph1",
+                "ph2"
+              ],
+              "repeats": 1,
+              "section_kind": "vocal"
+            },
+            {
+              "bars": 2,
+              "id": "s3",
+              "name": "outro",
+              "phrase_ids": [],
+              "repeats": 1,
+              "section_kind": "instrumental"
+            }
+          ]
+        },
+        "kind": "song-spec",
+        "larger_n_budget": null,
+        "melody": {
+          "melody_id": "mel_case",
+          "rev": 1,
+          "tempo_map_rev": 1
+        },
+        "project_id": "prj_case",
+        "references": [],
+        "render_routes": {
+          "mode": "auto",
+          "routes": []
+        },
+        "rev": 1,
+        "schemaVersion": "1.1.0",
+        "song_id": "song_case",
+        "validation": {
+          "conflicts": [],
+          "unsupported_by_profile": []
+        }
+      }
+    }
+  ],
+  "kind": "fixture.songform",
+  "schemaVersion": "1.0.0"
+}

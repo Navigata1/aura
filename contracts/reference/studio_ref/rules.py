@@ -13,7 +13,7 @@ from datetime import datetime, timedelta
 from decimal import Decimal
 from typing import Callable
 
-from . import audition, ledger
+from . import audition, ledger, timemodel
 from .canonical import ceil_cents, float_paths, self_hash, sha256_hex, sha_of, usd_text
 from .world import CANDIDATE_ORIGINS, GENERATIVE_ORIGINS, LANES, PROPAGATING, World, identity
 
@@ -893,7 +893,7 @@ def _release_blockers(w: World) -> list[Finding]:
     return out
 
 
-@rule("lane.record_eligible", "A transcribed MelodySpec carries its transcriber's lanes, and every revision built on it (corrections, assembly) inherits them; no project holds, and no job reads, a melody revision outside its lanes.")
+@rule("lane.record_eligible", "A transcribed MelodySpec carries its transcriber's lanes, and every revision built on it (corrections, assembly) inherits them; an assembled revision carries its source revision's capture and transcription exactly (a 1.0 record may leave them null, inheriting by reference); no project holds, and no job reads, a melody revision outside its lanes.")
 def _record_eligible(w: World) -> list[Finding]:
     out = []
     memo: dict[tuple, set] = {}
@@ -921,6 +921,13 @@ def _record_eligible(w: World) -> list[Finding]:
             declared = w.component_lanes(w.profiles[tr["profile_id"]]["components"])
             if set(tr["eligible_lanes"]) != declared:
                 out.append((at(m), f"transcription lanes {sorted(tr['eligible_lanes'])} != its transcriber's {sorted(declared)}"))
+        af = m["source"]["assembled_from"]
+        origin = w.melodies.get((af["melody"]["melody_id"], af["melody"]["rev"])) if af is not None else None
+        legacy = m["schemaVersion"].startswith("1.0.")
+        for field in ("capture_sha256", "transcription"):
+            mine = m["source"][field]
+            if origin is not None and mine != origin["source"][field] and not (legacy and mine is None):
+                out.append((at(m), f"{field} is not inherited from {af['melody']['melody_id']} rev {af['melody']['rev']}"))
         lanes = lanes_of_rev(m)
         by_sha[m["content_sha256"]] = (m, lanes)
         project = w.ids["project"].get(m["project_id"])
@@ -1032,7 +1039,7 @@ def _revision_chain(w: World) -> list[Finding]:
     return out
 
 
-@rule("melody.wellformed", "Tempo and meter start at tick 0 and strictly increase; phrases have positive length; note ids are unique; the seed capture and transcription job exist.")
+@rule("melody.wellformed", "Tempo and meter start at tick 0 and strictly increase, and the meter changes only on a bar line; phrases have positive length; note ids are unique; the seed capture and transcription job exist.")
 def _melody_wellformed(w: World) -> list[Finding]:
     out = []
     for m in w.by_kind.get("melody-spec", []):
@@ -1040,6 +1047,9 @@ def _melody_wellformed(w: World) -> list[Finding]:
             ticks = [s["tick"] for s in m["tempo_map"][name]]
             if ticks[0] != 0 or any(b <= a for a, b in zip(ticks, ticks[1:])):
                 out.append((at(m), f"{name} segments must start at 0 and strictly increase"))
+        meter = m["tempo_map"]["meter"]
+        if any((b["tick"] - a["tick"]) % timemodel.bar_ticks(a["numerator"], a["denominator"]) for a, b in zip(meter, meter[1:])):
+            out.append((at(m), "a meter change lands inside a bar of the meter before it"))
         if any(p["end_tick"] <= p["start_tick"] for p in m["phrases"]):
             out.append((at(m), "a phrase ends before it starts"))
         ids = [n["id"] for n in m["notes"]] + [p["id"] for p in m["phrases"]]
@@ -1052,7 +1062,9 @@ def _melody_wellformed(w: World) -> list[Finding]:
                 out.append((at(m), "the seed capture is not a stored human recording"))
         if src["transcription"] is not None:
             job = w.ids["job"].get(src["transcription"]["job_id"])
-            first = w.melodies.get((m["melody_id"], 1))
+            # An assembled revision carries its source's transcription, which output revision 1 of the source melody.
+            lineage = src["assembled_from"]["melody"]["melody_id"] if src["assembled_from"] else m["melody_id"]
+            first = w.melodies.get((lineage, 1))
             if job is None or job["job_kind"] != "transcribe" or first is None \
                     or first["content_sha256"] not in {o["sha256"] for o in job["outputs"]}:
                 out.append((at(m), "the transcription job is missing or did not output revision 1 of this melody"))
