@@ -1,59 +1,62 @@
 {
-  "version": 1,
-  "scope": "vector-kinds and added fields",
+  "version": 2,
+  "scope": "vector-kinds, record fields and added fields",
   "consumers": {
-    "fixture.tempo": [
-      "contract-completion",
-      "contracts-codegen"
-    ],
-    "fixture.status": [
-      "contract-completion",
-      "registry"
-    ],
-    "fixture.recommend": [
-      "contract-completion",
-      "compute-sessions"
-    ],
-    "fixture.ledger": [
-      "contract-completion",
-      "paid-run-gate"
-    ],
-    "fixture.audition": [
-      "contract-completion",
-      "audition"
-    ],
-    "fixture.songform": [
-      "contract-completion",
-      "song-spec",
-      "guide",
-      "abc-emission",
-      "ace-routes"
-    ],
-    "fixture.meter": [
-      "contract-completion",
-      "contracts-codegen",
-      "song-spec",
-      "piano-roll",
-      "abc-emission",
-      "timeline",
-      "midi-in-out"
-    ]
+    "fixture.tempo": ["contract-completion", "contracts-codegen"],
+    "fixture.status": ["contract-completion", "registry"],
+    "fixture.recommend": ["contract-completion", "compute-sessions"],
+    "fixture.ledger": ["contract-completion", "paid-run-gate"],
+    "fixture.audition": ["contract-completion", "audition"],
+    "fixture.binding": ["contract-completion", "C02", "eval-prereg", "hum-benchmark-harness", "registry"],
+    "fixture.songform": ["contract-completion", "song-spec", "guide", "abc-emission", "ace-routes"],
+    "fixture.meter": ["contract-completion", "contracts-codegen", "song-spec", "piano-roll", "abc-emission", "timeline", "midi-in-out"]
   },
   "fields": {
-    "melody-spec.schema.json#/properties/form": [
-      "contract-completion",
-      "song-spec",
-      "guide",
-      "abc-emission",
-      "midi-in-out",
-      "export",
-      "ace-routes",
-      "timeline"
-    ],
-    "song-spec.schema.json#/properties/form/properties/sections/items/properties/chord_symbols": [
-      "contract-completion",
-      "chord-symbols",
-      "abc-emission"
-    ]
-  }
+    "melody-spec.schema.json#/properties/form": ["contract-completion", "song-spec", "guide", "abc-emission", "midi-in-out", "export", "ace-routes", "timeline"],
+    "song-spec.schema.json#/properties/form/properties/sections/items/properties/chord_symbols": ["contract-completion", "chord-symbols", "abc-emission"]
+  },
+  "records": {
+    "benchmark-prereg": {
+      "id": ["C02", "eval-prereg", "hum-benchmark-harness", "hum-benchmark-on-jon"],
+      "prereg_sha256": ["C02", "eval-prereg", "hum-benchmark-harness", "hum-benchmark-on-jon", "registry"],
+      "set": ["C02", "eval-prereg", "hum-benchmark-harness", "hum-benchmark-on-jon", "registry"],
+      "eval_set_id": ["C02", "eval-prereg", "eval-auditions"],
+      "subjects": ["C02", "eval-prereg", "hum-benchmark-harness", "hum-benchmark-on-jon", "registry"],
+      "cases": ["C02", "eval-prereg", "hum-benchmark-harness", "hum-benchmark-on-jon", "eval-auditions"],
+      "asset_hashes": ["C02", "eval-prereg", "hum-benchmark-harness", "hum-benchmark-on-jon"],
+      "budgets": ["C02", "eval-prereg", "hum-benchmark-harness", "hum-benchmark-on-jon", "eval-auditions"],
+      "burst_run_ceiling_usd": ["C02", "eval-prereg"],
+      "listening_quota": ["C02", "eval-prereg", "hum-benchmark-harness", "hum-benchmark-on-jon", "eval-auditions"],
+      "coverage": ["C02", "eval-auditions", "hum-benchmark-harness"],
+      "protocol": ["C02", "eval-prereg", "hum-benchmark-harness", "hum-benchmark-on-jon", "eval-auditions"],
+      "thresholds": ["C02", "eval-prereg", "hum-benchmark-harness", "hum-benchmark-on-jon", "eval-auditions"],
+      "decision": ["C02", "hum-benchmark-harness", "hum-benchmark-on-jon"],
+      "gate_owner": ["C02", "eval-prereg", "hum-benchmark-harness", "hum-benchmark-on-jon"],
+      "committed_at": ["C02", "eval-prereg", "hum-benchmark-harness", "hum-benchmark-on-jon"]
+    },
+    "benchmark-membership": {
+      "id": ["C02", "eval-auditions", "hum-benchmark-harness"],
+      "set": ["C02", "eval-auditions", "hum-benchmark-harness"],
+      "prereg_sha256": ["C02", "eval-auditions", "hum-benchmark-harness"],
+      "cases": ["C02", "eval-auditions", "hum-benchmark-harness"]
+    },
+    "evidence-binding": {
+      "id": ["C02", "registry", "eval-auditions", "hum-benchmark-harness"],
+      "set": ["C02", "registry", "eval-auditions", "hum-benchmark-harness"],
+      "evidence_id": ["C02", "registry", "eval-auditions", "hum-benchmark-harness"],
+      "subject": ["C02", "registry", "eval-auditions", "hum-benchmark-harness"],
+      "prereg_sha256": ["C02", "registry", "eval-auditions", "hum-benchmark-harness"],
+      "membership_id": ["C02", "registry", "eval-auditions", "hum-benchmark-harness"]
+    }
+  },
+  "pending": [
+    "approval", "artifact", "audition", "burst-run", "candidate", "capability-registry",
+    "component-register", "compute-profile", "compute-tiers", "correction-log", "edit-operation", "engine-profile-registry",
+    "eval-brief", "eval-set", "event", "evidence", "export-manifest", "generation-request",
+    "hardware-snapshot", "import-terms", "job", "keeper", "lane-policy", "ledger-entry",
+    "license-acceptance", "melody-spec", "prereg", "product", "project", "provenance-sidecar",
+    "quote", "reference", "refusal", "reveal", "risk-acceptance", "session",
+    "song-spec", "store", "task-request", "task-status", "timeline", "verdict",
+    "worker-describe", "worker-health"
+  ]
 }

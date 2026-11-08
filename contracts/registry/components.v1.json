@@ -424,7 +424,7 @@
       "gated": false,
       "id": "basic-pitch",
       "name": "Spotify Basic Pitch",
-      "notes": "Last release 0.4.0 (2024-08-16). Works best on one instrument; trained partly on iKala singing. No hum benchmark. Only humming figure: onset+pitch F1 0.434 octave-invariant / 0.268 octave-aware, no offsets (arXiv 2410.05455, course project, COMMUNITY). Main has unreleased 2025-11 fixes (#179). T03 license verification 2026-11-07: version 0.4.0 (tag v0.4.0, commit 9991303); LICENSE SHA-256 929c910bae2152fa87199a5d0660e09263419b7eee6d4b301d05ee2aaf211c37 (Apache-2.0) and NOTICE SHA-256 b810e55c0e3b520fabb45fc2ccc74880187bf84e309971968541cc812dcde905, which a redistribution carries; PyPI 0.4.0 declares no license. The bundled models sit under basic_pitch/saved_models/icassp_2022 (nmp.onnx git blob c30e5f9438e798604b7177aa26be1fe64482f767). Training datasets, the input to T54 (Table 1 of arXiv 2203.09893v2, PDF SHA-256 63040c77ce170c4c353f287ee5b777a57615098d799e998ec618a4f5de7d5b36, and the v0.4.0 data scripts): GuitarSet (CC BY 4.0), MAESTRO (CC BY-NC-SA 4.0), Slakh2100 redux (CC BY 4.0), iKala (end-user agreement: academic purposes only, no profit; the official host no longer resolves, so the archived copy is cited) and the MedleyDB pitch-tracking subset (CC BY-NC-SA 4.0, non-commercial research only). Molina and Phenicx were test-only. The v0.4.0 data README calls its scripts a selection of the datasets used to train the original model. See docs/research/licenses/plumbing-sources-2026-11-07.json.",
+      "notes": "Last release 0.4.0 (2024-08-16). Works best on one instrument; trained partly on iKala singing. No hum benchmark. Only humming figure: onset+pitch F1 0.434 octave-invariant / 0.268 octave-aware, no offsets (arXiv 2410.05455, course project, COMMUNITY). Main has unreleased 2025-11 fixes (#179). T03 license verification 2026-11-07: version 0.4.0 (tag v0.4.0, commit 9991303); LICENSE SHA-256 929c910bae2152fa87199a5d0660e09263419b7eee6d4b301d05ee2aaf211c37 (Apache-2.0) and NOTICE SHA-256 b810e55c0e3b520fabb45fc2ccc74880187bf84e309971968541cc812dcde905, which a redistribution carries; PyPI 0.4.0 declares no license. The bundled models sit under basic_pitch/saved_models/icassp_2022 (nmp.onnx git blob c30e5f9438e798604b7177aa26be1fe64482f767). Training datasets, the input to T54 (Table 1 of arXiv 2203.09893v2, PDF SHA-256 63040c77ce170c4c353f287ee5b777a57615098d799e998ec618a4f5de7d5b36, and the v0.4.0 data scripts): GuitarSet (CC BY 4.0), MAESTRO (CC BY-NC-SA 4.0), Slakh2100 redux (CC BY 4.0), iKala (end-user agreement: academic purposes only, no profit; the official host no longer resolves, so the archived copy is cited) and the MedleyDB pitch-tracking subset (CC BY-NC-SA 4.0, non-commercial research only). Molina and Phenicx were test-only. The v0.4.0 data README calls its scripts a selection of the datasets used to train the original model. See docs/research/licenses/plumbing-sources-2026-11-07.json. T54 provenance review 2026-11-08 (prv_basic-pitch-0.4.0, docs/research/licenses/provenance-reviews/basic-pitch-0.4.0.json): the TensorFlow SavedModel has one commit (eea661f, 2022-05-12) and the ONNX, TFLite and CoreML files are 2024 serializations of it; the v0.4.0 sampling weights cover the same five training sets (MAESTRO 5; GuitarSet, MedleyDB-Pitch, iKala and Slakh 2 each); the paper's noise, equalization and reverb augmentation names no source and no v0.4.0 module applies it. Verdict: fail for llc, with permissive_label_nc_data for the checked datasets and unverified_training_data kept for the unidentified augmentation inputs. Interpretation, not legal advice.",
       "obligations": [],
       "output_terms": "None",
       "primary_sources": [
@@ -441,18 +441,21 @@
         "https://arxiv.org/abs/2410.05455",
         "https://github.com/spotify/basic-pitch",
         "https://github.com/spotify/basic-pitch/issues/194",
-        "https://github.com/spotify/basic-pitch/issues/203"
+        "https://github.com/spotify/basic-pitch/issues/203",
+        "https://arxiv.org/pdf/2203.09893v2",
+        "https://raw.githubusercontent.com/spotify/basic-pitch/9991303bba609a3b93089d13ec80d1d495083596/basic_pitch/constants.py"
       ],
       "process_boundary_required": false,
-      "redistribution_blocker": "None",
+      "redistribution_blocker": "Training-data provenance (CC BY-NC-SA and academic-only datasets, unidentified augmentation sources) behind an Apache-2.0-labelled model",
       "release_blockers": [
+        "permissive_label_nc_data",
         "unverified_training_data"
       ],
       "role": "Hum/stem to MIDI with pitch bends",
       "test_only": false,
       "v1_path": true,
       "verdict": "adopt-v1",
-      "verdict_condition": "Provisional: a local hum benchmark (Basic Pitch vs SwiftF0.segment_notes vs pYIN+HMM, mir_eval COn/COnP/COnPOff) decides the A4 transcriber. LLC use waits on T54: three of its five training datasets carry non-commercial or academic-only terms.",
+      "verdict_condition": "Provisional: a local hum benchmark (Basic Pitch vs SwiftF0.segment_notes vs pYIN+HMM, mir_eval COn/COnP/COnPOff) decides the A4 transcriber. Individual and research: T54's provenance review prv_basic-pitch-0.4.0 failed llc eligibility. MAESTRO and the MedleyDB pitch-tracking subset (CC BY-NC-SA 4.0) and iKala (academic use only) bar commercial use, and its augmentation sources are unidentified. Interpretation, not legal advice.",
       "verification_status": "confirmed",
       "weights_license": "Apache-2.0 (bundled TF SavedModel, CoreML, TFLite, ONNX)"
     },
@@ -3784,7 +3787,7 @@
       "gated": false,
       "id": "swiftf0",
       "name": "SwiftF0 0.3.0 (lars76)",
-      "notes": "Frame-level pitch F1@50c on Vocadito 0.847 (RMVPE 0.862, pYIN 0.653) in a benchmark run by SwiftF0's own author (VENDOR). LLC use pending a provenance review. T03 license verification 2026-11-07: version 0.3.0 (tag v0.3.0, commit d1ba77f); LICENSE SHA-256 5f4711c748cf616e894fbab28144ee74f1650dfe1bbd6801c44f11e054508c18 (MIT); PyPI 0.3.0 declares MIT and requires onnxruntime and numpy. The package bundles swift_f0/model.onnx (135,090 bytes, git blob 3619f9ab7ad7c852b995550c74d971be236225d7). The training README (lars76/swift-f0-training commit a3095d2, SHA-256 3633675c5402159ef9c1b7b7b8276594dc6903a887ecefafea983e5796e69f10) and the lars1234/pitch-benchmark dataset card (revision e98642f, SHA-256 cb67633ffe1602342ab560275426094c49fb5dfe4aa8400efc2fe5fbbbb460cc) state CC BY-NC-SA 4.0 for research use: the training-data caveat stands until T54. See docs/research/licenses/plumbing-sources-2026-11-07.json.",
+      "notes": "Frame-level pitch F1@50c on Vocadito 0.847 (RMVPE 0.862, pYIN 0.653) in a benchmark run by SwiftF0's own author (VENDOR). LLC use failed T54's provenance review. T03 license verification 2026-11-07: version 0.3.0 (tag v0.3.0, commit d1ba77f); LICENSE SHA-256 5f4711c748cf616e894fbab28144ee74f1650dfe1bbd6801c44f11e054508c18 (MIT); PyPI 0.3.0 declares MIT and requires onnxruntime and numpy. The package bundles swift_f0/model.onnx (135,090 bytes, git blob 3619f9ab7ad7c852b995550c74d971be236225d7). The training README (lars76/swift-f0-training commit a3095d2, SHA-256 3633675c5402159ef9c1b7b7b8276594dc6903a887ecefafea983e5796e69f10) and the lars1234/pitch-benchmark dataset card (revision e98642f, SHA-256 cb67633ffe1602342ab560275426094c49fb5dfe4aa8400efc2fe5fbbbb460cc) state CC BY-NC-SA 4.0 for research use: the training-data caveat stood until T54. See docs/research/licenses/plumbing-sources-2026-11-07.json. T54 provenance review 2026-11-08 (prv_swiftf0-0.3.0, docs/research/licenses/provenance-reviews/swiftf0-0.3.0.json): the bundled model is the same git blob as runs/seed1/model.onnx of lars76/swift-f0-training at a3095d2, trained by its config.py on the pitch-benchmark train split: MDB-stem-synth (CC BY-NC 4.0), NSynth (CC BY 4.0), PTDB-TUG (ODbL 1.0), MOCHA-TIMIT (research, educational and individual use only) and CMU ARCTIC (any purpose), with augmentation pools from LibriSpeech (CC BY 4.0), MUSDB18 (educational use only), TAU Urban Acoustic Scenes 2019 (non-commercial only) and simulated RIRS_NOISES (Apache 2.0), plus generated coloured noise. Verdict: fail for llc. Interpretation, not legal advice.",
       "obligations": [],
       "output_terms": "None stated",
       "primary_sources": [
@@ -3794,7 +3797,14 @@
         "https://huggingface.co/datasets/lars1234/pitch-benchmark/blob/e98642fc2cb82e4dc201421b24f24c523989d344/README.md",
         "https://github.com/lars76/swift-f0",
         "https://github.com/lars76/swift-f0-training",
-        "https://github.com/lars76/pitch-benchmark"
+        "https://github.com/lars76/pitch-benchmark",
+        "https://raw.githubusercontent.com/lars76/swift-f0-training/a3095d23d79097ed7f5fad59d1cb2e2a826501a8/config.py",
+        "https://raw.githubusercontent.com/lars76/pitch-benchmark/6f21369afc8c7eb39f2f9548022ac9beb60e5c5a/prepare/README.md",
+        "https://raw.githubusercontent.com/lars76/pitch-benchmark/6f21369afc8c7eb39f2f9548022ac9beb60e5c5a/prepare/constants.py",
+        "https://zenodo.org/api/records/1481172",
+        "https://data.cstr.ed.ac.uk/mocha/LICENCE.txt",
+        "https://zenodo.org/api/records/1117372",
+        "https://zenodo.org/records/2589280/files/TAU-urban-acoustic-scenes-2019-development.doc.zip?download=1"
       ],
       "process_boundary_required": false,
       "redistribution_blocker": "Training-data provenance (CC BY-NC-SA dataset) behind an MIT-labelled model",
@@ -3805,7 +3815,7 @@
       "test_only": false,
       "v1_path": true,
       "verdict": "adopt-v1",
-      "verdict_condition": "Individual and research until T54's provenance review: the MIT-labelled bundled ONNX was trained on CC BY-NC-SA 4.0 data.",
+      "verdict_condition": "Individual and research: T54's provenance review prv_swiftf0-0.3.0 failed llc eligibility. The bundled ONNX was trained on the CC BY-NC-SA 4.0 pitch-benchmark train split, whose MDB-stem-synth, MOCHA-TIMIT, MUSDB18 and TAU Urban Acoustic Scenes 2019 sources bar commercial use. Interpretation, not legal advice.",
       "verification_status": "confirmed",
       "weights_license": "MIT-labelled bundled ONNX (14k params), trained on the author's CC BY-NC-SA research dataset (provenance caveat)"
     },
@@ -4700,7 +4710,7 @@
     },
     {
       "path": "scripts/registry/register_overlay.json",
-      "sha256": "73697e896bf8e14e00b5db9c5292611566296937740791e2be7875cb17661fd7"
+      "sha256": "c286b4da118f2f19d4c6518729c4d6441e7c56c68ad90e6b53da8cbfa94eadb3"
     }
   ],
   "kind": "component-register",

@@ -1,0 +1,283 @@
+{
+  "id": "prv_basic-pitch-0.4.0",
+  "kind": "training-data-provenance-review",
+  "component_id": "basic-pitch",
+  "ticket": "T54",
+  "reviewed_on": "2026-11-08",
+  "legal_label": "Interpretation, not legal advice.",
+  "question": "May the studio run this component in the llc lane, judged by the terms of every input its shipped model was trained on?",
+  "rule": "Pass only when every training input is identified and its terms, found in a primary source, permit commercial use. An input whose terms cannot be found fails the review as unverifiable.",
+  "component": "Spotify Basic Pitch 0.4.0 (spotify/basic-pitch, tag v0.4.0, commit 9991303), Apache-2.0 label on code and models",
+  "model": "basic_pitch/saved_models/icassp_2022. The TensorFlow SavedModel (saved_model.pb and its variables) has one commit, the initial public commit eea661f of 2022-05-12, the day arXiv v2 of the paper was posted. nmp.onnx (git blob c30e5f94), nmp.tflite and the CoreML package were added on 2024-02-27 as serialized copies of that model, by their commit messages.",
+  "verdict": "fail",
+  "reasoning": [
+    "Table 1 of the paper (arXiv 2203.09893v2) trains the model on GuitarSet, MAESTRO, Slakh (the de-duplicated redux version), iKala and the MedleyDB pitch-tracking subset; Molina and Phenicx are test sets only. The v0.4.0 training code samples the same five datasets (DATASET_SAMPLING_FREQUENCY).",
+    "Three of the five bar commercial use on their own terms: MAESTRO (CC BY-NC-SA 4.0), the MedleyDB pitch-tracking subset (non-commercial research use only, linked to CC BY-NC-SA 4.0) and iKala (an end-user agreement for academic purposes only, with no resale, trade or profit). GuitarSet and Slakh2100-redux are CC BY 4.0.",
+    "The paper also adds noise, equalization filters and reverb during training but names no source for the noise or the reverb, and none of the v0.4.0 code applies them. Those inputs are unverifiable, which on its own would fail the review.",
+    "Whether a trained model is adapted material of its training data is legally unsettled; ADR-0011 resolves that doubt toward the narrower lanes. The row stays in individual and research. It gains permissive_label_nc_data for the checked non-commercial datasets and keeps unverified_training_data for the unidentified augmentation inputs."
+  ],
+  "register": {
+    "allowed_lanes": [
+      "individual",
+      "research"
+    ],
+    "training_data_release_blockers": [
+      "permissive_label_nc_data",
+      "unverified_training_data"
+    ]
+  },
+  "training_inputs": [
+    {
+      "name": "GuitarSet 1.1.0",
+      "role": "training corpus",
+      "use": "648 training tracks (Table 1); sampling weight 2",
+      "listed_in": [
+        "paper-v2",
+        "train-constants",
+        "data-guitarset"
+      ],
+      "terms": {
+        "reading": "CC BY 4.0",
+        "commercial_use": "permitted",
+        "source": "terms-guitarset"
+      }
+    },
+    {
+      "name": "MAESTRO v2.0.0",
+      "role": "training corpus",
+      "use": "1,154 training performances (Table 1); sampling weight 5",
+      "listed_in": [
+        "paper-v2",
+        "train-constants",
+        "data-maestro"
+      ],
+      "terms": {
+        "reading": "CC BY-NC-SA 4.0",
+        "commercial_use": "not_permitted",
+        "source": "terms-maestro"
+      }
+    },
+    {
+      "name": "Slakh2100-redux",
+      "role": "training corpus",
+      "use": "1,590 training stems (Table 1); sampling weight 2",
+      "listed_in": [
+        "paper-v2",
+        "train-constants",
+        "data-slakh"
+      ],
+      "terms": {
+        "reading": "CC BY 4.0",
+        "commercial_use": "permitted",
+        "source": "terms-slakh"
+      }
+    },
+    {
+      "name": "iKala",
+      "role": "training corpus",
+      "use": "252 excerpts, isolated vocals (Table 1); sampling weight 2",
+      "listed_in": [
+        "paper-v2",
+        "train-constants",
+        "data-ikala"
+      ],
+      "terms": {
+        "reading": "end-user agreement: academic purposes only; no resale, trade or exploitation for profit; a one-year term",
+        "commercial_use": "not_permitted",
+        "source": "terms-ikala"
+      },
+      "note": "the official host no longer resolves, so the archived agreement is cited"
+    },
+    {
+      "name": "MedleyDB pitch-tracking subset",
+      "role": "training corpus",
+      "use": "103 stems (Table 1); sampling weight 2",
+      "listed_in": [
+        "paper-v2",
+        "train-constants",
+        "data-medleydb-pitch"
+      ],
+      "terms": {
+        "reading": "non-commercial research use only, under a Creative Commons Attribution-NonCommercial licence linked to CC BY-NC-SA 4.0; files restricted on request",
+        "commercial_use": "not_permitted",
+        "source": "terms-medleydb-pitch"
+      }
+    },
+    {
+      "name": "augmentation noise and reverb sources",
+      "role": "augmentation (unidentified)",
+      "use": "noise, equalization filters and reverb added during training (paper, section 3)",
+      "listed_in": [
+        "paper-v2"
+      ],
+      "terms": {
+        "reading": "not identified: the paper names no source, and none of the 24 Python modules of the v0.4.0 package applies an augmentation",
+        "commercial_use": "unverifiable",
+        "source": "paper-v2"
+      }
+    }
+  ],
+  "not_training_inputs": [
+    {
+      "name": "Molina",
+      "why": "test set only (Table 1)",
+      "source": "paper-v2"
+    },
+    {
+      "name": "Phenicx",
+      "why": "test set only (Table 1)",
+      "source": "paper-v2"
+    }
+  ],
+  "limits": [
+    "No dataset, archive or weight file was downloaded.",
+    "The README says the library was improved beyond the paper without saying whether the model was retrained. The SavedModel files have no commit after 2022-05-12, so the paper is read as the shipped model's training record.",
+    "The v0.4.0 data README calls its scripts \"a selection of\" the datasets used to train the original model. The scripts and the sampling weights cover exactly the five training sets of Table 1; no further dataset was found.",
+    "Dynamic pages (Zenodo, Magenta, the Wayback Machine, GitHub API) are hashed as fetched.",
+    "This review covers training data only. The Apache-2.0 code and model label are T03's verified row, and the NOTICE obligation stays deferred to the contract-fix PR T03 named."
+  ],
+  "sources": {
+    "package-readme": {
+      "document": "basic-pitch README.md",
+      "url": "https://raw.githubusercontent.com/spotify/basic-pitch/9991303bba609a3b93089d13ec80d1d495083596/README.md",
+      "sha256": "a99d0e121396843444f010004ab27a22779beb94584488d6a03c4dbce0ce1556",
+      "bytes": 10100,
+      "pin": "commit 9991303 (v0.4.0)",
+      "fetched_at": "2026-11-08T02:40:51Z"
+    },
+    "package-tree": {
+      "document": "GitHub tree of spotify/basic-pitch at v0.4.0",
+      "url": "https://api.github.com/repos/spotify/basic-pitch/git/trees/9991303bba609a3b93089d13ec80d1d495083596?recursive=1",
+      "sha256": "3a0c6b21579ae636c3651712e89aa5c959af401700a76adcd30a4c86ffefcc0b",
+      "bytes": 27098,
+      "pin": "commit 9991303",
+      "fetched_at": "2026-11-08T02:48:04Z"
+    },
+    "model-history": {
+      "document": "GitHub commit history of saved_models/icassp_2022/nmp/saved_model.pb up to v0.4.0",
+      "url": "https://api.github.com/repos/spotify/basic-pitch/commits?path=basic_pitch/saved_models/icassp_2022/nmp/saved_model.pb&sha=9991303bba609a3b93089d13ec80d1d495083596",
+      "sha256": "8bdbfc7a41d4b62adac1e77c004baa3d9c6ea2f0311cae52e9915ad41298c7ea",
+      "bytes": 1420,
+      "pin": "dynamic page, hashed as fetched",
+      "fetched_at": "2026-11-08T02:48:04Z"
+    },
+    "model-history-onnx": {
+      "document": "GitHub commit history of saved_models/icassp_2022/nmp.onnx up to v0.4.0",
+      "url": "https://api.github.com/repos/spotify/basic-pitch/commits?path=basic_pitch/saved_models/icassp_2022/nmp.onnx&sha=9991303bba609a3b93089d13ec80d1d495083596",
+      "sha256": "46df1134c227c6b2310c4c4a58af505de772211fb3e97d87f5b8b19c43ecb620",
+      "bytes": 1417,
+      "pin": "dynamic page, hashed as fetched",
+      "fetched_at": "2026-11-08T02:48:05Z"
+    },
+    "paper-v2": {
+      "document": "Bittner et al., ICASSP 2022 (arXiv 2203.09893v2), section 3 and Table 1",
+      "url": "https://arxiv.org/pdf/2203.09893v2",
+      "sha256": "63040c77ce170c4c353f287ee5b777a57615098d799e998ec618a4f5de7d5b36",
+      "bytes": 534859,
+      "pin": "arXiv version 2",
+      "fetched_at": "2026-11-08T02:41:12Z"
+    },
+    "train-constants": {
+      "document": "basic-pitch basic_pitch/constants.py (DATASET_SAMPLING_FREQUENCY)",
+      "url": "https://raw.githubusercontent.com/spotify/basic-pitch/9991303bba609a3b93089d13ec80d1d495083596/basic_pitch/constants.py",
+      "sha256": "3374330dbf374cc4ba3d76eba6aad06e089a40252c4c68b3bf93510bd7b37214",
+      "bytes": 2355,
+      "pin": "commit 9991303",
+      "fetched_at": "2026-11-08T02:40:52Z"
+    },
+    "data-readme": {
+      "document": "basic-pitch basic_pitch/data/README.md",
+      "url": "https://raw.githubusercontent.com/spotify/basic-pitch/9991303bba609a3b93089d13ec80d1d495083596/basic_pitch/data/README.md",
+      "sha256": "fbc92e843261029c344b2c2157215332832a63829adfd04368c42dd4f0539cf6",
+      "bytes": 1640,
+      "pin": "commit 9991303",
+      "fetched_at": "2026-11-08T02:40:52Z"
+    },
+    "data-guitarset": {
+      "document": "basic-pitch data/datasets/guitarset.py",
+      "url": "https://raw.githubusercontent.com/spotify/basic-pitch/9991303bba609a3b93089d13ec80d1d495083596/basic_pitch/data/datasets/guitarset.py",
+      "sha256": "0737594d893c013122ef7143073af28a1e91002f4c41259767478f93a65ba8af",
+      "bytes": 6750,
+      "pin": "commit 9991303",
+      "fetched_at": "2026-11-08T02:40:53Z"
+    },
+    "data-maestro": {
+      "document": "basic-pitch data/datasets/maestro.py (maestro-v2.0.0)",
+      "url": "https://raw.githubusercontent.com/spotify/basic-pitch/9991303bba609a3b93089d13ec80d1d495083596/basic_pitch/data/datasets/maestro.py",
+      "sha256": "b1beb7c05ddfaef057842cefdda987846bc5cfc8b03a0300b7cb8a36f6cbe129",
+      "bytes": 8260,
+      "pin": "commit 9991303",
+      "fetched_at": "2026-11-08T02:40:53Z"
+    },
+    "data-slakh": {
+      "document": "basic-pitch data/datasets/slakh.py",
+      "url": "https://raw.githubusercontent.com/spotify/basic-pitch/9991303bba609a3b93089d13ec80d1d495083596/basic_pitch/data/datasets/slakh.py",
+      "sha256": "2a0be0a95d2ea518a899d52ccca531939e51de33ffeccd2d5caa9eef53f4d0a0",
+      "bytes": 7930,
+      "pin": "commit 9991303",
+      "fetched_at": "2026-11-08T02:40:54Z"
+    },
+    "data-ikala": {
+      "document": "basic-pitch data/datasets/ikala.py",
+      "url": "https://raw.githubusercontent.com/spotify/basic-pitch/9991303bba609a3b93089d13ec80d1d495083596/basic_pitch/data/datasets/ikala.py",
+      "sha256": "ddac630c19bebdd04a1035f21868509a6ab626556c623a8b55b3586f17e3373e",
+      "bytes": 6834,
+      "pin": "commit 9991303",
+      "fetched_at": "2026-11-08T02:40:53Z"
+    },
+    "data-medleydb-pitch": {
+      "document": "basic-pitch data/datasets/medleydb_pitch.py",
+      "url": "https://raw.githubusercontent.com/spotify/basic-pitch/9991303bba609a3b93089d13ec80d1d495083596/basic_pitch/data/datasets/medleydb_pitch.py",
+      "sha256": "7a8f436273969a9944c288dff2e94338c498a94082069477e98ec0b03c2cfd05",
+      "bytes": 6893,
+      "pin": "commit 9991303",
+      "fetched_at": "2026-11-08T02:40:53Z"
+    },
+    "terms-guitarset": {
+      "document": "Zenodo record 3371780 (GuitarSet 1.1.0), metadata license",
+      "url": "https://zenodo.org/api/records/3371780",
+      "sha256": "f7d8764e76ccf0386f8b6e1cd3306c3a12027ae2eb3b4934e426df6bc9b4f42e",
+      "bytes": 7292,
+      "pin": "dynamic page, hashed as fetched",
+      "fetched_at": "2026-11-08T02:42:06Z"
+    },
+    "terms-maestro": {
+      "document": "Magenta MAESTRO dataset page, License",
+      "url": "https://magenta.tensorflow.org/datasets/maestro",
+      "sha256": "a6c8cb83208a7f5d64547f6e4e9fd0a44895e3e182a5a2aca190ee871bd2f378",
+      "bytes": 36160,
+      "pin": "dynamic page, hashed as fetched",
+      "fetched_at": "2026-11-08T02:43:19Z"
+    },
+    "terms-slakh": {
+      "document": "Zenodo record 4599666 (Slakh2100-redux), metadata license",
+      "url": "https://zenodo.org/api/records/4599666",
+      "sha256": "8ea9a028accf84414b758e97fdf7fc2ab35d848882d5f61303b5787dc4c299e0",
+      "bytes": 8739,
+      "pin": "dynamic page, hashed as fetched",
+      "fetched_at": "2026-11-08T02:42:06Z"
+    },
+    "terms-ikala": {
+      "document": "iKala Dataset End User License Agreement, archived 2017-03-15",
+      "url": "https://web.archive.org/web/20170315154633/http://mac.citi.sinica.edu.tw/ikala/EULA.pdf",
+      "sha256": "a813501f9fa728b5d0d45e9d4e7898c48b69e3f5a4c941abc013e34611f36986",
+      "bytes": 233527,
+      "pin": "Wayback Machine capture 20170315154633",
+      "fetched_at": "2026-11-08T02:44:41Z"
+    },
+    "terms-medleydb-pitch": {
+      "document": "Zenodo record 2620624 (MedleyDB - Pitch Tracking Subset), access conditions",
+      "url": "https://zenodo.org/records/2620624",
+      "sha256": "171f1144cca66bd1ae928882acfc192728918f17ea9badfe9a4850b41d91b56e",
+      "bytes": 90969,
+      "pin": "dynamic page, hashed as fetched",
+      "fetched_at": "2026-11-08T02:42:32Z"
+    }
+  },
+  "decided_by": [
+    "MAESTRO v2.0.0",
+    "MedleyDB pitch-tracking subset",
+    "augmentation noise and reverb sources",
+    "iKala"
+  ]
+}
