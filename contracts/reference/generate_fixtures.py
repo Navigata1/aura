@@ -1469,6 +1469,21 @@ def build_invalid_records(docs: list[dict], L: dict) -> list[dict]:
     ir("SESSION-SWITCH-INCOMPLETE", g("session", "ses_1"),
        lambda d: d.update(switches=[{"at": "2026-10-09T12:00:00Z", "from_compute_profile_id": "cp_tier4", "to_compute_profile_id": "cp_tier1"}]),
        "A switch logs re-planned jobs and re-quoted approvals", "missing required property 'replanned_job_ids'", "An unlogged switch.")
+    from studio_ref.vector_cases import binding as binding_cases  # T02b's hypothetical binding inputs
+    bound, typed, member = binding_cases.engine()[:3]
+    closed = ": no value is allowed here"
+    ir("BENCHMARK-PREREG-NO-THRESHOLD", typed, lambda d: d.update(thresholds=[]), "Thresholds are fixed at preregistration",
+       "$.thresholds: fewer than 1 items", "A typed benchmark preregistration with no thresholds.")
+    ir("BENCHMARK-PREREG-OPEN-SUBJECT", typed, lambda d: d["subjects"][0].update(weight="2"), "A subject is a profile revision and host class",
+       "$.subjects[0].weight" + closed, "A subject with an undeclared weight.")
+    ir("BENCHMARK-PREREG-OPEN-HUM-CASE", binding_cases.hum_prereg(), lambda d: d["cases"][0].update(brief_id="brief_b01"),
+       "A hum case is a hum and its MIDI ground truth", "$.cases[0].brief_id" + closed, "A hum-benchmark case that also names a brief.")
+    ir("BENCHMARK-MEMBERSHIP-OPEN-ARM", member, lambda d: d["cases"][0]["arms"][0].update(credited_profile_id="yue2-3b-score"),
+       "An arm credits only its own subject", "$.cases[0].arms[0].credited_profile_id" + closed, "An arm crediting another profile.")
+    ir("BENCHMARK-MEMBERSHIP-NO-VERDICTS", member, lambda d: d["cases"][0].update(verdict_ids=[]),
+       "An engine case names the owner verdicts it expects", "$.cases[0].verdict_ids: fewer than 1 items", "An engine case expecting no verdict.")
+    ir("EVIDENCE-BINDING-VALIDATED-FLAG", bound, lambda d: d.update(validated=True), "No caller-set validated flag (C01 follow-on 6)",
+       "$.validated" + closed, "A binding that declares itself validated.")
     return out
 
 

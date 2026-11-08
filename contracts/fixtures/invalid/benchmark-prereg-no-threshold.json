@@ -1,0 +1,51 @@
+{
+  "description": "A typed benchmark preregistration with no thresholds.",
+  "error_contains": "$.thresholds: fewer than 1 items",
+  "id": "IR-BENCHMARK-PREREG-NO-THRESHOLD",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "cases": [
+      {
+        "brief_id": "brief_b01",
+        "case_id": "case_b01",
+        "lane": "individual"
+      }
+    ],
+    "committed_at": "2026-11-01T09:00:00Z",
+    "gate_owner": "jon",
+    "id": "bp_engine",
+    "kind": "benchmark-prereg",
+    "prereg_sha256": "0d6dfc315e9b31c1ce81d7e7e0d5ca6f705d0ab12db348c50c7cf394fccb21de",
+    "protocol": {
+      "method": "eval_audition",
+      "metrics": [
+        "preferred_rate",
+        "repeat_pair_agreement"
+      ]
+    },
+    "quota": {
+      "cases_complete_min": 1,
+      "repeat_pair_fraction": "0.10",
+      "sessions_min": 1,
+      "short_quota_outcome": "inconclusive"
+    },
+    "schemaVersion": "1.0.0",
+    "set": "benchmark-48",
+    "subjects": [
+      {
+        "host_class": "mlx/m5pro",
+        "profile_id": "ace-2b-sft-mlx",
+        "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+      },
+      {
+        "host_class": "cuda/rtx4090",
+        "profile_id": "yue2-3b-score",
+        "profile_revision": "37522ad18dee26df2c7956bcdd34163bca9d88e991f76a2f6c983581f67b0d8e"
+      }
+    ],
+    "thresholds": []
+  },
+  "record_kind": "benchmark-prereg",
+  "rule": "Thresholds are fixed at preregistration",
+  "schemaVersion": "1.0.0"
+}

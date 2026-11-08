@@ -1,0 +1,4671 @@
+{
+  "cases": [
+    {
+      "check_id": "bp_engine",
+      "derivation": "ACE SFT on mlx/m5pro and YuE2 on cuda/rtx4090 both declare a benchmark-48 gate and allow the case's individual lane; both protocol metrics have a threshold; the stored hash is the record's own.",
+      "expected": [],
+      "name": "valid mixed-profile engine-benchmark preregistration",
+      "op": "prereg",
+      "records": [
+        {
+          "cases": [
+            {
+              "brief_id": "brief_b01",
+              "case_id": "case_b01",
+              "lane": "individual"
+            }
+          ],
+          "committed_at": "2026-11-01T09:00:00Z",
+          "gate_owner": "jon",
+          "id": "bp_engine",
+          "kind": "benchmark-prereg",
+          "prereg_sha256": "0d6dfc315e9b31c1ce81d7e7e0d5ca6f705d0ab12db348c50c7cf394fccb21de",
+          "protocol": {
+            "method": "eval_audition",
+            "metrics": [
+              "preferred_rate",
+              "repeat_pair_agreement"
+            ]
+          },
+          "quota": {
+            "cases_complete_min": 1,
+            "repeat_pair_fraction": "0.10",
+            "sessions_min": 1,
+            "short_quota_outcome": "inconclusive"
+          },
+          "schemaVersion": "1.0.0",
+          "set": "benchmark-48",
+          "subjects": [
+            {
+              "host_class": "mlx/m5pro",
+              "profile_id": "ace-2b-sft-mlx",
+              "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+            },
+            {
+              "host_class": "cuda/rtx4090",
+              "profile_id": "yue2-3b-score",
+              "profile_revision": "37522ad18dee26df2c7956bcdd34163bca9d88e991f76a2f6c983581f67b0d8e"
+            }
+          ],
+          "thresholds": [
+            {
+              "comparator": "gte",
+              "metric": "preferred_rate",
+              "value": "0.50"
+            },
+            {
+              "comparator": "gte",
+              "metric": "repeat_pair_agreement",
+              "value": "0.70"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "check_id": "bp_hum",
+      "derivation": "pYIN+HMM and Basic Pitch both declare a hum-benchmark gate and allow the individual lane; COn, COnP, COnPOff and correction effort each have a threshold; the stored hash is the record's own.",
+      "expected": [],
+      "name": "valid hum-benchmark preregistration",
+      "op": "prereg",
+      "records": [
+        {
+          "cases": [
+            {
+              "case_id": "case_h01",
+              "ground_truth_sha256": "29a252ab19d9394360f42ffd10d3255d080e7e80e7e15edac8758539112d0cc0",
+              "hum_sha256": "7d6d6d6cea0baae50964ddac3ec02749716787eb9e7b1e10ed2b4698f485cef1",
+              "lane": "individual"
+            }
+          ],
+          "committed_at": "2026-11-01T09:00:00Z",
+          "gate_owner": "jon",
+          "id": "bp_hum",
+          "kind": "benchmark-prereg",
+          "prereg_sha256": "3e097d54719534ab7faf735b96ab02af6b2b4396d7477247df5f6a9fd2684b92",
+          "protocol": {
+            "method": "blind_correction",
+            "metrics": [
+              "con_f1",
+              "conp_f1",
+              "conpoff_f1",
+              "correction_ops"
+            ]
+          },
+          "quota": {
+            "cases_complete_min": 1,
+            "repeat_pair_fraction": "0",
+            "sessions_min": 1,
+            "short_quota_outcome": "inconclusive"
+          },
+          "schemaVersion": "1.0.0",
+          "set": "hum-benchmark",
+          "subjects": [
+            {
+              "host_class": "cpu/m5pro",
+              "profile_id": "analysis-transcribe-pyin-hmm",
+              "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa"
+            },
+            {
+              "host_class": "cpu/m5pro",
+              "profile_id": "transcribe-basic-pitch",
+              "profile_revision": "9244a5233e6fea486a22985a55019cdf14d298e2b41ae1508f85fce878257646"
+            }
+          ],
+          "thresholds": [
+            {
+              "comparator": "gte",
+              "metric": "con_f1",
+              "value": "0.40"
+            },
+            {
+              "comparator": "gte",
+              "metric": "conp_f1",
+              "value": "0.30"
+            },
+            {
+              "comparator": "gte",
+              "metric": "conpoff_f1",
+              "value": "0.20"
+            },
+            {
+              "comparator": "lte",
+              "metric": "correction_ops",
+              "value": "60"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "check_id": "bp_engine",
+      "derivation": "The decision reads repeat_pair_agreement, but no threshold was fixed for it before any run.",
+      "expected": [
+        "threshold_missing"
+      ],
+      "name": "a protocol metric without a threshold",
+      "op": "prereg",
+      "records": [
+        {
+          "cases": [
+            {
+              "brief_id": "brief_b01",
+              "case_id": "case_b01",
+              "lane": "individual"
+            }
+          ],
+          "committed_at": "2026-11-01T09:00:00Z",
+          "gate_owner": "jon",
+          "id": "bp_engine",
+          "kind": "benchmark-prereg",
+          "prereg_sha256": "3a0ceec0e4af8a5952ea883322d724d336ed97b1f63fb077f102393a46fc20a9",
+          "protocol": {
+            "method": "eval_audition",
+            "metrics": [
+              "preferred_rate",
+              "repeat_pair_agreement"
+            ]
+          },
+          "quota": {
+            "cases_complete_min": 1,
+            "repeat_pair_fraction": "0.10",
+            "sessions_min": 1,
+            "short_quota_outcome": "inconclusive"
+          },
+          "schemaVersion": "1.0.0",
+          "set": "benchmark-48",
+          "subjects": [
+            {
+              "host_class": "mlx/m5pro",
+              "profile_id": "ace-2b-sft-mlx",
+              "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+            },
+            {
+              "host_class": "cuda/rtx4090",
+              "profile_id": "yue2-3b-score",
+              "profile_revision": "37522ad18dee26df2c7956bcdd34163bca9d88e991f76a2f6c983581f67b0d8e"
+            }
+          ],
+          "thresholds": [
+            {
+              "comparator": "gte",
+              "metric": "preferred_rate",
+              "value": "0.50"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "check_id": "bp_engine",
+      "derivation": "Two cases share the id case_b01 (briefs b01 and b02), so a run or verdict could be bound to either.",
+      "expected": [
+        "case_duplicate"
+      ],
+      "name": "duplicate case ids",
+      "op": "prereg",
+      "records": [
+        {
+          "cases": [
+            {
+              "brief_id": "brief_b01",
+              "case_id": "case_b01",
+              "lane": "individual"
+            },
+            {
+              "brief_id": "brief_b02",
+              "case_id": "case_b01",
+              "lane": "individual"
+            }
+          ],
+          "committed_at": "2026-11-01T09:00:00Z",
+          "gate_owner": "jon",
+          "id": "bp_engine",
+          "kind": "benchmark-prereg",
+          "prereg_sha256": "e3d01f44009824c4d7638b50daa5bf0314aa6858023d0752278be59948234d4c",
+          "protocol": {
+            "method": "eval_audition",
+            "metrics": [
+              "preferred_rate",
+              "repeat_pair_agreement"
+            ]
+          },
+          "quota": {
+            "cases_complete_min": 1,
+            "repeat_pair_fraction": "0.10",
+            "sessions_min": 1,
+            "short_quota_outcome": "inconclusive"
+          },
+          "schemaVersion": "1.0.0",
+          "set": "benchmark-48",
+          "subjects": [
+            {
+              "host_class": "mlx/m5pro",
+              "profile_id": "ace-2b-sft-mlx",
+              "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+            },
+            {
+              "host_class": "cuda/rtx4090",
+              "profile_id": "yue2-3b-score",
+              "profile_revision": "37522ad18dee26df2c7956bcdd34163bca9d88e991f76a2f6c983581f67b0d8e"
+            }
+          ],
+          "thresholds": [
+            {
+              "comparator": "gte",
+              "metric": "preferred_rate",
+              "value": "0.50"
+            },
+            {
+              "comparator": "gte",
+              "metric": "repeat_pair_agreement",
+              "value": "0.70"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "check_id": "bp_hum",
+      "derivation": "The conp_f1 threshold moved from 0.30 to 0.20 after prereg_sha256 was computed, so the hash no longer names the record.",
+      "expected": [
+        "prereg_hash_mismatch"
+      ],
+      "name": "a threshold edited after hashing",
+      "op": "prereg",
+      "records": [
+        {
+          "cases": [
+            {
+              "case_id": "case_h01",
+              "ground_truth_sha256": "29a252ab19d9394360f42ffd10d3255d080e7e80e7e15edac8758539112d0cc0",
+              "hum_sha256": "7d6d6d6cea0baae50964ddac3ec02749716787eb9e7b1e10ed2b4698f485cef1",
+              "lane": "individual"
+            }
+          ],
+          "committed_at": "2026-11-01T09:00:00Z",
+          "gate_owner": "jon",
+          "id": "bp_hum",
+          "kind": "benchmark-prereg",
+          "prereg_sha256": "3e097d54719534ab7faf735b96ab02af6b2b4396d7477247df5f6a9fd2684b92",
+          "protocol": {
+            "method": "blind_correction",
+            "metrics": [
+              "con_f1",
+              "conp_f1",
+              "conpoff_f1",
+              "correction_ops"
+            ]
+          },
+          "quota": {
+            "cases_complete_min": 1,
+            "repeat_pair_fraction": "0",
+            "sessions_min": 1,
+            "short_quota_outcome": "inconclusive"
+          },
+          "schemaVersion": "1.0.0",
+          "set": "hum-benchmark",
+          "subjects": [
+            {
+              "host_class": "cpu/m5pro",
+              "profile_id": "analysis-transcribe-pyin-hmm",
+              "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa"
+            },
+            {
+              "host_class": "cpu/m5pro",
+              "profile_id": "transcribe-basic-pitch",
+              "profile_revision": "9244a5233e6fea486a22985a55019cdf14d298e2b41ae1508f85fce878257646"
+            }
+          ],
+          "thresholds": [
+            {
+              "comparator": "gte",
+              "metric": "con_f1",
+              "value": "0.40"
+            },
+            {
+              "comparator": "gte",
+              "metric": "conp_f1",
+              "value": "0.20"
+            },
+            {
+              "comparator": "gte",
+              "metric": "conpoff_f1",
+              "value": "0.20"
+            },
+            {
+              "comparator": "lte",
+              "metric": "correction_ops",
+              "value": "60"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "check_id": "bp_engine",
+      "derivation": "YuE2 is allowed only in individual and research, and an llc case may not name it (ADR-0029 point 6). ACE allows llc.",
+      "expected": [
+        "lane_forbidden"
+      ],
+      "name": "an llc case names YuE2",
+      "op": "prereg",
+      "records": [
+        {
+          "cases": [
+            {
+              "brief_id": "brief_b01",
+              "case_id": "case_b01",
+              "lane": "llc"
+            }
+          ],
+          "committed_at": "2026-11-01T09:00:00Z",
+          "gate_owner": "jon",
+          "id": "bp_engine",
+          "kind": "benchmark-prereg",
+          "prereg_sha256": "f837126d0ca583083abd7bcf1bf665785e396dbc73ac667a61e91c546851b071",
+          "protocol": {
+            "method": "eval_audition",
+            "metrics": [
+              "preferred_rate",
+              "repeat_pair_agreement"
+            ]
+          },
+          "quota": {
+            "cases_complete_min": 1,
+            "repeat_pair_fraction": "0.10",
+            "sessions_min": 1,
+            "short_quota_outcome": "inconclusive"
+          },
+          "schemaVersion": "1.0.0",
+          "set": "benchmark-48",
+          "subjects": [
+            {
+              "host_class": "mlx/m5pro",
+              "profile_id": "ace-2b-sft-mlx",
+              "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+            },
+            {
+              "host_class": "cuda/rtx4090",
+              "profile_id": "yue2-3b-score",
+              "profile_revision": "37522ad18dee26df2c7956bcdd34163bca9d88e991f76a2f6c983581f67b0d8e"
+            }
+          ],
+          "thresholds": [
+            {
+              "comparator": "gte",
+              "metric": "preferred_rate",
+              "value": "0.50"
+            },
+            {
+              "comparator": "gte",
+              "metric": "repeat_pair_agreement",
+              "value": "0.70"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "check_id": "bp_hum",
+      "derivation": "ACE's benchmark gate set is benchmark-48, so a hum-benchmark preregistration cannot govern it.",
+      "expected": [
+        "subject_ungated"
+      ],
+      "name": "an engine profile in a hum benchmark",
+      "op": "prereg",
+      "records": [
+        {
+          "cases": [
+            {
+              "case_id": "case_h01",
+              "ground_truth_sha256": "29a252ab19d9394360f42ffd10d3255d080e7e80e7e15edac8758539112d0cc0",
+              "hum_sha256": "7d6d6d6cea0baae50964ddac3ec02749716787eb9e7b1e10ed2b4698f485cef1",
+              "lane": "individual"
+            }
+          ],
+          "committed_at": "2026-11-01T09:00:00Z",
+          "gate_owner": "jon",
+          "id": "bp_hum",
+          "kind": "benchmark-prereg",
+          "prereg_sha256": "bc242e5b9739456f52fde35b5156a10e6fcac624b5ad2fb6e6973872c1c11a7a",
+          "protocol": {
+            "method": "blind_correction",
+            "metrics": [
+              "con_f1",
+              "conp_f1",
+              "conpoff_f1",
+              "correction_ops"
+            ]
+          },
+          "quota": {
+            "cases_complete_min": 1,
+            "repeat_pair_fraction": "0",
+            "sessions_min": 1,
+            "short_quota_outcome": "inconclusive"
+          },
+          "schemaVersion": "1.0.0",
+          "set": "hum-benchmark",
+          "subjects": [
+            {
+              "host_class": "cpu/m5pro",
+              "profile_id": "analysis-transcribe-pyin-hmm",
+              "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa"
+            },
+            {
+              "host_class": "cpu/m5pro",
+              "profile_id": "transcribe-basic-pitch",
+              "profile_revision": "9244a5233e6fea486a22985a55019cdf14d298e2b41ae1508f85fce878257646"
+            },
+            {
+              "host_class": "mlx/m5pro",
+              "profile_id": "ace-2b-sft-mlx",
+              "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+            }
+          ],
+          "thresholds": [
+            {
+              "comparator": "gte",
+              "metric": "con_f1",
+              "value": "0.40"
+            },
+            {
+              "comparator": "gte",
+              "metric": "conp_f1",
+              "value": "0.30"
+            },
+            {
+              "comparator": "gte",
+              "metric": "conpoff_f1",
+              "value": "0.20"
+            },
+            {
+              "comparator": "lte",
+              "metric": "correction_ops",
+              "value": "60"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "check_id": "eb_engine",
+      "derivation": "ACE's binding names its preregistered subject; both runs were queued after the 09:00 commit; vd_b01 is a preregistered listening verdict on the eval audition of brief_b01 under this hash, over the case's own non-synthetic candidates.",
+      "expected": [],
+      "name": "valid mixed-profile engine-benchmark binding",
+      "op": "binding",
+      "records": [
+        {
+          "evidence_id": "ev_bench_ace",
+          "id": "eb_engine",
+          "kind": "evidence-binding",
+          "membership_id": "bm_engine",
+          "prereg_sha256": "0d6dfc315e9b31c1ce81d7e7e0d5ca6f705d0ab12db348c50c7cf394fccb21de",
+          "schemaVersion": "1.0.0",
+          "set": "benchmark-48",
+          "subject": {
+            "host_class": "mlx/m5pro",
+            "profile_id": "ace-2b-sft-mlx",
+            "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+          }
+        },
+        {
+          "cases": [
+            {
+              "brief_id": "brief_b01",
+              "case_id": "case_b01",
+              "lane": "individual"
+            }
+          ],
+          "committed_at": "2026-11-01T09:00:00Z",
+          "gate_owner": "jon",
+          "id": "bp_engine",
+          "kind": "benchmark-prereg",
+          "prereg_sha256": "0d6dfc315e9b31c1ce81d7e7e0d5ca6f705d0ab12db348c50c7cf394fccb21de",
+          "protocol": {
+            "method": "eval_audition",
+            "metrics": [
+              "preferred_rate",
+              "repeat_pair_agreement"
+            ]
+          },
+          "quota": {
+            "cases_complete_min": 1,
+            "repeat_pair_fraction": "0.10",
+            "sessions_min": 1,
+            "short_quota_outcome": "inconclusive"
+          },
+          "schemaVersion": "1.0.0",
+          "set": "benchmark-48",
+          "subjects": [
+            {
+              "host_class": "mlx/m5pro",
+              "profile_id": "ace-2b-sft-mlx",
+              "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+            },
+            {
+              "host_class": "cuda/rtx4090",
+              "profile_id": "yue2-3b-score",
+              "profile_revision": "37522ad18dee26df2c7956bcdd34163bca9d88e991f76a2f6c983581f67b0d8e"
+            }
+          ],
+          "thresholds": [
+            {
+              "comparator": "gte",
+              "metric": "preferred_rate",
+              "value": "0.50"
+            },
+            {
+              "comparator": "gte",
+              "metric": "repeat_pair_agreement",
+              "value": "0.70"
+            }
+          ]
+        },
+        {
+          "cases": [
+            {
+              "arms": [
+                {
+                  "candidate_ids": [
+                    "cand_ace"
+                  ],
+                  "job_ids": [
+                    "job_ace"
+                  ],
+                  "melody_ids": [],
+                  "subject": {
+                    "host_class": "mlx/m5pro",
+                    "profile_id": "ace-2b-sft-mlx",
+                    "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+                  }
+                },
+                {
+                  "candidate_ids": [
+                    "cand_yue"
+                  ],
+                  "job_ids": [
+                    "job_yue"
+                  ],
+                  "melody_ids": [],
+                  "subject": {
+                    "host_class": "cuda/rtx4090",
+                    "profile_id": "yue2-3b-score",
+                    "profile_revision": "37522ad18dee26df2c7956bcdd34163bca9d88e991f76a2f6c983581f67b0d8e"
+                  }
+                }
+              ],
+              "case_id": "case_b01",
+              "verdict_ids": [
+                "vd_b01"
+              ]
+            }
+          ],
+          "id": "bm_engine",
+          "kind": "benchmark-membership",
+          "prereg_sha256": "0d6dfc315e9b31c1ce81d7e7e0d5ca6f705d0ab12db348c50c7cf394fccb21de",
+          "schemaVersion": "1.0.0",
+          "set": "benchmark-48"
+        },
+        {
+          "approval_id": null,
+          "compute_profile_id": "cp_bench",
+          "cost": {
+            "basis": "local_zero",
+            "usd": "0.00"
+          },
+          "created_at": "2026-11-02T10:00:00Z",
+          "egress": [],
+          "error": null,
+          "history": [
+            {
+              "at": "2026-11-02T10:00:00Z",
+              "state": "queued"
+            },
+            {
+              "at": "2026-11-02T10:01:00Z",
+              "state": "preparing"
+            },
+            {
+              "at": "2026-11-02T10:02:00Z",
+              "state": "loading"
+            },
+            {
+              "at": "2026-11-02T10:03:00Z",
+              "state": "generating"
+            },
+            {
+              "at": "2026-11-02T10:04:00Z",
+              "state": "ready"
+            }
+          ],
+          "id": "job_ace",
+          "inputs": [],
+          "job_kind": "generate",
+          "kind": "job",
+          "lane": "individual",
+          "outputs": [
+            {
+              "role": "mix",
+              "sha256": "bfa3a06d4b8f660259961c953661e35ddfe4e51e31f213d7298e4323dce7f14d"
+            }
+          ],
+          "params": {
+            "actual": {},
+            "intent": {}
+          },
+          "parent_job_id": null,
+          "placement": {
+            "host_class": "mlx/m5pro",
+            "kind": "local"
+          },
+          "profile_id": "ace-2b-sft-mlx",
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "project_id": "prj_bench",
+          "quote_id": null,
+          "record_inputs": [],
+          "request_id": "gr_bench",
+          "retry": null,
+          "schemaVersion": "1.0.0",
+          "seed": 1,
+          "session_id": "ses_bench",
+          "state": "ready",
+          "steps": [],
+          "task": "cover"
+        },
+        {
+          "approval_id": null,
+          "compute_profile_id": "cp_bench",
+          "cost": {
+            "basis": "local_zero",
+            "usd": "0.00"
+          },
+          "created_at": "2026-11-02T10:05:00Z",
+          "egress": [],
+          "error": null,
+          "history": [
+            {
+              "at": "2026-11-02T10:05:00Z",
+              "state": "queued"
+            },
+            {
+              "at": "2026-11-02T10:06:00Z",
+              "state": "preparing"
+            },
+            {
+              "at": "2026-11-02T10:07:00Z",
+              "state": "loading"
+            },
+            {
+              "at": "2026-11-02T10:08:00Z",
+              "state": "generating"
+            },
+            {
+              "at": "2026-11-02T10:09:00Z",
+              "state": "ready"
+            }
+          ],
+          "id": "job_yue",
+          "inputs": [],
+          "job_kind": "generate",
+          "kind": "job",
+          "lane": "individual",
+          "outputs": [
+            {
+              "role": "mix",
+              "sha256": "c5474429837dcbf47b8a962c4a7379585edf1a19d8a2f3793bf21b6080ebef21"
+            }
+          ],
+          "params": {
+            "actual": {},
+            "intent": {}
+          },
+          "parent_job_id": null,
+          "placement": {
+            "host_class": "cuda/rtx4090",
+            "kind": "worker_host"
+          },
+          "profile_id": "yue2-3b-score",
+          "profile_revision": "37522ad18dee26df2c7956bcdd34163bca9d88e991f76a2f6c983581f67b0d8e",
+          "project_id": "prj_bench",
+          "quote_id": null,
+          "record_inputs": [],
+          "request_id": "gr_bench",
+          "retry": null,
+          "schemaVersion": "1.0.0",
+          "seed": 2,
+          "session_id": "ses_bench",
+          "state": "ready",
+          "steps": [],
+          "task": "score_to_song"
+        },
+        {
+          "adherence": {
+            "reason": "pending",
+            "state": "unmeasured"
+          },
+          "artifact_sha256": "bfa3a06d4b8f660259961c953661e35ddfe4e51e31f213d7298e4323dce7f14d",
+          "badges": [
+            "unbenchmarked route"
+          ],
+          "created_at": "2026-11-02T10:04:30Z",
+          "diagnostics": [],
+          "hard_constraints": [],
+          "id": "cand_ace",
+          "job_id": "job_ace",
+          "kind": "candidate",
+          "measures": null,
+          "ordinal": 1,
+          "placement": {
+            "host_class": "mlx/m5pro",
+            "kind": "local"
+          },
+          "preview_sha256": "79aecfeba9c1275207b7dab549f1deae527b9f1bd9887e59949f9f8ba0dad736",
+          "profile_id": "ace-2b-sft-mlx",
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "project_id": "prj_bench",
+          "route": "R2-synth",
+          "schemaVersion": "1.0.0",
+          "seed": 1,
+          "source": {
+            "generation_request_id": "gr_bench"
+          },
+          "synthetic_test": false,
+          "withheld_during_blind": [
+            "route",
+            "profile_id",
+            "profile_revision",
+            "seed",
+            "placement",
+            "job_id",
+            "artifact_sha256",
+            "preview_sha256",
+            "measures",
+            "adherence",
+            "hard_constraints",
+            "badges",
+            "diagnostics",
+            "source"
+          ]
+        },
+        {
+          "adherence": {
+            "reason": "pending",
+            "state": "unmeasured"
+          },
+          "artifact_sha256": "c5474429837dcbf47b8a962c4a7379585edf1a19d8a2f3793bf21b6080ebef21",
+          "badges": [
+            "unbenchmarked route"
+          ],
+          "created_at": "2026-11-02T10:09:00Z",
+          "diagnostics": [],
+          "hard_constraints": [],
+          "id": "cand_yue",
+          "job_id": "job_yue",
+          "kind": "candidate",
+          "measures": null,
+          "ordinal": 2,
+          "placement": {
+            "host_class": "cuda/rtx4090",
+            "kind": "worker_host"
+          },
+          "preview_sha256": "cb9826fc9f249b2f0655b7ecb965286018f2c44ef3d91dedcadf49dd150f76f9",
+          "profile_id": "yue2-3b-score",
+          "profile_revision": "37522ad18dee26df2c7956bcdd34163bca9d88e991f76a2f6c983581f67b0d8e",
+          "project_id": "prj_bench",
+          "route": "R1",
+          "schemaVersion": "1.0.0",
+          "seed": 2,
+          "source": {
+            "generation_request_id": "gr_bench"
+          },
+          "synthetic_test": false,
+          "withheld_during_blind": [
+            "route",
+            "profile_id",
+            "profile_revision",
+            "seed",
+            "placement",
+            "job_id",
+            "artifact_sha256",
+            "preview_sha256",
+            "measures",
+            "adherence",
+            "hard_constraints",
+            "badges",
+            "diagnostics",
+            "source"
+          ]
+        },
+        {
+          "all_arms_ready_at": "2026-11-02T10:09:00Z",
+          "anchors": [],
+          "arms": [
+            {
+              "label": "A",
+              "unplayable": false
+            },
+            {
+              "label": "B",
+              "unplayable": false
+            }
+          ],
+          "brief_id": "brief_b01",
+          "candidate_ids": [
+            "cand_ace",
+            "cand_yue"
+          ],
+          "commitment_sha256": "cca21f26e0f60eedee75c2a912ba8d4bd8b2a490cc1f5b91eb0b6b726a5b4548",
+          "gains": [
+            {
+              "gain_db": "-0.80",
+              "label": "A"
+            },
+            {
+              "gain_db": "0.00",
+              "label": "B"
+            }
+          ],
+          "id": "aud_b01",
+          "kind": "audition",
+          "loudness_standard": "BS.1770-4 (pyloudnorm)",
+          "mode": "eval",
+          "opened_at": "2026-11-03T17:30:00Z",
+          "prereg_sha256": "0d6dfc315e9b31c1ce81d7e7e0d5ca6f705d0ab12db348c50c7cf394fccb21de",
+          "preview": {
+            "bit_depth": 24,
+            "sample_rate": 48000
+          },
+          "project_id": null,
+          "repeat_pairs": [],
+          "request_ids": [],
+          "residual_leak_acknowledged": [
+            "duration",
+            "sonic_character"
+          ],
+          "residual_mismatch_lu": "0.04",
+          "schemaVersion": "1.0.0",
+          "state": "revealed",
+          "true_peak_meter": "studio-truepeak-4x"
+        },
+        {
+          "act": {
+            "act": "give_verdict",
+            "at": "2026-11-03T17:45:00Z",
+            "scope": "owner-ui"
+          },
+          "audition_id": "aud_b01",
+          "axes": [],
+          "evidence_kind": "listening-preregistered",
+          "id": "vd_b01",
+          "kind": "verdict",
+          "preferred": "A",
+          "problem_intervals": [],
+          "schemaVersion": "1.0.0",
+          "seconds_listened": [
+            {
+              "label": "A",
+              "seconds": 150
+            },
+            {
+              "label": "B",
+              "seconds": 140
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "check_id": "eb_hum",
+      "derivation": "pYIN's binding names its preregistered subject; both transcription runs were queued after the commit; each draft melody has a correction log; the case is preregistered.",
+      "expected": [],
+      "name": "valid hum-benchmark binding",
+      "op": "binding",
+      "records": [
+        {
+          "evidence_id": "ev_hum_pyin",
+          "id": "eb_hum",
+          "kind": "evidence-binding",
+          "membership_id": "bm_hum",
+          "prereg_sha256": "3e097d54719534ab7faf735b96ab02af6b2b4396d7477247df5f6a9fd2684b92",
+          "schemaVersion": "1.0.0",
+          "set": "hum-benchmark",
+          "subject": {
+            "host_class": "cpu/m5pro",
+            "profile_id": "analysis-transcribe-pyin-hmm",
+            "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa"
+          }
+        },
+        {
+          "cases": [
+            {
+              "case_id": "case_h01",
+              "ground_truth_sha256": "29a252ab19d9394360f42ffd10d3255d080e7e80e7e15edac8758539112d0cc0",
+              "hum_sha256": "7d6d6d6cea0baae50964ddac3ec02749716787eb9e7b1e10ed2b4698f485cef1",
+              "lane": "individual"
+            }
+          ],
+          "committed_at": "2026-11-01T09:00:00Z",
+          "gate_owner": "jon",
+          "id": "bp_hum",
+          "kind": "benchmark-prereg",
+          "prereg_sha256": "3e097d54719534ab7faf735b96ab02af6b2b4396d7477247df5f6a9fd2684b92",
+          "protocol": {
+            "method": "blind_correction",
+            "metrics": [
+              "con_f1",
+              "conp_f1",
+              "conpoff_f1",
+              "correction_ops"
+            ]
+          },
+          "quota": {
+            "cases_complete_min": 1,
+            "repeat_pair_fraction": "0",
+            "sessions_min": 1,
+            "short_quota_outcome": "inconclusive"
+          },
+          "schemaVersion": "1.0.0",
+          "set": "hum-benchmark",
+          "subjects": [
+            {
+              "host_class": "cpu/m5pro",
+              "profile_id": "analysis-transcribe-pyin-hmm",
+              "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa"
+            },
+            {
+              "host_class": "cpu/m5pro",
+              "profile_id": "transcribe-basic-pitch",
+              "profile_revision": "9244a5233e6fea486a22985a55019cdf14d298e2b41ae1508f85fce878257646"
+            }
+          ],
+          "thresholds": [
+            {
+              "comparator": "gte",
+              "metric": "con_f1",
+              "value": "0.40"
+            },
+            {
+              "comparator": "gte",
+              "metric": "conp_f1",
+              "value": "0.30"
+            },
+            {
+              "comparator": "gte",
+              "metric": "conpoff_f1",
+              "value": "0.20"
+            },
+            {
+              "comparator": "lte",
+              "metric": "correction_ops",
+              "value": "60"
+            }
+          ]
+        },
+        {
+          "cases": [
+            {
+              "arms": [
+                {
+                  "candidate_ids": [],
+                  "job_ids": [
+                    "job_pyin"
+                  ],
+                  "melody_ids": [
+                    "mel_h01_pyin"
+                  ],
+                  "subject": {
+                    "host_class": "cpu/m5pro",
+                    "profile_id": "analysis-transcribe-pyin-hmm",
+                    "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa"
+                  }
+                },
+                {
+                  "candidate_ids": [],
+                  "job_ids": [
+                    "job_bp"
+                  ],
+                  "melody_ids": [
+                    "mel_h01_bp"
+                  ],
+                  "subject": {
+                    "host_class": "cpu/m5pro",
+                    "profile_id": "transcribe-basic-pitch",
+                    "profile_revision": "9244a5233e6fea486a22985a55019cdf14d298e2b41ae1508f85fce878257646"
+                  }
+                }
+              ],
+              "case_id": "case_h01",
+              "verdict_ids": []
+            }
+          ],
+          "id": "bm_hum",
+          "kind": "benchmark-membership",
+          "prereg_sha256": "3e097d54719534ab7faf735b96ab02af6b2b4396d7477247df5f6a9fd2684b92",
+          "schemaVersion": "1.0.0",
+          "set": "hum-benchmark"
+        },
+        {
+          "approval_id": null,
+          "compute_profile_id": "cp_bench",
+          "cost": {
+            "basis": "local_zero",
+            "usd": "0.00"
+          },
+          "created_at": "2026-11-02T11:00:00Z",
+          "egress": [],
+          "error": null,
+          "history": [
+            {
+              "at": "2026-11-02T11:00:00Z",
+              "state": "queued"
+            },
+            {
+              "at": "2026-11-02T11:01:00Z",
+              "state": "preparing"
+            },
+            {
+              "at": "2026-11-02T11:02:00Z",
+              "state": "loading"
+            },
+            {
+              "at": "2026-11-02T11:03:00Z",
+              "state": "generating"
+            },
+            {
+              "at": "2026-11-02T11:04:00Z",
+              "state": "ready"
+            }
+          ],
+          "id": "job_pyin",
+          "inputs": [],
+          "job_kind": "transcribe",
+          "kind": "job",
+          "lane": "individual",
+          "outputs": [
+            {
+              "role": "melody_spec",
+              "sha256": "f9da303de8701d3559d2c2a1aef08cc91a4bb5c7c6ffdc99ef0272f47a9689dd"
+            }
+          ],
+          "params": {
+            "actual": {},
+            "intent": {}
+          },
+          "parent_job_id": null,
+          "placement": {
+            "host_class": "cpu/m5pro",
+            "kind": "local"
+          },
+          "profile_id": "analysis-transcribe-pyin-hmm",
+          "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa",
+          "project_id": "prj_bench",
+          "quote_id": null,
+          "record_inputs": [],
+          "request_id": null,
+          "retry": null,
+          "schemaVersion": "1.0.0",
+          "seed": null,
+          "session_id": "ses_bench",
+          "state": "ready",
+          "steps": [],
+          "task": "transcribe"
+        },
+        {
+          "approval_id": null,
+          "compute_profile_id": "cp_bench",
+          "cost": {
+            "basis": "local_zero",
+            "usd": "0.00"
+          },
+          "created_at": "2026-11-02T11:10:00Z",
+          "egress": [],
+          "error": null,
+          "history": [
+            {
+              "at": "2026-11-02T11:10:00Z",
+              "state": "queued"
+            },
+            {
+              "at": "2026-11-02T11:11:00Z",
+              "state": "preparing"
+            },
+            {
+              "at": "2026-11-02T11:12:00Z",
+              "state": "loading"
+            },
+            {
+              "at": "2026-11-02T11:13:00Z",
+              "state": "generating"
+            },
+            {
+              "at": "2026-11-02T11:14:00Z",
+              "state": "ready"
+            }
+          ],
+          "id": "job_bp",
+          "inputs": [],
+          "job_kind": "transcribe",
+          "kind": "job",
+          "lane": "individual",
+          "outputs": [
+            {
+              "role": "melody_spec",
+              "sha256": "698f91d1b49609d273b4753ebc294c4353f57dd658057435d0fff6a535ebb5d8"
+            }
+          ],
+          "params": {
+            "actual": {},
+            "intent": {}
+          },
+          "parent_job_id": null,
+          "placement": {
+            "host_class": "cpu/m5pro",
+            "kind": "local"
+          },
+          "profile_id": "transcribe-basic-pitch",
+          "profile_revision": "9244a5233e6fea486a22985a55019cdf14d298e2b41ae1508f85fce878257646",
+          "project_id": "prj_bench",
+          "quote_id": null,
+          "record_inputs": [],
+          "request_id": null,
+          "retry": null,
+          "schemaVersion": "1.0.0",
+          "seed": null,
+          "session_id": "ses_bench",
+          "state": "ready",
+          "steps": [],
+          "task": "transcribe"
+        },
+        {
+          "entries": [
+            {
+              "at": "2026-11-02T12:00:00Z",
+              "base_rev": 1,
+              "new_rev": 2,
+              "ops": [
+                {
+                  "delta_ticks": 240,
+                  "note_ids": [
+                    "n1"
+                  ],
+                  "op": "move"
+                }
+              ],
+              "seq": 1
+            }
+          ],
+          "kind": "correction-log",
+          "melody_id": "mel_h01_pyin",
+          "project_id": "prj_bench",
+          "schemaVersion": "1.0.0"
+        },
+        {
+          "entries": [
+            {
+              "at": "2026-11-02T12:00:00Z",
+              "base_rev": 1,
+              "new_rev": 2,
+              "ops": [
+                {
+                  "delta_ticks": 240,
+                  "note_ids": [
+                    "n1"
+                  ],
+                  "op": "move"
+                }
+              ],
+              "seq": 1
+            }
+          ],
+          "kind": "correction-log",
+          "melody_id": "mel_h01_bp",
+          "project_id": "prj_bench",
+          "schemaVersion": "1.0.0"
+        }
+      ]
+    },
+    {
+      "check_id": "eb_engine",
+      "derivation": "The cited hash is a known MelodySpec's content hash, not a benchmark preregistration's; nothing else binds.",
+      "expected": [
+        "prereg_unresolved"
+      ],
+      "name": "engine binding citing a MelodySpec hash",
+      "op": "binding",
+      "records": [
+        {
+          "evidence_id": "ev_bench_ace",
+          "id": "eb_engine",
+          "kind": "evidence-binding",
+          "membership_id": "bm_engine",
+          "prereg_sha256": "14e0ed5fb6bff36a03585f99596fa7365bb37547a0eb9d4a5205d2690addcf7f",
+          "schemaVersion": "1.0.0",
+          "set": "benchmark-48",
+          "subject": {
+            "host_class": "mlx/m5pro",
+            "profile_id": "ace-2b-sft-mlx",
+            "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+          }
+        },
+        {
+          "base_rev": null,
+          "content_sha256": "14e0ed5fb6bff36a03585f99596fa7365bb37547a0eb9d4a5205d2690addcf7f",
+          "created_at": "2026-10-30T09:00:00Z",
+          "key": {
+            "mode": "major",
+            "tonic": "C"
+          },
+          "kind": "melody-spec",
+          "melody_id": "mel_bench",
+          "notes": [],
+          "phrases": [],
+          "ppq": 960,
+          "project_id": "prj_bench",
+          "quantize": null,
+          "rev": 1,
+          "schemaVersion": "1.0.0",
+          "source": {
+            "assembled_from": null,
+            "capture_sha256": "4605d0397259dddea5b9816b1925c579db7f8f202fba84055c126a67bbaf0194",
+            "seed_kind": "midi_file",
+            "transcription": null
+          },
+          "spec_kind": "melody",
+          "tempo_map": {
+            "meter": [
+              {
+                "denominator": 4,
+                "numerator": 4,
+                "tick": 0
+              }
+            ],
+            "rev": 1,
+            "tempo": [
+              {
+                "tick": 0,
+                "us_per_quarter": 500000
+              }
+            ]
+          }
+        },
+        {
+          "cases": [
+            {
+              "brief_id": "brief_b01",
+              "case_id": "case_b01",
+              "lane": "individual"
+            }
+          ],
+          "committed_at": "2026-11-01T09:00:00Z",
+          "gate_owner": "jon",
+          "id": "bp_engine",
+          "kind": "benchmark-prereg",
+          "prereg_sha256": "0d6dfc315e9b31c1ce81d7e7e0d5ca6f705d0ab12db348c50c7cf394fccb21de",
+          "protocol": {
+            "method": "eval_audition",
+            "metrics": [
+              "preferred_rate",
+              "repeat_pair_agreement"
+            ]
+          },
+          "quota": {
+            "cases_complete_min": 1,
+            "repeat_pair_fraction": "0.10",
+            "sessions_min": 1,
+            "short_quota_outcome": "inconclusive"
+          },
+          "schemaVersion": "1.0.0",
+          "set": "benchmark-48",
+          "subjects": [
+            {
+              "host_class": "mlx/m5pro",
+              "profile_id": "ace-2b-sft-mlx",
+              "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+            },
+            {
+              "host_class": "cuda/rtx4090",
+              "profile_id": "yue2-3b-score",
+              "profile_revision": "37522ad18dee26df2c7956bcdd34163bca9d88e991f76a2f6c983581f67b0d8e"
+            }
+          ],
+          "thresholds": [
+            {
+              "comparator": "gte",
+              "metric": "preferred_rate",
+              "value": "0.50"
+            },
+            {
+              "comparator": "gte",
+              "metric": "repeat_pair_agreement",
+              "value": "0.70"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "check_id": "eb_hum",
+      "derivation": "The cited hash is a known MelodySpec's content hash, not a benchmark preregistration's; nothing else binds.",
+      "expected": [
+        "prereg_unresolved"
+      ],
+      "name": "hum binding citing a MelodySpec hash",
+      "op": "binding",
+      "records": [
+        {
+          "evidence_id": "ev_hum_pyin",
+          "id": "eb_hum",
+          "kind": "evidence-binding",
+          "membership_id": "bm_hum",
+          "prereg_sha256": "14e0ed5fb6bff36a03585f99596fa7365bb37547a0eb9d4a5205d2690addcf7f",
+          "schemaVersion": "1.0.0",
+          "set": "hum-benchmark",
+          "subject": {
+            "host_class": "cpu/m5pro",
+            "profile_id": "analysis-transcribe-pyin-hmm",
+            "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa"
+          }
+        },
+        {
+          "base_rev": null,
+          "content_sha256": "14e0ed5fb6bff36a03585f99596fa7365bb37547a0eb9d4a5205d2690addcf7f",
+          "created_at": "2026-10-30T09:00:00Z",
+          "key": {
+            "mode": "major",
+            "tonic": "C"
+          },
+          "kind": "melody-spec",
+          "melody_id": "mel_bench",
+          "notes": [],
+          "phrases": [],
+          "ppq": 960,
+          "project_id": "prj_bench",
+          "quantize": null,
+          "rev": 1,
+          "schemaVersion": "1.0.0",
+          "source": {
+            "assembled_from": null,
+            "capture_sha256": "4605d0397259dddea5b9816b1925c579db7f8f202fba84055c126a67bbaf0194",
+            "seed_kind": "midi_file",
+            "transcription": null
+          },
+          "spec_kind": "melody",
+          "tempo_map": {
+            "meter": [
+              {
+                "denominator": 4,
+                "numerator": 4,
+                "tick": 0
+              }
+            ],
+            "rev": 1,
+            "tempo": [
+              {
+                "tick": 0,
+                "us_per_quarter": 500000
+              }
+            ]
+          }
+        },
+        {
+          "cases": [
+            {
+              "case_id": "case_h01",
+              "ground_truth_sha256": "29a252ab19d9394360f42ffd10d3255d080e7e80e7e15edac8758539112d0cc0",
+              "hum_sha256": "7d6d6d6cea0baae50964ddac3ec02749716787eb9e7b1e10ed2b4698f485cef1",
+              "lane": "individual"
+            }
+          ],
+          "committed_at": "2026-11-01T09:00:00Z",
+          "gate_owner": "jon",
+          "id": "bp_hum",
+          "kind": "benchmark-prereg",
+          "prereg_sha256": "3e097d54719534ab7faf735b96ab02af6b2b4396d7477247df5f6a9fd2684b92",
+          "protocol": {
+            "method": "blind_correction",
+            "metrics": [
+              "con_f1",
+              "conp_f1",
+              "conpoff_f1",
+              "correction_ops"
+            ]
+          },
+          "quota": {
+            "cases_complete_min": 1,
+            "repeat_pair_fraction": "0",
+            "sessions_min": 1,
+            "short_quota_outcome": "inconclusive"
+          },
+          "schemaVersion": "1.0.0",
+          "set": "hum-benchmark",
+          "subjects": [
+            {
+              "host_class": "cpu/m5pro",
+              "profile_id": "analysis-transcribe-pyin-hmm",
+              "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa"
+            },
+            {
+              "host_class": "cpu/m5pro",
+              "profile_id": "transcribe-basic-pitch",
+              "profile_revision": "9244a5233e6fea486a22985a55019cdf14d298e2b41ae1508f85fce878257646"
+            }
+          ],
+          "thresholds": [
+            {
+              "comparator": "gte",
+              "metric": "con_f1",
+              "value": "0.40"
+            },
+            {
+              "comparator": "gte",
+              "metric": "conp_f1",
+              "value": "0.30"
+            },
+            {
+              "comparator": "gte",
+              "metric": "conpoff_f1",
+              "value": "0.20"
+            },
+            {
+              "comparator": "lte",
+              "metric": "correction_ops",
+              "value": "60"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "check_id": "eb_hum",
+      "derivation": "The cited hash is a real benchmark preregistration, but of benchmark-48; a hum-benchmark reference never resolves to it.",
+      "expected": [
+        "prereg_unresolved"
+      ],
+      "name": "hum binding citing the engine preregistration",
+      "op": "binding",
+      "records": [
+        {
+          "evidence_id": "ev_hum_pyin",
+          "id": "eb_hum",
+          "kind": "evidence-binding",
+          "membership_id": "bm_hum",
+          "prereg_sha256": "0d6dfc315e9b31c1ce81d7e7e0d5ca6f705d0ab12db348c50c7cf394fccb21de",
+          "schemaVersion": "1.0.0",
+          "set": "hum-benchmark",
+          "subject": {
+            "host_class": "cpu/m5pro",
+            "profile_id": "analysis-transcribe-pyin-hmm",
+            "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa"
+          }
+        },
+        {
+          "cases": [
+            {
+              "brief_id": "brief_b01",
+              "case_id": "case_b01",
+              "lane": "individual"
+            }
+          ],
+          "committed_at": "2026-11-01T09:00:00Z",
+          "gate_owner": "jon",
+          "id": "bp_engine",
+          "kind": "benchmark-prereg",
+          "prereg_sha256": "0d6dfc315e9b31c1ce81d7e7e0d5ca6f705d0ab12db348c50c7cf394fccb21de",
+          "protocol": {
+            "method": "eval_audition",
+            "metrics": [
+              "preferred_rate",
+              "repeat_pair_agreement"
+            ]
+          },
+          "quota": {
+            "cases_complete_min": 1,
+            "repeat_pair_fraction": "0.10",
+            "sessions_min": 1,
+            "short_quota_outcome": "inconclusive"
+          },
+          "schemaVersion": "1.0.0",
+          "set": "benchmark-48",
+          "subjects": [
+            {
+              "host_class": "mlx/m5pro",
+              "profile_id": "ace-2b-sft-mlx",
+              "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+            },
+            {
+              "host_class": "cuda/rtx4090",
+              "profile_id": "yue2-3b-score",
+              "profile_revision": "37522ad18dee26df2c7956bcdd34163bca9d88e991f76a2f6c983581f67b0d8e"
+            }
+          ],
+          "thresholds": [
+            {
+              "comparator": "gte",
+              "metric": "preferred_rate",
+              "value": "0.50"
+            },
+            {
+              "comparator": "gte",
+              "metric": "repeat_pair_agreement",
+              "value": "0.70"
+            }
+          ]
+        },
+        {
+          "cases": [
+            {
+              "case_id": "case_h01",
+              "ground_truth_sha256": "29a252ab19d9394360f42ffd10d3255d080e7e80e7e15edac8758539112d0cc0",
+              "hum_sha256": "7d6d6d6cea0baae50964ddac3ec02749716787eb9e7b1e10ed2b4698f485cef1",
+              "lane": "individual"
+            }
+          ],
+          "committed_at": "2026-11-01T09:00:00Z",
+          "gate_owner": "jon",
+          "id": "bp_hum",
+          "kind": "benchmark-prereg",
+          "prereg_sha256": "3e097d54719534ab7faf735b96ab02af6b2b4396d7477247df5f6a9fd2684b92",
+          "protocol": {
+            "method": "blind_correction",
+            "metrics": [
+              "con_f1",
+              "conp_f1",
+              "conpoff_f1",
+              "correction_ops"
+            ]
+          },
+          "quota": {
+            "cases_complete_min": 1,
+            "repeat_pair_fraction": "0",
+            "sessions_min": 1,
+            "short_quota_outcome": "inconclusive"
+          },
+          "schemaVersion": "1.0.0",
+          "set": "hum-benchmark",
+          "subjects": [
+            {
+              "host_class": "cpu/m5pro",
+              "profile_id": "analysis-transcribe-pyin-hmm",
+              "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa"
+            },
+            {
+              "host_class": "cpu/m5pro",
+              "profile_id": "transcribe-basic-pitch",
+              "profile_revision": "9244a5233e6fea486a22985a55019cdf14d298e2b41ae1508f85fce878257646"
+            }
+          ],
+          "thresholds": [
+            {
+              "comparator": "gte",
+              "metric": "con_f1",
+              "value": "0.40"
+            },
+            {
+              "comparator": "gte",
+              "metric": "conp_f1",
+              "value": "0.30"
+            },
+            {
+              "comparator": "gte",
+              "metric": "conpoff_f1",
+              "value": "0.20"
+            },
+            {
+              "comparator": "lte",
+              "metric": "correction_ops",
+              "value": "60"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "check_id": "eb_engine",
+      "derivation": "job_ace was queued at 10:00:00, a minute before the 10:01:00 commit; job_yue (10:05:00) is later.",
+      "expected": [
+        "committed_after_run"
+      ],
+      "name": "preregistration committed after a run it governs",
+      "op": "binding",
+      "records": [
+        {
+          "evidence_id": "ev_bench_ace",
+          "id": "eb_engine",
+          "kind": "evidence-binding",
+          "membership_id": "bm_engine",
+          "prereg_sha256": "5e7d3f5acd2a9aa89979ef55e54411412062f18de92cb6bfebac303f907027a6",
+          "schemaVersion": "1.0.0",
+          "set": "benchmark-48",
+          "subject": {
+            "host_class": "mlx/m5pro",
+            "profile_id": "ace-2b-sft-mlx",
+            "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+          }
+        },
+        {
+          "cases": [
+            {
+              "brief_id": "brief_b01",
+              "case_id": "case_b01",
+              "lane": "individual"
+            }
+          ],
+          "committed_at": "2026-11-02T10:01:00Z",
+          "gate_owner": "jon",
+          "id": "bp_engine",
+          "kind": "benchmark-prereg",
+          "prereg_sha256": "5e7d3f5acd2a9aa89979ef55e54411412062f18de92cb6bfebac303f907027a6",
+          "protocol": {
+            "method": "eval_audition",
+            "metrics": [
+              "preferred_rate",
+              "repeat_pair_agreement"
+            ]
+          },
+          "quota": {
+            "cases_complete_min": 1,
+            "repeat_pair_fraction": "0.10",
+            "sessions_min": 1,
+            "short_quota_outcome": "inconclusive"
+          },
+          "schemaVersion": "1.0.0",
+          "set": "benchmark-48",
+          "subjects": [
+            {
+              "host_class": "mlx/m5pro",
+              "profile_id": "ace-2b-sft-mlx",
+              "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+            },
+            {
+              "host_class": "cuda/rtx4090",
+              "profile_id": "yue2-3b-score",
+              "profile_revision": "37522ad18dee26df2c7956bcdd34163bca9d88e991f76a2f6c983581f67b0d8e"
+            }
+          ],
+          "thresholds": [
+            {
+              "comparator": "gte",
+              "metric": "preferred_rate",
+              "value": "0.50"
+            },
+            {
+              "comparator": "gte",
+              "metric": "repeat_pair_agreement",
+              "value": "0.70"
+            }
+          ]
+        },
+        {
+          "cases": [
+            {
+              "arms": [
+                {
+                  "candidate_ids": [
+                    "cand_ace"
+                  ],
+                  "job_ids": [
+                    "job_ace"
+                  ],
+                  "melody_ids": [],
+                  "subject": {
+                    "host_class": "mlx/m5pro",
+                    "profile_id": "ace-2b-sft-mlx",
+                    "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+                  }
+                },
+                {
+                  "candidate_ids": [
+                    "cand_yue"
+                  ],
+                  "job_ids": [
+                    "job_yue"
+                  ],
+                  "melody_ids": [],
+                  "subject": {
+                    "host_class": "cuda/rtx4090",
+                    "profile_id": "yue2-3b-score",
+                    "profile_revision": "37522ad18dee26df2c7956bcdd34163bca9d88e991f76a2f6c983581f67b0d8e"
+                  }
+                }
+              ],
+              "case_id": "case_b01",
+              "verdict_ids": [
+                "vd_b01"
+              ]
+            }
+          ],
+          "id": "bm_engine",
+          "kind": "benchmark-membership",
+          "prereg_sha256": "5e7d3f5acd2a9aa89979ef55e54411412062f18de92cb6bfebac303f907027a6",
+          "schemaVersion": "1.0.0",
+          "set": "benchmark-48"
+        },
+        {
+          "approval_id": null,
+          "compute_profile_id": "cp_bench",
+          "cost": {
+            "basis": "local_zero",
+            "usd": "0.00"
+          },
+          "created_at": "2026-11-02T10:00:00Z",
+          "egress": [],
+          "error": null,
+          "history": [
+            {
+              "at": "2026-11-02T10:00:00Z",
+              "state": "queued"
+            },
+            {
+              "at": "2026-11-02T10:01:00Z",
+              "state": "preparing"
+            },
+            {
+              "at": "2026-11-02T10:02:00Z",
+              "state": "loading"
+            },
+            {
+              "at": "2026-11-02T10:03:00Z",
+              "state": "generating"
+            },
+            {
+              "at": "2026-11-02T10:04:00Z",
+              "state": "ready"
+            }
+          ],
+          "id": "job_ace",
+          "inputs": [],
+          "job_kind": "generate",
+          "kind": "job",
+          "lane": "individual",
+          "outputs": [
+            {
+              "role": "mix",
+              "sha256": "bfa3a06d4b8f660259961c953661e35ddfe4e51e31f213d7298e4323dce7f14d"
+            }
+          ],
+          "params": {
+            "actual": {},
+            "intent": {}
+          },
+          "parent_job_id": null,
+          "placement": {
+            "host_class": "mlx/m5pro",
+            "kind": "local"
+          },
+          "profile_id": "ace-2b-sft-mlx",
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "project_id": "prj_bench",
+          "quote_id": null,
+          "record_inputs": [],
+          "request_id": "gr_bench",
+          "retry": null,
+          "schemaVersion": "1.0.0",
+          "seed": 1,
+          "session_id": "ses_bench",
+          "state": "ready",
+          "steps": [],
+          "task": "cover"
+        },
+        {
+          "approval_id": null,
+          "compute_profile_id": "cp_bench",
+          "cost": {
+            "basis": "local_zero",
+            "usd": "0.00"
+          },
+          "created_at": "2026-11-02T10:05:00Z",
+          "egress": [],
+          "error": null,
+          "history": [
+            {
+              "at": "2026-11-02T10:05:00Z",
+              "state": "queued"
+            },
+            {
+              "at": "2026-11-02T10:06:00Z",
+              "state": "preparing"
+            },
+            {
+              "at": "2026-11-02T10:07:00Z",
+              "state": "loading"
+            },
+            {
+              "at": "2026-11-02T10:08:00Z",
+              "state": "generating"
+            },
+            {
+              "at": "2026-11-02T10:09:00Z",
+              "state": "ready"
+            }
+          ],
+          "id": "job_yue",
+          "inputs": [],
+          "job_kind": "generate",
+          "kind": "job",
+          "lane": "individual",
+          "outputs": [
+            {
+              "role": "mix",
+              "sha256": "c5474429837dcbf47b8a962c4a7379585edf1a19d8a2f3793bf21b6080ebef21"
+            }
+          ],
+          "params": {
+            "actual": {},
+            "intent": {}
+          },
+          "parent_job_id": null,
+          "placement": {
+            "host_class": "cuda/rtx4090",
+            "kind": "worker_host"
+          },
+          "profile_id": "yue2-3b-score",
+          "profile_revision": "37522ad18dee26df2c7956bcdd34163bca9d88e991f76a2f6c983581f67b0d8e",
+          "project_id": "prj_bench",
+          "quote_id": null,
+          "record_inputs": [],
+          "request_id": "gr_bench",
+          "retry": null,
+          "schemaVersion": "1.0.0",
+          "seed": 2,
+          "session_id": "ses_bench",
+          "state": "ready",
+          "steps": [],
+          "task": "score_to_song"
+        },
+        {
+          "adherence": {
+            "reason": "pending",
+            "state": "unmeasured"
+          },
+          "artifact_sha256": "bfa3a06d4b8f660259961c953661e35ddfe4e51e31f213d7298e4323dce7f14d",
+          "badges": [
+            "unbenchmarked route"
+          ],
+          "created_at": "2026-11-02T10:04:30Z",
+          "diagnostics": [],
+          "hard_constraints": [],
+          "id": "cand_ace",
+          "job_id": "job_ace",
+          "kind": "candidate",
+          "measures": null,
+          "ordinal": 1,
+          "placement": {
+            "host_class": "mlx/m5pro",
+            "kind": "local"
+          },
+          "preview_sha256": "79aecfeba9c1275207b7dab549f1deae527b9f1bd9887e59949f9f8ba0dad736",
+          "profile_id": "ace-2b-sft-mlx",
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "project_id": "prj_bench",
+          "route": "R2-synth",
+          "schemaVersion": "1.0.0",
+          "seed": 1,
+          "source": {
+            "generation_request_id": "gr_bench"
+          },
+          "synthetic_test": false,
+          "withheld_during_blind": [
+            "route",
+            "profile_id",
+            "profile_revision",
+            "seed",
+            "placement",
+            "job_id",
+            "artifact_sha256",
+            "preview_sha256",
+            "measures",
+            "adherence",
+            "hard_constraints",
+            "badges",
+            "diagnostics",
+            "source"
+          ]
+        },
+        {
+          "adherence": {
+            "reason": "pending",
+            "state": "unmeasured"
+          },
+          "artifact_sha256": "c5474429837dcbf47b8a962c4a7379585edf1a19d8a2f3793bf21b6080ebef21",
+          "badges": [
+            "unbenchmarked route"
+          ],
+          "created_at": "2026-11-02T10:09:00Z",
+          "diagnostics": [],
+          "hard_constraints": [],
+          "id": "cand_yue",
+          "job_id": "job_yue",
+          "kind": "candidate",
+          "measures": null,
+          "ordinal": 2,
+          "placement": {
+            "host_class": "cuda/rtx4090",
+            "kind": "worker_host"
+          },
+          "preview_sha256": "cb9826fc9f249b2f0655b7ecb965286018f2c44ef3d91dedcadf49dd150f76f9",
+          "profile_id": "yue2-3b-score",
+          "profile_revision": "37522ad18dee26df2c7956bcdd34163bca9d88e991f76a2f6c983581f67b0d8e",
+          "project_id": "prj_bench",
+          "route": "R1",
+          "schemaVersion": "1.0.0",
+          "seed": 2,
+          "source": {
+            "generation_request_id": "gr_bench"
+          },
+          "synthetic_test": false,
+          "withheld_during_blind": [
+            "route",
+            "profile_id",
+            "profile_revision",
+            "seed",
+            "placement",
+            "job_id",
+            "artifact_sha256",
+            "preview_sha256",
+            "measures",
+            "adherence",
+            "hard_constraints",
+            "badges",
+            "diagnostics",
+            "source"
+          ]
+        },
+        {
+          "all_arms_ready_at": "2026-11-02T10:09:00Z",
+          "anchors": [],
+          "arms": [
+            {
+              "label": "A",
+              "unplayable": false
+            },
+            {
+              "label": "B",
+              "unplayable": false
+            }
+          ],
+          "brief_id": "brief_b01",
+          "candidate_ids": [
+            "cand_ace",
+            "cand_yue"
+          ],
+          "commitment_sha256": "cca21f26e0f60eedee75c2a912ba8d4bd8b2a490cc1f5b91eb0b6b726a5b4548",
+          "gains": [
+            {
+              "gain_db": "-0.80",
+              "label": "A"
+            },
+            {
+              "gain_db": "0.00",
+              "label": "B"
+            }
+          ],
+          "id": "aud_b01",
+          "kind": "audition",
+          "loudness_standard": "BS.1770-4 (pyloudnorm)",
+          "mode": "eval",
+          "opened_at": "2026-11-03T17:30:00Z",
+          "prereg_sha256": "5e7d3f5acd2a9aa89979ef55e54411412062f18de92cb6bfebac303f907027a6",
+          "preview": {
+            "bit_depth": 24,
+            "sample_rate": 48000
+          },
+          "project_id": null,
+          "repeat_pairs": [],
+          "request_ids": [],
+          "residual_leak_acknowledged": [
+            "duration",
+            "sonic_character"
+          ],
+          "residual_mismatch_lu": "0.04",
+          "schemaVersion": "1.0.0",
+          "state": "revealed",
+          "true_peak_meter": "studio-truepeak-4x"
+        },
+        {
+          "act": {
+            "act": "give_verdict",
+            "at": "2026-11-03T17:45:00Z",
+            "scope": "owner-ui"
+          },
+          "audition_id": "aud_b01",
+          "axes": [],
+          "evidence_kind": "listening-preregistered",
+          "id": "vd_b01",
+          "kind": "verdict",
+          "preferred": "A",
+          "problem_intervals": [],
+          "schemaVersion": "1.0.0",
+          "seconds_listened": [
+            {
+              "label": "A",
+              "seconds": 150
+            },
+            {
+              "label": "B",
+              "seconds": 140
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "check_id": "eb_hum",
+      "derivation": "job_pyin was queued at 11:00:00, the commit time itself; the commit must be strictly earlier than every run.",
+      "expected": [
+        "committed_after_run"
+      ],
+      "name": "a run queued the same second the preregistration was committed",
+      "op": "binding",
+      "records": [
+        {
+          "evidence_id": "ev_hum_pyin",
+          "id": "eb_hum",
+          "kind": "evidence-binding",
+          "membership_id": "bm_hum",
+          "prereg_sha256": "5be1fcf5dd6777da36504b71c3fed25c4875d415834ffc4cbbf3840afe5c944f",
+          "schemaVersion": "1.0.0",
+          "set": "hum-benchmark",
+          "subject": {
+            "host_class": "cpu/m5pro",
+            "profile_id": "analysis-transcribe-pyin-hmm",
+            "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa"
+          }
+        },
+        {
+          "cases": [
+            {
+              "case_id": "case_h01",
+              "ground_truth_sha256": "29a252ab19d9394360f42ffd10d3255d080e7e80e7e15edac8758539112d0cc0",
+              "hum_sha256": "7d6d6d6cea0baae50964ddac3ec02749716787eb9e7b1e10ed2b4698f485cef1",
+              "lane": "individual"
+            }
+          ],
+          "committed_at": "2026-11-02T11:00:00Z",
+          "gate_owner": "jon",
+          "id": "bp_hum",
+          "kind": "benchmark-prereg",
+          "prereg_sha256": "5be1fcf5dd6777da36504b71c3fed25c4875d415834ffc4cbbf3840afe5c944f",
+          "protocol": {
+            "method": "blind_correction",
+            "metrics": [
+              "con_f1",
+              "conp_f1",
+              "conpoff_f1",
+              "correction_ops"
+            ]
+          },
+          "quota": {
+            "cases_complete_min": 1,
+            "repeat_pair_fraction": "0",
+            "sessions_min": 1,
+            "short_quota_outcome": "inconclusive"
+          },
+          "schemaVersion": "1.0.0",
+          "set": "hum-benchmark",
+          "subjects": [
+            {
+              "host_class": "cpu/m5pro",
+              "profile_id": "analysis-transcribe-pyin-hmm",
+              "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa"
+            },
+            {
+              "host_class": "cpu/m5pro",
+              "profile_id": "transcribe-basic-pitch",
+              "profile_revision": "9244a5233e6fea486a22985a55019cdf14d298e2b41ae1508f85fce878257646"
+            }
+          ],
+          "thresholds": [
+            {
+              "comparator": "gte",
+              "metric": "con_f1",
+              "value": "0.40"
+            },
+            {
+              "comparator": "gte",
+              "metric": "conp_f1",
+              "value": "0.30"
+            },
+            {
+              "comparator": "gte",
+              "metric": "conpoff_f1",
+              "value": "0.20"
+            },
+            {
+              "comparator": "lte",
+              "metric": "correction_ops",
+              "value": "60"
+            }
+          ]
+        },
+        {
+          "cases": [
+            {
+              "arms": [
+                {
+                  "candidate_ids": [],
+                  "job_ids": [
+                    "job_pyin"
+                  ],
+                  "melody_ids": [
+                    "mel_h01_pyin"
+                  ],
+                  "subject": {
+                    "host_class": "cpu/m5pro",
+                    "profile_id": "analysis-transcribe-pyin-hmm",
+                    "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa"
+                  }
+                },
+                {
+                  "candidate_ids": [],
+                  "job_ids": [
+                    "job_bp"
+                  ],
+                  "melody_ids": [
+                    "mel_h01_bp"
+                  ],
+                  "subject": {
+                    "host_class": "cpu/m5pro",
+                    "profile_id": "transcribe-basic-pitch",
+                    "profile_revision": "9244a5233e6fea486a22985a55019cdf14d298e2b41ae1508f85fce878257646"
+                  }
+                }
+              ],
+              "case_id": "case_h01",
+              "verdict_ids": []
+            }
+          ],
+          "id": "bm_hum",
+          "kind": "benchmark-membership",
+          "prereg_sha256": "5be1fcf5dd6777da36504b71c3fed25c4875d415834ffc4cbbf3840afe5c944f",
+          "schemaVersion": "1.0.0",
+          "set": "hum-benchmark"
+        },
+        {
+          "approval_id": null,
+          "compute_profile_id": "cp_bench",
+          "cost": {
+            "basis": "local_zero",
+            "usd": "0.00"
+          },
+          "created_at": "2026-11-02T11:00:00Z",
+          "egress": [],
+          "error": null,
+          "history": [
+            {
+              "at": "2026-11-02T11:00:00Z",
+              "state": "queued"
+            },
+            {
+              "at": "2026-11-02T11:01:00Z",
+              "state": "preparing"
+            },
+            {
+              "at": "2026-11-02T11:02:00Z",
+              "state": "loading"
+            },
+            {
+              "at": "2026-11-02T11:03:00Z",
+              "state": "generating"
+            },
+            {
+              "at": "2026-11-02T11:04:00Z",
+              "state": "ready"
+            }
+          ],
+          "id": "job_pyin",
+          "inputs": [],
+          "job_kind": "transcribe",
+          "kind": "job",
+          "lane": "individual",
+          "outputs": [
+            {
+              "role": "melody_spec",
+              "sha256": "f9da303de8701d3559d2c2a1aef08cc91a4bb5c7c6ffdc99ef0272f47a9689dd"
+            }
+          ],
+          "params": {
+            "actual": {},
+            "intent": {}
+          },
+          "parent_job_id": null,
+          "placement": {
+            "host_class": "cpu/m5pro",
+            "kind": "local"
+          },
+          "profile_id": "analysis-transcribe-pyin-hmm",
+          "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa",
+          "project_id": "prj_bench",
+          "quote_id": null,
+          "record_inputs": [],
+          "request_id": null,
+          "retry": null,
+          "schemaVersion": "1.0.0",
+          "seed": null,
+          "session_id": "ses_bench",
+          "state": "ready",
+          "steps": [],
+          "task": "transcribe"
+        },
+        {
+          "approval_id": null,
+          "compute_profile_id": "cp_bench",
+          "cost": {
+            "basis": "local_zero",
+            "usd": "0.00"
+          },
+          "created_at": "2026-11-02T11:10:00Z",
+          "egress": [],
+          "error": null,
+          "history": [
+            {
+              "at": "2026-11-02T11:10:00Z",
+              "state": "queued"
+            },
+            {
+              "at": "2026-11-02T11:11:00Z",
+              "state": "preparing"
+            },
+            {
+              "at": "2026-11-02T11:12:00Z",
+              "state": "loading"
+            },
+            {
+              "at": "2026-11-02T11:13:00Z",
+              "state": "generating"
+            },
+            {
+              "at": "2026-11-02T11:14:00Z",
+              "state": "ready"
+            }
+          ],
+          "id": "job_bp",
+          "inputs": [],
+          "job_kind": "transcribe",
+          "kind": "job",
+          "lane": "individual",
+          "outputs": [
+            {
+              "role": "melody_spec",
+              "sha256": "698f91d1b49609d273b4753ebc294c4353f57dd658057435d0fff6a535ebb5d8"
+            }
+          ],
+          "params": {
+            "actual": {},
+            "intent": {}
+          },
+          "parent_job_id": null,
+          "placement": {
+            "host_class": "cpu/m5pro",
+            "kind": "local"
+          },
+          "profile_id": "transcribe-basic-pitch",
+          "profile_revision": "9244a5233e6fea486a22985a55019cdf14d298e2b41ae1508f85fce878257646",
+          "project_id": "prj_bench",
+          "quote_id": null,
+          "record_inputs": [],
+          "request_id": null,
+          "retry": null,
+          "schemaVersion": "1.0.0",
+          "seed": null,
+          "session_id": "ses_bench",
+          "state": "ready",
+          "steps": [],
+          "task": "transcribe"
+        },
+        {
+          "entries": [
+            {
+              "at": "2026-11-02T12:00:00Z",
+              "base_rev": 1,
+              "new_rev": 2,
+              "ops": [
+                {
+                  "delta_ticks": 240,
+                  "note_ids": [
+                    "n1"
+                  ],
+                  "op": "move"
+                }
+              ],
+              "seq": 1
+            }
+          ],
+          "kind": "correction-log",
+          "melody_id": "mel_h01_pyin",
+          "project_id": "prj_bench",
+          "schemaVersion": "1.0.0"
+        },
+        {
+          "entries": [
+            {
+              "at": "2026-11-02T12:00:00Z",
+              "base_rev": 1,
+              "new_rev": 2,
+              "ops": [
+                {
+                  "delta_ticks": 240,
+                  "note_ids": [
+                    "n1"
+                  ],
+                  "op": "move"
+                }
+              ],
+              "seq": 1
+            }
+          ],
+          "kind": "correction-log",
+          "melody_id": "mel_h01_bp",
+          "project_id": "prj_bench",
+          "schemaVersion": "1.0.0"
+        }
+      ]
+    },
+    {
+      "check_id": "eb_engine",
+      "derivation": "vd_b01 is an owner-ui verdict, but both arms of aud_b01 are Synthetic test output; synthetic material never meets a benchmark gate.",
+      "expected": [
+        "verdict_synthetic"
+      ],
+      "name": "synthetic-only verdicts presented as owner listening",
+      "op": "binding",
+      "records": [
+        {
+          "evidence_id": "ev_bench_ace",
+          "id": "eb_engine",
+          "kind": "evidence-binding",
+          "membership_id": "bm_engine",
+          "prereg_sha256": "0d6dfc315e9b31c1ce81d7e7e0d5ca6f705d0ab12db348c50c7cf394fccb21de",
+          "schemaVersion": "1.0.0",
+          "set": "benchmark-48",
+          "subject": {
+            "host_class": "mlx/m5pro",
+            "profile_id": "ace-2b-sft-mlx",
+            "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+          }
+        },
+        {
+          "cases": [
+            {
+              "brief_id": "brief_b01",
+              "case_id": "case_b01",
+              "lane": "individual"
+            }
+          ],
+          "committed_at": "2026-11-01T09:00:00Z",
+          "gate_owner": "jon",
+          "id": "bp_engine",
+          "kind": "benchmark-prereg",
+          "prereg_sha256": "0d6dfc315e9b31c1ce81d7e7e0d5ca6f705d0ab12db348c50c7cf394fccb21de",
+          "protocol": {
+            "method": "eval_audition",
+            "metrics": [
+              "preferred_rate",
+              "repeat_pair_agreement"
+            ]
+          },
+          "quota": {
+            "cases_complete_min": 1,
+            "repeat_pair_fraction": "0.10",
+            "sessions_min": 1,
+            "short_quota_outcome": "inconclusive"
+          },
+          "schemaVersion": "1.0.0",
+          "set": "benchmark-48",
+          "subjects": [
+            {
+              "host_class": "mlx/m5pro",
+              "profile_id": "ace-2b-sft-mlx",
+              "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+            },
+            {
+              "host_class": "cuda/rtx4090",
+              "profile_id": "yue2-3b-score",
+              "profile_revision": "37522ad18dee26df2c7956bcdd34163bca9d88e991f76a2f6c983581f67b0d8e"
+            }
+          ],
+          "thresholds": [
+            {
+              "comparator": "gte",
+              "metric": "preferred_rate",
+              "value": "0.50"
+            },
+            {
+              "comparator": "gte",
+              "metric": "repeat_pair_agreement",
+              "value": "0.70"
+            }
+          ]
+        },
+        {
+          "cases": [
+            {
+              "arms": [
+                {
+                  "candidate_ids": [
+                    "cand_ace"
+                  ],
+                  "job_ids": [
+                    "job_ace"
+                  ],
+                  "melody_ids": [],
+                  "subject": {
+                    "host_class": "mlx/m5pro",
+                    "profile_id": "ace-2b-sft-mlx",
+                    "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+                  }
+                },
+                {
+                  "candidate_ids": [
+                    "cand_yue"
+                  ],
+                  "job_ids": [
+                    "job_yue"
+                  ],
+                  "melody_ids": [],
+                  "subject": {
+                    "host_class": "cuda/rtx4090",
+                    "profile_id": "yue2-3b-score",
+                    "profile_revision": "37522ad18dee26df2c7956bcdd34163bca9d88e991f76a2f6c983581f67b0d8e"
+                  }
+                }
+              ],
+              "case_id": "case_b01",
+              "verdict_ids": [
+                "vd_b01"
+              ]
+            }
+          ],
+          "id": "bm_engine",
+          "kind": "benchmark-membership",
+          "prereg_sha256": "0d6dfc315e9b31c1ce81d7e7e0d5ca6f705d0ab12db348c50c7cf394fccb21de",
+          "schemaVersion": "1.0.0",
+          "set": "benchmark-48"
+        },
+        {
+          "approval_id": null,
+          "compute_profile_id": "cp_bench",
+          "cost": {
+            "basis": "local_zero",
+            "usd": "0.00"
+          },
+          "created_at": "2026-11-02T10:00:00Z",
+          "egress": [],
+          "error": null,
+          "history": [
+            {
+              "at": "2026-11-02T10:00:00Z",
+              "state": "queued"
+            },
+            {
+              "at": "2026-11-02T10:01:00Z",
+              "state": "preparing"
+            },
+            {
+              "at": "2026-11-02T10:02:00Z",
+              "state": "loading"
+            },
+            {
+              "at": "2026-11-02T10:03:00Z",
+              "state": "generating"
+            },
+            {
+              "at": "2026-11-02T10:04:00Z",
+              "state": "ready"
+            }
+          ],
+          "id": "job_ace",
+          "inputs": [],
+          "job_kind": "generate",
+          "kind": "job",
+          "lane": "individual",
+          "outputs": [
+            {
+              "role": "mix",
+              "sha256": "bfa3a06d4b8f660259961c953661e35ddfe4e51e31f213d7298e4323dce7f14d"
+            }
+          ],
+          "params": {
+            "actual": {},
+            "intent": {}
+          },
+          "parent_job_id": null,
+          "placement": {
+            "host_class": "mlx/m5pro",
+            "kind": "local"
+          },
+          "profile_id": "ace-2b-sft-mlx",
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "project_id": "prj_bench",
+          "quote_id": null,
+          "record_inputs": [],
+          "request_id": "gr_bench",
+          "retry": null,
+          "schemaVersion": "1.0.0",
+          "seed": 1,
+          "session_id": "ses_bench",
+          "state": "ready",
+          "steps": [],
+          "task": "cover"
+        },
+        {
+          "approval_id": null,
+          "compute_profile_id": "cp_bench",
+          "cost": {
+            "basis": "local_zero",
+            "usd": "0.00"
+          },
+          "created_at": "2026-11-02T10:05:00Z",
+          "egress": [],
+          "error": null,
+          "history": [
+            {
+              "at": "2026-11-02T10:05:00Z",
+              "state": "queued"
+            },
+            {
+              "at": "2026-11-02T10:06:00Z",
+              "state": "preparing"
+            },
+            {
+              "at": "2026-11-02T10:07:00Z",
+              "state": "loading"
+            },
+            {
+              "at": "2026-11-02T10:08:00Z",
+              "state": "generating"
+            },
+            {
+              "at": "2026-11-02T10:09:00Z",
+              "state": "ready"
+            }
+          ],
+          "id": "job_yue",
+          "inputs": [],
+          "job_kind": "generate",
+          "kind": "job",
+          "lane": "individual",
+          "outputs": [
+            {
+              "role": "mix",
+              "sha256": "c5474429837dcbf47b8a962c4a7379585edf1a19d8a2f3793bf21b6080ebef21"
+            }
+          ],
+          "params": {
+            "actual": {},
+            "intent": {}
+          },
+          "parent_job_id": null,
+          "placement": {
+            "host_class": "cuda/rtx4090",
+            "kind": "worker_host"
+          },
+          "profile_id": "yue2-3b-score",
+          "profile_revision": "37522ad18dee26df2c7956bcdd34163bca9d88e991f76a2f6c983581f67b0d8e",
+          "project_id": "prj_bench",
+          "quote_id": null,
+          "record_inputs": [],
+          "request_id": "gr_bench",
+          "retry": null,
+          "schemaVersion": "1.0.0",
+          "seed": 2,
+          "session_id": "ses_bench",
+          "state": "ready",
+          "steps": [],
+          "task": "score_to_song"
+        },
+        {
+          "adherence": {
+            "reason": "pending",
+            "state": "unmeasured"
+          },
+          "artifact_sha256": "bfa3a06d4b8f660259961c953661e35ddfe4e51e31f213d7298e4323dce7f14d",
+          "badges": [
+            "Synthetic test output"
+          ],
+          "created_at": "2026-11-02T10:04:30Z",
+          "diagnostics": [],
+          "hard_constraints": [],
+          "id": "cand_ace",
+          "job_id": "job_ace",
+          "kind": "candidate",
+          "measures": null,
+          "ordinal": 1,
+          "placement": {
+            "host_class": "mlx/m5pro",
+            "kind": "local"
+          },
+          "preview_sha256": "79aecfeba9c1275207b7dab549f1deae527b9f1bd9887e59949f9f8ba0dad736",
+          "profile_id": "ace-2b-sft-mlx",
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "project_id": "prj_bench",
+          "route": "R2-synth",
+          "schemaVersion": "1.0.0",
+          "seed": 1,
+          "source": {
+            "generation_request_id": "gr_bench"
+          },
+          "synthetic_test": true,
+          "withheld_during_blind": [
+            "route",
+            "profile_id",
+            "profile_revision",
+            "seed",
+            "placement",
+            "job_id",
+            "artifact_sha256",
+            "preview_sha256",
+            "measures",
+            "adherence",
+            "hard_constraints",
+            "badges",
+            "diagnostics",
+            "source"
+          ]
+        },
+        {
+          "adherence": {
+            "reason": "pending",
+            "state": "unmeasured"
+          },
+          "artifact_sha256": "c5474429837dcbf47b8a962c4a7379585edf1a19d8a2f3793bf21b6080ebef21",
+          "badges": [
+            "Synthetic test output"
+          ],
+          "created_at": "2026-11-02T10:09:00Z",
+          "diagnostics": [],
+          "hard_constraints": [],
+          "id": "cand_yue",
+          "job_id": "job_yue",
+          "kind": "candidate",
+          "measures": null,
+          "ordinal": 2,
+          "placement": {
+            "host_class": "cuda/rtx4090",
+            "kind": "worker_host"
+          },
+          "preview_sha256": "cb9826fc9f249b2f0655b7ecb965286018f2c44ef3d91dedcadf49dd150f76f9",
+          "profile_id": "yue2-3b-score",
+          "profile_revision": "37522ad18dee26df2c7956bcdd34163bca9d88e991f76a2f6c983581f67b0d8e",
+          "project_id": "prj_bench",
+          "route": "R1",
+          "schemaVersion": "1.0.0",
+          "seed": 2,
+          "source": {
+            "generation_request_id": "gr_bench"
+          },
+          "synthetic_test": true,
+          "withheld_during_blind": [
+            "route",
+            "profile_id",
+            "profile_revision",
+            "seed",
+            "placement",
+            "job_id",
+            "artifact_sha256",
+            "preview_sha256",
+            "measures",
+            "adherence",
+            "hard_constraints",
+            "badges",
+            "diagnostics",
+            "source"
+          ]
+        },
+        {
+          "all_arms_ready_at": "2026-11-02T10:09:00Z",
+          "anchors": [],
+          "arms": [
+            {
+              "label": "A",
+              "unplayable": false
+            },
+            {
+              "label": "B",
+              "unplayable": false
+            }
+          ],
+          "brief_id": "brief_b01",
+          "candidate_ids": [
+            "cand_ace",
+            "cand_yue"
+          ],
+          "commitment_sha256": "cca21f26e0f60eedee75c2a912ba8d4bd8b2a490cc1f5b91eb0b6b726a5b4548",
+          "gains": [
+            {
+              "gain_db": "-0.80",
+              "label": "A"
+            },
+            {
+              "gain_db": "0.00",
+              "label": "B"
+            }
+          ],
+          "id": "aud_b01",
+          "kind": "audition",
+          "loudness_standard": "BS.1770-4 (pyloudnorm)",
+          "mode": "eval",
+          "opened_at": "2026-11-03T17:30:00Z",
+          "prereg_sha256": "0d6dfc315e9b31c1ce81d7e7e0d5ca6f705d0ab12db348c50c7cf394fccb21de",
+          "preview": {
+            "bit_depth": 24,
+            "sample_rate": 48000
+          },
+          "project_id": null,
+          "repeat_pairs": [],
+          "request_ids": [],
+          "residual_leak_acknowledged": [
+            "duration",
+            "sonic_character"
+          ],
+          "residual_mismatch_lu": "0.04",
+          "schemaVersion": "1.0.0",
+          "state": "revealed",
+          "true_peak_meter": "studio-truepeak-4x"
+        },
+        {
+          "act": {
+            "act": "give_verdict",
+            "at": "2026-11-03T17:45:00Z",
+            "scope": "owner-ui"
+          },
+          "audition_id": "aud_b01",
+          "axes": [],
+          "evidence_kind": "listening-preregistered",
+          "id": "vd_b01",
+          "kind": "verdict",
+          "preferred": "A",
+          "problem_intervals": [],
+          "schemaVersion": "1.0.0",
+          "seconds_listened": [
+            {
+              "label": "A",
+              "seconds": 150
+            },
+            {
+              "label": "B",
+              "seconds": 140
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "check_id": "eb_hum",
+      "derivation": "bm_hum names a different preregistration hash than the binding, so it is not this set's membership.",
+      "expected": [
+        "membership_unresolved"
+      ],
+      "name": "membership of another preregistration",
+      "op": "binding",
+      "records": [
+        {
+          "evidence_id": "ev_hum_pyin",
+          "id": "eb_hum",
+          "kind": "evidence-binding",
+          "membership_id": "bm_hum",
+          "prereg_sha256": "3e097d54719534ab7faf735b96ab02af6b2b4396d7477247df5f6a9fd2684b92",
+          "schemaVersion": "1.0.0",
+          "set": "hum-benchmark",
+          "subject": {
+            "host_class": "cpu/m5pro",
+            "profile_id": "analysis-transcribe-pyin-hmm",
+            "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa"
+          }
+        },
+        {
+          "cases": [
+            {
+              "case_id": "case_h01",
+              "ground_truth_sha256": "29a252ab19d9394360f42ffd10d3255d080e7e80e7e15edac8758539112d0cc0",
+              "hum_sha256": "7d6d6d6cea0baae50964ddac3ec02749716787eb9e7b1e10ed2b4698f485cef1",
+              "lane": "individual"
+            }
+          ],
+          "committed_at": "2026-11-01T09:00:00Z",
+          "gate_owner": "jon",
+          "id": "bp_hum",
+          "kind": "benchmark-prereg",
+          "prereg_sha256": "3e097d54719534ab7faf735b96ab02af6b2b4396d7477247df5f6a9fd2684b92",
+          "protocol": {
+            "method": "blind_correction",
+            "metrics": [
+              "con_f1",
+              "conp_f1",
+              "conpoff_f1",
+              "correction_ops"
+            ]
+          },
+          "quota": {
+            "cases_complete_min": 1,
+            "repeat_pair_fraction": "0",
+            "sessions_min": 1,
+            "short_quota_outcome": "inconclusive"
+          },
+          "schemaVersion": "1.0.0",
+          "set": "hum-benchmark",
+          "subjects": [
+            {
+              "host_class": "cpu/m5pro",
+              "profile_id": "analysis-transcribe-pyin-hmm",
+              "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa"
+            },
+            {
+              "host_class": "cpu/m5pro",
+              "profile_id": "transcribe-basic-pitch",
+              "profile_revision": "9244a5233e6fea486a22985a55019cdf14d298e2b41ae1508f85fce878257646"
+            }
+          ],
+          "thresholds": [
+            {
+              "comparator": "gte",
+              "metric": "con_f1",
+              "value": "0.40"
+            },
+            {
+              "comparator": "gte",
+              "metric": "conp_f1",
+              "value": "0.30"
+            },
+            {
+              "comparator": "gte",
+              "metric": "conpoff_f1",
+              "value": "0.20"
+            },
+            {
+              "comparator": "lte",
+              "metric": "correction_ops",
+              "value": "60"
+            }
+          ]
+        },
+        {
+          "cases": [
+            {
+              "arms": [
+                {
+                  "candidate_ids": [],
+                  "job_ids": [
+                    "job_pyin"
+                  ],
+                  "melody_ids": [
+                    "mel_h01_pyin"
+                  ],
+                  "subject": {
+                    "host_class": "cpu/m5pro",
+                    "profile_id": "analysis-transcribe-pyin-hmm",
+                    "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa"
+                  }
+                },
+                {
+                  "candidate_ids": [],
+                  "job_ids": [
+                    "job_bp"
+                  ],
+                  "melody_ids": [
+                    "mel_h01_bp"
+                  ],
+                  "subject": {
+                    "host_class": "cpu/m5pro",
+                    "profile_id": "transcribe-basic-pitch",
+                    "profile_revision": "9244a5233e6fea486a22985a55019cdf14d298e2b41ae1508f85fce878257646"
+                  }
+                }
+              ],
+              "case_id": "case_h01",
+              "verdict_ids": []
+            }
+          ],
+          "id": "bm_hum",
+          "kind": "benchmark-membership",
+          "prereg_sha256": "0887e09c27e554fd87e23fbb400c288e020e74d7e2665ca1915889aa0d30f468",
+          "schemaVersion": "1.0.0",
+          "set": "hum-benchmark"
+        },
+        {
+          "approval_id": null,
+          "compute_profile_id": "cp_bench",
+          "cost": {
+            "basis": "local_zero",
+            "usd": "0.00"
+          },
+          "created_at": "2026-11-02T11:00:00Z",
+          "egress": [],
+          "error": null,
+          "history": [
+            {
+              "at": "2026-11-02T11:00:00Z",
+              "state": "queued"
+            },
+            {
+              "at": "2026-11-02T11:01:00Z",
+              "state": "preparing"
+            },
+            {
+              "at": "2026-11-02T11:02:00Z",
+              "state": "loading"
+            },
+            {
+              "at": "2026-11-02T11:03:00Z",
+              "state": "generating"
+            },
+            {
+              "at": "2026-11-02T11:04:00Z",
+              "state": "ready"
+            }
+          ],
+          "id": "job_pyin",
+          "inputs": [],
+          "job_kind": "transcribe",
+          "kind": "job",
+          "lane": "individual",
+          "outputs": [
+            {
+              "role": "melody_spec",
+              "sha256": "f9da303de8701d3559d2c2a1aef08cc91a4bb5c7c6ffdc99ef0272f47a9689dd"
+            }
+          ],
+          "params": {
+            "actual": {},
+            "intent": {}
+          },
+          "parent_job_id": null,
+          "placement": {
+            "host_class": "cpu/m5pro",
+            "kind": "local"
+          },
+          "profile_id": "analysis-transcribe-pyin-hmm",
+          "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa",
+          "project_id": "prj_bench",
+          "quote_id": null,
+          "record_inputs": [],
+          "request_id": null,
+          "retry": null,
+          "schemaVersion": "1.0.0",
+          "seed": null,
+          "session_id": "ses_bench",
+          "state": "ready",
+          "steps": [],
+          "task": "transcribe"
+        },
+        {
+          "approval_id": null,
+          "compute_profile_id": "cp_bench",
+          "cost": {
+            "basis": "local_zero",
+            "usd": "0.00"
+          },
+          "created_at": "2026-11-02T11:10:00Z",
+          "egress": [],
+          "error": null,
+          "history": [
+            {
+              "at": "2026-11-02T11:10:00Z",
+              "state": "queued"
+            },
+            {
+              "at": "2026-11-02T11:11:00Z",
+              "state": "preparing"
+            },
+            {
+              "at": "2026-11-02T11:12:00Z",
+              "state": "loading"
+            },
+            {
+              "at": "2026-11-02T11:13:00Z",
+              "state": "generating"
+            },
+            {
+              "at": "2026-11-02T11:14:00Z",
+              "state": "ready"
+            }
+          ],
+          "id": "job_bp",
+          "inputs": [],
+          "job_kind": "transcribe",
+          "kind": "job",
+          "lane": "individual",
+          "outputs": [
+            {
+              "role": "melody_spec",
+              "sha256": "698f91d1b49609d273b4753ebc294c4353f57dd658057435d0fff6a535ebb5d8"
+            }
+          ],
+          "params": {
+            "actual": {},
+            "intent": {}
+          },
+          "parent_job_id": null,
+          "placement": {
+            "host_class": "cpu/m5pro",
+            "kind": "local"
+          },
+          "profile_id": "transcribe-basic-pitch",
+          "profile_revision": "9244a5233e6fea486a22985a55019cdf14d298e2b41ae1508f85fce878257646",
+          "project_id": "prj_bench",
+          "quote_id": null,
+          "record_inputs": [],
+          "request_id": null,
+          "retry": null,
+          "schemaVersion": "1.0.0",
+          "seed": null,
+          "session_id": "ses_bench",
+          "state": "ready",
+          "steps": [],
+          "task": "transcribe"
+        },
+        {
+          "entries": [
+            {
+              "at": "2026-11-02T12:00:00Z",
+              "base_rev": 1,
+              "new_rev": 2,
+              "ops": [
+                {
+                  "delta_ticks": 240,
+                  "note_ids": [
+                    "n1"
+                  ],
+                  "op": "move"
+                }
+              ],
+              "seq": 1
+            }
+          ],
+          "kind": "correction-log",
+          "melody_id": "mel_h01_pyin",
+          "project_id": "prj_bench",
+          "schemaVersion": "1.0.0"
+        },
+        {
+          "entries": [
+            {
+              "at": "2026-11-02T12:00:00Z",
+              "base_rev": 1,
+              "new_rev": 2,
+              "ops": [
+                {
+                  "delta_ticks": 240,
+                  "note_ids": [
+                    "n1"
+                  ],
+                  "op": "move"
+                }
+              ],
+              "seq": 1
+            }
+          ],
+          "kind": "correction-log",
+          "melody_id": "mel_h01_bp",
+          "project_id": "prj_bench",
+          "schemaVersion": "1.0.0"
+        }
+      ]
+    },
+    {
+      "check_id": "eb_hum",
+      "derivation": "pYIN was preregistered on cpu/m5pro; evidence from cpu/linux-ci would credit a host class that was never under test.",
+      "expected": [
+        "subject_unregistered"
+      ],
+      "name": "binding for an unpreregistered host class",
+      "op": "binding",
+      "records": [
+        {
+          "evidence_id": "ev_hum_pyin",
+          "id": "eb_hum",
+          "kind": "evidence-binding",
+          "membership_id": "bm_hum",
+          "prereg_sha256": "3e097d54719534ab7faf735b96ab02af6b2b4396d7477247df5f6a9fd2684b92",
+          "schemaVersion": "1.0.0",
+          "set": "hum-benchmark",
+          "subject": {
+            "host_class": "cpu/linux-ci",
+            "profile_id": "analysis-transcribe-pyin-hmm",
+            "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa"
+          }
+        },
+        {
+          "cases": [
+            {
+              "case_id": "case_h01",
+              "ground_truth_sha256": "29a252ab19d9394360f42ffd10d3255d080e7e80e7e15edac8758539112d0cc0",
+              "hum_sha256": "7d6d6d6cea0baae50964ddac3ec02749716787eb9e7b1e10ed2b4698f485cef1",
+              "lane": "individual"
+            }
+          ],
+          "committed_at": "2026-11-01T09:00:00Z",
+          "gate_owner": "jon",
+          "id": "bp_hum",
+          "kind": "benchmark-prereg",
+          "prereg_sha256": "3e097d54719534ab7faf735b96ab02af6b2b4396d7477247df5f6a9fd2684b92",
+          "protocol": {
+            "method": "blind_correction",
+            "metrics": [
+              "con_f1",
+              "conp_f1",
+              "conpoff_f1",
+              "correction_ops"
+            ]
+          },
+          "quota": {
+            "cases_complete_min": 1,
+            "repeat_pair_fraction": "0",
+            "sessions_min": 1,
+            "short_quota_outcome": "inconclusive"
+          },
+          "schemaVersion": "1.0.0",
+          "set": "hum-benchmark",
+          "subjects": [
+            {
+              "host_class": "cpu/m5pro",
+              "profile_id": "analysis-transcribe-pyin-hmm",
+              "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa"
+            },
+            {
+              "host_class": "cpu/m5pro",
+              "profile_id": "transcribe-basic-pitch",
+              "profile_revision": "9244a5233e6fea486a22985a55019cdf14d298e2b41ae1508f85fce878257646"
+            }
+          ],
+          "thresholds": [
+            {
+              "comparator": "gte",
+              "metric": "con_f1",
+              "value": "0.40"
+            },
+            {
+              "comparator": "gte",
+              "metric": "conp_f1",
+              "value": "0.30"
+            },
+            {
+              "comparator": "gte",
+              "metric": "conpoff_f1",
+              "value": "0.20"
+            },
+            {
+              "comparator": "lte",
+              "metric": "correction_ops",
+              "value": "60"
+            }
+          ]
+        },
+        {
+          "cases": [
+            {
+              "arms": [
+                {
+                  "candidate_ids": [],
+                  "job_ids": [
+                    "job_pyin"
+                  ],
+                  "melody_ids": [
+                    "mel_h01_pyin"
+                  ],
+                  "subject": {
+                    "host_class": "cpu/m5pro",
+                    "profile_id": "analysis-transcribe-pyin-hmm",
+                    "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa"
+                  }
+                },
+                {
+                  "candidate_ids": [],
+                  "job_ids": [
+                    "job_bp"
+                  ],
+                  "melody_ids": [
+                    "mel_h01_bp"
+                  ],
+                  "subject": {
+                    "host_class": "cpu/m5pro",
+                    "profile_id": "transcribe-basic-pitch",
+                    "profile_revision": "9244a5233e6fea486a22985a55019cdf14d298e2b41ae1508f85fce878257646"
+                  }
+                }
+              ],
+              "case_id": "case_h01",
+              "verdict_ids": []
+            }
+          ],
+          "id": "bm_hum",
+          "kind": "benchmark-membership",
+          "prereg_sha256": "3e097d54719534ab7faf735b96ab02af6b2b4396d7477247df5f6a9fd2684b92",
+          "schemaVersion": "1.0.0",
+          "set": "hum-benchmark"
+        },
+        {
+          "approval_id": null,
+          "compute_profile_id": "cp_bench",
+          "cost": {
+            "basis": "local_zero",
+            "usd": "0.00"
+          },
+          "created_at": "2026-11-02T11:00:00Z",
+          "egress": [],
+          "error": null,
+          "history": [
+            {
+              "at": "2026-11-02T11:00:00Z",
+              "state": "queued"
+            },
+            {
+              "at": "2026-11-02T11:01:00Z",
+              "state": "preparing"
+            },
+            {
+              "at": "2026-11-02T11:02:00Z",
+              "state": "loading"
+            },
+            {
+              "at": "2026-11-02T11:03:00Z",
+              "state": "generating"
+            },
+            {
+              "at": "2026-11-02T11:04:00Z",
+              "state": "ready"
+            }
+          ],
+          "id": "job_pyin",
+          "inputs": [],
+          "job_kind": "transcribe",
+          "kind": "job",
+          "lane": "individual",
+          "outputs": [
+            {
+              "role": "melody_spec",
+              "sha256": "f9da303de8701d3559d2c2a1aef08cc91a4bb5c7c6ffdc99ef0272f47a9689dd"
+            }
+          ],
+          "params": {
+            "actual": {},
+            "intent": {}
+          },
+          "parent_job_id": null,
+          "placement": {
+            "host_class": "cpu/m5pro",
+            "kind": "local"
+          },
+          "profile_id": "analysis-transcribe-pyin-hmm",
+          "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa",
+          "project_id": "prj_bench",
+          "quote_id": null,
+          "record_inputs": [],
+          "request_id": null,
+          "retry": null,
+          "schemaVersion": "1.0.0",
+          "seed": null,
+          "session_id": "ses_bench",
+          "state": "ready",
+          "steps": [],
+          "task": "transcribe"
+        },
+        {
+          "approval_id": null,
+          "compute_profile_id": "cp_bench",
+          "cost": {
+            "basis": "local_zero",
+            "usd": "0.00"
+          },
+          "created_at": "2026-11-02T11:10:00Z",
+          "egress": [],
+          "error": null,
+          "history": [
+            {
+              "at": "2026-11-02T11:10:00Z",
+              "state": "queued"
+            },
+            {
+              "at": "2026-11-02T11:11:00Z",
+              "state": "preparing"
+            },
+            {
+              "at": "2026-11-02T11:12:00Z",
+              "state": "loading"
+            },
+            {
+              "at": "2026-11-02T11:13:00Z",
+              "state": "generating"
+            },
+            {
+              "at": "2026-11-02T11:14:00Z",
+              "state": "ready"
+            }
+          ],
+          "id": "job_bp",
+          "inputs": [],
+          "job_kind": "transcribe",
+          "kind": "job",
+          "lane": "individual",
+          "outputs": [
+            {
+              "role": "melody_spec",
+              "sha256": "698f91d1b49609d273b4753ebc294c4353f57dd658057435d0fff6a535ebb5d8"
+            }
+          ],
+          "params": {
+            "actual": {},
+            "intent": {}
+          },
+          "parent_job_id": null,
+          "placement": {
+            "host_class": "cpu/m5pro",
+            "kind": "local"
+          },
+          "profile_id": "transcribe-basic-pitch",
+          "profile_revision": "9244a5233e6fea486a22985a55019cdf14d298e2b41ae1508f85fce878257646",
+          "project_id": "prj_bench",
+          "quote_id": null,
+          "record_inputs": [],
+          "request_id": null,
+          "retry": null,
+          "schemaVersion": "1.0.0",
+          "seed": null,
+          "session_id": "ses_bench",
+          "state": "ready",
+          "steps": [],
+          "task": "transcribe"
+        },
+        {
+          "entries": [
+            {
+              "at": "2026-11-02T12:00:00Z",
+              "base_rev": 1,
+              "new_rev": 2,
+              "ops": [
+                {
+                  "delta_ticks": 240,
+                  "note_ids": [
+                    "n1"
+                  ],
+                  "op": "move"
+                }
+              ],
+              "seq": 1
+            }
+          ],
+          "kind": "correction-log",
+          "melody_id": "mel_h01_pyin",
+          "project_id": "prj_bench",
+          "schemaVersion": "1.0.0"
+        },
+        {
+          "entries": [
+            {
+              "at": "2026-11-02T12:00:00Z",
+              "base_rev": 1,
+              "new_rev": 2,
+              "ops": [
+                {
+                  "delta_ticks": 240,
+                  "note_ids": [
+                    "n1"
+                  ],
+                  "op": "move"
+                }
+              ],
+              "seq": 1
+            }
+          ],
+          "kind": "correction-log",
+          "melody_id": "mel_h01_bp",
+          "project_id": "prj_bench",
+          "schemaVersion": "1.0.0"
+        }
+      ]
+    },
+    {
+      "check_id": "eb_hum",
+      "derivation": "The preregistration's only case is case_h01; case_h99 was added afterwards.",
+      "expected": [
+        "case_unregistered"
+      ],
+      "name": "membership case not preregistered",
+      "op": "binding",
+      "records": [
+        {
+          "evidence_id": "ev_hum_pyin",
+          "id": "eb_hum",
+          "kind": "evidence-binding",
+          "membership_id": "bm_hum",
+          "prereg_sha256": "3e097d54719534ab7faf735b96ab02af6b2b4396d7477247df5f6a9fd2684b92",
+          "schemaVersion": "1.0.0",
+          "set": "hum-benchmark",
+          "subject": {
+            "host_class": "cpu/m5pro",
+            "profile_id": "analysis-transcribe-pyin-hmm",
+            "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa"
+          }
+        },
+        {
+          "cases": [
+            {
+              "case_id": "case_h01",
+              "ground_truth_sha256": "29a252ab19d9394360f42ffd10d3255d080e7e80e7e15edac8758539112d0cc0",
+              "hum_sha256": "7d6d6d6cea0baae50964ddac3ec02749716787eb9e7b1e10ed2b4698f485cef1",
+              "lane": "individual"
+            }
+          ],
+          "committed_at": "2026-11-01T09:00:00Z",
+          "gate_owner": "jon",
+          "id": "bp_hum",
+          "kind": "benchmark-prereg",
+          "prereg_sha256": "3e097d54719534ab7faf735b96ab02af6b2b4396d7477247df5f6a9fd2684b92",
+          "protocol": {
+            "method": "blind_correction",
+            "metrics": [
+              "con_f1",
+              "conp_f1",
+              "conpoff_f1",
+              "correction_ops"
+            ]
+          },
+          "quota": {
+            "cases_complete_min": 1,
+            "repeat_pair_fraction": "0",
+            "sessions_min": 1,
+            "short_quota_outcome": "inconclusive"
+          },
+          "schemaVersion": "1.0.0",
+          "set": "hum-benchmark",
+          "subjects": [
+            {
+              "host_class": "cpu/m5pro",
+              "profile_id": "analysis-transcribe-pyin-hmm",
+              "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa"
+            },
+            {
+              "host_class": "cpu/m5pro",
+              "profile_id": "transcribe-basic-pitch",
+              "profile_revision": "9244a5233e6fea486a22985a55019cdf14d298e2b41ae1508f85fce878257646"
+            }
+          ],
+          "thresholds": [
+            {
+              "comparator": "gte",
+              "metric": "con_f1",
+              "value": "0.40"
+            },
+            {
+              "comparator": "gte",
+              "metric": "conp_f1",
+              "value": "0.30"
+            },
+            {
+              "comparator": "gte",
+              "metric": "conpoff_f1",
+              "value": "0.20"
+            },
+            {
+              "comparator": "lte",
+              "metric": "correction_ops",
+              "value": "60"
+            }
+          ]
+        },
+        {
+          "cases": [
+            {
+              "arms": [
+                {
+                  "candidate_ids": [],
+                  "job_ids": [
+                    "job_pyin"
+                  ],
+                  "melody_ids": [
+                    "mel_h01_pyin"
+                  ],
+                  "subject": {
+                    "host_class": "cpu/m5pro",
+                    "profile_id": "analysis-transcribe-pyin-hmm",
+                    "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa"
+                  }
+                },
+                {
+                  "candidate_ids": [],
+                  "job_ids": [
+                    "job_bp"
+                  ],
+                  "melody_ids": [
+                    "mel_h01_bp"
+                  ],
+                  "subject": {
+                    "host_class": "cpu/m5pro",
+                    "profile_id": "transcribe-basic-pitch",
+                    "profile_revision": "9244a5233e6fea486a22985a55019cdf14d298e2b41ae1508f85fce878257646"
+                  }
+                }
+              ],
+              "case_id": "case_h99",
+              "verdict_ids": []
+            }
+          ],
+          "id": "bm_hum",
+          "kind": "benchmark-membership",
+          "prereg_sha256": "3e097d54719534ab7faf735b96ab02af6b2b4396d7477247df5f6a9fd2684b92",
+          "schemaVersion": "1.0.0",
+          "set": "hum-benchmark"
+        },
+        {
+          "approval_id": null,
+          "compute_profile_id": "cp_bench",
+          "cost": {
+            "basis": "local_zero",
+            "usd": "0.00"
+          },
+          "created_at": "2026-11-02T11:00:00Z",
+          "egress": [],
+          "error": null,
+          "history": [
+            {
+              "at": "2026-11-02T11:00:00Z",
+              "state": "queued"
+            },
+            {
+              "at": "2026-11-02T11:01:00Z",
+              "state": "preparing"
+            },
+            {
+              "at": "2026-11-02T11:02:00Z",
+              "state": "loading"
+            },
+            {
+              "at": "2026-11-02T11:03:00Z",
+              "state": "generating"
+            },
+            {
+              "at": "2026-11-02T11:04:00Z",
+              "state": "ready"
+            }
+          ],
+          "id": "job_pyin",
+          "inputs": [],
+          "job_kind": "transcribe",
+          "kind": "job",
+          "lane": "individual",
+          "outputs": [
+            {
+              "role": "melody_spec",
+              "sha256": "f9da303de8701d3559d2c2a1aef08cc91a4bb5c7c6ffdc99ef0272f47a9689dd"
+            }
+          ],
+          "params": {
+            "actual": {},
+            "intent": {}
+          },
+          "parent_job_id": null,
+          "placement": {
+            "host_class": "cpu/m5pro",
+            "kind": "local"
+          },
+          "profile_id": "analysis-transcribe-pyin-hmm",
+          "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa",
+          "project_id": "prj_bench",
+          "quote_id": null,
+          "record_inputs": [],
+          "request_id": null,
+          "retry": null,
+          "schemaVersion": "1.0.0",
+          "seed": null,
+          "session_id": "ses_bench",
+          "state": "ready",
+          "steps": [],
+          "task": "transcribe"
+        },
+        {
+          "approval_id": null,
+          "compute_profile_id": "cp_bench",
+          "cost": {
+            "basis": "local_zero",
+            "usd": "0.00"
+          },
+          "created_at": "2026-11-02T11:10:00Z",
+          "egress": [],
+          "error": null,
+          "history": [
+            {
+              "at": "2026-11-02T11:10:00Z",
+              "state": "queued"
+            },
+            {
+              "at": "2026-11-02T11:11:00Z",
+              "state": "preparing"
+            },
+            {
+              "at": "2026-11-02T11:12:00Z",
+              "state": "loading"
+            },
+            {
+              "at": "2026-11-02T11:13:00Z",
+              "state": "generating"
+            },
+            {
+              "at": "2026-11-02T11:14:00Z",
+              "state": "ready"
+            }
+          ],
+          "id": "job_bp",
+          "inputs": [],
+          "job_kind": "transcribe",
+          "kind": "job",
+          "lane": "individual",
+          "outputs": [
+            {
+              "role": "melody_spec",
+              "sha256": "698f91d1b49609d273b4753ebc294c4353f57dd658057435d0fff6a535ebb5d8"
+            }
+          ],
+          "params": {
+            "actual": {},
+            "intent": {}
+          },
+          "parent_job_id": null,
+          "placement": {
+            "host_class": "cpu/m5pro",
+            "kind": "local"
+          },
+          "profile_id": "transcribe-basic-pitch",
+          "profile_revision": "9244a5233e6fea486a22985a55019cdf14d298e2b41ae1508f85fce878257646",
+          "project_id": "prj_bench",
+          "quote_id": null,
+          "record_inputs": [],
+          "request_id": null,
+          "retry": null,
+          "schemaVersion": "1.0.0",
+          "seed": null,
+          "session_id": "ses_bench",
+          "state": "ready",
+          "steps": [],
+          "task": "transcribe"
+        },
+        {
+          "entries": [
+            {
+              "at": "2026-11-02T12:00:00Z",
+              "base_rev": 1,
+              "new_rev": 2,
+              "ops": [
+                {
+                  "delta_ticks": 240,
+                  "note_ids": [
+                    "n1"
+                  ],
+                  "op": "move"
+                }
+              ],
+              "seq": 1
+            }
+          ],
+          "kind": "correction-log",
+          "melody_id": "mel_h01_pyin",
+          "project_id": "prj_bench",
+          "schemaVersion": "1.0.0"
+        },
+        {
+          "entries": [
+            {
+              "at": "2026-11-02T12:00:00Z",
+              "base_rev": 1,
+              "new_rev": 2,
+              "ops": [
+                {
+                  "delta_ticks": 240,
+                  "note_ids": [
+                    "n1"
+                  ],
+                  "op": "move"
+                }
+              ],
+              "seq": 1
+            }
+          ],
+          "kind": "correction-log",
+          "melody_id": "mel_h01_bp",
+          "project_id": "prj_bench",
+          "schemaVersion": "1.0.0"
+        }
+      ]
+    },
+    {
+      "check_id": "eb_hum",
+      "derivation": "Basic Pitch's arm names job_bp, but no such job exists, so its start cannot be checked against the commit.",
+      "expected": [
+        "run_unresolved"
+      ],
+      "name": "a governed run without its job record",
+      "op": "binding",
+      "records": [
+        {
+          "evidence_id": "ev_hum_pyin",
+          "id": "eb_hum",
+          "kind": "evidence-binding",
+          "membership_id": "bm_hum",
+          "prereg_sha256": "3e097d54719534ab7faf735b96ab02af6b2b4396d7477247df5f6a9fd2684b92",
+          "schemaVersion": "1.0.0",
+          "set": "hum-benchmark",
+          "subject": {
+            "host_class": "cpu/m5pro",
+            "profile_id": "analysis-transcribe-pyin-hmm",
+            "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa"
+          }
+        },
+        {
+          "cases": [
+            {
+              "case_id": "case_h01",
+              "ground_truth_sha256": "29a252ab19d9394360f42ffd10d3255d080e7e80e7e15edac8758539112d0cc0",
+              "hum_sha256": "7d6d6d6cea0baae50964ddac3ec02749716787eb9e7b1e10ed2b4698f485cef1",
+              "lane": "individual"
+            }
+          ],
+          "committed_at": "2026-11-01T09:00:00Z",
+          "gate_owner": "jon",
+          "id": "bp_hum",
+          "kind": "benchmark-prereg",
+          "prereg_sha256": "3e097d54719534ab7faf735b96ab02af6b2b4396d7477247df5f6a9fd2684b92",
+          "protocol": {
+            "method": "blind_correction",
+            "metrics": [
+              "con_f1",
+              "conp_f1",
+              "conpoff_f1",
+              "correction_ops"
+            ]
+          },
+          "quota": {
+            "cases_complete_min": 1,
+            "repeat_pair_fraction": "0",
+            "sessions_min": 1,
+            "short_quota_outcome": "inconclusive"
+          },
+          "schemaVersion": "1.0.0",
+          "set": "hum-benchmark",
+          "subjects": [
+            {
+              "host_class": "cpu/m5pro",
+              "profile_id": "analysis-transcribe-pyin-hmm",
+              "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa"
+            },
+            {
+              "host_class": "cpu/m5pro",
+              "profile_id": "transcribe-basic-pitch",
+              "profile_revision": "9244a5233e6fea486a22985a55019cdf14d298e2b41ae1508f85fce878257646"
+            }
+          ],
+          "thresholds": [
+            {
+              "comparator": "gte",
+              "metric": "con_f1",
+              "value": "0.40"
+            },
+            {
+              "comparator": "gte",
+              "metric": "conp_f1",
+              "value": "0.30"
+            },
+            {
+              "comparator": "gte",
+              "metric": "conpoff_f1",
+              "value": "0.20"
+            },
+            {
+              "comparator": "lte",
+              "metric": "correction_ops",
+              "value": "60"
+            }
+          ]
+        },
+        {
+          "cases": [
+            {
+              "arms": [
+                {
+                  "candidate_ids": [],
+                  "job_ids": [
+                    "job_pyin"
+                  ],
+                  "melody_ids": [
+                    "mel_h01_pyin"
+                  ],
+                  "subject": {
+                    "host_class": "cpu/m5pro",
+                    "profile_id": "analysis-transcribe-pyin-hmm",
+                    "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa"
+                  }
+                },
+                {
+                  "candidate_ids": [],
+                  "job_ids": [
+                    "job_bp"
+                  ],
+                  "melody_ids": [
+                    "mel_h01_bp"
+                  ],
+                  "subject": {
+                    "host_class": "cpu/m5pro",
+                    "profile_id": "transcribe-basic-pitch",
+                    "profile_revision": "9244a5233e6fea486a22985a55019cdf14d298e2b41ae1508f85fce878257646"
+                  }
+                }
+              ],
+              "case_id": "case_h01",
+              "verdict_ids": []
+            }
+          ],
+          "id": "bm_hum",
+          "kind": "benchmark-membership",
+          "prereg_sha256": "3e097d54719534ab7faf735b96ab02af6b2b4396d7477247df5f6a9fd2684b92",
+          "schemaVersion": "1.0.0",
+          "set": "hum-benchmark"
+        },
+        {
+          "approval_id": null,
+          "compute_profile_id": "cp_bench",
+          "cost": {
+            "basis": "local_zero",
+            "usd": "0.00"
+          },
+          "created_at": "2026-11-02T11:00:00Z",
+          "egress": [],
+          "error": null,
+          "history": [
+            {
+              "at": "2026-11-02T11:00:00Z",
+              "state": "queued"
+            },
+            {
+              "at": "2026-11-02T11:01:00Z",
+              "state": "preparing"
+            },
+            {
+              "at": "2026-11-02T11:02:00Z",
+              "state": "loading"
+            },
+            {
+              "at": "2026-11-02T11:03:00Z",
+              "state": "generating"
+            },
+            {
+              "at": "2026-11-02T11:04:00Z",
+              "state": "ready"
+            }
+          ],
+          "id": "job_pyin",
+          "inputs": [],
+          "job_kind": "transcribe",
+          "kind": "job",
+          "lane": "individual",
+          "outputs": [
+            {
+              "role": "melody_spec",
+              "sha256": "f9da303de8701d3559d2c2a1aef08cc91a4bb5c7c6ffdc99ef0272f47a9689dd"
+            }
+          ],
+          "params": {
+            "actual": {},
+            "intent": {}
+          },
+          "parent_job_id": null,
+          "placement": {
+            "host_class": "cpu/m5pro",
+            "kind": "local"
+          },
+          "profile_id": "analysis-transcribe-pyin-hmm",
+          "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa",
+          "project_id": "prj_bench",
+          "quote_id": null,
+          "record_inputs": [],
+          "request_id": null,
+          "retry": null,
+          "schemaVersion": "1.0.0",
+          "seed": null,
+          "session_id": "ses_bench",
+          "state": "ready",
+          "steps": [],
+          "task": "transcribe"
+        },
+        {
+          "entries": [
+            {
+              "at": "2026-11-02T12:00:00Z",
+              "base_rev": 1,
+              "new_rev": 2,
+              "ops": [
+                {
+                  "delta_ticks": 240,
+                  "note_ids": [
+                    "n1"
+                  ],
+                  "op": "move"
+                }
+              ],
+              "seq": 1
+            }
+          ],
+          "kind": "correction-log",
+          "melody_id": "mel_h01_pyin",
+          "project_id": "prj_bench",
+          "schemaVersion": "1.0.0"
+        },
+        {
+          "entries": [
+            {
+              "at": "2026-11-02T12:00:00Z",
+              "base_rev": 1,
+              "new_rev": 2,
+              "ops": [
+                {
+                  "delta_ticks": 240,
+                  "note_ids": [
+                    "n1"
+                  ],
+                  "op": "move"
+                }
+              ],
+              "seq": 1
+            }
+          ],
+          "kind": "correction-log",
+          "melody_id": "mel_h01_bp",
+          "project_id": "prj_bench",
+          "schemaVersion": "1.0.0"
+        }
+      ]
+    },
+    {
+      "check_id": "eb_engine",
+      "derivation": "The membership expects vd_b01 but no such verdict exists.",
+      "expected": [
+        "verdict_unresolved"
+      ],
+      "name": "an expected verdict that does not resolve",
+      "op": "binding",
+      "records": [
+        {
+          "evidence_id": "ev_bench_ace",
+          "id": "eb_engine",
+          "kind": "evidence-binding",
+          "membership_id": "bm_engine",
+          "prereg_sha256": "0d6dfc315e9b31c1ce81d7e7e0d5ca6f705d0ab12db348c50c7cf394fccb21de",
+          "schemaVersion": "1.0.0",
+          "set": "benchmark-48",
+          "subject": {
+            "host_class": "mlx/m5pro",
+            "profile_id": "ace-2b-sft-mlx",
+            "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+          }
+        },
+        {
+          "cases": [
+            {
+              "brief_id": "brief_b01",
+              "case_id": "case_b01",
+              "lane": "individual"
+            }
+          ],
+          "committed_at": "2026-11-01T09:00:00Z",
+          "gate_owner": "jon",
+          "id": "bp_engine",
+          "kind": "benchmark-prereg",
+          "prereg_sha256": "0d6dfc315e9b31c1ce81d7e7e0d5ca6f705d0ab12db348c50c7cf394fccb21de",
+          "protocol": {
+            "method": "eval_audition",
+            "metrics": [
+              "preferred_rate",
+              "repeat_pair_agreement"
+            ]
+          },
+          "quota": {
+            "cases_complete_min": 1,
+            "repeat_pair_fraction": "0.10",
+            "sessions_min": 1,
+            "short_quota_outcome": "inconclusive"
+          },
+          "schemaVersion": "1.0.0",
+          "set": "benchmark-48",
+          "subjects": [
+            {
+              "host_class": "mlx/m5pro",
+              "profile_id": "ace-2b-sft-mlx",
+              "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+            },
+            {
+              "host_class": "cuda/rtx4090",
+              "profile_id": "yue2-3b-score",
+              "profile_revision": "37522ad18dee26df2c7956bcdd34163bca9d88e991f76a2f6c983581f67b0d8e"
+            }
+          ],
+          "thresholds": [
+            {
+              "comparator": "gte",
+              "metric": "preferred_rate",
+              "value": "0.50"
+            },
+            {
+              "comparator": "gte",
+              "metric": "repeat_pair_agreement",
+              "value": "0.70"
+            }
+          ]
+        },
+        {
+          "cases": [
+            {
+              "arms": [
+                {
+                  "candidate_ids": [
+                    "cand_ace"
+                  ],
+                  "job_ids": [
+                    "job_ace"
+                  ],
+                  "melody_ids": [],
+                  "subject": {
+                    "host_class": "mlx/m5pro",
+                    "profile_id": "ace-2b-sft-mlx",
+                    "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+                  }
+                },
+                {
+                  "candidate_ids": [
+                    "cand_yue"
+                  ],
+                  "job_ids": [
+                    "job_yue"
+                  ],
+                  "melody_ids": [],
+                  "subject": {
+                    "host_class": "cuda/rtx4090",
+                    "profile_id": "yue2-3b-score",
+                    "profile_revision": "37522ad18dee26df2c7956bcdd34163bca9d88e991f76a2f6c983581f67b0d8e"
+                  }
+                }
+              ],
+              "case_id": "case_b01",
+              "verdict_ids": [
+                "vd_b01"
+              ]
+            }
+          ],
+          "id": "bm_engine",
+          "kind": "benchmark-membership",
+          "prereg_sha256": "0d6dfc315e9b31c1ce81d7e7e0d5ca6f705d0ab12db348c50c7cf394fccb21de",
+          "schemaVersion": "1.0.0",
+          "set": "benchmark-48"
+        },
+        {
+          "approval_id": null,
+          "compute_profile_id": "cp_bench",
+          "cost": {
+            "basis": "local_zero",
+            "usd": "0.00"
+          },
+          "created_at": "2026-11-02T10:00:00Z",
+          "egress": [],
+          "error": null,
+          "history": [
+            {
+              "at": "2026-11-02T10:00:00Z",
+              "state": "queued"
+            },
+            {
+              "at": "2026-11-02T10:01:00Z",
+              "state": "preparing"
+            },
+            {
+              "at": "2026-11-02T10:02:00Z",
+              "state": "loading"
+            },
+            {
+              "at": "2026-11-02T10:03:00Z",
+              "state": "generating"
+            },
+            {
+              "at": "2026-11-02T10:04:00Z",
+              "state": "ready"
+            }
+          ],
+          "id": "job_ace",
+          "inputs": [],
+          "job_kind": "generate",
+          "kind": "job",
+          "lane": "individual",
+          "outputs": [
+            {
+              "role": "mix",
+              "sha256": "bfa3a06d4b8f660259961c953661e35ddfe4e51e31f213d7298e4323dce7f14d"
+            }
+          ],
+          "params": {
+            "actual": {},
+            "intent": {}
+          },
+          "parent_job_id": null,
+          "placement": {
+            "host_class": "mlx/m5pro",
+            "kind": "local"
+          },
+          "profile_id": "ace-2b-sft-mlx",
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "project_id": "prj_bench",
+          "quote_id": null,
+          "record_inputs": [],
+          "request_id": "gr_bench",
+          "retry": null,
+          "schemaVersion": "1.0.0",
+          "seed": 1,
+          "session_id": "ses_bench",
+          "state": "ready",
+          "steps": [],
+          "task": "cover"
+        },
+        {
+          "approval_id": null,
+          "compute_profile_id": "cp_bench",
+          "cost": {
+            "basis": "local_zero",
+            "usd": "0.00"
+          },
+          "created_at": "2026-11-02T10:05:00Z",
+          "egress": [],
+          "error": null,
+          "history": [
+            {
+              "at": "2026-11-02T10:05:00Z",
+              "state": "queued"
+            },
+            {
+              "at": "2026-11-02T10:06:00Z",
+              "state": "preparing"
+            },
+            {
+              "at": "2026-11-02T10:07:00Z",
+              "state": "loading"
+            },
+            {
+              "at": "2026-11-02T10:08:00Z",
+              "state": "generating"
+            },
+            {
+              "at": "2026-11-02T10:09:00Z",
+              "state": "ready"
+            }
+          ],
+          "id": "job_yue",
+          "inputs": [],
+          "job_kind": "generate",
+          "kind": "job",
+          "lane": "individual",
+          "outputs": [
+            {
+              "role": "mix",
+              "sha256": "c5474429837dcbf47b8a962c4a7379585edf1a19d8a2f3793bf21b6080ebef21"
+            }
+          ],
+          "params": {
+            "actual": {},
+            "intent": {}
+          },
+          "parent_job_id": null,
+          "placement": {
+            "host_class": "cuda/rtx4090",
+            "kind": "worker_host"
+          },
+          "profile_id": "yue2-3b-score",
+          "profile_revision": "37522ad18dee26df2c7956bcdd34163bca9d88e991f76a2f6c983581f67b0d8e",
+          "project_id": "prj_bench",
+          "quote_id": null,
+          "record_inputs": [],
+          "request_id": "gr_bench",
+          "retry": null,
+          "schemaVersion": "1.0.0",
+          "seed": 2,
+          "session_id": "ses_bench",
+          "state": "ready",
+          "steps": [],
+          "task": "score_to_song"
+        },
+        {
+          "adherence": {
+            "reason": "pending",
+            "state": "unmeasured"
+          },
+          "artifact_sha256": "bfa3a06d4b8f660259961c953661e35ddfe4e51e31f213d7298e4323dce7f14d",
+          "badges": [
+            "unbenchmarked route"
+          ],
+          "created_at": "2026-11-02T10:04:30Z",
+          "diagnostics": [],
+          "hard_constraints": [],
+          "id": "cand_ace",
+          "job_id": "job_ace",
+          "kind": "candidate",
+          "measures": null,
+          "ordinal": 1,
+          "placement": {
+            "host_class": "mlx/m5pro",
+            "kind": "local"
+          },
+          "preview_sha256": "79aecfeba9c1275207b7dab549f1deae527b9f1bd9887e59949f9f8ba0dad736",
+          "profile_id": "ace-2b-sft-mlx",
+          "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d",
+          "project_id": "prj_bench",
+          "route": "R2-synth",
+          "schemaVersion": "1.0.0",
+          "seed": 1,
+          "source": {
+            "generation_request_id": "gr_bench"
+          },
+          "synthetic_test": false,
+          "withheld_during_blind": [
+            "route",
+            "profile_id",
+            "profile_revision",
+            "seed",
+            "placement",
+            "job_id",
+            "artifact_sha256",
+            "preview_sha256",
+            "measures",
+            "adherence",
+            "hard_constraints",
+            "badges",
+            "diagnostics",
+            "source"
+          ]
+        },
+        {
+          "adherence": {
+            "reason": "pending",
+            "state": "unmeasured"
+          },
+          "artifact_sha256": "c5474429837dcbf47b8a962c4a7379585edf1a19d8a2f3793bf21b6080ebef21",
+          "badges": [
+            "unbenchmarked route"
+          ],
+          "created_at": "2026-11-02T10:09:00Z",
+          "diagnostics": [],
+          "hard_constraints": [],
+          "id": "cand_yue",
+          "job_id": "job_yue",
+          "kind": "candidate",
+          "measures": null,
+          "ordinal": 2,
+          "placement": {
+            "host_class": "cuda/rtx4090",
+            "kind": "worker_host"
+          },
+          "preview_sha256": "cb9826fc9f249b2f0655b7ecb965286018f2c44ef3d91dedcadf49dd150f76f9",
+          "profile_id": "yue2-3b-score",
+          "profile_revision": "37522ad18dee26df2c7956bcdd34163bca9d88e991f76a2f6c983581f67b0d8e",
+          "project_id": "prj_bench",
+          "route": "R1",
+          "schemaVersion": "1.0.0",
+          "seed": 2,
+          "source": {
+            "generation_request_id": "gr_bench"
+          },
+          "synthetic_test": false,
+          "withheld_during_blind": [
+            "route",
+            "profile_id",
+            "profile_revision",
+            "seed",
+            "placement",
+            "job_id",
+            "artifact_sha256",
+            "preview_sha256",
+            "measures",
+            "adherence",
+            "hard_constraints",
+            "badges",
+            "diagnostics",
+            "source"
+          ]
+        },
+        {
+          "all_arms_ready_at": "2026-11-02T10:09:00Z",
+          "anchors": [],
+          "arms": [
+            {
+              "label": "A",
+              "unplayable": false
+            },
+            {
+              "label": "B",
+              "unplayable": false
+            }
+          ],
+          "brief_id": "brief_b01",
+          "candidate_ids": [
+            "cand_ace",
+            "cand_yue"
+          ],
+          "commitment_sha256": "cca21f26e0f60eedee75c2a912ba8d4bd8b2a490cc1f5b91eb0b6b726a5b4548",
+          "gains": [
+            {
+              "gain_db": "-0.80",
+              "label": "A"
+            },
+            {
+              "gain_db": "0.00",
+              "label": "B"
+            }
+          ],
+          "id": "aud_b01",
+          "kind": "audition",
+          "loudness_standard": "BS.1770-4 (pyloudnorm)",
+          "mode": "eval",
+          "opened_at": "2026-11-03T17:30:00Z",
+          "prereg_sha256": "0d6dfc315e9b31c1ce81d7e7e0d5ca6f705d0ab12db348c50c7cf394fccb21de",
+          "preview": {
+            "bit_depth": 24,
+            "sample_rate": 48000
+          },
+          "project_id": null,
+          "repeat_pairs": [],
+          "request_ids": [],
+          "residual_leak_acknowledged": [
+            "duration",
+            "sonic_character"
+          ],
+          "residual_mismatch_lu": "0.04",
+          "schemaVersion": "1.0.0",
+          "state": "revealed",
+          "true_peak_meter": "studio-truepeak-4x"
+        }
+      ]
+    },
+    {
+      "check_id": "eb_hum",
+      "derivation": "Basic Pitch's draft mel_h01_bp has no correction log, so its correction effort is not linked.",
+      "expected": [
+        "correction_unresolved"
+      ],
+      "name": "a draft melody without its correction log",
+      "op": "binding",
+      "records": [
+        {
+          "evidence_id": "ev_hum_pyin",
+          "id": "eb_hum",
+          "kind": "evidence-binding",
+          "membership_id": "bm_hum",
+          "prereg_sha256": "3e097d54719534ab7faf735b96ab02af6b2b4396d7477247df5f6a9fd2684b92",
+          "schemaVersion": "1.0.0",
+          "set": "hum-benchmark",
+          "subject": {
+            "host_class": "cpu/m5pro",
+            "profile_id": "analysis-transcribe-pyin-hmm",
+            "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa"
+          }
+        },
+        {
+          "cases": [
+            {
+              "case_id": "case_h01",
+              "ground_truth_sha256": "29a252ab19d9394360f42ffd10d3255d080e7e80e7e15edac8758539112d0cc0",
+              "hum_sha256": "7d6d6d6cea0baae50964ddac3ec02749716787eb9e7b1e10ed2b4698f485cef1",
+              "lane": "individual"
+            }
+          ],
+          "committed_at": "2026-11-01T09:00:00Z",
+          "gate_owner": "jon",
+          "id": "bp_hum",
+          "kind": "benchmark-prereg",
+          "prereg_sha256": "3e097d54719534ab7faf735b96ab02af6b2b4396d7477247df5f6a9fd2684b92",
+          "protocol": {
+            "method": "blind_correction",
+            "metrics": [
+              "con_f1",
+              "conp_f1",
+              "conpoff_f1",
+              "correction_ops"
+            ]
+          },
+          "quota": {
+            "cases_complete_min": 1,
+            "repeat_pair_fraction": "0",
+            "sessions_min": 1,
+            "short_quota_outcome": "inconclusive"
+          },
+          "schemaVersion": "1.0.0",
+          "set": "hum-benchmark",
+          "subjects": [
+            {
+              "host_class": "cpu/m5pro",
+              "profile_id": "analysis-transcribe-pyin-hmm",
+              "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa"
+            },
+            {
+              "host_class": "cpu/m5pro",
+              "profile_id": "transcribe-basic-pitch",
+              "profile_revision": "9244a5233e6fea486a22985a55019cdf14d298e2b41ae1508f85fce878257646"
+            }
+          ],
+          "thresholds": [
+            {
+              "comparator": "gte",
+              "metric": "con_f1",
+              "value": "0.40"
+            },
+            {
+              "comparator": "gte",
+              "metric": "conp_f1",
+              "value": "0.30"
+            },
+            {
+              "comparator": "gte",
+              "metric": "conpoff_f1",
+              "value": "0.20"
+            },
+            {
+              "comparator": "lte",
+              "metric": "correction_ops",
+              "value": "60"
+            }
+          ]
+        },
+        {
+          "cases": [
+            {
+              "arms": [
+                {
+                  "candidate_ids": [],
+                  "job_ids": [
+                    "job_pyin"
+                  ],
+                  "melody_ids": [
+                    "mel_h01_pyin"
+                  ],
+                  "subject": {
+                    "host_class": "cpu/m5pro",
+                    "profile_id": "analysis-transcribe-pyin-hmm",
+                    "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa"
+                  }
+                },
+                {
+                  "candidate_ids": [],
+                  "job_ids": [
+                    "job_bp"
+                  ],
+                  "melody_ids": [
+                    "mel_h01_bp"
+                  ],
+                  "subject": {
+                    "host_class": "cpu/m5pro",
+                    "profile_id": "transcribe-basic-pitch",
+                    "profile_revision": "9244a5233e6fea486a22985a55019cdf14d298e2b41ae1508f85fce878257646"
+                  }
+                }
+              ],
+              "case_id": "case_h01",
+              "verdict_ids": []
+            }
+          ],
+          "id": "bm_hum",
+          "kind": "benchmark-membership",
+          "prereg_sha256": "3e097d54719534ab7faf735b96ab02af6b2b4396d7477247df5f6a9fd2684b92",
+          "schemaVersion": "1.0.0",
+          "set": "hum-benchmark"
+        },
+        {
+          "approval_id": null,
+          "compute_profile_id": "cp_bench",
+          "cost": {
+            "basis": "local_zero",
+            "usd": "0.00"
+          },
+          "created_at": "2026-11-02T11:00:00Z",
+          "egress": [],
+          "error": null,
+          "history": [
+            {
+              "at": "2026-11-02T11:00:00Z",
+              "state": "queued"
+            },
+            {
+              "at": "2026-11-02T11:01:00Z",
+              "state": "preparing"
+            },
+            {
+              "at": "2026-11-02T11:02:00Z",
+              "state": "loading"
+            },
+            {
+              "at": "2026-11-02T11:03:00Z",
+              "state": "generating"
+            },
+            {
+              "at": "2026-11-02T11:04:00Z",
+              "state": "ready"
+            }
+          ],
+          "id": "job_pyin",
+          "inputs": [],
+          "job_kind": "transcribe",
+          "kind": "job",
+          "lane": "individual",
+          "outputs": [
+            {
+              "role": "melody_spec",
+              "sha256": "f9da303de8701d3559d2c2a1aef08cc91a4bb5c7c6ffdc99ef0272f47a9689dd"
+            }
+          ],
+          "params": {
+            "actual": {},
+            "intent": {}
+          },
+          "parent_job_id": null,
+          "placement": {
+            "host_class": "cpu/m5pro",
+            "kind": "local"
+          },
+          "profile_id": "analysis-transcribe-pyin-hmm",
+          "profile_revision": "71e33d20ae73ae8059bb2835f8e18dc29aca8d7ad5905f6e4ab5bda94eb6d2fa",
+          "project_id": "prj_bench",
+          "quote_id": null,
+          "record_inputs": [],
+          "request_id": null,
+          "retry": null,
+          "schemaVersion": "1.0.0",
+          "seed": null,
+          "session_id": "ses_bench",
+          "state": "ready",
+          "steps": [],
+          "task": "transcribe"
+        },
+        {
+          "approval_id": null,
+          "compute_profile_id": "cp_bench",
+          "cost": {
+            "basis": "local_zero",
+            "usd": "0.00"
+          },
+          "created_at": "2026-11-02T11:10:00Z",
+          "egress": [],
+          "error": null,
+          "history": [
+            {
+              "at": "2026-11-02T11:10:00Z",
+              "state": "queued"
+            },
+            {
+              "at": "2026-11-02T11:11:00Z",
+              "state": "preparing"
+            },
+            {
+              "at": "2026-11-02T11:12:00Z",
+              "state": "loading"
+            },
+            {
+              "at": "2026-11-02T11:13:00Z",
+              "state": "generating"
+            },
+            {
+              "at": "2026-11-02T11:14:00Z",
+              "state": "ready"
+            }
+          ],
+          "id": "job_bp",
+          "inputs": [],
+          "job_kind": "transcribe",
+          "kind": "job",
+          "lane": "individual",
+          "outputs": [
+            {
+              "role": "melody_spec",
+              "sha256": "698f91d1b49609d273b4753ebc294c4353f57dd658057435d0fff6a535ebb5d8"
+            }
+          ],
+          "params": {
+            "actual": {},
+            "intent": {}
+          },
+          "parent_job_id": null,
+          "placement": {
+            "host_class": "cpu/m5pro",
+            "kind": "local"
+          },
+          "profile_id": "transcribe-basic-pitch",
+          "profile_revision": "9244a5233e6fea486a22985a55019cdf14d298e2b41ae1508f85fce878257646",
+          "project_id": "prj_bench",
+          "quote_id": null,
+          "record_inputs": [],
+          "request_id": null,
+          "retry": null,
+          "schemaVersion": "1.0.0",
+          "seed": null,
+          "session_id": "ses_bench",
+          "state": "ready",
+          "steps": [],
+          "task": "transcribe"
+        },
+        {
+          "entries": [
+            {
+              "at": "2026-11-02T12:00:00Z",
+              "base_rev": 1,
+              "new_rev": 2,
+              "ops": [
+                {
+                  "delta_ticks": 240,
+                  "note_ids": [
+                    "n1"
+                  ],
+                  "op": "move"
+                }
+              ],
+              "seq": 1
+            }
+          ],
+          "kind": "correction-log",
+          "melody_id": "mel_h01_pyin",
+          "project_id": "prj_bench",
+          "schemaVersion": "1.0.0"
+        }
+      ]
+    }
+  ],
+  "kind": "fixture.binding",
+  "schemaVersion": "1.0.0"
+}

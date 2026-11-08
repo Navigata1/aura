@@ -1,0 +1,24 @@
+{
+  "description": "A binding that declares itself validated.",
+  "error_contains": "$.validated: no value is allowed here",
+  "id": "IR-EVIDENCE-BINDING-VALIDATED-FLAG",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "evidence_id": "ev_bench_ace",
+    "id": "eb_engine",
+    "kind": "evidence-binding",
+    "membership_id": "bm_engine",
+    "prereg_sha256": "0d6dfc315e9b31c1ce81d7e7e0d5ca6f705d0ab12db348c50c7cf394fccb21de",
+    "schemaVersion": "1.0.0",
+    "set": "benchmark-48",
+    "subject": {
+      "host_class": "mlx/m5pro",
+      "profile_id": "ace-2b-sft-mlx",
+      "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+    },
+    "validated": true
+  },
+  "record_kind": "evidence-binding",
+  "rule": "No caller-set validated flag (C01 follow-on 6)",
+  "schemaVersion": "1.0.0"
+}

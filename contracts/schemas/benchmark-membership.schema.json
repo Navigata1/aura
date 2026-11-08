@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "benchmark-membership/1",
+  "description": "What a preregistered benchmark holds, case by case (GLOSSARY: Brief, Candidate, Verdict, Correction; ADR-0010): each arm's subject with the runs (jobs) it governs and their candidates (benchmark-48) or the transcribed melodies whose correction logs hold Jon's blind correction (hum-benchmark), and the owner verdict ids expected from the case's eval auditions. prereg_sha256 resolves only to a benchmark-prereg of the same set. It is an input C02 validates; it concludes nothing.",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "id", "set", "prereg_sha256", "cases"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "benchmark-membership"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "id": {"$ref": "common.schema.json#/$defs/id"},
+    "set": {"$ref": "benchmark-prereg.schema.json#/$defs/benchmarkSet"},
+    "prereg_sha256": {"$ref": "common.schema.json#/$defs/sha256"},
+    "cases": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["case_id", "arms", "verdict_ids"],
+        "additionalProperties": false,
+        "properties": {
+          "case_id": {"$ref": "common.schema.json#/$defs/id"},
+          "arms": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["subject", "job_ids", "candidate_ids", "melody_ids"],
+              "additionalProperties": false,
+              "properties": {
+                "subject": {"$ref": "benchmark-prereg.schema.json#/$defs/subject"},
+                "job_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "common.schema.json#/$defs/id"}},
+                "candidate_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "common.schema.json#/$defs/id"}},
+                "melody_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "common.schema.json#/$defs/id"}, "description": "Transcribed drafts; each one's correction log is the correction linkage."}
+              }
+            }
+          },
+          "verdict_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "common.schema.json#/$defs/id"}, "description": "The owner verdicts expected from this case's eval auditions."}
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"set": {"const": "benchmark-48"}}},
+      "then": {"properties": {"cases": {"items": {"properties": {"verdict_ids": {"minItems": 1}, "arms": {"items": {"properties": {"candidate_ids": {"minItems": 1}, "melody_ids": {"maxItems": 0}}}}}}}}},
+      "else": {"properties": {"cases": {"items": {"properties": {"verdict_ids": {"maxItems": 0}, "arms": {"items": {"properties": {"candidate_ids": {"maxItems": 0}, "melody_ids": {"minItems": 1}}}}}}}}}
+    }
+  ]
+}

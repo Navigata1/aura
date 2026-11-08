@@ -1,0 +1,55 @@
+{
+  "description": "An arm crediting another profile.",
+  "error_contains": "$.cases[0].arms[0].credited_profile_id: no value is allowed here",
+  "id": "IR-BENCHMARK-MEMBERSHIP-OPEN-ARM",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "cases": [
+      {
+        "arms": [
+          {
+            "candidate_ids": [
+              "cand_ace"
+            ],
+            "credited_profile_id": "yue2-3b-score",
+            "job_ids": [
+              "job_ace"
+            ],
+            "melody_ids": [],
+            "subject": {
+              "host_class": "mlx/m5pro",
+              "profile_id": "ace-2b-sft-mlx",
+              "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+            }
+          },
+          {
+            "candidate_ids": [
+              "cand_yue"
+            ],
+            "job_ids": [
+              "job_yue"
+            ],
+            "melody_ids": [],
+            "subject": {
+              "host_class": "cuda/rtx4090",
+              "profile_id": "yue2-3b-score",
+              "profile_revision": "37522ad18dee26df2c7956bcdd34163bca9d88e991f76a2f6c983581f67b0d8e"
+            }
+          }
+        ],
+        "case_id": "case_b01",
+        "verdict_ids": [
+          "vd_b01"
+        ]
+      }
+    ],
+    "id": "bm_engine",
+    "kind": "benchmark-membership",
+    "prereg_sha256": "0d6dfc315e9b31c1ce81d7e7e0d5ca6f705d0ab12db348c50c7cf394fccb21de",
+    "schemaVersion": "1.0.0",
+    "set": "benchmark-48"
+  },
+  "record_kind": "benchmark-membership",
+  "rule": "An arm credits only its own subject",
+  "schemaVersion": "1.0.0"
+}

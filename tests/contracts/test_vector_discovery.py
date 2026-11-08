@@ -120,3 +120,41 @@ def evaluate(case, world):
         manifest_path.write_text(json.dumps(manifest))
         self.run_cli('contracts/reference/generate_fixtures.py', ok=False, contains='invalid vector consumers manifest')
         self.run_cli('scripts/spec/validate.py', ok=False, contains='invalid vector consumers manifest')
+
+    def edit_manifest(self, change):
+        path = self.root / 'contracts/consumers.json'
+        manifest = json.loads(path.read_text())
+        change(manifest)
+        path.write_text(json.dumps(manifest))
+
+    def test_record_consumers_refuse_orphans_gaps_and_unknown_tickets(self):
+        original = (self.root / 'contracts/consumers.json').read_text()
+        for change, message in [
+                (lambda m: m['records']['benchmark-prereg'].update(no_such_field=['registry']), 'orphan consumer entry'),
+                (lambda m: m['records'].update({'no-such-kind': {'id': ['registry']}}), 'orphan consumer entry'),
+                (lambda m: m['records']['evidence-binding'].pop('membership_id'), 'field has no consumer'),
+                (lambda m: m['records']['benchmark-membership'].update(cases=['not-a-ticket']), 'unknown consumer ticket slug'),
+                (lambda m: m['records']['benchmark-prereg'].update(id=['C09']), 'unknown consumer ticket slug'),
+                (lambda m: m['pending'].remove('verdict'), 'mapped or pending exactly once')]:
+            with self.subTest(message=message):
+                (self.root / 'contracts/consumers.json').write_text(original)
+                self.edit_manifest(change)
+                self.run_cli('contracts/reference/generate_fixtures.py', ok=False, contains=message)
+                self.run_cli('scripts/spec/validate.py', ok=False, contains=message)
+
+    def test_new_record_kind_needs_a_consumer_entry(self):
+        schema = {'type': 'object', 'required': ['kind', 'schemaVersion'], 'additionalProperties': False,
+                  'properties': {'kind': {'const': 'probe-record'}, 'schemaVersion': {'const': '1.0.0'}, 'note': {'type': 'string'}}}
+        (self.root / 'contracts/schemas/probe-record.schema.json').write_text(json.dumps(schema))
+        self.run_cli('scripts/spec/validate.py', ok=False, contains='probe-record: every record kind must be mapped or pending exactly once')
+        self.edit_manifest(lambda m: m['records'].update({'probe-record': {'note': ['C02', 'registry']}}))
+        self.run_cli('scripts/spec/validate.py')
+
+    def test_binding_vectors_hold_hand_derived_findings(self):
+        self.run_cli('scripts/spec/validate.py', '-v', contains='fixture.binding vectors')
+        path = self.root / 'contracts/fixtures/vectors/binding.json'
+        vector = json.loads(path.read_text())
+        case = next(c for c in vector['cases'] if c['op'] == 'binding' and c['expected'] == [])
+        case['expected'] = ['committed_after_run']
+        path.write_text(json.dumps(vector))
+        self.run_cli('scripts/spec/validate.py', ok=False, contains="reference gives [], fixture expects ['committed_after_run']")

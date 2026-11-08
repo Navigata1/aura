@@ -1,26 +1,50 @@
 {
-  "version": 1,
-  "scope": "vector-kinds",
+  "version": 2,
+  "scope": "vector-kinds and record fields",
   "consumers": {
-    "fixture.tempo": [
-      "contract-completion",
-      "contracts-codegen"
-    ],
-    "fixture.status": [
-      "contract-completion",
-      "registry"
-    ],
-    "fixture.recommend": [
-      "contract-completion",
-      "compute-sessions"
-    ],
-    "fixture.ledger": [
-      "contract-completion",
-      "paid-run-gate"
-    ],
-    "fixture.audition": [
-      "contract-completion",
-      "audition"
-    ]
-  }
+    "fixture.tempo": ["contract-completion", "contracts-codegen"],
+    "fixture.status": ["contract-completion", "registry"],
+    "fixture.recommend": ["contract-completion", "compute-sessions"],
+    "fixture.ledger": ["contract-completion", "paid-run-gate"],
+    "fixture.audition": ["contract-completion", "audition"],
+    "fixture.binding": ["contract-completion", "eval-prereg", "hum-benchmark-harness", "registry"]
+  },
+  "records": {
+    "benchmark-prereg": {
+      "id": ["C02", "eval-prereg", "hum-benchmark-harness", "hum-benchmark-on-jon"],
+      "prereg_sha256": ["C02", "eval-prereg", "hum-benchmark-harness", "hum-benchmark-on-jon", "registry"],
+      "set": ["C02", "eval-prereg", "hum-benchmark-harness", "hum-benchmark-on-jon", "registry"],
+      "subjects": ["C02", "eval-prereg", "hum-benchmark-harness", "hum-benchmark-on-jon", "registry"],
+      "cases": ["C02", "eval-prereg", "hum-benchmark-harness", "hum-benchmark-on-jon", "eval-auditions"],
+      "protocol": ["C02", "eval-prereg", "hum-benchmark-harness", "hum-benchmark-on-jon", "eval-auditions"],
+      "thresholds": ["C02", "eval-prereg", "hum-benchmark-harness", "hum-benchmark-on-jon", "eval-auditions"],
+      "quota": ["C02", "eval-prereg", "hum-benchmark-harness", "hum-benchmark-on-jon", "eval-auditions"],
+      "gate_owner": ["C02", "eval-prereg", "hum-benchmark-harness", "hum-benchmark-on-jon"],
+      "committed_at": ["C02", "eval-prereg", "hum-benchmark-harness", "hum-benchmark-on-jon"]
+    },
+    "benchmark-membership": {
+      "id": ["C02", "eval-auditions", "hum-benchmark-harness"],
+      "set": ["C02", "eval-auditions", "hum-benchmark-harness"],
+      "prereg_sha256": ["C02", "eval-auditions", "hum-benchmark-harness"],
+      "cases": ["C02", "eval-auditions", "hum-benchmark-harness"]
+    },
+    "evidence-binding": {
+      "id": ["C02", "registry", "eval-auditions", "hum-benchmark-harness"],
+      "set": ["C02", "registry", "eval-auditions", "hum-benchmark-harness"],
+      "evidence_id": ["C02", "registry", "eval-auditions", "hum-benchmark-harness"],
+      "subject": ["C02", "registry", "eval-auditions", "hum-benchmark-harness"],
+      "prereg_sha256": ["C02", "registry", "eval-auditions", "hum-benchmark-harness"],
+      "membership_id": ["C02", "registry", "eval-auditions", "hum-benchmark-harness"]
+    }
+  },
+  "pending": [
+    "approval", "artifact", "audition", "burst-run", "candidate", "capability-registry",
+    "component-register", "compute-profile", "compute-tiers", "correction-log", "edit-operation", "engine-profile-registry",
+    "eval-brief", "eval-set", "event", "evidence", "export-manifest", "generation-request",
+    "hardware-snapshot", "import-terms", "job", "keeper", "lane-policy", "ledger-entry",
+    "license-acceptance", "melody-spec", "prereg", "product", "project", "provenance-sidecar",
+    "quote", "reference", "refusal", "reveal", "risk-acceptance", "session",
+    "song-spec", "store", "task-request", "task-status", "timeline", "verdict",
+    "worker-describe", "worker-health"
+  ]
 }

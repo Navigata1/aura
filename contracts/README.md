@@ -45,7 +45,7 @@ python3 scripts/spec/validate.py                  # the gate; -v for detail, --r
    attested, a risk acceptance that would make a Suno import an audition arm, a YuE2 license acceptance without its
    GitHub permission document, and so on).
 7. **Vectors**: tick<->frame (960 PPQ, integer tempo, one half-up rounding), the status fold, `recommend()`, ledger
-   arithmetic and audition gains and commitments match hand-derived values exactly.
+   arithmetic, audition gains and commitments, and the evidence-binding input findings match hand-derived values exactly.
 8. `docs/evidence/` (a hash-checked export of the store: evidence plus the verdicts and preregistrations it cites)
    validates by kind and breaks no reference rule, so a hand-committed passing record cannot become a status; then the
    computed status of the shipped registry from it (none yet: every profile and capability is `declared`), plus the
@@ -130,13 +130,46 @@ The validator discovers schemas by their existing `kind` const/enum and executes
 vector kinds fail explicitly. Frozen legacy vectors still execute against current reference functions.
 
 A new family needs its module, schema and an entry in `contracts/consumers.json`, with no shared dispatch-list edit.
-This manifest is deliberately scoped to vector kinds: every discovered family has a nonempty unique list of actual
-`docs/spec/tickets.json` ticket slugs, and no orphan manifest entry is allowed. These slugs name the consuming contract
-or feature ticket; they do not claim that the future feature is implemented. Full field/enum/schema/declaration
-consumer inventory remains T02 work. There is no pending allow-list in this slice: missing consumers fail closed.
+Every discovered family has a nonempty unique list of actual `docs/spec/tickets.json` ticket slugs, and no orphan
+manifest entry is allowed. These slugs name the consuming contract or feature ticket; they do not claim that the future
+feature is implemented. Vector kinds have no pending allow-list: missing consumers fail closed. Record kinds and
+fields joined the manifest in T02b (below); the rest of the field/enum/declaration consumer inventory remains T02 work.
 
 `tests/contracts/test_vector_discovery.py` exercises the public generator and validator in disposable tracked-file
 copies: new-family discovery, unchanged existing bytes, corrupt expectations, duplicate kinds, missing evaluator,
 missing/unknown consumer, removed handler, producer-kind mismatch and legacy expectation execution. The production
 schemas and existing fixture bytes are unchanged. SongForm, ABC, MIDI and route-standing implementation remain open;
 C01 benchmark containment remains in force until C02 establishes result binding.
+
+## Evidence-binding inputs (T02b)
+
+C02 (#4) needs exact inputs to bind concluded benchmark evidence to, not the existence of a hash. Three closed record
+kinds hold them. None of them concludes, promotes or demotes anything, and none is read by `evidence.gates` or the status
+fold: C01's refusal of concluded `benchmark` and `hum-benchmark` records and its inert fold are unchanged.
+
+- `benchmark-prereg/1`, the typed preregistration. `set` is the benchmark gate's set (`benchmark-48` or
+  `hum-benchmark`). It fixes the subjects under test (profile revision and host class), the exact case set (briefs, or
+  hums with their MIDI ground truth), one threshold per protocol metric, sessions, hidden repeat pairs and coverage.
+  `prereg_sha256` is the record's own canonical hash, and `committed_at` must precede every run it governs. `prereg/1`
+  stays the preregistration of smoke-set eval auditions.
+- `benchmark-membership/1`: per case, each arm's subject with its runs (jobs) and candidates, or its transcribed
+  melodies whose correction logs hold Jon's blind correction; the owner verdict ids each engine case expects.
+- `evidence-binding/1`: one evidence record, its subject, its typed preregistration and the membership. It carries no
+  validated flag (`IR-EVIDENCE-BINDING-VALIDATED-FLAG`).
+
+`studio_ref/binding.py` is the reference. `resolve_prereg` is typed: only a `benchmark-prereg` of the same set whose own
+hash matches resolves, so a MelodySpec, a `prereg/1` or the other set's preregistration never does. `prereg_findings` and
+`binding_findings` report missing thresholds, duplicate case ids, hash mismatches, subjects without a gate of that set,
+forbidden case lanes (ADR-0029 point 6), unresolved or substituted references, unregistered subjects and cases, runs
+queued at or before the commit, and expected verdicts or corrections that do not resolve or were given over synthetic
+test output. The `fixture.binding` vectors hold the hand-derived findings for valid mixed-profile engine and hum
+preregistrations and bindings, and at least one negative for every finding.
+
+`contracts/consumers.json` (version 2) maps every field of these kinds to real consuming tickets. A ticket is a
+`docs/spec/tickets.json` slug or a contract-fix id registered by a `docs/spec/contract-fixes/Cnn-*.md` file, which is
+how C02 is named. Every other record kind sits on an explicit `pending` allow-list. An orphan kind or field entry, an
+unmapped field, an unknown ticket or a new kind on neither list fails both the generator and the validator.
+
+Still open for C02: wiring typed resolution into `evidence.gates` and registry admission, binding candidates to their
+arm's subject and cases to the benchmark set's briefs (all 48 for `benchmark-48`), quota, coverage and threshold
+evaluation, and the conclusion itself. Fields of the pending kinds and route standing remain T02 work.
