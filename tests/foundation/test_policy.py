@@ -30,9 +30,23 @@ PRIVATE_PATHS = {
     'Windows profile into a machine folder': joined('\\','%USERPROFILE%','Some Folder','checkout'),
     'placeholder account into a machine folder': joined('/','','Users','<name>','Some Folder','checkout'),
     'cloud drive under Library': joined('/','~','Library','Mobile Documents','com~apple~CloudDocs','Some Folder'),
+    'cloud storage under Library': joined('/','~','Library','CloudStorage','Some Drive','Some Folder'),
+    'braced home variable into a machine folder': joined('/','${HOME}','Some Folder','checkout'),
+    'PowerShell home variable into a machine folder': joined('/','$env:HOME','Some Folder','checkout'),
+    'PowerShell profile variable into a machine folder': joined('\\','$env:USERPROFILE','Some Folder','checkout'),
+    'quoted home variable': joined('/','"$HOME"','Some Folder'),
+    'quoted braced home variable': joined('/','"${HOME}"','Some Folder'),
+    'quoted Windows profile variable': joined('\\','"%USERPROFILE%"','Some Folder'),
+    'quoted PowerShell profile variable': joined('\\','"$env:USERPROFILE"','Some Folder'),
+    'canonical checkout shape, quoted for a shell': 'cd '+joined('/','"$HOME"','"Some Folder"','checkout'),
+    'home on the macOS Data volume': joined('/','','System','Volumes','Data','Users','someone','notes.txt'),
+    'home on a mounted volume': joined('/','','Volumes','Macintosh HD','Users','someone','notes.txt'),
+    'mdutil output for a home folder': joined('/','','System','Volumes','Data','Users','someone','Some Folder')+':',
 }
 DOCUMENTED_PATHS = '\n'.join([
-    'Studio volume: /Volumes/STUDIO/worktrees/C05-private-path-lint/',
+    'Studio volume: /Volumes/STUDIO/worktrees/C05-private-path-lint/, /Volumes/STUDIO/home/tool/.cache',
+    'Studio volume as mdutil prints it: /System/Volumes/Data/Volumes/STUDIO:, /Volumes/Extreme SSD/STUDIO.sparsebundle',
+    'Volume placeholders: /Volumes/<disk>/Users/<name>/, /System/Volumes/Data/Users/<name>/Library/Caches',
     'Tool folders: `~/.config/studio/env.sh`, `$HOME/.cache/uv`, `~/Library/Caches/pnpm`, `%USERPROFILE%\\AppData\\Local`',
     'Placeholders: /Users/<name>/, /home/<user>/.cache/uv, C:\\Users\\<name>\\AppData\\Local, `~/`, `/Users/`',
     'Not home paths: apps/web/src/home/Home.tsx, ./home/Home, src/Users/List.tsx, https://example.com/home/page, ~400 lines',
@@ -102,7 +116,9 @@ class PolicyTest(unittest.TestCase):
         self.assertEqual(self.scan('docs/research/sources/notes.md',PRIVATE_PATHS['macOS home']).returncode,0)
     def test_private_path_in_undecodable_bytes_rejected(self):
         for form,raw in [('invalid UTF-8',b'\xff'+PRIVATE_PATHS['Linux home'].encode()),
-                         ('UTF-16 with a byte-order mark',PRIVATE_PATHS['Windows home'].encode('utf-16'))]:
+                         ('UTF-16 with a byte-order mark',PRIVATE_PATHS['Windows home'].encode('utf-16')),
+                         ('ASCII appended after UTF-16','Clean text\n'.encode('utf-16')+PRIVATE_PATHS['Linux home'].encode()),
+                         ('UTF-32 with a byte-order mark',PRIVATE_PATHS['macOS home'].encode('utf-32'))]:
             with self.subTest(form=form): self.rejected('evidence.log',raw,'evidence.log: private-path')
     @unittest.skipIf(os.name=='nt','Windows checkouts store a tracked symlink as a text file, which the text scan reads')
     def test_private_symlink_target_rejected(self):

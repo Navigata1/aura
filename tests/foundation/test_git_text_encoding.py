@@ -60,7 +60,7 @@ class GitTextEncodingTest(unittest.TestCase):
             self.assertNotIn('B' * 36, result.stdout + result.stderr)
 
             # Neither Unicode text nor a Unicode filename may hide a home path; its account is never echoed.
-            note.write_text('“Evidence” ' + '/'.join(['', 'home', 'someone', 'notes.txt']) + '\n', encoding='utf-8')
+            note.write_text('\u201cEvidence\u201d ' + '/'.join(['', 'home', 'someone', 'notes.txt']) + '\n', encoding='utf-8')
             result = scan()
             self.assertNotEqual(result.returncode, 0)
             self.assertIn('private-path: line 1:', result.stdout)
