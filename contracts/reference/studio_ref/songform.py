@@ -1,10 +1,10 @@
 """SongForm assembly (ADR-0032; GLOSSARY: SongForm, Phrase, Assembled melody): the reference for Score.assemble.
 
 assemble(melody, song, output) lays the phrases of the MelodySpec revision a SongSpec names along its SongForm and
-returns {"assembled": a melody-spec 1.1.0 record with its form} or {"refused": a typed refusal}. Pure, deterministic
-and integer-only at 960 PPQ on the TimeModel's bar grid (ADR-0033): every bar length is exact, so nothing rounds.
-Nothing is truncated, stretched, retimed or chosen by first match. Semantics, scan order and refusal codes:
-contracts/README.md, "SongForm assembly (T02c)".
+returns {"assembled": a melody-spec 1.1.0 record with its form} or {"refused": a typed refusal}; a source the time
+model cannot measure raises TimeModelError. Pure, deterministic and integer-only at 960 PPQ, in the TimeModel's bars
+and beats (ADR-0033): every bar length is exact, so nothing rounds. Nothing is truncated, stretched, retimed or chosen
+by first match. Semantics, scan order and refusal codes: contracts/README.md, "SongForm assembly (T02c)".
 """
 
 from __future__ import annotations
@@ -12,7 +12,7 @@ from __future__ import annotations
 import copy
 
 from .canonical import self_hash
-from .timemodel import PPQ, bar_segments, bar_ticks, position, tick_at
+from .timemodel import PPQ, bar_segments, bar_ticks, position, tempo_segments, tick_at
 
 SCHEMA_VERSION = "1.1.0"
 
@@ -40,7 +40,8 @@ def _changes_inside(segments: list[dict], start: int, end: int) -> bool:
 
 
 def _shape(melody: dict, phrase: dict, section_id: str) -> dict:
-    """The bars one phrase occupies (from the bar line at or before its start), its one tempo and meter, its notes."""
+    """The bars one phrase occupies (from the bar line at or before its start, rounded up to whole bars), its one tempo
+    and meter over all of those bars, trailing rest included, and its notes."""
     pid, start, end = phrase["id"], phrase["start_tick"], phrase["end_tick"]
     if end <= start:
         raise Refused("empty_phrase", section_id, pid)
@@ -48,9 +49,10 @@ def _shape(melody: dict, phrase: dict, section_id: str) -> dict:
     meter = _at(tempo_map["meter"], start)
     bar = bar_ticks(meter["numerator"], meter["denominator"])
     anchor = tick_at(position(start, tempo_map["meter"])["bar"], 1, tempo_map["meter"])
-    if _changes_inside(tempo_map["meter"], anchor, end):
+    bars = -(-(end - anchor) // bar)
+    if _changes_inside(tempo_map["meter"], anchor, anchor + bars * bar):
         raise Refused("meter_conflict", section_id, pid)
-    if _changes_inside(tempo_map["tempo"], anchor, end):
+    if _changes_inside(tempo_map["tempo"], anchor, anchor + bars * bar):
         raise Refused("tempo_conflict", section_id, pid)
     notes = []
     for note in melody["notes"]:
@@ -59,16 +61,15 @@ def _shape(melody: dict, phrase: dict, section_id: str) -> dict:
             if note["start_tick"] < start or note_end > end:
                 raise Refused("note_crosses_phrase_edge", section_id, pid, note["id"])
             notes.append(note)
-    return {"phrase": phrase, "anchor": anchor, "bars": -(-(end - anchor) // bar),
+    return {"phrase": phrase, "anchor": anchor, "bars": bars,
             "notes": sorted(notes, key=lambda n: (n["start_tick"], n["pitch"])),
             "time": (_at(tempo_map["tempo"], anchor)["us_per_quarter"], meter["numerator"], meter["denominator"])}
 
 
-def _plan(melody: dict, song: dict) -> list[tuple[dict, list[dict]]]:
-    ticks = [s["tick"] for s in melody["tempo_map"]["tempo"]]
-    if ticks[0] != 0 or any(b <= a for a, b in zip(ticks, ticks[1:])):
-        raise ValueError("tempo segments must start at tick 0 and strictly increase (melody.wellformed)")
-    bar_segments(melody["tempo_map"]["meter"])  # raises MeterError unless meter changes land on bar lines
+def _section_phrases(melody: dict, song: dict) -> list[tuple[dict, list[dict]]]:
+    """Each SongForm section with the shapes of the phrases it places, after every refusal check but chord placement."""
+    tempo_segments(melody["tempo_map"]["tempo"])  # TimeModelError unless the tempo map starts at 0 and increases
+    bar_segments(melody["tempo_map"]["meter"])  # TimeModelError unless meter changes land on bar lines
     if melody["spec_kind"] != "melody":
         raise Refused("source_not_melody")
     named = {"melody_id": melody["melody_id"], "rev": melody["rev"], "tempo_map_rev": melody["tempo_map"]["rev"]}
@@ -108,8 +109,8 @@ def _plan(melody: dict, song: dict) -> list[tuple[dict, list[dict]]]:
     return plan
 
 
-def _layout(melody: dict, plan: list[tuple[dict, list[dict]]]):
-    """Tempo and meter segments, notes and section repeats, laid out from tick 0; returns them with the end tick."""
+def _place(melody: dict, plan: list[tuple[dict, list[dict]]]):
+    """Tempo and meter segments, notes and section repeats, placed from tick 0; returns them with the end tick."""
     meter0 = melody["tempo_map"]["meter"][0]
     first = next((shapes[0]["time"] for _, shapes in plan if shapes), None)
     time = first or (melody["tempo_map"]["tempo"][0]["us_per_quarter"], meter0["numerator"], meter0["denominator"])
@@ -143,7 +144,7 @@ def _layout(melody: dict, plan: list[tuple[dict, list[dict]]]):
 
 
 def _assemble(melody: dict, song: dict, output: dict) -> dict:
-    tempo, meter, notes, repeats, end = _layout(melody, _plan(melody, song))
+    tempo, meter, notes, repeats, end = _place(melody, _section_phrases(melody, song))
     source = melody["source"]
     record = {
         "kind": "melody-spec", "schemaVersion": SCHEMA_VERSION, "melody_id": output["melody_id"], "rev": output["rev"],

@@ -17,16 +17,26 @@ def round_half_up(value: Fraction) -> int:
     return (value.numerator * 2 + value.denominator) // (value.denominator * 2)
 
 
-def _segments(tempo: list[dict]) -> list[tuple[int, int]]:
+class TimeModelError(ValueError):
+    """A tempo map, meter map or bar position the time model cannot represent; code names the reason. Other bad
+    arguments (a negative tick or frame, a bar or beat below 1) are plain ValueErrors outside the vectors' domain."""
+
+    def __init__(self, code: str):
+        super().__init__(code)
+        self.code = code
+
+
+def tempo_segments(tempo: list[dict]) -> list[tuple[int, int]]:
+    """Tempo segments as (tick, us_per_quarter); they start at tick 0 and strictly increase."""
     segs = [(seg["tick"], seg["us_per_quarter"]) for seg in tempo]
     if not segs or segs[0][0] != 0 or any(b[0] <= a[0] for a, b in zip(segs, segs[1:])):
-        raise ValueError("tempo segments must start at tick 0 and strictly increase")
+        raise TimeModelError("tempo_segments_invalid")
     return segs
 
 
 def seconds_at_tick(tick: int, tempo: list[dict], ppq: int = PPQ) -> Fraction:
     total = Fraction(0)
-    segs = _segments(tempo)
+    segs = tempo_segments(tempo)
     for i, (start, us) in enumerate(segs):
         end = segs[i + 1][0] if i + 1 < len(segs) else None
         if tick <= start:
@@ -34,14 +44,6 @@ def seconds_at_tick(tick: int, tempo: list[dict], ppq: int = PPQ) -> Fraction:
         span = (min(tick, end) if end is not None else tick) - start
         total += Fraction(span * us, ppq * US_PER_SECOND)
     return total
-
-
-class MeterError(ValueError):
-    """A meter map or bar position the time model cannot represent; code names the reason."""
-
-    def __init__(self, code: str):
-        super().__init__(code)
-        self.code = code
 
 
 def bar_ticks(numerator: int, denominator: int, ppq: int = PPQ) -> int:
@@ -56,12 +58,12 @@ def bar_segments(meter: list[dict], ppq: int = PPQ) -> list[tuple[int, int, int,
     for seg in meter:
         tick, numerator, denominator = seg["tick"], seg["numerator"], seg["denominator"]
         if (not out and tick != 0) or (out and tick <= out[-1][0]):
-            raise MeterError("meter_segments_invalid")
+            raise TimeModelError("meter_segments_invalid")
         if out:
             start, bar, prev_numerator, prev_denominator = out[-1]
             bars, inside = divmod(tick - start, bar_ticks(prev_numerator, prev_denominator, ppq))
             if inside:
-                raise MeterError("meter_change_inside_bar")
+                raise TimeModelError("meter_change_inside_bar")
             out.append((tick, bar + bars, numerator, denominator))
         else:
             out.append((0, 1, numerator, denominator))
@@ -84,7 +86,7 @@ def tick_at(bar: int, beat: int, meter: list[dict], ppq: int = PPQ) -> int:
         raise ValueError("bars and beats count from 1")
     start, first, numerator, denominator = [s for s in bar_segments(meter, ppq) if s[1] <= bar][-1]
     if beat > numerator:
-        raise MeterError("beat_outside_bar")
+        raise TimeModelError("beat_outside_bar")
     return start + (bar - first) * bar_ticks(numerator, denominator, ppq) + (beat - 1) * (4 * ppq // denominator)
 
 
@@ -98,7 +100,7 @@ def frames_to_ticks(frame: int, tempo: list[dict], sample_rate: int, ppq: int = 
     if frame < 0:
         raise ValueError("frame must be >= 0")
     target = Fraction(frame, sample_rate)
-    segs = _segments(tempo)
+    segs = tempo_segments(tempo)
     start_seconds = Fraction(0)
     for i, (start, us) in enumerate(segs):
         end = segs[i + 1][0] if i + 1 < len(segs) else None

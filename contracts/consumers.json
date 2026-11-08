@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "scope": "vector-kinds",
+  "scope": "vector-kinds and added fields",
   "consumers": {
     "fixture.tempo": [
       "contract-completion",
@@ -26,14 +26,17 @@
       "contract-completion",
       "song-spec",
       "guide",
-      "abc-emission"
+      "abc-emission",
+      "ace-routes"
     ],
     "fixture.meter": [
       "contract-completion",
       "contracts-codegen",
       "song-spec",
-      "guide",
-      "piano-roll"
+      "piano-roll",
+      "abc-emission",
+      "timeline",
+      "midi-in-out"
     ]
   },
   "fields": {

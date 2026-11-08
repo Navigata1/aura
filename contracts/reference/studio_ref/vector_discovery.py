@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 import re
 
-ADDED = re.compile(r'added in 1\.[0-9]+\.[0-9]+')
+ADDED = re.compile(r'added in 1\.[1-9][0-9]*\.[0-9]+')  # a minor version above 1.0.0
 
 
 def added_fields(root: Path) -> set[str]:
@@ -45,7 +45,8 @@ def discover(root: Path):
     manifest = json.loads((root / 'contracts/consumers.json').read_text(encoding='utf-8'))
     keys = set(manifest) if isinstance(manifest, dict) else set()
     if (not {'version', 'scope', 'consumers'} <= keys <= {'version', 'scope', 'consumers', 'fields'}
-            or type(manifest['version']) is not int or manifest['version'] != 1 or manifest['scope'] != 'vector-kinds'):
+            or type(manifest['version']) is not int or manifest['version'] != 1
+            or manifest['scope'] != 'vector-kinds and added fields'):
         raise ValueError('invalid vector consumers manifest')
     consumers, fields = manifest['consumers'], manifest.get('fields', {})
     if not isinstance(consumers, dict) or set(consumers) != set(modules):

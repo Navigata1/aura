@@ -1063,8 +1063,8 @@ def _melody_wellformed(w: World) -> list[Finding]:
         if src["transcription"] is not None:
             job = w.ids["job"].get(src["transcription"]["job_id"])
             # An assembled revision carries its source's transcription, which output revision 1 of the source melody.
-            lineage = src["assembled_from"]["melody"]["melody_id"] if src["assembled_from"] else m["melody_id"]
-            first = w.melodies.get((lineage, 1))
+            source_melody_id = src["assembled_from"]["melody"]["melody_id"] if src["assembled_from"] else m["melody_id"]
+            first = w.melodies.get((source_melody_id, 1))
             if job is None or job["job_kind"] != "transcribe" or first is None \
                     or first["content_sha256"] not in {o["sha256"] for o in job["outputs"]}:
                 out.append((at(m), "the transcription job is missing or did not output revision 1 of this melody"))

@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "fixture.songform",
-  "description": "SongForm assembly golden vectors (T02c; contracts/README.md, 'SongForm assembly'). Each case gives a hypothetical source MelodySpec, a SongSpec and the new record's identity, and the hand-derived result: the assembled MelodySpec with its form's end frame at sample_rate (the one rounding function, ADR-0033), or a typed refusal. The validator re-runs studio_ref.songform.assemble and requires exact equality. Inputs are not evidence of anything.",
+  "description": "SongForm assembly golden vectors (T02c; contracts/README.md, 'SongForm assembly'). Each case gives a hypothetical source MelodySpec, a SongSpec and the new record's identity, and the hand-derived result: the assembled MelodySpec with its form's end frame at sample_rate (the one rounding function, ADR-0033), a typed refusal, or the TimeModelError code an unmeasurable source raises. The validator re-runs studio_ref.songform.assemble and requires exact equality. Inputs are not evidence of anything.",
   "type": "object",
   "required": ["kind", "schemaVersion", "cases"],
   "additionalProperties": false,
@@ -34,7 +34,7 @@
           }
         },
         "sample_rate": {"type": "integer", "minimum": 8000, "maximum": 384000},
-        "expected": {"oneOf": [{"$ref": "#/$defs/assembled"}, {"$ref": "#/$defs/refused"}]}
+        "expected": {"oneOf": [{"$ref": "#/$defs/assembled"}, {"$ref": "#/$defs/refused"}, {"$ref": "#/$defs/invalid"}]}
       }
     },
     "assembled": {
@@ -45,6 +45,13 @@
         "assembled": {"allOf": [{"$ref": "melody-spec.schema.json"}, {"required": ["form"], "properties": {"spec_kind": {"const": "assembled"}}}]},
         "end_frame": {"type": "integer", "minimum": 0}
       }
+    },
+    "invalid": {
+      "description": "A source the time model cannot measure (it breaks melody.wellformed): an input error, raised, never a refusal.",
+      "type": "object",
+      "required": ["invalid"],
+      "additionalProperties": false,
+      "properties": {"invalid": {"enum": ["tempo_segments_invalid", "meter_segments_invalid", "meter_change_inside_bar"]}}
     },
     "refused": {
       "type": "object",

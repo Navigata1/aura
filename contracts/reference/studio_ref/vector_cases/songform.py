@@ -108,6 +108,22 @@ def _no(name, why, melody_doc, song_doc, code, section=None, phrase=None, note=N
             "expected": {"refused": {"code": code, "section_id": section, "phrase_id": phrase, "note_id": note}}}
 
 
+def _invalid(name, why, melody_doc, song_doc, code):
+    return {"name": name, "derivation": why, "melody": melody_doc, "song": song_doc, "output": OUT, "sample_rate": RATE,
+            "expected": {"invalid": code}}
+
+
+def _instrumental(s):
+    s["controls"]["vocal_mode"]["requested"] = "instrumental"
+    s["approved_lyrics"] = None
+
+
+def _shared():
+    """ph1 ends mid-bar at 5760 and ph2 starts there: the two phrases share the source's second 4/4 bar."""
+    return melody([(0, 1920, 60, 90), (1920, 1920, 62, 90), (3840, 1920, 64, 90), (5760, 1920, 65, 90)],
+                  [("ph1", "long line", 0, 5760), ("ph2", "tag", 5760, 7680)])
+
+
 def _changed(doc, change):
     doc = copy.deepcopy(doc)
     change(doc)
@@ -176,6 +192,21 @@ def _assembled_cases(profiles, pick, pick_song, pick_out):
                              ("s4", "jig", "vocal", 1, 17280, 20160, [("ph3", 17280, 20160)]),
                              ("s4", "jig", "vocal", 2, 20160, 23040, [("ph3", 20160, 23040)]),
                              ("s5", "outro", "instrumental", 1, 23040, 25920, [])], 25920)
+    seed = melody([(0, 960, 60, 100), (960, 960, 62, 80)], [("ph1", "seed", 0, 3840)])
+    seed_song = song(seed, [("s1", "intro", "instrumental", [], 1, 1), ("s2", "verse", "vocal", ["ph1"], 1, 2)])
+    seed_out = assembled(seed, seed_song, [(3840, 960, 60, 100), (4800, 960, 62, 80), (7680, 960, 60, 100), (8640, 960, 62, 80)],
+                         [(0, Q120)], [(0, 4, 4)],
+                         [("s1", "intro", "instrumental", 1, 0, 3840, []), ("s2", "verse", "vocal", 1, 3840, 7680, [("ph1", 3840, 7680)]),
+                          ("s2", "verse", "vocal", 2, 7680, 11520, [("ph1", 7680, 11520)])], 11520)
+    shared = _shared()
+    shared_song = song(shared, [("s1", "verse", "vocal", ["ph1", "ph2"], 3, 1)])
+    shared_out = assembled(shared, shared_song, [(0, 1920, 60, 90), (1920, 1920, 62, 90), (3840, 1920, 64, 90), (9600, 1920, 65, 90)],
+                           [(0, Q120)], [(0, 4, 4)], [("s1", "verse", "vocal", 1, 0, 11520, [("ph1", 0, 5760), ("ph2", 9600, 11520)])],
+                           11520)
+    bed_song = _changed(song(waltz, [("s1", "intro", "instrumental", [], 2, 1), ("s2", "outro", "instrumental", [], 1, 1)]),
+                        _instrumental)
+    bed_out = assembled(waltz, bed_song, [], [(0, Q120)], [(0, 4, 4)], [("s1", "intro", "instrumental", 1, 0, 7680, []),
+                                                                        ("s2", "outro", "instrumental", 1, 7680, 11520, [])], 11520)
     return [
         _ok("world hymn: repeated chorus and a tempo change", "The 8-bar verse [0, 30720) places ph1 at its own ticks (1 bar, "
             "then 7 bars of rest). The chorus repeats twice, [30720, 61440) and [61440, 92160), placing ph2 (bar line 3840, "
@@ -205,6 +236,18 @@ def _assembled_cases(profiles, pick, pick_song, pick_out):
             "increase and lie inside the verse's 15360-tick repeat. Assembly reads, but does not copy, them (ABC emission "
             "reads them from the SongSpec by section id), so the result is the pickup case's.",
             pick, _chords(pick, (0, "G"), (3840, "C"), (7680, "D7"), (11520, "G/B")), pick_out, 672000),
+        _ok("preparation case: one instrumental bar, then a phrase twice", "The T02 preparation note's first case: ph1 "
+            "[0, 3840) with notes at 0 and 960. The 1-bar intro [0, 3840) is empty; the 1-bar verse repeats at [3840, 7680) "
+            "and [7680, 11520), so the note pairs start at 3840/4800 and 7680/8640, and the form reaches 11520 although "
+            "its last note ends at 9600. 12 quarters x 0.5 s = 6 s = 288000 frames.", seed, seed_song, seed_out, 288000),
+        _ok("two phrases that share a source bar take separate bars", "ph1 [0, 5760) touches 2 bars: ceil(5760 / 3840) "
+            "= 2, slots 1-2. ph2 [5760, 7680) starts in the source's second bar, so its bar line is 3840 and it fills 1 "
+            "bar; in the 3-bar verse it takes slot 3 [7680, 11520) and moves by 7680 - 3840 = +3840, so its note lands at "
+            "9600, not 5760. 11520 ticks = 6 s = 288000 frames.", shared, shared_song, shared_out, 288000),
+        _ok("a form with no phrase takes the source's tick-0 tempo and meter", "No section places a phrase (an "
+            "instrumental SongSpec), so every section takes the source's tick-0 values, 4/4 at 120 BPM, and not its "
+            "later 3/4 at 100 BPM: a 2-bar intro [0, 7680) and a 1-bar outro [7680, 11520), with no notes. 288000 frames.",
+            waltz, bed_song, bed_out, 288000),
     ]
 
 
@@ -219,6 +262,8 @@ def _refused_cases(pick, pick_song, pick_out):
     def meter(change_at):
         return lambda m: m["tempo_map"].update(meter=[{"tick": 0, "numerator": 4, "denominator": 4},
                                                       {"tick": change_at, "numerator": 2, "denominator": 4}])
+    shared = _shared()
+    solo = song(shared, [("s1", "verse", "vocal", ["ph1"], 2, 1)])
     return [
         _no("source already assembled", "Assembly lays out a source melody; an assembled one is never re-assembled.",
             pick_out, pick_song, "source_not_melody"),
@@ -259,6 +304,23 @@ def _refused_cases(pick, pick_song, pick_out):
             pick, _chords(pick, (0, "G"), (15360, "D7")), "chord_symbol_misplaced", "s2"),
         _no("chord symbols out of order", "Offsets 3840 then 0 do not increase.", pick, _chords(pick, (3840, "C"), (0, "G")),
             "chord_symbol_misplaced", "s2"),
+        _no("tempo change after a phrase's last note, inside its last bar", "ph1 [0, 5760) occupies the bars [0, 7680); "
+            "the tempo changes at 6720, after its last note ends at 5760 but inside its last bar, so the bars it occupies "
+            "have no single tempo. Dropping the change would retime that bar.", _changed(shared, tempo(6720)), solo,
+            "tempo_conflict", "s1", "ph1"),
+        _no("tempo change where a phrase ends mid-bar", "The tempo changes at 5760, exactly where ph1 ends and inside "
+            "its last bar [3840, 7680).", _changed(shared, tempo(5760)), solo, "tempo_conflict", "s1", "ph1"),
+        _invalid("meter change after a phrase's last note, inside its last bar", "The source turns 2/4 at 6720, inside "
+                 "ph1's last 4/4 bar after its last note. A meter changes only on a bar line (melody.wellformed), so the "
+                 "time model cannot measure the source and raises before any section is placed.",
+                 _changed(shared, meter(6720)), solo, "meter_change_inside_bar"),
+        _invalid("tempo map not from tick 0", "The source's first tempo segment starts at 960 (melody.wellformed).",
+                 _changed(pick, lambda m: m["tempo_map"].update(tempo=[{"tick": 960, "us_per_quarter": Q120}])), pick_song,
+                 "tempo_segments_invalid"),
+        _invalid("meter segments not increasing", "Two meter segments start at tick 0 (melody.wellformed).",
+                 _changed(pick, lambda m: m["tempo_map"].update(meter=[{"tick": 0, "numerator": 4, "denominator": 4},
+                                                                       {"tick": 0, "numerator": 3, "denominator": 4}])),
+                 pick_song, "meter_segments_invalid"),
     ]
 
 
@@ -268,7 +330,10 @@ def build(profiles):
 
 
 def evaluate(case, world):
-    got = songform.assemble(case["melody"], case["song"], case["output"])
+    try:
+        got = songform.assemble(case["melody"], case["song"], case["output"])
+    except timemodel.TimeModelError as error:
+        return {"invalid": error.code}, case["expected"]
     if "assembled" in got:
         record = got["assembled"]
         got = {"assembled": record, "end_frame": timemodel.ticks_to_frames(

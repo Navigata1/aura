@@ -888,10 +888,11 @@ def build_scenarios(docs: list[dict], L: dict) -> list[dict]:
     from studio_ref.vector_cases.songform import hymn_assembled
     asm_bp = hymn_assembled(m2_bp, get("song-spec", "song_hymn", 1), {"melody_id": "mel_hymn_asm", "rev": 1, "base_rev": None,
                                                                        "tempo_map_rev": 1, "created_at": "2026-10-09T10:09:00Z"})
-    asm_dropped, asm_laundered = copy.deepcopy(asm_bp), copy.deepcopy(asm_bp)
+    asm_dropped, asm_laundered, asm_capture = copy.deepcopy(asm_bp), copy.deepcopy(asm_bp), copy.deepcopy(asm_bp)
     asm_dropped["source"]["transcription"] = None
     asm_laundered["source"]["transcription"]["license_chain"] = lic(PROFILES["analysis-transcribe-pyin-hmm"]["components"])
-    rehash(asm_dropped), rehash(asm_laundered)
+    asm_capture["source"]["capture_sha256"] = L["midi"]
+    rehash(asm_dropped), rehash(asm_laundered), rehash(asm_capture)
 
     def reads(jid, project, lane, melody_doc):
         return job(jid, project, "guide", "guide", "analysis-guide-neutralvoice", None, [("queued", "2026-10-09T12:00:00Z")], lane=lane,
@@ -908,6 +909,9 @@ def build_scenarios(docs: list[dict], L: dict) -> list[dict]:
     sc("LANE-RECORD-ASSEMBLED-CHAIN-LAUNDERED", ["lane.record_eligible"], "A 1.1.0 assembled hymn keeps Basic Pitch's lanes "
        "but swaps in the all-lanes pYIN transcriber's license chain; the license chain is inherited exactly too.",
        [m1_bp, m2_bp, tr_bp, asm_laundered, reads("job_asm_read", "prj_hymn", "individual", asm_laundered)])
+    sc("LANE-RECORD-ASSEMBLED-CAPTURE-SWAPPED", ["lane.record_eligible"], "A 1.1.0 assembled hymn names the venture's MIDI "
+       "capture, a stored human recording, instead of its source's hum; the capture is inherited exactly too.",
+       [m1_bp, m2_bp, tr_bp, asm_capture, reads("job_asm_read", "prj_hymn", "individual", asm_capture)])
     sc("LANE-RECORD-LEGACY-ASSEMBLED-READ-IN-LLC", ["lane.record_eligible"], "An llc job reads the world's 1.0.0 assembled "
        "hymn, whose lineage is by reference only: its lanes still come from the Basic Pitch source through assembled_from.",
        [m1_bp, m2_bp, tr_bp, reads("job_asm_llc", "prj_venture", "llc", get("melody-spec", "mel_hymn_asm", 1))])
