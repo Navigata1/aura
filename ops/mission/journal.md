@@ -91,3 +91,56 @@
 - Original failed integration run42342742232 remains recorded; no failed run was retried to erase its result. Copied the final independent reviews, merge proof and separate completed integration receipt.
 - Full T02, C02 and actual scheduled-nightly acceptance remain open. No models, audio, playback, owner listening or paid jobs occurred; main remains unchanged.
 - This documentation checkpoint publishes that implementation state. Its own eventual publication CI belongs in the external receipt rather than another recursive state commit.
+
+## 2026-11-08T03:33:12.741690+00:00 — public build decision
+
+- Jon's instruction of 2026-11-07: "Keep the repo private unless we can build in public and keep ci free- then make it back private again when its at production level …". After a publication audit of every commit diff and identity and of every issue, PR, comment and review (no credential, personal address or committed media found), the lead made Navigata1/aura public so hosted CI stays free. It returns to private at production level, on Jon's call.
+- Recorded in docs/research/OWNER-DECISIONS-2026-11-07.md by S01 (#126, PR #127). Public visibility grants no license: the code license (Q5) stays owner-pending and the default remains all rights reserved.
+- Hard rule 10 now covers every public surface, including the review and merge records that checkpoints like this one commit under ops/.
+
+## 2026-11-08T03:33:12.741690+00:00 — rulesets and Actions settings
+
+- Read back at this checkpoint (evidence/2026-11-07/integration-batch.json), both active with no bypass actors: `integration: PR-only, green three-OS CI, up to date` (squash only; the three `checks / foundation (…)` contexts with the branch up to date; review threads resolved; no force-push or deletion) and `main: owner release only via PR, green three-OS CI`.
+- Actions require SHA-pinned actions and approval of fork-PR workflows from all external contributors, and the default workflow token is read-only.
+- Still procedural: the independent review (the rulesets require no approving review), Jon's release-only `main`, and no auto-merge. A review is bound to its patch (`git patch-id --stable`), so a clean integration-only update keeps it. That is the lead's addendum, and Jon has not yet confirmed it.
+
+## 2026-11-08T03:33:12.741690+00:00 — tracker published
+
+- Every plan ticket is a GitHub issue. P01 is #1 and T01 is #2; T02–T105 were published as #15–#125 with 219 native blocking edges, and the seven T02 slices sit among them: T02b #77, T02c #80, T02d #83, T02e #86, T02f #89, T02g #92, T02h #95.
+- Contract fixes: C02 #4, C04 #132, C05 #133, C06 #134, C07 #135, C08 #143. Spec tickets: S01 #126, S02 #141.
+- S01 added T106 #138, T107 #139 and T108 #140, and amended T44 #57, T46 #59, T58 #71, T61 #74 and T93 #113 in place. The lead added the eight blocking edges those changes imply, among them T58 on T03 and T61 on T44 (227 edges in /Volumes/STUDIO/evidence/tracker/issue-map.json). state.json now mirrors the 108-ticket plan and those dependencies.
+
+## 2026-11-08T03:33:12.741690+00:00 — reviewed merges of 2026-11-07
+
+- Four squash merges into integration, each after green three-OS CI on the merged head and an independent Standards and Spec review of the same patch:
+  - T03, PR #129 → dee28e2 (issue #16 closed).
+  - S01, PR #127 → 0e02d72 (#126 closed), on the second review round.
+  - T02c, PR #131 → 910910a (#80 closed), on the second review round. Its base was refreshed by merging integration, with patch-id 09e0de2b unchanged.
+  - C04, PR #136 → a30bbad (#132 closed). Its base was refreshed the same way, with patch-id 33288056 unchanged.
+- The four integration pushes (runs 42438742621, 42441114008, 42441652777 and 42442475484) passed on Linux, macOS and Windows. `main` is unchanged at 79cd9af.
+- Copied 20 records byte-for-byte into ops/mission/evidence/2026-11-07/: each merge's Standards and Spec reviews, review JSON and merge JSON (both rounds for T02c, the passing round for S01) and T03's lead merge notes. This checkpoint adds its own integration-batch.json. Not copied: raw fetched license, NOTICE or registry text (it holds third-party addresses), probe dumps or probe inputs.
+- Withheld under hard rule 10 and left unedited on STUDIO, because each names a home path: S01's round-1 `S01-standards-review.md` (SHA-256 `adcdb23c7163917c6b36644523d3d95b04da6572380c06c50d3906f4d659f7cf`) and `S01-review.json` (`74c51e2800b4822ff5667b980a300900a4b359eb4a23c5cadd2a9fe133ab8bf3`) name the canonical checkout's home folder, and `S01-spec-review.md` (`91c37899154188bd9db8a214a4ce1d1502a6724693eb0004a6975bd04718f5c4`) names a vendor's default folder under the home directory. Their findings survive in the copied round-2 reviews.
+
+## 2026-11-08T03:33:12.741690+00:00 — the review gate caught real defects
+
+- S01 round 1 (906f4a8, Spec): T106 pinned GAME's v1.0.3 ONNX release while presenting it as carrying the 2026-10-21 and 2026-10-24 fixes. Those assets predate both fixes, which change functions traced into the exported graphs. Fixed: T106 runs GAME's own PyTorch inference at 69ba01de with the v1.0.0 checkpoints. Round 2 passed.
+- T02c round 1 (969886b, Standards): a source tempo change after a phrase's last note, inside its last bar, was assembled and silently dropped instead of refused as the README contract says. Fixed by cd85ce8, and round 2 passed.
+- T02d round 1 (19985b8, both lenses): reading a MIDI file discarded the End of Track position, so a trailing section such as an outro was silently lost. Fixed, and round 2 passed at 9742d88, but the PR has since conflicted with integration, so its updated patch needs a fresh review.
+- T02b round 1 (dd300ff, both lenses): the consumers.json pending allow-list could hide a new record kind, benchmark-prereg/1 could not hold asset hashes or budgets, and two thresholds for one metric validated. Round 2 (8361db1) still blocks on Standards: 5 of 31 condition mutants survived the shipped vectors. Its fix round is in progress.
+
+## 2026-11-08T03:33:12.741690+00:00 — merge-gate bugs and the issue #80 correction
+
+- The lead's merge gate (/Volumes/STUDIO/evidence/protocol/merge_pr.py, SHA-256 `c210131e2a6027cd34b4c81371812d318abca1b029cf2ad6b43f40983290254a` at this checkpoint) had two bugs, both fixed. GitHub's commit `authors` list folds in Co-Authored-By trailers, so the noreply check now reads each commit's real git author and committer. The post-update commit range counted integration's own new commits, so those are now excluded, and only merges of the integration tip may remain.
+- Because of the second bug, the gate refused PR #131 after its branch update, but issue #80 had already been closed with a premature "merged" comment (03:09:46Z). The lead reopened it at 03:10:00Z with a correction comment and closed it again at 03:11:25Z, after the real merge (910910a at 03:11:20Z). That merge went through the fixed gate with the reviewed patch-id unchanged (T02c-merge.json).
+
+## 2026-11-08T03:33:12.741690+00:00 — license findings with product consequences
+
+- T03: waveform-playlist requires LGPL-3.0 waveform-data, which hard rule 5 bars from the web bundle, so the Studio timeline (T77) will be AURA's own (comment on #97; ADR-0013's other option).
+- T54 (PR #137, under review): SwiftF0 0.3.0 and Basic Pitch 0.4.0 both train on non-commercial data, so neither is llc-eligible, and llc transcription stays on pYIN + HMM or manual entry, as the spec planned. The finding is not final until that review passes.
+
+## 2026-11-08T03:33:12.741690+00:00 — what is open
+
+- T02 slices: T02b (PR #130) and T02d (PR #128) are in their loops; T02e (#86) has started; T02f (#89), T02g (#92) and T02h (#95) have not. C02 (#4) waits for T02b.
+- Contract and spec fixes: C05 (PR #142) and T54 (PR #137) are in review, C07 (#135) is being implemented, and C06 (#134), C08 (#143) and S02 (#141) have not started.
+- The scheduled nightly still awaits Jon's first release merge into `main`, so T01 (#2) stays open. Jon has not yet confirmed the patch-bound review rule (owner-pending).
+- No model, audio, playback, owner verdict or paid run occurred. This checkpoint's own publication CI belongs in the external receipt, not in another recursive state commit.
