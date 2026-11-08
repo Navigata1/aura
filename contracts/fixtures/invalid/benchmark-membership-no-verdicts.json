@@ -1,0 +1,52 @@
+{
+  "description": "An engine case expecting no verdict.",
+  "error_contains": "$.cases[0].verdict_ids: fewer than 1 items",
+  "id": "IR-BENCHMARK-MEMBERSHIP-NO-VERDICTS",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "cases": [
+      {
+        "arms": [
+          {
+            "candidate_ids": [
+              "cand_ace"
+            ],
+            "job_ids": [
+              "job_ace"
+            ],
+            "melody_ids": [],
+            "subject": {
+              "host_class": "mlx/m5pro",
+              "profile_id": "ace-2b-sft-mlx",
+              "profile_revision": "da1d8370a3bc246a72aad19f94b68bbeecaf2a08414d1eddf905c03f440bcb5d"
+            }
+          },
+          {
+            "candidate_ids": [
+              "cand_yue"
+            ],
+            "job_ids": [
+              "job_yue"
+            ],
+            "melody_ids": [],
+            "subject": {
+              "host_class": "cuda/rtx4090",
+              "profile_id": "yue2-3b-score",
+              "profile_revision": "37522ad18dee26df2c7956bcdd34163bca9d88e991f76a2f6c983581f67b0d8e"
+            }
+          }
+        ],
+        "case_id": "case_b01",
+        "verdict_ids": []
+      }
+    ],
+    "id": "bm_engine",
+    "kind": "benchmark-membership",
+    "prereg_sha256": "4687de13d7aac751e569f68633119ead5ad7e1171f60754b87606f2e59c12ca7",
+    "schemaVersion": "1.0.0",
+    "set": "benchmark-48"
+  },
+  "record_kind": "benchmark-membership",
+  "rule": "An engine case names the owner verdicts it expects",
+  "schemaVersion": "1.0.0"
+}
