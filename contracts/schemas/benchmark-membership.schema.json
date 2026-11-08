@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "benchmark-membership/1",
-  "description": "What a preregistered benchmark holds, case by case (GLOSSARY: Brief, Candidate, Verdict, Correction; ADR-0010): each arm's subject with the runs (jobs) it governs and their candidates (benchmark-48) or the transcribed melodies whose correction logs hold Jon's blind correction (hum-benchmark), and the owner verdict ids expected from the case's eval auditions. prereg_sha256 resolves only to a benchmark-prereg of the same set. It is an input C02 validates; it concludes nothing.",
+  "description": "What a preregistered benchmark holds, case by case (GLOSSARY: Brief, Candidate, Verdict, Correction; ADR-0010): each arm's subject with the jobs it governs and their candidates (benchmark-48) or the MelodySpec revisions they transcribed, whose correction logs hold Jon's blind correction (hum-benchmark), and the owner verdict ids expected from the case's eval auditions. prereg_sha256 resolves only to a benchmark-prereg of the same set. It is an input C02 validates; it concludes nothing.",
   "type": "object",
   "required": ["kind", "schemaVersion", "id", "set", "prereg_sha256", "cases"],
   "additionalProperties": false,
@@ -31,7 +31,7 @@
                 "subject": {"$ref": "benchmark-prereg.schema.json#/$defs/subject"},
                 "job_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "common.schema.json#/$defs/id"}},
                 "candidate_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "common.schema.json#/$defs/id"}},
-                "melody_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "common.schema.json#/$defs/id"}, "description": "Transcribed drafts; each one's correction log is the correction linkage."}
+                "melody_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "common.schema.json#/$defs/id"}, "description": "MelodySpecs transcribed by the arm's jobs; each one's correction log is the correction linkage."}
               }
             }
           },

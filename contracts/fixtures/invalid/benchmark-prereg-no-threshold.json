@@ -4,30 +4,44 @@
   "id": "IR-BENCHMARK-PREREG-NO-THRESHOLD",
   "kind": "fixture.invalid-record",
   "record": {
+    "asset_hashes": [
+      "177cc7f2e7685d0be714597bf678af6bde6bd38f2ef58410e89a50785e2add9e"
+    ],
+    "budgets": {
+      "candidates_per_brief": 1,
+      "compute_usd_cap": "5.00",
+      "listening_minutes": 60
+    },
+    "burst_run_ceiling_usd": "2.00",
     "cases": [
       {
         "brief_id": "brief_b01",
+        "brief_sha256": "3bd99ce55d15b5330d56ef3a4475cab01eacc41eb48f84359b5b6ac6c8c8ccd5",
         "case_id": "case_b01",
         "lane": "individual"
       }
     ],
     "committed_at": "2026-11-01T09:00:00Z",
+    "coverage": {
+      "cases_complete_min": 1
+    },
+    "decision": null,
+    "eval_set_id": "es_bench",
     "gate_owner": "jon",
     "id": "bp_engine",
     "kind": "benchmark-prereg",
-    "prereg_sha256": "0d6dfc315e9b31c1ce81d7e7e0d5ca6f705d0ab12db348c50c7cf394fccb21de",
+    "listening_quota": {
+      "repeat_pair_fraction": "0.10",
+      "sessions_min": 1,
+      "short_quota_outcome": "inconclusive"
+    },
+    "prereg_sha256": "4687de13d7aac751e569f68633119ead5ad7e1171f60754b87606f2e59c12ca7",
     "protocol": {
       "method": "eval_audition",
       "metrics": [
         "preferred_rate",
         "repeat_pair_agreement"
       ]
-    },
-    "quota": {
-      "cases_complete_min": 1,
-      "repeat_pair_fraction": "0.10",
-      "sessions_min": 1,
-      "short_quota_outcome": "inconclusive"
     },
     "schemaVersion": "1.0.0",
     "set": "benchmark-48",

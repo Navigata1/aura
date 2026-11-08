@@ -7,18 +7,25 @@
     "fixture.recommend": ["contract-completion", "compute-sessions"],
     "fixture.ledger": ["contract-completion", "paid-run-gate"],
     "fixture.audition": ["contract-completion", "audition"],
-    "fixture.binding": ["contract-completion", "eval-prereg", "hum-benchmark-harness", "registry"]
+    "fixture.binding": ["contract-completion", "C02", "eval-prereg", "hum-benchmark-harness", "registry"]
   },
+  "fields": {},
   "records": {
     "benchmark-prereg": {
       "id": ["C02", "eval-prereg", "hum-benchmark-harness", "hum-benchmark-on-jon"],
       "prereg_sha256": ["C02", "eval-prereg", "hum-benchmark-harness", "hum-benchmark-on-jon", "registry"],
       "set": ["C02", "eval-prereg", "hum-benchmark-harness", "hum-benchmark-on-jon", "registry"],
+      "eval_set_id": ["C02", "eval-prereg", "eval-auditions"],
       "subjects": ["C02", "eval-prereg", "hum-benchmark-harness", "hum-benchmark-on-jon", "registry"],
       "cases": ["C02", "eval-prereg", "hum-benchmark-harness", "hum-benchmark-on-jon", "eval-auditions"],
+      "asset_hashes": ["C02", "eval-prereg", "hum-benchmark-harness", "hum-benchmark-on-jon"],
+      "budgets": ["C02", "eval-prereg", "hum-benchmark-harness", "hum-benchmark-on-jon", "eval-auditions"],
+      "burst_run_ceiling_usd": ["C02", "eval-prereg"],
+      "listening_quota": ["C02", "eval-prereg", "hum-benchmark-harness", "hum-benchmark-on-jon", "eval-auditions"],
+      "coverage": ["C02", "eval-auditions", "hum-benchmark-harness"],
       "protocol": ["C02", "eval-prereg", "hum-benchmark-harness", "hum-benchmark-on-jon", "eval-auditions"],
       "thresholds": ["C02", "eval-prereg", "hum-benchmark-harness", "hum-benchmark-on-jon", "eval-auditions"],
-      "quota": ["C02", "eval-prereg", "hum-benchmark-harness", "hum-benchmark-on-jon", "eval-auditions"],
+      "decision": ["C02", "hum-benchmark-harness", "hum-benchmark-on-jon"],
       "gate_owner": ["C02", "eval-prereg", "hum-benchmark-harness", "hum-benchmark-on-jon"],
       "committed_at": ["C02", "eval-prereg", "hum-benchmark-harness", "hum-benchmark-on-jon"]
     },

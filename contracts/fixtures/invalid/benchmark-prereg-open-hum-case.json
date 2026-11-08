@@ -4,6 +4,16 @@
   "id": "IR-BENCHMARK-PREREG-OPEN-HUM-CASE",
   "kind": "fixture.invalid-record",
   "record": {
+    "asset_hashes": [
+      "29a252ab19d9394360f42ffd10d3255d080e7e80e7e15edac8758539112d0cc0",
+      "7d6d6d6cea0baae50964ddac3ec02749716787eb9e7b1e10ed2b4698f485cef1"
+    ],
+    "budgets": {
+      "candidates_per_brief": 1,
+      "compute_usd_cap": "0.00",
+      "listening_minutes": 30
+    },
+    "burst_run_ceiling_usd": "0.00",
     "cases": [
       {
         "brief_id": "brief_b01",
@@ -14,10 +24,24 @@
       }
     ],
     "committed_at": "2026-11-01T09:00:00Z",
+    "coverage": {
+      "cases_complete_min": 1
+    },
+    "decision": {
+      "none_pass": "manual_entry",
+      "order": "lowest",
+      "rank_by": "correction_ops"
+    },
+    "eval_set_id": null,
     "gate_owner": "jon",
     "id": "bp_hum",
     "kind": "benchmark-prereg",
-    "prereg_sha256": "3e097d54719534ab7faf735b96ab02af6b2b4396d7477247df5f6a9fd2684b92",
+    "listening_quota": {
+      "repeat_pair_fraction": "0",
+      "sessions_min": 1,
+      "short_quota_outcome": "inconclusive"
+    },
+    "prereg_sha256": "8555e45d608a1b1107a58b9f85c709cb7b37c1f1ac1f8eff54ad7242040af304",
     "protocol": {
       "method": "blind_correction",
       "metrics": [
@@ -26,12 +50,6 @@
         "conpoff_f1",
         "correction_ops"
       ]
-    },
-    "quota": {
-      "cases_complete_min": 1,
-      "repeat_pair_fraction": "0",
-      "sessions_min": 1,
-      "short_quota_outcome": "inconclusive"
     },
     "schemaVersion": "1.0.0",
     "set": "hum-benchmark",

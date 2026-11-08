@@ -28,7 +28,7 @@
       "type": "object",
       "required": ["kind"],
       "properties": {"kind": {"enum": ["benchmark-prereg", "benchmark-membership", "evidence-binding", "job", "candidate", "audition", "verdict",
-                                       "correction-log", "melody-spec"]}},
+                                       "correction-log", "melody-spec", "eval-brief", "eval-set"]}},
       "allOf": [
         {"if": {"properties": {"kind": {"const": "benchmark-prereg"}}}, "then": {"$ref": "benchmark-prereg.schema.json"}},
         {"if": {"properties": {"kind": {"const": "benchmark-membership"}}}, "then": {"$ref": "benchmark-membership.schema.json"}},
@@ -38,13 +38,16 @@
         {"if": {"properties": {"kind": {"const": "audition"}}}, "then": {"$ref": "audition.schema.json"}},
         {"if": {"properties": {"kind": {"const": "verdict"}}}, "then": {"$ref": "verdict.schema.json"}},
         {"if": {"properties": {"kind": {"const": "correction-log"}}}, "then": {"$ref": "correction-log.schema.json"}},
-        {"if": {"properties": {"kind": {"const": "melody-spec"}}}, "then": {"$ref": "melody-spec.schema.json"}}
+        {"if": {"properties": {"kind": {"const": "melody-spec"}}}, "then": {"$ref": "melody-spec.schema.json"}},
+        {"if": {"properties": {"kind": {"const": "eval-brief"}}}, "then": {"$ref": "eval-brief.schema.json"}},
+        {"if": {"properties": {"kind": {"const": "eval-set"}}}, "then": {"$ref": "eval-set.schema.json"}}
       ]
     },
     "finding": {
-      "enum": ["prereg_hash_mismatch", "case_duplicate", "threshold_missing", "subject_ungated", "lane_forbidden", "prereg_unresolved",
-               "membership_unresolved", "subject_unregistered", "case_unregistered", "run_unresolved", "committed_after_run",
-               "verdict_unresolved", "verdict_synthetic", "correction_unresolved"]
+      "enum": ["prereg_hash_mismatch", "case_duplicate", "threshold_missing", "threshold_ambiguous", "decision_unregistered", "asset_unlisted",
+               "ceiling_exceeds_cap", "coverage_unreachable", "subject_ungated", "lane_forbidden", "prereg_unresolved", "record_duplicate",
+               "membership_unresolved", "subject_unregistered", "eval_set_unresolved", "brief_unresolved", "case_unregistered",
+               "candidates_unequal", "job_unresolved", "committed_after_run", "verdict_unresolved", "verdict_synthetic", "correction_unresolved"]
     }
   }
 }

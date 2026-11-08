@@ -1,9 +1,10 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "benchmark-prereg/1",
-  "description": "The typed preregistration a benchmark gate's evidence is bound to, committed before any run it governs (GLOSSARY: Preregistration, Benchmark set, Gate; ADR-0010, ADR-0027). set is the gate's set: benchmark-48 (engine profiles in eval auditions over briefs) or hum-benchmark (transcribers scored on hums against MIDI ground truth, with blind correction). It fixes the subjects under test (profile revision and host class), the exact case set, one threshold for every protocol metric, the listening quotas, hidden repeat pairs and coverage. prereg_sha256 is the sha256 of the record's canonical JSON without that field, and a reference resolves only to this kind and this set (studio_ref.binding). Nothing concludes from it yet: evidence.gates still refuses concluded benchmark and hum-benchmark records and the status fold ignores them until C02 binds a conclusion (C01). prereg/1 stays the preregistration of smoke-set eval auditions.",
+  "description": "The typed preregistration a benchmark gate's evidence is bound to, committed before any run it governs (GLOSSARY: Preregistration, Benchmark set, Gate, Ceiling; ADR-0010, ADR-0027). set is the gate's set: benchmark-48 (engine profiles in eval auditions over briefs of the benchmark set named by eval_set_id) or hum-benchmark (transcribers scored on hums against MIDI ground truth, with blind correction and a decision rule under which manual entry may win). It holds every part of a preregistration: the cases (each brief pinned by its content hash, or each hum with its ground truth), asset hashes, pins (subjects by profile revision and host class), budgets with the burst-run ceiling, listening quotas, coverage and exactly one threshold per protocol metric. prereg_sha256 is the sha256 of the record's canonical JSON without that field, and a reference resolves only to this kind and this set (studio_ref.binding). Nothing concludes from it yet: evidence.gates still refuses concluded benchmark and hum-benchmark records and the status fold ignores them until C02 binds a conclusion (C01). prereg/1 stays the preregistration of smoke-set eval auditions.",
   "type": "object",
-  "required": ["kind", "schemaVersion", "id", "prereg_sha256", "set", "subjects", "cases", "protocol", "thresholds", "quota", "gate_owner", "committed_at"],
+  "required": ["kind", "schemaVersion", "id", "prereg_sha256", "set", "eval_set_id", "subjects", "cases", "asset_hashes", "budgets",
+               "burst_run_ceiling_usd", "listening_quota", "coverage", "protocol", "thresholds", "decision", "gate_owner", "committed_at"],
   "additionalProperties": false,
   "properties": {
     "kind": {"const": "benchmark-prereg"},
@@ -11,9 +12,22 @@
     "id": {"$ref": "common.schema.json#/$defs/id"},
     "prereg_sha256": {"$ref": "common.schema.json#/$defs/sha256"},
     "set": {"$ref": "#/$defs/benchmarkSet"},
+    "eval_set_id": {"oneOf": [{"$ref": "common.schema.json#/$defs/id"}, {"type": "null"}],
+                    "description": "benchmark-48: the benchmark set (eval-set/1) every case's brief belongs to. hum-benchmark: null."},
     "subjects": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/subject"},
                  "description": "Every profile revision and host class under test. An evidence record credits only its own subject."},
     "cases": {"type": "array", "minItems": 1, "items": {"type": "object"}, "description": "The exact case set, each case in its own lane; case ids are unique."},
+    "asset_hashes": {"$ref": "prereg.schema.json#/properties/body/properties/asset_hashes", "description": "Every seed, hum and ground truth the cases use."},
+    "budgets": {"$ref": "prereg.schema.json#/properties/body/properties/budgets",
+                "description": "candidates_per_brief is the equal-candidate track: each arm of each case holds exactly that many candidates (benchmark-48) or transcribed MelodySpecs (hum-benchmark)."},
+    "burst_run_ceiling_usd": {"$ref": "common.schema.json#/$defs/usd", "description": "The highest ceiling any one burst run governed here may carry; never above budgets.compute_usd_cap."},
+    "listening_quota": {"$ref": "prereg.schema.json#/properties/body/properties/listening_quota"},
+    "coverage": {
+      "type": "object",
+      "required": ["cases_complete_min"],
+      "additionalProperties": false,
+      "properties": {"cases_complete_min": {"type": "integer", "minimum": 1, "description": "Cases whose every arm has its jobs and its owner verdicts or corrections; at most the number of cases."}}
+    },
     "protocol": {
       "type": "object",
       "required": ["method", "metrics"],
@@ -21,29 +35,21 @@
       "properties": {
         "method": {"enum": ["eval_audition", "blind_correction"]},
         "metrics": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/metric"},
-                    "description": "Every metric the decision reads; each has its threshold fixed here."}
+                    "description": "Every metric the decision reads; each has exactly one threshold fixed here."}
       }
     },
     "thresholds": {"$ref": "prereg.schema.json#/properties/body/properties/thresholds"},
-    "quota": {
-      "type": "object",
-      "required": ["sessions_min", "repeat_pair_fraction", "cases_complete_min", "short_quota_outcome"],
-      "additionalProperties": false,
-      "properties": {
-        "sessions_min": {"type": "integer", "minimum": 1},
-        "repeat_pair_fraction": {"$ref": "common.schema.json#/$defs/unitInterval", "description": "Hidden repeat pairs that measure listener consistency (about 10% of eval auditions)."},
-        "cases_complete_min": {"type": "integer", "minimum": 1, "description": "Coverage: cases whose every arm has its runs and its owner verdicts or corrections."},
-        "short_quota_outcome": {"const": "inconclusive"}
-      }
-    },
+    "decision": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/decision"}]},
     "gate_owner": {"const": "jon"},
-    "committed_at": {"$ref": "common.schema.json#/$defs/dateTime", "description": "Strictly earlier than every run it governs."}
+    "committed_at": {"$ref": "common.schema.json#/$defs/dateTime", "description": "Strictly earlier than every job it governs."}
   },
   "allOf": [
     {
       "if": {"properties": {"set": {"const": "benchmark-48"}}},
-      "then": {"properties": {"cases": {"items": {"$ref": "#/$defs/briefCase"}}, "protocol": {"properties": {"method": {"const": "eval_audition"}}}}},
-      "else": {"properties": {"cases": {"items": {"$ref": "#/$defs/humCase"}}, "protocol": {"properties": {"method": {"const": "blind_correction"}}}}}
+      "then": {"properties": {"cases": {"items": {"$ref": "#/$defs/briefCase"}}, "protocol": {"properties": {"method": {"const": "eval_audition"}}},
+                              "eval_set_id": {"type": "string"}, "decision": {"type": "null"}}},
+      "else": {"properties": {"cases": {"items": {"$ref": "#/$defs/humCase"}}, "protocol": {"properties": {"method": {"const": "blind_correction"}}},
+                              "eval_set_id": {"type": "null"}, "decision": {"type": "object"}}}
     }
   ],
   "$defs": {
@@ -61,12 +67,13 @@
     "metric": {"type": "string", "pattern": "^[a-z][a-z0-9_.-]{0,63}$"},
     "briefCase": {
       "type": "object",
-      "required": ["case_id", "lane", "brief_id"],
+      "required": ["case_id", "lane", "brief_id", "brief_sha256"],
       "additionalProperties": false,
       "properties": {
         "case_id": {"$ref": "common.schema.json#/$defs/id"},
         "lane": {"$ref": "common.schema.json#/$defs/operatorLane"},
-        "brief_id": {"$ref": "common.schema.json#/$defs/id"}
+        "brief_id": {"$ref": "common.schema.json#/$defs/id"},
+        "brief_sha256": {"$ref": "common.schema.json#/$defs/sha256", "description": "The sha256 of the eval-brief record's canonical JSON when committed."}
       }
     },
     "humCase": {
@@ -78,6 +85,17 @@
         "lane": {"$ref": "common.schema.json#/$defs/operatorLane"},
         "hum_sha256": {"$ref": "common.schema.json#/$defs/sha256"},
         "ground_truth_sha256": {"$ref": "common.schema.json#/$defs/sha256", "description": "The same melody played on MIDI."}
+      }
+    },
+    "decision": {
+      "description": "How the hum benchmark picks the default transcriber: in each lane, among the subjects allowed there that meet every threshold, the best by rank_by; when none does, manual entry wins.",
+      "type": "object",
+      "required": ["rank_by", "order", "none_pass"],
+      "additionalProperties": false,
+      "properties": {
+        "rank_by": {"$ref": "#/$defs/metric"},
+        "order": {"enum": ["lowest", "highest"]},
+        "none_pass": {"const": "manual_entry"}
       }
     }
   }

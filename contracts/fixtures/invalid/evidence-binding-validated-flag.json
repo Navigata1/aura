@@ -8,7 +8,7 @@
     "id": "eb_engine",
     "kind": "evidence-binding",
     "membership_id": "bm_engine",
-    "prereg_sha256": "0d6dfc315e9b31c1ce81d7e7e0d5ca6f705d0ab12db348c50c7cf394fccb21de",
+    "prereg_sha256": "4687de13d7aac751e569f68633119ead5ad7e1171f60754b87606f2e59c12ca7",
     "schemaVersion": "1.0.0",
     "set": "benchmark-48",
     "subject": {
