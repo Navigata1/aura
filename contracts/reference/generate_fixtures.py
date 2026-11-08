@@ -884,6 +884,37 @@ def build_scenarios(docs: list[dict], L: dict) -> list[dict]:
        [m1_bp, m2_bp, tr_bp,
         job("job_rec_llc", "prj_venture", "guide", "guide", "analysis-guide-neutralvoice", None, [("queued", "2026-10-09T12:00:00Z")],
             lane="llc", placement=("local", "cpu/m5pro"), record_inputs=[{"kind": "melody-spec", "sha256": m2_bp["content_sha256"]}])])
+    # --- SongForm assembly (T02c): an assembled revision inherits its source revision's lanes and license chain
+    from studio_ref.vector_cases.songform import hymn_assembled
+    asm_bp = hymn_assembled(m2_bp, get("song-spec", "song_hymn", 1), {"melody_id": "mel_hymn_asm", "rev": 1, "base_rev": None,
+                                                                       "tempo_map_rev": 1, "created_at": "2026-10-09T10:09:00Z"})
+    asm_dropped, asm_laundered, asm_capture = copy.deepcopy(asm_bp), copy.deepcopy(asm_bp), copy.deepcopy(asm_bp)
+    asm_dropped["source"]["transcription"] = None
+    asm_laundered["source"]["transcription"]["license_chain"] = lic(PROFILES["analysis-transcribe-pyin-hmm"]["components"])
+    asm_capture["source"]["capture_sha256"] = L["midi"]
+    rehash(asm_dropped), rehash(asm_laundered), rehash(asm_capture)
+
+    def reads(jid, project, lane, melody_doc):
+        return job(jid, project, "guide", "guide", "analysis-guide-neutralvoice", None, [("queued", "2026-10-09T12:00:00Z")], lane=lane,
+                   placement=("local", "cpu/m5pro"), record_inputs=[{"kind": "melody-spec", "sha256": melody_doc["content_sha256"]}])
+    sc("LANE-RECORD-ASSEMBLED-INDIVIDUAL-OK", [], "The 1.1.0 assembled hymn carries its Basic Pitch source's capture and "
+       "transcription, so its lanes and license chain, and an individual job reads it.",
+       [m1_bp, m2_bp, tr_bp, asm_bp, reads("job_asm_read", "prj_hymn", "individual", asm_bp)])
+    sc("LANE-RECORD-ASSEMBLED-READ-IN-LLC", ["lane.record_eligible"], "An llc job reads the assembled hymn: assembling an "
+       "individual-only transcription never yields an llc-eligible melody.",
+       [m1_bp, m2_bp, tr_bp, asm_bp, reads("job_asm_llc", "prj_venture", "llc", asm_bp)])
+    sc("LANE-RECORD-ASSEMBLED-LINEAGE-DROPPED", ["lane.record_eligible"], "A 1.1.0 assembled hymn drops its source's Basic "
+       "Pitch transcription, so the record would hide the transcriber's lanes and license chain.",
+       [m1_bp, m2_bp, tr_bp, asm_dropped, reads("job_asm_read", "prj_hymn", "individual", asm_dropped)])
+    sc("LANE-RECORD-ASSEMBLED-CHAIN-LAUNDERED", ["lane.record_eligible"], "A 1.1.0 assembled hymn keeps Basic Pitch's lanes "
+       "but swaps in the all-lanes pYIN transcriber's license chain; the license chain is inherited exactly too.",
+       [m1_bp, m2_bp, tr_bp, asm_laundered, reads("job_asm_read", "prj_hymn", "individual", asm_laundered)])
+    sc("LANE-RECORD-ASSEMBLED-CAPTURE-SWAPPED", ["lane.record_eligible"], "A 1.1.0 assembled hymn names the venture's MIDI "
+       "capture, a stored human recording, instead of its source's hum; the capture is inherited exactly too.",
+       [m1_bp, m2_bp, tr_bp, asm_capture, reads("job_asm_read", "prj_hymn", "individual", asm_capture)])
+    sc("LANE-RECORD-LEGACY-ASSEMBLED-READ-IN-LLC", ["lane.record_eligible"], "An llc job reads the world's 1.0.0 assembled "
+       "hymn, whose lineage is by reference only: its lanes still come from the Basic Pitch source through assembled_from.",
+       [m1_bp, m2_bp, tr_bp, reads("job_asm_llc", "prj_venture", "llc", get("melody-spec", "mel_hymn_asm", 1))])
     sc("REGISTRY-UNVERIFIED-IN-LLC", ["registry.lane_policy_consistent"],
        "A component whose license is still UNVERIFIED claims the individual and llc lanes; both forbid an unverified license.",
        [edit(("component-register", "components.fake-overlay"), unverified_everywhere)])
@@ -1037,6 +1068,10 @@ def build_scenarios(docs: list[dict], L: dict) -> list[dict]:
     bad_start = edit(("melody-spec", "mel_hymn", 1), lambda d: d["tempo_map"].update(tempo=[{"tick": 960, "us_per_quarter": 500000}]))
     sc("MELODY-TEMPO-START", ["melody.wellformed"], "Revision 1's first tempo segment starts at tick 960.",
        [bad_start, edit(("job", "job_tr1"), lambda d: d.update(outputs=[{"role": "melody_spec", "sha256": bad_start["content_sha256"]}]))])
+    sc("MELODY-METER-INSIDE-BAR", ["melody.wellformed"], "Revision 2 turns 3/4 at tick 1920, the middle of a 4/4 bar; a meter "
+       "changes only on a bar line, so bars and beats count on across it (T02c).",
+       [edit(("melody-spec", "mel_hymn", 2), lambda d: d["tempo_map"].update(meter=[{"tick": 0, "numerator": 4, "denominator": 4},
+                                                                                    {"tick": 1920, "numerator": 3, "denominator": 4}]))])
     sc("SONG-PHRASE", ["song.phrase_refs"], "The chorus places a phrase the melody does not have.",
        [edit(("song-spec", "song_hymn", 1), lambda d: d["form"]["sections"][1].update(phrase_ids=["ph9"]))])
 
@@ -1321,6 +1356,28 @@ def build_invalid_records(docs: list[dict], L: dict) -> list[dict]:
        "Lyrics carry a BCP-47 language", "$.approved_lyrics", "A language name instead of a tag.")
     ir("SONG-LARGER-N-UNPRICED", g("song-spec", "song_hymn", 1), lambda d: d.update(candidate_count=4),
        "ADR-0005: a larger n is an explicit, priced choice", "$.larger_n_budget", "Four candidates with no budget.")
+    # --- minor version 1.1.0 (T02c): the assembled form and SongForm chord symbols, accepted only from 1.1.0
+    from studio_ref.vector_cases.songform import hymn_assembled
+    asm11 = hymn_assembled(g("melody-spec", "mel_hymn", 2), g("song-spec", "song_hymn", 1), {
+        "melody_id": "mel_hymn_asm", "rev": 1, "base_rev": None, "tempo_map_rev": 1, "created_at": "2026-10-09T10:09:00Z"})
+
+    def chords(version, **mark):
+        return lambda d: (d.update(schemaVersion=version),
+                          d["form"]["sections"][0].update(chord_symbols=[{"offset_ticks": 0, "symbol": "C"} | mark]))
+    ir("MELODY-FORM-BEFORE-1-1", asm11, lambda d: d.update(schemaVersion="1.0.0"), "Minor versions are additive: form is new in 1.1.0",
+       "$.schemaVersion", "A 1.0.0 MelodySpec carrying the 1.1.0 assembled form.")
+    ir("MELODY-ASSEMBLED-WITHOUT-FORM", asm11, lambda d: d.pop("form"), "A 1.1 assembled MelodySpec states its duration and sections",
+       "missing required property 'form'", "A 1.1.0 assembled MelodySpec without its form.")
+    ir("MELODY-FORM-ON-SOURCE", g("melody-spec", "mel_hymn", 2), lambda d: d.update(schemaVersion="1.1.0", form=copy.deepcopy(asm11["form"])),
+       "Only an assembled MelodySpec carries a form", "$.spec_kind", "A source melody carrying an assembled form.")
+    ir("MELODY-FORM-UNKNOWN-PROPERTY", asm11, lambda d: d["form"]["sections"][0].update(bars=8),
+       "Closed objects reject unknown properties", "$.form.sections[0].bars", "A form section with a property no schema defines.")
+    ir("SONG-CHORDS-BEFORE-1-1", g("song-spec", "song_hymn", 1), chords("1.0.0"), "Minor versions are additive: chord symbols are new in 1.1.0",
+       "$.schemaVersion", "A 1.0.0 SongSpec carrying chord symbols.")
+    ir("SONG-CHORD-UNKNOWN-PROPERTY", g("song-spec", "song_hymn", 1), chords("1.1.0", beat=1), "Closed objects reject unknown properties",
+       "$.form.sections[0].chord_symbols[0].beat", "A chord symbol with a property no schema defines.")
+    ir("SONG-CHORD-SYMBOL-MALFORMED", g("song-spec", "song_hymn", 1), chords("1.1.0", symbol='C"maj'),
+       "Chord symbols are plain ASCII chord names", "$.form.sections[0].chord_symbols[0].symbol", "A chord symbol carrying a quote.")
     ir("REFERENCE-STANDARD-NOT-LISTENING-ONLY", g("reference", "ref_worship"), lambda d: d["permission"].update(listening_only=False),
        "O-08: reference standards are listening-only", "$.permission.listening_only", "A reference standard usable as input.")
     ir("REFERENCE-FROM-SUNO", g("reference", "ref_worship"), lambda d: d.update(source="suno"), "ADR-0021: Suno output is never a reference",

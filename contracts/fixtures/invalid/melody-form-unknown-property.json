@@ -1,0 +1,203 @@
+{
+  "description": "A form section with a property no schema defines.",
+  "error_contains": "$.form.sections[0].bars",
+  "id": "IR-MELODY-FORM-UNKNOWN-PROPERTY",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "base_rev": null,
+    "content_sha256": "029e3f419ac11d1ecdebefdb0f44add0bbb5429e37179bb4df3dd5d8720c375c",
+    "created_at": "2026-10-09T10:09:00Z",
+    "form": {
+      "end_tick": 92160,
+      "sections": [
+        {
+          "bars": 8,
+          "end_tick": 30720,
+          "name": "verse",
+          "phrases": [
+            {
+              "end_tick": 3840,
+              "phrase_id": "ph1",
+              "start_tick": 0
+            }
+          ],
+          "repeat": 1,
+          "section_id": "s1",
+          "section_kind": "vocal",
+          "start_tick": 0
+        },
+        {
+          "end_tick": 61440,
+          "name": "chorus",
+          "phrases": [
+            {
+              "end_tick": 34560,
+              "phrase_id": "ph2",
+              "start_tick": 30720
+            }
+          ],
+          "repeat": 1,
+          "section_id": "s2",
+          "section_kind": "vocal",
+          "start_tick": 30720
+        },
+        {
+          "end_tick": 92160,
+          "name": "chorus",
+          "phrases": [
+            {
+              "end_tick": 65280,
+              "phrase_id": "ph2",
+              "start_tick": 61440
+            }
+          ],
+          "repeat": 2,
+          "section_id": "s2",
+          "section_kind": "vocal",
+          "start_tick": 61440
+        }
+      ]
+    },
+    "key": {
+      "mode": "major",
+      "tonic": "C"
+    },
+    "kind": "melody-spec",
+    "melody_id": "mel_hymn_asm",
+    "notes": [
+      {
+        "confidence": null,
+        "duration_ticks": 960,
+        "id": "n1",
+        "origin": "assembled",
+        "pitch": 60,
+        "start_tick": 0,
+        "velocity": 90
+      },
+      {
+        "confidence": null,
+        "duration_ticks": 960,
+        "id": "n2",
+        "origin": "assembled",
+        "pitch": 63,
+        "start_tick": 960,
+        "velocity": 90
+      },
+      {
+        "confidence": null,
+        "duration_ticks": 1920,
+        "id": "n3",
+        "origin": "assembled",
+        "pitch": 64,
+        "start_tick": 1920,
+        "velocity": 90
+      },
+      {
+        "confidence": null,
+        "duration_ticks": 1920,
+        "id": "n4",
+        "origin": "assembled",
+        "pitch": 65,
+        "start_tick": 30720,
+        "velocity": 90
+      },
+      {
+        "confidence": null,
+        "duration_ticks": 1920,
+        "id": "n5",
+        "origin": "assembled",
+        "pitch": 67,
+        "start_tick": 32640,
+        "velocity": 90
+      },
+      {
+        "confidence": null,
+        "duration_ticks": 1920,
+        "id": "n6",
+        "origin": "assembled",
+        "pitch": 65,
+        "start_tick": 61440,
+        "velocity": 90
+      },
+      {
+        "confidence": null,
+        "duration_ticks": 1920,
+        "id": "n7",
+        "origin": "assembled",
+        "pitch": 67,
+        "start_tick": 63360,
+        "velocity": 90
+      }
+    ],
+    "phrases": [],
+    "ppq": 960,
+    "project_id": "prj_hymn",
+    "quantize": null,
+    "rev": 1,
+    "schemaVersion": "1.1.0",
+    "source": {
+      "assembled_from": {
+        "melody": {
+          "melody_id": "mel_hymn",
+          "rev": 2,
+          "tempo_map_rev": 2
+        },
+        "song": {
+          "rev": 1,
+          "song_id": "song_hymn"
+        }
+      },
+      "capture_sha256": "dc777e3766c902a35936fea39ee9ceecee87a562e63e9fb42a090dc80205d7e7",
+      "seed_kind": "assembled",
+      "transcription": {
+        "eligible_lanes": [
+          "individual",
+          "llc",
+          "research"
+        ],
+        "job_id": "job_tr1",
+        "license_chain": [
+          {
+            "code_license": "ISC",
+            "component_id": "librosa-pyin",
+            "obligations": [],
+            "weights_license": "n/a (no weights)"
+          },
+          {
+            "code_license": "Own code (all rights reserved until Q5)",
+            "component_id": "studio-own-code",
+            "obligations": [],
+            "weights_license": "n/a (no weights)"
+          }
+        ],
+        "method": "pyin-hmm",
+        "note": "unverified on real hums",
+        "profile_id": "analysis-transcribe-pyin-hmm"
+      }
+    },
+    "spec_kind": "assembled",
+    "tempo_map": {
+      "meter": [
+        {
+          "denominator": 4,
+          "numerator": 4,
+          "tick": 0
+        }
+      ],
+      "rev": 1,
+      "tempo": [
+        {
+          "tick": 0,
+          "us_per_quarter": 500000
+        },
+        {
+          "tick": 30720,
+          "us_per_quarter": 600000
+        }
+      ]
+    }
+  },
+  "record_kind": "melody-spec",
+  "rule": "Closed objects reject unknown properties",
+  "schemaVersion": "1.0.0"
+}
