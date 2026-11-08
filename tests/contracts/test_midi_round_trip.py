@@ -1,4 +1,6 @@
-"""The MIDI round-trip vectors through the public generator and contract gate, on a disposable tracked-file copy."""
+"""The MIDI round-trip vectors through the public generator and contract gate, on a disposable tracked-file copy, and
+the reference writer's refusal of input outside the schemas, which no schema-valid vector can carry."""
+import copy
 from pathlib import Path
 import shutil
 import subprocess
@@ -11,7 +13,7 @@ CASES = 'contracts/reference/studio_ref/vector_cases/midi.py'
 # Each edit seeds one wrong hand-derived expectation into the case module (first occurrence only).
 SEEDED = [
     ('one note', '"00903c64"', '"00903c65"'),                                  # a wrong byte: note-on velocity 101
-    ('one note', 'note(0, 960, 60, 100)', 'note(0, 961, 60, 100)'),             # a wrong MelodySpec note duration
+    ('one note', 'note(0, 960, 60, 100)', 'note(0, 959, 60, 100)'),             # a wrong MelodySpec note duration
     ('SMPTE', '"smpte_division", None, None', '"malformed_smf", None, None'),   # a wrong typed refusal
 ]
 
@@ -51,6 +53,41 @@ class MidiRoundTripGateTests(unittest.TestCase):
                     self.assertRegex(out, rf'midi\.json \[[^\]]*{case}[^\]]*\]: reference gives')
                 finally:
                     module.write_text(original, encoding='utf-8')
+
+
+def reference_midi():
+    sys.path.insert(0, str(ROOT / 'contracts/reference'))
+    try:
+        from studio_ref import midi
+    finally:
+        sys.path.pop(0)
+    return midi
+
+
+class MidiWriterInputTests(unittest.TestCase):
+    MELODY = {'tempo_map': {'tempo': [{'tick': 0, 'us_per_quarter': 500000}],
+                            'meter': [{'tick': 0, 'numerator': 4, 'denominator': 4}]},
+              'notes': [{'start_tick': 0, 'duration_ticks': 960, 'pitch': 60, 'velocity': 100}]}
+
+    def test_input_outside_the_schemas_raises_a_typed_error_instead_of_corrupt_bytes(self):
+        midi = reference_midi()
+        self.assertTrue(midi.to_smf(self.MELODY, [{'name': 'verse', 'tick': 0}]))  # the valid neighbour writes
+        spoilers = {
+            'a meter denominator of 6': lambda m, k: m['tempo_map']['meter'][0].update(denominator=6),
+            'a tempo of 2^24 us': lambda m, k: m['tempo_map']['tempo'][0].update(us_per_quarter=16777216),
+            'a pitch of 200': lambda m, k: m['notes'][0].update(pitch=200),
+            'a velocity of 0': lambda m, k: m['notes'][0].update(velocity=0),
+            'a marker at tick -5': lambda m, k: k[0].update(tick=-5),
+            'a marker name with a trailing newline': lambda m, k: k[0].update(name='verse\n'),
+        }
+        for label, spoil in spoilers.items():
+            with self.subTest(label):
+                melody, markers = copy.deepcopy(self.MELODY), [{'name': 'verse', 'tick': 0}]
+                spoil(melody, markers)
+                with self.assertRaises(midi.MidiInputError):
+                    midi.to_smf(melody, markers)
+        with self.subTest('an end_tick of -1'), self.assertRaises(midi.MidiInputError):
+            midi.to_smf(self.MELODY, [], -1)
 
 
 if __name__ == '__main__':
