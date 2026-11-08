@@ -31,8 +31,9 @@ and reviews were clean.
 
 ## What may enter the public repository
 
-Everything in the repository, its issues, PRs, comments, reviews and CI logs is now public. None of it may contain
-secrets, personal addresses, audio, weights or private paths other than `/Volumes/STUDIO/...`. The policy scan
+Everything in the repository, its issues, PRs, comments, reviews and CI logs is now public. That includes commit
+messages and the review and merge records committed under `ops/`. None of it may contain secrets, personal addresses,
+audio, weights or private paths other than `/Volumes/STUDIO/...`. `CLAUDE.md` hard rule 10 carries the same sentence. The policy scan
 (`scripts/ci/check.py`) enforces part of this on every pull request: tracked files, the PR diff and commit metadata.
 Issue and PR text, comments, reviews and CI log output are covered by procedure only, so whoever posts them checks them
 first.

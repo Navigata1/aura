@@ -11,8 +11,10 @@ The control service and web UI are portable across macOS, Windows and Linux; the
   hosted CI stays free, and returns to private at production level. Nothing sensitive goes into the repository, issues,
   PRs or CI logs. Merges into `integration` need green three-OS CI, enforced by rulesets, plus an independent review bound
   to the PR's patch. The continuation report's expansion trials are now in the plan.
-- `docs/research/OWNER-DECISIONS-2026-11-06.md`: the merge policy that November 7 refines. Its "procedural only"
-  enforcement note is superseded where the rulesets apply.
+- `docs/research/OWNER-DECISIONS-2026-11-06.md`: the merge policy: green current-head CI and independent review,
+  integration only. November 7 supersedes its visibility: the repository is public during the build and returns to
+  private at production level. November 7 also adds the server-side rulesets in place of its "procedural only" note.
+  Every other rule in it stays.
 - `docs/research/OWNER-DECISIONS-2026-10-29.md`: Jon's continuation instruction and O-03 amendment to Extreme SSD.
   Then read `docs/research/OWNER-DECISIONS-2026-10-09.md` for binding O-01…O-11 and owner-pending defaults.
   The November 7, November 6 and October 29 amendments win where they change earlier decisions; all other owner decisions and owner-act gates remain.
@@ -86,7 +88,10 @@ The control service and web UI are portable across macOS, Windows and Linux; the
    never record a verdict for him.
 10. **No secrets in the client.** The RunPod API key, the HF token and tailnet pairing secrets live in the OS keychain
     through `keyring`. They never appear in code, the web bundle, API responses, logs, fixtures, evidence or commits.
-    Worker tokens and burst URLs never cross the Studio API. No `.env` with real values is ever committed.
+    Worker tokens and burst URLs never cross the Studio API. No `.env` with real values is ever committed. Because the
+    repository is public during the build (November 7 decision), nothing sensitive goes into commits, issues, PR
+    bodies, review files committed under `ops/`, or CI logs. That means no secrets, personal addresses, audio, weights,
+    or private paths beyond `/Volumes/STUDIO/...`.
 11. **Public contact (IDC Rule 07).** The only contact address anywhere is `hello@islanddevcrew.com`, as text (in code
     formatting in Markdown), stored once in `contracts/product.json`. Never a `mailto:` link, never a personal address,
     in code, copy, contracts, manifests, package metadata, docs or commit metadata. Commits use the GitHub noreply
