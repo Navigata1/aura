@@ -4,7 +4,9 @@
  1. Schemas use only keywords the bundled checker implements, every $ref resolves, no schema has an $id, and every
     record schema requires kind and schemaVersion.
  2. Checker self-tests: hand-written known-bad instances fail and known-good ones pass, keyword by keyword, so the
-    checker is not vacuous; an unsupported keyword and a dangling $ref are refused.
+    checker is not vacuous; an unsupported keyword and a dangling $ref are refused. Patterns follow ECMA-262: every
+    anchored contract pattern rejects a planted trailing newline ("verse\\n", "id\\n"), and a character class that
+    ECMA-262 and Python end in different places is refused.
  3. Every JSON file under contracts/ validates against the schema its "kind" names; no file holds a float
     (integers only); scenario overlay records validate against their own kinds.
  4. contracts/registry/components.v1.json regenerates byte-identically from the evidence register (ADR-0011).
@@ -83,6 +85,20 @@ def has_key(node, key: str) -> bool:
     return False
 
 
+def regexes(node):
+    """Yield every pattern and patternProperties regex in a schema tree."""
+    if isinstance(node, list):
+        for value in node:
+            yield from regexes(value)
+    elif isinstance(node, dict):
+        if isinstance(node.get("pattern"), str):
+            yield node["pattern"]
+        if isinstance(node.get("patternProperties"), dict):
+            yield from node["patternProperties"]
+        for value in node.values():
+            yield from regexes(value)
+
+
 # ----- 1: schemas ---------------------------------------------------------------------------------------------------
 
 def kind_map(schemas: SchemaSet, rep: Report) -> dict[str, str]:
@@ -124,10 +140,15 @@ def checker_self_tests(schemas: SchemaSet, rep: Report) -> None:
         (S({"exclusiveMinimum": 0}), 0, False), (S({"exclusiveMaximum": 1}), 1, False), (S({"multipleOf": 960}), 1920, True),
         (S({"multipleOf": 960}), 1000, False), (S({"minLength": 2}), "a", False), (S({"maxLength": 2}), "abc", False),
         (S({"pattern": "^[0-9a-f]{4}$"}), "beef", True), (S({"pattern": "^[0-9a-f]{4}$"}), "BEEF", False),
+        (S({"pattern": "^[0-9a-f]{4}$"}), "beef\n", False), (S({"pattern": "^a$|^b$"}), "a\n", False),
+        (S({"pattern": "^a"}), "a\n", True), (S({"pattern": "^a\\$$"}), "a$", True),
+        (S({"pattern": "^[\\]$]+$"}), "]$", True),
+        (S({"pattern": "^a\\\\$"}), "a\\", True), (S({"pattern": "^a\\\\$"}), "a\\\n", False),
         (S({"properties": {"a": {"type": "integer"}}}), {"a": "x"}, False),
         (S({"additionalProperties": False}), {"x": 1}, False),
         (S({"patternProperties": {"^[A-Z]$": {"type": "integer"}}, "additionalProperties": False}), {"A": 1}, True),
         (S({"patternProperties": {"^[A-Z]$": {"type": "integer"}}, "additionalProperties": False}), {"a": 1}, False),
+        (S({"patternProperties": {"^[A-Z]$": {"type": "integer"}}, "additionalProperties": False}), {"A\n": 1}, False),
         (S({"propertyNames": {"pattern": "^[a-z]+$"}}), {"Ab": 1}, False),
         (S({"items": {"type": "integer"}}), [1, "2"], False), (S({"prefixItems": [{"const": 1}]}), [2], False),
         (S({"contains": {"const": "x"}}), ["a"], False), (S({"contains": {"const": "x"}}), ["a", "x"], True),
@@ -139,6 +160,8 @@ def checker_self_tests(schemas: SchemaSet, rep: Report) -> None:
         (S({"$ref": "common.schema.json#/$defs/sha256"}), "0" * 64, True), (S({"$ref": "common.schema.json#/$defs/sha256"}), "0" * 63, False),
         (S({"$ref": "common.schema.json#/$defs/gainDb"}), "1.20", False), (S({"$ref": "common.schema.json#/$defs/gainDb"}), "-1.20", True),
         (S({"$ref": "common.schema.json#/$defs/usd"}), "25.00", True), (S({"$ref": "common.schema.json#/$defs/usd"}), "25", False),
+        (S({"$ref": "common.schema.json#/$defs/id"}), "melody_id", True),
+        (S({"$ref": "common.schema.json#/$defs/id"}), "melody_id\n", False),
     ]
     for schema, instance, must_pass in cases:
         errors = schemas._validate(instance, schema, "common.schema.json", "$")
@@ -156,6 +179,30 @@ def checker_self_tests(schemas: SchemaSet, rep: Report) -> None:
         rep.ok("checker self-tests", 2)
     if "$id" in SUPPORTED:
         rep.fail("checker self-test", "$id must not be a supported keyword")
+
+
+def anchor_self_tests(schemas: SchemaSet, rep: Report) -> None:
+    """ECMA-262 anchors. Every contract pattern written as ^...$ (a final \\$ is a literal) that accepts a planted
+    value rejects it with a trailing newline, which Python's own $ would let through; a class that ECMA-262 and
+    Python end in different places ([]$]) is refused rather than guessed."""
+    anchored = sorted({p for schema in schemas.files.values() for p in regexes(schema)
+                       if p.startswith("^") and p.endswith("$") and not p.endswith("\\$")})
+    for good in ("verse", "id"):
+        accepting = [p for p in anchored if not schemas._validate(good, {"pattern": p}, "common.schema.json", "$")]
+        if not accepting:
+            rep.fail("checker self-test", f"no anchored contract pattern accepts {good!r}; planting proves nothing")
+        for p in accepting:
+            planted = good + "\n"
+            if schemas._validate(planted, {"pattern": p}, "common.schema.json", "$"):
+                rep.ok("checker self-tests")
+            else:
+                rep.fail("checker self-test", f"{p!r} accepts {planted!r}; ECMA-262 $ matches only at the end of input")
+    probe = SchemaSet.__new__(SchemaSet)
+    probe.dir, probe._patterns, probe.files = CONTRACTS / "schemas", {}, {"b.schema.json": {"pattern": "[]$]"}}
+    if not any("bad pattern" in p for p in probe.check_all()):
+        rep.fail("checker self-test", "a class that ECMA-262 and Python end in different places ([]$]) must be refused")
+    else:
+        rep.ok("checker self-tests")
 
 
 # ----- 3: every file by its kind ------------------------------------------------------------------------------------
@@ -449,6 +496,7 @@ def main(argv: list[str]) -> int:
         rep.fail("schema check", p)
     kinds = kind_map(schemas, rep)
     checker_self_tests(schemas, rep)
+    anchor_self_tests(schemas, rep)
     if problems:
         print("\n".join(rep.failures))
         return 1
