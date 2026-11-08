@@ -1,14 +1,15 @@
 {
   "notes": [
-    "TICKET SET, a draft until Jon accepts the spec and ADR-0025 to ADR-0037 (revised by the 2026-10-09 design review; see architecture.md, 'Design review log'): 105 tickets, T01-T105, T01 the foundation, plus precondition P01. Sizes: 26 L, 64 M, 15 S. Work streams: stream:engine 29, stream:eval 16, stream:shared 21, stream:studio 25, stream:voice 14. 23 tickets need Jon (owner_gate true, ready-for-human): T19, T47, T51, T52, T55, T60, T61, T62, T63, T68, T69, T73, T74, T83, T84, T86, T91, T92, T94, T95, T97, T98, T104. Every blocker comes earlier in the list, the graph is acyclic, every ticket reaches T01, blockers are transitively reduced, tickets that can run in parallel own disjoint paths, every slot filler descends from the ticket that declares its slot, and every one of the numbered user stories in aura-v1-spec.md is covered. Each what_to_build ends with 'Why blocked:', one reason per remaining edge. scripts/spec/tickets.py checks all of this, plus inventory, owner-decision, ADR and unverified-capability traceability, and renders tickets.md.",
+    "TICKET SET, a draft until Jon accepts the spec and ADR-0025 to ADR-0037 (revised by the 2026-10-09 design review; see architecture.md, 'Design review log'): 108 tickets, T01-T108, T01 the foundation, plus precondition P01 (T106-T108 were added on 2026-11-07; see the EXPANSION note). Sizes: 28 L, 65 M, 15 S. Work streams: stream:engine 30, stream:eval 17, stream:shared 21, stream:studio 25, stream:voice 15. 26 tickets need Jon (owner_gate true, ready-for-human): T19, T47, T51, T52, T55, T60, T61, T62, T63, T68, T69, T73, T74, T83, T84, T86, T91, T92, T94, T95, T97, T98, T104, T106, T107, T108. Every blocker comes earlier in the list, the graph is acyclic, every ticket reaches T01, blockers are transitively reduced, tickets that can run in parallel own disjoint paths, every slot filler descends from the ticket that declares its slot, and every one of the numbered user stories in aura-v1-spec.md is covered. Each what_to_build ends with 'Why blocked:', one reason per remaining edge. scripts/spec/tickets.py checks all of this, plus inventory, owner-decision, ADR and unverified-capability traceability, and renders tickets.md.",
     "PRECONDITION P01 (a ready-for-human issue that blocks T01, because it precedes the repository): Jon creates the interim studio volume by hand per DEVELOPING.md 'Create it once' (default 8 MiB bands), runs the printed sudo mdutil line, and turns on GitHub email privacy for the Navigata1 account, so that worktrees, caches and environments never touch the internal disk and no commit exposes a personal address. The interim volume holds only reproducible data. T18 measures the band size; T19 then adopts the interim volume or creates the real one and moves the reproducible contents across, before any irreplaceable data lands. Every ticket that writes Jon's real songs, hums, references, ledger entries, owner acts or evidence records is transitively blocked by T19.",
     "FIELD MEANINGS: owner_gate true means the ticket cannot close without Jon: an owner act (a license acceptance, a paid-run approval, a verdict, a 'not garbled' check, a risk acceptance, a reference permission, an import attestation) or an input only he can supply (his hums and melody, his four reference standards, listening time, a rental account and API key in his keychain, his hardware, a go-ahead to reserve or free disk). owner_needs says exactly what. An agent still prepares everything up to that point. Those tickets carry ready-for-human; every other ticket is ready-for-agent. gate:evidence marks a ticket whose completion needs a captured evidence record or hardware, listening, paid or per-OS evidence beyond CI on fakes. stream:* labels are work streams (engine, studio, voice, eval, shared), never operator lanes. prefactor true marks a justified horizontal ticket; its notes say why. slots lists the named slots a container ticket declares, and fills the slots a ticket fills.",
     "ACCEPTANCE CRITERIA: every criterion is a check that could fail and ends with 'Evidence:' naming its artifact (a CI run id and test names, an evidence/1 record id under docs/evidence/<NN>-<slug>/ exported from the store with the verdicts and preregistrations it cites, an owner-act record id, hashed screenshots or command output). The five kinds of evidence are reported separately and never merged: CI on fakes, hardware evidence per host class, listening evidence, paid evidence, per-OS evidence. No audio and no secret is ever committed as evidence.",
     "PREFACTORS (horizontal by design, each justified in its notes): T02, T03, T04, T05, T06, T07, T08, T10, T11, T13, T15, T16, T20. Everything else is a vertical slice through the Studio API or the worker protocol, its screen where one exists, and its tests.",
     "TRACER BULLETS: TB0 store, doctor, session = T05, T06, T14, T17, T18, T38; TB1a MIDI to a measured fake pair = T21, T25, T26, T28, T30; TB1b audition, keeper, verified export = T31, T32, T33; TB1c capture = T35; TB1d transcription = T36, T37; TB2 paid-run gate = T40, T41; TB3 first real pair = T46, T47, T45, T48, T52; TB4 MIDI in and out = T25; TB5 adherence = T50, T51; TB6 hum benchmark = T53, T55; TB7 R1 on a burst = T56, T58, T59, T60, T61, T62; TB8 references and smoke-12 = T64, T66, T69, T70, T71, T74; TB9 first studio slice = T76, T77, T78, T79, T80. WALKING SKELETON: T21 proves the deep modules integrate at depth 8; T33 closes MIDI to a verified export on fakes; T65 proves it on three operating systems with the Suno-boundary negatives (a P1 exit).",
     "CONFLICT AVOIDANCE: (1) contracts change only in T02, then through small contract-fix PRs that precede the feature PR; registry result entries (results_local, image digests, gate thresholds, widened register rows) also land by contract-fix PR, and owned areas marked 'through a contract-fix PR' are separate PRs. (2) The register overlay is edited by T01 (stack rows), then T03, then by contract-fix PR; T02 never edits it or components.v1.json. (3) Generated code in packages/contracts-py and packages/contracts-ts changes only by regeneration. (4) T11 declares routes and shared surfaces only; each screen's container ticket declares its own slots (the slots field) and fillers list them (the fills field), so a filler always descends from its container. (5) Registration is by file convention, never a shared list: API routers from api/routes/<module>.py (T05), studioctl subcommands from cli/commands/*.py and doctor sections from cli/doctor/*.py (T01), analysis tasks from workers/analysis/tasks/<task>.py with every known analysis dependency pre-added to the lock (T13), child jobs from conductor/children/<kind>.py and extra job states from conductor/states/ (T16), placement strategies from placement/strategies/ (T14), plan route providers, labels and pricing from score/plan/ (T30), NeedsYou kinds from needs_you/kinds/ (T23). (6) Each worker is its own folder and uv project; the ACE adapter is split into modules so that T46 (cover, text), T67 (reference timbre) and T79 (repaint) never edit the same file. (7) The preregistration commit-order check is built once (T36) and reused. (8) A ticket that needs a change in another ticket's area files a small fix PR for it. scripts/spec/tickets.py fails when two tickets that can run in parallel own the same or nested paths.",
-    "DEVIATIONS AND FLAGS FOR THE LEAD: (a) Re-perform and Create a new part are v2 (ADR-0006 and the spec's Out of Scope), so v1 covers only their reserved origins (T02) and the labelling guards (T85: ACE extract is a re-perform, never isolation). (b) 'take lanes' are replacement tracks (GLOSSARY: Track), hence T81. (c) 'listening sessions' are eval auditions (GLOSSARY: Audition). (d) The hum benchmark (T53, T55) runs in parallel and does not block the first ACE pair (architecture T-05). (e) The P6 and optional tickets that need Jon (T91, T92, T94, T95, T97, T98, T68, T63, T83) do not block final QA (T105), which lists any still open in the UNVERIFIED register, because the Linux and Windows hardware is owner-pending (Q1). (f) Defaults applied pending Jon: screens open questions 1 (verdict reasons, T02), 2 (the smoke 'not garbled' check is an owner verdict, T44), 3 (eval identities deferred until a set concludes, T71), 4 (launch token in the URL fragment, T12), 5 (a 4 h idle gap, T02), 10 (the default route order in the plan-rules contract, with R1 only without a burst or with Jon's opt-in, T30), 14 (one vocal section per phrase, T28) and 15 (an audition-level synthetic notice, T31); spec interpretations 1 (MIDI export is v1-core), 2 (an optional chord-symbol field, edited in T57), 3 (not garbled as an owner verdict) and 6 (smoke briefs needing edits are not yet runnable). Interpretation 8 is resolved: docs/agents/issue-tracker.md now names `integration`. (g) Real Suno audio is never test material: Suno-boundary tests use synthetic stand-ins labelled as imports, and T104 no longer touches Jon's Suno download as evidence (O-08). (h) Whether Demucs-isolated stems may appear in a released individual song is owner-pending; until Jon answers, they are release-blocked. (i) The real-hardware halves of section replace and isolate original are their own tickets (T80, T86), so the fake-only Studio chain no longer waits on owner gates.",
+    "DEVIATIONS AND FLAGS FOR THE LEAD: (a) Re-perform and Create a new part are v2 (ADR-0006 and the spec's Out of Scope), so v1 covers only their reserved origins (T02) and the labelling guards (T85: ACE extract is a re-perform, never isolation). (b) 'take lanes' are replacement tracks (GLOSSARY: Track), hence T81. (c) 'listening sessions' are eval auditions (GLOSSARY: Audition). (d) The hum benchmark (T53, T55) runs in parallel and does not block the first ACE pair (architecture T-05). (e) The P6 and optional tickets that need Jon (T91, T92, T94, T95, T97, T98, T68, T63, T83, and the expansion trials T106, T107 and T108) do not block final QA (T105), which lists any still open in the UNVERIFIED register, because the Linux and Windows hardware is owner-pending (Q1). (f) Defaults applied pending Jon: screens open questions 1 (verdict reasons, T02), 2 (the smoke 'not garbled' check is an owner verdict, T44), 3 (eval identities deferred until a set concludes, T71), 4 (launch token in the URL fragment, T12), 5 (a 4 h idle gap, T02), 10 (the default route order in the plan-rules contract, with R1 only without a burst or with Jon's opt-in, T30), 14 (one vocal section per phrase, T28) and 15 (an audition-level synthetic notice, T31); spec interpretations 1 (MIDI export is v1-core), 2 (an optional chord-symbol field, edited in T57), 3 (not garbled as an owner verdict) and 6 (smoke briefs needing edits are not yet runnable). Interpretation 8 is resolved: docs/agents/issue-tracker.md now names `integration`. (g) Real Suno audio is never test material: Suno-boundary tests use synthetic stand-ins labelled as imports, and T104 no longer touches Jon's Suno download as evidence (O-08). (h) Whether Demucs-isolated stems may appear in a released individual song is owner-pending; until Jon answers, they are release-blocked. (i) The real-hardware halves of section replace and isolate original are their own tickets (T80, T86), so the fake-only Studio chain no longer waits on owner gates.",
     "OUT OF V1 STORIES: [] (none). All numbered user stories map to at least one ticket. Out-of-v1 features from the spec's Out of Scope have no tickets: the narration service (only its dry run is here), own-voice conversion and the voice registry, training and personalization, a desktop shell, hosted music services, Re-perform and Create a new part, role-bound multi-reference conditioning, studio features beyond the v1-studio gates, mastering and enhancement, delivery extras, rejected engines, and LLM lyric help. Running the 48-brief benchmark set to completion is not a v1 exit: T70 authors and can preregister it, and no v1 ticket requires a benchmarked profile.",
+    "EXPANSION (2026-11-07, docs/research/OWNER-DECISIONS-2026-11-07.md, which cites every item's pinned primary sources): the five expansion items of the 2026-10-29 continuation report, as amendments where an existing ticket owns the work and as new tickets otherwise. (1) Lock advisories: T44's environment step refuses a lock that resolves a version inside a recorded security advisory's vulnerable range (first GHSA-4prv-5hj7-c2xr, Diffusers 0.42.0 and earlier, patched in 0.42.1), records the versions it resolved, and CI scans every committed worker lock; T46 (ACE) and T93 (MiniMax and HeartMuLa) constrain diffusers to 0.42.1 or later. It is an amendment because every real environment build already descends from T44, which a new ticket at the end of the list could not precede. (2) YuE2's exact pins: T58 pins the source commit, never a version label, with the code license, the MODEL_LICENSE permission and the YuE2-3B and YuE2-Vae licenses pinned separately, and gains T03 because it corrects the YuE2 register row by contract-fix PR; T61's acceptance archives those four documents and gains T44, whose O7 and license-acceptance record it already used without an edge. (3) T106, the research-lane transcription trial (GAME and SheetSage2). (4) T107, the alternate-decoder fidelity trial (ScragVAE). (5) T108, the Magenta RealTime 2 instrument trial. T106-T108 need Jon, run only in research projects and come after T105 in list order, so nothing earlier waits on them. Stories 414-422 cover the five items. No existing ticket's depth changed, and the critical path is unchanged.",
     "OWNER-PENDING DEFAULTS USED: Q1 tier 4 on the Mac, other hosts unverified until their tickets close; Q4 personal release with AI-disclosure-ready manifests; Q5 all rights reserved; Q6 English lyrics and Jon's melody as the first hum fixture; Q8 Jon as the only voter and gate owner; Q10 Chromium for the Studio; Q11 Logic Pro not a comparator (the DAW import uses whatever DAW Jon has); the backup destination device (drills use a second directory until he names one); whether Demucs-isolated stems may be released (release-blocked until he answers).",
     "SIZING: the binding constraint is one fresh context window per ticket. Heuristic carried from JOVRA: a ticket is too big with more than about 12 stories, more than two new modules plus a screen, or a new fixture kind plus a port plus UI. The design review split the tickets that broke it on modules and surfaces (the web shell, the studio volume, projects, the paid-run gate, references and imports, section replace, isolate original). T05 (13), T08 (14), T17 (13), T28 (15), T30 (16), T31 (18), T33 (16), T35 (14) and T40 (15) still carry more than 12 stories, but each is one deep module or one screen whose stories are acceptance rules of that one interface or flow, not separate features.",
     "CRITICAL PATH (weighted S=1, M=2, L=3) is 49: T01, T02, T04, T05, T11, T12, T22, T23, T25, T26, T28, T30, T31, T32, T77, T79, T81, T87, T103, T105."
@@ -1988,19 +1989,23 @@
         300,
         345,
         346,
-        356
+        356,
+        414,
+        415
       ],
-      "what_to_build": "Installing an engine is itself the proof, and nothing heavy lands before it is needed. The first time a profile is needed, the supervisor creates its environment lazily on the studio volume under envs/workers/<env>/<lock sha256>, shared by every worktree with the same lock. Installing a profile walks: environment, disk preflight, license acceptance, selective download, verification, conformance, smoke. License acceptance is an owner act through O7 that records a license-acceptance/1 record (each document's URL, commit or revision and sha256, where the weights come from, the register's lanes and obligations, and any release permission) before any weights download starts, gated or not, whether the weights come from Hugging Face, a pinned URL or a file inside a pinned package. YuE2's acceptance archives two documents, the Hugging Face LICENSE and the GitHub MODEL_LICENSE that carries the individual-creator permission. At install and at quote time the documents are hashed again; a changed document voids the acceptance and the component is refused until Jon accepts again. Downloads use allow-patterns after a size dry run, land in models/hf or models/other with pin files, and are verified against the profile's weights manifest and every LFS sha256; workers fetch nothing but their profile's pinned weights. Smoke renders through the normal job path and records every check the gate declares in the evidence record's checks: decode, non-silence and duration with measure, the manifest match, conformance, and Jon's 'not garbled' check as an owner-ui verdict on that revision's smoke candidates. Each step posts an evidence record, and smoke-passed is computed only at the end. S13's Downloads tab shows each step's state, and S01b's engines step links to it. CI runs the whole pipeline against a local fixture repository of tiny dummy files and a test-only profile. Why blocked: T20 (the smoke step checks decode, silence and duration with measure jobs); T43 (the Downloads tab slot and the entry point for O7); T38 (S01b's engines step is a slot of the first-run container).",
+      "what_to_build": "Installing an engine is itself the proof, and nothing heavy lands before it is needed. The first time a profile is needed, the supervisor creates its environment lazily on the studio volume under envs/workers/<env>/<lock sha256>, shared by every worktree with the same lock. Installing a profile walks: environment, disk preflight, license acceptance, selective download, verification, conformance, smoke. Before the environment is created, its lock is checked against the recorded security advisories, each naming its advisory id, package, vulnerable range, patched version and primary source (the first is GHSA-4prv-5hj7-c2xr: in Diffusers 0.42.0 and earlier a model directory's own config can reach Python's import machinery despite trust_remote_code=False, and 0.42.1 is patched). A lock that resolves a vulnerable version gets a failed environment evidence record naming the advisory, and nothing is created or fetched; otherwise the environment's evidence record lists every advisory-named package with the version the lock resolved, so the patched loader is on record. The same advisories fail CI for any committed worker lock that pins a vulnerable version. License acceptance is an owner act through O7 that records a license-acceptance/1 record (each document's URL, commit or revision and sha256, where the weights come from, the register's lanes and obligations, and any release permission) before any weights download starts, gated or not, whether the weights come from Hugging Face, a pinned URL or a file inside a pinned package. YuE2's acceptance archives the documents its worker pins: the code LICENSE and the GitHub MODEL_LICENSE that carries the individual-creator permission, both at the exact source commit, and the Hugging Face LICENSE of each weights repository (YuE2-3B and YuE2-Vae) at its revision. At install and at quote time the documents are hashed again; a changed document voids the acceptance and the component is refused until Jon accepts again. Downloads use allow-patterns after a size dry run, land in models/hf or models/other with pin files, and are verified against the profile's weights manifest and every LFS sha256; workers fetch nothing but their profile's pinned weights. Smoke renders through the normal job path and records every check the gate declares in the evidence record's checks: decode, non-silence and duration with measure, the manifest match, conformance, and Jon's 'not garbled' check as an owner-ui verdict on that revision's smoke candidates. Each step posts an evidence record, and smoke-passed is computed only at the end. S13's Downloads tab shows each step's state, and S01b's engines step links to it. CI runs the whole pipeline against a local fixture repository of tiny dummy files and a test-only profile. Why blocked: T20 (the smoke step checks decode, silence and duration with measure jobs); T43 (the Downloads tab slot and the entry point for O7); T38 (S01b's engines step is a slot of the first-run container).",
       "acceptance_criteria": [
         "Against the fixture repository the pipeline posts an evidence record for every step in order, and status computes smoke-passed only after the owner-ui 'not garbled' verdict, which the automation scope cannot record. Evidence: the StudioHarness tests in the Linux PR run.",
         "A download that differs from the manifest by one byte fails verification and leaves the profile short of installed, and a missing license acceptance stops the pipeline before any byte is fetched. Evidence: the negative tests in CI.",
         "The size dry run's estimate is within 10% of the bytes fetched for the fixture, and preflight runs before the download. Evidence: the estimate test in CI.",
         "Two worktrees with the same lock share one environment directory, and a lock change creates a new directory and a new profile revision. Evidence: the environment-key test in CI.",
         "O7 and the Downloads tab pass the accessibility audit and the keyboard-only pass. Evidence: the Playwright accessibility report in CI.",
-        "A package-sourced and a URL-sourced weights install stop before fetching a byte without an acceptance, and a changed license document (one byte) voids the acceptance and refuses the install. Evidence: the acceptance tests in CI."
+        "A package-sourced and a URL-sourced weights install stop before fetching a byte without an acceptance, and a changed license document (one byte) voids the acceptance and refuses the install. Evidence: the acceptance tests in CI.",
+        "A test-only lock that resolves diffusers 0.42.0 gets a failed environment evidence record naming GHSA-4prv-5hj7-c2xr before any environment directory exists or a byte is fetched, and the same lock at 0.42.1 proceeds with diffusers 0.42.1 listed in its environment evidence record. Evidence: the advisory tests in CI.",
+        "CI fails on a committed worker lock that pins a version inside a recorded vulnerable range, and the failure names the lock, the package and the advisory id. Evidence: the lock-scan negative test and its log in CI."
       ],
       "owner_gate": false,
-      "notes": "ADR-0011, ADR-0016, ADR-0027. Spec interpretation 3 and screens open question 2: the smoke 'not garbled' check is an owner verdict.",
+      "notes": "ADR-0011, ADR-0016, ADR-0027. Spec interpretation 3 and screens open question 2: the smoke 'not garbled' check is an owner verdict. Lock advisories added 2026-11-07 (OWNER-DECISIONS-2026-11-07.md, expansion item 1): ACE-Step 1.5 at ca1e85fe9 requires diffusers>=0.37.0 and MiniMax Music 3 runs as a Diffusers modular pipeline, so an engine lock can resolve a vulnerable loader; the advisory says PYTHONSAFEPATH=1 also blocks this one, which is defence in depth, not a substitute.",
       "prefactor": false,
       "screens": [
         "S13",
@@ -2014,7 +2019,8 @@
         "apps/web/src/screens/engines/downloads",
         "apps/web/src/surfaces/license-dialog",
         "apps/web/src/screens/first-run/engines-step",
-        "services/control/tests/fixtures/model-repo"
+        "services/control/tests/fixtures/model-repo",
+        "services/control/studio_control/registry/install/advisories (the recorded advisories and the committed-lock scan)"
       ],
       "fills": [
         "S13/downloads",
@@ -2071,17 +2077,19 @@
         128,
         130,
         353,
-        360
+        360,
+        415
       ],
-      "what_to_build": "ACE-Step 1.5 can run behind the worker protocol with no UI branch. workers/ace is a standalone uv project outside the workspace lock, pinned to ACE-Step main at or after ca1e85fe9, with a darwin-arm64 extra (MLX and MPS) and a linux-cuda extra. Its adapter implements describe, prepare, run and unload for the cover task (audio_cover_strength, cover_noise_strength) and text_to_song, declaring ace-2b-turbo-mlx and ace-2b-sft-mlx and the declared MPS and CUDA twins. The turbo profile hides guidance and records shift=3.0 among its actual parameters, and intent and actual are both reported. Lyric languages are declared en only until a smoke run per language. It refuses before loading when weights are missing, the duration is over its limit or memory is short, keeps one model resident and unloads when idle. Why blocked: T10 (the adapter contract and the conformance suite).",
+      "what_to_build": "ACE-Step 1.5 can run behind the worker protocol with no UI branch. workers/ace is a standalone uv project outside the workspace lock, pinned to ACE-Step main at or after ca1e85fe9, with a darwin-arm64 extra (MLX and MPS) and a linux-cuda extra. ACE-Step's own requirements accept diffusers 0.37.0 and later, so the lock constrains diffusers to 0.42.1 or later (GHSA-4prv-5hj7-c2xr). Its adapter implements describe, prepare, run and unload for the cover task (audio_cover_strength, cover_noise_strength) and text_to_song, declaring ace-2b-turbo-mlx and ace-2b-sft-mlx and the declared MPS and CUDA twins. The turbo profile hides guidance and records shift=3.0 among its actual parameters, and intent and actual are both reported. Lyric languages are declared en only until a smoke run per language. It refuses before loading when weights are missing, the duration is over its limit or memory is short, keeps one model resident and unloads when idle. Why blocked: T10 (the adapter contract and the conformance suite).",
       "acceptance_criteria": [
         "With weights absent, the adapter passes every conformance check that needs no weights and refuses with weights_missing before any model import. Evidence: the conformance log in the Linux PR run.",
         "describe() validates against its schema and matches the registry declarations for every ACE profile. Evidence: the describe-match test in CI.",
         "The turbo profile's actual parameters never include a guidance value even when the intent sets one, and the control is reported unsupported. Evidence: the intent-to-actual test in CI.",
-        "The environment lock pins the ACE commit, and a test fails if the pin is older than ca1e85fe9. Evidence: the pin test in CI."
+        "The environment lock pins the ACE commit, and a test fails if the pin is older than ca1e85fe9. Evidence: the pin test in CI.",
+        "The lock resolves diffusers 0.42.1 or later, and a test fails if it resolves 0.42.0 or earlier. Evidence: the lock-floor test in CI."
       ],
       "owner_gate": false,
-      "notes": "Real weights, conformance on the Mac and smoke are the owner-gated next step. Repaint and reference timbre are added as separate modules by the section-replace and references tickets. ADR-0002, ADR-0016, ADR-0018.",
+      "notes": "Real weights, conformance on the Mac and smoke are the owner-gated next step. Repaint and reference timbre are added as separate modules by the section-replace and references tickets. ADR-0002, ADR-0016, ADR-0018. Diffusers floor added 2026-11-07 (OWNER-DECISIONS-2026-11-07.md, expansion item 1).",
       "prefactor": false,
       "screens": [],
       "owned_areas": [
@@ -2522,30 +2530,35 @@
       ],
       "size": "L",
       "blocked_by": [
-        "T10"
+        "T10",
+        "T03"
       ],
       "stories": [
         137,
         322,
         324,
-        353
+        353,
+        416
       ],
-      "what_to_build": "YuE2 can run identically on a rented burst machine or a local CUDA box, and can never touch LLC work. workers/yue2 holds a Dockerfile (CUDA 12.8, torch 2.10.0, a pinned YuE2 commit, no weights) and a uv.lock; the image is built in CI on Linux (never in the Mac's container VM, whose disk is internal), pushed to a private GHCR repository, and its digest pinned in the registry through a contract-fix PR. The adapter runs score_to_song with abc and cot, writing the ABC to a scratch file and calling YuE2's Python API with that path (no shell); lyrics are en or zh only, the length about six minutes at most, and the lanes individual and research only, so an llc request is refused before load. At boot the image downloads the weights from the pinned Hugging Face revision under a license-acceptance id passed in the lease, verifies them against a pinned weights manifest and reports that manifest's hash in /v1/describe, honours a per-lease bearer token, and arms an in-image shutdown deadline at the lease's hard maximum. It answers a conformance ping before the first job. Why blocked: T10 (the adapter contract and the conformance suite).",
+      "what_to_build": "YuE2 can run identically on a rented burst machine or a local CUDA box, and can never touch LLC work. workers/yue2 holds a Dockerfile (CUDA 12.8, torch 2.10.0, YuE2 at an exact source commit, no weights) and a uv.lock. The pin is a commit, never a version label or tag: package version 0.1.6 is Apache-2.0 code on main and CC BY-NC 4.0 code at the yue2-v0.1.6 tag. The verified pin is 1647252d68b70cbead046ffd3f7caf036dde47ee (main on 2026-10-06), and moving it to a later commit re-verifies that commit's LICENSE first. Its pin record keeps four documents, each with a URL that embeds its revision and a sha256: the code LICENSE and the MODEL_LICENSE (the individual-creator permission) at the source commit, and the LICENSE of the YuE2-3B weights (revision 8f24312f187763b9854adeec87e437e2b03bbff1) and of the YuE2-Vae weights (revision 152733a19ad43aa67e367f9b5503ef8075bb5126). The yue2-3b-score profile pins both weights repositories, and the YuE2 register row records the code license per pinned revision with pinned primary sources, each through a contract-fix PR. The image is built in CI on Linux (never in the Mac's container VM, whose disk is internal), pushed to a private GHCR repository, and its digest pinned in the registry through a contract-fix PR. The adapter runs score_to_song with abc and cot, writing the ABC to a scratch file and calling YuE2's Python API with that path (no shell); lyrics are en or zh only, the length about six minutes at most, and the lanes individual and research only, so an llc request is refused before load. At boot the image downloads the weights from their pinned Hugging Face revisions under a license-acceptance id passed in the lease, verifies them against a pinned weights manifest and reports that manifest's hash in /v1/describe, honours a per-lease bearer token, and arms an in-image shutdown deadline at the lease's hard maximum. It answers a conformance ping before the first job. Why blocked: T10 (the adapter contract and the conformance suite); T03 (the YuE2 register row changes only after the license-verification ticket's register edits, by contract-fix PR).",
       "acceptance_criteria": [
         "The image builds in CI from the pinned commit, contains no weight file (the no-weights check runs on the image's layers), and its digest is recorded. Evidence: the build job log and the digest in the PR.",
         "Conformance's no-weights checks pass against the container on a CPU runner, and an llc request is refused with lane_forbidden before any import. Evidence: the conformance log in CI.",
         "The in-image deadline shuts the container down at a short test hard maximum. Evidence: the deadline test log in CI.",
         "A request with lyrics in fr or a length over the limit is refused before load with its code. Evidence: the refusal tests in CI.",
-        "A weights download that differs from the pinned manifest by one byte refuses every job and describe reports the mismatch. Evidence: the in-image verification test in CI."
+        "A weights download that differs from the pinned manifest by one byte refuses every job and describe reports the mismatch. Evidence: the in-image verification test in CI.",
+        "The source pin is a 40-character commit equal to the register row's verified revision, and a test fails for a tag, a branch, a version label or a commit whose recorded code license differs from the row. Evidence: the pin tests in CI and the contract-fix PR's register diff.",
+        "The pin record lists the code LICENSE, the MODEL_LICENSE and the YuE2-3B and YuE2-Vae LICENSE files, each URL embedding its own revision, with sha256 values recorded from those documents; a test fails when a role is missing or a URL's revision differs from its pin. Evidence: the pin-record test in CI and the hashing log attached to the PR."
       ],
       "owner_gate": false,
-      "notes": "ADR-0002, ADR-0016, ADR-0026. Whether an in-container shutdown stops provider billing is UNVERIFIED (a RunPod spike); until then the deadline is a second lock, not a guarantee.",
+      "notes": "ADR-0002, ADR-0016, ADR-0026. Whether an in-container shutdown stops provider billing is UNVERIFIED (a RunPod spike); until then the deadline is a second lock, not a guarantee. Exact pins added 2026-11-07 (OWNER-DECISIONS-2026-11-07.md, expansion item 2). YuE2 main has moved past the verified commit (1116bea7 on 2026-11-01, with byte-identical LICENSE and MODEL_LICENSE); a later pin is adopted only after its own check. The engine-profile contract pins one weights repository per profile today, so the YuE2-Vae pin needs its contract-fix PR. ADR-0011, ADR-0027.",
       "prefactor": false,
       "screens": [],
       "owned_areas": [
         "workers/yue2",
         ".github/workflows/yue2-image.yml",
-        "contracts/registry (yue2 image digest, through a contract-fix PR)"
+        "contracts/registry (the yue2 image digest and the YuE2-3B and YuE2-Vae weights pins, through a contract-fix PR)",
+        "scripts/registry/register_overlay.json (the YuE2 row's pinned revisions and per-revision code license, through a contract-fix PR)"
       ]
     },
     {
@@ -2634,21 +2647,23 @@
       ],
       "size": "M",
       "blocked_by": [
-        "T60"
+        "T60",
+        "T44"
       ],
       "stories": [
         322,
         324,
-        339
+        339,
+        416
       ],
-      "what_to_build": "YuE2 earns smoke-passed on the exact rented hardware it will run on before any product R1 candidate. Jon accepts the YuE2 license in O7 (two documents archived). One quoted burst run, approved by Jon, boots the pinned image on one fixed GPU model (host class cuda/runpod-<gpu>-24gb), verifies the downloaded weights against the pinned manifest, passes conformance, renders the smoke candidates (decode, non-silence, duration, manifest match) and Jon records 'not garbled'. Boot, weights-download and run times are recorded as MEASURED-LOCAL and become the measured history that later quotes use. The quote's GPU-class fallback list holds only GPU classes with a smoke-passed record for this revision. Why blocked: T60 (the account, the verified provider behaviours and the approval path).",
+      "what_to_build": "YuE2 earns smoke-passed on the exact rented hardware it will run on before any product R1 candidate. Jon accepts the YuE2 license in O7, which archives the four documents the worker pins (the code LICENSE and the MODEL_LICENSE at the source commit, and the YuE2-3B and YuE2-Vae LICENSE files at their revisions); a changed document or revision voids the acceptance before any quote. One quoted burst run, approved by Jon, boots the pinned image on one fixed GPU model (host class cuda/runpod-<gpu>-24gb), verifies the downloaded weights against the pinned manifest, passes conformance, renders the smoke candidates (decode, non-silence, duration, manifest match) and Jon records 'not garbled'. Boot, weights-download and run times are recorded as MEASURED-LOCAL and become the measured history that later quotes use. The quote's GPU-class fallback list holds only GPU classes with a smoke-passed record for this revision. Why blocked: T60 (the account, the verified provider behaviours and the approval path); T44 (O7 and the license-acceptance record, which archives each pinned document and hashes it again at quote time).",
       "acceptance_criteria": [
-        "The YuE2 license acceptance (both documents hashed) predates the run, and the run has a quote, Jon's approval and a reservation before provisioning. Evidence: the acceptance record id and the ledger export.",
+        "The YuE2 license acceptance lists the code license, the permission and both weights licenses with their revisions and hashes, matching the worker's pin record; it predates the run, and the run has a quote, Jon's approval and a reservation before provisioning. Evidence: the acceptance record id and the ledger export.",
         "The smoke record lists every declared check with Jon's verdict, and yue2-3b-score computes smoke-passed on that host class only. Evidence: the smoke evidence record id and the registry read.",
         "Boot, download and run times are recorded as MEASURED-LOCAL, and a later quote's fallback list names only smoke-passed GPU classes. Evidence: the timing record id and a quote attached to the PR."
       ],
       "owner_gate": true,
-      "notes": "Needs Jon: a license acceptance, a paid-run approval and a 'not garbled' check. Added in the design review: without it the first product R1 run would be refused profile_not_promoted. O-09, ADR-0002, ADR-0030.",
+      "notes": "Needs Jon: a license acceptance, a paid-run approval and a 'not garbled' check. Added in the design review: without it the first product R1 run would be refused profile_not_promoted. O-09, ADR-0002, ADR-0030. The four pinned documents and the edge to the install-pipeline ticket were added 2026-11-07 (OWNER-DECISIONS-2026-11-07.md, expansion item 2): the acceptance runs through O7 and the license-acceptance record that ticket builds, which this ticket previously used without an edge.",
       "owner_needs": "Accepts the YuE2 license; approves the paid smoke run; listens and records 'not garbled'."
     },
     {
@@ -3923,17 +3938,19 @@
       ],
       "stories": [
         139,
-        308
+        308,
+        415
       ],
-      "what_to_build": "LLC songs can stop being ACE-only once a challenger passes smoke. HeartMuLa 3B (Apache-2.0) and MiniMax Music 3 (Community License) get standalone CUDA worker adapters for text_to_song, declared LLC-eligible per the component register. Their lyric languages stay undeclared, so vocal requests are refused until smoke runs per language. MiniMax's obligations (UI naming, the revenue threshold, the AUP #11 machine-generated disclosure) are carried from the register into the license chain and into the manifest of any closure containing its output. Each challenger gets an OCI image built in CI on Linux with no weights, its digest pinned by contract-fix PR, as the YuE2 image is, so it can run on a burst. Why blocked: T33 (the disclosure obligation must reach the ExportManifest; the worker SDK and conformance suite arrive through it).",
+      "what_to_build": "LLC songs can stop being ACE-only once a challenger passes smoke. HeartMuLa 3B (Apache-2.0) and MiniMax Music 3 (Community License) get standalone CUDA worker adapters for text_to_song, declared LLC-eligible per the component register. Their lyric languages stay undeclared, so vocal requests are refused until smoke runs per language. MiniMax's obligations (UI naming, the revenue threshold, the AUP #11 machine-generated disclosure) are carried from the register into the license chain and into the manifest of any closure containing its output. Any challenger lock that resolves diffusers (MiniMax Music 3 runs as a Diffusers modular pipeline) constrains it to 0.42.1 or later (GHSA-4prv-5hj7-c2xr). Each challenger gets an OCI image built in CI on Linux with no weights, its digest pinned by contract-fix PR, as the YuE2 image is, so it can run on a burst. Why blocked: T33 (the disclosure obligation must reach the ExportManifest; the worker SDK and conformance suite arrive through it).",
       "acceptance_criteria": [
         "Both adapters pass conformance's no-weights checks and refuse a vocal request with language_unsupported before load. Evidence: the conformance logs in the Linux PR run.",
         "An export whose closure contains a MiniMax-profile stand-in output carries the disclosure flag with reason component_obligation_ai_disclosure. Evidence: the manifest test in CI.",
         "describe() for each matches its registry declaration. Evidence: the describe-match tests in CI.",
-        "Each image builds in CI with no weight file and its digest is recorded. Evidence: the build job logs and the digests in the PR."
+        "Each image builds in CI with no weight file and its digest is recorded. Evidence: the build job logs and the digests in the PR.",
+        "Neither challenger lock resolves diffusers 0.42.0 or earlier, and a test fails if one does. Evidence: the lock-floor test in CI."
       ],
       "owner_gate": false,
-      "notes": "ADR-0002, X-12. MiniMax's one-or-two GPU question and its sample rate are CONTESTED until smoke. ADR-0022 (no hosted music service in v1-core).",
+      "notes": "ADR-0002, X-12. MiniMax's one-or-two GPU question and its sample rate are CONTESTED until smoke. ADR-0022 (no hosted music service in v1-core). Diffusers floor added 2026-11-07 (OWNER-DECISIONS-2026-11-07.md, expansion item 1).",
       "prefactor": false,
       "screens": [],
       "owned_areas": [
@@ -4386,6 +4403,126 @@
         "docs/evidence/index (generated)",
         "contracts/fixtures/legacy/1.x (frozen here)"
       ]
+    },
+    {
+      "id": "T106",
+      "slug": "transcription-trial",
+      "title": "Research-lane transcription trial: four hard hum kinds, and GAME and SheetSage2 pinned as research-only transcribers (needs Jon)",
+      "labels": [
+        "ready-for-human",
+        "stream:voice",
+        "area:transcription",
+        "gate:evidence"
+      ],
+      "size": "L",
+      "blocked_by": [
+        "T19",
+        "T44",
+        "T53"
+      ],
+      "stories": [
+        417,
+        418
+      ],
+      "what_to_build": "Jon learns where transcribers break before he relies on one, and no research result reaches his songs. Four hard hum kinds join the hum benchmark's test-time generator as a research trial set, each with ground-truth notes and a sidecar and nothing committed as audio: a one-note phrase (a single duration), adjacent fixed word boundaries, a long melisma, and a noisy vocal standing in for a separated one (the line under a bed with a stated residual and noise level). GAME (openvpi/GAME code at 69ba01ded0ddda5495e51ba373685f1be1a67ea2, MIT, which carries the 2026-10-21 single-duration CUDA fix and the 2026-10-24 retained-boundary fix; weights the v1.0.3 ONNX release, CC BY-NC-SA 4.0) and SheetSage2 (m-a-p/SheetSage2 at b83c3d79a6d98bcffaf8f9ed112c90aa887887bc, CC BY-NC 4.0, model.safetensors sha256 b235f68091a5f5b644000f2b5acb57d1e70432aca2b34ab1b9cf27236e1f4274) become standalone transcriber workers behind the process boundary that refuse every project outside research before load; their register rows gain these pinned revisions through a contract-fix PR and stay research-only. Jon accepts each one's non-commercial terms in O7 before its weights download. With a trial preregistration committed first (the hum kinds, N per kind, COnP and COnPOff for onsets and offsets, and blind correction effort), every installed transcriber in a research project, pYIN with HMM included, is scored on the set, and Jon makes one blind correction pass per hum. The evidence record is synthetic (NeutralVoice material) with MEASURED-LOCAL figures; it never feeds the default-transcriber decision or a register row, and it states that the upstream fixes are code fixes, not accuracy claims. Why blocked: T19 (Jon's license acceptances and the trial's evidence records are irreplaceable records in the real store); T44 (license acceptance as an owner act through O7, and verified downloads of the pinned weights); T53 (the benchmark runner, its mir_eval scoring, the blind-correction view and its reuse of the commit-order check).",
+      "acceptance_criteria": [
+        "Both workers pass conformance's no-weights checks and refuse a request from an individual or llc project with lane_forbidden before any model import, and a test fails when a code pin is a tag or a branch or a weights pin lacks its revision or sha256. Evidence: the conformance logs and pin tests in the Linux PR run.",
+        "Each hum kind renders at test time with its sidecar, and analytic checks confirm one note in the one-note phrase, word boundaries at their stated times, the melisma's notes on one syllable, and the noisy hum's residual and noise at their stated levels. Evidence: the generator tests in CI.",
+        "Jon's acceptance of each component's terms predates its first downloaded byte, and each download verifies against its pinned manifest. Evidence: the acceptance and install evidence record ids under docs/evidence/.",
+        "The preregistration is committed before the first scored hum, and the evidence record holds each transcriber's COnP and COnPOff per hum kind and Jon's blind correction effort, labelled synthetic with MEASURED-LOCAL figures and no audio attached. Evidence: the commit ids with CI's order check, and the evidence record id under docs/evidence/.",
+        "The registry refuses the trial record for the hum benchmark gate and as input to the default-transcriber decision, and the GAME and SheetSage2 register rows stay research-only. Evidence: the negative tests in CI and the contract-fix PR's register diff."
+      ],
+      "owner_gate": true,
+      "notes": "Expansion item 3 of OWNER-DECISIONS-2026-11-07.md (the 2026-10-29 continuation report's model refresh). GAME's eb08841f and 69ba01de and SheetSage2's b83c3d79 (local loading of its chord spelling module, weights unchanged) are code fixes that neither show better accuracy nor clear a licensing restriction. Out of Scope keeps SheetSage2 to research-lane jobs, and GAME's MIT code label does not clear its weights (O-06, ADR-0011, ADR-0029). The noisy hum stands in for a separated vocal; a real separator run waits for its own ticket. Optional; does not block final QA, and is listed in the UNVERIFIED register while open. ADR-0027.",
+      "prefactor": false,
+      "screens": [],
+      "owned_areas": [
+        "eval/harness/hum-benchmark/trial-set",
+        "workers/transcribe-game",
+        "workers/transcribe-sheetsage2",
+        "eval/prereg/transcription-trial",
+        "docs/evidence/<NN>-transcription-trial",
+        "scripts/registry/register_overlay.json (GAME and SheetSage2 pinned revisions, through a contract-fix PR)"
+      ],
+      "owner_needs": "Accepts the GAME (CC BY-NC-SA 4.0) and SheetSage2 (CC BY-NC 4.0) terms in O7; makes one blind correction pass per trial hum."
+    },
+    {
+      "id": "T107",
+      "slug": "decoder-trial",
+      "title": "Alternate-decoder fidelity trial: the same saved ACE latents through the official decoder and ScragVAE, auditioned as two blind, level-matched candidates (needs Jon)",
+      "labels": [
+        "ready-for-human",
+        "stream:eval",
+        "area:ace",
+        "gate:evidence"
+      ],
+      "size": "M",
+      "blocked_by": [
+        "T31",
+        "T36",
+        "T47"
+      ],
+      "stories": [
+        419,
+        420
+      ],
+      "what_to_build": "Whether a compatible decoder sounds better is settled by Jon's ears on identical material, with no training. ACE's pinned ALT_VAE.md (commit ca1e85fe9430179831e6bc6be790c332190a3866) documents drop-in AutoencoderOobleck decoders and lists ScragVAE (scragnog/Ace-Step-1.5-ScragVAE at 0547ba36ff72b94ca3db3fa9194a59899ca37e5c: the decoder fine-tuned with the encoder frozen; MIT in its card metadata, with no LICENSE file and no named training data). Its rights review comes first: a register row, through a contract-fix PR, records those facts against the pinned card, allows the research lane only and lists its release blockers. Jon accepts its documented terms in O7, and its weights download through the install pipeline to the studio volume. The ACE worker gains a decoder module that loads an alternate decoder only from that verified directory, never through ACE's own registry downloader or its mirror fallback, uses the patched Diffusers loader, and refuses any project outside research. With a trial preregistration committed first (the saved latent set, both decoders and their revisions, the pair count, the problem labels and the decision rule), each pair decodes the same saved latents through the official decoder and through ScragVAE; audio whose allowed uses include engine input (an AURA keeper, never a reference standard or an import) is also round-tripped through the frozen encoder and each decoder. Both candidates are measured and level-matched, and Jon auditions each pair blind, marking transients, sibilance, stereo image and quiet-tail problems. Spectral and loudness differences are diagnostics that never select; the card's figures stay VENDOR, and brighter is never called better. The evidence record states the decision rule's outcome, and no profile status, default or lane changes because of it. Why blocked: T31 (the blind, level-matched audition and the verdict as an owner act); T36 (the commit-order check that puts the preregistration before the first decode); T47 (ACE on mlx/m5pro with the official decoder smoke-passed, its environment and the install pipeline).",
+      "acceptance_criteria": [
+        "The ScragVAE register row cites the card at its pinned revision, records the absent LICENSE file and the unnamed training data, allows research only and lists its release blockers, and the component register regenerates byte-identically. Evidence: the contract-fix PR's register diff and the gate log.",
+        "Jon's acceptance predates the first ScragVAE byte and the download verifies against its pinned manifest; tests show the decoder module never calls ACE's own downloader and refuses an unverified directory or a project outside research. Evidence: the acceptance and install evidence record ids, and the decoder-module tests in CI.",
+        "The preregistration is committed before the first decode. Evidence: the commit ids and CI's order check.",
+        "In every pair both candidates cite the same latent sha256 and differ only in decoder revision, the residual loudness mismatch is at most 0.1 LU, and each audition has exactly two arms. Evidence: the trial evidence record id under docs/evidence/ and the audition record ids.",
+        "Jon's verdict on each pair, with its problem labels and seconds listened, is an owner act, the evidence record states the decision rule's outcome, and the registry computes the same profile statuses before and after the trial. Evidence: the verdict record ids and both registry reads."
+      ],
+      "owner_gate": true,
+      "notes": "Expansion item 4 of OWNER-DECISIONS-2026-11-07.md. One slice of the codec round-trip study (J13, research). ALT_VAE.md keeps the architecture fixed and the integration inference-only, and this trial adds no training (ADR-0020). Diagnostics never select (ADR-0005); Jon's blind, level-matched verdicts decide (ADR-0010). The alternate decoder loads through diffusers AutoencoderOobleck, so the install pipeline's advisory check applies to it. The engine-profile contract pins one weights repository per profile, so a trial profile that needs the ACE bundle and the decoder together files its contract-fix PR first. Optional; does not block final QA, and is listed in the UNVERIFIED register while open. ADR-0011.",
+      "prefactor": false,
+      "screens": [],
+      "owned_areas": [
+        "workers/ace/modules/decoder.py",
+        "eval/prereg/decoder-trial",
+        "docs/evidence/<NN>-decoder-trial",
+        "scripts/registry/register_overlay.json (the ScragVAE row, through a contract-fix PR)"
+      ],
+      "owner_needs": "Accepts ScragVAE's documented terms in O7; auditions each preregistered pair blind and gives a verdict with problem labels."
+    },
+    {
+      "id": "T108",
+      "slug": "magenta-realtime-trial",
+      "title": "Magenta RealTime 2 trial on the Mac: a research-lane instrument and accompaniment worker on MLX, its terms, and a latency smoke gate on mlx/m5pro (needs Jon)",
+      "labels": [
+        "ready-for-human",
+        "stream:engine",
+        "area:engines",
+        "gate:evidence"
+      ],
+      "size": "L",
+      "blocked_by": [
+        "T52"
+      ],
+      "stories": [
+        421,
+        422
+      ],
+      "what_to_build": "Once the first v1 flow works, Jon can judge a playable instrument without it touching his v1 songs. Magenta RealTime 2 (Google, introduced 2026-06-04; VENDOR: a 230M small and a 2.4B base checkpoint, 48 kHz stereo, MIDI and audio control as well as text, about 200 ms control latency, trained on about 71k hours of mostly instrumental stock music; not a lyric engine) gets register rows through a contract-fix PR for its code (magenta/magenta-realtime at 694a545e4ba0b88bf1150137b129582166d3e07f, Apache-2.0) and its weights (google/magenta-realtime-2 at 010aa0dcb0dfd27b24f0ad07b4dad63e8f9521cc, CC BY 4.0 with its responsible-use terms and attribution), with lanes no wider than individual and research until a training-data review; the trial itself runs in a research project. workers/magenta-rt is a standalone darwin-arm64 uv project on the official Python MLX runtime (not the example app and not a community runtime), declaring mrt2-small-mlx and mrt2-base-mlx for the instrumental task with MIDI and style-text inputs and no lyric languages. It refuses a project outside research before load, never uses the runtime's own downloader, and keeps every model, resource and cache path on the studio volume, never the runtime's default folder in the home directory. Jon accepts the code and weights terms in O7; the small checkpoint downloads first through the install pipeline with allow-patterns, and base only after small passes. The profiles' smoke gate declares latency checks whose thresholds are committed before the first measurement and measured with the worker SDK's own timings on mlx/m5pro: generation faster than real time with no underruns over a fixed duration, and the control latency from a MIDI change to the first changed output frame. Jon listens to a MIDI-conditioned rendering of a fixture MelodySpec and records 'not garbled'. Every figure is MEASURED-LOCAL or an honest fail; browser input-to-audio latency is not measured here, and no Studio control or part-creation feature is added (Create a new part stays v2). Why blocked: T52 (the first v1 flow works for real on the Mac, and through it the install pipeline, the real studio volume and the analysis worker on cpu/m5pro).",
+      "acceptance_criteria": [
+        "The register rows cite the pinned code and weights revisions with their license documents and use terms, and the component register regenerates byte-identically. Evidence: the contract-fix PR's register diff and the gate log.",
+        "With weights absent the worker passes conformance's no-weights checks and refuses an individual or llc project with lane_forbidden before load, and a test fails if any configured model, resource or cache path resolves outside the studio volume. Evidence: the conformance log and path tests in the macOS PR run.",
+        "Jon's acceptance predates the first downloaded byte, only the small checkpoint's files download first, and they verify against the pinned manifest. Evidence: the acceptance and install evidence record ids under docs/evidence/.",
+        "The latency thresholds are committed before the first measurement, and each smoke record lists every declared check (real-time factor, underruns, control latency, decode, non-silence) with MEASURED-LOCAL values from the worker SDK's timings and Jon's 'not garbled' verdict, so status computes pass or fail on mlx/m5pro only. Evidence: the commit ids with CI's order check, the smoke evidence record ids and the registry read.",
+        "A plan in an individual or llc project never offers the profiles, and a request naming them there is refused at submit. Evidence: the lane tests in CI."
+      ],
+      "owner_gate": true,
+      "notes": "Expansion item 5 of OWNER-DECISIONS-2026-11-07.md. The vendor's real-time tables disagree on base (the README says a Pro Max chip yet marks the M4 Pro real-time; the introduction says M3 Pro or higher), and the M5 Pro is in neither, so small runs first. Its MIDI input and the latency checks are new to the contracts and land through contract-fix PRs first. The community audio.cpp runtime added MRT2 support on 2026-10-28; it is a separate component with its own pins, outside this trial. Touches A8 and C11 (v1-studio) without building them; any product use needs its own spec and ticket. ADR-0002, ADR-0011, ADR-0013, ADR-0027, O-06. Optional; does not block final QA, and is listed in the UNVERIFIED register while open.",
+      "prefactor": false,
+      "screens": [],
+      "owned_areas": [
+        "workers/magenta-rt",
+        "docs/evidence/<NN>-magenta-realtime-trial",
+        "scripts/registry/register_overlay.json (the Magenta RealTime 2 rows, through a contract-fix PR)",
+        "contracts/registry (the trial profiles and their smoke gate, through a contract-fix PR)"
+      ],
+      "owner_needs": "Accepts the Magenta RealTime 2 code and weights terms in O7; listens to the trial rendering and records 'not garbled'; frees disk if preflight refuses."
     }
   ]
 }

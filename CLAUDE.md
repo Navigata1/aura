@@ -7,10 +7,15 @@ The control service and web UI are portable across macOS, Windows and Linux; the
 
 ## Read first
 
-- `docs/research/OWNER-DECISIONS-2026-11-06.md`: current private-repository merge policy: green current-head CI and independent review; integration only.
-- `docs/research/OWNER-DECISIONS-2026-10-29.md`: Jon's latest continuation instruction and O-03 amendment to Extreme SSD.
+- `docs/research/OWNER-DECISIONS-2026-11-07.md`: the current build. The repository is public for the build phase, so
+  hosted CI stays free, and returns to private at production level. Nothing sensitive goes into the repository, issues,
+  PRs or CI logs. Merges into `integration` need green three-OS CI, enforced by rulesets, plus an independent review bound
+  to the PR's patch. The continuation report's expansion trials are now in the plan.
+- `docs/research/OWNER-DECISIONS-2026-11-06.md`: the merge policy that November 7 refines. Its "procedural only"
+  enforcement note is superseded where the rulesets apply.
+- `docs/research/OWNER-DECISIONS-2026-10-29.md`: Jon's continuation instruction and O-03 amendment to Extreme SSD.
   Then read `docs/research/OWNER-DECISIONS-2026-10-09.md` for binding O-01…O-11 and owner-pending defaults.
-  The November 6 and October 29 amendments win where they change earlier decisions; all other owner decisions and owner-act gates remain.
+  The November 7, November 6 and October 29 amendments win where they change earlier decisions; all other owner decisions and owner-act gates remain.
 - `docs/research/RECONCILIATION.md`: the verified evidence base. §4 is the component register, §6 the decisions
   D-01…D-24 behind the ADRs, §7 the owner's open questions, §8 what remains unverified. `evidence-register.json` is
   its machine-readable form, and `feature-inventory.md` lists every feature with its scope.
@@ -102,7 +107,9 @@ The control service and web UI are portable across macOS, Windows and Linux; the
 
 - One ticket is one issue, one branch `ticket/<NN>-<slug>`, one worktree at `/Volumes/STUDIO/worktrees/<NN>-<slug>/`
   and one PR into `integration` (O-01; `main` advances only by Jon's release merge), squash-merged only after the
-  required checks pass. The merging agent enforces that with `gh pr checks --watch`. Never build in the canonical checkout, and never use `.claude/worktrees/`
+  required checks pass and an independent review of that patch finds no blocking issue (November 6 and 7 decisions).
+  The `integration` ruleset enforces the three-OS checks, an up-to-date branch and squash merging. The merging agent
+  confirms the checks with `gh pr checks --watch` and the review by its patch-id. Never build in the canonical checkout, and never use `.claude/worktrees/`
   (it sits on the internal disk).
 - One feature per folder: a control-service module in `services/control/studio_control/<module>/`, a worker in
   `workers/<name>/`, a web screen in its own folder under `apps/web/src/`. A ticket changes its own folder and its
@@ -124,9 +131,11 @@ The control service and web UI are portable across macOS, Windows and Linux; the
 
 ### Issue tracker
 
-GitHub Issues on `Navigata1/aura` (private) via `gh`. Run every `gh` command for this repo as
-`GH_TOKEN="$(gh auth token --user Navigata1)" gh …` so the machine's default account is never switched. See
-`docs/agents/issue-tracker.md`.
+GitHub Issues on `Navigata1/aura` via `gh`. The repository is public during the build phase and private again at
+production level (`docs/research/OWNER-DECISIONS-2026-11-07.md`). Issues, PRs, comments, reviews and CI logs are public,
+so none of them may hold secrets, personal addresses, audio, weights or private paths beyond `/Volumes/STUDIO/...`.
+Run every `gh` command for this repo as `GH_TOKEN="$(gh auth token --user Navigata1)" gh …` so the machine's default
+account is never switched. See `docs/agents/issue-tracker.md`.
 
 ### Triage labels
 
