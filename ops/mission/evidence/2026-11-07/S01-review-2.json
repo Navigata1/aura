@@ -1,0 +1,92 @@
+{
+ "pr": 127,
+ "head": "4773eb58ac94232cebb36b454bec1ba08dcdd101",
+ "base": "dee28e2fd2b7a79ca2773e639a4a714af5c356b8",
+ "standards": "pass",
+ "spec": "pass",
+ "blocking": [],
+ "non_blocking": [
+  {
+   "id": "R2-N1",
+   "lens": "standards",
+   "finding": "The review binding is now stated as relaxing the November 6 changed-base clause (record L71-74, CLAUDE.md L14-19), with Jon's confirmation listed as open, but it also replaces November 6's 'The merge must match the reviewed head' (OWNER-DECISIONS-2026-11-06.md L9), which CLAUDE.md keeps under 'Every other rule in it stays'. Record L59-60 ('the exact head against its current integration base'), issue-tracker.md L56-57 ('review of that head') and DEVELOPING.md L292 ('against the current integration base') still state the rule the binding relaxes. Non-blocking because both quoted owner instructions are met and the rule is disclosed as the lead's; it blocks only if the November 6 text is held to be binding owner wording, until Jon confirms.",
+   "fix": "List both relaxed clauses in CLAUDE.md, reword the three sentences to 'the PR's patch (see Review binding)', and record Jon's confirmation."
+  },
+  {
+   "id": "R2-N2",
+   "lens": "standards",
+   "finding": "Rule 10 calls itself 'the one statement of the rule', yet the only statement that six tracked archives under docs/research/sources/ keep an absolute home path naming the local account is in the record (L40-41); the follow-up is 'the lead tracks', with no issue, and the repository is public.",
+   "fix": "Purge the paths now, or put the exception in rule 10 and open the follow-up issue (path rule plus a planted-violation test)."
+  },
+  {
+   "id": "R2-N3",
+   "lens": "standards",
+   "finding": "Reconciliation residues: T65, which covers the updated story 363, still says 'on macOS and Windows in the integration and nightly runs'; spec L1309 (the StudioHarness row) still says 'macOS and Windows on integration and nightly'; ADR-0002's note 'license-acceptance/1 already supports this' is true for the four documents, but weights_source is a single $ref to engine-profile weightsSource, so T58's contract-fix for a second weights pin must also let the acceptance bind both YuE2 weights repositories.",
+   "fix": "Update T65 and spec L1309; say in T58 that the contract-fix covers license-acceptance/1's weights_source."
+  },
+  {
+   "id": "R2-N4",
+   "lens": "standards",
+   "finding": "GLOSSARY terms (present since 906f4a8; missed in the first review): a hum kind is called 'a noisy vocal' (story 417 at spec L655, T106, record L189-190), but GLOSSARY Hum lists _Avoid_: vocal; 'residual' is used for bed left in the stand-in (T106) and for the 0.1 LU gap (T107), but GLOSSARY Residual is 'the mix minus its stems' and Level matching calls the gap 'the remaining mismatch'; 'bed', 'accompaniment', 'playable instrument' and 'hum kind'/'trial set' are undefined and missing from the glossary-gap paragraph (spec L1568-1573).",
+   "fix": "Write 'a noisy hum standing in for a separated vocal stem' and 'the remaining mismatch', and list the undefined terms for domain-modeling."
+  },
+  {
+   "id": "R2-N5",
+   "lens": "standards",
+   "finding": "Judgement call (Mysterious Name): rule 10's heading 'No secrets in the client' no longer describes a rule that now governs every public surface.",
+   "fix": "Retitle it, for example 'No secrets in the client or on any public surface'."
+  },
+  {
+   "id": "R2-N6",
+   "lens": "spec",
+   "finding": "Issue #126 item 5 asks for 'a Mac instrument and accompaniment worker trial'; T108 and story 421 are now instrument-only. That is defensible: the continuation report says 'playable instrument or accompaniment worker after the first v1 flow'. But the PR body's Unverified / still open does not list the narrowing, record L248 ('needs its own ticket') and T108's notes ('if the instrument trial passes') disagree, and the record's section 5 heading still says 'instrument and accompaniment'.",
+   "fix": "Make the record and T108 agree and list the narrowing as open so the lead can accept it explicitly."
+  },
+  {
+   "id": "R2-N7",
+   "lens": "spec",
+   "finding": "Story 422 measures 'on the official Python MLX runtime, not the C++ runner the vendor's figures describe' yet keeps 'so that a vendor's real-time claim becomes a measured fact or an honest failure', contradicting T108's 'a miss here does not falsify the vendor's claim'. The UNVERIFIED row (L1542) should name the measured path. T108 streams 'through MagentaRT2Sampler', but the entry classes at 694a545e are MagentaRT2System and MagentaRT2SystemMlxfn (the CLI's default .mlxfn path), which are different compute paths.",
+   "fix": "Reword story 422's benefit clause, name the path in the row, and name the entry class the worker uses."
+  },
+  {
+   "id": "R2-N8",
+   "lens": "spec",
+   "finding": "ADR-0026 fixes the worker route list ('Anything else returns 404') and rejected WebSocket, so T108's 'control latency from a MIDI change to the first changed output frame' is compatible only if the change is scripted inside the job's submitted MIDI input.",
+   "fix": "State that in T108, or name ADR-0026 if a live control route is intended."
+  },
+  {
+   "id": "R2-N9",
+   "lens": "spec",
+   "finding": "The separated noisy vocal is still a synthetic stand-in; the record names what a real case needs (T51 and T49) but there is no follow-up ticket, story or open item.",
+   "fix": "List it under Unverified / still open or in the GAME and SheetSage2 UNVERIFIED row."
+  },
+  {
+   "id": "R2-N10",
+   "lens": "spec",
+   "finding": "Residual risks from the PyTorch path: (1) loading the March GAME-1.0 checkpoint at 69ba01de is implied by the README but unproven; loading is strict=True, so it would fail loudly and T106's new criterion would catch it. (2) GAME loads the checkpoint with torch.load (a pickle). (3) The v1.0.0 notes name GAME's training data (about 32 h of private labelled singing data plus DEMAND, MUSAN, MIR-1K, MusicNet, MUSDB18-HQ, a private instrument set and MB-RIRs), which belongs in GAME's register row.",
+   "fix": "Keep torch's weights_only default and the sha256 pin, and add the training data to the register row."
+  },
+  {
+   "id": "R2-N11",
+   "lens": "spec",
+   "finding": "Unchanged from the first review: the record's main row omits that main dismisses stale reviews, allows merge or squash, and does not require up-to-date branches (strict is false), while issue #126 says both rulesets enforce up-to-date branches.",
+   "fix": "Add the three facts to the main row."
+  },
+  {
+   "id": "R2-C1",
+   "lens": "correction",
+   "finding": "Correction to my first review (N3): three-OS checks on every PR date from #12 (fdd588c, 2026-11-06), not #6; in #6, pr.yml ran three OSes only for the ticket/01-foundation branch. The PR's 'since PR #12' is correct.",
+   "fix": "None needed in the PR."
+  }
+ ],
+ "files": [
+  "/Volumes/STUDIO/evidence/S01/S01-standards-review-2.md",
+  "/Volumes/STUDIO/evidence/S01/S01-spec-review-2.md",
+  "/Volumes/STUDIO/evidence/S01/S01-review-2.json",
+  "/Volumes/STUDIO/evidence/S01/S01-review-2-probes/",
+  "/Volumes/STUDIO/evidence/S01/S01-review-2-probes/SHA256SUMS",
+  "/Volumes/STUDIO/evidence/S01/S01-review-2-sources/",
+  "/Volumes/STUDIO/evidence/S01/S01-review-2-sources/SHA256SUMS",
+  "/Volumes/STUDIO/evidence/S01/S01-review-2-SHA256SUMS"
+ ]
+}
