@@ -291,6 +291,147 @@
       "smf_hex": "4d546864000000060001000203c04d54726b0000001300ff58040402180800ff510307a12000ff2f004d54726b0000000d00903c648740803c4000ff2f00"
     },
     {
+      "derivation": "A melody-spec 1.1.0 assembled record carries its form (T02c): each form.sections entry gives a marker at its start_tick (verse at 0, outro at 3840), and form.end_tick, 7680, is the file's end. The caller passes neither, and the bytes are the outro case's, so the outro keeps its bar.",
+      "end_tick": null,
+      "markers": null,
+      "melody": {
+        "base_rev": null,
+        "content_sha256": "e062e250326f1d03bcd7ef66a54044effe89836b4ffb5aa508bd31d960e8dbcc",
+        "created_at": "2026-11-08T12:00:00Z",
+        "form": {
+          "end_tick": 7680,
+          "sections": [
+            {
+              "end_tick": 3840,
+              "name": "verse",
+              "phrases": [
+                {
+                  "end_tick": 3840,
+                  "phrase_id": "ph1",
+                  "start_tick": 0
+                }
+              ],
+              "repeat": 1,
+              "section_id": "s1",
+              "section_kind": "vocal",
+              "start_tick": 0
+            },
+            {
+              "end_tick": 7680,
+              "name": "outro",
+              "phrases": [],
+              "repeat": 1,
+              "section_id": "s2",
+              "section_kind": "instrumental",
+              "start_tick": 3840
+            }
+          ]
+        },
+        "key": {
+          "mode": "major",
+          "tonic": "C"
+        },
+        "kind": "melody-spec",
+        "melody_id": "mel_midi_asm",
+        "notes": [
+          {
+            "confidence": null,
+            "duration_ticks": 3840,
+            "id": "n1",
+            "origin": "assembled",
+            "pitch": 60,
+            "start_tick": 0,
+            "velocity": 100
+          }
+        ],
+        "phrases": [],
+        "ppq": 960,
+        "project_id": "prj_midi",
+        "quantize": null,
+        "rev": 1,
+        "schemaVersion": "1.1.0",
+        "source": {
+          "assembled_from": {
+            "melody": {
+              "melody_id": "mel_midi",
+              "rev": 2,
+              "tempo_map_rev": 1
+            },
+            "song": {
+              "rev": 1,
+              "song_id": "song_midi"
+            }
+          },
+          "capture_sha256": "d725fa4343321d5915739fd794e66212d83af86e4ad1f96fb3352543a790dec7",
+          "seed_kind": "assembled",
+          "transcription": null
+        },
+        "spec_kind": "assembled",
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            }
+          ],
+          "rev": 1,
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "an assembled record writes its form's sections and end",
+      "op": "write",
+      "smf_hex": "4d546864000000060001000203c04d54726b0000002700ff58040402180800ff510307a12000ff060576657273659e00ff06056f7574726f9e00ff2f004d54726b0000000d00903c649e00803c4000ff2f00"
+    },
+    {
+      "derivation": "4/4 at 0, 3/4 at 3840 (9e 00, one 4/4 bar), 2/4 at 6720 (96 40, 2880 later: one 3/4 bar of 3 x 3840 / 4). 6720 is a bar line of the meter before it, 3/4, though not of the first meter's 3840-tick bars, so it is kept. Conductor 37 bytes, ending at its last event, 6720, which is end_tick; the note is the one-note case's.",
+      "end_tick": 6720,
+      "markers": [],
+      "melody": {
+        "notes": [
+          {
+            "duration_ticks": 960,
+            "pitch": 60,
+            "start_tick": 0,
+            "velocity": 100
+          }
+        ],
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            },
+            {
+              "denominator": 4,
+              "numerator": 3,
+              "tick": 3840
+            },
+            {
+              "denominator": 4,
+              "numerator": 2,
+              "tick": 6720
+            }
+          ],
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "a third meter is judged by the bar of the second",
+      "op": "round_trip",
+      "smf_hex": "4d546864000000060001000203c04d54726b0000002500ff58040402180800ff510307a1209e00ff5804030218089640ff58040202180800ff2f004d54726b0000000d00903c648740803c4000ff2f00"
+    },
+    {
       "derivation": "Format 0, one SMF track, 480 PPQ (01e0), so every tick doubles exactly. 90 3c 50: C4 velocity 80 at 0; 83 60 (480) 3c 00 is running status 90 with velocity 0, a note-off; 00 3e 50 starts D4 (62) at 480; 83 60 3e 00 ends it at 960. No tempo or time signature, so the SMF defaults hold: 500000 us (120 BPM) and 4/4. At 960 PPQ the notes are 0 + 960 and 960 + 960, and End of Track at 960 is end_tick 1920.",
       "name": "format 0 at 480 PPQ with running status and the SMF defaults",
       "op": "read",
@@ -529,7 +670,7 @@
       "smf_hex": "4d546864000000060000000103c04d54726b0000001400ff58040402180800ff58040302180800ff2f00"
     },
     {
-      "derivation": "4/4 at 0, then 3/4 at 1920 (8f 00), half a bar: a 4/4 bar is 4 x 3840 / 4 = 3840 ticks, and ADR-0033 counts bars and beats across meter segments only from bar lines, so the change must fall on 3840, 7680 and so on.",
+      "derivation": "4/4 at 0, then 3/4 at 1920 (8f 00), half a bar: a 4/4 bar is 4 x 3840 / 4 = 3840 ticks, and meter segments change only on a bar line (timemodel, rule melody.wellformed), so the change must fall on 3840, 7680 and so on.",
       "name": "a time signature inside a bar",
       "op": "refuse_read",
       "refusal": {
@@ -538,6 +679,28 @@
         "tick": 1920
       },
       "smf_hex": "4d546864000000060000000103c04d54726b0000001500ff5804040218088f00ff58040302180800ff2f00"
+    },
+    {
+      "derivation": "4/4 at 0, 3/4 at 3840, then 2/4 at 7680 (9e 00 after it): 3840 ticks into 3/4, whose bar is 2880, so it is inside a bar of the meter before it, though 7680 is a bar line of the first meter's 4/4.",
+      "name": "a third meter off a bar line of the second",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "meter_change_inside_bar",
+        "smf_track": 0,
+        "tick": 7680
+      },
+      "smf_hex": "4d546864000000060000000103c04d54726b0000001e00ff5804040218089e00ff5804030218089e00ff58040202180800ff2f00"
+    },
+    {
+      "derivation": "No time signature at 0, so the SMF default 4/4 holds there; 3/4 at 1920 (8f 00) falls inside its first 3840-tick bar.",
+      "name": "a first time signature off a bar line of the default 4/4",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "meter_change_inside_bar",
+        "smf_track": 0,
+        "tick": 1920
+      },
+      "smf_hex": "4d546864000000060000000103c04d54726b0000000d8f00ff58040302180800ff2f00"
     },
     {
       "derivation": "C4 starts at 0 and again at 480 (83 60) before any note-off, so which note-off ends which note is ambiguous.",
@@ -769,6 +932,17 @@
         "tick": 960
       },
       "smf_hex": "4d546864000000060000000103c04d54726b0000001000903c6400ff010087403c0000ff2f00"
+    },
+    {
+      "derivation": "f0 01 f7 (a one-byte SysEx) cancels running status like a meta event, so the data byte 3c at 960 has no status.",
+      "name": "running status after a SysEx event",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "malformed_smf",
+        "smf_track": 0,
+        "tick": 960
+      },
+      "smf_hex": "4d546864000000060000000103c04d54726b0000001000903c6400f001f787403c0000ff2f00"
     },
     {
       "derivation": "The note-on's velocity byte is 90, a status byte; data bytes are below 80.",
@@ -1086,6 +1260,79 @@
         "code": "end_before_last_event",
         "smf_track": null,
         "tick": 1920
+      }
+    },
+    {
+      "derivation": "A melody-spec 1.0 assembled record has no form, so its end and sections could only be inferred from its notes; T02c has consumers refuse such a record rather than infer one, and the writer does.",
+      "end_tick": null,
+      "markers": null,
+      "melody": {
+        "base_rev": null,
+        "content_sha256": "8f4dd98af0d79621321b231ae0b412eba495a013a867271be17d6cda9e3de91d",
+        "created_at": "2026-11-08T12:00:00Z",
+        "key": {
+          "mode": "major",
+          "tonic": "C"
+        },
+        "kind": "melody-spec",
+        "melody_id": "mel_midi_asm",
+        "notes": [
+          {
+            "confidence": null,
+            "duration_ticks": 3840,
+            "id": "n1",
+            "origin": "assembled",
+            "pitch": 60,
+            "start_tick": 0,
+            "velocity": 100
+          }
+        ],
+        "phrases": [],
+        "ppq": 960,
+        "project_id": "prj_midi",
+        "quantize": null,
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "source": {
+          "assembled_from": {
+            "melody": {
+              "melody_id": "mel_midi",
+              "rev": 2,
+              "tempo_map_rev": 1
+            },
+            "song": {
+              "rev": 1,
+              "song_id": "song_midi"
+            }
+          },
+          "capture_sha256": "d725fa4343321d5915739fd794e66212d83af86e4ad1f96fb3352543a790dec7",
+          "seed_kind": "assembled",
+          "transcription": null
+        },
+        "spec_kind": "assembled",
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            }
+          ],
+          "rev": 1,
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "an assembled record without a form",
+      "op": "refuse_write",
+      "refusal": {
+        "code": "assembled_without_form",
+        "smf_track": null,
+        "tick": null
       }
     }
   ],

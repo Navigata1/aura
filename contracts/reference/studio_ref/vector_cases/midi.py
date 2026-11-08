@@ -13,6 +13,10 @@ ONE_NOTE = ("4d546864" "00000006" "0001" "0002" "03c0"
             "4d54726b" "00000013" "00ff5804" "04021808" "00ff5103" "07a120" "00ff2f00"
             "4d54726b" "0000000d" "00903c64" "8740803c40" "00ff2f00")
 FORMAT0 = "4d546864" "00000006" "0000" "0001" "03c0"  # MThd, length 6, format 0, one SMF track, 960 PPQ
+# The outro case: verse at 0, outro at 3840, C4 for one bar, the conductor's End of Track one bar later at 7680.
+OUTRO = ("4d546864000000060001000203c0"
+         "4d54726b00000027" "00ff580404021808" "00ff510307a120" "00ff06057665727365" "9e00ff06056f7574726f" "9e00ff2f00"
+         "4d54726b0000000d" "00903c64" "9e00803c40" "00ff2f00")
 
 
 def note(start, duration, pitch, velocity):
@@ -42,6 +46,23 @@ def build(profiles):
               "source": {"seed_kind": "midi_file", "capture_sha256": H("midi capture"), "transcription": None,
                          "assembled_from": None},
               "quantize": {"grid_ticks": 240}, "content_sha256": H("midi record")}
+
+    def assembled(version, form):  # an assembled melody-spec record (T02c); 1.1.0 carries its form
+        doc = {"kind": "melody-spec", "schemaVersion": version, "melody_id": "mel_midi_asm", "rev": 1, "base_rev": None,
+               "project_id": "prj_midi", "created_at": "2026-11-08T12:00:00Z", "spec_kind": "assembled", "ppq": 960,
+               "tempo_map": {"rev": 1, "tempo": T120, "meter": M44}, "key": {"tonic": "C", "mode": "major"},
+               "notes": [{"id": "n1", "start_tick": 0, "duration_ticks": 3840, "pitch": 60, "velocity": 100,
+                          "confidence": None, "origin": "assembled"}],
+               "phrases": [], "quantize": None, "content_sha256": H("midi assembled " + version),
+               "source": {"seed_kind": "assembled", "capture_sha256": H("midi capture"), "transcription": None,
+                          "assembled_from": {"melody": {"melody_id": "mel_midi", "rev": 2, "tempo_map_rev": 1},
+                                             "song": {"song_id": "song_midi", "rev": 1}}}}
+        return {**doc, "form": form} if form else doc
+    form = {"end_tick": 7680, "sections": [
+        {"section_id": "s1", "name": "verse", "section_kind": "vocal", "repeat": 1, "start_tick": 0, "end_tick": 3840,
+         "phrases": [{"phrase_id": "ph1", "start_tick": 0, "end_tick": 3840}]},
+        {"section_id": "s2", "name": "outro", "section_kind": "instrumental", "repeat": 1, "start_tick": 3840,
+         "end_tick": 7680, "phrases": []}]}
     cases = [
         {"name": "one note at 120 BPM in 4/4", "op": "round_trip", "melody": melody(T120, M44, note(0, 960, 60, 100)),
          "markers": [], "end_tick": 960, "smf_hex": ONE_NOTE, "derivation":
@@ -84,9 +105,7 @@ def build(profiles):
         {"name": "an outro after the last note keeps its length", "op": "round_trip",
          "melody": melody(T120, M44, note(0, 3840, 60, 100)),
          "markers": [{"name": "verse", "tick": 0}, {"name": "outro", "tick": 3840}], "end_tick": 7680,
-         "smf_hex": "4d546864000000060001000203c0"
-                    "4d54726b00000027" "00ff580404021808" "00ff510307a120" "00ff06057665727365" "9e00ff06056f7574726f"
-                    "9e00ff2f00" "4d54726b0000000d" "00903c64" "9e00803c40" "00ff2f00", "derivation":
+         "smf_hex": OUTRO, "derivation":
          "end_tick 7680 is later than every event (the outro marker and the note-off, both at 3840), so the conductor's "
          "End of Track goes there: after ff06 05 'outro' (6f 75 74 72 6f) at 3840 (9e 00) comes 9e 00 ff2f00, 3840 more "
          "ticks, and the outro keeps its bar (39 bytes). The melody's SMF track (13 bytes) ends at its note-off. Reading "
@@ -96,6 +115,21 @@ def build(profiles):
          "The record's tempo map and its one note equal the one-note case; its ids, revisions, corrected origin, "
          "confidence, key, phrase, quantize layer and source are MelodySpec-only, and a null end_tick ends each SMF track "
          "at its own last event, so the bytes are the one-note bytes."},
+        {"name": "an assembled record writes its form's sections and end", "op": "write",
+         "melody": assembled("1.1.0", form), "markers": None, "end_tick": None, "smf_hex": OUTRO, "derivation":
+         "A melody-spec 1.1.0 assembled record carries its form (T02c): each form.sections entry gives a marker at its "
+         "start_tick (verse at 0, outro at 3840), and form.end_tick, 7680, is the file's end. The caller passes neither, "
+         "and the bytes are the outro case's, so the outro keeps its bar."},
+        {"name": "a third meter is judged by the bar of the second", "op": "round_trip",
+         "melody": melody(T120, [{"tick": 0, "numerator": 4, "denominator": 4}, {"tick": 3840, "numerator": 3,
+                                  "denominator": 4}, {"tick": 6720, "numerator": 2, "denominator": 4}],
+                          note(0, 960, 60, 100)), "markers": [], "end_tick": 6720,
+         "smf_hex": "4d546864000000060001000203c0"
+                    "4d54726b00000025" "00ff580404021808" "00ff510307a120" "9e00ff580403021808" "9640ff580402021808"
+                    "00ff2f00" "4d54726b0000000d" "00903c64" "8740803c40" "00ff2f00", "derivation":
+         "4/4 at 0, 3/4 at 3840 (9e 00, one 4/4 bar), 2/4 at 6720 (96 40, 2880 later: one 3/4 bar of 3 x 3840 / 4). "
+         "6720 is a bar line of the meter before it, 3/4, though not of the first meter's 3840-tick bars, so it is kept. "
+         "Conductor 37 bytes, ending at its last event, 6720, which is end_tick; the note is the one-note case's."},
         {"name": "format 0 at 480 PPQ with running status and the SMF defaults", "op": "read",
          "smf_hex": "4d546864" "00000006" "0000" "0001" "01e0"
                     "4d54726b" "00000013" "00903c50" "83603c00" "003e50" "83603e00" "00ff2f00",
@@ -150,9 +184,17 @@ def build(profiles):
                     "than keep one."),
         refuse_read("a time signature inside a bar", FORMAT0 + "4d54726b" "00000015" "00ff580404021808" "8f00ff580403021808"
                     "00ff2f00", "meter_change_inside_bar", 0, 1920,
-                    "4/4 at 0, then 3/4 at 1920 (8f 00), half a bar: a 4/4 bar is 4 x 3840 / 4 = 3840 ticks, and ADR-0033 "
-                    "counts bars and beats across meter segments only from bar lines, so the change must fall on 3840, 7680 "
-                    "and so on."),
+                    "4/4 at 0, then 3/4 at 1920 (8f 00), half a bar: a 4/4 bar is 4 x 3840 / 4 = 3840 ticks, and meter "
+                    "segments change only on a bar line (timemodel, rule melody.wellformed), so the change must fall on "
+                    "3840, 7680 and so on."),
+        refuse_read("a third meter off a bar line of the second", FORMAT0 + "4d54726b" "0000001e" "00ff580404021808"
+                    "9e00ff580403021808" "9e00ff580402021808" "00ff2f00", "meter_change_inside_bar", 0, 7680,
+                    "4/4 at 0, 3/4 at 3840, then 2/4 at 7680 (9e 00 after it): 3840 ticks into 3/4, whose bar is 2880, so it "
+                    "is inside a bar of the meter before it, though 7680 is a bar line of the first meter's 4/4."),
+        refuse_read("a first time signature off a bar line of the default 4/4", FORMAT0 + "4d54726b" "0000000d"
+                    "8f00ff580403021808" "00ff2f00", "meter_change_inside_bar", 0, 1920,
+                    "No time signature at 0, so the SMF default 4/4 holds there; 3/4 at 1920 (8f 00) falls inside its "
+                    "first 3840-tick bar."),
         refuse_read("a second note-on for a sounding pitch", FORMAT0 + "4d54726b" "00000016" "00903c64" "8360903c64"
                     "8360803c40" "00803c40" "00ff2f00", "same_pitch_overlap", 0, 480,
                     "C4 starts at 0 and again at 480 (83 60) before any note-off, so which note-off ends which note is "
@@ -207,6 +249,9 @@ def build(profiles):
          "80 80 80 80 still has its continuation bit after four bytes, the SMF maximum."),
         ("running status after a meta event", FORMAT0 + "4d54726b" "00000010" "00903c64" "00ff0100" "87403c00"
          "00ff2f00", 0, 960, "ff 01 00 (an empty text event) cancels running status, so the data byte 3c at 960 has no status."),
+        ("running status after a SysEx event", FORMAT0 + "4d54726b" "00000010" "00903c64" "00f001f7" "87403c00"
+         "00ff2f00", 0, 960, "f0 01 f7 (a one-byte SysEx) cancels running status like a meta event, so the data byte 3c "
+         "at 960 has no status."),
         ("a status byte where data belongs", FORMAT0 + "4d54726b" "00000008" "00903c90" "00ff2f00", 0, 0,
          "The note-on's velocity byte is 90, a status byte; data bytes are below 80."),
         ("a system message in an SMF track", FORMAT0 + "4d54726b" "00000006" "00f8" "00ff2f00", 0, 0,
@@ -245,6 +290,11 @@ def build(profiles):
          "end_before_last_event", 1920, "end_tick 960 falls inside the C4 that sounds until 1920, the last event; End of "
          "Track must come last, so the end is refused rather than the note cut or the end moved."),
     ]]
+    cases.append({"name": "an assembled record without a form", "op": "refuse_write", "melody": assembled("1.0.0", None),
+                  "markers": None, "end_tick": None,
+                  "refusal": {"code": "assembled_without_form", "smf_track": None, "tick": None}, "derivation":
+                  "A melody-spec 1.0 assembled record has no form, so its end and sections could only be inferred from "
+                  "its notes; T02c has consumers refuse such a record rather than infer one, and the writer does."})
     return {"kind": KIND, "schemaVersion": SV, "cases": cases}
 
 

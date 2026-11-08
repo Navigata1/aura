@@ -1,5 +1,5 @@
 """The MIDI round-trip vectors through the public generator and contract gate, on a disposable tracked-file copy, and
-the reference writer's refusal of input outside the schemas, which no schema-valid vector can carry."""
+the reference writer's typed error for arguments outside the schemas, which no schema-valid vector can carry."""
 import copy
 from pathlib import Path
 import shutil
@@ -64,14 +64,17 @@ def reference_midi():
     return midi
 
 
-class MidiWriterInputTests(unittest.TestCase):
+class SmfWriteArgumentTests(unittest.TestCase):
     MELODY = {'tempo_map': {'tempo': [{'tick': 0, 'us_per_quarter': 500000}],
                             'meter': [{'tick': 0, 'numerator': 4, 'denominator': 4}]},
               'notes': [{'start_tick': 0, 'duration_ticks': 960, 'pitch': 60, 'velocity': 100}]}
+    ASSEMBLED = {**MELODY, 'spec_kind': 'assembled',
+                 'form': {'end_tick': 3840, 'sections': [{'name': 'verse', 'start_tick': 0}]}}
 
-    def test_input_outside_the_schemas_raises_a_typed_error_instead_of_corrupt_bytes(self):
+    def test_arguments_outside_the_schemas_raise_a_typed_error_instead_of_corrupt_bytes(self):
         midi = reference_midi()
         self.assertTrue(midi.to_smf(self.MELODY, [{'name': 'verse', 'tick': 0}]))  # the valid neighbour writes
+        self.assertTrue(midi.to_smf(self.ASSEMBLED))  # and so does an assembled record, from its form
         spoilers = {
             'a meter denominator of 6': lambda m, k: m['tempo_map']['meter'][0].update(denominator=6),
             'a tempo of 2^24 us': lambda m, k: m['tempo_map']['tempo'][0].update(us_per_quarter=16777216),
@@ -79,15 +82,24 @@ class MidiWriterInputTests(unittest.TestCase):
             'a velocity of 0': lambda m, k: m['notes'][0].update(velocity=0),
             'a marker at tick -5': lambda m, k: k[0].update(tick=-5),
             'a marker name with a trailing newline': lambda m, k: k[0].update(name='verse\n'),
+            'no tempo_map': lambda m, k: m.pop('tempo_map'),
+            'a note without velocity': lambda m, k: m['notes'][0].pop('velocity'),
+            'notes that are null': lambda m, k: m.update(notes=None),
+            'a marker that is a string': lambda m, k: k.__setitem__(0, 'verse'),
+            'a marker name with a lone surrogate': lambda m, k: k[0].update(name='verse\ud800'),
         }
         for label, spoil in spoilers.items():
             with self.subTest(label):
                 melody, markers = copy.deepcopy(self.MELODY), [{'name': 'verse', 'tick': 0}]
                 spoil(melody, markers)
-                with self.assertRaises(midi.MidiInputError):
+                with self.assertRaises(midi.SmfWriteArgumentError):
                     midi.to_smf(melody, markers)
-        with self.subTest('an end_tick of -1'), self.assertRaises(midi.MidiInputError):
+        with self.subTest('an end_tick of -1'), self.assertRaises(midi.SmfWriteArgumentError):
             midi.to_smf(self.MELODY, [], -1)
+        for label, extra in {'markers beside a form': ([{'name': 'verse', 'tick': 0}], None),
+                             'an end_tick beside a form': (None, 3840)}.items():
+            with self.subTest(label), self.assertRaises(midi.SmfWriteArgumentError):
+                midi.to_smf(self.ASSEMBLED, *extra)
 
 
 if __name__ == '__main__':

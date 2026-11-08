@@ -73,7 +73,7 @@
         "code": {"enum": ["smpte_division", "tempo_outside_model", "meter_outside_model", "tempo_map_ambiguous",
                           "same_pitch_overlap", "track_layout_unsupported", "tick_not_representable",
                           "zero_length_note", "unterminated_note", "meter_change_inside_bar", "end_before_last_event",
-                          "malformed_smf"]},
+                          "assembled_without_form", "malformed_smf"]},
         "smf_track": {"type": ["integer", "null"], "minimum": 0, "description": "The MTrk chunk's index in the file (an SMF track, not a timeline track); null outside every chunk, and on write."},
         "tick": {"type": ["integer", "null"], "minimum": 0, "description": "The tick of the event to blame: on read in the file's own division, once that event's delta time is read; on write in MelodySpec ticks. Null where no event is to blame: the header, a chunk header, a delta time, or a tempo or meter list as a whole."}
       }
@@ -87,8 +87,8 @@
         "derivation": {"type": "string", "minLength": 1, "maxLength": 600},
         "op": {"enum": ["round_trip", "write", "read", "refuse_write", "refuse_read"]},
         "melody": {"type": "object"},
-        "markers": {"$ref": "#/$defs/markers"},
-        "end_tick": {"oneOf": [{"$ref": "#/$defs/endTick"}, {"type": "null"}], "description": "The writer's end_tick; null ends every SMF track at its own last event."},
+        "markers": {"oneOf": [{"$ref": "#/$defs/markers"}, {"type": "null"}], "description": "The writer's section markers; null for an assembled record, whose form supplies them."},
+        "end_tick": {"oneOf": [{"$ref": "#/$defs/endTick"}, {"type": "null"}], "description": "The writer's end_tick; null ends every SMF track at its own last event, or takes an assembled record's form.end_tick."},
         "smf_hex": {"$ref": "#/$defs/smfHex"},
         "read": {"$ref": "#/$defs/read"},
         "refusal": {"$ref": "#/$defs/refusal"}
@@ -97,7 +97,8 @@
         {
           "if": {"properties": {"op": {"const": "round_trip"}}},
           "then": {"required": ["melody", "markers", "end_tick", "smf_hex"],
-                   "properties": {"melody": {"$ref": "#/$defs/melody"}, "end_tick": {"$ref": "#/$defs/endTick"}, "read": false, "refusal": false}}
+                   "properties": {"melody": {"$ref": "#/$defs/melody"}, "markers": {"$ref": "#/$defs/markers"},
+                                  "end_tick": {"$ref": "#/$defs/endTick"}, "read": false, "refusal": false}}
         },
         {
           "if": {"properties": {"op": {"const": "write"}}},
@@ -111,7 +112,8 @@
         {
           "if": {"properties": {"op": {"const": "refuse_write"}}},
           "then": {"required": ["melody", "markers", "end_tick", "refusal"],
-                   "properties": {"melody": {"$ref": "#/$defs/melody"}, "smf_hex": false, "read": false,
+                   "properties": {"melody": {"oneOf": [{"$ref": "#/$defs/melody"}, {"$ref": "melody-spec.schema.json"}]},
+                                  "smf_hex": false, "read": false,
                                   "refusal": {"properties": {"smf_track": {"type": "null"}}}}}
         },
         {

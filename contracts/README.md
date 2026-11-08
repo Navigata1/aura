@@ -45,7 +45,8 @@ python3 scripts/spec/validate.py                  # the gate; -v for detail, --r
    attested, a risk acceptance that would make a Suno import an audition arm, a YuE2 license acceptance without its
    GitHub permission document, and so on).
 7. **Vectors**: tick<->frame (960 PPQ, integer tempo, one half-up rounding), the status fold, `recommend()`, ledger
-   arithmetic and audition gains and commitments match hand-derived values exactly.
+   arithmetic, audition gains and commitments, and the MIDI round trip (`fixture.midi`: written bytes, read MelodySpec
+   fields, markers and `end_tick`, and every typed refusal) match hand-derived values exactly.
 8. `docs/evidence/` (a hash-checked export of the store: evidence plus the verdicts and preregistrations it cites)
    validates by kind and breaks no reference rule, so a hand-committed passing record cannot become a status; then the
    computed status of the shipped registry from it (none yet: every profile and capability is `declared`), plus the
@@ -243,9 +244,9 @@ nothing was rendered or listened to.
 (`fixtures/vectors/midi.json`, schema `fixture-midi.schema.json`) holds its hand-derived vectors; expected bytes are
 lowercase hex inside the JSON, and no binary file is committed. `to_smf(melody, markers, end_tick)` writes and
 `from_smf(bytes)` reads. Content the mapping cannot represent raises a typed `MidiRefusal` (`{code, smf_track, tick}`).
-Writer input outside the melody-spec and `timeline/1` schemas (a denominator of 6, a negative tick, a pitch of 200)
-raises `MidiInputError` instead of being written corrupted. Nothing is retimed or rounded, and nothing is dropped
-silently. An "SMF track" below is an `MTrk` chunk, not a timeline track.
+A `to_smf` argument outside the melody-spec and `timeline/1` schemas, whether a value (a denominator of 6, a negative
+tick, a pitch of 200), a type or a missing key, raises `SmfWriteArgumentError` instead of being written corrupted.
+Nothing is retimed or rounded, and nothing is dropped silently. An "SMF track" below is an `MTrk` chunk, not a timeline track.
 
 **Written: one canonical file.** Format 1, two SMF tracks, 960 PPQ (`timemodel.PPQ`), no running status. SMF track 0,
 the conductor, holds at each tick the time signature (`FF 58 04 nn dd cc 08`: `dd` is log2 of the denominator, `cc`
@@ -254,18 +255,22 @@ section markers (`FF 06`, the section name), in that order. SMF track 1 holds th
 `90 kk vv` (the note's velocity) and `80 kk 40`; at one tick note-offs come first, then ascending pitch, so touching
 notes of one pitch stay two notes. The writer reads only `tempo_map.tempo`, `tempo_map.meter` and each note's start,
 duration, pitch and velocity, so a whole `melody-spec` record works. Beyond the schemas' field rules it refuses what a
-schema cannot see: a tempo or meter list that breaks the time model's ordering rule (`timemodel._segments`), a meter
-change off a bar line, overlapping notes of one pitch, an end before the last event, and a gap beyond the delta-time
-maximum.
+schema cannot see: a tempo or meter list the time model refuses (`timemodel.tempo_segments` and `bar_segments`: out
+of order, or a meter change off a bar line), overlapping notes of one pitch, an end before the last event, and a gap
+beyond the delta-time maximum.
 
 **End of Track and `end_tick`.** `end_tick` is where the file ends, at 960 PPQ. On write, the conductor's End of
 Track goes at `end_tick` when that is later than every event, so trailing bars such as an instrumental outro keep
 their length. Left out, or equal to the last event's tick, it ends every SMF track at its own last event; earlier than
 the last event, it is refused. On read, `end_tick` is the latest End of Track, converted exactly like any other tick.
 An End of Track after its own SMF track's last event but before `end_tick` is listed as `ff2f`, so no position is lost.
-For an assembled melody, melody-spec 1.1.0's `form` (the SongForm assembly slice, T02c) supplies both inputs:
-`end_tick` is `form.end_tick`, and each `form.sections` entry gives a marker (`name`, `start_tick`). This contract does
-not depend on that slice, and a plain melody passes no `end_tick`.
+
+**An assembled record carries its form.** Given a melody-spec 1.1.0 assembled record (SongForm assembly, T02c), the
+writer takes the section markers (each `form.sections` entry's `name` at its `start_tick`) and `end_tick`
+(`form.end_tick`) from the record itself, so an outro keeps its bars; markers or an end passed beside it raise
+`SmfWriteArgumentError`. A 1.0 assembled record has no form, and its end could only be inferred from its notes, which
+the SongForm slice forbids, so it is refused (`assembled_without_form`). A plain melody gets its markers from the caller
+(none, or a SongForm's) and, optionally, an `end_tick`.
 
 **Read.** Formats 0 and 1, at any division whose ticks convert exactly (`960 x tick / division` is whole, so a 480 PPQ
 file doubles every tick). Running status, a note-on with velocity 0 as a note-off, and tempo, meter and markers in any
@@ -273,7 +278,7 @@ SMF track. Until the first tempo or time signature the SMF defaults hold (500000
 time signature repeated at one tick, as notation programs write it in every SMF track, is one entry. Notes come back in
 (start_tick, pitch) order and markers in tick order, which is the round trip's precondition: for notes and markers
 already in that order, `from_smf(to_smf(m, k, e))` returns `m`, `k` and `e` exactly (`e` at least the last event's
-tick) and lists nothing as not carried. Input in any other order comes back as the same notes and markers, sorted.
+tick) and lists nothing as not carried. Notes and markers given in any other order come back the same, sorted.
 
 **Not carried, and never silently.** MelodySpec-only fields are not written: note ids, confidence and origin, key,
 phrases, quantize, source and revisions. On import the MIDI in-and-out ticket assigns ids `n1`, `n2`, ... in that
@@ -298,8 +303,9 @@ SMF marker is a point, and GLOSSARY keeps phrases apart from sections.
 | `tick_not_representable` | a tick, End of Track included, that is not a whole 960 PPQ tick; on write, a gap over the four-byte delta-time maximum, `0x0FFFFFFF` |
 | `zero_length_note` | a note-off at its own note-on's tick |
 | `unterminated_note` | a note still sounding when its SMF track ends |
-| `meter_change_inside_bar` | a time signature (on write, a meter segment) that does not fall on a bar line of the meter before it, the SMF default 4/4 included: ADR-0033 counts bars and beats across meter segments only from bar lines, and a bar of n/d is n x 3840 / d ticks (the same rule as SongForm's `melody.wellformed`, #131) |
+| `meter_change_inside_bar` | a time signature (on write, a meter segment) that does not fall on a bar line of the meter before it, the SMF default 4/4 included: meter segments change only on a bar line (the time model's invariant, `timemodel.bar_segments`, and rule `melody.wellformed`), and a bar of n/d is n x 3840 / d ticks (`timemodel.bar_ticks`) |
 | `end_before_last_event` | on write, an `end_tick` earlier than the last event (the refusal names that event's tick) |
+| `assembled_without_form` | on write, a melody-spec 1.0 assembled record, which has no form to supply its end and sections |
 | `malformed_smf` | no `MThd` of length 6; format 0 without exactly one SMF track, no tracks, a format above 2 or a division of 0; a chunk that is not `MTrk` (unknown chunks are refused, not skipped), a short chunk, or bytes after the last one; a delta time over four bytes; a data byte with no status (meta and SysEx events cancel running status), a status byte where data belongs, or a system message; a tempo or time signature of the wrong length; an SMF track without End of Track, or anything after it |
 
 A refusal's `tick` is the tick of the event to blame: on read in the file's own division, and for `malformed_smf`

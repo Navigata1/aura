@@ -1,7 +1,8 @@
 """MelodySpec <-> Standard MIDI File, the reference mapping (ADR-0033; contracts/README.md, 'MIDI round trip').
 
 Standard library only. to_smf writes the canonical file; from_smf reads one back. Content the mapping cannot represent
-raises a typed MidiRefusal; writer input outside the melody-spec and timeline/1 schemas raises MidiInputError.
+raises a typed MidiRefusal; a to_smf argument outside the melody-spec and timeline/1 schemas raises
+SmfWriteArgumentError.
 """
 
 from __future__ import annotations
@@ -28,8 +29,9 @@ class MidiRefusal(ValueError):
         return {"code": self.code, "smf_track": self.smf_track, "tick": self.tick}
 
 
-class MidiInputError(ValueError):
-    """Writer input outside the melody-spec and timeline/1 schemas, refused before a byte is written."""
+class SmfWriteArgumentError(ValueError):
+    """A to_smf argument outside the melody-spec and timeline/1 schemas (a value, a type or a missing key), raised
+    before a byte is written."""
 
 
 # ----- write --------------------------------------------------------------------------------------------------------
@@ -57,8 +59,8 @@ def _within(value, low: int, high: int | None = None) -> bool:
     return type(value) is int and low <= value and (high is None or value <= high)
 
 
-def _check_input(melody: dict, markers, end_tick) -> None:
-    """The schemas' own field rules, so that invalid input fails loudly instead of being written corrupted."""
+def _check_fields(melody: dict, markers: list, end_tick) -> None:
+    """The schemas' own field rules, so that a bad value fails loudly instead of being written corrupted."""
     tm = melody["tempo_map"]
     bad = [s for s in tm["tempo"] if not (_within(s["tick"], 0) and _within(s["us_per_quarter"], 1, 0xFFFFFF))]
     bad += [s for s in tm["meter"] if not (_within(s["tick"], 0) and _within(s["numerator"], 1, 32)
@@ -68,7 +70,7 @@ def _check_input(melody: dict, markers, end_tick) -> None:
     bad += [m for m in markers if not (_within(m["tick"], 0) and isinstance(m["name"], str)
                                        and SECTION_NAME.fullmatch(m["name"].encode()))]
     if bad or not (tm["tempo"] and tm["meter"]) or not (end_tick is None or _within(end_tick, 0)):
-        raise MidiInputError(f"outside the melody-spec or timeline/1 schema: {bad[:1] or end_tick}")
+        raise SmfWriteArgumentError(f"outside the melody-spec or timeline/1 schema: {bad[:1] or end_tick}")
 
 
 def _meter_refused(meter: list[dict]) -> tuple[str, int] | None:
@@ -96,12 +98,33 @@ def _check_time_model(tempo_map: dict) -> None:
         raise MidiRefusal("tempo_map_ambiguous") from None
 
 
-def to_smf(melody: dict, markers: list[dict] = (), end_tick: int | None = None) -> bytes:
+def _arguments(melody: dict, markers, end_tick) -> tuple[list[dict], int | None]:
+    """The writer's arguments, checked. An assembled record (melody-spec 1.1.0, T02c) supplies its markers and end from
+    its form, so the caller passes neither; a 1.0 assembled record has no form and is refused rather than have its end
+    inferred from its notes. Any value, type or key outside the schemas raises SmfWriteArgumentError."""
+    try:
+        if melody.get("spec_kind") == "assembled":
+            if "form" not in melody:
+                raise MidiRefusal("assembled_without_form")
+            if markers is not None or end_tick is not None:
+                raise SmfWriteArgumentError("an assembled record supplies its own markers and end from its form")
+            sections = melody["form"]["sections"]
+            markers = [{"name": section["name"], "tick": section["start_tick"]} for section in sections]
+            end_tick = melody["form"]["end_tick"]
+        markers = [] if markers is None else list(markers)
+        _check_fields(melody, markers, end_tick)
+    except (KeyError, TypeError, AttributeError, UnicodeError) as error:
+        raise SmfWriteArgumentError(f"not a melody-spec and timeline/1 shape: {error!r}") from None
+    return markers, end_tick
+
+
+def to_smf(melody: dict, markers: list[dict] | None = None, end_tick: int | None = None) -> bytes:
     """Format 1, 960 PPQ: SMF track 0, the conductor (per tick: meter, tempo, section markers), and SMF track 1, the
     notes on MIDI channel 1. Takes any dict with a MelodySpec's tempo_map and notes (a whole record included), the
     section markers and the file's end: the conductor's End of Track goes at end_tick when that is later than every
-    event (an outro keeps its bars); left out, every SMF track ends at its own last event."""
-    _check_input(melody, markers, end_tick)
+    event (an outro keeps its bars); left out, every SMF track ends at its own last event. An assembled record supplies
+    its markers and end itself, from its form."""
+    markers, end_tick = _arguments(melody, markers, end_tick)
     tm = melody["tempo_map"]
     _check_time_model(tm)
     conductor = [(m["tick"], 0, bytes([0xFF, 0x58, 4, m["numerator"], m["denominator"].bit_length() - 1,
