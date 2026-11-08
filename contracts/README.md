@@ -112,8 +112,8 @@ benchmark conclusions and coordinated with T02's route-standing work.
 
 ## Not covered yet (needs vectors before code relies on it)
 
-SongForm assembly beyond its bounded T02c semantics (below), MelodySpec -> YuE2 ABC emission,
-the MIDI round trip, `render_mode` stitching, route standing and
+SongForm assembly beyond its bounded T02c semantics (below), YuE2 ABC emission beyond its bounded T02e semantics
+(below), the MIDI round trip, `render_mode` stitching, route standing and
 the plan-rules order, the remaining job kinds and tasks (isolate, dsp-finish, dsp-edit, offline-render, preservation,
 per, align, diagnostics, stem-to-midi, a reserved tts), `price-snapshots/`, frozen `legacy/`
 fixtures (they freeze at the first release), the TypeScript twin of the tempo vectors and the Pydantic/TS codegen
@@ -142,8 +142,8 @@ remains T02 work.
 `tests/contracts/test_vector_discovery.py` exercises the public generator and validator in disposable tracked-file
 copies: new-family discovery, unchanged existing bytes, corrupt expectations, duplicate kinds, missing evaluator,
 missing/unknown consumer, removed handler, producer-kind mismatch and legacy expectation execution. The production
-schemas and existing fixture bytes are unchanged. ABC, MIDI and route-standing implementation remain open
-(SongForm: T02c below);
+schemas and existing fixture bytes are unchanged. MIDI and route-standing implementation remain open
+(SongForm: T02c below; ABC emission: T02e below);
 C01 benchmark containment remains in force until C02 establishes result binding.
 
 ## Evidence-binding inputs (T02b)
@@ -286,3 +286,120 @@ module, its API refusal type and that consistency check belong to the song-inten
 architecture §4.6's `assemble(melody, form) -> melody` with this reference's `assemble(melody, song, output)` (the
 SongSpec supplies the form and names the source revision; `output` names the new record). Fixtures are synthetic:
 nothing was rendered or listened to.
+
+
+## YuE2 ABC emission (T02e)
+
+`reference/studio_ref/abc.py` is the language-neutral reference for `Score.to_abc` (ADR-0004, RECONCILIATION D-04 and
+GAP-02, architecture §4.6). `to_abc(melody, song, cot=None)` writes an assembled melody-spec 1.1 record, with the
+SongSpec revision it was assembled from, as YuE2's native two-voice ABC. It returns `{"abc": {text, cot, lyrics,
+syllable_plan}}` or `{"ineligible": {"reasons": [...]}}`. The vectors (`fixtures/vectors/abc.json`, hand-derived in
+`vector_cases/abc.py`) fix the rules below. A consumer never truncates, retimes or respells what the dialect cannot
+hold: the song is ineligible and the reason says why.
+
+**Grammar targeted.** YuE's own validator for the bounded native dialect: `skills/yue2-music/scripts/abc_tools.py` at
+`multimodal-art-projection/YuE` commit `1647252d68b70cbead046ffd3f7caf036dde47ee`, the S01 pin (git blob `88b66e5b`,
+sha256 `ea04b922dacebec7ad257a2f8d83bdb5dfecb7a23110c1a3121c5c41c313930e`). Its notes are
+`skills/yue2-music/references/abc-editing.md` (blob `9fbdfb0a`) and `docs/generation.md` (blob `65d3c407`) at the same
+commit. All three are byte-identical at `72272f90` (`yue2-music-v1.2.0`), the revision of T03's `yue-abc-tools` license
+row. A pin move re-reads them and re-derives these vectors. Validating the goldens with `abc_tools.py` itself is the
+abc-emission ticket's (T56).
+
+**Header and layout.** The header is `X:1`, a blank `T:`, `M:` (the tick-0 meter), `L:1/32`, `Q:1/4=<BPM>`, the two
+native voice lines (`Vocal`, `Ins`) and `K:`. Then each repeat of each section, in form order, gets a `% <section name>`
+comment and groups of at most four bars. A group is a `V: Vocal` block, then a `V: Ins` block. A meter change starts a
+new group with the same `M:` field in both blocks. Every bar is full. A bar with no note and no chord onset is a
+whole-bar rest, and a run of them in one group is `Z`, `Z2`, `Z3` or `Z4`. The melody is the `Vocal` voice. `Ins` is
+whole-bar rests throughout: a MelodySpec has no instrumental line.
+
+**Time.**
+- One integer tempo. `60000000 / us_per_quarter` must be whole, else `tempo_not_integer_bpm`. A second tempo segment is
+  `tempo_change`: refused, never retimed. Rendering such a form per section is `render_mode` work.
+- Re-quantization. Every note's start and end move to the 1/32-note grid (120 ticks) by the one rounding function,
+  `round_half_up(tick / 120) x 120` (ADR-0033). A note on the grid does not move; a triplet does. A half-note triplet's
+  1280-tick notes become 1320, 1200 and 1320.
+- Re-quantization is monotone, so it never makes notes overlap. A note whose start and end land on one grid line would
+  vanish: `note_requantize_collapse`. The MelodySpec's `quantize` layer is not read; as for MIDI, emission starts from
+  the notes' own ticks.
+- Lengths use the dialect's multipliers (1, 2, 3, 4, 6, 8, 12, 16, 24, 32, 48), largest first. A note is written as tied
+  pieces (`B8-B3`), a rest as consecutive pieces (`z4z`), and both split at every bar line and chord onset. A one-unit
+  piece has no number.
+- Pickups. The ABC starts at tick 0 on a bar line and the dialect has no anacrusis. A pickup is the end of a bar whose
+  start is rest (`z24G4G4`), exactly as assembly lays it out.
+
+**Pitch.**
+- `K:` is the MelodySpec key when the native table holds it: the 15 major keys from Cb to C# and the 15 minor keys from
+  Abm to A#m. A modal key, or another spelling (D#, G# or A# major; Db or Gb minor), is `key_unrepresentable` and is
+  never respelled.
+- Each note's spelling is the first that fits, in this order:
+  1. the key's own letter;
+  2. in a minor key, the raised seventh, written as the seventh degree raised (F# in G minor, F double sharp in G#
+     minor);
+  3. a natural sign on a letter the key alters;
+  4. a sharp on the letter below in a sharp key (and in C major or A minor), a flat on the letter above in a flat key.
+- An accidental is written only when the bar's state for that letter differs. In the native convention that state is by
+  letter, across octaves, and resets at each bar line. A tied continuation repeats its letter without a sign and leaves
+  the state alone.
+- Two notes sounding at once are `notes_overlap`: both voices are monophonic.
+
+**Chord symbols and `cot`.**
+- `cot` defaults to `full` when any SongSpec section carries chord symbols, otherwise `melody`. An explicit `melody`
+  strips them. An explicit `full` with no chord symbols is `chords_missing`.
+- Under `full`, each section's symbols sound at their offsets in every repeat, quoted in `Vocal` before the token at
+  that onset. A held note is split there with a tie, a rest is split, and that bar is never `Z`.
+- The native vocabulary is a root and optional slash bass (`A`-`G` with `#`, `b`, `##` or `bb`) and one of these
+  qualities: none, `m`, `dim`, `aug`, `7`, `maj7`, `m7`, `dim7`, `m7b5`, `sus4`, `sus2`, `6`, `m6`, `7sus4`, `m(maj7)`.
+  A symbol outside it is `chord_unrepresentable`.
+- An onset off the 1/32 grid is `chord_off_grid`: chord symbols are not re-quantized.
+- Under `melody`, symbols are not read at all.
+
+**Lyrics.**
+- Approved lyrics are required. An instrumental SongSpec is `lyrics_missing`. Their BCP-47 primary subtag must be `en`
+  or `zh`, else `lyrics_language`; `zh-Hans` and `en-US` are eligible.
+- A line that is only `[tag]` starts a block. The tag names the section whose name is the tag lowercased, with
+  whitespace runs as `-`: `[Verse 1]` names `verse-1`. A block with no syllable is a placeholder and binds nothing.
+- The remaining blocks bind the vocal sections in form order, one to one. Each block is sung on every repeat of its
+  section, as the world's hymn writes its twice-repeated chorus once.
+- `lyrics_unbound` covers a block whose tag names another section, a vocal section with no block left, and a block left
+  over.
+- The `lyrics` YuE2 receives has one block per section repeat, in form order: `[name]` and its lines, or the tag alone
+  for an instrumental section, separated by blank lines. Its tags and the ABC's `%` comments correspond in order.
+
+**Syllable plan.** The plan is a sidecar, never inside the ABC (no `w:` fields).
+- A syllable is one CJK ideograph (U+3400-U+4DBF, U+4E00-U+9FFF), or a run of other word characters and apostrophes. A
+  hyphen or a space ends a syllable, so `mor-ning` is two.
+- In each vocal repeat, the block's syllables take the repeat's notes in onset order, one each. A row is `{section_id,
+  repeat, line, syllable, note_id, pitch, start_tick, end_tick}`, with the note's re-quantized ticks.
+- A note beyond the last syllable has `line` and `syllable` null; a syllable beyond the last note has the note fields
+  null. Nothing is dropped.
+- The plan is a designed symbolic fit. It is not a forced alignment and does not claim the engine sings it.
+
+**Length.** The limit is 360 s: ADR-0004's and the abc-emission ticket's "about 6 minutes", as exact seconds. It agrees
+with YuE2's default semantic budget at the pin (INFERRED). `protocol.py` sets `max_tokens=9000`, one codec token is one
+latent frame (`nar.py`), and there are 25 frames a second (48000 / 1920 in `modeling_vae.py`): 9000 / 25 = 360 s. The
+form's duration is exact (`seconds_at_tick(form.end_tick)`, with no rounding). Over 360 s is `length_over_limit`;
+exactly 360 s is eligible.
+
+**Ineligible** lists every reason, each code once at its first occurrence, in this scan order:
+1. `lyrics_missing` or `lyrics_language`, then `lyrics_unbound`;
+2. `length_over_limit`;
+3. `tempo_change`, then `tempo_not_integer_bpm`;
+4. `key_unrepresentable`;
+5. `chords_missing`, `chord_unrepresentable`, `chord_off_grid`;
+6. `notes_overlap`, then `note_requantize_collapse`.
+
+A reason is `{code, section_id, note_id, tick}`. A tick-located reason names the tick and the section repeat that holds
+it, and a note reason also names the note; the other fields are null.
+
+**Input errors** raise `AbcInputError`, never an Ineligible, in this order:
+- `melody_not_assembled`.
+- `form_missing`: a 1.0 assembled record. A consumer refuses it rather than infer a form.
+- `song_mismatch`: another SongSpec revision or project, a form whose sections and repeats differ from the SongSpec's,
+  or chord symbols that assembly would refuse.
+- `form_inconsistent`: repeats that do not tile `[0, end_tick)` on bar lines with their sections' bars, or a note
+  outside the form.
+
+**Still open.** These belong to T56: validating the goldens with `abc_tools.py` in CI, the runtime `Score.to_abc`, the
+API route, the S07 eligibility slot and the syllable viewer. Chord symbols from a MIDI chord track belong to T57. Also
+open: a per-section render for a form with a tempo change, enharmonic spelling beyond the raised seventh, and an `Ins`
+line. Fixtures are synthetic: nothing was rendered, sent to an engine or listened to.
