@@ -1,0 +1,340 @@
+{
+  "description": "Every revision Basic Pitch drafted lists its transcriber's license chain plus the studio's own code. The chain must equal the transcriber's, not merely contain it, so an extra entry is refused even though every revision agrees.",
+  "expect_rules": [
+    "lane.record_eligible"
+  ],
+  "id": "SC-LANE-RECORD-CHAIN-EXTRA",
+  "kind": "fixture.scenario",
+  "overlay": [
+    {
+      "base_rev": null,
+      "content_sha256": "41f9f2e7e8ce3e25417efa291ad4e87a6d79f1fc238cfcf4f1973dd822ceb5f5",
+      "created_at": "2026-10-09T10:01:20Z",
+      "key": {
+        "mode": "major",
+        "tonic": "C"
+      },
+      "kind": "melody-spec",
+      "melody_id": "mel_hymn",
+      "notes": [
+        {
+          "confidence": "0.91",
+          "duration_ticks": 960,
+          "id": "n1",
+          "origin": "transcribed",
+          "pitch": 60,
+          "start_tick": 0,
+          "velocity": 90
+        },
+        {
+          "confidence": "0.64",
+          "duration_ticks": 960,
+          "id": "n2",
+          "origin": "transcribed",
+          "pitch": 62,
+          "start_tick": 960,
+          "velocity": 90
+        },
+        {
+          "confidence": "0.88",
+          "duration_ticks": 1920,
+          "id": "n3",
+          "origin": "transcribed",
+          "pitch": 64,
+          "start_tick": 1920,
+          "velocity": 90
+        },
+        {
+          "confidence": "0.79",
+          "duration_ticks": 1920,
+          "id": "n4",
+          "origin": "transcribed",
+          "pitch": 65,
+          "start_tick": 3840,
+          "velocity": 90
+        },
+        {
+          "confidence": "0.83",
+          "duration_ticks": 1920,
+          "id": "n5",
+          "origin": "transcribed",
+          "pitch": 67,
+          "start_tick": 5760,
+          "velocity": 90
+        }
+      ],
+      "phrases": [
+        {
+          "end_tick": 3840,
+          "id": "ph1",
+          "name": "opening line",
+          "start_tick": 0
+        },
+        {
+          "end_tick": 7680,
+          "id": "ph2",
+          "name": "answer line",
+          "start_tick": 3840
+        }
+      ],
+      "ppq": 960,
+      "project_id": "prj_hymn",
+      "quantize": null,
+      "rev": 1,
+      "schemaVersion": "1.0.0",
+      "source": {
+        "assembled_from": null,
+        "capture_sha256": "dc777e3766c902a35936fea39ee9ceecee87a562e63e9fb42a090dc80205d7e7",
+        "seed_kind": "hum",
+        "transcription": {
+          "eligible_lanes": [
+            "individual",
+            "research"
+          ],
+          "job_id": "job_tr1",
+          "license_chain": [
+            {
+              "code_license": "Apache-2.0",
+              "component_id": "basic-pitch",
+              "obligations": [],
+              "weights_license": "Apache-2.0 (bundled TF SavedModel, CoreML, TFLite, ONNX)"
+            },
+            {
+              "code_license": "Own code (all rights reserved until Q5)",
+              "component_id": "studio-own-code",
+              "obligations": [],
+              "weights_license": "n/a (no weights)"
+            }
+          ],
+          "method": "basic-pitch",
+          "note": "unverified on real hums",
+          "profile_id": "transcribe-basic-pitch"
+        }
+      },
+      "spec_kind": "melody",
+      "tempo_map": {
+        "meter": [
+          {
+            "denominator": 4,
+            "numerator": 4,
+            "tick": 0
+          }
+        ],
+        "rev": 1,
+        "tempo": [
+          {
+            "tick": 0,
+            "us_per_quarter": 500000
+          }
+        ]
+      }
+    },
+    {
+      "base_rev": 1,
+      "content_sha256": "d507b845fe4fc711d9777fea221eed5100f6d5f27b1aaba7a64c04fe11ac2195",
+      "created_at": "2026-10-09T10:05:00Z",
+      "key": {
+        "mode": "major",
+        "tonic": "C"
+      },
+      "kind": "melody-spec",
+      "melody_id": "mel_hymn",
+      "notes": [
+        {
+          "confidence": "0.91",
+          "duration_ticks": 960,
+          "id": "n1",
+          "origin": "transcribed",
+          "pitch": 60,
+          "start_tick": 0,
+          "velocity": 90
+        },
+        {
+          "confidence": null,
+          "duration_ticks": 960,
+          "id": "n2",
+          "origin": "corrected",
+          "pitch": 63,
+          "start_tick": 960,
+          "velocity": 90
+        },
+        {
+          "confidence": "0.88",
+          "duration_ticks": 1920,
+          "id": "n3",
+          "origin": "transcribed",
+          "pitch": 64,
+          "start_tick": 1920,
+          "velocity": 90
+        },
+        {
+          "confidence": "0.79",
+          "duration_ticks": 1920,
+          "id": "n4",
+          "origin": "transcribed",
+          "pitch": 65,
+          "start_tick": 3840,
+          "velocity": 90
+        },
+        {
+          "confidence": "0.83",
+          "duration_ticks": 1920,
+          "id": "n5",
+          "origin": "transcribed",
+          "pitch": 67,
+          "start_tick": 5760,
+          "velocity": 90
+        }
+      ],
+      "phrases": [
+        {
+          "end_tick": 3840,
+          "id": "ph1",
+          "name": "opening line",
+          "start_tick": 0
+        },
+        {
+          "end_tick": 7680,
+          "id": "ph2",
+          "name": "answer line",
+          "start_tick": 3840
+        }
+      ],
+      "ppq": 960,
+      "project_id": "prj_hymn",
+      "quantize": null,
+      "rev": 2,
+      "schemaVersion": "1.0.0",
+      "source": {
+        "assembled_from": null,
+        "capture_sha256": "dc777e3766c902a35936fea39ee9ceecee87a562e63e9fb42a090dc80205d7e7",
+        "seed_kind": "hum",
+        "transcription": {
+          "eligible_lanes": [
+            "individual",
+            "research"
+          ],
+          "job_id": "job_tr1",
+          "license_chain": [
+            {
+              "code_license": "Apache-2.0",
+              "component_id": "basic-pitch",
+              "obligations": [],
+              "weights_license": "Apache-2.0 (bundled TF SavedModel, CoreML, TFLite, ONNX)"
+            },
+            {
+              "code_license": "Own code (all rights reserved until Q5)",
+              "component_id": "studio-own-code",
+              "obligations": [],
+              "weights_license": "n/a (no weights)"
+            }
+          ],
+          "method": "basic-pitch",
+          "note": "unverified on real hums",
+          "profile_id": "transcribe-basic-pitch"
+        }
+      },
+      "spec_kind": "melody",
+      "tempo_map": {
+        "meter": [
+          {
+            "denominator": 4,
+            "numerator": 4,
+            "tick": 0
+          }
+        ],
+        "rev": 2,
+        "tempo": [
+          {
+            "tick": 0,
+            "us_per_quarter": 500000
+          },
+          {
+            "tick": 3840,
+            "us_per_quarter": 600000
+          }
+        ]
+      }
+    },
+    {
+      "approval_id": null,
+      "compute_profile_id": "cp_tier4",
+      "cost": {
+        "basis": "local_zero",
+        "usd": "0.00"
+      },
+      "created_at": "2026-10-09T10:01:05Z",
+      "egress": [],
+      "error": null,
+      "history": [
+        {
+          "at": "2026-10-09T10:01:05Z",
+          "state": "queued"
+        },
+        {
+          "at": "2026-10-09T10:01:06Z",
+          "state": "preparing"
+        },
+        {
+          "at": "2026-10-09T10:01:07Z",
+          "state": "loading"
+        },
+        {
+          "at": "2026-10-09T10:01:08Z",
+          "state": "generating"
+        },
+        {
+          "at": "2026-10-09T10:01:20Z",
+          "state": "ready"
+        }
+      ],
+      "id": "job_tr1",
+      "inputs": [
+        {
+          "role": "hum",
+          "sha256": "dc777e3766c902a35936fea39ee9ceecee87a562e63e9fb42a090dc80205d7e7"
+        }
+      ],
+      "job_kind": "transcribe",
+      "kind": "job",
+      "lane": "individual",
+      "outputs": [
+        {
+          "role": "melody_spec",
+          "sha256": "41f9f2e7e8ce3e25417efa291ad4e87a6d79f1fc238cfcf4f1973dd822ceb5f5"
+        }
+      ],
+      "params": {
+        "actual": {},
+        "intent": {}
+      },
+      "parent_job_id": null,
+      "placement": {
+        "host_class": "cpu/m5pro",
+        "kind": "local"
+      },
+      "profile_id": "transcribe-basic-pitch",
+      "profile_revision": "9244a5233e6fea486a22985a55019cdf14d298e2b41ae1508f85fce878257646",
+      "project_id": "prj_hymn",
+      "quote_id": null,
+      "record_inputs": [],
+      "request_id": null,
+      "retry": null,
+      "schemaVersion": "1.0.0",
+      "seed": null,
+      "session_id": "ses_1",
+      "state": "ready",
+      "steps": [
+        {
+          "name": "pyin"
+        },
+        {
+          "name": "hmm-segmentation"
+        }
+      ],
+      "task": "transcribe"
+    }
+  ],
+  "remove": [],
+  "schemaVersion": "1.0.0"
+}
