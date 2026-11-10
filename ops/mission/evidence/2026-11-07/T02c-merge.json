@@ -1,0 +1,96 @@
+{
+ "ticket": "T02c",
+ "pr": 131,
+ "checked_at": "2026-11-08T03:11:18.728629+00:00",
+ "before": {
+  "head": "847303b86bdad7164903f6541515312dc7054811",
+  "integration_tip": "0e02d7290bf29979ece63da5952ffc11157186d9",
+  "reviewed_head": "cd85ce80580c82df6222f2c7d7df7a5b4eea4b89",
+  "reviewed_patch_id": "09e0de2b8daedab41b949dc7c1fcad06cce90cc0",
+  "merged_patch_id": "09e0de2b8daedab41b949dc7c1fcad06cce90cc0",
+  "base_refresh": {
+   "reviewed_head": "cd85ce80580c82df6222f2c7d7df7a5b4eea4b89",
+   "new_head": "847303b86bdad7164903f6541515312dc7054811",
+   "patch_id": "09e0de2b8daedab41b949dc7c1fcad06cce90cc0"
+  },
+  "checks": {
+   "checks / foundation (ubuntu-latest)": {
+    "conclusion": "success",
+    "name": "checks / foundation (ubuntu-latest)",
+    "status": "completed"
+   },
+   "checks / foundation (macos-latest)": {
+    "conclusion": "success",
+    "name": "checks / foundation (macos-latest)",
+    "status": "completed"
+   },
+   "checks / foundation (windows-latest)": {
+    "conclusion": "success",
+    "name": "checks / foundation (windows-latest)",
+    "status": "completed"
+   }
+  },
+  "review_file": "/Volumes/STUDIO/evidence/T02c/T02c-review-2.json",
+  "review_files": [
+   "/Volumes/STUDIO/evidence/T02c/T02c-standards-review-2.md",
+   "/Volumes/STUDIO/evidence/T02c/T02c-spec-review-2.md",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review-2.json",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-SHA256SUMS",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-00-preflight.log",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-01-install.log",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-02-local-gate.log",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-03-validate-v-head.log",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-04-fixture-bytes.json",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-05-hand-derived.log",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-06-refusals.log",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-07-tempo-inside-bars.log",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-08-differential.log",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-08b-differential-inputs-and-outcomes.sha256",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-09-meter-claim.log",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-10-mutants.json",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-10-mutants.log",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-11-mutant-R5.diff",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-11-validate-mutant-R5.log",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-12-precedence-witness.log",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-13-meter-mixed.log",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-14-schema-versions.log",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-15-lane-scenarios.log",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-16-meter-tightening-base-dee28e2.log",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-17-source-chain-preexisting.log",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-18-hosted-checks.txt",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-19-scope-policy-glossary.log",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-20-size.txt",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-21-patch-ids.txt",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-22-trial-merge-0e02d72.log",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-22b-trial-merge-0e02d72-validate.log",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-mutant-meter-revert.diff",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-mutant-tempo-revert.diff",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-pr131-body-at-cd85ce8.md",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-probes/compare_outcomes.py",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-probes/copy_tracked.sh",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-probes/fixture_bytes.py",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-probes/fuzz_inputs.py",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-probes/hand_derived.py",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-probes/lane_scenarios.py",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-probes/meter_mixed.py",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-probes/meter_tightening.py",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-probes/meter_trailing_check.py",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-probes/mutants.py",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-probes/precedence_witness.py",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-probes/refusals.py",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-probes/run_assemble.py",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-probes/schema_versions.py",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-probes/source_chain.py",
+   "/Volumes/STUDIO/evidence/T02c/T02c-review2-probes/tempo_bars.py"
+  ]
+ },
+ "after": {
+  "state": "MERGED",
+  "merge_commit": "910910a594f131a8082c355412aefed2b9348e41",
+  "merged_at": "2026-11-08T03:11:20Z",
+  "squash_author_noreply": true,
+  "issues_closed": [
+   80
+  ]
+ }
+}

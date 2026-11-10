@@ -4,20 +4,20 @@
     "name": "Studio implementation",
     "tagline": "Prove the contracts, establish the build volume, then deliver the first complete song flow.",
     "repo": "Navigata1/aura",
-    "repoPath": "/Volumes/STUDIO/worktrees/integration-review",
+    "repoPath": "/Volumes/STUDIO/git/aura.git",
     "defaultBranch": "integration",
     "planDoc": "docs/spec/aura-v1-spec.md",
     "northStar": "Owned melody to an editable song, judged by the owner in blind audition.",
     "status": "active",
     "started": "2026-10-29",
-    "updated": "2026-11-07T05:42:46.183524+00:00",
-    "sessionCount": 3
+    "updated": "2026-11-08T03:33:12.741690+00:00",
+    "sessionCount": 4
   },
   "policies": {
     "merge": "review",
     "branchPrefix": "ticket/",
     "maxPrLines": 400,
-    "notes": "Ticket PRs target integration and require independent review plus fresh CI. Only Jon release-merges integration into main. Review policy holds unreviewed PRs; an independent agent review is not an owner listening or license act. T01 is the pre-specified broad foundation ticket; package scaffolding, gates and generated registry/mission files are reviewed together. Later feature changes retain small ticket boundaries. November 6 owner amendment authorizes integration squash merges after green current-head CI and independent current-base review. Server-side branch protection is not required; repository stays private. Main remains owner-release-only. Merged code is distinct from pending full acceptance."
+    "notes": "Ticket PRs target integration and require independent review plus fresh CI. Only Jon release-merges integration into main. Review policy holds unreviewed PRs; an independent agent review is not an owner listening or license act. T01 is the pre-specified broad foundation ticket; package scaffolding, gates and generated registry/mission files are reviewed together. Later feature changes retain small ticket boundaries. November 6 owner amendment authorizes integration squash merges after green current-head CI and independent current-base review. November 7 owner decision (docs/research/OWNER-DECISIONS-2026-11-07.md): the repository is public for the build so hosted CI stays free, and returns to private at production level (Jon's call). Server-side rulesets now enforce PR-only changes, the three foundation checks, an up-to-date branch and squash merging on integration, and PR-only changes with the same checks on main. Independent review, owner-only release of main and no auto-merge stay procedural. A review is bound to the PR's patch (git patch-id --stable): a clean integration-only update keeps it, any other change needs a fresh review; this is the lead's addendum and awaits Jon's confirmation. Main remains owner-release-only. Merged code is distinct from pending full acceptance."
   },
   "phases": [
     {
@@ -32,18 +32,18 @@
           "title": "Existing contract fixture suite",
           "command": "python3 -B scripts/spec/validate.py",
           "status": "passed",
-          "evidence": "ops/mission/evidence/2026-11-06/integration-batch.json",
-          "lastRun": "2026-11-07T05:23:09.691534+00:00",
-          "notes": "Executed within the full software gate on integration cc846da in run42342305602, all three hosted OS successful. No nightly, real-device playback or musical-quality proof."
+          "evidence": "ops/mission/evidence/2026-11-07/integration-batch.json",
+          "lastRun": "2026-11-08T03:33:12.741690+00:00",
+          "notes": "Executed within the full software gate on every 2026-11-07 integration push (dee28e2, 0e02d72, 910910a, a30bbad; runs 42438742621, 42441114008, 42441652777, 42442475484), all three hosted OS successful. No nightly, real-device playback or musical-quality proof."
         },
         {
           "id": "ticket-baseline",
           "title": "Draft ticket graph",
           "command": "python3 -B scripts/spec/tickets.py --check",
           "status": "passed",
-          "evidence": "ops/mission/evidence/2026-11-06/integration-batch.json",
-          "lastRun": "2026-11-07T05:23:09.691534+00:00",
-          "notes": "Executed within the full software gate on integration cc846da in run42342305602, all three hosted OS successful. No nightly, real-device playback or musical-quality proof."
+          "evidence": "ops/mission/evidence/2026-11-07/integration-batch.json",
+          "lastRun": "2026-11-08T03:33:12.741690+00:00",
+          "notes": "Executed within the full software gate on every 2026-11-07 integration push (dee28e2, 0e02d72, 910910a, a30bbad; runs 42438742621, 42441114008, 42441652777, 42442475484), all three hosted OS successful. No nightly, real-device playback or musical-quality proof."
         }
       ],
       "tasks": [
@@ -78,34 +78,34 @@
             "T02b"
           ],
           "pr": null,
-          "notes": "Issue #4 remains open. Requires C01 plus the immutable binding-schema/consumer slice of T02, not all T02 acceptance; concluded route-standing in T02 follows C02 to avoid circular sequencing. Exact set, revision/host, preregistration, quota, thresholds and verdict binding required."
+          "notes": "Issue #4 remains open. Requires C01 plus T02b (issue #77, PR #130 still in its review loop), not all T02 acceptance; concluded route standing (T02f, issue #89) follows C02 to avoid circular sequencing. Exact set, revision/host, preregistration, quota, thresholds and verdict binding required."
         }
       ]
     },
     {
       "id": "BUILD",
       "title": "Implementation graph",
-      "goal": "Execute the 105 ticket graph with independent gates",
+      "goal": "Execute the 108-ticket graph (the original 105 plus T106-T108 from S01) with independent gates",
       "status": "in_progress",
       "sessionsEstimate": "Not re-estimated; no completion-date promise",
       "gates": [
         {
           "id": "foundation-software",
           "title": "Foundation software tests, builds and policy gates",
-          "command": "uv run --frozen python scripts/ci/run.py --base cc846da282744b807ac2f2f7cfb4e845161eb881",
+          "command": "uv run --frozen python scripts/ci/run.py --base a30bbad18b5d58a8f68afddc0abf6867e8c15102",
           "status": "passed",
-          "evidence": "ops/mission/evidence/2026-11-06/integration-batch.json",
-          "lastRun": "2026-11-07T05:23:09.691534+00:00",
-          "notes": "Executed within the full software gate on integration cc846da in run42342305602, all three hosted OS successful. No nightly, real-device playback or musical-quality proof."
+          "evidence": "ops/mission/evidence/2026-11-07/integration-batch.json",
+          "lastRun": "2026-11-08T03:33:12.741690+00:00",
+          "notes": "Executed within the full software gate on every 2026-11-07 integration push (dee28e2, 0e02d72, 910910a, a30bbad; runs 42438742621, 42441114008, 42441652777, 42442475484), all three hosted OS successful. No nightly, real-device playback or musical-quality proof."
         },
         {
           "id": "latest-integration-software",
           "title": "Latest actual integration push across Linux, macOS and Windows",
-          "command": "gh run view 42343689947 --repo Navigata1/aura",
+          "command": "gh run view 42442475484 --repo Navigata1/aura",
           "status": "passed",
-          "evidence": "ops/mission/evidence/2026-11-06/C03-integration-green.json",
-          "lastRun": "2026-11-07T05:42:46.183524+00:00",
-          "notes": "Fresh actual integration push at fdd588c passed Linux/macOS/Windows. Original d008639 Windows failure42342742232 is preserved in C03-original-integration-failure.json; this does not establish scheduled-nightly or playback evidence."
+          "evidence": "ops/mission/evidence/2026-11-07/integration-batch.json",
+          "lastRun": "2026-11-08T03:33:12.741690+00:00",
+          "notes": "Integration push at a30bbad (C04, PR #136) passed Linux/macOS/Windows, as did the three earlier pushes of 2026-11-07. This does not establish scheduled-nightly or playback evidence."
         }
       ],
       "tasks": [
@@ -131,17 +131,21 @@
             "T01-code"
           ],
           "pr": null,
-          "notes": "T02a issue #7 / PR #8 merged. Remaining: additive schemas/full consumers, SongForm/ABC/MIDI, worker transcripts/declarations/gates/prices/legacy plumbing and route standing after C02. Do not close parent based on vector discovery."
+          "notes": "Issue #15. Delivered as slices: T02a done (PR #8), T02c done (PR #131); T02b (PR #130) and T02d (PR #128) in their review loops; T02e started; T02f, T02g and T02h not started. Close the parent only when every slice and T02's own acceptance pass (docs/spec/T02-continuation-sequencing.md)."
         },
         {
           "id": "T03",
           "title": "License verification of the v1-core plumbing (P0-9): close every adoptable row, or leave it explicitly open with its gate",
-          "status": "pending",
+          "status": "done",
           "dependsOn": [
             "T01-code"
           ],
-          "pr": null,
-          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+          "pr": {
+            "number": 129,
+            "url": "https://github.com/Navigata1/aura/pull/129",
+            "mergedAt": "2026-11-08T02:29:09Z"
+          },
+          "notes": "Issue #16 closed by reviewed PR #129 at dee28e2fd2b7a79ca2773e639a4a714af5c356b8: Standards and Spec pass, 14 non-blocking findings, the register-sync ones carried by C06 (#134). 308 of 310 fixtures byte-identical; the two generated fixtures that embed the register overlay hash moved one line each. Found that waveform-playlist depends on LGPL-3.0 waveform-data (recorded on T77, #97). Software and licensing records only."
         },
         {
           "id": "T04",
@@ -573,7 +577,7 @@
             "T38"
           ],
           "pr": null,
-          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified. Amended in place by S01 (PR #127): the environment step checks every lock against the recorded advisories (Diffusers GHSA-4prv-5hj7-c2xr, floor 0.42.1) before anything is created or fetched, and names YuE2's four pinned documents."
         },
         {
           "id": "T45",
@@ -595,7 +599,7 @@
             "T10"
           ],
           "pr": null,
-          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified. Amended in place by S01 (PR #127): its lock constrains diffusers to 0.42.1 or later."
         },
         {
           "id": "T47",
@@ -681,12 +685,15 @@
         {
           "id": "T54",
           "title": "Training-data provenance review: SwiftF0 and Basic Pitch against primary sources, and their llc eligibility",
-          "status": "pending",
+          "status": "in_progress",
           "dependsOn": [
             "T03"
           ],
-          "pr": null,
-          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+          "pr": {
+            "number": 137,
+            "url": "https://github.com/Navigata1/aura/pull/137"
+          },
+          "notes": "Issue #67. PR #137 is under review: SwiftF0 0.3.0 and Basic Pitch 0.4.0 both train on non-commercial data, so neither is llc-eligible, and llc transcription stays on pYIN + HMM or manual entry as the spec plans. Not final until its review passes and it merges."
         },
         {
           "id": "T55",
@@ -725,10 +732,11 @@
           "title": "YuE2 worker image: a pinned CUDA image with no weights, the score-to-song adapter, refusal of llc before load, and the in-image deadline",
           "status": "pending",
           "dependsOn": [
-            "T10"
+            "T10",
+            "T03"
           ],
           "pr": null,
-          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified. Amended in place by S01 (PR #127): pins YuE2's exact commit, its four license documents and both weights repositories, and now also waits for T03."
         },
         {
           "id": "T59",
@@ -758,10 +766,11 @@
           "title": "YuE2 smoke on its burst host class: quote, approval, in-image weight verification, conformance and Jon's 'not garbled' check (needs Jon)",
           "status": "pending",
           "dependsOn": [
-            "T60"
+            "T60",
+            "T44"
           ],
           "pr": null,
-          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified. Amended in place by S01 (PR #127): archives the four documents and now also waits for T44."
         },
         {
           "id": "T62",
@@ -942,7 +951,7 @@
             "T76"
           ],
           "pr": null,
-          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified. T03 found that waveform-playlist depends on LGPL-3.0 waveform-data, which hard rule 5 bars from the web bundle, so the Studio timeline will be AURA's own (ADR-0013's other option; comment on #97)."
         },
         {
           "id": "T78",
@@ -1120,7 +1129,7 @@
             "T33"
           ],
           "pr": null,
-          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified. Amended in place by S01 (PR #127): the challenger locks constrain diffusers to 0.42.1 or later, with a floor test."
         },
         {
           "id": "T94",
@@ -1279,6 +1288,39 @@
           "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
         },
         {
+          "id": "T106",
+          "title": "Research-lane transcription trial: four hard hum kinds, and GAME and SheetSage2 pinned as research-only transcribers (needs Jon)",
+          "status": "pending",
+          "dependsOn": [
+            "T45",
+            "T53"
+          ],
+          "pr": null,
+          "notes": "Issue #138. Added by S01 (PR #127); research-lane trial, not implemented or verified."
+        },
+        {
+          "id": "T107",
+          "title": "Alternate-decoder fidelity trial: the same saved ACE latents through the official decoder and ScragVAE, auditioned as two blind, level-matched candidates (needs Jon)",
+          "status": "pending",
+          "dependsOn": [
+            "T32",
+            "T36",
+            "T47"
+          ],
+          "pr": null,
+          "notes": "Issue #139. Added by S01 (PR #127); research-lane trial, not implemented or verified."
+        },
+        {
+          "id": "T108",
+          "title": "Magenta RealTime 2 trial on the Mac: a research-lane playable instrument worker on the official Python MLX runtime, its terms, and a latency smoke gate on mlx/m5pro (needs Jon)",
+          "status": "pending",
+          "dependsOn": [
+            "T52"
+          ],
+          "pr": null,
+          "notes": "Issue #140. Added by S01 (PR #127); research-lane trial, not implemented or verified."
+        },
+        {
           "id": "T02a",
           "title": "Convention-discovered golden-vector cases and scoped consumer checks",
           "status": "done",
@@ -1308,13 +1350,88 @@
         },
         {
           "id": "T02b",
-          "title": "Additive immutable benchmark-binding schemas and consumers",
-          "status": "pending",
+          "title": "Evidence-binding inputs: typed preregistration, evaluation-set and result-binding records",
+          "status": "in_progress",
           "dependsOn": [
             "T02a"
           ],
+          "pr": {
+            "number": 130,
+            "url": "https://github.com/Navigata1/aura/pull/130"
+          },
+          "notes": "Issue #77, PR #130; explicit prerequisite slice for C02, no conclusion effects enabled. Round 1 (dd300ff) blocked: the pending allow-list could hide a new record kind, benchmark-prereg/1 could not hold asset hashes or budgets, and two thresholds for one metric validated. Round 2 (8361db1) blocked on Standards: 5 of 31 condition mutants survived the shipped vectors. Fix round in progress."
+        },
+        {
+          "id": "T02c",
+          "title": "SongForm assembly: stdlib reference, explicit form duration and hand-derived vectors",
+          "status": "done",
+          "dependsOn": [
+            "T01-code"
+          ],
+          "pr": {
+            "number": 131,
+            "url": "https://github.com/Navigata1/aura/pull/131",
+            "mergedAt": "2026-11-08T03:11:20Z"
+          },
+          "notes": "Issue #80 closed by reviewed PR #131 at 910910a594f131a8082c355412aefed2b9348e41 after the second review round (round 1 found a tempo change inside a phrase's last bar silently dropped). Base refreshed by merging integration with patch-id 09e0de2b unchanged. Full T02 remains open."
+        },
+        {
+          "id": "T02d",
+          "title": "MIDI round trip: MelodySpec to Standard MIDI File and back, with hand-derived byte vectors",
+          "status": "in_progress",
+          "dependsOn": [
+            "T01-code"
+          ],
+          "pr": {
+            "number": 128,
+            "url": "https://github.com/Navigata1/aura/pull/128"
+          },
+          "notes": "Issue #83, PR #128. Round 1 (19985b8) blocked on both lenses: reading a file discarded the End of Track position, so a trailing section such as an outro was silently lost. Fixed; round 2 passed at 9742d88, but the PR now conflicts with integration, so its integration-updated patch needs a fresh review before merge."
+        },
+        {
+          "id": "T02e",
+          "title": "YuE2 ABC emission: two-voice ABC vectors with typed ineligibility",
+          "status": "in_progress",
+          "dependsOn": [
+            "T02c"
+          ],
           "pr": null,
-          "notes": "Explicit prerequisite slice for C02; no conclusion effects enabled here. Split of T02 scope, whose full acceptance remains open. Create bounded issue before implementation."
+          "notes": "Issue #86. Implementation started on STUDIO; no PR at this checkpoint."
+        },
+        {
+          "id": "T02f",
+          "title": "Route standing and plan rules from validated results only",
+          "status": "pending",
+          "dependsOn": [
+            "C02"
+          ],
+          "pr": null,
+          "notes": "Issue #89. Follows C02; route standing only from validated results."
+        },
+        {
+          "id": "T02g",
+          "title": "Remaining optional v1 fields, declared enums and pre-seeded registry declarations",
+          "status": "pending",
+          "dependsOn": [
+            "T01-code"
+          ],
+          "pr": null,
+          "notes": "Issue #92."
+        },
+        {
+          "id": "T02h",
+          "title": "T02 completeness: worker transcripts, price and gate snapshots, legacy freeze plumbing, full consumer inventory",
+          "status": "pending",
+          "dependsOn": [
+            "T02b",
+            "T02c",
+            "T02d",
+            "T02e",
+            "T02f",
+            "T02g"
+          ],
+          "pr": null,
+          "notes": "Issue #95. The last slice: closes T02's remaining acceptance."
         },
         {
           "id": "C03",
@@ -1329,6 +1446,85 @@
             "mergedAt": "2026-11-07T05:39:57Z"
           },
           "notes": "Issue #11 closed by reviewed PR #12 at fdd588cd2288f193d945e32f31c481b0eeee1607. Exact-head PR run42343511152 and post-merge integration run42343689947 passed all three hosted operating systems. Original failed run42342742232 retained as historical evidence. Software scope only."
+        },
+        {
+          "id": "C04",
+          "title": "Anchor JSON Schema 'pattern' matching so '^\u2026$' cannot accept a trailing newline",
+          "status": "done",
+          "dependsOn": [
+            "T01-code"
+          ],
+          "pr": {
+            "number": 136,
+            "url": "https://github.com/Navigata1/aura/pull/136",
+            "mergedAt": "2026-11-08T03:22:50Z"
+          },
+          "notes": "Issue #132 closed by reviewed PR #136 at a30bbad18b5d58a8f68afddc0abf6867e8c15102 (Standards and Spec pass, 9 non-blocking). Base refreshed by merging integration with patch-id 33288056 unchanged."
+        },
+        {
+          "id": "C05",
+          "title": "Policy scan: refuse absolute home and private paths in tracked files",
+          "status": "in_progress",
+          "dependsOn": [
+            "T01-code"
+          ],
+          "pr": {
+            "number": 142,
+            "url": "https://github.com/Navigata1/aura/pull/142"
+          },
+          "notes": "Issue #133, PR #142 in review. Until it lands, private paths are checked by procedure; R03 applied its rule to the records it copied."
+        },
+        {
+          "id": "C06",
+          "title": "Harden the component-register sync: sources tied to pins, classes consistent with licenses, labels on every rewritten row",
+          "status": "pending",
+          "dependsOn": [
+            "T54"
+          ],
+          "pr": null,
+          "notes": "Issue #134. Carries T03's review follow-ups NB-1, NB-4, NB-5, NB-6, NB-7, NB-8 and NB-11; after T54 merges."
+        },
+        {
+          "id": "C07",
+          "title": "lane.record_eligible must check a transcription's license chain against its transcriber, not only its lanes",
+          "status": "in_progress",
+          "dependsOn": [
+            "T02c"
+          ],
+          "pr": null,
+          "notes": "Issue #135. Implementing on STUDIO; no PR at this checkpoint."
+        },
+        {
+          "id": "C08",
+          "title": "Policy scan and schema checker: close the remaining dialect and encoding gaps",
+          "status": "pending",
+          "dependsOn": [
+            "C05"
+          ],
+          "pr": null,
+          "notes": "Issue #143."
+        },
+        {
+          "id": "S01",
+          "title": "Record the public-build decision and fold the continuation report's expansion trials into the plan",
+          "status": "done",
+          "dependsOn": [],
+          "pr": {
+            "number": 127,
+            "url": "https://github.com/Navigata1/aura/pull/127",
+            "mergedAt": "2026-11-08T03:03:53Z"
+          },
+          "notes": "Issue #126 closed by reviewed PR #127 at 0e02d7290bf29979ece63da5952ffc11157186d9 after the second review round (round 1 found the GAME ONNX pin predating the fixes it cited). Records the public-build decision and folds the expansion trials into the plan: T106-T108, and T44, T46, T58, T61 and T93 amended in place."
+        },
+        {
+          "id": "S02",
+          "title": "Close S01's review residues: review-binding wording, stale per-OS prose, glossary terms, T108 and ruleset facts",
+          "status": "pending",
+          "dependsOn": [
+            "S01"
+          ],
+          "pr": null,
+          "notes": "Issue #141."
         }
       ]
     }
@@ -1344,8 +1540,15 @@
     {
       "label": "Implementation tickets completed",
       "baseline": "0",
-      "current": "0",
-      "target": "105",
+      "current": "1",
+      "target": "108",
+      "direction": "up"
+    },
+    {
+      "label": "Plan tickets tracked as GitHub issues",
+      "baseline": "0",
+      "current": "108",
+      "target": "108",
       "direction": "up"
     },
     {
@@ -1363,9 +1566,14 @@
       "note": "Remounted November 6 from the approved Extreme SSD sparse bundle; preflight passed. Every heavy operation still requires a fresh preflight."
     },
     {
-      "title": "Integration branch protection unavailable",
+      "title": "Public build: every public surface is in scope",
       "severity": "high",
-      "note": "November 6 owner amendment requires green CI plus independent exact-head/current-base review procedurally. Repository remains private; server-side enforcement is unavailable."
+      "note": "The repository is public during the build (November 7 decision). Hard rule 10 covers tracked files, commit messages, issues, PRs, comments, reviews, records committed under ops/ and CI logs. The policy scan has no private-path rule until C05 (#133, PR #142) lands, and issue, PR, comment and log text is checked by procedure only. Checkpoints copy review and merge records only and withhold any that name a home path."
+    },
+    {
+      "title": "Review and issue closure remain procedural",
+      "severity": "medium",
+      "note": "Rulesets require no approving review: the merger checks the review files, the reviewed patch-id and green current-head checks. Two merge-gate bugs were found and fixed on 2026-11-07, and issue #80 was closed in error before a refused merge, then reopened with a correction. Close an issue only after the merge is confirmed. The patch-bound review rule awaits Jon's confirmation."
     },
     {
       "title": "Nightly evidence follows the first owner release",
@@ -1375,7 +1583,12 @@
     {
       "title": "Benchmark conclusions remain unavailable",
       "severity": "medium",
-      "note": "C01 blocks unsupported conclusions. C02 binding and later route-standing work are required before any benchmark promotion or demotion."
+      "note": "C01 blocks unsupported conclusions. T02b (PR #130, still in its review loop) and then C02 binding (#4) are required before route standing (T02f) or any benchmark promotion or demotion."
+    },
+    {
+      "title": "License findings narrow the stack",
+      "severity": "medium",
+      "note": "T03: waveform-playlist depends on LGPL-3.0 waveform-data, barred from the web bundle, so the Studio timeline (T77) will be AURA's own. T54 (PR #137, under review): SwiftF0 and Basic Pitch both train on non-commercial data, so neither is llc-eligible; llc transcription stays on pYIN + HMM or manual entry."
     }
   ],
   "prLog": [
@@ -1406,16 +1619,46 @@
       "url": "https://github.com/Navigata1/aura/pull/12",
       "phase": "BUILD",
       "mergedAt": "2026-11-07T05:39:57Z"
+    },
+    {
+      "number": 129,
+      "title": "License verification of the v1-core plumbing and the open-source-readiness register (T03)",
+      "url": "https://github.com/Navigata1/aura/pull/129",
+      "phase": "BUILD",
+      "mergedAt": "2026-11-08T02:29:09Z"
+    },
+    {
+      "number": 127,
+      "title": "Public-build decision and expansion trials folded into the plan (S01)",
+      "url": "https://github.com/Navigata1/aura/pull/127",
+      "phase": "BUILD",
+      "mergedAt": "2026-11-08T03:03:53Z"
+    },
+    {
+      "number": 131,
+      "title": "SongForm assembly into explicit full-form MelodySpecs with hand-derived vectors (T02c)",
+      "url": "https://github.com/Navigata1/aura/pull/131",
+      "phase": "BUILD",
+      "mergedAt": "2026-11-08T03:11:20Z"
+    },
+    {
+      "number": 136,
+      "title": "JSON Schema patterns matched with ECMA-262 end anchors (C04)",
+      "url": "https://github.com/Navigata1/aura/pull/136",
+      "phase": "BUILD",
+      "mergedAt": "2026-11-08T03:22:50Z"
     }
   ],
   "resume": {
     "activePhase": "BUILD",
     "nextActions": [
-      "Read docs/spec/T02-continuation-sequencing.md. Create a bounded T02b contract issue/worktree from current integration: additive immutable binding schemas/consumers, with old fixtures unchanged.",
-      "Then complete C02 result binding before enabling concluded route-standing effects. Keep C01 refusals/inert folds until exact-set proof is supported.",
-      "Implement SongForm assembly with explicit section/full-duration semantics, instrumental intro/outro and lane inheritance; then hand-derived ABC/MIDI vectors.",
-      "Complete remaining T02 acceptance before T04 generated types and T05 ProjectStore/StudioHarness. No runtime feature may bypass missing contracts.",
-      "After the owner releases integration to default main, observe actual scheduled-nightly run and finish T01 acceptance. Do not release main on behalf of the owner."
+      "Resume from the bare clone /Volumes/STUDIO/git/aura.git: refresh integration (a30bbad or later) with git -C /Volumes/STUDIO/git/aura.git fetch origin +refs/heads/integration:refs/heads/integration, then follow /Volumes/STUDIO/evidence/protocol/AGENT-PROTOCOL.md and docs/research/OWNER-DECISIONS-2026-11-07.md. One ticket, one worktree under /Volumes/STUDIO/worktrees/, one PR into integration.",
+      "Finish the open review loops: T02b PR #130 (round 2 blocked: 5 of 31 condition mutants survived; fix round under way), T02d PR #128 (round 2 passed at 9742d88, but the branch now conflicts with integration, so its updated patch needs a fresh review), C05 PR #142 and T54 PR #137 (in review, both behind integration). Merge only under the patch-bound review rule, with green three-OS checks on the merged head.",
+      "Then C02 (#4) binds concluded results on top of T02b, and T02f (#89) derives route standing from validated results only. Continue T02e (#86, started), T02g (#92) and T02h (#95) in the order of docs/spec/T02-continuation-sequencing.md; close T02 (#15) only when every slice and its own acceptance pass.",
+      "Contract and spec fixes: C07 (#135, implementing), C06 (#134, T03's register-sync follow-ups, after T54), C08 (#143, after C05) and S02 (#141, S01's review residues).",
+      "After T02: T04 generated types, then T05 ProjectStore/StudioHarness. No runtime feature may bypass missing contracts. T106-T108 are research-lane trials whose blockers sit far down the graph.",
+      "Owner-pending, never done for Jon: his first release merge of integration into main (then observe an actual scheduled-nightly run and finish T01, #2), and his confirmation of the patch-bound review rule.",
+      "The next checkpoint (R04) copies only the review and merge records of later merges into ops/mission/evidence/<date>/, never raw fetched license, NOTICE or registry text or probe dumps, and withholds any record that names a home path, journaling its SHA-256."
     ],
     "blockers": [
       "T18/T19 storage qualification blocks irreplaceable songs, references, owner acts and evidence records.",
@@ -1425,9 +1668,10 @@
       "Mission state lives in the external implementation worktree; inspect remote integration before relying on task status.",
       "No model inference or owner listening performed.",
       "Tier 2: independent implementer and verifier agents; canonical checkout read-only.",
-      "This checkpoint records implementation merges through PR #12. Its documentation-only publication is identified by git history, not a recursively embedded self-merge hash.",
-      "Mission dependencies distinguish T01-code availability from T01 full acceptance and explicitly route C02 through T02b. The original 105-ticket specification remains unchanged.",
-      "The integration-review worktree is a detached read-only snapshot. Create the next ticket worktree from the external bare clone; do not commit in the snapshot."
+      "This checkpoint records implementation merges through PR #136 (integration a30bbad). Its documentation-only publication is identified by git history, not a recursively embedded self-merge hash.",
+      "Mission dependencies distinguish T01-code availability from T01 full acceptance and explicitly route C02 through T02b. The plan is now 108 tickets (the original 105 plus T106-T108 from S01); amended dependencies, such as T58 on T03 and T61 on T44, mirror docs/spec/tickets.json. T02 slices and contract fixes are mission tasks with their issue numbers in the notes.",
+      "The local repository is the bare clone /Volumes/STUDIO/git/aura.git (git log there needs a ref, such as integration). The integration-review worktree is a stale detached snapshot at 7cb7bbd; do not commit in it.",
+      "Public build: hard rule 10 governs every committed file, ops/ records included. Merges into integration never auto-close issues; the merger closes the issue only after confirming the merge."
     ]
   }
 }

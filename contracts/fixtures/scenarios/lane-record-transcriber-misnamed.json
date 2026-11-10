@@ -1,0 +1,392 @@
+{
+  "description": "The hymn's transcription job ran Basic Pitch, but every revision it drafted names the all-lanes pYIN transcriber, with pYIN's lanes and license chain, and an llc job reads one; the transcriber is the profile its transcription job ran, so naming another would widen the lanes.",
+  "expect_rules": [
+    "lane.record_eligible"
+  ],
+  "id": "SC-LANE-RECORD-TRANSCRIBER-MISNAMED",
+  "kind": "fixture.scenario",
+  "overlay": [
+    {
+      "base_rev": null,
+      "content_sha256": "4d63cd759a3b381d73d9bec75ea8a2adea2249911b467413972bb162e18e8791",
+      "created_at": "2026-10-09T10:01:20Z",
+      "key": {
+        "mode": "major",
+        "tonic": "C"
+      },
+      "kind": "melody-spec",
+      "melody_id": "mel_hymn",
+      "notes": [
+        {
+          "confidence": "0.91",
+          "duration_ticks": 960,
+          "id": "n1",
+          "origin": "transcribed",
+          "pitch": 60,
+          "start_tick": 0,
+          "velocity": 90
+        },
+        {
+          "confidence": "0.64",
+          "duration_ticks": 960,
+          "id": "n2",
+          "origin": "transcribed",
+          "pitch": 62,
+          "start_tick": 960,
+          "velocity": 90
+        },
+        {
+          "confidence": "0.88",
+          "duration_ticks": 1920,
+          "id": "n3",
+          "origin": "transcribed",
+          "pitch": 64,
+          "start_tick": 1920,
+          "velocity": 90
+        },
+        {
+          "confidence": "0.79",
+          "duration_ticks": 1920,
+          "id": "n4",
+          "origin": "transcribed",
+          "pitch": 65,
+          "start_tick": 3840,
+          "velocity": 90
+        },
+        {
+          "confidence": "0.83",
+          "duration_ticks": 1920,
+          "id": "n5",
+          "origin": "transcribed",
+          "pitch": 67,
+          "start_tick": 5760,
+          "velocity": 90
+        }
+      ],
+      "phrases": [
+        {
+          "end_tick": 3840,
+          "id": "ph1",
+          "name": "opening line",
+          "start_tick": 0
+        },
+        {
+          "end_tick": 7680,
+          "id": "ph2",
+          "name": "answer line",
+          "start_tick": 3840
+        }
+      ],
+      "ppq": 960,
+      "project_id": "prj_hymn",
+      "quantize": null,
+      "rev": 1,
+      "schemaVersion": "1.0.0",
+      "source": {
+        "assembled_from": null,
+        "capture_sha256": "dc777e3766c902a35936fea39ee9ceecee87a562e63e9fb42a090dc80205d7e7",
+        "seed_kind": "hum",
+        "transcription": {
+          "eligible_lanes": [
+            "individual",
+            "llc",
+            "research"
+          ],
+          "job_id": "job_tr1",
+          "license_chain": [
+            {
+              "code_license": "ISC",
+              "component_id": "librosa-pyin",
+              "obligations": [],
+              "weights_license": "n/a (no weights)"
+            },
+            {
+              "code_license": "Own code (all rights reserved until Q5)",
+              "component_id": "studio-own-code",
+              "obligations": [],
+              "weights_license": "n/a (no weights)"
+            }
+          ],
+          "method": "pyin-hmm",
+          "note": "unverified on real hums",
+          "profile_id": "analysis-transcribe-pyin-hmm"
+        }
+      },
+      "spec_kind": "melody",
+      "tempo_map": {
+        "meter": [
+          {
+            "denominator": 4,
+            "numerator": 4,
+            "tick": 0
+          }
+        ],
+        "rev": 1,
+        "tempo": [
+          {
+            "tick": 0,
+            "us_per_quarter": 500000
+          }
+        ]
+      }
+    },
+    {
+      "base_rev": 1,
+      "content_sha256": "0750f3d10e5b0e5da43a29c31e6ef51780256fa1a56c8e652619dba04f20064e",
+      "created_at": "2026-10-09T10:05:00Z",
+      "key": {
+        "mode": "major",
+        "tonic": "C"
+      },
+      "kind": "melody-spec",
+      "melody_id": "mel_hymn",
+      "notes": [
+        {
+          "confidence": "0.91",
+          "duration_ticks": 960,
+          "id": "n1",
+          "origin": "transcribed",
+          "pitch": 60,
+          "start_tick": 0,
+          "velocity": 90
+        },
+        {
+          "confidence": null,
+          "duration_ticks": 960,
+          "id": "n2",
+          "origin": "corrected",
+          "pitch": 63,
+          "start_tick": 960,
+          "velocity": 90
+        },
+        {
+          "confidence": "0.88",
+          "duration_ticks": 1920,
+          "id": "n3",
+          "origin": "transcribed",
+          "pitch": 64,
+          "start_tick": 1920,
+          "velocity": 90
+        },
+        {
+          "confidence": "0.79",
+          "duration_ticks": 1920,
+          "id": "n4",
+          "origin": "transcribed",
+          "pitch": 65,
+          "start_tick": 3840,
+          "velocity": 90
+        },
+        {
+          "confidence": "0.83",
+          "duration_ticks": 1920,
+          "id": "n5",
+          "origin": "transcribed",
+          "pitch": 67,
+          "start_tick": 5760,
+          "velocity": 90
+        }
+      ],
+      "phrases": [
+        {
+          "end_tick": 3840,
+          "id": "ph1",
+          "name": "opening line",
+          "start_tick": 0
+        },
+        {
+          "end_tick": 7680,
+          "id": "ph2",
+          "name": "answer line",
+          "start_tick": 3840
+        }
+      ],
+      "ppq": 960,
+      "project_id": "prj_hymn",
+      "quantize": null,
+      "rev": 2,
+      "schemaVersion": "1.0.0",
+      "source": {
+        "assembled_from": null,
+        "capture_sha256": "dc777e3766c902a35936fea39ee9ceecee87a562e63e9fb42a090dc80205d7e7",
+        "seed_kind": "hum",
+        "transcription": {
+          "eligible_lanes": [
+            "individual",
+            "llc",
+            "research"
+          ],
+          "job_id": "job_tr1",
+          "license_chain": [
+            {
+              "code_license": "ISC",
+              "component_id": "librosa-pyin",
+              "obligations": [],
+              "weights_license": "n/a (no weights)"
+            },
+            {
+              "code_license": "Own code (all rights reserved until Q5)",
+              "component_id": "studio-own-code",
+              "obligations": [],
+              "weights_license": "n/a (no weights)"
+            }
+          ],
+          "method": "pyin-hmm",
+          "note": "unverified on real hums",
+          "profile_id": "analysis-transcribe-pyin-hmm"
+        }
+      },
+      "spec_kind": "melody",
+      "tempo_map": {
+        "meter": [
+          {
+            "denominator": 4,
+            "numerator": 4,
+            "tick": 0
+          }
+        ],
+        "rev": 2,
+        "tempo": [
+          {
+            "tick": 0,
+            "us_per_quarter": 500000
+          },
+          {
+            "tick": 3840,
+            "us_per_quarter": 600000
+          }
+        ]
+      }
+    },
+    {
+      "approval_id": null,
+      "compute_profile_id": "cp_tier4",
+      "cost": {
+        "basis": "local_zero",
+        "usd": "0.00"
+      },
+      "created_at": "2026-10-09T10:01:05Z",
+      "egress": [],
+      "error": null,
+      "history": [
+        {
+          "at": "2026-10-09T10:01:05Z",
+          "state": "queued"
+        },
+        {
+          "at": "2026-10-09T10:01:06Z",
+          "state": "preparing"
+        },
+        {
+          "at": "2026-10-09T10:01:07Z",
+          "state": "loading"
+        },
+        {
+          "at": "2026-10-09T10:01:08Z",
+          "state": "generating"
+        },
+        {
+          "at": "2026-10-09T10:01:20Z",
+          "state": "ready"
+        }
+      ],
+      "id": "job_tr1",
+      "inputs": [
+        {
+          "role": "hum",
+          "sha256": "dc777e3766c902a35936fea39ee9ceecee87a562e63e9fb42a090dc80205d7e7"
+        }
+      ],
+      "job_kind": "transcribe",
+      "kind": "job",
+      "lane": "individual",
+      "outputs": [
+        {
+          "role": "melody_spec",
+          "sha256": "4d63cd759a3b381d73d9bec75ea8a2adea2249911b467413972bb162e18e8791"
+        }
+      ],
+      "params": {
+        "actual": {},
+        "intent": {}
+      },
+      "parent_job_id": null,
+      "placement": {
+        "host_class": "cpu/m5pro",
+        "kind": "local"
+      },
+      "profile_id": "transcribe-basic-pitch",
+      "profile_revision": "9244a5233e6fea486a22985a55019cdf14d298e2b41ae1508f85fce878257646",
+      "project_id": "prj_hymn",
+      "quote_id": null,
+      "record_inputs": [],
+      "request_id": null,
+      "retry": null,
+      "schemaVersion": "1.0.0",
+      "seed": null,
+      "session_id": "ses_1",
+      "state": "ready",
+      "steps": [
+        {
+          "name": "pyin"
+        },
+        {
+          "name": "hmm-segmentation"
+        }
+      ],
+      "task": "transcribe"
+    },
+    {
+      "approval_id": null,
+      "compute_profile_id": "cp_tier4",
+      "cost": {
+        "basis": "local_zero",
+        "usd": "0.00"
+      },
+      "created_at": "2026-10-09T12:00:00Z",
+      "egress": [],
+      "error": null,
+      "history": [
+        {
+          "at": "2026-10-09T12:00:00Z",
+          "state": "queued"
+        }
+      ],
+      "id": "job_mis_llc",
+      "inputs": [],
+      "job_kind": "guide",
+      "kind": "job",
+      "lane": "llc",
+      "outputs": [],
+      "params": {
+        "actual": {},
+        "intent": {}
+      },
+      "parent_job_id": null,
+      "placement": {
+        "host_class": "cpu/m5pro",
+        "kind": "local"
+      },
+      "profile_id": "analysis-guide-neutralvoice",
+      "profile_revision": "a4979994a03c31f42466b0f3150589dbbedd064480f48862298b111ad620dc26",
+      "project_id": "prj_venture",
+      "quote_id": null,
+      "record_inputs": [
+        {
+          "kind": "melody-spec",
+          "sha256": "0750f3d10e5b0e5da43a29c31e6ef51780256fa1a56c8e652619dba04f20064e"
+        }
+      ],
+      "request_id": null,
+      "retry": null,
+      "schemaVersion": "1.0.0",
+      "seed": null,
+      "session_id": "ses_1",
+      "state": "queued",
+      "steps": [],
+      "task": "guide"
+    }
+  ],
+  "remove": [],
+  "schemaVersion": "1.0.0"
+}
