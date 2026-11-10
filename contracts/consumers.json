@@ -2,6 +2,7 @@
   "version": 2,
   "scope": "vector-kinds, record fields and added fields",
   "consumers": {
+    "fixture.abc": ["contract-completion", "abc-emission", "chord-symbols"],
     "fixture.tempo": ["contract-completion", "contracts-codegen"],
     "fixture.status": ["contract-completion", "registry"],
     "fixture.recommend": ["contract-completion", "compute-sessions"],
