@@ -1,0 +1,1472 @@
+{
+  "cases": [
+    {
+      "derivation": "Header 4d546864 00000006 0001 0002 03c0: format 1, two SMF tracks, 960 PPQ. Conductor (19 bytes): 00 ff5804 04 02 18 08 is 4/4 (dd 2 = 2^2; cc 24 = 96/4, one click per quarter; bb 8), 00 ff5103 07a120 is 500000 us, 00 ff2f00. Melody (13 bytes): 00 90 3c 64 is note-on C4 (60) velocity 100 at 0; 87 40 is delta 960 (7 x 128 + 64); 80 3c 40 is its note-off with release velocity 64; 00 ff2f00. end_tick 960 is that last End of Track.",
+      "end_tick": 960,
+      "markers": [],
+      "melody": {
+        "notes": [
+          {
+            "duration_ticks": 960,
+            "pitch": 60,
+            "start_tick": 0,
+            "velocity": 100
+          }
+        ],
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            }
+          ],
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "one note at 120 BPM in 4/4",
+      "op": "round_trip",
+      "smf_hex": "4d546864000000060001000203c04d54726b0000001300ff58040402180800ff510307a12000ff2f004d54726b0000000d00903c648740803c4000ff2f00"
+    },
+    {
+      "derivation": "Header and conductor as in the one-note case. Melody (23 bytes): the first delta is 2880 (22 x 128 + 64 = 96 40), so nothing moves to tick 0: 90 43 5a is G4 (67) velocity 90 on beat 4; 87 40 80 43 40 ends it at 3840; at 3840 the note-off comes before 00 90 48 64, C5 (72) velocity 100 on the downbeat; 8f 00 (15 x 128) 80 48 40 ends it at 5760; 00 ff2f00, so end_tick is 5760.",
+      "end_tick": 5760,
+      "markers": [],
+      "melody": {
+        "notes": [
+          {
+            "duration_ticks": 960,
+            "pitch": 67,
+            "start_tick": 2880,
+            "velocity": 90
+          },
+          {
+            "duration_ticks": 1920,
+            "pitch": 72,
+            "start_tick": 3840,
+            "velocity": 100
+          }
+        ],
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            }
+          ],
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "a pickup on beat 4 keeps its leading rest",
+      "op": "round_trip",
+      "smf_hex": "4d546864000000060001000203c04d54726b0000001300ff58040402180800ff510307a12000ff2f004d54726b00000017964090435a8740804340009048648f0080484000ff2f00"
+    },
+    {
+      "derivation": "Three eighth-note triplets fill one quarter: 960 / 3 = 320 ticks each, a whole number at 960 PPQ, so nothing rounds. C4, D4 (3e) and E4 (40), velocity 100, start at 0, 320 and 640; each note-off comes 320 ticks later (82 40 = 2 x 128 + 64), before the next note-on. Melody 31 bytes; conductor as in the one-note case; end_tick 960.",
+      "end_tick": 960,
+      "markers": [],
+      "melody": {
+        "notes": [
+          {
+            "duration_ticks": 320,
+            "pitch": 60,
+            "start_tick": 0,
+            "velocity": 100
+          },
+          {
+            "duration_ticks": 320,
+            "pitch": 62,
+            "start_tick": 320,
+            "velocity": 100
+          },
+          {
+            "duration_ticks": 320,
+            "pitch": 64,
+            "start_tick": 640,
+            "velocity": 100
+          }
+        ],
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            }
+          ],
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "eighth-note triplets are exact at 960 PPQ",
+      "op": "round_trip",
+      "smf_hex": "4d546864000000060001000203c04d54726b0000001300ff58040402180800ff510307a12000ff2f004d54726b0000001f00903c648240803c4000903e648240803e4000904064824080404000ff2f00"
+    },
+    {
+      "derivation": "Conductor (54 bytes), meter then tempo then markers at each tick: at 0, 4/4, 07a120 and ff06 05 'verse' (76 65 72 73 65); delta 3840 (30 x 128 = 9e 00), then ff5804 03 02 18 08 (3/4, a click per quarter), 600000 us (0927c0) and ff06 06 'chorus' (63 68 6f 72 75 73). Melody (31 bytes): E4 (64 = 40) velocity 96 (60) at 0 and again at 1920, the first note-off (8f 00 80 40 40) written before the second note-on, so the touching notes stay two; G4 (43) velocity 110 (6e) at 3840 for a dotted half, 2880 (96 40); 00 ff2f00 at end_tick 6720.",
+      "end_tick": 6720,
+      "markers": [
+        {
+          "name": "verse",
+          "tick": 0
+        },
+        {
+          "name": "chorus",
+          "tick": 3840
+        }
+      ],
+      "melody": {
+        "notes": [
+          {
+            "duration_ticks": 1920,
+            "pitch": 64,
+            "start_tick": 0,
+            "velocity": 96
+          },
+          {
+            "duration_ticks": 1920,
+            "pitch": 64,
+            "start_tick": 1920,
+            "velocity": 96
+          },
+          {
+            "duration_ticks": 2880,
+            "pitch": 67,
+            "start_tick": 3840,
+            "velocity": 110
+          }
+        ],
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            },
+            {
+              "denominator": 4,
+              "numerator": 3,
+              "tick": 3840
+            }
+          ],
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            },
+            {
+              "tick": 3840,
+              "us_per_quarter": 600000
+            }
+          ]
+        }
+      },
+      "name": "tempo and meter change with section markers",
+      "op": "round_trip",
+      "smf_hex": "4d546864000000060001000203c04d54726b0000003600ff58040402180800ff510307a12000ff060576657273659e00ff58040302180800ff51030927c000ff060663686f72757300ff2f004d54726b0000001f009040608f00804040009040608f008040400090436e964080434000ff2f00"
+    },
+    {
+      "derivation": "end_tick 7680 is later than every event (the outro marker and the note-off, both at 3840), so the conductor's End of Track goes there: after ff06 05 'outro' (6f 75 74 72 6f) at 3840 (9e 00) comes 9e 00 ff2f00, 3840 more ticks, and the outro keeps its bar (39 bytes). The melody's SMF track (13 bytes) ends at its note-off. Reading gives end_tick 7680 back, the latest End of Track.",
+      "end_tick": 7680,
+      "markers": [
+        {
+          "name": "verse",
+          "tick": 0
+        },
+        {
+          "name": "outro",
+          "tick": 3840
+        }
+      ],
+      "melody": {
+        "notes": [
+          {
+            "duration_ticks": 3840,
+            "pitch": 60,
+            "start_tick": 0,
+            "velocity": 100
+          }
+        ],
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            }
+          ],
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "an outro after the last note keeps its length",
+      "op": "round_trip",
+      "smf_hex": "4d546864000000060001000203c04d54726b0000002700ff58040402180800ff510307a12000ff060576657273659e00ff06056f7574726f9e00ff2f004d54726b0000000d00903c649e00803c4000ff2f00"
+    },
+    {
+      "derivation": "The record's tempo map and its one note equal the one-note case; its ids, revisions, corrected origin, confidence, key, phrase, quantize layer and source are MelodySpec-only, and a null end_tick ends each SMF track at its own last event, so the bytes are the one-note bytes.",
+      "end_tick": null,
+      "markers": [],
+      "melody": {
+        "base_rev": 1,
+        "content_sha256": "00ef514870e2f1ec00499f6a25e83b4c377a359477941683d37d06beb1f5bea3",
+        "created_at": "2026-11-07T12:00:00Z",
+        "key": {
+          "mode": "minor",
+          "tonic": "A"
+        },
+        "kind": "melody-spec",
+        "melody_id": "mel_midi",
+        "notes": [
+          {
+            "confidence": null,
+            "duration_ticks": 960,
+            "id": "n7",
+            "origin": "corrected",
+            "pitch": 60,
+            "start_tick": 0,
+            "velocity": 100
+          }
+        ],
+        "phrases": [
+          {
+            "end_tick": 3840,
+            "id": "ph1",
+            "name": "opening line",
+            "start_tick": 0
+          }
+        ],
+        "ppq": 960,
+        "project_id": "prj_midi",
+        "quantize": {
+          "grid_ticks": 240
+        },
+        "rev": 2,
+        "schemaVersion": "1.0.0",
+        "source": {
+          "assembled_from": null,
+          "capture_sha256": "d725fa4343321d5915739fd794e66212d83af86e4ad1f96fb3352543a790dec7",
+          "seed_kind": "midi_file",
+          "transcription": null
+        },
+        "spec_kind": "melody",
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            }
+          ],
+          "rev": 1,
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "a whole MelodySpec record writes only its MIDI fields",
+      "op": "write",
+      "smf_hex": "4d546864000000060001000203c04d54726b0000001300ff58040402180800ff510307a12000ff2f004d54726b0000000d00903c648740803c4000ff2f00"
+    },
+    {
+      "derivation": "A melody-spec 1.1.0 assembled record carries its form (T02c): each form.sections entry gives a marker at its start_tick (verse at 0, outro at 3840), and form.end_tick, 7680, is the file's end. The caller passes neither, and the bytes are the outro case's, so the outro keeps its bar.",
+      "end_tick": null,
+      "markers": null,
+      "melody": {
+        "base_rev": null,
+        "content_sha256": "e062e250326f1d03bcd7ef66a54044effe89836b4ffb5aa508bd31d960e8dbcc",
+        "created_at": "2026-11-08T12:00:00Z",
+        "form": {
+          "end_tick": 7680,
+          "sections": [
+            {
+              "end_tick": 3840,
+              "name": "verse",
+              "phrases": [
+                {
+                  "end_tick": 3840,
+                  "phrase_id": "ph1",
+                  "start_tick": 0
+                }
+              ],
+              "repeat": 1,
+              "section_id": "s1",
+              "section_kind": "vocal",
+              "start_tick": 0
+            },
+            {
+              "end_tick": 7680,
+              "name": "outro",
+              "phrases": [],
+              "repeat": 1,
+              "section_id": "s2",
+              "section_kind": "instrumental",
+              "start_tick": 3840
+            }
+          ]
+        },
+        "key": {
+          "mode": "major",
+          "tonic": "C"
+        },
+        "kind": "melody-spec",
+        "melody_id": "mel_midi_asm",
+        "notes": [
+          {
+            "confidence": null,
+            "duration_ticks": 3840,
+            "id": "n1",
+            "origin": "assembled",
+            "pitch": 60,
+            "start_tick": 0,
+            "velocity": 100
+          }
+        ],
+        "phrases": [],
+        "ppq": 960,
+        "project_id": "prj_midi",
+        "quantize": null,
+        "rev": 1,
+        "schemaVersion": "1.1.0",
+        "source": {
+          "assembled_from": {
+            "melody": {
+              "melody_id": "mel_midi",
+              "rev": 2,
+              "tempo_map_rev": 1
+            },
+            "song": {
+              "rev": 1,
+              "song_id": "song_midi"
+            }
+          },
+          "capture_sha256": "d725fa4343321d5915739fd794e66212d83af86e4ad1f96fb3352543a790dec7",
+          "seed_kind": "assembled",
+          "transcription": null
+        },
+        "spec_kind": "assembled",
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            }
+          ],
+          "rev": 1,
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "an assembled record writes its form's sections and end",
+      "op": "write",
+      "smf_hex": "4d546864000000060001000203c04d54726b0000002700ff58040402180800ff510307a12000ff060576657273659e00ff06056f7574726f9e00ff2f004d54726b0000000d00903c649e00803c4000ff2f00"
+    },
+    {
+      "derivation": "The form's intro [0, 3840) is instrumental and places no phrase; the verse [3840, 7680) holds C4. Conductor (38 bytes): 4/4, 07a120 and ff06 05 'intro' (69 6e 74 72 6f) at 0, then 9e 00 (3840) ff06 05 'verse'; form.end_tick 7680 equals the last note-off, so the conductor ends at its own last event. Melody (14 bytes): 9e 00 90 3c 64, so the intro's bar of rest is kept; 9e 00 80 3c 40 at 7680; 00 ff2f00.",
+      "end_tick": null,
+      "markers": null,
+      "melody": {
+        "base_rev": null,
+        "content_sha256": "a62ee9eb48f0e1b52b0551d4b5495d49eb5e572c8ebb3f3180b2ea0ec05c04de",
+        "created_at": "2026-11-08T12:00:00Z",
+        "form": {
+          "end_tick": 7680,
+          "sections": [
+            {
+              "end_tick": 3840,
+              "name": "intro",
+              "phrases": [],
+              "repeat": 1,
+              "section_id": "s1",
+              "section_kind": "instrumental",
+              "start_tick": 0
+            },
+            {
+              "end_tick": 7680,
+              "name": "verse",
+              "phrases": [
+                {
+                  "end_tick": 7680,
+                  "phrase_id": "ph1",
+                  "start_tick": 3840
+                }
+              ],
+              "repeat": 1,
+              "section_id": "s2",
+              "section_kind": "vocal",
+              "start_tick": 3840
+            }
+          ]
+        },
+        "key": {
+          "mode": "major",
+          "tonic": "C"
+        },
+        "kind": "melody-spec",
+        "melody_id": "mel_midi_intro",
+        "notes": [
+          {
+            "confidence": null,
+            "duration_ticks": 3840,
+            "id": "n1",
+            "origin": "assembled",
+            "pitch": 60,
+            "start_tick": 3840,
+            "velocity": 100
+          }
+        ],
+        "phrases": [],
+        "ppq": 960,
+        "project_id": "prj_midi",
+        "quantize": null,
+        "rev": 1,
+        "schemaVersion": "1.1.0",
+        "source": {
+          "assembled_from": {
+            "melody": {
+              "melody_id": "mel_midi",
+              "rev": 2,
+              "tempo_map_rev": 1
+            },
+            "song": {
+              "rev": 1,
+              "song_id": "song_midi"
+            }
+          },
+          "capture_sha256": "d725fa4343321d5915739fd794e66212d83af86e4ad1f96fb3352543a790dec7",
+          "seed_kind": "assembled",
+          "transcription": null
+        },
+        "spec_kind": "assembled",
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            }
+          ],
+          "rev": 1,
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "an assembled record with an instrumental intro is written whole",
+      "op": "write",
+      "smf_hex": "4d546864000000060001000203c04d54726b0000002600ff58040402180800ff510307a12000ff0605696e74726f9e00ff0605766572736500ff2f004d54726b0000000e9e00903c649e00803c4000ff2f00"
+    },
+    {
+      "derivation": "4/4 at 0, 3/4 at 3840 (9e 00, one 4/4 bar), 2/4 at 6720 (96 40, 2880 later: one 3/4 bar of 3 x 3840 / 4). 6720 is a bar line of the meter before it, 3/4, though not of the first meter's 3840-tick bars, so it is kept. Conductor 37 bytes, ending at its last event, 6720, which is end_tick; the note is the one-note case's.",
+      "end_tick": 6720,
+      "markers": [],
+      "melody": {
+        "notes": [
+          {
+            "duration_ticks": 960,
+            "pitch": 60,
+            "start_tick": 0,
+            "velocity": 100
+          }
+        ],
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            },
+            {
+              "denominator": 4,
+              "numerator": 3,
+              "tick": 3840
+            },
+            {
+              "denominator": 4,
+              "numerator": 2,
+              "tick": 6720
+            }
+          ],
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "a third meter is judged by the bar of the second",
+      "op": "round_trip",
+      "smf_hex": "4d546864000000060001000203c04d54726b0000002500ff58040402180800ff510307a1209e00ff5804030218089640ff58040202180800ff2f004d54726b0000000d00903c648740803c4000ff2f00"
+    },
+    {
+      "derivation": "Format 0, one SMF track, 480 PPQ (01e0), so every tick doubles exactly. 90 3c 50: C4 velocity 80 at 0; 83 60 (480) 3c 00 is running status 90 with velocity 0, a note-off; 00 3e 50 starts D4 (62) at 480; 83 60 3e 00 ends it at 960. No tempo or time signature, so the SMF defaults hold: 500000 us (120 BPM) and 4/4. At 960 PPQ the notes are 0 + 960 and 960 + 960, and End of Track at 960 is end_tick 1920.",
+      "name": "format 0 at 480 PPQ with running status and the SMF defaults",
+      "op": "read",
+      "read": {
+        "end_tick": 1920,
+        "markers": [],
+        "melody": {
+          "notes": [
+            {
+              "duration_ticks": 960,
+              "pitch": 60,
+              "start_tick": 0,
+              "velocity": 80
+            },
+            {
+              "duration_ticks": 960,
+              "pitch": 62,
+              "start_tick": 960,
+              "velocity": 80
+            }
+          ],
+          "tempo_map": {
+            "meter": [
+              {
+                "denominator": 4,
+                "numerator": 4,
+                "tick": 0
+              }
+            ],
+            "tempo": [
+              {
+                "tick": 0,
+                "us_per_quarter": 500000
+              }
+            ]
+          }
+        },
+        "not_carried": []
+      },
+      "smf_hex": "4d546864000000060000000101e04d54726b0000001300903c5083603c00003e5083603e0000ff2f00"
+    },
+    {
+      "derivation": "SMF track 0 (46 bytes): ff03 04 'lead' (a name), 3/4, ff59 02 00 00 (a key signature), ff06 07 'Verse 1' (56 65 72 73 65 20 31, not a section name), ff06 05 'intro' (69 6e 74 72 6f, a marker). SMF track 1 (40 bytes): SysEx f0 05 7e 7f 09 01 f7, the same 3/4 (one entry), c0 00, b0 07 64, a note-off 80 3c 40 with nothing sounding, then C4 velocity 100 from 0 to 960 (87 40), end_tick 960. The note, meter and 'intro' are carried; each other event is listed by SMF track, tick and status. No tempo: the SMF default.",
+      "name": "events a MelodySpec does not carry are listed, never dropped",
+      "op": "read",
+      "read": {
+        "end_tick": 960,
+        "markers": [
+          {
+            "name": "intro",
+            "tick": 0
+          }
+        ],
+        "melody": {
+          "notes": [
+            {
+              "duration_ticks": 960,
+              "pitch": 60,
+              "start_tick": 0,
+              "velocity": 100
+            }
+          ],
+          "tempo_map": {
+            "meter": [
+              {
+                "denominator": 4,
+                "numerator": 3,
+                "tick": 0
+              }
+            ],
+            "tempo": [
+              {
+                "tick": 0,
+                "us_per_quarter": 500000
+              }
+            ]
+          }
+        },
+        "not_carried": [
+          {
+            "event": "ff03",
+            "smf_track": 0,
+            "tick": 0
+          },
+          {
+            "event": "ff59",
+            "smf_track": 0,
+            "tick": 0
+          },
+          {
+            "event": "ff06",
+            "smf_track": 0,
+            "tick": 0
+          },
+          {
+            "event": "f0",
+            "smf_track": 1,
+            "tick": 0
+          },
+          {
+            "event": "c0",
+            "smf_track": 1,
+            "tick": 0
+          },
+          {
+            "event": "b0",
+            "smf_track": 1,
+            "tick": 0
+          },
+          {
+            "event": "80",
+            "smf_track": 1,
+            "tick": 0
+          }
+        ]
+      },
+      "smf_hex": "4d546864000000060001000203c04d54726b0000002e00ff03046c65616400ff58040302180800ff5902000000ff06075665727365203100ff0605696e74726f00ff2f004d54726b0000002800f0057e7f0901f700ff58040302180800c00000b0076400803c4000903c648740803c4000ff2f00"
+    },
+    {
+      "derivation": "SMF track 0 (20 bytes) ends 7680 ticks after its last event (bc 00 ff2f00, 60 x 128), the latest End of Track, so end_tick is 7680. SMF track 1 (14 bytes) ends at 3840 (96 40 after the note-off at 960): after its own last event but before the file's end, a position the result does not otherwise hold, so it is listed as ff2f.",
+      "name": "an End of Track inside the file is listed, not dropped",
+      "op": "read",
+      "read": {
+        "end_tick": 7680,
+        "markers": [],
+        "melody": {
+          "notes": [
+            {
+              "duration_ticks": 960,
+              "pitch": 60,
+              "start_tick": 0,
+              "velocity": 100
+            }
+          ],
+          "tempo_map": {
+            "meter": [
+              {
+                "denominator": 4,
+                "numerator": 4,
+                "tick": 0
+              }
+            ],
+            "tempo": [
+              {
+                "tick": 0,
+                "us_per_quarter": 500000
+              }
+            ]
+          }
+        },
+        "not_carried": [
+          {
+            "event": "ff2f",
+            "smf_track": 1,
+            "tick": 3840
+          }
+        ]
+      },
+      "smf_hex": "4d546864000000060001000203c04d54726b0000001400ff58040402180800ff510307a120bc00ff2f004d54726b0000000e00903c648740803c409640ff2f00"
+    },
+    {
+      "derivation": "Division e728 has its top bit set: SMPTE timing (e7 = -25 frames per second, 28 = 40 ticks per frame), which has no ticks per quarter note, so no 960 PPQ tempo map exists for it.",
+      "name": "SMPTE time division",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "smpte_division",
+        "smf_track": null,
+        "tick": null
+      },
+      "smf_hex": "4d5468640000000600010001e7284d54726b0000000400ff2f00"
+    },
+    {
+      "derivation": "ff51 03 00 00 00 sets 0 us per quarter; the tempo map holds integers from 1 to 16777215.",
+      "name": "a tempo of 0 us per quarter",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "tempo_outside_model",
+        "smf_track": 0,
+        "tick": 0
+      },
+      "smf_hex": "4d546864000000060000000103c04d54726b0000000b00ff510300000000ff2f00"
+    },
+    {
+      "derivation": "nn 21 is 33 beats; a MelodySpec meter has at most 32.",
+      "name": "a 33/4 time signature",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "meter_outside_model",
+        "smf_track": 0,
+        "tick": 0
+      },
+      "smf_hex": "4d546864000000060000000103c04d54726b0000000c00ff58042102180800ff2f00"
+    },
+    {
+      "derivation": "nn 00 is zero beats in a bar; a MelodySpec meter has at least 1.",
+      "name": "a time signature numerator of 0",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "meter_outside_model",
+        "smf_track": 0,
+        "tick": 0
+      },
+      "smf_hex": "4d546864000000060000000103c04d54726b0000000c00ff58040002180800ff2f00"
+    },
+    {
+      "derivation": "dd 06 is a denominator of 2^6 = 64; a MelodySpec meter stops at 32.",
+      "name": "a 4/64 time signature",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "meter_outside_model",
+        "smf_track": 0,
+        "tick": 0
+      },
+      "smf_hex": "4d546864000000060000000103c04d54726b0000000c00ff58040406180800ff2f00"
+    },
+    {
+      "derivation": "500000 and 600000 us both at tick 0: a tempo map holds one tempo per tick, and taking either would silently drop the other.",
+      "name": "two different tempos at one tick",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "tempo_map_ambiguous",
+        "smf_track": 0,
+        "tick": 0
+      },
+      "smf_hex": "4d546864000000060000000103c04d54726b0000001200ff510307a12000ff51030927c000ff2f00"
+    },
+    {
+      "derivation": "4/4 and then 3/4 at tick 0: a meter holds one time signature per tick, so the reader refuses rather than keep one.",
+      "name": "two different time signatures at one tick",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "tempo_map_ambiguous",
+        "smf_track": 0,
+        "tick": 0
+      },
+      "smf_hex": "4d546864000000060000000103c04d54726b0000001400ff58040402180800ff58040302180800ff2f00"
+    },
+    {
+      "derivation": "4/4 at 0, then 3/4 at 1920 (8f 00), half a bar: a 4/4 bar is 4 x 3840 / 4 = 3840 ticks, and meter segments change only on a bar line (timemodel, rule melody.wellformed), so the change must fall on 3840, 7680 and so on.",
+      "name": "a time signature inside a bar",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "meter_change_inside_bar",
+        "smf_track": 0,
+        "tick": 1920
+      },
+      "smf_hex": "4d546864000000060000000103c04d54726b0000001500ff5804040218088f00ff58040302180800ff2f00"
+    },
+    {
+      "derivation": "4/4 at 0, 3/4 at 3840, then 2/4 at 7680 (9e 00 after it): 3840 ticks into 3/4, whose bar is 2880, so it is inside a bar of the meter before it, though 7680 is a bar line of the first meter's 4/4.",
+      "name": "a third meter off a bar line of the second",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "meter_change_inside_bar",
+        "smf_track": 0,
+        "tick": 7680
+      },
+      "smf_hex": "4d546864000000060000000103c04d54726b0000001e00ff5804040218089e00ff5804030218089e00ff58040202180800ff2f00"
+    },
+    {
+      "derivation": "No time signature at 0, so the SMF default 4/4 holds there; 3/4 at 1920 (8f 00) falls inside its first 3840-tick bar.",
+      "name": "a first time signature off a bar line of the default 4/4",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "meter_change_inside_bar",
+        "smf_track": 0,
+        "tick": 1920
+      },
+      "smf_hex": "4d546864000000060000000103c04d54726b0000000d8f00ff58040302180800ff2f00"
+    },
+    {
+      "derivation": "C4 starts at 0 and again at 480 (83 60) before any note-off, so which note-off ends which note is ambiguous.",
+      "name": "a second note-on for a sounding pitch",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "same_pitch_overlap",
+        "smf_track": 0,
+        "tick": 480
+      },
+      "smf_hex": "4d546864000000060000000103c04d54726b0000001600903c648360903c648360803c4000803c4000ff2f00"
+    },
+    {
+      "derivation": "Format 2 holds independent sequences, each with its own tempo map; the mapping reads one.",
+      "name": "format 2",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "track_layout_unsupported",
+        "smf_track": null,
+        "tick": null
+      },
+      "smf_hex": "4d546864000000060002000103c04d54726b0000000400ff2f00"
+    },
+    {
+      "derivation": "SMF track 0 plays C4 and SMF track 1 plays D4 (3e), both at 0; a MelodySpec is one melody, so a chooser must name the SMF track (T25) rather than the reader merging or dropping one.",
+      "name": "notes in two SMF tracks",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "track_layout_unsupported",
+        "smf_track": 1,
+        "tick": 0
+      },
+      "smf_hex": "4d546864000000060001000203c04d54726b0000000d00903c648740803c4000ff2f004d54726b0000000d00903e648740803e4000ff2f00"
+    },
+    {
+      "derivation": "C4 on channel 1 (90) and D4 on channel 2 (91) in one SMF track; one melody is one channel.",
+      "name": "notes on two MIDI channels",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "track_layout_unsupported",
+        "smf_track": 0,
+        "tick": 0
+      },
+      "smf_hex": "4d546864000000060000000103c04d54726b0000001500903c6400913e648740803c4000813e4000ff2f00"
+    },
+    {
+      "derivation": "At 1920 PPQ (0780) the note-off at tick 1 is 960 x 1 / 1920 = half a tick; rounding would retime it.",
+      "name": "a tick that is not a whole 960 PPQ tick",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "tick_not_representable",
+        "smf_track": 0,
+        "tick": 1
+      },
+      "smf_hex": "4d546864000000060000000107804d54726b0000000c00903c6401803c4000ff2f00"
+    },
+    {
+      "derivation": "At 1920 PPQ the note-off at 1920 (8f 00) is tick 960, but End of Track at 1921 (01) is 960.5: the end is converted exactly like any other event, or refused, never rounded.",
+      "name": "an End of Track that is not on a whole 960 PPQ tick",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "tick_not_representable",
+        "smf_track": 0,
+        "tick": 1921
+      },
+      "smf_hex": "4d546864000000060000000107804d54726b0000000d00903c648f00803c4001ff2f00"
+    },
+    {
+      "derivation": "C4 starts and ends at tick 0; a MelodySpec note lasts at least one tick.",
+      "name": "a zero-length note",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "zero_length_note",
+        "smf_track": 0,
+        "tick": 0
+      },
+      "smf_hex": "4d546864000000060000000103c04d54726b0000000c00903c6400803c4000ff2f00"
+    },
+    {
+      "derivation": "C4 starts at 0 and the SMF track ends at 960 (87 40 ff 2f 00) with no note-off, so its length is unknown.",
+      "name": "a note still sounding at End of Track",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "unterminated_note",
+        "smf_track": 0,
+        "tick": 0
+      },
+      "smf_hex": "4d546864000000060000000103c04d54726b0000000900903c648740ff2f00"
+    },
+    {
+      "derivation": "The file starts 'RIFF', not 'MThd' (4d 54 68 64).",
+      "name": "not a MIDI file header",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "malformed_smf",
+        "smf_track": null,
+        "tick": null
+      },
+      "smf_hex": "52494646000000060000000103c04d54726b0000000400ff2f00"
+    },
+    {
+      "derivation": "MThd's length is 8; the mapping reads only the 6-byte SMF 1.0 header rather than skip unknown fields.",
+      "name": "a header longer than 6 bytes",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "malformed_smf",
+        "smf_track": null,
+        "tick": null
+      },
+      "smf_hex": "4d546864000000080000000103c000004d54726b0000000400ff2f00"
+    },
+    {
+      "derivation": "ntrks 0000: there is no SMF track to hold a tempo map or a note.",
+      "name": "a file with no SMF tracks",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "malformed_smf",
+        "smf_track": null,
+        "tick": null
+      },
+      "smf_hex": "4d546864000000060001000003c0"
+    },
+    {
+      "derivation": "Format 0003 is not defined by SMF 1.0 (0, 1 and 2 are).",
+      "name": "a format above 2",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "malformed_smf",
+        "smf_track": null,
+        "tick": null
+      },
+      "smf_hex": "4d546864000000060003000103c04d54726b0000000400ff2f00"
+    },
+    {
+      "derivation": "0 ticks per quarter note cannot place any event.",
+      "name": "a division of 0",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "malformed_smf",
+        "smf_track": null,
+        "tick": null
+      },
+      "smf_hex": "4d546864000000060000000100004d54726b0000000400ff2f00"
+    },
+    {
+      "derivation": "Format 0 has exactly one SMF track.",
+      "name": "format 0 with two SMF tracks",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "malformed_smf",
+        "smf_track": null,
+        "tick": null
+      },
+      "smf_hex": "4d546864000000060000000203c04d54726b0000000400ff2f004d54726b0000000400ff2f00"
+    },
+    {
+      "derivation": "The first chunk after the header is 'MTrl'; unknown chunks are refused, not skipped.",
+      "name": "a chunk that is not MTrk",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "malformed_smf",
+        "smf_track": 0,
+        "tick": null
+      },
+      "smf_hex": "4d546864000000060000000103c04d54726c0000000400ff2f00"
+    },
+    {
+      "derivation": "The chunk says 8 bytes but the file ends after 4.",
+      "name": "a chunk shorter than its length",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "malformed_smf",
+        "smf_track": 0,
+        "tick": null
+      },
+      "smf_hex": "4d546864000000060000000103c04d54726b0000000800903c64"
+    },
+    {
+      "derivation": "The 9 bytes end after the note-off, inside the next delta time; ff 2f 00 never comes.",
+      "name": "a track without End of Track",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "malformed_smf",
+        "smf_track": 0,
+        "tick": null
+      },
+      "smf_hex": "4d546864000000060000000103c04d54726b0000000900903c648740803c40"
+    },
+    {
+      "derivation": "A second event follows the End of Track at tick 0 inside the chunk.",
+      "name": "data after End of Track",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "malformed_smf",
+        "smf_track": 0,
+        "tick": 0
+      },
+      "smf_hex": "4d546864000000060000000103c04d54726b0000000800ff2f0000ff2f00"
+    },
+    {
+      "derivation": "ff 2f 01 00: the End of Track's length byte is 01 and one data byte follows; SMF 1.0 fixes it at ff 2f 00.",
+      "name": "an End of Track that carries data",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "malformed_smf",
+        "smf_track": 0,
+        "tick": 0
+      },
+      "smf_hex": "4d546864000000060000000103c04d54726b0000000500ff2f0100"
+    },
+    {
+      "derivation": "One stray byte follows the only chunk.",
+      "name": "bytes after the last chunk",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "malformed_smf",
+        "smf_track": null,
+        "tick": null
+      },
+      "smf_hex": "4d546864000000060000000103c04d54726b0000000400ff2f0000"
+    },
+    {
+      "derivation": "80 80 80 80 still has its continuation bit after four bytes, the SMF maximum.",
+      "name": "a delta time longer than four bytes",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "malformed_smf",
+        "smf_track": 0,
+        "tick": null
+      },
+      "smf_hex": "4d546864000000060000000103c04d54726b00000009808080800000ff2f00"
+    },
+    {
+      "derivation": "ff 01 00 (an empty text event) cancels running status, so the data byte 3c at 960 has no status.",
+      "name": "running status after a meta event",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "malformed_smf",
+        "smf_track": 0,
+        "tick": 960
+      },
+      "smf_hex": "4d546864000000060000000103c04d54726b0000001000903c6400ff010087403c0000ff2f00"
+    },
+    {
+      "derivation": "f0 01 f7 (a one-byte SysEx) cancels running status like a meta event, so the data byte 3c at 960 has no status.",
+      "name": "running status after a SysEx event",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "malformed_smf",
+        "smf_track": 0,
+        "tick": 960
+      },
+      "smf_hex": "4d546864000000060000000103c04d54726b0000001000903c6400f001f787403c0000ff2f00"
+    },
+    {
+      "derivation": "The note-on's velocity byte is 90, a status byte; data bytes are below 80.",
+      "name": "a status byte where data belongs",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "malformed_smf",
+        "smf_track": 0,
+        "tick": 0
+      },
+      "smf_hex": "4d546864000000060000000103c04d54726b0000000800903c9000ff2f00"
+    },
+    {
+      "derivation": "f8 (timing clock) is a real-time message; a file holds only channel, SysEx and meta events.",
+      "name": "a system message in an SMF track",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "malformed_smf",
+        "smf_track": 0,
+        "tick": 0
+      },
+      "smf_hex": "4d546864000000060000000103c04d54726b0000000600f800ff2f00"
+    },
+    {
+      "derivation": "At 960 (87 40), ff 51 must carry 3 bytes; 02 07 a1 carries 2.",
+      "name": "a tempo event of the wrong length",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "malformed_smf",
+        "smf_track": 0,
+        "tick": 960
+      },
+      "smf_hex": "4d546864000000060000000103c04d54726b0000000b8740ff510207a100ff2f00"
+    },
+    {
+      "derivation": "At 960 (87 40), ff 58 must carry 4 bytes; 02 04 02 carries 2.",
+      "name": "a time signature of the wrong length",
+      "op": "refuse_read",
+      "refusal": {
+        "code": "malformed_smf",
+        "smf_track": 0,
+        "tick": 960
+      },
+      "smf_hex": "4d546864000000060000000103c04d54726b0000000b8740ff5802040200ff2f00"
+    },
+    {
+      "derivation": "C4 sounds from 0 to 1920 and again from 960; one channel cannot hold both, and the first note-off would end the wrong note.",
+      "end_tick": null,
+      "markers": [],
+      "melody": {
+        "notes": [
+          {
+            "duration_ticks": 1920,
+            "pitch": 60,
+            "start_tick": 0,
+            "velocity": 100
+          },
+          {
+            "duration_ticks": 960,
+            "pitch": 60,
+            "start_tick": 960,
+            "velocity": 100
+          }
+        ],
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            }
+          ],
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "two overlapping notes of one pitch",
+      "op": "refuse_write",
+      "refusal": {
+        "code": "same_pitch_overlap",
+        "smf_track": null,
+        "tick": 960
+      }
+    },
+    {
+      "derivation": "The first note-on is 268435456 = 2^28 ticks after 0, one more than the largest four-byte delta time, 0x0fffffff.",
+      "end_tick": null,
+      "markers": [],
+      "melody": {
+        "notes": [
+          {
+            "duration_ticks": 960,
+            "pitch": 60,
+            "start_tick": 268435456,
+            "velocity": 100
+          }
+        ],
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            }
+          ],
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "a gap longer than the SMF delta-time maximum",
+      "op": "refuse_write",
+      "refusal": {
+        "code": "tick_not_representable",
+        "smf_track": null,
+        "tick": 268435456
+      }
+    },
+    {
+      "derivation": "end_tick 960 falls inside the C4 that sounds until 1920, the last event; End of Track must come last, so the end is refused rather than the note cut or the end moved.",
+      "end_tick": 960,
+      "markers": [],
+      "melody": {
+        "notes": [
+          {
+            "duration_ticks": 1920,
+            "pitch": 60,
+            "start_tick": 0,
+            "velocity": 100
+          }
+        ],
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            }
+          ],
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "a file end before the last note-off",
+      "op": "refuse_write",
+      "refusal": {
+        "code": "end_before_last_event",
+        "smf_track": null,
+        "tick": 1920
+      }
+    },
+    {
+      "derivation": "A melody-spec 1.0 assembled record has no form, so its end and sections could only be inferred from its notes; T02c has consumers refuse such a record rather than infer one, and the writer does.",
+      "end_tick": null,
+      "markers": null,
+      "melody": {
+        "base_rev": null,
+        "content_sha256": "8f4dd98af0d79621321b231ae0b412eba495a013a867271be17d6cda9e3de91d",
+        "created_at": "2026-11-08T12:00:00Z",
+        "key": {
+          "mode": "major",
+          "tonic": "C"
+        },
+        "kind": "melody-spec",
+        "melody_id": "mel_midi_asm",
+        "notes": [
+          {
+            "confidence": null,
+            "duration_ticks": 3840,
+            "id": "n1",
+            "origin": "assembled",
+            "pitch": 60,
+            "start_tick": 0,
+            "velocity": 100
+          }
+        ],
+        "phrases": [],
+        "ppq": 960,
+        "project_id": "prj_midi",
+        "quantize": null,
+        "rev": 1,
+        "schemaVersion": "1.0.0",
+        "source": {
+          "assembled_from": {
+            "melody": {
+              "melody_id": "mel_midi",
+              "rev": 2,
+              "tempo_map_rev": 1
+            },
+            "song": {
+              "rev": 1,
+              "song_id": "song_midi"
+            }
+          },
+          "capture_sha256": "d725fa4343321d5915739fd794e66212d83af86e4ad1f96fb3352543a790dec7",
+          "seed_kind": "assembled",
+          "transcription": null
+        },
+        "spec_kind": "assembled",
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            }
+          ],
+          "rev": 1,
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "an assembled record without a form",
+      "op": "refuse_write",
+      "refusal": {
+        "code": "assembled_without_form",
+        "smf_track": null,
+        "tick": null
+      }
+    },
+    {
+      "derivation": "The tempo list repeats tick 0, so it does not strictly increase: the caller's own record breaks melody.wellformed, an input error on write (as in SongForm assembly), not a refusal.",
+      "end_tick": null,
+      "invalid": "tempo_segments_invalid",
+      "markers": [],
+      "melody": {
+        "notes": [
+          {
+            "duration_ticks": 960,
+            "pitch": 60,
+            "start_tick": 0,
+            "velocity": 100
+          }
+        ],
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            }
+          ],
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            },
+            {
+              "tick": 0,
+              "us_per_quarter": 600000
+            }
+          ]
+        }
+      },
+      "name": "two tempos at one tick",
+      "op": "invalid_write"
+    },
+    {
+      "derivation": "Written as is, a reader would hear the SMF default 120 BPM before 960, a tempo the MelodySpec never stated. The record breaks melody.wellformed: an input error.",
+      "end_tick": null,
+      "invalid": "tempo_segments_invalid",
+      "markers": [],
+      "melody": {
+        "notes": [
+          {
+            "duration_ticks": 960,
+            "pitch": 60,
+            "start_tick": 0,
+            "velocity": 100
+          }
+        ],
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            }
+          ],
+          "tempo": [
+            {
+              "tick": 960,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "a tempo list that does not start at tick 0",
+      "op": "invalid_write"
+    },
+    {
+      "derivation": "Written as is, a reader would hear the SMF default 4/4 before 960, a meter the MelodySpec never stated. The record breaks melody.wellformed: an input error.",
+      "end_tick": null,
+      "invalid": "meter_segments_invalid",
+      "markers": [],
+      "melody": {
+        "notes": [
+          {
+            "duration_ticks": 960,
+            "pitch": 60,
+            "start_tick": 0,
+            "velocity": 100
+          }
+        ],
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 960
+            }
+          ],
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "a meter that does not start at tick 0",
+      "op": "invalid_write"
+    },
+    {
+      "derivation": "The meter list repeats tick 0, so it does not strictly increase: the record breaks melody.wellformed, an input error.",
+      "end_tick": null,
+      "invalid": "meter_segments_invalid",
+      "markers": [],
+      "melody": {
+        "notes": [
+          {
+            "duration_ticks": 960,
+            "pitch": 60,
+            "start_tick": 0,
+            "velocity": 100
+          }
+        ],
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            },
+            {
+              "denominator": 4,
+              "numerator": 3,
+              "tick": 0
+            }
+          ],
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "two meters at one tick",
+      "op": "invalid_write"
+    },
+    {
+      "derivation": "3/4 starts at 1920, half a 3840-tick 4/4 bar; written as is, the file would put a bar line where the MelodySpec's own bars do not. The same file is a refusal on read; the caller's own record is an input error.",
+      "end_tick": null,
+      "invalid": "meter_change_inside_bar",
+      "markers": [],
+      "melody": {
+        "notes": [
+          {
+            "duration_ticks": 960,
+            "pitch": 60,
+            "start_tick": 0,
+            "velocity": 100
+          }
+        ],
+        "tempo_map": {
+          "meter": [
+            {
+              "denominator": 4,
+              "numerator": 4,
+              "tick": 0
+            },
+            {
+              "denominator": 4,
+              "numerator": 3,
+              "tick": 1920
+            }
+          ],
+          "tempo": [
+            {
+              "tick": 0,
+              "us_per_quarter": 500000
+            }
+          ]
+        }
+      },
+      "name": "a meter change inside a bar",
+      "op": "invalid_write"
+    }
+  ],
+  "kind": "fixture.midi",
+  "schemaVersion": "1.0.0"
+}
