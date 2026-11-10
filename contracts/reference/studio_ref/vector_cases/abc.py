@@ -56,8 +56,13 @@ def _no(name, why, melody, song_doc, *reasons, cot=None):
             "expected": {"ineligible": {"reasons": list(reasons)}}}
 
 
-def _invalid(name, why, melody, song_doc, code):
-    return {"name": name, "derivation": why, "melody": melody, "song": song_doc, "cot": None, "expected": {"invalid": code}}
+def _invalid(name, why, melody, song_doc, code, cot=None):
+    return {"name": name, "derivation": why, "melody": melody, "song": song_doc, "cot": cot, "expected": {"invalid": code}}
+
+
+def _at(melody, us):
+    """The record with one stored tempo from tick 0."""
+    return _changed(melody, lambda m: m["tempo_map"].update(tempo=[{"tick": 0, "us_per_quarter": us}]))
 
 
 def _line(notes, key, lyric, bars, name="verse"):
@@ -91,6 +96,28 @@ PICK_PLAN = _plan("s2", (1, "La", ("n1", 67, 6720, 7200)), (1, "la", ("n2", 67, 
                   (None, None, ("n4", 67, 8640, 9600)), (None, None, ("n5", 72, 9600, 11520)),
                   (None, None, ("n6", 71, 11520, 12840)), (None, None, ("n7", 69, 12840, 14040)),
                   (None, None, ("n8", 67, 14040, 15360)))
+SAME = " Ticks do not depend on the tempo, so the bars, lyrics and plan are the pickup case's."
+WHOLE = [  # (name, the stored us_per_quarter, the BPM written, derivation): the pickup form at other stored tempos
+    ("88 BPM stored as 681818 us", 681818, 88, "60000000 / 88 = 681818.18, and round_half_up gives 681818 us: the Standard "
+     "MIDI File encoding of 88 BPM, the tempo of YuE's own example score. Q:1/4=88."),
+    ("90 BPM stored as 666667 us", 666667, 90, "60000000 / 90 = 666666.67 rounds up to 666667 us, the encoding of 90 BPM. "
+     "Q:1/4=90."),
+    ("130 BPM stored as 461538 us", 461538, 130, "60000000 / 130 = 461538.46 rounds down to 461538 us, the encoding of 130 "
+     "BPM. Q:1/4=130; the stored value is not changed."),
+    ("20 BPM, the slowest supported tempo", 3000000, 20, "60000000 / 20 = 3000000 us exactly. Q:1/4=20."),
+    ("300 BPM, the fastest supported tempo", 200000, 300, "60000000 / 300 = 200000 us exactly. Q:1/4=300."),
+]
+PART = [  # (name, the stored us_per_quarter, derivation): stored tempos that encode no whole BPM from 20 to 300
+    ("a tempo between two whole BPMs", 497925, "497925 us is 120.5 BPM (60000000 / 120.5 = 497925.31). 120 BPM is stored "
+     "as 500000 us and 121 BPM as 495868 us (60000000 / 121 = 495867.77), so no whole BPM has this encoding. Q: takes a "
+     "whole number and rounding would retime the song."),
+    ("one microsecond from a whole BPM's encoding", 666666, "90 BPM is stored as 666667 us (60000000 / 90 = 666666.67, half "
+     "up). 666666 us, one less, is the encoding of no whole BPM, and the tempo is never snapped to the nearest one."),
+    ("19 BPM is below the supported range", 3157895, "60000000 / 19 = 3157894.74, so 3157895 us is the encoding of 19 BPM, "
+     "one below the slowest supported tempo."),
+    ("301 BPM is above the supported range", 199336, "60000000 / 301 = 199335.55, so 199336 us is the encoding of 301 BPM, "
+     "one above the fastest supported tempo."),
+]
 
 
 def _eligible(pick, pick_song, pick_out):
@@ -170,6 +197,8 @@ def _eligible(pick, pick_song, pick_out):
             _text("4/4", 60, "C", "% verse\nV: Vocal\nC32|\nV: Ins\nZ|\n% outro\n" + "V: Vocal\nZ4|\nV: Ins\nZ4|\n" * 22
                   + "V: Vocal\nZ|\nV: Ins\nZ|\n"), "melody", "[verse]\nLa la\n\n[outro]",
             _plan("s1", (1, "La", ("n1", 60, 0, 3840)), (1, "la", None))),
+        *[_ok(name, why + SAME, _at(pick_out, us), pick_song, None, _text("4/4", bpm, "C", PICK_BODY), "melody", PICK_LYRICS,
+              PICK_PLAN) for name, us, bpm, why in WHOLE],
     ]
 
 
@@ -192,9 +221,7 @@ def _ineligible(pick, pick_song, pick_out):
         _no("a tempo change is refused, never retimed", "The hymn form changes from 120 to 100 BPM at the chorus (s2, 30720). "
             "The ABC has one integer tempo. The lyrics bind the verse and the chorus.", hymn_out,
             _lyrics(hymn_song, "[verse]\nLa la la\n[chorus]\nLa la"), _why("tempo_change", "s2", None, 30720)),
-        _no("a tempo that is not a whole BPM", "60000000 / 461538 = 130.0001 BPM; Q: takes a whole number and rounding would "
-            "retime the song.", pick_changed(lambda m: m["tempo_map"].update(tempo=[{"tick": 0, "us_per_quarter": 461538}])),
-            pick_song, _why("tempo_not_integer_bpm", "s1", None, 0)),
+        *[_no(name, why, _at(pick_out, us), pick_song, _why("tempo_not_integer_bpm", "s1", None, 0)) for name, us, why in PART],
         _no("an instrumental SongSpec has no lyrics to sing", "Instrumental, so no approved lyrics; its form places no note.",
             bed_out, bed_song, _why("lyrics_missing")),
         _no("a lyric tag naming another section", "The only block is tagged chorus; the one vocal section is the verse, s2 at "
@@ -240,7 +267,13 @@ def _inconsistent(pick, pick_song, pick_out):
     def short_verse(m):
         m["form"]["sections"][1]["end_tick"] = 15360
         m["form"]["sections"][2]["start_tick"] = 15360
+
+    def last_note(start, duration):
+        return _changed(pick_out, lambda m: m["notes"][7].update(start_tick=start, duration_ticks=duration))
     return [
+        _invalid("a cot outside the contract", "cot 'off' is neither melody nor full. The argument is checked before either "
+                 "record is read, so the source melody's own error (melody_not_assembled) is not reached.", pick, pick_song,
+                 "cot_invalid", cot="off"),
         _invalid("a source melody, not an assembled one", "spec_kind melody.", pick, pick_song, "melody_not_assembled"),
         _invalid("a 1.0 assembled record has no form", "A consumer refuses it rather than infer a form.",
                  _changed(pick_out, one_point_zero), pick_song, "form_missing"),
@@ -260,6 +293,13 @@ def _inconsistent(pick, pick_song, pick_out):
         _invalid("repeats whose bars differ from the SongSpec's", "The verse ends and the outro starts at 15360: the repeats "
                  "still tile on bar lines, but hold 3 and 3 bars where the SongSpec says 4 and 2.",
                  _changed(pick_out, short_verse), pick_song, "form_inconsistent"),
+        _invalid("a note crossing out of its repeat", "An assembled record edited after assembly: n8 moved to [19150, 19550) "
+                 "starts in the verse, which ends at 19200, and ends in the outro. Assembly never lays a note across a "
+                 "repeat's edge; emitting it would sound it in the instrumental outro's bars.", last_note(19150, 400), pick_song,
+                 "form_inconsistent"),
+        _invalid("a note inside an instrumental repeat", "n8 moved to [19200, 19680) lies wholly in the outro. Assembly "
+                 "places notes only in vocal sections, and the syllable plan covers only those, so the note would be sounded "
+                 "but left out of the plan.", last_note(19200, 480), pick_song, "form_inconsistent"),
     ]
 
 

@@ -20,7 +20,7 @@
         "derivation": {"type": "string", "minLength": 1, "maxLength": 1200},
         "melody": {"$ref": "melody-spec.schema.json"},
         "song": {"$ref": "song-spec.schema.json"},
-        "cot": {"enum": ["melody", "full", null]},
+        "cot": {"type": ["string", "null"], "maxLength": 16, "description": "melody, full or null; any other value is the input error cot_invalid."},
         "expected": {"oneOf": [{"$ref": "#/$defs/abc"}, {"$ref": "#/$defs/ineligible"}, {"$ref": "#/$defs/invalid"}]}
       }
     },
@@ -89,7 +89,8 @@
       "type": "object",
       "required": ["invalid"],
       "additionalProperties": false,
-      "properties": {"invalid": {"enum": ["melody_not_assembled", "form_missing", "song_mismatch", "form_inconsistent"]}}
+      "properties": {"invalid": {"enum": ["cot_invalid", "melody_not_assembled", "form_missing", "song_mismatch",
+                                          "form_inconsistent"]}}
     }
   }
 }

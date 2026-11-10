@@ -321,8 +321,13 @@ whole-bar rest, and a run of them in one group is `Z`, `Z2`, `Z3` or `Z4`. The m
 whole-bar rests throughout: a MelodySpec has no instrumental line.
 
 **Time.**
-- One integer tempo. `60000000 / us_per_quarter` must be whole, else `tempo_not_integer_bpm`. A second tempo segment is
-  `tempo_change`: refused, never retimed. Rendering such a form per section is `render_mode` work.
+- One integer tempo. A stored `us_per_quarter` is written as `Q:1/4=b` when it is the Standard MIDI File encoding of a
+  whole BPM `b` from 20 to 300: `us_per_quarter == round_half_up(60000000 / b)`. So 88 BPM (681818 us), 90 BPM (666667
+  us) and 130 BPM (461538 us) are eligible. Any other value, including one a microsecond off an encoding or a whole BPM
+  outside 20-300, is `tempo_not_integer_bpm`: refused, never snapped or retimed. In 20-300 the encodings are at least
+  669 us apart, so no two whole BPMs share one and `b` is unique; were the range widened until two did, the lowest `b`
+  would be written. A second tempo segment is `tempo_change`: refused, never retimed. Rendering such a form per section
+  is `render_mode` work.
 - Re-quantization. Every note's start and end move to the 1/32-note grid (120 ticks) by the one rounding function,
   `round_half_up(tick / 120) x 120` (ADR-0033). A note on the grid does not move; a triplet does. A half-note triplet's
   1280-tick notes become 1320, 1200 and 1320.
@@ -400,12 +405,14 @@ A reason is `{code, section_id, note_id, tick}`. A tick-located reason names the
 it, and a note reason also names the note; the other fields are null.
 
 **Input errors** raise `AbcInputError`, never an Ineligible, in this order:
+- `cot_invalid`: a `cot` other than `melody`, `full` or none, checked before either record is read.
 - `melody_not_assembled`.
 - `form_missing`: a 1.0 assembled record. A consumer refuses it rather than infer a form.
 - `song_mismatch`: another SongSpec revision or project, a form whose sections and repeats differ from the SongSpec's,
   or chord symbols that assembly would refuse.
 - `form_inconsistent`: repeats that do not tile `[0, end_tick)` on bar lines with their sections' bars, or a note
-  outside the form.
+  that does not lie inside one vocal repeat (outside the form, across a repeat's edge, or in an instrumental repeat),
+  as assembly never lays one.
 
 **Still open.** These belong to T56: validating the goldens with `abc_tools.py` in CI, the runtime `Score.to_abc`, the
 API route, the S07 eligibility slot and the syllable viewer. Chord symbols from a MIDI chord track belong to T57. Also

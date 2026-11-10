@@ -19,6 +19,7 @@ from .timemodel import PPQ, bar_segments, bar_ticks, round_half_up, seconds_at_t
 UNIT = PPQ // 8  # one 1/32 note, the L:1/32 unit: 120 ticks
 MAX_SECONDS = 360  # "about 6 minutes" (ADR-0004; the abc-emission ticket) as exact seconds
 US_PER_MINUTE = 60_000_000
+BPM_RANGE = range(20, 301)  # the whole BPMs written to Q:, 20 to 300: this contract's bound (the dialect takes any)
 LANGUAGES = ("en", "zh")
 PIECES = (48, 32, 24, 16, 12, 8, 6, 4, 3, 2, 1)  # the dialect's duration multipliers, largest first
 LETTERS = "CDEFGAB"
@@ -46,12 +47,12 @@ class AbcInputError(ValueError):
 
 def to_abc(melody: dict, song: dict, cot: str | None = None) -> dict:
     """cot None takes 'full' when any section carries chord symbols, else 'melody'."""
+    if cot not in (None, "melody", "full"):
+        raise AbcInputError("cot_invalid")
     form, bars = _checked(melody, song)
     chords = {s["id"]: s.get("chord_symbols", []) for s in song["form"]["sections"]}
     if cot is None:
         cot = "full" if any(chords.values()) else "melody"
-    elif cot not in ("melody", "full"):
-        raise ValueError("cot must be melody or full")
     notes = sorted(melody["notes"], key=lambda n: (n["start_tick"], n["pitch"]))
     lyrics = song["approved_lyrics"]
     bound, unbound_at = _bind(lyrics["text"], form) if lyrics else (None, None)
@@ -100,15 +101,18 @@ def _assembled_from(melody, song, form):
 
 
 def _tiles(melody, song, form, bars):
-    """The repeats tile [0, end_tick) on bar lines, each with its section's bars, and every note lies inside."""
+    """The repeats tile [0, end_tick) on bar lines, each with its section's bars, and every note lies inside one vocal
+    repeat, as assembly lays it: never across a repeat's edge, in an instrumental repeat or outside the form."""
     end = form["end_tick"]
     lines = {bar[0] for bar in bars} | {end}
     edges = [(r["start_tick"], r["end_tick"]) for r in form["sections"]]
+    vocal = [(r["start_tick"], r["end_tick"]) for r in form["sections"] if r["section_kind"] == "vocal"]
     return (edges[0][0] == 0 and edges[-1][1] == end and all(a[1] == b[0] for a, b in zip(edges, edges[1:]))
             and all(start < stop and start in lines and stop in lines for start, stop in edges)
             and [sum(start <= bar[0] < stop for bar in bars) for start, stop in edges]
             == [s["bars"] for s in song["form"]["sections"] for _ in range(s["repeats"])]
-            and all(n["start_tick"] + n["duration_ticks"] <= end for n in melody["notes"]))
+            and all(any(start <= n["start_tick"] and n["start_tick"] + n["duration_ticks"] <= stop for start, stop in vocal)
+                    for n in melody["notes"]))
 
 
 def _bind(text, form):
@@ -152,7 +156,7 @@ def _reasons(melody, form, notes, chords, lyrics, bound, unbound_at):
     if len(tempo) > 1:
         add("tempo_change", tempo[1]["tick"])
     for segment in tempo:
-        if US_PER_MINUTE % segment["us_per_quarter"]:
+        if _bpm(segment["us_per_quarter"]) is None:
             add("tempo_not_integer_bpm", segment["tick"])
     if _key(melody["key"]) is None:
         add("key_unrepresentable")
@@ -173,6 +177,12 @@ def _reasons(melody, form, notes, chords, lyrics, bound, unbound_at):
         if _q(note["start_tick"]) == _q(note["start_tick"] + note["duration_ticks"]):
             add("note_requantize_collapse", note["start_tick"], note["id"])
     return list(found.values())
+
+
+def _bpm(us_per_quarter):
+    """The whole BPM this stored tempo encodes, or None: the lowest b from 20 to 300 whose Standard MIDI File encoding
+    round_half_up(60000000 / b) is the stored value. Encodings in that range are at least 669 us apart, so b is unique."""
+    return next((b for b in BPM_RANGE if round_half_up(Fraction(US_PER_MINUTE, b)) == us_per_quarter), None)
 
 
 def _q(tick):
@@ -272,7 +282,7 @@ def _text(melody, form, bars, notes, onsets):
     field, signature, ranked = _key(melody["key"])
     spans = [(_q(n["start_tick"]), _q(n["start_tick"] + n["duration_ticks"]), n["pitch"]) for n in notes]
     vocal = {start: _bar(start, ticks, spans, onsets, signature, ranked) for start, ticks, _ in bars}
-    meter, bpm = bars[0][2], US_PER_MINUTE // melody["tempo_map"]["tempo"][0]["us_per_quarter"]
+    meter, bpm = bars[0][2], _bpm(melody["tempo_map"]["tempo"][0]["us_per_quarter"])
     lines = ["X:1", "T:", f"M:{meter}", "L:1/32", f"Q:1/4={bpm}", *VOICES, f"K:{field}"]
     for repeat in form["sections"]:
         lines.append(f"% {repeat['name']}")
