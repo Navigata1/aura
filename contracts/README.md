@@ -79,7 +79,15 @@ inside scenarios, and vector inputs are hypothetical inputs to pure functions. N
    non-commercial scorers to individual and research (O-06), and made every row with an UNVERIFIED license
    research-only (individual and llc now forbid `unverified`). An `analyzed_by` edge is recorded on the analysis
    artifact, pointing at the audio it read. An import's lanes are bounded by its attested terms, and a transcribed
-   MelodySpec carries its transcriber's lanes.
+   MelodySpec carries its transcriber's lanes and license chain (`lane.record_eligible`, C07). The transcriber is the
+   profile its transcription job ran, which the transcription must name; the job records the profile revision, and
+   every revision of a profile shares its declared components. The `license_chain` must **equal** the chain derived
+   from that profile (the register's terms for exactly its components, in any order), not merely contain it: a
+   transcription has no other source of components (its capture is a human recording, whose chain is empty), so an
+   extra entry could only claim terms its transcriber never carried. Every revision that carries a transcription is
+   checked (the first, each correction and each 1.1 assembled copy, which must also equal its source's exactly), so a
+   wrong chain set at the source cannot travel by exact inheritance; a 1.0 assembled record that leaves the
+   transcription null inherits its source's by reference, and the source is checked.
 7. **Lyric languages**: ACE profiles declare `en` only until a smoke run per language (Q6 default); HeartMuLa and
    MiniMax leave languages undeclared, so vocal requests are refused until their smoke runs.
 8. **Register text** copied from the research register uses neutral wording for the product name (ADR-0035), and nine

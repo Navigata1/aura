@@ -1,0 +1,78 @@
+{
+ "ticket": "C04",
+ "pr": 136,
+ "checked_at": "2026-11-08T03:22:48.645436+00:00",
+ "before": {
+  "head": "22f6ea2dc7280dac7ea594da430e056656f3404a",
+  "integration_tip": "910910a594f131a8082c355412aefed2b9348e41",
+  "reviewed_head": "1e0e1254a4b09faa5b1e0532ccfbf09f0a45dd5e",
+  "reviewed_patch_id": "332880565f3263269b30caeceaf4d0f1c01ee79b",
+  "merged_patch_id": "332880565f3263269b30caeceaf4d0f1c01ee79b",
+  "base_refresh": {
+   "reviewed_head": "1e0e1254a4b09faa5b1e0532ccfbf09f0a45dd5e",
+   "new_head": "22f6ea2dc7280dac7ea594da430e056656f3404a",
+   "patch_id": "332880565f3263269b30caeceaf4d0f1c01ee79b"
+  },
+  "checks": {
+   "checks / foundation (ubuntu-latest)": {
+    "conclusion": "success",
+    "name": "checks / foundation (ubuntu-latest)",
+    "status": "completed"
+   },
+   "checks / foundation (macos-latest)": {
+    "conclusion": "success",
+    "name": "checks / foundation (macos-latest)",
+    "status": "completed"
+   },
+   "checks / foundation (windows-latest)": {
+    "conclusion": "success",
+    "name": "checks / foundation (windows-latest)",
+    "status": "completed"
+   }
+  },
+  "review_file": "/Volumes/STUDIO/evidence/C04/C04-review.json",
+  "review_files": [
+   "/Volumes/STUDIO/evidence/C04/C04-standards-review.md",
+   "/Volumes/STUDIO/evidence/C04/C04-spec-review.md",
+   "/Volumes/STUDIO/evidence/C04/C04-review.json",
+   "/Volumes/STUDIO/evidence/C04/C04-review-SHA256SUMS",
+   "/Volumes/STUDIO/evidence/C04/C04-review-R00-install.log",
+   "/Volumes/STUDIO/evidence/C04/C04-review-R01-local-gate-head.log",
+   "/Volumes/STUDIO/evidence/C04/C04-review-R02-validate-base.log",
+   "/Volumes/STUDIO/evidence/C04/C04-review-R03-validate-head.log",
+   "/Volumes/STUDIO/evidence/C04/C04-review-R04-fixture-preservation.log",
+   "/Volumes/STUDIO/evidence/C04/C04-review-R04-fixtures-base.sha256",
+   "/Volumes/STUDIO/evidence/C04/C04-review-R04-fixtures-head.sha256",
+   "/Volumes/STUDIO/evidence/C04/C04-review-R05-dialect-probe.log",
+   "/Volumes/STUDIO/evidence/C04/C04-review-R06-polarity-probe.log",
+   "/Volumes/STUDIO/evidence/C04/C04-review-R07-oneof-disjoint.log",
+   "/Volumes/STUDIO/evidence/C04/C04-review-R07b-oneof-count-correction.log",
+   "/Volumes/STUDIO/evidence/C04/C04-review-R08-mutants.log",
+   "/Volumes/STUDIO/evidence/C04/C04-review-R09-plants-refusals.log",
+   "/Volumes/STUDIO/evidence/C04/C04-review-R10-patternproperties-metacheck.log",
+   "/Volumes/STUDIO/evidence/C04/C04-review-R11-latent-oracle.log",
+   "/Volumes/STUDIO/evidence/C04/C04-review-R12-integrity-ci.log",
+   "/Volumes/STUDIO/evidence/C04/C04-review-R13-merge-preview.log",
+   "/Volumes/STUDIO/evidence/C04/C04-review-R14-integration-now.log",
+   "/Volumes/STUDIO/evidence/C04/C04-review-R15-patchid-py310.log",
+   "/Volumes/STUDIO/evidence/C04/C04-review-R16-subagent-examples.log",
+   "/Volumes/STUDIO/evidence/C04/C04-review-dialect_probe.py",
+   "/Volumes/STUDIO/evidence/C04/C04-review-issue-132.json",
+   "/Volumes/STUDIO/evidence/C04/C04-review-mutants_probe.py",
+   "/Volumes/STUDIO/evidence/C04/C04-review-oneof_disjoint_probe.py",
+   "/Volumes/STUDIO/evidence/C04/C04-review-polarity_probe.py",
+   "/Volumes/STUDIO/evidence/C04/C04-review-pr-136.json",
+   "/Volumes/STUDIO/evidence/C04/C04-review-pr136.diff",
+   "/Volumes/STUDIO/evidence/C04/C04-review-v8_oracle.mjs"
+  ]
+ },
+ "after": {
+  "state": "MERGED",
+  "merge_commit": "a30bbad18b5d58a8f68afddc0abf6867e8c15102",
+  "merged_at": "2026-11-08T03:22:50Z",
+  "squash_author_noreply": true,
+  "issues_closed": [
+   132
+  ]
+ }
+}

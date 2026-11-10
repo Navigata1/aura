@@ -1,0 +1,576 @@
+{
+  "description": "The reviewer's case: Basic Pitch's corrected hymn, the assembly's source revision, carries the all-lanes pYIN transcriber's license chain with Basic Pitch's lanes, and its 1.1.0 assembled copy inherits that chain exactly; a transcription's license chain is derived from its transcriber, so an exact copy of a wrong chain is still refused.",
+  "expect_rules": [
+    "lane.record_eligible"
+  ],
+  "id": "SC-LANE-RECORD-SOURCE-CHAIN-LAUNDERED",
+  "kind": "fixture.scenario",
+  "overlay": [
+    {
+      "base_rev": null,
+      "content_sha256": "d73a941eb1b0da4fd6a511d88cc1dc1eefcd5136e01a747e2e14b32a8c3cb0f2",
+      "created_at": "2026-10-09T10:01:20Z",
+      "key": {
+        "mode": "major",
+        "tonic": "C"
+      },
+      "kind": "melody-spec",
+      "melody_id": "mel_hymn",
+      "notes": [
+        {
+          "confidence": "0.91",
+          "duration_ticks": 960,
+          "id": "n1",
+          "origin": "transcribed",
+          "pitch": 60,
+          "start_tick": 0,
+          "velocity": 90
+        },
+        {
+          "confidence": "0.64",
+          "duration_ticks": 960,
+          "id": "n2",
+          "origin": "transcribed",
+          "pitch": 62,
+          "start_tick": 960,
+          "velocity": 90
+        },
+        {
+          "confidence": "0.88",
+          "duration_ticks": 1920,
+          "id": "n3",
+          "origin": "transcribed",
+          "pitch": 64,
+          "start_tick": 1920,
+          "velocity": 90
+        },
+        {
+          "confidence": "0.79",
+          "duration_ticks": 1920,
+          "id": "n4",
+          "origin": "transcribed",
+          "pitch": 65,
+          "start_tick": 3840,
+          "velocity": 90
+        },
+        {
+          "confidence": "0.83",
+          "duration_ticks": 1920,
+          "id": "n5",
+          "origin": "transcribed",
+          "pitch": 67,
+          "start_tick": 5760,
+          "velocity": 90
+        }
+      ],
+      "phrases": [
+        {
+          "end_tick": 3840,
+          "id": "ph1",
+          "name": "opening line",
+          "start_tick": 0
+        },
+        {
+          "end_tick": 7680,
+          "id": "ph2",
+          "name": "answer line",
+          "start_tick": 3840
+        }
+      ],
+      "ppq": 960,
+      "project_id": "prj_hymn",
+      "quantize": null,
+      "rev": 1,
+      "schemaVersion": "1.0.0",
+      "source": {
+        "assembled_from": null,
+        "capture_sha256": "dc777e3766c902a35936fea39ee9ceecee87a562e63e9fb42a090dc80205d7e7",
+        "seed_kind": "hum",
+        "transcription": {
+          "eligible_lanes": [
+            "individual",
+            "research"
+          ],
+          "job_id": "job_tr1",
+          "license_chain": [
+            {
+              "code_license": "Apache-2.0",
+              "component_id": "basic-pitch",
+              "obligations": [],
+              "weights_license": "Apache-2.0 (bundled TF SavedModel, CoreML, TFLite, ONNX)"
+            }
+          ],
+          "method": "basic-pitch",
+          "note": "unverified on real hums",
+          "profile_id": "transcribe-basic-pitch"
+        }
+      },
+      "spec_kind": "melody",
+      "tempo_map": {
+        "meter": [
+          {
+            "denominator": 4,
+            "numerator": 4,
+            "tick": 0
+          }
+        ],
+        "rev": 1,
+        "tempo": [
+          {
+            "tick": 0,
+            "us_per_quarter": 500000
+          }
+        ]
+      }
+    },
+    {
+      "base_rev": 1,
+      "content_sha256": "3983e83dcc82796c07dde98527e11592343710620c644b412836772a3960e2b3",
+      "created_at": "2026-10-09T10:05:00Z",
+      "key": {
+        "mode": "major",
+        "tonic": "C"
+      },
+      "kind": "melody-spec",
+      "melody_id": "mel_hymn",
+      "notes": [
+        {
+          "confidence": "0.91",
+          "duration_ticks": 960,
+          "id": "n1",
+          "origin": "transcribed",
+          "pitch": 60,
+          "start_tick": 0,
+          "velocity": 90
+        },
+        {
+          "confidence": null,
+          "duration_ticks": 960,
+          "id": "n2",
+          "origin": "corrected",
+          "pitch": 63,
+          "start_tick": 960,
+          "velocity": 90
+        },
+        {
+          "confidence": "0.88",
+          "duration_ticks": 1920,
+          "id": "n3",
+          "origin": "transcribed",
+          "pitch": 64,
+          "start_tick": 1920,
+          "velocity": 90
+        },
+        {
+          "confidence": "0.79",
+          "duration_ticks": 1920,
+          "id": "n4",
+          "origin": "transcribed",
+          "pitch": 65,
+          "start_tick": 3840,
+          "velocity": 90
+        },
+        {
+          "confidence": "0.83",
+          "duration_ticks": 1920,
+          "id": "n5",
+          "origin": "transcribed",
+          "pitch": 67,
+          "start_tick": 5760,
+          "velocity": 90
+        }
+      ],
+      "phrases": [
+        {
+          "end_tick": 3840,
+          "id": "ph1",
+          "name": "opening line",
+          "start_tick": 0
+        },
+        {
+          "end_tick": 7680,
+          "id": "ph2",
+          "name": "answer line",
+          "start_tick": 3840
+        }
+      ],
+      "ppq": 960,
+      "project_id": "prj_hymn",
+      "quantize": null,
+      "rev": 2,
+      "schemaVersion": "1.0.0",
+      "source": {
+        "assembled_from": null,
+        "capture_sha256": "dc777e3766c902a35936fea39ee9ceecee87a562e63e9fb42a090dc80205d7e7",
+        "seed_kind": "hum",
+        "transcription": {
+          "eligible_lanes": [
+            "individual",
+            "research"
+          ],
+          "job_id": "job_tr1",
+          "license_chain": [
+            {
+              "code_license": "ISC",
+              "component_id": "librosa-pyin",
+              "obligations": [],
+              "weights_license": "n/a (no weights)"
+            },
+            {
+              "code_license": "Own code (all rights reserved until Q5)",
+              "component_id": "studio-own-code",
+              "obligations": [],
+              "weights_license": "n/a (no weights)"
+            }
+          ],
+          "method": "basic-pitch",
+          "note": "unverified on real hums",
+          "profile_id": "transcribe-basic-pitch"
+        }
+      },
+      "spec_kind": "melody",
+      "tempo_map": {
+        "meter": [
+          {
+            "denominator": 4,
+            "numerator": 4,
+            "tick": 0
+          }
+        ],
+        "rev": 2,
+        "tempo": [
+          {
+            "tick": 0,
+            "us_per_quarter": 500000
+          },
+          {
+            "tick": 3840,
+            "us_per_quarter": 600000
+          }
+        ]
+      }
+    },
+    {
+      "approval_id": null,
+      "compute_profile_id": "cp_tier4",
+      "cost": {
+        "basis": "local_zero",
+        "usd": "0.00"
+      },
+      "created_at": "2026-10-09T10:01:05Z",
+      "egress": [],
+      "error": null,
+      "history": [
+        {
+          "at": "2026-10-09T10:01:05Z",
+          "state": "queued"
+        },
+        {
+          "at": "2026-10-09T10:01:06Z",
+          "state": "preparing"
+        },
+        {
+          "at": "2026-10-09T10:01:07Z",
+          "state": "loading"
+        },
+        {
+          "at": "2026-10-09T10:01:08Z",
+          "state": "generating"
+        },
+        {
+          "at": "2026-10-09T10:01:20Z",
+          "state": "ready"
+        }
+      ],
+      "id": "job_tr1",
+      "inputs": [
+        {
+          "role": "hum",
+          "sha256": "dc777e3766c902a35936fea39ee9ceecee87a562e63e9fb42a090dc80205d7e7"
+        }
+      ],
+      "job_kind": "transcribe",
+      "kind": "job",
+      "lane": "individual",
+      "outputs": [
+        {
+          "role": "melody_spec",
+          "sha256": "d73a941eb1b0da4fd6a511d88cc1dc1eefcd5136e01a747e2e14b32a8c3cb0f2"
+        }
+      ],
+      "params": {
+        "actual": {},
+        "intent": {}
+      },
+      "parent_job_id": null,
+      "placement": {
+        "host_class": "cpu/m5pro",
+        "kind": "local"
+      },
+      "profile_id": "transcribe-basic-pitch",
+      "profile_revision": "9244a5233e6fea486a22985a55019cdf14d298e2b41ae1508f85fce878257646",
+      "project_id": "prj_hymn",
+      "quote_id": null,
+      "record_inputs": [],
+      "request_id": null,
+      "retry": null,
+      "schemaVersion": "1.0.0",
+      "seed": null,
+      "session_id": "ses_1",
+      "state": "ready",
+      "steps": [
+        {
+          "name": "pyin"
+        },
+        {
+          "name": "hmm-segmentation"
+        }
+      ],
+      "task": "transcribe"
+    },
+    {
+      "base_rev": null,
+      "content_sha256": "a946ad0d2380491c1d863345d7fde867f55aef8267b9fb663ca576b3578335f3",
+      "created_at": "2026-10-09T10:09:00Z",
+      "form": {
+        "end_tick": 92160,
+        "sections": [
+          {
+            "end_tick": 30720,
+            "name": "verse",
+            "phrases": [
+              {
+                "end_tick": 3840,
+                "phrase_id": "ph1",
+                "start_tick": 0
+              }
+            ],
+            "repeat": 1,
+            "section_id": "s1",
+            "section_kind": "vocal",
+            "start_tick": 0
+          },
+          {
+            "end_tick": 61440,
+            "name": "chorus",
+            "phrases": [
+              {
+                "end_tick": 34560,
+                "phrase_id": "ph2",
+                "start_tick": 30720
+              }
+            ],
+            "repeat": 1,
+            "section_id": "s2",
+            "section_kind": "vocal",
+            "start_tick": 30720
+          },
+          {
+            "end_tick": 92160,
+            "name": "chorus",
+            "phrases": [
+              {
+                "end_tick": 65280,
+                "phrase_id": "ph2",
+                "start_tick": 61440
+              }
+            ],
+            "repeat": 2,
+            "section_id": "s2",
+            "section_kind": "vocal",
+            "start_tick": 61440
+          }
+        ]
+      },
+      "key": {
+        "mode": "major",
+        "tonic": "C"
+      },
+      "kind": "melody-spec",
+      "melody_id": "mel_hymn_asm",
+      "notes": [
+        {
+          "confidence": null,
+          "duration_ticks": 960,
+          "id": "n1",
+          "origin": "assembled",
+          "pitch": 60,
+          "start_tick": 0,
+          "velocity": 90
+        },
+        {
+          "confidence": null,
+          "duration_ticks": 960,
+          "id": "n2",
+          "origin": "assembled",
+          "pitch": 63,
+          "start_tick": 960,
+          "velocity": 90
+        },
+        {
+          "confidence": null,
+          "duration_ticks": 1920,
+          "id": "n3",
+          "origin": "assembled",
+          "pitch": 64,
+          "start_tick": 1920,
+          "velocity": 90
+        },
+        {
+          "confidence": null,
+          "duration_ticks": 1920,
+          "id": "n4",
+          "origin": "assembled",
+          "pitch": 65,
+          "start_tick": 30720,
+          "velocity": 90
+        },
+        {
+          "confidence": null,
+          "duration_ticks": 1920,
+          "id": "n5",
+          "origin": "assembled",
+          "pitch": 67,
+          "start_tick": 32640,
+          "velocity": 90
+        },
+        {
+          "confidence": null,
+          "duration_ticks": 1920,
+          "id": "n6",
+          "origin": "assembled",
+          "pitch": 65,
+          "start_tick": 61440,
+          "velocity": 90
+        },
+        {
+          "confidence": null,
+          "duration_ticks": 1920,
+          "id": "n7",
+          "origin": "assembled",
+          "pitch": 67,
+          "start_tick": 63360,
+          "velocity": 90
+        }
+      ],
+      "phrases": [],
+      "ppq": 960,
+      "project_id": "prj_hymn",
+      "quantize": null,
+      "rev": 1,
+      "schemaVersion": "1.1.0",
+      "source": {
+        "assembled_from": {
+          "melody": {
+            "melody_id": "mel_hymn",
+            "rev": 2,
+            "tempo_map_rev": 2
+          },
+          "song": {
+            "rev": 1,
+            "song_id": "song_hymn"
+          }
+        },
+        "capture_sha256": "dc777e3766c902a35936fea39ee9ceecee87a562e63e9fb42a090dc80205d7e7",
+        "seed_kind": "assembled",
+        "transcription": {
+          "eligible_lanes": [
+            "individual",
+            "research"
+          ],
+          "job_id": "job_tr1",
+          "license_chain": [
+            {
+              "code_license": "ISC",
+              "component_id": "librosa-pyin",
+              "obligations": [],
+              "weights_license": "n/a (no weights)"
+            },
+            {
+              "code_license": "Own code (all rights reserved until Q5)",
+              "component_id": "studio-own-code",
+              "obligations": [],
+              "weights_license": "n/a (no weights)"
+            }
+          ],
+          "method": "basic-pitch",
+          "note": "unverified on real hums",
+          "profile_id": "transcribe-basic-pitch"
+        }
+      },
+      "spec_kind": "assembled",
+      "tempo_map": {
+        "meter": [
+          {
+            "denominator": 4,
+            "numerator": 4,
+            "tick": 0
+          }
+        ],
+        "rev": 1,
+        "tempo": [
+          {
+            "tick": 0,
+            "us_per_quarter": 500000
+          },
+          {
+            "tick": 30720,
+            "us_per_quarter": 600000
+          }
+        ]
+      }
+    },
+    {
+      "approval_id": null,
+      "compute_profile_id": "cp_tier4",
+      "cost": {
+        "basis": "local_zero",
+        "usd": "0.00"
+      },
+      "created_at": "2026-10-09T12:00:00Z",
+      "egress": [],
+      "error": null,
+      "history": [
+        {
+          "at": "2026-10-09T12:00:00Z",
+          "state": "queued"
+        }
+      ],
+      "id": "job_asm_read",
+      "inputs": [],
+      "job_kind": "guide",
+      "kind": "job",
+      "lane": "individual",
+      "outputs": [],
+      "params": {
+        "actual": {},
+        "intent": {}
+      },
+      "parent_job_id": null,
+      "placement": {
+        "host_class": "cpu/m5pro",
+        "kind": "local"
+      },
+      "profile_id": "analysis-guide-neutralvoice",
+      "profile_revision": "a4979994a03c31f42466b0f3150589dbbedd064480f48862298b111ad620dc26",
+      "project_id": "prj_hymn",
+      "quote_id": null,
+      "record_inputs": [
+        {
+          "kind": "melody-spec",
+          "sha256": "a946ad0d2380491c1d863345d7fde867f55aef8267b9fb663ca576b3578335f3"
+        }
+      ],
+      "request_id": null,
+      "retry": null,
+      "schemaVersion": "1.0.0",
+      "seed": null,
+      "session_id": "ses_1",
+      "state": "queued",
+      "steps": [],
+      "task": "guide"
+    }
+  ],
+  "remove": [],
+  "schemaVersion": "1.0.0"
+}
