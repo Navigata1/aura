@@ -75,7 +75,7 @@
                           "zero_length_note", "unterminated_note", "meter_change_inside_bar", "end_before_last_event",
                           "assembled_without_form", "malformed_smf"]},
         "smf_track": {"type": ["integer", "null"], "minimum": 0, "description": "The MTrk chunk's index in the file (an SMF track, not a timeline track); null outside every chunk, and on write."},
-        "tick": {"type": ["integer", "null"], "minimum": 0, "description": "The tick of the event to blame: on read in the file's own division, once that event's delta time is read; on write in MelodySpec ticks. Null where no event is to blame: the header, a chunk header, a delta time, or a tempo or meter list as a whole."}
+        "tick": {"type": ["integer", "null"], "minimum": 0, "description": "The tick of the event to blame: on read in the file's own division, once that event's delta time is read; on write in MelodySpec ticks. Null where no event is to blame: the header, a chunk header, a delta time, or an assembled record without a form."}
       }
     },
     "case": {
@@ -85,13 +85,14 @@
       "properties": {
         "name": {"type": "string", "minLength": 1},
         "derivation": {"type": "string", "minLength": 1, "maxLength": 600},
-        "op": {"enum": ["round_trip", "write", "read", "refuse_write", "refuse_read"]},
+        "op": {"enum": ["round_trip", "write", "read", "refuse_write", "refuse_read", "invalid_write"]},
         "melody": {"type": "object"},
         "markers": {"oneOf": [{"$ref": "#/$defs/markers"}, {"type": "null"}], "description": "The writer's section markers; null for an assembled record, whose form supplies them."},
         "end_tick": {"oneOf": [{"$ref": "#/$defs/endTick"}, {"type": "null"}], "description": "The writer's end_tick; null ends every SMF track at its own last event, or takes an assembled record's form.end_tick."},
         "smf_hex": {"$ref": "#/$defs/smfHex"},
         "read": {"$ref": "#/$defs/read"},
-        "refusal": {"$ref": "#/$defs/refusal"}
+        "refusal": {"$ref": "#/$defs/refusal"},
+        "invalid": {"enum": ["tempo_segments_invalid", "meter_segments_invalid", "meter_change_inside_bar"], "description": "On write, the time model's code for a record that breaks rule melody.wellformed: an input error (SmfWriteArgumentError), not a refusal, as in SongForm assembly."}
       },
       "allOf": [
         {
@@ -119,6 +120,15 @@
         {
           "if": {"properties": {"op": {"const": "refuse_read"}}},
           "then": {"required": ["smf_hex", "refusal"], "properties": {"melody": false, "markers": false, "end_tick": false, "read": false}}
+        },
+        {
+          "if": {"properties": {"op": {"const": "invalid_write"}}},
+          "then": {"required": ["melody", "markers", "end_tick", "invalid"],
+                   "properties": {"melody": {"$ref": "#/$defs/melody"}, "smf_hex": false, "read": false, "refusal": false}}
+        },
+        {
+          "if": {"properties": {"op": {"enum": ["round_trip", "write", "read", "refuse_write", "refuse_read"]}}},
+          "then": {"properties": {"invalid": false}}
         }
       ]
     }

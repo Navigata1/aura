@@ -75,6 +75,7 @@ class SmfWriteArgumentTests(unittest.TestCase):
         midi = reference_midi()
         self.assertTrue(midi.to_smf(self.MELODY, [{'name': 'verse', 'tick': 0}]))  # the valid neighbour writes
         self.assertTrue(midi.to_smf(self.ASSEMBLED))  # and so does an assembled record, from its form
+        self.assertTrue(midi.to_smf({**self.ASSEMBLED, 'ppq': 960}))  # a stated ppq must be the time model's
         spoilers = {
             'a meter denominator of 6': lambda m, k: m['tempo_map']['meter'][0].update(denominator=6),
             'a tempo of 2^24 us': lambda m, k: m['tempo_map']['tempo'][0].update(us_per_quarter=16777216),
@@ -87,6 +88,10 @@ class SmfWriteArgumentTests(unittest.TestCase):
             'notes that are null': lambda m, k: m.update(notes=None),
             'a marker that is a string': lambda m, k: k.__setitem__(0, 'verse'),
             'a marker name with a lone surrogate': lambda m, k: k[0].update(name='verse\ud800'),
+            'a ppq of 480, which would be retimed': lambda m, k: m.update(ppq=480),
+            'a form on a melody, whose outro would be cut': lambda m, k: m.update(
+                spec_kind='melody', form=self.ASSEMBLED['form']),
+            'a form on a record with no spec_kind': lambda m, k: m.update(form=self.ASSEMBLED['form']),
         }
         for label, spoil in spoilers.items():
             with self.subTest(label):

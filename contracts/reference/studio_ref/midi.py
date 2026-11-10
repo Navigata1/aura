@@ -1,8 +1,8 @@
 """MelodySpec <-> Standard MIDI File, the reference mapping (ADR-0033; contracts/README.md, 'MIDI round trip').
 
 Standard library only. to_smf writes the canonical file; from_smf reads one back. Content the mapping cannot represent
-raises a typed MidiRefusal; a to_smf argument outside the melody-spec and timeline/1 schemas raises
-SmfWriteArgumentError.
+raises a typed MidiRefusal; a to_smf argument outside the melody-spec and timeline/1 schemas in what the writer reads,
+or breaking rule melody.wellformed, is an input error and raises SmfWriteArgumentError.
 """
 
 from __future__ import annotations
@@ -30,8 +30,13 @@ class MidiRefusal(ValueError):
 
 
 class SmfWriteArgumentError(ValueError):
-    """A to_smf argument outside the melody-spec and timeline/1 schemas (a value, a type or a missing key), raised
-    before a byte is written."""
+    """A to_smf argument the writer reads that is outside the melody-spec and timeline/1 schemas (a value, a type or a
+    missing key) or breaks rule melody.wellformed, raised before a byte is written. An input error, not a refusal;
+    code is the time model's code when the tempo or meter list breaks melody.wellformed, else None."""
+
+    def __init__(self, message: str, code: str | None = None):
+        super().__init__(message)
+        self.code = code
 
 
 # ----- write --------------------------------------------------------------------------------------------------------
@@ -74,9 +79,9 @@ def _check_fields(melody: dict, markers: list, end_tick) -> None:
 
 
 def _meter_refused(meter: list[dict]) -> tuple[str, int] | None:
-    """The time model's own meter check, timemodel.bar_segments: segments start at tick 0, strictly increase and change
-    only on a bar line of the meter before them (timemodel's invariant, rule melody.wellformed). Returns the code and
-    tick of the first segment it refuses, found as the shortest prefix it refuses, or None."""
+    """On read, the time model's own meter check, timemodel.bar_segments: segments start at tick 0, strictly increase
+    and change only on a bar line of the meter before them (timemodel's invariant, rule melody.wellformed). Returns the
+    code and tick of the first segment it refuses, found as the shortest prefix it refuses, or None."""
     for end in range(1, len(meter) + 1):
         try:
             timemodel.bar_segments(meter[:end])
@@ -86,23 +91,27 @@ def _meter_refused(meter: list[dict]) -> tuple[str, int] | None:
 
 
 def _check_time_model(tempo_map: dict) -> None:
-    """Tempo and meter pass the time model's own checks (timemodel.bar_segments, tempo_segments). A list out of order is
-    refused as a whole, with no tick; a meter change off a bar line names its segment's tick."""
-    refused = _meter_refused(tempo_map["meter"])
-    if refused is not None:
-        code, tick = refused
-        raise MidiRefusal(code, None, tick) if code == "meter_change_inside_bar" else MidiRefusal("tempo_map_ambiguous")
+    """On write, meter and tempo pass the time model's own checks (timemodel.bar_segments, tempo_segments). A breach is
+    the caller's own record breaking rule melody.wellformed: an input error carrying the time model's code, as in
+    SongForm assembly (T02c), not a refusal. In a file being read the same breach is content the mapping cannot
+    represent: a MidiRefusal."""
     try:
+        timemodel.bar_segments(tempo_map["meter"])
         timemodel.tempo_segments(tempo_map["tempo"])
-    except timemodel.TimeModelError:
-        raise MidiRefusal("tempo_map_ambiguous") from None
+    except timemodel.TimeModelError as error:
+        raise SmfWriteArgumentError(f"breaks melody.wellformed: {error.code}", code=error.code) from None
 
 
 def _arguments(melody: dict, markers, end_tick) -> tuple[list[dict], int | None]:
     """The writer's arguments, checked. An assembled record (melody-spec 1.1.0, T02c) supplies its markers and end from
     its form, so the caller passes neither; a 1.0 assembled record has no form and is refused rather than have its end
-    inferred from its notes. Any value, type or key outside the schemas raises SmfWriteArgumentError."""
+    inferred from its notes. Any value, type or key outside the schemas raises SmfWriteArgumentError, and so do a ppq
+    other than 960 (it would be retimed) and a form on any other record (its outro would be cut)."""
     try:
+        if melody.get("ppq", timemodel.PPQ) != timemodel.PPQ:
+            raise SmfWriteArgumentError(f"ppq must be {timemodel.PPQ}: {melody['ppq']!r}")
+        if "form" in melody and melody.get("spec_kind") != "assembled":
+            raise SmfWriteArgumentError("only an assembled record carries a form")
         if melody.get("spec_kind") == "assembled":
             if "form" not in melody:
                 raise MidiRefusal("assembled_without_form")

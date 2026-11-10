@@ -63,6 +63,14 @@ def build(profiles):
          "phrases": [{"phrase_id": "ph1", "start_tick": 0, "end_tick": 3840}]},
         {"section_id": "s2", "name": "outro", "section_kind": "instrumental", "repeat": 1, "start_tick": 3840,
          "end_tick": 7680, "phrases": []}]}
+    intro = {**assembled("1.1.0", {"end_tick": 7680, "sections": [
+        {"section_id": "s1", "name": "intro", "section_kind": "instrumental", "repeat": 1, "start_tick": 0,
+         "end_tick": 3840, "phrases": []},
+        {"section_id": "s2", "name": "verse", "section_kind": "vocal", "repeat": 1, "start_tick": 3840, "end_tick": 7680,
+         "phrases": [{"phrase_id": "ph1", "start_tick": 3840, "end_tick": 7680}]}]}),
+        "melody_id": "mel_midi_intro", "content_sha256": H("midi assembled intro"),
+        "notes": [{"id": "n1", "start_tick": 3840, "duration_ticks": 3840, "pitch": 60, "velocity": 100,
+                   "confidence": None, "origin": "assembled"}]}
     cases = [
         {"name": "one note at 120 BPM in 4/4", "op": "round_trip", "melody": melody(T120, M44, note(0, 960, 60, 100)),
          "markers": [], "end_tick": 960, "smf_hex": ONE_NOTE, "derivation":
@@ -120,6 +128,15 @@ def build(profiles):
          "A melody-spec 1.1.0 assembled record carries its form (T02c): each form.sections entry gives a marker at its "
          "start_tick (verse at 0, outro at 3840), and form.end_tick, 7680, is the file's end. The caller passes neither, "
          "and the bytes are the outro case's, so the outro keeps its bar."},
+        {"name": "an assembled record with an instrumental intro is written whole", "op": "write", "melody": intro,
+         "markers": None, "end_tick": None,
+         "smf_hex": "4d546864000000060001000203c0"
+                    "4d54726b00000026" "00ff580404021808" "00ff510307a120" "00ff0605696e74726f" "9e00ff06057665727365"
+                    "00ff2f00" "4d54726b0000000e" "9e00903c64" "9e00803c40" "00ff2f00", "derivation":
+         "The form's intro [0, 3840) is instrumental and places no phrase; the verse [3840, 7680) holds C4. Conductor "
+         "(38 bytes): 4/4, 07a120 and ff06 05 'intro' (69 6e 74 72 6f) at 0, then 9e 00 (3840) ff06 05 'verse'; "
+         "form.end_tick 7680 equals the last note-off, so the conductor ends at its own last event. Melody (14 bytes): "
+         "9e 00 90 3c 64, so the intro's bar of rest is kept; 9e 00 80 3c 40 at 7680; 00 ff2f00."},
         {"name": "a third meter is judged by the bar of the second", "op": "round_trip",
          "melody": melody(T120, [{"tick": 0, "numerator": 4, "denominator": 4}, {"tick": 3840, "numerator": 3,
                                   "denominator": 4}, {"tick": 6720, "numerator": 2, "denominator": 4}],
@@ -244,6 +261,8 @@ def build(profiles):
          "The 9 bytes end after the note-off, inside the next delta time; ff 2f 00 never comes."),
         ("data after End of Track", FORMAT0 + "4d54726b" "00000008" "00ff2f00" "00ff2f00", 0, 0,
          "A second event follows the End of Track at tick 0 inside the chunk."),
+        ("an End of Track that carries data", FORMAT0 + "4d54726b" "00000005" "00ff2f0100", 0, 0,
+         "ff 2f 01 00: the End of Track's length byte is 01 and one data byte follows; SMF 1.0 fixes it at ff 2f 00."),
         ("bytes after the last chunk", FORMAT0 + end + "00", None, None, "One stray byte follows the only chunk."),
         ("a delta time longer than four bytes", FORMAT0 + "4d54726b" "00000009" "8080808000" "00ff2f00", 0, None,
          "80 80 80 80 still has its continuation bit after four bytes, the SMF maximum."),
@@ -266,27 +285,6 @@ def build(profiles):
         ("two overlapping notes of one pitch", melody(T120, M44, note(0, 1920, 60, 100), note(960, 960, 60, 100)), None,
          "same_pitch_overlap", 960, "C4 sounds from 0 to 1920 and again from 960; one channel cannot hold both, and "
          "the first note-off would end the wrong note."),
-        ("two tempos at one tick", melody([{"tick": 0, "us_per_quarter": 500000}, {"tick": 0, "us_per_quarter": 600000}],
-                                          M44, note(0, 960, 60, 100)), None,
-         "tempo_map_ambiguous", None, "The tempo list repeats tick 0, so it does not strictly increase: the time model's "
-         "ordering check (melody.wellformed) refuses the list as a whole, so no tick."),
-        ("a tempo list that does not start at tick 0", melody([{"tick": 960, "us_per_quarter": 500000}], M44,
-                                                              note(0, 960, 60, 100)), None,
-         "tempo_map_ambiguous", None, "Written as is, a reader would hear the SMF default 120 BPM before 960, a tempo "
-         "the MelodySpec never stated. The time model's ordering check refuses the list as a whole, so no tick."),
-        ("a meter that does not start at tick 0", melody(T120, [{"tick": 960, "numerator": 4, "denominator": 4}],
-                                                        note(0, 960, 60, 100)), None,
-         "tempo_map_ambiguous", None, "Written as is, a reader would hear the SMF default 4/4 before 960, a meter the "
-         "MelodySpec never stated. The list as a whole is refused, so no tick."),
-        ("two meters at one tick", melody(T120, [{"tick": 0, "numerator": 4, "denominator": 4},
-                                                  {"tick": 0, "numerator": 3, "denominator": 4}], note(0, 960, 60, 100)), None,
-         "tempo_map_ambiguous", None, "The meter list repeats tick 0, so it does not strictly increase: the time model's "
-         "meter check refuses the list as a whole, so no tick."),
-        ("a meter change inside a bar", melody(T120, [{"tick": 0, "numerator": 4, "denominator": 4},
-                                                       {"tick": 1920, "numerator": 3, "denominator": 4}],
-                                                      note(0, 960, 60, 100)), None,
-         "meter_change_inside_bar", 1920, "3/4 starts at 1920, half a 3840-tick 4/4 bar; written as is, the file would put "
-         "a bar line where the MelodySpec's own bars do not."),
         ("a gap longer than the SMF delta-time maximum", melody(T120, M44, note(268435456, 960, 60, 100)), None,
          "tick_not_representable", 268435456, "The first note-on is 268435456 = 2^28 ticks after 0, one more than the "
          "largest four-byte delta time, 0x0fffffff."),
@@ -299,6 +297,31 @@ def build(profiles):
                   "refusal": {"code": "assembled_without_form", "smf_track": None, "tick": None}, "derivation":
                   "A melody-spec 1.0 assembled record has no form, so its end and sections could only be inferred from "
                   "its notes; T02c has consumers refuse such a record rather than infer one, and the writer does."})
+    cases += [{"name": name, "derivation": why, "op": "invalid_write", "melody": mel, "markers": [], "end_tick": None,
+               "invalid": code} for name, mel, code, why in [
+        ("two tempos at one tick", melody([{"tick": 0, "us_per_quarter": 500000}, {"tick": 0, "us_per_quarter": 600000}],
+                                          M44, note(0, 960, 60, 100)),
+         "tempo_segments_invalid", "The tempo list repeats tick 0, so it does not strictly increase: the caller's own "
+         "record breaks melody.wellformed, an input error on write (as in SongForm assembly), not a refusal."),
+        ("a tempo list that does not start at tick 0", melody([{"tick": 960, "us_per_quarter": 500000}], M44,
+                                                              note(0, 960, 60, 100)),
+         "tempo_segments_invalid", "Written as is, a reader would hear the SMF default 120 BPM before 960, a tempo "
+         "the MelodySpec never stated. The record breaks melody.wellformed: an input error."),
+        ("a meter that does not start at tick 0", melody(T120, [{"tick": 960, "numerator": 4, "denominator": 4}],
+                                                        note(0, 960, 60, 100)),
+         "meter_segments_invalid", "Written as is, a reader would hear the SMF default 4/4 before 960, a meter the "
+         "MelodySpec never stated. The record breaks melody.wellformed: an input error."),
+        ("two meters at one tick", melody(T120, [{"tick": 0, "numerator": 4, "denominator": 4},
+                                                  {"tick": 0, "numerator": 3, "denominator": 4}], note(0, 960, 60, 100)),
+         "meter_segments_invalid", "The meter list repeats tick 0, so it does not strictly increase: the record breaks "
+         "melody.wellformed, an input error."),
+        ("a meter change inside a bar", melody(T120, [{"tick": 0, "numerator": 4, "denominator": 4},
+                                                       {"tick": 1920, "numerator": 3, "denominator": 4}],
+                                                      note(0, 960, 60, 100)),
+         "meter_change_inside_bar", "3/4 starts at 1920, half a 3840-tick 4/4 bar; written as is, the file would put a "
+         "bar line where the MelodySpec's own bars do not. The same file is a refusal on read; the caller's own record "
+         "is an input error."),
+    ]]
     return {"kind": KIND, "schemaVersion": SV, "cases": cases}
 
 
@@ -313,6 +336,12 @@ def evaluate(case, world):
         except midi.MidiRefusal as refusal:
             return refusal.as_dict(), case["refusal"]
         return "no refusal", case["refusal"]
+    if op == "invalid_write":  # the caller's own record breaks melody.wellformed: an input error, not a refusal
+        try:
+            midi.to_smf(case["melody"], case["markers"], case["end_tick"])
+        except midi.SmfWriteArgumentError as error:
+            return {"invalid": error.code}, {"invalid": case["invalid"]}
+        return "no input error", {"invalid": case["invalid"]}
     if op == "read":
         return midi.from_smf(bytes.fromhex(case["smf_hex"])), case["read"]
     written = midi.to_smf(case["melody"], case["markers"], case["end_tick"]).hex()
