@@ -1,0 +1,30 @@
+{
+  "description": "A guide at 22.05 kHz.",
+  "error_contains": "$.params.sample_rate",
+  "id": "IR-TASK-REQUEST-GUIDE-RATE",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "deadline_s": 600,
+    "inputs": [
+      {
+        "bytes": 1024,
+        "media_type": "application/json",
+        "role": "melody",
+        "sha256": "c4d586b249e1f0f8197c14d6cc3d66eeb072c77111e815508e7bd6b8e0954e5b"
+      }
+    ],
+    "job_id": "job_ir",
+    "kind": "task-request",
+    "lane": "individual",
+    "params": {
+      "sample_rate": 22050
+    },
+    "profile_id": "analysis-guide-neutralvoice",
+    "schemaVersion": "1.1.0",
+    "seed": 1,
+    "task": "guide"
+  },
+  "record_kind": "task-request",
+  "rule": "A guide renders at 44.1 or 48 kHz",
+  "schemaVersion": "1.0.0"
+}

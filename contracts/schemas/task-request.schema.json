@@ -29,5 +29,75 @@
     "params": {"type": "object"},
     "seed": {"type": ["integer", "null"], "minimum": 0},
     "deadline_s": {"type": "integer", "minimum": 1, "maximum": 14400}
+  },
+  "allOf": [{"if": {"properties": {"schemaVersion": {"pattern": "^1\\.[1-9][0-9]*\\.[0-9]+$"}}}, "then": {"$ref": "#/$defs/typedTask"}}],
+  "$defs": {
+    "typedTask": {
+      "$comment": "added in 1.1.0",
+      "description": "From 1.1.0, params and input roles are typed per task (contracts/README.md, 'Worker protocol'). cover takes one source audio (the guide or the hum it follows) and text_to_song none; both take the approved lyrics as role lyrics exactly when lyrics_language is set, and text_to_song an optional style text. guide takes one assembled MelodySpec as canonical JSON (role melody). A task typed nowhere here takes no params. Faults are allowed only on fake-* profiles.",
+      "allOf": [
+        {"if": {"properties": {"task": {"enum": ["cover", "text_to_song"]}}},
+         "then": {"properties": {"params": {"$ref": "#/$defs/generateParams"}}},
+         "else": {"if": {"properties": {"task": {"const": "guide"}}},
+                  "then": {"properties": {"params": {"$ref": "#/$defs/guideParams"},
+                                          "inputs": {"minItems": 1, "items": {"properties": {"role": {"const": "melody"}, "media_type": {"const": "application/json"}}}}}},
+                  "else": {"properties": {"params": {"maxProperties": 0}}}}},
+        {"if": {"properties": {"task": {"const": "cover"}}},
+         "then": {"properties": {"inputs": {"contains": {"properties": {"role": {"const": "source"}}},
+                                            "items": {"anyOf": [{"properties": {"role": {"const": "source"}, "media_type": {"pattern": "^audio/(wav|flac)$"}}},
+                                                                {"properties": {"role": {"const": "lyrics"}, "media_type": {"const": "text/plain"}}}]}}}}},
+        {"if": {"properties": {"task": {"const": "text_to_song"}}},
+         "then": {"properties": {"params": {"properties": {"audio_cover_strength": false}},
+                                 "inputs": {"items": {"properties": {"role": {"enum": ["lyrics", "style"]}, "media_type": {"const": "text/plain"}}}}}}},
+        {"if": {"properties": {"task": {"enum": ["cover", "text_to_song"]}, "params": {"required": ["lyrics_language"], "properties": {"lyrics_language": {"type": "string"}}}}},
+         "then": {"properties": {"inputs": {"contains": {"properties": {"role": {"const": "lyrics"}}}}}},
+         "else": {"properties": {"inputs": {"items": {"properties": {"role": {"not": {"const": "lyrics"}}}}}}}},
+        {"if": {"properties": {"params": {"required": ["faults"]}}}, "then": {"properties": {"profile_id": {"pattern": "^fake-"}}}}
+      ]
+    },
+    "generateParams": {
+      "$comment": "added in 1.1.0",
+      "description": "Params of cover and text_to_song. duration_s and channels are checked against the profile's max_duration_s and channels (over_limit); lyrics_language against its lyric languages (language_unsupported), null meaning instrumental. audio_cover_strength (cover only) is an exact decimal from 0 to 1. faults are FakeEngine's fault knobs (fake-engine), honoured only under STUDIO_ENV=test; rates are exact decimals from 0 to 1.",
+      "type": "object",
+      "required": ["duration_s", "channels", "lyrics_language"],
+      "additionalProperties": false,
+      "properties": {
+        "duration_s": {"type": "integer", "minimum": 1, "maximum": 14400},
+        "channels": {"type": "integer", "minimum": 1, "maximum": 2},
+        "lyrics_language": {"oneOf": [{"$ref": "common.schema.json#/$defs/bcp47"}, {"type": "null"}]},
+        "audio_cover_strength": {"type": "string", "pattern": "^(0(\\.[0-9]{1,3})?|1(\\.0{1,3})?)$"},
+        "faults": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": false,
+          "properties": {
+            "drift_cents": {"type": "integer", "minimum": -1200, "maximum": 1200},
+            "octave_error_rate": {"type": "string", "pattern": "^(0(\\.[0-9]{1,3})?|1(\\.0{1,3})?)$"},
+            "onset_jitter_ms": {"type": "integer", "minimum": 0, "maximum": 1000},
+            "clip_db": {"type": "integer", "minimum": 0, "maximum": 48},
+            "silence": {"type": "boolean"},
+            "fail_at_step": {"type": "integer", "minimum": 1},
+            "crash_at": {"enum": ["preparing", "loading", "generating"]},
+            "wrong_output_hash": {"type": "boolean"},
+            "slow_load_ms": {"type": "integer", "minimum": 0, "maximum": 600000},
+            "ignore_cancel": {"type": "boolean"},
+            "refuse": {"$ref": "common.schema.json#/$defs/refusalCode"}
+          }
+        }
+      }
+    },
+    "guideParams": {
+      "$comment": "added in 1.1.0",
+      "description": "Params of the guide task (NeutralVoice, ADR-0032): the output sample rate, and optionally its vowel, vibrato depth and pitch drift in cents.",
+      "type": "object",
+      "required": ["sample_rate"],
+      "additionalProperties": false,
+      "properties": {
+        "sample_rate": {"enum": [44100, 48000]},
+        "vowel": {"enum": ["a", "e", "i", "o", "u"]},
+        "vibrato_cents": {"type": "integer", "minimum": 0, "maximum": 100},
+        "drift_cents": {"type": "integer", "minimum": 0, "maximum": 30}
+      }
+    }
   }
 }

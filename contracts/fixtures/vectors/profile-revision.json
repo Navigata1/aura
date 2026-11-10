@@ -1,0 +1,162 @@
+{
+  "cases": [
+    {
+      "derivation": "wkr_fake's pins; a profile without weights hashes null, never an empty string.",
+      "expected": {
+        "preimage": "{\"code_commit\":\"0000000\",\"env\":{\"lock_sha256\":\"f66d3cea03d102df6b8139947fb3b0c09f8a387a58fd6b4e78a63a6796dbfe54\"},\"sdk_version\":\"0.1.0\",\"weights_manifest_sha256\":null}",
+        "profile_revision": "af2c6dda342644302b7af98e1c3e6c39cb922b712ba090d423c0445da0a8e99d"
+      },
+      "input": {
+        "code_commit": "0000000",
+        "env": {
+          "lock_sha256": "f66d3cea03d102df6b8139947fb3b0c09f8a387a58fd6b4e78a63a6796dbfe54"
+        },
+        "sdk_version": "0.1.0",
+        "weights_manifest_sha256": null
+      },
+      "name": "fake worker, no weights"
+    },
+    {
+      "derivation": "The same pins with a weights manifest: the hex goes in as a lowercase string.",
+      "expected": {
+        "preimage": "{\"code_commit\":\"0000000\",\"env\":{\"lock_sha256\":\"f66d3cea03d102df6b8139947fb3b0c09f8a387a58fd6b4e78a63a6796dbfe54\"},\"sdk_version\":\"0.1.0\",\"weights_manifest_sha256\":\"1111111111111111111111111111111111111111111111111111111111111111\"}",
+        "profile_revision": "8d870430e357c44e199f7b21e4e0b376c28241ad81c808722ef750f935e60398"
+      },
+      "input": {
+        "code_commit": "0000000",
+        "env": {
+          "lock_sha256": "f66d3cea03d102df6b8139947fb3b0c09f8a387a58fd6b4e78a63a6796dbfe54"
+        },
+        "sdk_version": "0.1.0",
+        "weights_manifest_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      "name": "weights manifest pinned"
+    },
+    {
+      "derivation": "A burst image: env is the image_digest object, prefix included.",
+      "expected": {
+        "preimage": "{\"code_commit\":\"0000000\",\"env\":{\"image_digest\":\"sha256:2222222222222222222222222222222222222222222222222222222222222222\"},\"sdk_version\":\"0.1.0\",\"weights_manifest_sha256\":\"1111111111111111111111111111111111111111111111111111111111111111\"}",
+        "profile_revision": "46a5da0d201d0beb38f5ad06935996ebeb8ed8b5c0632139592412bc59a3ca3b"
+      },
+      "input": {
+        "code_commit": "0000000",
+        "env": {
+          "image_digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+        },
+        "sdk_version": "0.1.0",
+        "weights_manifest_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      "name": "image digest environment"
+    },
+    {
+      "derivation": "The commit is hashed exactly as described: a 40-digit commit whose first 7 digits match the short one is a different revision, so a worker must describe one form consistently.",
+      "expected": {
+        "preimage": "{\"code_commit\":\"0000000aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"env\":{\"lock_sha256\":\"f66d3cea03d102df6b8139947fb3b0c09f8a387a58fd6b4e78a63a6796dbfe54\"},\"sdk_version\":\"0.1.0\",\"weights_manifest_sha256\":null}",
+        "profile_revision": "7e954a6ea229991e484f2534b97ea2c6898808af67a6543cdc768d9a2caf1ece"
+      },
+      "input": {
+        "code_commit": "0000000aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "env": {
+          "lock_sha256": "f66d3cea03d102df6b8139947fb3b0c09f8a387a58fd6b4e78a63a6796dbfe54"
+        },
+        "sdk_version": "0.1.0",
+        "weights_manifest_sha256": null
+      },
+      "name": "full commit is another revision"
+    },
+    {
+      "derivation": "Only sdk_version changes from the first case.",
+      "expected": {
+        "preimage": "{\"code_commit\":\"0000000\",\"env\":{\"lock_sha256\":\"f66d3cea03d102df6b8139947fb3b0c09f8a387a58fd6b4e78a63a6796dbfe54\"},\"sdk_version\":\"0.2.0\",\"weights_manifest_sha256\":null}",
+        "profile_revision": "92c974426e10313c5701e4f2dd736efab7d118de9277f395f3467052a4b59b6e"
+      },
+      "input": {
+        "code_commit": "0000000",
+        "env": {
+          "lock_sha256": "f66d3cea03d102df6b8139947fb3b0c09f8a387a58fd6b4e78a63a6796dbfe54"
+        },
+        "sdk_version": "0.2.0",
+        "weights_manifest_sha256": null
+      },
+      "name": "SDK bump is another revision"
+    },
+    {
+      "derivation": "Commits are lowercase hex, 7 to 40 digits.",
+      "expected": {
+        "invalid": "code_commit_invalid"
+      },
+      "input": {
+        "code_commit": "0000000A",
+        "env": {
+          "lock_sha256": "f66d3cea03d102df6b8139947fb3b0c09f8a387a58fd6b4e78a63a6796dbfe54"
+        },
+        "sdk_version": "0.1.0",
+        "weights_manifest_sha256": null
+      },
+      "name": "uppercase commit"
+    },
+    {
+      "derivation": "env is exactly one of lock_sha256 or image_digest.",
+      "expected": {
+        "invalid": "env_invalid"
+      },
+      "input": {
+        "code_commit": "0000000",
+        "env": {
+          "image_digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+          "lock_sha256": "f66d3cea03d102df6b8139947fb3b0c09f8a387a58fd6b4e78a63a6796dbfe54"
+        },
+        "sdk_version": "0.1.0",
+        "weights_manifest_sha256": null
+      },
+      "name": "both environments"
+    },
+    {
+      "derivation": "An image digest carries its sha256: prefix.",
+      "expected": {
+        "invalid": "env_invalid"
+      },
+      "input": {
+        "code_commit": "0000000",
+        "env": {
+          "image_digest": "2222222222222222222222222222222222222222222222222222222222222222"
+        },
+        "sdk_version": "0.1.0",
+        "weights_manifest_sha256": null
+      },
+      "name": "digest without prefix"
+    },
+    {
+      "derivation": "SDK versions are major.minor.patch.",
+      "expected": {
+        "invalid": "sdk_version_invalid"
+      },
+      "input": {
+        "code_commit": "0000000",
+        "env": {
+          "lock_sha256": "f66d3cea03d102df6b8139947fb3b0c09f8a387a58fd6b4e78a63a6796dbfe54"
+        },
+        "sdk_version": "0.1",
+        "weights_manifest_sha256": null
+      },
+      "name": "two-part SDK version"
+    },
+    {
+      "derivation": "No weights is null; an empty string is refused.",
+      "expected": {
+        "invalid": "weights_manifest_invalid"
+      },
+      "input": {
+        "code_commit": "0000000",
+        "env": {
+          "lock_sha256": "f66d3cea03d102df6b8139947fb3b0c09f8a387a58fd6b4e78a63a6796dbfe54"
+        },
+        "sdk_version": "0.1.0",
+        "weights_manifest_sha256": ""
+      },
+      "name": "empty weights manifest"
+    }
+  ],
+  "kind": "fixture.profile-revision",
+  "schemaVersion": "1.0.0"
+}

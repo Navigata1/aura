@@ -294,3 +294,33 @@ module, its API refusal type and that consistency check belong to the song-inten
 architecture §4.6's `assemble(melody, form) -> melody` with this reference's `assemble(melody, song, output)` (the
 SongSpec supplies the form and names the source revision; `output` names the new record). Fixtures are synthetic:
 nothing was rendered or listened to.
+
+## Worker protocol (T02w)
+
+Carved out of T02h and T02g for the worker SDK (`worker-sdk`), FakeEngine (`fake-engine`), NeutralVoice's guide
+(`neutralvoice`), the conductor and the registry. Reference: `reference/studio_ref/worker_protocol.py`.
+
+**Typed task params and input roles** (task-request 1.1.0, `$defs/typedTask`). A 1.1.0 request is validated per task and
+an unknown param fails its schema; a 1.0.0 request keeps its untyped `params`, so every stored 1.0.0 record still
+validates (the scenarios that smuggle a path or URL into params are 1.0.0 and still reach `worker.no_paths_or_urls`).
+- `cover` and `text_to_song` (`$defs/generateParams`): `duration_s` and `channels` (checked against `max_duration_s`
+  and `channels`: `over_limit`) and `lyrics_language` (a BCP 47 tag, or null for instrumental: `language_unsupported`
+  when the profile does not declare it) are required; `audio_cover_strength` is a cover-only exact decimal from 0 to 1.
+  `cover` takes one `source` (WAV or FLAC: the guide for R2-synth, the hum for R2-raw); both take the approved lyrics
+  as role `lyrics` (text/plain) exactly when `lyrics_language` is set, and `text_to_song` an optional `style` text.
+- `faults` are FakeEngine's fault knobs (T15's eleven, in snake_case; rates are decimals from 0 to 1), allowed only on
+  `fake-*` profiles; the worker honours them only under `STUDIO_ENV=test`.
+- `guide` (`$defs/guideParams`): one assembled MelodySpec as canonical JSON in role `melody`, a required `sample_rate`
+  (44100 or 48000) and optional `vowel`, `vibrato_cents` and `drift_cents`.
+- Every other task takes no params at 1.1.0 and its roles stay untyped. Typing them is a later minor version, owned by
+  the ticket that needs them (ACE's own cover params, separate, score_to_song, transcribe and the rest).
+
+**`profile_revision`** = lowercase hex `sha256` of the canonical JSON (ADR-0028) of
+`{code_commit, env, sdk_version, weights_manifest_sha256}`, each exactly as `GET /v1/describe` reports it: `env` is
+the one-key `lock_sha256` or `image_digest` object, and a profile without weights is `null`. This is the spec's
+`sha256(code_commit ‖ weights_manifest ‖ env_lock_or_image_digest ‖ worker_sdk_version)` with the concatenation made
+unambiguous. The profile id is not hashed: two weightless profiles of one worker share a revision, which is safe because
+status is keyed by the subject as well as the revision. The commit is hashed as described, so a short and a full commit
+are different revisions. Malformed pins raise `ProtocolError` with `code_commit_invalid`, `env_invalid`,
+`sdk_version_invalid` or `weights_manifest_invalid`. Vectors: `fixtures/vectors/profile-revision.json`, each with its
+hand-written preimage.

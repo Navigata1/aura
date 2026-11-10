@@ -1590,6 +1590,48 @@ def build_invalid_records(docs: list[dict], L: dict) -> list[dict]:
        "An engine case names the owner verdicts it expects", "$.cases[0].verdict_ids: fewer than 1 items", "An engine case expecting no verdict.")
     ir("EVIDENCE-BINDING-VALIDATED-FLAG", bound, lambda d: d.update(validated=True), "No caller-set validated flag (C01 follow-on 6)",
        "$.validated" + closed, "A binding that declares itself validated.")
+
+    def request(task, profile, inputs, **params):  # T02w: params and input roles are typed per task from 1.1.0
+        return {"kind": "task-request", "schemaVersion": "1.1.0", "job_id": "job_ir", "profile_id": profile, "task": task,
+                "lane": "individual", "inputs": [{"role": r, "sha256": H("ir-" + r), "media_type": m, "bytes": 1024}
+                                                 for r, m in inputs], "params": params, "seed": 1, "deadline_s": 600}
+    cover = request("cover", "fake-route-a", [("source", "audio/wav")], duration_s=30, channels=2, lyrics_language=None)
+    guide = request("guide", "analysis-guide-neutralvoice", [("melody", "application/json")], sample_rate=48000)
+    params = lambda **kw: (lambda d: d["params"].update(kw))  # noqa: E731
+    ir("TASK-REQUEST-UNKNOWN-PARAM", cover, params(guidance="7"), "Params are typed per task; unknown params are refused",
+       "$.params.guidance" + closed, "An undeclared cover param.")
+    ir("TASK-REQUEST-PARAM-MISSING", cover, lambda d: d["params"].pop("duration_s"), "over_limit needs a typed duration",
+       "$.params: missing required property 'duration_s'", "A cover without its duration.")
+    ir("TASK-REQUEST-ROLE-UNDECLARED", cover, lambda d: d["inputs"][0].update(role="melody"), "A cover takes a source and lyrics",
+       "$.inputs[0]: matches none of anyOf", "A cover given a MelodySpec input.")
+    ir("TASK-REQUEST-NO-SOURCE", cover, lambda d: d.update(inputs=[]), "A cover needs the audio it follows", "$.inputs: no item matches 'contains'",
+       "A cover with nothing to cover.")
+    ir("TASK-REQUEST-LYRICS-MISSING", cover, params(lyrics_language="en"), "A sung request sends its approved lyrics",
+       "$.inputs: no item matches 'contains'", "A lyric language without lyrics.")
+    ir("TASK-REQUEST-FAULTS-REAL-PROFILE", cover, lambda d: d.update(profile_id="ace-2b-turbo-mlx", params={**d["params"],
+       "faults": {"silence": True}}), "Faults are for test-only fake profiles",
+       "$.profile_id: 'ace-2b-turbo-mlx' does not match '^fake-'", "A fault on a real engine.")
+    ir("TASK-REQUEST-UNTYPED-TASK-PARAMS", cover, lambda d: d.update(task="separate", params={"stems": "4"}),
+       "A task without typed params takes none", "$.params: more than 0 properties", "Params on a task that types none yet.")
+    ir("TASK-REQUEST-GUIDE-AUDIO", guide, lambda d: d.update(inputs=cover["inputs"]), "A guide renders a MelodySpec",
+       "$.inputs[0].role: expected const 'melody'", "A guide given audio.")
+    ir("TASK-REQUEST-STRENGTH-ON-TEXT", cover, lambda d: d.update(task="text_to_song", inputs=[], params={**d["params"],
+       "audio_cover_strength": "0.5"}), "Cover strength is a cover param",
+       "$.params.audio_cover_strength" + closed, "A cover strength on text to song.")
+    ir("TASK-REQUEST-LYRICS-UNSUNG", cover, lambda d: d["inputs"].append({**d["inputs"][0], "role": "lyrics", "media_type": "text/plain"}),
+       "Lyrics travel only with their language", "$.inputs[1].role: must not match the 'not' schema", "Lyrics on an instrumental.")
+    ir("TASK-REQUEST-SOURCE-MP3", cover, lambda d: d["inputs"][0].update(media_type="audio/mpeg"), "A source is WAV or FLAC",
+       "$.inputs[0]: matches none of anyOf", "An MP3 source.")
+    ir("TASK-REQUEST-TEXT-WITH-SOURCE", cover, lambda d: d.update(task="text_to_song"), "Text to song takes only text inputs",
+       "$.inputs[0].role: 'source' not in ['lyrics', 'style']", "A text-to-song request given audio.")
+    ir("TASK-REQUEST-UNKNOWN-FAULT", cover, params(faults={"explode": True}), "Faults are the declared fault knobs only",
+       "$.params.faults.explode" + closed, "An undeclared fault.")
+    ir("TASK-REQUEST-GUIDE-NO-MELODY", guide, lambda d: d.update(inputs=[]), "A guide renders one MelodySpec",
+       "$.inputs: fewer than 1 items", "A guide with nothing to sing.")
+    ir("TASK-REQUEST-STRENGTH-ABOVE-ONE", cover, params(audio_cover_strength="1.5"), "Cover strength runs from 0 to 1",
+       "$.params.audio_cover_strength: '1.5' does not match", "A cover strength above 1.")
+    ir("TASK-REQUEST-GUIDE-RATE", guide, params(sample_rate=22050), "A guide renders at 44.1 or 48 kHz", "$.params.sample_rate",
+       "A guide at 22.05 kHz.")
     return out
 
 

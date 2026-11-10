@@ -1,0 +1,23 @@
+{
+  "description": "A guide with nothing to sing.",
+  "error_contains": "$.inputs: fewer than 1 items",
+  "id": "IR-TASK-REQUEST-GUIDE-NO-MELODY",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "deadline_s": 600,
+    "inputs": [],
+    "job_id": "job_ir",
+    "kind": "task-request",
+    "lane": "individual",
+    "params": {
+      "sample_rate": 48000
+    },
+    "profile_id": "analysis-guide-neutralvoice",
+    "schemaVersion": "1.1.0",
+    "seed": 1,
+    "task": "guide"
+  },
+  "record_kind": "task-request",
+  "rule": "A guide renders one MelodySpec",
+  "schemaVersion": "1.0.0"
+}

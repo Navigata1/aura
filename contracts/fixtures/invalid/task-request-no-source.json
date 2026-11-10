@@ -1,0 +1,25 @@
+{
+  "description": "A cover with nothing to cover.",
+  "error_contains": "$.inputs: no item matches 'contains'",
+  "id": "IR-TASK-REQUEST-NO-SOURCE",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "deadline_s": 600,
+    "inputs": [],
+    "job_id": "job_ir",
+    "kind": "task-request",
+    "lane": "individual",
+    "params": {
+      "channels": 2,
+      "duration_s": 30,
+      "lyrics_language": null
+    },
+    "profile_id": "fake-route-a",
+    "schemaVersion": "1.1.0",
+    "seed": 1,
+    "task": "cover"
+  },
+  "record_kind": "task-request",
+  "rule": "A cover needs the audio it follows",
+  "schemaVersion": "1.0.0"
+}

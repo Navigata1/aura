@@ -1,0 +1,32 @@
+{
+  "description": "A cover given a MelodySpec input.",
+  "error_contains": "$.inputs[0]: matches none of anyOf",
+  "id": "IR-TASK-REQUEST-ROLE-UNDECLARED",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "deadline_s": 600,
+    "inputs": [
+      {
+        "bytes": 1024,
+        "media_type": "audio/wav",
+        "role": "melody",
+        "sha256": "86513786ba22951c8e6853f95c9f1d9b3b202d49aeafe7613f8281b9b8973186"
+      }
+    ],
+    "job_id": "job_ir",
+    "kind": "task-request",
+    "lane": "individual",
+    "params": {
+      "channels": 2,
+      "duration_s": 30,
+      "lyrics_language": null
+    },
+    "profile_id": "fake-route-a",
+    "schemaVersion": "1.1.0",
+    "seed": 1,
+    "task": "cover"
+  },
+  "record_kind": "task-request",
+  "rule": "A cover takes a source and lyrics",
+  "schemaVersion": "1.0.0"
+}

@@ -1,0 +1,30 @@
+{
+  "description": "A guide given audio.",
+  "error_contains": "$.inputs[0].role: expected const 'melody'",
+  "id": "IR-TASK-REQUEST-GUIDE-AUDIO",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "deadline_s": 600,
+    "inputs": [
+      {
+        "bytes": 1024,
+        "media_type": "audio/wav",
+        "role": "source",
+        "sha256": "86513786ba22951c8e6853f95c9f1d9b3b202d49aeafe7613f8281b9b8973186"
+      }
+    ],
+    "job_id": "job_ir",
+    "kind": "task-request",
+    "lane": "individual",
+    "params": {
+      "sample_rate": 48000
+    },
+    "profile_id": "analysis-guide-neutralvoice",
+    "schemaVersion": "1.1.0",
+    "seed": 1,
+    "task": "guide"
+  },
+  "record_kind": "task-request",
+  "rule": "A guide renders a MelodySpec",
+  "schemaVersion": "1.0.0"
+}

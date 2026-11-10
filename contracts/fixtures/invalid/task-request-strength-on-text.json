@@ -1,0 +1,26 @@
+{
+  "description": "A cover strength on text to song.",
+  "error_contains": "$.params.audio_cover_strength: no value is allowed here",
+  "id": "IR-TASK-REQUEST-STRENGTH-ON-TEXT",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "deadline_s": 600,
+    "inputs": [],
+    "job_id": "job_ir",
+    "kind": "task-request",
+    "lane": "individual",
+    "params": {
+      "audio_cover_strength": "0.5",
+      "channels": 2,
+      "duration_s": 30,
+      "lyrics_language": null
+    },
+    "profile_id": "fake-route-a",
+    "schemaVersion": "1.1.0",
+    "seed": 1,
+    "task": "text_to_song"
+  },
+  "record_kind": "task-request",
+  "rule": "Cover strength is a cover param",
+  "schemaVersion": "1.0.0"
+}

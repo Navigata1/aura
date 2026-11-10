@@ -1,0 +1,33 @@
+{
+  "description": "A cover strength above 1.",
+  "error_contains": "$.params.audio_cover_strength: '1.5' does not match",
+  "id": "IR-TASK-REQUEST-STRENGTH-ABOVE-ONE",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "deadline_s": 600,
+    "inputs": [
+      {
+        "bytes": 1024,
+        "media_type": "audio/wav",
+        "role": "source",
+        "sha256": "86513786ba22951c8e6853f95c9f1d9b3b202d49aeafe7613f8281b9b8973186"
+      }
+    ],
+    "job_id": "job_ir",
+    "kind": "task-request",
+    "lane": "individual",
+    "params": {
+      "audio_cover_strength": "1.5",
+      "channels": 2,
+      "duration_s": 30,
+      "lyrics_language": null
+    },
+    "profile_id": "fake-route-a",
+    "schemaVersion": "1.1.0",
+    "seed": 1,
+    "task": "cover"
+  },
+  "record_kind": "task-request",
+  "rule": "Cover strength runs from 0 to 1",
+  "schemaVersion": "1.0.0"
+}

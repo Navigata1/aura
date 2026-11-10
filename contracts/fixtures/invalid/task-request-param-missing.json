@@ -1,0 +1,31 @@
+{
+  "description": "A cover without its duration.",
+  "error_contains": "$.params: missing required property 'duration_s'",
+  "id": "IR-TASK-REQUEST-PARAM-MISSING",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "deadline_s": 600,
+    "inputs": [
+      {
+        "bytes": 1024,
+        "media_type": "audio/wav",
+        "role": "source",
+        "sha256": "86513786ba22951c8e6853f95c9f1d9b3b202d49aeafe7613f8281b9b8973186"
+      }
+    ],
+    "job_id": "job_ir",
+    "kind": "task-request",
+    "lane": "individual",
+    "params": {
+      "channels": 2,
+      "lyrics_language": null
+    },
+    "profile_id": "fake-route-a",
+    "schemaVersion": "1.1.0",
+    "seed": 1,
+    "task": "cover"
+  },
+  "record_kind": "task-request",
+  "rule": "over_limit needs a typed duration",
+  "schemaVersion": "1.0.0"
+}

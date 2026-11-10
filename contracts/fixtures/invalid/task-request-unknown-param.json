@@ -1,0 +1,33 @@
+{
+  "description": "An undeclared cover param.",
+  "error_contains": "$.params.guidance: no value is allowed here",
+  "id": "IR-TASK-REQUEST-UNKNOWN-PARAM",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "deadline_s": 600,
+    "inputs": [
+      {
+        "bytes": 1024,
+        "media_type": "audio/wav",
+        "role": "source",
+        "sha256": "86513786ba22951c8e6853f95c9f1d9b3b202d49aeafe7613f8281b9b8973186"
+      }
+    ],
+    "job_id": "job_ir",
+    "kind": "task-request",
+    "lane": "individual",
+    "params": {
+      "channels": 2,
+      "duration_s": 30,
+      "guidance": "7",
+      "lyrics_language": null
+    },
+    "profile_id": "fake-route-a",
+    "schemaVersion": "1.1.0",
+    "seed": 1,
+    "task": "cover"
+  },
+  "record_kind": "task-request",
+  "rule": "Params are typed per task; unknown params are refused",
+  "schemaVersion": "1.0.0"
+}
