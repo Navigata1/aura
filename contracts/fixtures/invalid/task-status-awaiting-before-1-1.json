@@ -1,0 +1,20 @@
+{
+  "description": "A 1.0.0 status in the 1.1 state.",
+  "error_contains": "$.schemaVersion",
+  "id": "IR-TASK-STATUS-AWAITING-BEFORE-1-1",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "error": null,
+    "job_id": "job_ir",
+    "kind": "task-status",
+    "outputs": [],
+    "params_actual": null,
+    "schemaVersion": "1.0.0",
+    "state": "awaiting_inputs",
+    "steps": [],
+    "timings": null
+  },
+  "record_kind": "task-status",
+  "rule": "awaiting_inputs is added in 1.1.0",
+  "schemaVersion": "1.0.0"
+}

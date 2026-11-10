@@ -1,0 +1,1812 @@
+{
+  "cases": [
+    {
+      "derivation": "FakeEngine's generate tasks on the protocol: auth, routing, admission and refusal before any byte moves, assets by hash, idempotent submit, cancel and unload.",
+      "exchanges": [
+        {
+          "request": {
+            "authorized": false,
+            "body": null,
+            "content": null,
+            "method": "GET",
+            "path": "/v1/describe"
+          },
+          "response": {
+            "body": null,
+            "content": null,
+            "status": 401
+          },
+          "why": "No bearer token: 401."
+        },
+        {
+          "request": {
+            "authorized": false,
+            "body": null,
+            "content": null,
+            "method": "GET",
+            "path": "/v1/nope"
+          },
+          "response": {
+            "body": null,
+            "content": null,
+            "status": 401
+          },
+          "why": "Auth comes before routing, so an unauthenticated probe learns no route."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": null,
+            "content": null,
+            "method": "GET",
+            "path": "/v1/nope"
+          },
+          "response": {
+            "body": null,
+            "content": null,
+            "status": 404
+          },
+          "why": "An undeclared path is 404."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": null,
+            "content": null,
+            "method": "POST",
+            "path": "/v1/describe"
+          },
+          "response": {
+            "body": null,
+            "content": null,
+            "status": 404
+          },
+          "why": "A declared path with an undeclared method is 404, not 405."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": null,
+            "content": null,
+            "method": "GET",
+            "path": "/v1/describe"
+          },
+          "response": {
+            "body": {
+              "code_commit": "0000000",
+              "env": {
+                "lock_sha256": "913f20a8d3229657fe93ba955d5f438b3040e3db0ccaea451dc5b7b2d4dd954f"
+              },
+              "host": {
+                "arch": "arm64",
+                "backend": "fake",
+                "device": "fake-device",
+                "free_disk_bytes": 966367641600,
+                "memory_bytes": 51539607552,
+                "metal": null,
+                "nvidia": null,
+                "os": "darwin"
+              },
+              "kind": "worker-describe",
+              "profiles": [
+                {
+                  "lanes": [
+                    "individual",
+                    "llc",
+                    "research"
+                  ],
+                  "limits": {
+                    "channels": 2,
+                    "instrumental_only": false,
+                    "lyric_languages": [
+                      "en"
+                    ],
+                    "max_duration_s": 600,
+                    "sample_rate": 44100
+                  },
+                  "profile_id": "fake-route-a",
+                  "tasks": [
+                    "cover",
+                    "text_to_song"
+                  ],
+                  "weights_manifest_sha256": null,
+                  "weights_present": true
+                },
+                {
+                  "lanes": [
+                    "individual",
+                    "research"
+                  ],
+                  "limits": {
+                    "channels": 2,
+                    "instrumental_only": false,
+                    "lyric_languages": [
+                      "en"
+                    ],
+                    "max_duration_s": 600,
+                    "sample_rate": 44100
+                  },
+                  "profile_id": "fake-nc",
+                  "tasks": [
+                    "cover"
+                  ],
+                  "weights_manifest_sha256": null,
+                  "weights_present": true
+                },
+                {
+                  "lanes": [
+                    "individual",
+                    "llc",
+                    "research"
+                  ],
+                  "limits": {
+                    "channels": 1,
+                    "instrumental_only": false,
+                    "lyric_languages": [
+                      "en"
+                    ],
+                    "max_duration_s": 600,
+                    "sample_rate": 44100
+                  },
+                  "profile_id": "fake-route-b",
+                  "tasks": [
+                    "cover"
+                  ],
+                  "weights_manifest_sha256": null,
+                  "weights_present": false
+                }
+              ],
+              "protocol_version": 1,
+              "schemaVersion": "1.0.0",
+              "sdk_version": "0.1.0",
+              "worker_id": "wkr_fake"
+            },
+            "content": null,
+            "status": 200
+          },
+          "why": "Describe."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": null,
+            "content": null,
+            "method": "GET",
+            "path": "/v1/health"
+          },
+          "response": {
+            "body": {
+              "kind": "worker-health",
+              "mem": {
+                "device_bytes": null,
+                "rss_bytes": 67108864
+              },
+              "resident_profile": "fake-route-a",
+              "schemaVersion": "1.0.0",
+              "state": "idle",
+              "worker_id": "wkr_fake"
+            },
+            "content": null,
+            "status": 200
+          },
+          "why": "Health."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": null,
+            "content": {
+              "bytes": 1024,
+              "sha256": "2fd4a82bb579baf9fd881a2a26104ef5a8b71aabe113e86b0eb4df5a509e0f5b"
+            },
+            "method": "PUT",
+            "path": "/v1/assets/2fd4a82bb579baf9fd881a2a26104ef5a8b71aabe113e86b0eb4df5a509e0f5b"
+          },
+          "response": {
+            "body": null,
+            "content": null,
+            "status": 403
+          },
+          "why": "Submit first: no admitted job lists this hash yet."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": {
+              "deadline_s": 600,
+              "inputs": [
+                {
+                  "bytes": 1024,
+                  "media_type": "audio/wav",
+                  "role": "source",
+                  "sha256": "2fd4a82bb579baf9fd881a2a26104ef5a8b71aabe113e86b0eb4df5a509e0f5b"
+                }
+              ],
+              "job_id": "job_ca",
+              "kind": "task-request",
+              "lane": "individual",
+              "params": {
+                "channels": 2,
+                "duration_s": 30,
+                "lyrics_language": null
+              },
+              "profile_id": "fake-route-a",
+              "schemaVersion": "1.1.0",
+              "seed": 1,
+              "task": "cover"
+            },
+            "content": null,
+            "method": "POST",
+            "path": "/v1/jobs"
+          },
+          "response": {
+            "body": {
+              "error": null,
+              "job_id": "job_ca",
+              "kind": "task-status",
+              "outputs": [],
+              "params_actual": null,
+              "schemaVersion": "1.1.0",
+              "state": "awaiting_inputs",
+              "steps": [],
+              "timings": null
+            },
+            "content": null,
+            "status": 202
+          },
+          "why": "Admitted: 202 awaiting_inputs, its source not yet present."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": {
+              "deadline_s": 600,
+              "inputs": [
+                {
+                  "bytes": 1024,
+                  "media_type": "audio/wav",
+                  "role": "source",
+                  "sha256": "2fd4a82bb579baf9fd881a2a26104ef5a8b71aabe113e86b0eb4df5a509e0f5b"
+                }
+              ],
+              "job_id": "job_ca",
+              "kind": "task-request",
+              "lane": "individual",
+              "params": {
+                "channels": 2,
+                "duration_s": 30,
+                "lyrics_language": null
+              },
+              "profile_id": "fake-route-a",
+              "schemaVersion": "1.1.0",
+              "seed": 1,
+              "task": "cover"
+            },
+            "content": null,
+            "method": "POST",
+            "path": "/v1/jobs"
+          },
+          "response": {
+            "body": {
+              "error": null,
+              "job_id": "job_ca",
+              "kind": "task-status",
+              "outputs": [],
+              "params_actual": null,
+              "schemaVersion": "1.1.0",
+              "state": "awaiting_inputs",
+              "steps": [],
+              "timings": null
+            },
+            "content": null,
+            "status": 202
+          },
+          "why": "An identical resubmit is idempotent."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": {
+              "deadline_s": 600,
+              "inputs": [
+                {
+                  "bytes": 1024,
+                  "media_type": "audio/wav",
+                  "role": "source",
+                  "sha256": "2fd4a82bb579baf9fd881a2a26104ef5a8b71aabe113e86b0eb4df5a509e0f5b"
+                }
+              ],
+              "job_id": "job_ca",
+              "kind": "task-request",
+              "lane": "individual",
+              "params": {
+                "channels": 2,
+                "duration_s": 30,
+                "lyrics_language": null
+              },
+              "profile_id": "fake-route-a",
+              "schemaVersion": "1.1.0",
+              "seed": 2,
+              "task": "cover"
+            },
+            "content": null,
+            "method": "POST",
+            "path": "/v1/jobs"
+          },
+          "response": {
+            "body": null,
+            "content": null,
+            "status": 409
+          },
+          "why": "The same job_id with another body is a conflict."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": null,
+            "content": null,
+            "method": "HEAD",
+            "path": "/v1/assets/2fd4a82bb579baf9fd881a2a26104ef5a8b71aabe113e86b0eb4df5a509e0f5b"
+          },
+          "response": {
+            "body": null,
+            "content": null,
+            "status": 404
+          },
+          "why": "HEAD before the PUT."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": null,
+            "content": {
+              "bytes": 1024,
+              "sha256": "2fd4a82bb579baf9fd881a2a26104ef5a8b71aabe113e86b0eb4df5a509e0f5b"
+            },
+            "method": "PUT",
+            "path": "/v1/assets/not-a-hash"
+          },
+          "response": {
+            "body": null,
+            "content": null,
+            "status": 404
+          },
+          "why": "An asset path is a lowercase sha256, or no route."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": null,
+            "content": {
+              "bytes": 1024,
+              "sha256": "49727fc87195f0819cc415d4a1cb38544bb0b103040e011eafd2d4edccc2a6de"
+            },
+            "method": "PUT",
+            "path": "/v1/assets/2fd4a82bb579baf9fd881a2a26104ef5a8b71aabe113e86b0eb4df5a509e0f5b"
+          },
+          "response": {
+            "body": null,
+            "content": null,
+            "status": 400
+          },
+          "why": "Bytes whose hash is not the path's."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": null,
+            "content": {
+              "bytes": 2048,
+              "sha256": "2fd4a82bb579baf9fd881a2a26104ef5a8b71aabe113e86b0eb4df5a509e0f5b"
+            },
+            "method": "PUT",
+            "path": "/v1/assets/2fd4a82bb579baf9fd881a2a26104ef5a8b71aabe113e86b0eb4df5a509e0f5b"
+          },
+          "response": {
+            "body": null,
+            "content": null,
+            "status": 413
+          },
+          "why": "More bytes than the request declared."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": null,
+            "content": {
+              "bytes": 2048,
+              "sha256": "49727fc87195f0819cc415d4a1cb38544bb0b103040e011eafd2d4edccc2a6de"
+            },
+            "method": "PUT",
+            "path": "/v1/assets/2fd4a82bb579baf9fd881a2a26104ef5a8b71aabe113e86b0eb4df5a509e0f5b"
+          },
+          "response": {
+            "body": null,
+            "content": null,
+            "status": 413
+          },
+          "why": "The length is checked before the hash: the worker stops reading at the declared length."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": null,
+            "content": null,
+            "method": "PUT",
+            "path": "/v1/assets/2fd4a82bb579baf9fd881a2a26104ef5a8b71aabe113e86b0eb4df5a509e0f5b"
+          },
+          "response": {
+            "body": null,
+            "content": null,
+            "status": 400
+          },
+          "why": "A PUT with no bytes."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": null,
+            "content": {
+              "bytes": 512,
+              "sha256": "2fd4a82bb579baf9fd881a2a26104ef5a8b71aabe113e86b0eb4df5a509e0f5b"
+            },
+            "method": "PUT",
+            "path": "/v1/assets/2fd4a82bb579baf9fd881a2a26104ef5a8b71aabe113e86b0eb4df5a509e0f5b"
+          },
+          "response": {
+            "body": null,
+            "content": null,
+            "status": 400
+          },
+          "why": "Fewer bytes than declared."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": null,
+            "content": {
+              "bytes": 1024,
+              "sha256": "2fd4a82bb579baf9fd881a2a26104ef5a8b71aabe113e86b0eb4df5a509e0f5b"
+            },
+            "method": "PUT",
+            "path": "/v1/assets/2fd4a82bb579baf9fd881a2a26104ef5a8b71aabe113e86b0eb4df5a509e0f5b"
+          },
+          "response": {
+            "body": null,
+            "content": null,
+            "status": 204
+          },
+          "why": "The listed asset is stored."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": null,
+            "content": null,
+            "method": "GET",
+            "path": "/v1/jobs/job_ca"
+          },
+          "response": {
+            "body": {
+              "error": null,
+              "job_id": "job_ca",
+              "kind": "task-status",
+              "outputs": [],
+              "params_actual": null,
+              "schemaVersion": "1.1.0",
+              "state": "queued",
+              "steps": [],
+              "timings": null
+            },
+            "content": null,
+            "status": 200
+          },
+          "why": "Every input present: the job is queued."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": null,
+            "content": null,
+            "method": "HEAD",
+            "path": "/v1/assets/2fd4a82bb579baf9fd881a2a26104ef5a8b71aabe113e86b0eb4df5a509e0f5b"
+          },
+          "response": {
+            "body": null,
+            "content": null,
+            "status": 200
+          },
+          "why": "HEAD after the PUT."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": null,
+            "content": null,
+            "method": "GET",
+            "path": "/v1/assets/2fd4a82bb579baf9fd881a2a26104ef5a8b71aabe113e86b0eb4df5a509e0f5b"
+          },
+          "response": {
+            "body": null,
+            "content": {
+              "bytes": 1024,
+              "sha256": "2fd4a82bb579baf9fd881a2a26104ef5a8b71aabe113e86b0eb4df5a509e0f5b"
+            },
+            "status": 200
+          },
+          "why": "GET returns the stored asset."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": null,
+            "content": null,
+            "method": "GET",
+            "path": "/v1/jobs/job_ca/outputs/mix"
+          },
+          "response": {
+            "body": null,
+            "content": null,
+            "status": 404
+          },
+          "why": "No output before ready."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": {
+              "deadline_s": 600,
+              "inputs": [
+                {
+                  "bytes": 1024,
+                  "media_type": "audio/wav",
+                  "role": "source",
+                  "sha256": "c8e84945b23a40e1f6777495da6aa2cfe01f02118f4400dc77f0c44544f83aec"
+                }
+              ],
+              "job_id": "job_nc",
+              "kind": "task-request",
+              "lane": "llc",
+              "params": {
+                "channels": 2,
+                "duration_s": 30,
+                "lyrics_language": null
+              },
+              "profile_id": "fake-nc",
+              "schemaVersion": "1.1.0",
+              "seed": 1,
+              "task": "cover"
+            },
+            "content": null,
+            "method": "POST",
+            "path": "/v1/jobs"
+          },
+          "response": {
+            "body": {
+              "code": "lane_forbidden",
+              "detail": "the profile's components do not allow this operator lane",
+              "job_id": "job_nc",
+              "kind": "refusal",
+              "loaded_nothing": true,
+              "schemaVersion": "1.0.0"
+            },
+            "content": null,
+            "status": 422
+          },
+          "why": "A non-commercial profile in llc is refused before load."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": null,
+            "content": {
+              "bytes": 1024,
+              "sha256": "c8e84945b23a40e1f6777495da6aa2cfe01f02118f4400dc77f0c44544f83aec"
+            },
+            "method": "PUT",
+            "path": "/v1/assets/c8e84945b23a40e1f6777495da6aa2cfe01f02118f4400dc77f0c44544f83aec"
+          },
+          "response": {
+            "body": null,
+            "content": null,
+            "status": 403
+          },
+          "why": "A refused request never receives a byte."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": null,
+            "content": null,
+            "method": "GET",
+            "path": "/v1/jobs/job_nc"
+          },
+          "response": {
+            "body": null,
+            "content": null,
+            "status": 404
+          },
+          "why": "A refused job is not known."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": {
+              "deadline_s": 600,
+              "inputs": [],
+              "job_id": "job_t",
+              "kind": "task-request",
+              "lane": "individual",
+              "params": {
+                "channels": 2,
+                "duration_s": 30,
+                "lyrics_language": null
+              },
+              "profile_id": "fake-nc",
+              "schemaVersion": "1.1.0",
+              "seed": 1,
+              "task": "text_to_song"
+            },
+            "content": null,
+            "method": "POST",
+            "path": "/v1/jobs"
+          },
+          "response": {
+            "body": {
+              "code": "unsupported_task",
+              "detail": "the profile is not described or does not declare this task",
+              "job_id": "job_t",
+              "kind": "refusal",
+              "loaded_nothing": true,
+              "schemaVersion": "1.0.0"
+            },
+            "content": null,
+            "status": 422
+          },
+          "why": "An undeclared task."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": {
+              "deadline_s": 600,
+              "inputs": [
+                {
+                  "bytes": 1024,
+                  "media_type": "audio/wav",
+                  "role": "source",
+                  "sha256": "2fd4a82bb579baf9fd881a2a26104ef5a8b71aabe113e86b0eb4df5a509e0f5b"
+                }
+              ],
+              "job_id": "job_long",
+              "kind": "task-request",
+              "lane": "individual",
+              "params": {
+                "channels": 2,
+                "duration_s": 601,
+                "lyrics_language": null
+              },
+              "profile_id": "fake-route-a",
+              "schemaVersion": "1.1.0",
+              "seed": 1,
+              "task": "cover"
+            },
+            "content": null,
+            "method": "POST",
+            "path": "/v1/jobs"
+          },
+          "response": {
+            "body": {
+              "code": "over_limit",
+              "detail": "the request exceeds the profile's declared limits",
+              "job_id": "job_long",
+              "kind": "refusal",
+              "loaded_nothing": true,
+              "schemaVersion": "1.0.0"
+            },
+            "content": null,
+            "status": 422
+          },
+          "why": "Above max_duration_s (600)."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": {
+              "deadline_s": 600,
+              "inputs": [
+                {
+                  "bytes": 1024,
+                  "media_type": "audio/wav",
+                  "role": "source",
+                  "sha256": "2fd4a82bb579baf9fd881a2a26104ef5a8b71aabe113e86b0eb4df5a509e0f5b"
+                },
+                {
+                  "bytes": 64,
+                  "media_type": "text/plain",
+                  "role": "lyrics",
+                  "sha256": "49727fc87195f0819cc415d4a1cb38544bb0b103040e011eafd2d4edccc2a6de"
+                }
+              ],
+              "job_id": "job_fr",
+              "kind": "task-request",
+              "lane": "individual",
+              "params": {
+                "channels": 2,
+                "duration_s": 30,
+                "lyrics_language": "fr"
+              },
+              "profile_id": "fake-route-a",
+              "schemaVersion": "1.1.0",
+              "seed": 1,
+              "task": "cover"
+            },
+            "content": null,
+            "method": "POST",
+            "path": "/v1/jobs"
+          },
+          "response": {
+            "body": {
+              "code": "language_unsupported",
+              "detail": "the profile does not declare this lyric language",
+              "job_id": "job_fr",
+              "kind": "refusal",
+              "loaded_nothing": true,
+              "schemaVersion": "1.0.0"
+            },
+            "content": null,
+            "status": 422
+          },
+          "why": "A lyric language the profile does not declare."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": {
+              "deadline_s": 600,
+              "inputs": [
+                {
+                  "bytes": 1024,
+                  "media_type": "audio/wav",
+                  "role": "source",
+                  "sha256": "2fd4a82bb579baf9fd881a2a26104ef5a8b71aabe113e86b0eb4df5a509e0f5b"
+                }
+              ],
+              "job_id": "job_b",
+              "kind": "task-request",
+              "lane": "individual",
+              "params": {
+                "channels": 1,
+                "duration_s": 30,
+                "lyrics_language": null
+              },
+              "profile_id": "fake-route-b",
+              "schemaVersion": "1.1.0",
+              "seed": 1,
+              "task": "cover"
+            },
+            "content": null,
+            "method": "POST",
+            "path": "/v1/jobs"
+          },
+          "response": {
+            "body": {
+              "code": "weights_missing",
+              "detail": "the profile's pinned weights are not present",
+              "job_id": "job_b",
+              "kind": "refusal",
+              "loaded_nothing": true,
+              "schemaVersion": "1.0.0"
+            },
+            "content": null,
+            "status": 422
+          },
+          "why": "Weights not present."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": {
+              "deadline_s": 600,
+              "inputs": [],
+              "job_id": "job_o1",
+              "kind": "task-request",
+              "lane": "llc",
+              "params": {
+                "channels": 2,
+                "duration_s": 30,
+                "lyrics_language": null
+              },
+              "profile_id": "fake-nc",
+              "schemaVersion": "1.1.0",
+              "seed": 1,
+              "task": "text_to_song"
+            },
+            "content": null,
+            "method": "POST",
+            "path": "/v1/jobs"
+          },
+          "response": {
+            "body": {
+              "code": "unsupported_task",
+              "detail": "the profile is not described or does not declare this task",
+              "job_id": "job_o1",
+              "kind": "refusal",
+              "loaded_nothing": true,
+              "schemaVersion": "1.0.0"
+            },
+            "content": null,
+            "status": 422
+          },
+          "why": "Order: the task before the lane."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": {
+              "deadline_s": 600,
+              "inputs": [
+                {
+                  "bytes": 1024,
+                  "media_type": "audio/wav",
+                  "role": "source",
+                  "sha256": "2fd4a82bb579baf9fd881a2a26104ef5a8b71aabe113e86b0eb4df5a509e0f5b"
+                }
+              ],
+              "job_id": "job_o2",
+              "kind": "task-request",
+              "lane": "llc",
+              "params": {
+                "channels": 2,
+                "duration_s": 601,
+                "lyrics_language": null
+              },
+              "profile_id": "fake-nc",
+              "schemaVersion": "1.1.0",
+              "seed": 1,
+              "task": "cover"
+            },
+            "content": null,
+            "method": "POST",
+            "path": "/v1/jobs"
+          },
+          "response": {
+            "body": {
+              "code": "lane_forbidden",
+              "detail": "the profile's components do not allow this operator lane",
+              "job_id": "job_o2",
+              "kind": "refusal",
+              "loaded_nothing": true,
+              "schemaVersion": "1.0.0"
+            },
+            "content": null,
+            "status": 422
+          },
+          "why": "Order: the lane before the limits."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": {
+              "deadline_s": 600,
+              "inputs": [
+                {
+                  "bytes": 1024,
+                  "media_type": "audio/wav",
+                  "role": "source",
+                  "sha256": "2fd4a82bb579baf9fd881a2a26104ef5a8b71aabe113e86b0eb4df5a509e0f5b"
+                },
+                {
+                  "bytes": 64,
+                  "media_type": "text/plain",
+                  "role": "lyrics",
+                  "sha256": "49727fc87195f0819cc415d4a1cb38544bb0b103040e011eafd2d4edccc2a6de"
+                }
+              ],
+              "job_id": "job_o3",
+              "kind": "task-request",
+              "lane": "individual",
+              "params": {
+                "channels": 2,
+                "duration_s": 601,
+                "lyrics_language": "fr"
+              },
+              "profile_id": "fake-route-a",
+              "schemaVersion": "1.1.0",
+              "seed": 1,
+              "task": "cover"
+            },
+            "content": null,
+            "method": "POST",
+            "path": "/v1/jobs"
+          },
+          "response": {
+            "body": {
+              "code": "over_limit",
+              "detail": "the request exceeds the profile's declared limits",
+              "job_id": "job_o3",
+              "kind": "refusal",
+              "loaded_nothing": true,
+              "schemaVersion": "1.0.0"
+            },
+            "content": null,
+            "status": 422
+          },
+          "why": "Order: duration before language."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": {
+              "deadline_s": 600,
+              "inputs": [
+                {
+                  "bytes": 1024,
+                  "media_type": "audio/wav",
+                  "role": "source",
+                  "sha256": "2fd4a82bb579baf9fd881a2a26104ef5a8b71aabe113e86b0eb4df5a509e0f5b"
+                }
+              ],
+              "job_id": "job_o4",
+              "kind": "task-request",
+              "lane": "individual",
+              "params": {
+                "channels": 2,
+                "duration_s": 30,
+                "lyrics_language": null
+              },
+              "profile_id": "fake-route-b",
+              "schemaVersion": "1.1.0",
+              "seed": 1,
+              "task": "cover"
+            },
+            "content": null,
+            "method": "POST",
+            "path": "/v1/jobs"
+          },
+          "response": {
+            "body": {
+              "code": "over_limit",
+              "detail": "the request exceeds the profile's declared limits",
+              "job_id": "job_o4",
+              "kind": "refusal",
+              "loaded_nothing": true,
+              "schemaVersion": "1.0.0"
+            },
+            "content": null,
+            "status": 422
+          },
+          "why": "Channels above the profile's 1, before missing weights."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": {
+              "deadline_s": 600,
+              "inputs": [
+                {
+                  "bytes": 1024,
+                  "media_type": "audio/wav",
+                  "role": "source",
+                  "sha256": "2fd4a82bb579baf9fd881a2a26104ef5a8b71aabe113e86b0eb4df5a509e0f5b"
+                },
+                {
+                  "bytes": 64,
+                  "media_type": "text/plain",
+                  "role": "lyrics",
+                  "sha256": "49727fc87195f0819cc415d4a1cb38544bb0b103040e011eafd2d4edccc2a6de"
+                }
+              ],
+              "job_id": "job_o5",
+              "kind": "task-request",
+              "lane": "individual",
+              "params": {
+                "channels": 1,
+                "duration_s": 30,
+                "lyrics_language": "fr"
+              },
+              "profile_id": "fake-route-b",
+              "schemaVersion": "1.1.0",
+              "seed": 1,
+              "task": "cover"
+            },
+            "content": null,
+            "method": "POST",
+            "path": "/v1/jobs"
+          },
+          "response": {
+            "body": {
+              "code": "language_unsupported",
+              "detail": "the profile does not declare this lyric language",
+              "job_id": "job_o5",
+              "kind": "refusal",
+              "loaded_nothing": true,
+              "schemaVersion": "1.0.0"
+            },
+            "content": null,
+            "status": 422
+          },
+          "why": "Order: language before weights."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": {
+              "deadline_s": 600,
+              "inputs": [
+                {
+                  "bytes": 1024,
+                  "media_type": "audio/wav",
+                  "role": "source",
+                  "sha256": "2fd4a82bb579baf9fd881a2a26104ef5a8b71aabe113e86b0eb4df5a509e0f5b"
+                }
+              ],
+              "job_id": "job_u",
+              "kind": "task-request",
+              "lane": "individual",
+              "params": {
+                "channels": 2,
+                "duration_s": 30,
+                "guidance": "7",
+                "lyrics_language": null
+              },
+              "profile_id": "fake-route-a",
+              "schemaVersion": "1.1.0",
+              "seed": 1,
+              "task": "cover"
+            },
+            "content": null,
+            "method": "POST",
+            "path": "/v1/jobs"
+          },
+          "response": {
+            "body": null,
+            "content": null,
+            "status": 400
+          },
+          "why": "An unknown param is schema-invalid."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": {
+              "deadline_s": 600,
+              "inputs": [
+                {
+                  "bytes": 1024,
+                  "media_type": "audio/wav",
+                  "role": "source",
+                  "sha256": "2fd4a82bb579baf9fd881a2a26104ef5a8b71aabe113e86b0eb4df5a509e0f5b"
+                }
+              ],
+              "job_id": "job_old",
+              "kind": "task-request",
+              "lane": "individual",
+              "params": {
+                "channels": 2,
+                "duration_s": 30,
+                "lyrics_language": null
+              },
+              "profile_id": "fake-route-a",
+              "schemaVersion": "1.0.0",
+              "seed": 1,
+              "task": "cover"
+            },
+            "content": null,
+            "method": "POST",
+            "path": "/v1/jobs"
+          },
+          "response": {
+            "body": null,
+            "content": null,
+            "status": 400
+          },
+          "why": "A 1.0.0 request has untyped params."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": {
+              "deadline_s": 600,
+              "inputs": [
+                {
+                  "bytes": 1024,
+                  "media_type": "audio/wav",
+                  "role": "source",
+                  "sha256": "2fd4a82bb579baf9fd881a2a26104ef5a8b71aabe113e86b0eb4df5a509e0f5b"
+                },
+                {
+                  "bytes": 1024,
+                  "media_type": "audio/wav",
+                  "role": "source",
+                  "sha256": "2fd4a82bb579baf9fd881a2a26104ef5a8b71aabe113e86b0eb4df5a509e0f5b"
+                }
+              ],
+              "job_id": "job_two",
+              "kind": "task-request",
+              "lane": "individual",
+              "params": {
+                "channels": 2,
+                "duration_s": 30,
+                "lyrics_language": null
+              },
+              "profile_id": "fake-route-a",
+              "schemaVersion": "1.1.0",
+              "seed": 1,
+              "task": "cover"
+            },
+            "content": null,
+            "method": "POST",
+            "path": "/v1/jobs"
+          },
+          "response": {
+            "body": null,
+            "content": null,
+            "status": 400
+          },
+          "why": "Input roles are unique."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": {
+              "deadline_s": 600,
+              "inputs": [
+                {
+                  "bytes": 1024,
+                  "media_type": "audio/wav",
+                  "role": "source",
+                  "sha256": "2fd4a82bb579baf9fd881a2a26104ef5a8b71aabe113e86b0eb4df5a509e0f5b"
+                }
+              ],
+              "job_id": "job_f",
+              "kind": "task-request",
+              "lane": "individual",
+              "params": {
+                "channels": 2,
+                "duration_s": 30,
+                "faults": {
+                  "silence": true
+                },
+                "lyrics_language": null
+              },
+              "profile_id": "ace-2b-turbo-mlx",
+              "schemaVersion": "1.1.0",
+              "seed": 1,
+              "task": "cover"
+            },
+            "content": null,
+            "method": "POST",
+            "path": "/v1/jobs"
+          },
+          "response": {
+            "body": null,
+            "content": null,
+            "status": 400
+          },
+          "why": "Faults belong to fake profiles only."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": {
+              "deadline_s": 600,
+              "inputs": [],
+              "job_id": "job_t2s",
+              "kind": "task-request",
+              "lane": "individual",
+              "params": {
+                "channels": 2,
+                "duration_s": 30,
+                "faults": {
+                  "silence": true
+                },
+                "lyrics_language": null
+              },
+              "profile_id": "fake-route-a",
+              "schemaVersion": "1.1.0",
+              "seed": 1,
+              "task": "text_to_song"
+            },
+            "content": null,
+            "method": "POST",
+            "path": "/v1/jobs"
+          },
+          "response": {
+            "body": {
+              "error": null,
+              "job_id": "job_t2s",
+              "kind": "task-status",
+              "outputs": [],
+              "params_actual": null,
+              "schemaVersion": "1.1.0",
+              "state": "queued",
+              "steps": [],
+              "timings": null
+            },
+            "content": null,
+            "status": 202
+          },
+          "why": "No inputs to wait for: queued at once."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": null,
+            "content": null,
+            "method": "POST",
+            "path": "/v1/jobs/job_ca/cancel"
+          },
+          "response": {
+            "body": {
+              "error": null,
+              "job_id": "job_ca",
+              "kind": "task-status",
+              "outputs": [],
+              "params_actual": null,
+              "schemaVersion": "1.1.0",
+              "state": "cancelled",
+              "steps": [],
+              "timings": null
+            },
+            "content": null,
+            "status": 200
+          },
+          "why": "Cancel."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": null,
+            "content": {
+              "bytes": 1024,
+              "sha256": "2fd4a82bb579baf9fd881a2a26104ef5a8b71aabe113e86b0eb4df5a509e0f5b"
+            },
+            "method": "PUT",
+            "path": "/v1/assets/2fd4a82bb579baf9fd881a2a26104ef5a8b71aabe113e86b0eb4df5a509e0f5b"
+          },
+          "response": {
+            "body": null,
+            "content": null,
+            "status": 403
+          },
+          "why": "A cancelled job lists no hash any more."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": null,
+            "content": null,
+            "method": "GET",
+            "path": "/v1/jobs/job_ca/events"
+          },
+          "response": {
+            "body": {
+              "error": null,
+              "job_id": "job_ca",
+              "kind": "task-status",
+              "outputs": [],
+              "params_actual": null,
+              "schemaVersion": "1.1.0",
+              "state": "cancelled",
+              "steps": [],
+              "timings": null
+            },
+            "content": null,
+            "status": 200
+          },
+          "why": "Events mirror the status."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": null,
+            "content": null,
+            "method": "POST",
+            "path": "/v1/jobs/job_zz/cancel"
+          },
+          "response": {
+            "body": null,
+            "content": null,
+            "status": 404
+          },
+          "why": "Cancel of an unknown job."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": null,
+            "content": null,
+            "method": "POST",
+            "path": "/v1/unload"
+          },
+          "response": {
+            "body": {
+              "kind": "worker-health",
+              "mem": {
+                "device_bytes": null,
+                "rss_bytes": 67108864
+              },
+              "resident_profile": null,
+              "schemaVersion": "1.0.0",
+              "state": "idle",
+              "worker_id": "wkr_fake"
+            },
+            "content": null,
+            "status": 200
+          },
+          "why": "Unload frees the resident model."
+        }
+      ],
+      "name": "fake worker: submit first, then assets",
+      "worker": {
+        "describe": {
+          "code_commit": "0000000",
+          "env": {
+            "lock_sha256": "913f20a8d3229657fe93ba955d5f438b3040e3db0ccaea451dc5b7b2d4dd954f"
+          },
+          "host": {
+            "arch": "arm64",
+            "backend": "fake",
+            "device": "fake-device",
+            "free_disk_bytes": 966367641600,
+            "memory_bytes": 51539607552,
+            "metal": null,
+            "nvidia": null,
+            "os": "darwin"
+          },
+          "kind": "worker-describe",
+          "profiles": [
+            {
+              "lanes": [
+                "individual",
+                "llc",
+                "research"
+              ],
+              "limits": {
+                "channels": 2,
+                "instrumental_only": false,
+                "lyric_languages": [
+                  "en"
+                ],
+                "max_duration_s": 600,
+                "sample_rate": 44100
+              },
+              "profile_id": "fake-route-a",
+              "tasks": [
+                "cover",
+                "text_to_song"
+              ],
+              "weights_manifest_sha256": null,
+              "weights_present": true
+            },
+            {
+              "lanes": [
+                "individual",
+                "research"
+              ],
+              "limits": {
+                "channels": 2,
+                "instrumental_only": false,
+                "lyric_languages": [
+                  "en"
+                ],
+                "max_duration_s": 600,
+                "sample_rate": 44100
+              },
+              "profile_id": "fake-nc",
+              "tasks": [
+                "cover"
+              ],
+              "weights_manifest_sha256": null,
+              "weights_present": true
+            },
+            {
+              "lanes": [
+                "individual",
+                "llc",
+                "research"
+              ],
+              "limits": {
+                "channels": 1,
+                "instrumental_only": false,
+                "lyric_languages": [
+                  "en"
+                ],
+                "max_duration_s": 600,
+                "sample_rate": 44100
+              },
+              "profile_id": "fake-route-b",
+              "tasks": [
+                "cover"
+              ],
+              "weights_manifest_sha256": null,
+              "weights_present": false
+            }
+          ],
+          "protocol_version": 1,
+          "schemaVersion": "1.0.0",
+          "sdk_version": "0.1.0",
+          "worker_id": "wkr_fake"
+        },
+        "health": {
+          "kind": "worker-health",
+          "mem": {
+            "device_bytes": null,
+            "rss_bytes": 67108864
+          },
+          "resident_profile": "fake-route-a",
+          "schemaVersion": "1.0.0",
+          "state": "idle",
+          "worker_id": "wkr_fake"
+        }
+      }
+    },
+    {
+      "derivation": "A guide renders one assembled MelodySpec, sent as canonical JSON in role melody, at a declared sample rate.",
+      "exchanges": [
+        {
+          "request": {
+            "authorized": true,
+            "body": {
+              "deadline_s": 600,
+              "inputs": [
+                {
+                  "bytes": 2048,
+                  "media_type": "application/json",
+                  "role": "melody",
+                  "sha256": "e1af38866a88a32bafa76cfa65f6da94447b579f81a558b34c7cfa3d25063277"
+                }
+              ],
+              "job_id": "job_gd",
+              "kind": "task-request",
+              "lane": "individual",
+              "params": {
+                "sample_rate": 48000,
+                "vowel": "a"
+              },
+              "profile_id": "analysis-guide-neutralvoice",
+              "schemaVersion": "1.1.0",
+              "seed": 1,
+              "task": "guide"
+            },
+            "content": null,
+            "method": "POST",
+            "path": "/v1/jobs"
+          },
+          "response": {
+            "body": {
+              "error": null,
+              "job_id": "job_gd",
+              "kind": "task-status",
+              "outputs": [],
+              "params_actual": null,
+              "schemaVersion": "1.1.0",
+              "state": "awaiting_inputs",
+              "steps": [],
+              "timings": null
+            },
+            "content": null,
+            "status": 202
+          },
+          "why": "Admitted."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": null,
+            "content": {
+              "bytes": 2048,
+              "sha256": "e1af38866a88a32bafa76cfa65f6da94447b579f81a558b34c7cfa3d25063277"
+            },
+            "method": "PUT",
+            "path": "/v1/assets/e1af38866a88a32bafa76cfa65f6da94447b579f81a558b34c7cfa3d25063277"
+          },
+          "response": {
+            "body": null,
+            "content": null,
+            "status": 204
+          },
+          "why": "The melody arrives."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": null,
+            "content": null,
+            "method": "GET",
+            "path": "/v1/jobs/job_gd"
+          },
+          "response": {
+            "body": {
+              "error": null,
+              "job_id": "job_gd",
+              "kind": "task-status",
+              "outputs": [],
+              "params_actual": null,
+              "schemaVersion": "1.1.0",
+              "state": "queued",
+              "steps": [],
+              "timings": null
+            },
+            "content": null,
+            "status": 200
+          },
+          "why": "Queued."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": {
+              "deadline_s": 600,
+              "inputs": [
+                {
+                  "bytes": 1024,
+                  "media_type": "audio/wav",
+                  "role": "source",
+                  "sha256": "2fd4a82bb579baf9fd881a2a26104ef5a8b71aabe113e86b0eb4df5a509e0f5b"
+                }
+              ],
+              "job_id": "job_g2",
+              "kind": "task-request",
+              "lane": "individual",
+              "params": {
+                "sample_rate": 48000
+              },
+              "profile_id": "analysis-guide-neutralvoice",
+              "schemaVersion": "1.1.0",
+              "seed": 1,
+              "task": "guide"
+            },
+            "content": null,
+            "method": "POST",
+            "path": "/v1/jobs"
+          },
+          "response": {
+            "body": null,
+            "content": null,
+            "status": 400
+          },
+          "why": "A guide takes no audio."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": {
+              "deadline_s": 600,
+              "inputs": [
+                {
+                  "bytes": 2048,
+                  "media_type": "application/json",
+                  "role": "melody",
+                  "sha256": "e1af38866a88a32bafa76cfa65f6da94447b579f81a558b34c7cfa3d25063277"
+                }
+              ],
+              "job_id": "job_g3",
+              "kind": "task-request",
+              "lane": "individual",
+              "params": {},
+              "profile_id": "analysis-guide-neutralvoice",
+              "schemaVersion": "1.1.0",
+              "seed": 1,
+              "task": "guide"
+            },
+            "content": null,
+            "method": "POST",
+            "path": "/v1/jobs"
+          },
+          "response": {
+            "body": null,
+            "content": null,
+            "status": 400
+          },
+          "why": "sample_rate is required."
+        }
+      ],
+      "name": "analysis worker: the guide task",
+      "worker": {
+        "describe": {
+          "code_commit": "0000000",
+          "env": {
+            "lock_sha256": "913f20a8d3229657fe93ba955d5f438b3040e3db0ccaea451dc5b7b2d4dd954f"
+          },
+          "host": {
+            "arch": "arm64",
+            "backend": "fake",
+            "device": "fake-device",
+            "free_disk_bytes": 966367641600,
+            "memory_bytes": 51539607552,
+            "metal": null,
+            "nvidia": null,
+            "os": "darwin"
+          },
+          "kind": "worker-describe",
+          "profiles": [
+            {
+              "lanes": [
+                "individual",
+                "llc",
+                "research"
+              ],
+              "limits": {
+                "channels": null,
+                "instrumental_only": false,
+                "lyric_languages": null,
+                "max_duration_s": null,
+                "sample_rate": null
+              },
+              "profile_id": "analysis-guide-neutralvoice",
+              "tasks": [
+                "guide"
+              ],
+              "weights_manifest_sha256": null,
+              "weights_present": true
+            }
+          ],
+          "protocol_version": 1,
+          "schemaVersion": "1.0.0",
+          "sdk_version": "0.1.0",
+          "worker_id": "wkr_analysis"
+        },
+        "health": {
+          "kind": "worker-health",
+          "mem": {
+            "device_bytes": null,
+            "rss_bytes": 67108864
+          },
+          "resident_profile": null,
+          "schemaVersion": "1.0.0",
+          "state": "idle",
+          "worker_id": "wkr_analysis"
+        }
+      }
+    },
+    {
+      "derivation": "README decision 7: lyric languages left undeclared refuse every sung request until a smoke run declares one; instrumental requests run.",
+      "exchanges": [
+        {
+          "request": {
+            "authorized": true,
+            "body": {
+              "deadline_s": 600,
+              "inputs": [
+                {
+                  "bytes": 64,
+                  "media_type": "text/plain",
+                  "role": "lyrics",
+                  "sha256": "49727fc87195f0819cc415d4a1cb38544bb0b103040e011eafd2d4edccc2a6de"
+                }
+              ],
+              "job_id": "job_hm",
+              "kind": "task-request",
+              "lane": "individual",
+              "params": {
+                "channels": 2,
+                "duration_s": 30,
+                "lyrics_language": "en"
+              },
+              "profile_id": "heartmula-3b-cuda",
+              "schemaVersion": "1.1.0",
+              "seed": 1,
+              "task": "text_to_song"
+            },
+            "content": null,
+            "method": "POST",
+            "path": "/v1/jobs"
+          },
+          "response": {
+            "body": {
+              "code": "language_unsupported",
+              "detail": "the profile does not declare this lyric language",
+              "job_id": "job_hm",
+              "kind": "refusal",
+              "loaded_nothing": true,
+              "schemaVersion": "1.0.0"
+            },
+            "content": null,
+            "status": 422
+          },
+          "why": "Sung."
+        },
+        {
+          "request": {
+            "authorized": true,
+            "body": {
+              "deadline_s": 600,
+              "inputs": [],
+              "job_id": "job_hi",
+              "kind": "task-request",
+              "lane": "individual",
+              "params": {
+                "channels": 2,
+                "duration_s": 30,
+                "lyrics_language": null
+              },
+              "profile_id": "heartmula-3b-cuda",
+              "schemaVersion": "1.1.0",
+              "seed": 1,
+              "task": "text_to_song"
+            },
+            "content": null,
+            "method": "POST",
+            "path": "/v1/jobs"
+          },
+          "response": {
+            "body": {
+              "error": null,
+              "job_id": "job_hi",
+              "kind": "task-status",
+              "outputs": [],
+              "params_actual": null,
+              "schemaVersion": "1.1.0",
+              "state": "queued",
+              "steps": [],
+              "timings": null
+            },
+            "content": null,
+            "status": 202
+          },
+          "why": "Instrumental, with no inputs to wait for."
+        }
+      ],
+      "name": "a profile that declares no lyric languages",
+      "worker": {
+        "describe": {
+          "code_commit": "0000000",
+          "env": {
+            "lock_sha256": "913f20a8d3229657fe93ba955d5f438b3040e3db0ccaea451dc5b7b2d4dd954f"
+          },
+          "host": {
+            "arch": "arm64",
+            "backend": "fake",
+            "device": "fake-device",
+            "free_disk_bytes": 966367641600,
+            "memory_bytes": 51539607552,
+            "metal": null,
+            "nvidia": null,
+            "os": "darwin"
+          },
+          "kind": "worker-describe",
+          "profiles": [
+            {
+              "lanes": [
+                "individual",
+                "research"
+              ],
+              "limits": {
+                "channels": null,
+                "instrumental_only": false,
+                "lyric_languages": null,
+                "max_duration_s": null,
+                "sample_rate": null
+              },
+              "profile_id": "heartmula-3b-cuda",
+              "tasks": [
+                "text_to_song"
+              ],
+              "weights_manifest_sha256": null,
+              "weights_present": true
+            }
+          ],
+          "protocol_version": 1,
+          "schemaVersion": "1.0.0",
+          "sdk_version": "0.1.0",
+          "worker_id": "wkr_tailnet"
+        },
+        "health": {
+          "kind": "worker-health",
+          "mem": {
+            "device_bytes": null,
+            "rss_bytes": 67108864
+          },
+          "resident_profile": null,
+          "schemaVersion": "1.0.0",
+          "state": "idle",
+          "worker_id": "wkr_tailnet"
+        }
+      }
+    }
+  ],
+  "kind": "fixture.worker-transcript",
+  "schemaVersion": "1.0.0"
+}

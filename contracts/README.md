@@ -324,3 +324,23 @@ status is keyed by the subject as well as the revision. The commit is hashed as 
 are different revisions. Malformed pins raise `ProtocolError` with `code_commit_invalid`, `env_invalid`,
 `sdk_version_invalid` or `weights_manifest_invalid`. Vectors: `fixtures/vectors/profile-revision.json`, each with its
 hand-written preimage.
+
+**The 202 reply and HTTP codes** (task-status 1.1.0, `$defs/stateAdded`; transcripts
+`fixtures/vectors/worker-transcript.json`, hand-derived in `vector_cases/worker_transcript.py` and replayed through
+`worker_protocol.Worker`). An admitted `POST /v1/jobs` answers `202` with a task-status in `awaiting_inputs` (no steps,
+actual params or timings), or `queued` when every input is already present; the job becomes `queued` once the last
+input arrives. The codes:
+- `401` before routing for a missing or wrong token, so an unauthenticated probe learns no route; then `404` for any
+  method and path outside architecture §9.2's list (no `405`), an unknown job id, and an output before `ready`.
+- `POST /v1/jobs`: `400` with no body for a schema-invalid request, one below 1.1.0 (its params are untyped) or one that
+  repeats an input role; `422` refusal/1 in the refusal enum's order for what describe decides (`unsupported_task`,
+  `lane_forbidden`, `over_limit`, `language_unsupported`, `weights_missing`), before any asset moves; `202` again for an
+  identical resubmit of a `job_id` and `409` for a different one. `insufficient_memory`, `insufficient_disk` and `busy`
+  are runtime facts the transcripts cannot pin. A refusal's `detail` is advisory text; status, kind and code are the
+  contract.
+- `PUT /v1/assets/{sha256}`: `403` unless an admitted job that is not finished lists the hash (so a refused or
+  cancelled job never receives a byte), then `413` above the declared length, `400` for another length or a hash
+  mismatch, `204` once stored. `HEAD` and `GET` are `200` or `404`.
+- `GET /v1/jobs/{id}` and its events, and `POST /v1/jobs/{id}/cancel`, answer `200` with a task-status; `POST
+  /v1/unload` answers `200` with worker-health. The reference runs nothing, so running, outputs, timings and the SSE
+  stream itself are the worker SDK's to prove (T10). The per-profile asset size cap is not in describe yet.

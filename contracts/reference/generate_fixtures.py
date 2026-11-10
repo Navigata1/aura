@@ -1632,6 +1632,12 @@ def build_invalid_records(docs: list[dict], L: dict) -> list[dict]:
        "$.params.audio_cover_strength: '1.5' does not match", "A cover strength above 1.")
     ir("TASK-REQUEST-GUIDE-RATE", guide, params(sample_rate=22050), "A guide renders at 44.1 or 48 kHz", "$.params.sample_rate",
        "A guide at 22.05 kHz.")
+    from studio_ref.vector_cases import worker_transcript  # T02w: the 202 state, from 1.1.0
+    waiting = worker_transcript._status("job_ir", "awaiting_inputs")
+    ir("TASK-STATUS-AWAITING-BEFORE-1-1", waiting, lambda d: d.update(schemaVersion=SV), "awaiting_inputs is added in 1.1.0",
+       "$.schemaVersion", "A 1.0.0 status in the 1.1 state.")
+    ir("TASK-STATUS-AWAITING-WITH-TIMINGS", waiting, lambda d: d.update(timings={"queue_ms": 4, "load_ms": 50, "run_ms": 900, "cold": True,
+       "peak_rss_bytes": 268435456, "measured_by": "worker-sdk"}), "Nothing has run while a job awaits its inputs", "$.timings: expected type ['null'], got object", "Timings on a job that has not started.")
     return out
 
 

@@ -1,0 +1,27 @@
+{
+  "description": "Timings on a job that has not started.",
+  "error_contains": "$.timings: expected type ['null'], got object",
+  "id": "IR-TASK-STATUS-AWAITING-WITH-TIMINGS",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "error": null,
+    "job_id": "job_ir",
+    "kind": "task-status",
+    "outputs": [],
+    "params_actual": null,
+    "schemaVersion": "1.1.0",
+    "state": "awaiting_inputs",
+    "steps": [],
+    "timings": {
+      "cold": true,
+      "load_ms": 50,
+      "measured_by": "worker-sdk",
+      "peak_rss_bytes": 268435456,
+      "queue_ms": 4,
+      "run_ms": 900
+    }
+  },
+  "record_kind": "task-status",
+  "rule": "Nothing has run while a job awaits its inputs",
+  "schemaVersion": "1.0.0"
+}

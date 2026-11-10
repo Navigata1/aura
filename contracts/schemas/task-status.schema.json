@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "task-status/1 (GET /v1/jobs/{id}, its SSE mirror, and the reply to POST /v1/jobs/{id}/cancel)",
+  "title": "task-status/1 (GET /v1/jobs/{id}, its SSE mirror, the reply to POST /v1/jobs/{id}/cancel and, from 1.1.0, the 202 reply to POST /v1/jobs)",
   "description": "Honest worker-side status (ADR-0026). Steps carry index and total only when the engine reports real counters; there is no percentage field. Timings and peak memory are measured by the SDK itself. Outputs appear only when the task is ready, with the audio facts the control service re-checks. A restarted worker reports a lost job as failed, never ready.",
   "type": "object",
   "required": ["kind", "schemaVersion", "job_id", "state", "steps", "outputs", "params_actual", "timings", "error"],
@@ -9,7 +9,7 @@
     "kind": {"const": "task-status"},
     "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
     "job_id": {"$ref": "common.schema.json#/$defs/id"},
-    "state": {"enum": ["queued", "preparing", "loading", "generating", "ready", "failed", "cancelled"]},
+    "state": {"anyOf": [{"enum": ["queued", "preparing", "loading", "generating", "ready", "failed", "cancelled"]}, {"$ref": "#/$defs/stateAdded"}]},
     "steps": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/step"}},
     "outputs": {
       "type": "array",
@@ -51,7 +51,18 @@
       ]
     }
   },
+  "$defs": {
+    "stateAdded": {
+      "$comment": "added in 1.1.0",
+      "description": "awaiting_inputs is the 202 reply to POST /v1/jobs (contracts/README.md, 'Worker protocol'): the job is admitted and waits for the control service to PUT the inputs the worker lacks; it becomes queued once every input is present. Nothing has run, so it has no steps, actual params or timings.",
+      "enum": ["awaiting_inputs"]
+    }
+  },
   "allOf": [
+    {
+      "if": {"properties": {"state": {"const": "awaiting_inputs"}}},
+      "then": {"properties": {"schemaVersion": {"pattern": "^1\\.[1-9][0-9]*\\.[0-9]+$"}, "steps": {"maxItems": 0}, "params_actual": {"type": "null"}, "timings": {"type": "null"}}}
+    },
     {
       "if": {"properties": {"state": {"const": "ready"}}},
       "then": {"properties": {"outputs": {"minItems": 1}, "params_actual": {"type": "object"}, "timings": {"type": "object"}}},

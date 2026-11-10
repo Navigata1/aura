@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "fixture.worker-transcript",
+  "description": "Worker protocol v1 golden transcripts (ADR-0026, architecture.md §9.2, contracts/README.md 'Worker protocol'): a worker's describe and health, then a sequence of HTTP requests with the exact status, record body and asset content a conforming worker answers, hand-derived. Request bodies are loose so that a schema-invalid submit can be stated (its answer is 400); response bodies validate as the records they are. Asset bytes appear only as their sha256 and length. The worker SDK and the conformance suite (T10) replay them.",
+  "type": "object",
+  "required": ["kind", "schemaVersion", "cases"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {"const": "fixture.worker-transcript"},
+    "schemaVersion": {"$ref": "common.schema.json#/$defs/schemaVersion"},
+    "cases": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/case"}}
+  },
+  "$defs": {
+    "content": {
+      "oneOf": [
+        {"type": "null"},
+        {"type": "object", "required": ["sha256", "bytes"], "additionalProperties": false,
+         "properties": {"sha256": {"$ref": "common.schema.json#/$defs/sha256"}, "bytes": {"type": "integer", "minimum": 0}}}
+      ]
+    },
+    "case": {
+      "type": "object",
+      "required": ["name", "derivation", "worker", "exchanges"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {"type": "string", "minLength": 1, "maxLength": 120},
+        "derivation": {"type": "string", "minLength": 1, "maxLength": 600},
+        "worker": {
+          "type": "object",
+          "required": ["describe", "health"],
+          "additionalProperties": false,
+          "properties": {"describe": {"$ref": "worker-describe.schema.json"}, "health": {"$ref": "worker-health.schema.json"}}
+        },
+        "exchanges": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/exchange"}}
+      }
+    },
+    "exchange": {
+      "type": "object",
+      "required": ["why", "request", "response"],
+      "additionalProperties": false,
+      "properties": {
+        "why": {"type": "string", "minLength": 1, "maxLength": 300},
+        "request": {
+          "type": "object",
+          "required": ["method", "path", "authorized", "body", "content"],
+          "additionalProperties": false,
+          "properties": {
+            "method": {"enum": ["GET", "HEAD", "PUT", "POST", "DELETE", "PATCH"]},
+            "path": {"type": "string", "pattern": "^/[!-~]*$"},
+            "authorized": {"type": "boolean"},
+            "body": {"type": ["object", "null"]},
+            "content": {"$ref": "#/$defs/content"}
+          }
+        },
+        "response": {
+          "type": "object",
+          "required": ["status", "body", "content"],
+          "additionalProperties": false,
+          "properties": {
+            "status": {"enum": [200, 202, 204, 400, 401, 403, 404, 409, 413, 422]},
+            "body": {
+              "anyOf": [
+                {"type": "null"},
+                {"$ref": "task-status.schema.json"},
+                {"$ref": "refusal.schema.json"},
+                {"$ref": "worker-describe.schema.json"},
+                {"$ref": "worker-health.schema.json"}
+              ]
+            },
+            "content": {"$ref": "#/$defs/content"}
+          }
+        }
+      }
+    }
+  }
+}

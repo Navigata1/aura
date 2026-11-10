@@ -10,14 +10,16 @@
     "fixture.binding": ["contract-completion", "C02", "eval-prereg", "hum-benchmark-harness", "registry"],
     "fixture.songform": ["contract-completion", "song-spec", "guide", "abc-emission", "ace-routes"],
     "fixture.meter": ["contract-completion", "contracts-codegen", "song-spec", "piano-roll", "abc-emission", "timeline", "midi-in-out"],
-    "fixture.profile-revision": ["contract-completion", "registry", "worker-sdk", "contracts-codegen", "conductor"]
+    "fixture.profile-revision": ["contract-completion", "registry", "worker-sdk", "contracts-codegen", "conductor"],
+    "fixture.worker-transcript": ["contract-completion", "worker-sdk", "fake-engine", "neutralvoice", "conductor"]
   },
   "fields": {
     "melody-spec.schema.json#/properties/form": ["contract-completion", "song-spec", "guide", "abc-emission", "midi-in-out", "export", "ace-routes", "timeline"],
     "song-spec.schema.json#/properties/form/properties/sections/items/properties/chord_symbols": ["contract-completion", "chord-symbols", "abc-emission"],
     "task-request.schema.json#/$defs/generateParams": ["worker-sdk", "fake-engine", "conductor", "contracts-codegen", "ace-adapter"],
     "task-request.schema.json#/$defs/guideParams": ["worker-sdk", "neutralvoice", "guide", "contracts-codegen"],
-    "task-request.schema.json#/$defs/typedTask": ["worker-sdk", "fake-engine", "neutralvoice", "conductor", "contracts-codegen"]
+    "task-request.schema.json#/$defs/typedTask": ["worker-sdk", "fake-engine", "neutralvoice", "conductor", "contracts-codegen"],
+    "task-status.schema.json#/$defs/stateAdded": ["worker-sdk", "fake-engine", "conductor", "contracts-codegen"]
   },
   "records": {
     "benchmark-prereg": {
