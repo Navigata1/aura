@@ -35,19 +35,10 @@ sys.path.insert(0, str(HERE))
 
 from studio_ref.canonical import self_hash, sha256_hex, sha_of  # noqa: E402
 
-SV = "1.0.0"
+from studio_ref.fixture_support import SV, H, R, owner
 LANES = ["individual", "llc", "research"]
 REGISTER = json.loads((ROOT / "contracts/registry/components.v1.json").read_text(encoding="utf-8"))
 REAL_PROFILES = json.loads((ROOT / "contracts/registry/engine-profiles.v1.json").read_text(encoding="utf-8"))
-
-
-def H(label: str) -> str:
-    """A synthetic, clearly fake sha256 for a fixture blob or record."""
-    return sha256_hex(("fixture:" + label).encode("utf-8"))
-
-
-def R(profile_id: str) -> str:
-    return sha256_hex(("fixture-profile-revision:" + profile_id).encode("utf-8"))
 
 
 def dump(doc) -> bytes:
@@ -229,10 +220,6 @@ def song(sid, project, created, melody_ref, profiles, sections, routes, lyrics_t
            "render_routes": routes, "validation": {"conflicts": [], "unsupported_by_profile": []}, "content_sha256": ""}
     doc["content_sha256"] = self_hash(doc, "content_sha256")
     return doc
-
-
-def owner(act, when):
-    return {"act": act, "scope": "owner-ui", "at": when}
 
 
 ALL_USES_GEN = ["listen", "loudness_measure", "dsp_finish", "analysis", "engine_input", "conditioning", "separation_input",
@@ -897,6 +884,77 @@ def build_scenarios(docs: list[dict], L: dict) -> list[dict]:
        [m1_bp, m2_bp, tr_bp,
         job("job_rec_llc", "prj_venture", "guide", "guide", "analysis-guide-neutralvoice", None, [("queued", "2026-10-09T12:00:00Z")],
             lane="llc", placement=("local", "cpu/m5pro"), record_inputs=[{"kind": "melody-spec", "sha256": m2_bp["content_sha256"]}])])
+    # --- SongForm assembly (T02c): an assembled revision inherits its source revision's lanes and license chain
+    from studio_ref.vector_cases.songform import hymn_assembled
+    asm_bp = hymn_assembled(m2_bp, get("song-spec", "song_hymn", 1), {"melody_id": "mel_hymn_asm", "rev": 1, "base_rev": None,
+                                                                       "tempo_map_rev": 1, "created_at": "2026-10-09T10:09:00Z"})
+    asm_dropped, asm_laundered, asm_capture = copy.deepcopy(asm_bp), copy.deepcopy(asm_bp), copy.deepcopy(asm_bp)
+    asm_dropped["source"]["transcription"] = None
+    asm_laundered["source"]["transcription"]["license_chain"] = lic(PROFILES["analysis-transcribe-pyin-hmm"]["components"])
+    asm_capture["source"]["capture_sha256"] = L["midi"]
+    rehash(asm_dropped), rehash(asm_laundered), rehash(asm_capture)
+
+    def reads(jid, project, lane, melody_doc):
+        return job(jid, project, "guide", "guide", "analysis-guide-neutralvoice", None, [("queued", "2026-10-09T12:00:00Z")], lane=lane,
+                   placement=("local", "cpu/m5pro"), record_inputs=[{"kind": "melody-spec", "sha256": melody_doc["content_sha256"]}])
+    sc("LANE-RECORD-ASSEMBLED-INDIVIDUAL-OK", [], "The 1.1.0 assembled hymn carries its Basic Pitch source's capture and "
+       "transcription, so its lanes and license chain, and an individual job reads it.",
+       [m1_bp, m2_bp, tr_bp, asm_bp, reads("job_asm_read", "prj_hymn", "individual", asm_bp)])
+    sc("LANE-RECORD-ASSEMBLED-READ-IN-LLC", ["lane.record_eligible"], "An llc job reads the assembled hymn: assembling an "
+       "individual-only transcription never yields an llc-eligible melody.",
+       [m1_bp, m2_bp, tr_bp, asm_bp, reads("job_asm_llc", "prj_venture", "llc", asm_bp)])
+    sc("LANE-RECORD-ASSEMBLED-LINEAGE-DROPPED", ["lane.record_eligible"], "A 1.1.0 assembled hymn drops its source's Basic "
+       "Pitch transcription, so the record would hide the transcriber's lanes and license chain.",
+       [m1_bp, m2_bp, tr_bp, asm_dropped, reads("job_asm_read", "prj_hymn", "individual", asm_dropped)])
+    sc("LANE-RECORD-ASSEMBLED-CHAIN-LAUNDERED", ["lane.record_eligible"], "A 1.1.0 assembled hymn keeps Basic Pitch's lanes "
+       "but swaps in the all-lanes pYIN transcriber's license chain; the license chain is inherited exactly too.",
+       [m1_bp, m2_bp, tr_bp, asm_laundered, reads("job_asm_read", "prj_hymn", "individual", asm_laundered)])
+    sc("LANE-RECORD-ASSEMBLED-CAPTURE-SWAPPED", ["lane.record_eligible"], "A 1.1.0 assembled hymn names the venture's MIDI "
+       "capture, a stored human recording, instead of its source's hum; the capture is inherited exactly too.",
+       [m1_bp, m2_bp, tr_bp, asm_capture, reads("job_asm_read", "prj_hymn", "individual", asm_capture)])
+    sc("LANE-RECORD-LEGACY-ASSEMBLED-READ-IN-LLC", ["lane.record_eligible"], "An llc job reads the world's 1.0.0 assembled "
+       "hymn, whose lineage is by reference only: its lanes still come from the Basic Pitch source through assembled_from.",
+       [m1_bp, m2_bp, tr_bp, reads("job_asm_llc", "prj_venture", "llc", get("melody-spec", "mel_hymn_asm", 1))])
+    # --- C07: a transcription's license chain is its transcriber's, the profile its job ran, exactly (no extra entries)
+    bp_components = PROFILES["transcribe-basic-pitch"]["components"]
+    pyin_tr = {"method": "pyin-hmm", "profile_id": "analysis-transcribe-pyin-hmm",
+               "eligible_lanes": lanes_of(PROFILES["analysis-transcribe-pyin-hmm"]["components"]),
+               "license_chain": lic(PROFILES["analysis-transcribe-pyin-hmm"]["components"])}
+
+    def retranscribed(doc, **changes):
+        doc = copy.deepcopy(doc)
+        doc["source"]["transcription"].update(copy.deepcopy(changes))
+        return rehash(doc)
+
+    def bp_lineage(**changes):
+        """Revisions 1 and 2 of Basic Pitch's hymn with one transcription change, and the job that output revision 1."""
+        revs = [retranscribed(m1_bp, **changes), retranscribed(m2_bp, **changes)]
+        return revs + [dict(copy.deepcopy(tr_bp), outputs=[{"role": "melody_spec", "sha256": revs[0]["content_sha256"]}])]
+
+    src_laundered = retranscribed(m2_bp, license_chain=pyin_tr["license_chain"])
+    asm_src_laundered = retranscribed(asm_bp, license_chain=pyin_tr["license_chain"])
+    sc("LANE-RECORD-SOURCE-CHAIN-LAUNDERED", ["lane.record_eligible"], "The reviewer's case: Basic Pitch's corrected hymn, "
+       "the assembly's source revision, carries the all-lanes pYIN transcriber's license chain with Basic Pitch's lanes, and "
+       "its 1.1.0 assembled copy inherits that chain exactly; a transcription's license chain is derived from its "
+       "transcriber, so an exact copy of a wrong chain is still refused.",
+       [m1_bp, src_laundered, tr_bp, asm_src_laundered, reads("job_asm_read", "prj_hymn", "individual", asm_src_laundered)])
+    sc("LANE-RECORD-CHAIN-MISSING", ["lane.record_eligible"], "Every revision Basic Pitch drafted carries an empty license "
+       "chain, so nothing downstream would name Basic Pitch's terms; a transcription's license chain equals its "
+       "transcriber's, with nothing missing.", bp_lineage(license_chain=[]))
+    sc("LANE-RECORD-CHAIN-EXTRA", ["lane.record_eligible"], "Every revision Basic Pitch drafted lists its transcriber's "
+       "license chain plus the studio's own code. The chain must equal the transcriber's, not merely contain it, so an "
+       "extra entry is refused even though every revision agrees.",
+       bp_lineage(license_chain=lic(bp_components + ["studio-own-code"])))
+    altered_terms = lic(bp_components)
+    altered_terms[0]["code_license"] = "MIT"
+    sc("LANE-RECORD-CHAIN-TERMS-ALTERED", ["lane.record_eligible"], "Every revision Basic Pitch drafted rewrites Basic "
+       "Pitch's code license in its license chain instead of copying the register's terms.",
+       bp_lineage(license_chain=altered_terms))
+    misnamed = bp_lineage(**pyin_tr)
+    sc("LANE-RECORD-TRANSCRIBER-MISNAMED", ["lane.record_eligible"], "The hymn's transcription job ran Basic Pitch, but "
+       "every revision it drafted names the all-lanes pYIN transcriber, with pYIN's lanes and license chain, and an llc job "
+       "reads one; the transcriber is the profile its transcription job ran, so naming another would widen the lanes.",
+       misnamed + [reads("job_mis_llc", "prj_venture", "llc", misnamed[1])])
     sc("REGISTRY-UNVERIFIED-IN-LLC", ["registry.lane_policy_consistent"],
        "A component whose license is still UNVERIFIED claims the individual and llc lanes; both forbid an unverified license.",
        [edit(("component-register", "components.fake-overlay"), unverified_everywhere)])
@@ -1050,6 +1108,10 @@ def build_scenarios(docs: list[dict], L: dict) -> list[dict]:
     bad_start = edit(("melody-spec", "mel_hymn", 1), lambda d: d["tempo_map"].update(tempo=[{"tick": 960, "us_per_quarter": 500000}]))
     sc("MELODY-TEMPO-START", ["melody.wellformed"], "Revision 1's first tempo segment starts at tick 960.",
        [bad_start, edit(("job", "job_tr1"), lambda d: d.update(outputs=[{"role": "melody_spec", "sha256": bad_start["content_sha256"]}]))])
+    sc("MELODY-METER-INSIDE-BAR", ["melody.wellformed"], "Revision 2 turns 3/4 at tick 1920, the middle of a 4/4 bar; a meter "
+       "changes only on a bar line, so bars and beats count on across it (T02c).",
+       [edit(("melody-spec", "mel_hymn", 2), lambda d: d["tempo_map"].update(meter=[{"tick": 0, "numerator": 4, "denominator": 4},
+                                                                                    {"tick": 1920, "numerator": 3, "denominator": 4}]))])
     sc("SONG-PHRASE", ["song.phrase_refs"], "The chorus places a phrase the melody does not have.",
        [edit(("song-spec", "song_hymn", 1), lambda d: d["form"]["sections"][1].update(phrase_ids=["ph9"]))])
 
@@ -1169,6 +1231,38 @@ def build_scenarios(docs: list[dict], L: dict) -> list[dict]:
        [ev("ev_bad_bench", "smoke", "ace-2b-sft-mlx", "benchmark.ace-2b-sft-mlx", True)])
     sc("EVIDENCE-UNKNOWN-PREREG", ["evidence.gates"], "A preregistered listening record cites a preregistration that was never committed.",
        [ev("ev_bad_prereg", "listening-preregistered", "ace-2b-sft-mlx", None, False, prereg=H("never-committed"))])
+    sc("EVIDENCE-WRONG-KIND-PREREG", ["evidence.gates"],
+       "A melody content hash is not a preregistration, even though it is a known record hash.",
+       [ev("ev_wrong_kind_prereg", "listening-preregistered", "ace-2b-sft-mlx", None, False,
+           prereg=get("melody-spec", "mel_hymn", 1)["content_sha256"])])
+    sc("EVIDENCE-BENCHMARK-CONCLUSION-UNSUPPORTED", ["evidence.gates"],
+       "A known preregistration and an existing owner verdict do not prove a concluded benchmark result.",
+       [ev("ev_benchmark_unbound", "benchmark", "ace-2b-sft-mlx", "benchmark.ace-2b-sft-mlx", False,
+           prereg=get("prereg", "pr_smoke")["prereg_sha256"],
+           checks=[{"check": "preregistered_listening", "result": "pass", "verdict_id": "vd_hymn", "measured": []}])])
+    for check, pid in (("benchmark", "ace-2b-sft-mlx"), ("hum-benchmark", "analysis-transcribe-pyin-hmm")):
+        for result in ("pass", "fail"):
+            record = ev("ev_unsupported_" + check + "_" + result, check, pid, "benchmark." + pid, False,
+                        prereg=get("prereg", "pr_smoke")["prereg_sha256"])
+            record["result"] = result
+            sc("EVIDENCE-UNSUPPORTED-" + check.upper() + "-" + result.upper(), ["evidence.gates"],
+               "An unsupported concluded " + check + " cannot be admitted as either a pass or failure.", [record])
+        pending = ev("ev_pending_" + check, check, pid, "benchmark." + pid, False,
+                     prereg=get("prereg", "pr_smoke")["prereg_sha256"])
+        pending["result"] = "inconclusive"
+        sc("EVIDENCE-INCONCLUSIVE-" + check.upper() + "-OK", [],
+           "An inconclusive " + check + " records no conclusion and changes no status.", [pending])
+    sc("EVIDENCE-MIXED-PROFILE-LISTENING-OK", [],
+       "A listening record may cite the existing mixed-profile audition; ordinary listening is not a benchmark conclusion.",
+       [ev("ev_mixed_listening", "listening-preregistered", "fake-route-a", None, False,
+           prereg=get("prereg", "pr_smoke")["prereg_sha256"], verdicts=["vd_hymn"])])
+    unlabelled = edit(("generation-request", "gr_hymn"),
+                      lambda d: d.update(labels=[x for x in d["labels"] if x != "unbenchmarked routes"]))
+    claims = [ev("ev_claim_" + p["profile_id"], "benchmark", p["profile_id"], None, False,
+                 prereg=get("prereg", "pr_smoke")["prereg_sha256"]) for p in unlabelled["plan"]]
+    sc("REQUEST-UNSUPPORTED-BENCHMARK-LABEL", ["evidence.gates", "request.plan_consistent"],
+       "Unsupported benchmark records cannot remove the unbenchmarked route label, including records without a gate.",
+       [unlabelled, *claims])
     ace_checks = PROFILES["ace-2b-sft-mlx"]["gates"]["smoke"]["checks"]
     sc("EVIDENCE-SMOKE-CHECK-MISSING", ["evidence.gates"],
        "A passing real smoke record for ACE lists no owner_not_garbled check, so Jon never listened (the gate declares it).",
@@ -1302,6 +1396,28 @@ def build_invalid_records(docs: list[dict], L: dict) -> list[dict]:
        "Lyrics carry a BCP-47 language", "$.approved_lyrics", "A language name instead of a tag.")
     ir("SONG-LARGER-N-UNPRICED", g("song-spec", "song_hymn", 1), lambda d: d.update(candidate_count=4),
        "ADR-0005: a larger n is an explicit, priced choice", "$.larger_n_budget", "Four candidates with no budget.")
+    # --- minor version 1.1.0 (T02c): the assembled form and SongForm chord symbols, accepted only from 1.1.0
+    from studio_ref.vector_cases.songform import hymn_assembled
+    asm11 = hymn_assembled(g("melody-spec", "mel_hymn", 2), g("song-spec", "song_hymn", 1), {
+        "melody_id": "mel_hymn_asm", "rev": 1, "base_rev": None, "tempo_map_rev": 1, "created_at": "2026-10-09T10:09:00Z"})
+
+    def chords(version, **mark):
+        return lambda d: (d.update(schemaVersion=version),
+                          d["form"]["sections"][0].update(chord_symbols=[{"offset_ticks": 0, "symbol": "C"} | mark]))
+    ir("MELODY-FORM-BEFORE-1-1", asm11, lambda d: d.update(schemaVersion="1.0.0"), "Minor versions are additive: form is new in 1.1.0",
+       "$.schemaVersion", "A 1.0.0 MelodySpec carrying the 1.1.0 assembled form.")
+    ir("MELODY-ASSEMBLED-WITHOUT-FORM", asm11, lambda d: d.pop("form"), "A 1.1 assembled MelodySpec states its duration and sections",
+       "missing required property 'form'", "A 1.1.0 assembled MelodySpec without its form.")
+    ir("MELODY-FORM-ON-SOURCE", g("melody-spec", "mel_hymn", 2), lambda d: d.update(schemaVersion="1.1.0", form=copy.deepcopy(asm11["form"])),
+       "Only an assembled MelodySpec carries a form", "$.spec_kind", "A source melody carrying an assembled form.")
+    ir("MELODY-FORM-UNKNOWN-PROPERTY", asm11, lambda d: d["form"]["sections"][0].update(bars=8),
+       "Closed objects reject unknown properties", "$.form.sections[0].bars", "A form section with a property no schema defines.")
+    ir("SONG-CHORDS-BEFORE-1-1", g("song-spec", "song_hymn", 1), chords("1.0.0"), "Minor versions are additive: chord symbols are new in 1.1.0",
+       "$.schemaVersion", "A 1.0.0 SongSpec carrying chord symbols.")
+    ir("SONG-CHORD-UNKNOWN-PROPERTY", g("song-spec", "song_hymn", 1), chords("1.1.0", beat=1), "Closed objects reject unknown properties",
+       "$.form.sections[0].chord_symbols[0].beat", "A chord symbol with a property no schema defines.")
+    ir("SONG-CHORD-SYMBOL-MALFORMED", g("song-spec", "song_hymn", 1), chords("1.1.0", symbol='C"maj'),
+       "Chord symbols are plain ASCII chord names", "$.form.sections[0].chord_symbols[0].symbol", "A chord symbol carrying a quote.")
     ir("REFERENCE-STANDARD-NOT-LISTENING-ONLY", g("reference", "ref_worship"), lambda d: d["permission"].update(listening_only=False),
        "O-08: reference standards are listening-only", "$.permission.listening_only", "A reference standard usable as input.")
     ir("REFERENCE-FROM-SUNO", g("reference", "ref_worship"), lambda d: d.update(source="suno"), "ADR-0021: Suno output is never a reference",
@@ -1450,6 +1566,30 @@ def build_invalid_records(docs: list[dict], L: dict) -> list[dict]:
     ir("SESSION-SWITCH-INCOMPLETE", g("session", "ses_1"),
        lambda d: d.update(switches=[{"at": "2026-10-09T12:00:00Z", "from_compute_profile_id": "cp_tier4", "to_compute_profile_id": "cp_tier1"}]),
        "A switch logs re-planned jobs and re-quoted approvals", "missing required property 'replanned_job_ids'", "An unlogged switch.")
+    from studio_ref.vector_cases import binding as binding_cases  # T02b's hypothetical binding inputs
+    bound, engine_prereg, member = binding_cases.engine()[:3]
+    closed = ": no value is allowed here"
+    ir("BENCHMARK-PREREG-NO-THRESHOLD", engine_prereg, lambda d: d.update(thresholds=[]), "Thresholds are fixed at preregistration",
+       "$.thresholds: fewer than 1 items", "A typed benchmark preregistration with no thresholds.")
+    ir("BENCHMARK-PREREG-OPEN-SUBJECT", engine_prereg, lambda d: d["subjects"][0].update(weight="2"), "A subject is a profile revision and host class",
+       "$.subjects[0].weight" + closed, "A subject with an undeclared weight.")
+    ir("BENCHMARK-PREREG-BRIEF-UNPINNED", engine_prereg, lambda d: d["cases"][0].pop("brief_sha256"), "A brief case pins the brief's content",
+       "$.cases[0]: missing required property 'brief_sha256'", "A benchmark-48 case naming its brief by id alone.")
+    ir("BENCHMARK-PREREG-NO-EVAL-SET", engine_prereg, lambda d: d.update(eval_set_id=None), "benchmark-48 draws on the benchmark set",
+       "$.eval_set_id: expected type ['string'], got null", "A benchmark-48 preregistration without its benchmark set.")
+    ir("BENCHMARK-PREREG-SHORT-QUOTA-FAIL", engine_prereg, lambda d: d["listening_quota"].update(short_quota_outcome="fail"),
+       "A set short of its quota concludes inconclusive (ADR-0010)", "$.listening_quota.short_quota_outcome: expected const 'inconclusive'",
+       "A preregistration that would fail a set short of its listening quota.")
+    ir("BENCHMARK-PREREG-HUM-NO-DECISION", binding_cases.hum_prereg(), lambda d: d.update(decision=None),
+       "The hum benchmark fixes its decision rule", "$.decision: expected type ['object'], got null", "A hum benchmark with no decision rule.")
+    ir("BENCHMARK-PREREG-OPEN-HUM-CASE", binding_cases.hum_prereg(), lambda d: d["cases"][0].update(brief_id="brief_b01"),
+       "A hum case is a hum and its MIDI ground truth", "$.cases[0].brief_id" + closed, "A hum-benchmark case that also names a brief.")
+    ir("BENCHMARK-MEMBERSHIP-OPEN-ARM", member, lambda d: d["cases"][0]["arms"][0].update(credited_profile_id="yue2-3b-score"),
+       "An arm credits only its own subject", "$.cases[0].arms[0].credited_profile_id" + closed, "An arm crediting another profile.")
+    ir("BENCHMARK-MEMBERSHIP-NO-VERDICTS", member, lambda d: d["cases"][0].update(verdict_ids=[]),
+       "An engine case names the owner verdicts it expects", "$.cases[0].verdict_ids: fewer than 1 items", "An engine case expecting no verdict.")
+    ir("EVIDENCE-BINDING-VALIDATED-FLAG", bound, lambda d: d.update(validated=True), "No caller-set validated flag (C01 follow-on 6)",
+       "$.validated" + closed, "A binding that declares itself validated.")
     return out
 
 
@@ -1458,215 +1598,16 @@ def build_invalid_records(docs: list[dict], L: dict) -> list[dict]:
 # ======================================================================================================================
 
 def build_vectors() -> dict[str, dict]:
-    T120 = [{"tick": 0, "us_per_quarter": 500000}]
-    TCHG = [{"tick": 0, "us_per_quarter": 500000}, {"tick": 3840, "us_per_quarter": 600000}]
-    T125 = [{"tick": 0, "us_per_quarter": 480000}]
-
-    def tc(name, op, tempo, rate, inp, exp, why):
-        return {"name": name, "derivation": why, "op": op, "tempo": tempo, "sample_rate": rate, "input": inp, "expected": exp}
-    tempo = {"kind": "fixture.tempo", "schemaVersion": SV, "cases": [
-        tc("zero", "ticks_to_frames", T120, 48000, 0, 0, "0 ticks is 0 s."),
-        tc("one beat at 120 BPM, 48 kHz", "ticks_to_frames", T120, 48000, 960, 24000, "960 ticks = 1 quarter = 0.5 s; 0.5 x 48000 = 24000."),
-        tc("one tick at 120 BPM, 48 kHz", "ticks_to_frames", T120, 48000, 1, 25, "0.5 s / 960 x 48000 = 25 exactly."),
-        tc("two bars at 120 BPM", "ticks_to_frames", T120, 48000, 7680, 192000, "8 quarters x 0.5 s = 4 s = 192000 frames."),
-        tc("one tick at 44.1 kHz rounds up", "ticks_to_frames", T120, 44100, 1, 23, "22050 / 960 = 22.96875, rounded half-up to 23."),
-        tc("exact half rounds up", "ticks_to_frames", T120, 44100, 16, 368, "16 x 22.96875 = 367.5, half-up gives 368."),
-        tc("one beat at 44.1 kHz", "ticks_to_frames", T120, 44100, 960, 22050, "0.5 s x 44100."),
-        tc("at the tempo change", "ticks_to_frames", TCHG, 48000, 3840, 96000, "4 quarters at 0.5 s = 2 s = 96000."),
-        tc("after the tempo change", "ticks_to_frames", TCHG, 48000, 4800, 124800,
-           "96000 + 960 ticks at 0.6 s per quarter = 0.6 s x 48000 = 28800; 124800."),
-        tc("frames to ticks, one beat", "frames_to_ticks", T120, 48000, 24000, 960, "Inverse of the beat case."),
-        tc("frames to ticks, below half", "frames_to_ticks", T120, 48000, 12, 0, "12 / 25 = 0.48 ticks, rounds to 0."),
-        tc("frames to ticks, above half", "frames_to_ticks", T120, 48000, 13, 1, "13 / 25 = 0.52 ticks, rounds to 1."),
-        tc("frames to ticks, exact half at 125 BPM", "frames_to_ticks", T125, 48000, 12, 1,
-           "480000 us per quarter: 960e6 / (480000 x 48000) = 1/24 tick per frame; 12 frames = 0.5, half-up 1."),
-        tc("frames to ticks, 1.5 at 125 BPM", "frames_to_ticks", T125, 48000, 36, 2, "36 / 24 = 1.5, half-up 2."),
-        tc("frames to ticks at the change", "frames_to_ticks", TCHG, 48000, 96000, 3840, "Inverse of the change boundary."),
-        tc("frames to ticks after the change", "frames_to_ticks", TCHG, 48000, 110400, 4320,
-           "14400 frames past 96000 = 0.3 s; at 0.6 s per quarter that is 480 ticks; 3840 + 480."),
-        tc("frames to ticks round trip", "frames_to_ticks", TCHG, 48000, 124800, 4800, "Inverse of the after-change case."),
-    ]}
-
-    def evr(eid, check, pid, rev, host, when, result="pass", gate=None, synthetic=False, prereg=None, verdicts=(), checks=(),
-            subject_type="profile"):
-        return {"kind": "evidence", "schemaVersion": SV, "id": eid, "check": check, "subject": {"subject_type": subject_type, "subject_id": pid},
-                "profile_revision": rev, "host_class": host, "gate_id": gate, "result": result, "measured": [],
-                "checks": [dict(c) for c in checks], "synthetic": synthetic,
-                "attachments": [], "prereg_sha256": prereg, "verdict_ids": list(verdicts), "recorded_at": when}
-
-    def passing(names, verdict=None, drop=()):
-        return [{"check": n, "result": "pass", "verdict_id": verdict if n in ("owner_not_garbled", "preregistered_listening") else None,
-                 "measured": []} for n in names if n not in drop]
-    ACE_SMOKE = PROFILES["ace-2b-sft-mlx"]["gates"]["smoke"]["checks"]
-    ace, rev, rev2, host = "ace-2b-sft-mlx", R("ace-2b-sft-mlx"), R("ace-2b-sft-mlx@pin2"), "mlx/m5pro"
-    inst = evr("ev_i", "install", ace, rev, host, "2026-10-10T10:00:00Z")
-    conf = evr("ev_c", "conformance", ace, rev, host, "2026-10-10T10:05:00Z")
-    smoke = evr("ev_s", "smoke", ace, rev, host, "2026-10-10T10:10:00Z", gate="smoke.ace-2b-sft-mlx", verdicts=["vd_smoke"],
-                checks=passing(ACE_SMOKE, "vd_smoke"))
-    smoke_syn = evr("ev_ss", "smoke", ace, rev, host, "2026-10-10T10:10:00Z", gate="smoke.ace-2b-sft-mlx", synthetic=True,
-                    verdicts=["vd_smoke"], checks=passing(ACE_SMOKE, "vd_smoke"))
-    smoke_no_ear = evr("ev_sne", "smoke", ace, rev, host, "2026-10-10T10:10:00Z", gate="smoke.ace-2b-sft-mlx",
-                       checks=passing(ACE_SMOKE, None, drop=("owner_not_garbled",)))
-    smoke_short = evr("ev_ssh", "smoke", ace, rev, host, "2026-10-10T10:10:00Z", gate="smoke.ace-2b-sft-mlx", verdicts=["vd_smoke"],
-                      checks=passing(ACE_SMOKE, "vd_smoke", drop=("install_bytes_match_manifest",)))
-    bench = evr("ev_b", "benchmark", ace, rev, host, "2026-10-12T10:00:00Z", gate="benchmark.ace-2b-sft-mlx", prereg=H("prereg-bench"))
-    later_fail = evr("ev_f", "smoke", ace, rev, host, "2026-10-11T10:00:00Z", result="fail", gate="smoke.ace-2b-sft-mlx",
-                     checks=[{"check": "decodes", "result": "fail", "verdict_id": None, "measured": []}])
-    early_fail = evr("ev_ef", "install", ace, rev, host, "2026-10-10T09:00:00Z", result="fail")
-    listen = {**evr("ev_l", "listening-unregistered", ace, rev, host, "2026-10-11T12:00:00Z", verdicts=["vd_x"])}
-
-    def stc(name, pid, r, h, evs, exp, why):
-        return {"name": name, "derivation": why, "profile_id": pid, "profile_revision": r, "host_class": h, "evidence": evs, "expected": exp}
-    status = {"kind": "fixture.status", "schemaVersion": SV, "cases": [
-        stc("no evidence", ace, rev, host, [], "declared", "Nothing has been checked."),
-        stc("install only", ace, rev, host, [inst], "declared", "installed needs install AND conformance."),
-        stc("install and conformance", ace, rev, host, [inst, conf], "installed", "Both records pass at this revision and host class."),
-        stc("smoke passes", ace, rev, host, [inst, conf, smoke], "smoke-passed",
-            "The declared smoke gate passed with real evidence: every declared check passes and Jon's verdict answers 'not garbled'."),
-        stc("smoke pass without owner verdict", ace, rev, host, [inst, conf, smoke_no_ear], "installed",
-            "The record has no owner_not_garbled check (a verdict id is the only way to answer it), so Jon never listened; it cannot promote."),
-        stc("smoke pass missing a declared check", ace, rev, host, [inst, conf, smoke_short], "installed",
-            "install_bytes_match_manifest is declared by the gate but absent from the record."),
-        stc("synthetic smoke on a real engine", ace, rev, host, [inst, conf, smoke_syn], "installed",
-            "ACE's smoke gate does not allow synthetic evidence (ADR-0027)."),
-        stc("benchmark with a preregistration", ace, rev, host, [inst, conf, smoke, bench], "benchmarked", "Preregistered benchmark pass."),
-        stc("later failing smoke", ace, rev, host, [inst, conf, smoke, later_fail], "disabled", "A failing record after promotion disables."),
-        stc("benchmark after a failure stays disabled", ace, rev, host, [inst, conf, smoke, later_fail, bench], "disabled", "disabled is terminal."),
-        stc("early failure then success", ace, rev, host, [early_fail, inst, conf], "installed", "A failure while declared changes nothing."),
-        stc("pin change starts over", ace, rev2, host, [inst, conf, smoke], "declared",
-            "A pin change is a new revision; with no records at it, it computes to declared (not installed)."),
-        stc("pin change reinstalled", ace, rev2, host,
-            [inst, conf, smoke, evr("ev_i2", "install", ace, rev2, host, "2026-10-13T10:00:00Z"),
-             evr("ev_c2", "conformance", ace, rev2, host, "2026-10-13T10:05:00Z")], "installed",
-            "A new revision with install and conformance returns to installed, not smoke-passed."),
-        stc("other host class", ace, rev, "cuda/rtx4090", [inst, conf, smoke], "declared", "A status on one host class says nothing about another."),
-        stc("unregistered listening changes nothing", ace, rev, host, [inst, conf, smoke, listen], "smoke-passed", "Product verdicts never promote."),
-        stc("test_only synthetic smoke", "fake-route-a", R("fake-route-a"), "fake/local",
-            [evr("ev_fi", "install", "fake-route-a", R("fake-route-a"), "fake/local", "2026-10-09T09:00:00Z", synthetic=True),
-             evr("ev_fc", "conformance", "fake-route-a", R("fake-route-a"), "fake/local", "2026-10-09T09:01:00Z", synthetic=True),
-             evr("ev_fs", "smoke", "fake-route-a", R("fake-route-a"), "fake/local", "2026-10-09T09:02:00Z", gate="smoke.fake-route-a", synthetic=True,
-                 checks=passing(["conformance", "decodes", "non_silent"]))],
-            "smoke-passed", "test_only profiles accept synthetic smoke evidence."),
-        stc("transcriber synthetic floor", "analysis-transcribe-pyin-hmm", R("analysis-transcribe-pyin-hmm"), "cpu/m5pro",
-            [evr("ev_ti", "install", "analysis-transcribe-pyin-hmm", R("analysis-transcribe-pyin-hmm"), "cpu/m5pro", "2026-10-09T09:00:00Z"),
-             evr("ev_tc", "conformance", "analysis-transcribe-pyin-hmm", R("analysis-transcribe-pyin-hmm"), "cpu/m5pro", "2026-10-09T09:01:00Z"),
-             evr("ev_ts", "smoke", "analysis-transcribe-pyin-hmm", R("analysis-transcribe-pyin-hmm"), "cpu/m5pro", "2026-10-09T09:02:00Z",
-                 gate="smoke.analysis-transcribe-pyin-hmm", synthetic=True, checks=passing(["conformance", "transcription_floor_synthetic"]))],
-            "smoke-passed", "The transcriber's smoke gate is the synthetic floor, which allows synthetic evidence."),
-        stc("no benchmark gate", "analysis-measure", R("analysis-measure"), "cpu/m5pro",
-            [evr("ev_mi", "install", "analysis-measure", R("analysis-measure"), "cpu/m5pro", "2026-10-09T09:00:00Z"),
-             evr("ev_mc", "conformance", "analysis-measure", R("analysis-measure"), "cpu/m5pro", "2026-10-09T09:01:00Z"),
-             evr("ev_ms", "smoke", "analysis-measure", R("analysis-measure"), "cpu/m5pro", "2026-10-09T09:02:00Z", gate="smoke.analysis-measure",
-                 checks=passing(["conformance", "decodes"])),
-             evr("ev_mb", "benchmark", "analysis-measure", R("analysis-measure"), "cpu/m5pro", "2026-10-12T09:00:00Z",
-                 gate="benchmark.analysis-measure", prereg=H("prereg-x"))],
-            "smoke-passed", "analysis-measure declares no benchmark gate, so nothing can benchmark it."),
-        stc("capability smoke missing the ui_p95 check", "studio.playback.darwin", None, "cpu/m5pro",
-            [evr("ev_pb_i", "install", "studio.playback.darwin", None, "cpu/m5pro", "2026-10-20T09:00:00Z", subject_type="capability"),
-             evr("ev_pb_c", "conformance", "studio.playback.darwin", None, "cpu/m5pro", "2026-10-20T09:01:00Z", subject_type="capability"),
-             evr("ev_pb_s", "smoke", "studio.playback.darwin", None, "cpu/m5pro", "2026-10-20T09:40:00Z", gate="smoke.studio-playback-darwin",
-                 subject_type="capability", checks=passing(["playback_underruns_zero"]))],
-            "installed", "The playback gate declares ui_p95_under_100ms; a record without it cannot pass the gate."),
-        stc("capability smoke with every check", "studio.playback.darwin", None, "cpu/m5pro",
-            [evr("ev_pb_i", "install", "studio.playback.darwin", None, "cpu/m5pro", "2026-10-20T09:00:00Z", subject_type="capability"),
-             evr("ev_pb_c", "conformance", "studio.playback.darwin", None, "cpu/m5pro", "2026-10-20T09:01:00Z", subject_type="capability"),
-             evr("ev_pb_s", "smoke", "studio.playback.darwin", None, "cpu/m5pro", "2026-10-20T09:40:00Z", gate="smoke.studio-playback-darwin",
-                 subject_type="capability", checks=passing(["playback_underruns_zero", "ui_p95_under_100ms"]))],
-            "smoke-passed", "Both declared playback checks pass on a real host of this OS."),
-    ]}
-
-    GIB = 2 ** 30
-    MIB = 2 ** 20
-
-    def snap(sid, osf, cpu, mem, accs, wsl=None):
-        return {"kind": "hardware-snapshot", "schemaVersion": SV, "id": sid, "host_id": "host_" + sid[3:], "taken_at": "2026-10-09T10:00:00Z",
-                "os": {"family": osf, "version": "fixture", "arch": "arm64" if osf == "darwin" else "x86_64"}, "cpu": cpu, "memory_bytes": mem,
-                "accelerators": accs, "wsl2": None if wsl is None else {"memory_bytes": wsl}, "volumes": [], "raw_outputs": []}
-
-    def nv(name, mib, cc, driver, cuda):
-        return {"vendor": "nvidia", "name": name, "vram_bytes": mib * MIB, "unified_memory": False, "compute_capability": cc,
-                "driver_version": driver, "cuda_runtime": cuda, "metal_recommended_max_working_set_bytes": None}
-    mac = snap("hw_m5pro", "darwin", "Apple M5 Pro", 48 * GIB,
-               [{"vendor": "apple", "name": "Apple M5 Pro GPU", "vram_bytes": None, "unified_memory": True, "compute_capability": None,
-                 "driver_version": None, "cuda_runtime": None, "metal_recommended_max_working_set_bytes": None}])
-    r4090 = snap("hw_4090", "linux", "x86", 64 * GIB, [nv("RTX 4090", 24564, "8.9", "570.86", "12.8")])
-    r5090 = snap("hw_5090", "linux", "x86", 64 * GIB, [nv("RTX 5090", 32607, "12.0", "575.51", "12.6")])
-    r3090 = snap("hw_3090", "windows", "x86", 32 * GIB, [nv("RTX 3090", 24576, "8.6", "566.03", "12.8")], wsl=16 * GIB)
-    r16 = snap("hw_4060ti", "linux", "x86", 16 * GIB, [nv("RTX 4060 Ti 16GB", 16380, "8.9", "570.26", "12.8")])
-    titan = snap("hw_titanrtx", "linux", "x86", 64 * GIB, [nv("TITAN RTX", 24576, "7.5", "570.86", "12.8")])
-    none = snap("hw_cpuonly", "linux", "x86", 32 * GIB, [])
-
-    def rc(name, snaps, tier, reasons, warnings, why):
-        return {"name": name, "derivation": why, "snapshots": snaps, "expected": {"tier": tier, "reasons": reasons, "warnings": warnings}}
-    recommend = {"kind": "fixture.recommend", "schemaVersion": SV, "cases": [
-        rc("this Mac", [mac], 4, ["apple_silicon"], [], "Apple Silicon recommends tier 4 (ADR-0003)."),
-        rc("4090", [r4090], 1, ["nvidia_24gb_cc89"], [], "24564 MiB = 23.99 GiB >= 23.5 and cc 8.9 >= 8.9; driver 570.86 >= 570.26."),
-        rc("5090 with cu126", [r5090], 1, ["nvidia_24gb_cc89"], ["blackwell_with_cu126"], "31.84 GiB, cc 12.0; a Blackwell card on cu126 is warned."),
-        rc("3090 on Windows", [r3090], 2, ["nvidia_24gb_cc80"], ["driver_below_cu128_minimum", "wsl2_memory_below_24gib"],
-           "24 GiB at cc 8.6 is tier 2; 566.03 < 570.65 on Windows; WSL2 16 GiB < 24."),
-        rc("16 GB card", [r16], 3, ["nvidia_12_16gb"], ["host_ram_below_24gib_for_yue2"],
-           "15.996 GiB is in 11.5-23.5; driver 570.26 meets the Linux minimum exactly; 16 GiB RAM < 24."),
-        rc("pre-BF16 card", [titan], 4, ["no_qualifying_accelerator"], ["compute_capability_below_8_0", "burst_only"],
-           "cc 7.5 < 8.0 qualifies for no NVIDIA tier (decision 1 in the README); burst only."),
-        rc("no accelerator", [none], 4, ["no_qualifying_accelerator"], ["burst_only"], "No accelerator: tier 4, burst only, with a warning."),
-        rc("Mac plus a reachable 4090", [mac, r4090], 1, ["nvidia_24gb_cc89"], [], "The best tier wins (option A: Mac studio host, CUDA worker)."),
-    ]}
-
-    def le(seq, at, typ, usd, month="2026-10", run="br_x"):
-        return {"kind": "ledger-entry", "schemaVersion": SV, "seq": seq, "at": at, "entry_type": typ,
-                "run_id": run if typ in ("reserve", "settle", "release", "overrun") else None, "usd": usd, "month": month,
-                "note": "vector", "act": owner("acknowledge_overrun", at) if typ == "overrun_acknowledged" else None}
-
-    def lc(name, entries, before, ceiling, mtd, allowed, blocks, why, month="2026-10", cap="25.00"):
-        return {"name": name, "derivation": why, "entries": entries, "month": month, "before": before, "ceiling_usd": ceiling,
-                "cap_usd": cap, "expected": {"month_to_date_usd": mtd, "allowed": allowed, "overrun_blocks": blocks}}
-    ledger_vec = {"kind": "fixture.ledger", "schemaVersion": SV, "cases": [
-        lc("empty month", [], None, "0.38", "0.00", True, False, "Nothing spent; 0.00 + 0.38 <= 25.00."),
-        lc("open reservation and a fixed line", [le(1, "2026-10-02T10:00:00Z", "reserve", "0.38"), le(2, "2026-10-01T00:00:00Z", "fixed_line", "2.00")],
-           None, "0.38", "2.38", True, False, "An open reserve counts at its ceiling: 0.38 + 2.00."),
-        lc("settled below the reservation", [le(1, "2026-10-02T10:00:00Z", "reserve", "0.38"), le(2, "2026-10-02T10:20:00Z", "settle", "0.21")],
-           None, "0.38", "0.21", True, False, "The settle closes the reserve; only 0.21 counts."),
-        lc("released", [le(1, "2026-10-02T10:00:00Z", "reserve", "0.38"), le(2, "2026-10-02T10:01:00Z", "release", "0.00")],
-           None, "0.38", "0.00", True, False, "A released reserve counts nothing."),
-        lc("month boundary", [le(1, "2026-09-30T23:50:00Z", "settle", "10.00", month="2026-09", run="br_sep"), le(2, "2026-10-01T00:10:00Z", "reserve", "1.00")],
-           None, "0.38", "1.00", True, False, "September's settle is not in October (UTC calendar month, T-09)."),
-        lc("before a quote", [le(1, "2026-10-02T10:00:00Z", "reserve", "0.38"), le(2, "2026-10-02T11:00:00Z", "fixed_line", "5.00")],
-           "2026-10-02T10:30:00Z", "0.38", "0.38", True, False, "Only entries strictly before the quote count."),
-        lc("over the cap", [le(1, "2026-10-03T10:00:00Z", "fixed_line", "24.80")], None, "0.38", "24.80", False, False,
-           "24.80 + 0.38 = 25.18 > 25.00: refused."),
-        lc("exactly at the cap", [le(1, "2026-10-03T10:00:00Z", "fixed_line", "24.62")], None, "0.38", "24.62", True, False,
-           "24.62 + 0.38 = 25.00 <= 25.00: allowed."),
-        lc("overrun not double counted", [le(1, "2026-10-04T10:00:00Z", "reserve", "0.38"), le(2, "2026-10-04T10:30:00Z", "settle", "0.60"),
-                                          le(3, "2026-10-04T10:30:01Z", "overrun", "0.22")],
-           None, "0.38", "0.60", True, True, "The settle holds the actual 0.60; the overrun marks the 0.22 excess and blocks leases."),
-        lc("overrun acknowledged", [le(1, "2026-10-04T10:00:00Z", "reserve", "0.38"), le(2, "2026-10-04T10:30:00Z", "settle", "0.60"),
-                                    le(3, "2026-10-04T10:30:01Z", "overrun", "0.22"), le(4, "2026-10-04T11:00:00Z", "overrun_acknowledged", "0.00")],
-           None, "0.38", "0.60", True, False, "Jon's acknowledgement (an owner act) lifts the block."),
-        lc("upward reconciliation", [le(1, "2026-10-04T10:00:00Z", "reserve", "0.38"), le(2, "2026-10-04T10:30:00Z", "settle", "0.30"),
-                                     le(3, "2026-10-31T09:00:00Z", "reconcile_adjustment", "1.10", run=None)],
-           None, "0.38", "1.40", True, True,
-           "The invoice shows 1.10 the ledger never booked (an orphan pod's storage): 0.30 + 1.10 = 1.40 counts, and new leases wait for Jon."),
-        lc("upward reconciliation acknowledged", [le(1, "2026-10-04T10:30:00Z", "settle", "0.30", run="br_y"),
-                                                  le(2, "2026-10-31T09:00:00Z", "reconcile_adjustment", "1.10", run=None),
-                                                  le(3, "2026-10-31T09:05:00Z", "overrun_acknowledged", "0.00", run=None)],
-           None, "0.38", "1.40", True, False, "Acknowledging lifts the block; the adjustment still counts toward the cap."),
-    ]}
-
-    mapping = [{"label": "B", "candidate_id": "cand_a"}, {"label": "A", "candidate_id": "cand_b"}]
-    nonce = "00" * 31 + "01"
-    preimage = '[{"candidate_id":"cand_b","label":"A"},{"candidate_id":"cand_a","label":"B"}]|' + nonce
-    audition_vec = {"kind": "fixture.audition", "schemaVersion": SV, "cases": [
-        {"name": "two arms", "derivation": "Quietest is -15.40; A is lowered by 1.20, B untouched.", "op": "gains",
-         "loudness": {"A": "-14.20", "B": "-15.40"}, "expected_gains": {"A": "-1.20", "B": "0.00"}},
-        {"name": "equal loudness", "derivation": "No arm moves.", "op": "gains", "loudness": {"A": "-14.00", "B": "-14.00"},
-         "expected_gains": {"A": "0.00", "B": "0.00"}},
-        {"name": "three arms", "derivation": "Quietest -12.55: A -9.00 -> -3.55; C -10.10 -> -2.45.", "op": "gains",
-         "loudness": {"A": "-9.00", "B": "-12.55", "C": "-10.10"}, "expected_gains": {"A": "-3.55", "B": "0.00", "C": "-2.45"}},
-        {"name": "commitment", "derivation": "Mapping sorted by label, canonical JSON (sorted keys, no spaces), '|', the nonce; hashed with sha256.",
-         "op": "commitment", "mapping": mapping, "nonce": nonce, "preimage": preimage,
-         "expected_commitment": hashlib.sha256(preimage.encode("utf-8")).hexdigest()},
-    ]}
-    return {"tempo.json": tempo, "status.json": status, "recommend.json": recommend, "ledger.json": ledger_vec, "audition.json": audition_vec}
+    from studio_ref.vector_discovery import discover
+    vectors = {}
+    for kind, module in discover(ROOT).items():
+        doc = module.build(PROFILES)
+        if not isinstance(doc, dict) or doc.get("kind") != kind:
+            raise ValueError(f"{kind}: producer kind mismatch")
+        if not isinstance(doc.get("cases"), list) or not doc["cases"]:
+            raise ValueError(f"{kind}: producer must supply nonempty cases")
+        vectors[kind.removeprefix("fixture.") + ".json"] = doc
+    return vectors
 
 
 # ======================================================================================================================
@@ -1707,7 +1648,11 @@ def plan_files() -> dict[Path, bytes]:
 
 
 def main(argv: list[str]) -> int:
-    files = plan_files()
+    try:
+        files = plan_files()
+    except (ValueError, OSError, ImportError) as exc:
+        print(f"FAILED: {exc}", file=sys.stderr)
+        return 1
     existing = {p for p in FIX.rglob("*.json") if "legacy" not in p.relative_to(FIX).parts}
     if "--check" in argv:
         stale = sorted(str(p.relative_to(ROOT)) for p, data in files.items() if not p.exists() or p.read_bytes() != data)

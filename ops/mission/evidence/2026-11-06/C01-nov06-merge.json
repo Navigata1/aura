@@ -1,0 +1,52 @@
+{
+  "checked_at": "2026-11-07T05:13:03.203813+00:00",
+  "before": {
+    "private": true,
+    "default_branch": "main",
+    "head": "361d9b973caf4dc31867bfa0cb17e56a70db744d",
+    "base": "e421699890e80c5fffcc3f36659b3ba4e1587db2",
+    "base_ref": "integration",
+    "main": "79cd9aff1ee239bd0422e684b4e8d58b73bb7c0f",
+    "checks": [
+      {
+        "name": "checks / foundation (ubuntu-latest)",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ],
+    "review_state": {
+      "reviewThreads": {
+        "nodes": [],
+        "pageInfo": {
+          "hasNextPage": false
+        }
+      },
+      "reviewRequests": {
+        "totalCount": 0
+      }
+    },
+    "hosted_run": {
+      "id": 42341645052,
+      "head_sha": "361d9b973caf4dc31867bfa0cb17e56a70db744d",
+      "conclusion": "success",
+      "url": "https://github.com/Navigata1/aura/actions/runs/42341645052"
+    },
+    "independent_review_files": [
+      "nov06-standards-review.md",
+      "nov06-spec-review.md"
+    ]
+  },
+  "checks_watch": "checks / foundation (ubuntu-latest)\tpass\t40s\thttps://github.com/Navigata1/aura/actions/runs/42341645052/job/128310411363\t\nchecks / foundation (ubuntu-latest)\tpass\t40s\thttps://github.com/Navigata1/aura/actions/runs/42341645052/job/128310411363\t\n",
+  "after": {
+    "merged": true,
+    "merge_commit_sha": "ab53ab794bfa71a4efc3ab5394df58f485347e59",
+    "merged_at": "2026-11-07T05:13:04Z",
+    "main": "79cd9aff1ee239bd0422e684b4e8d58b73bb7c0f",
+    "private": true,
+    "squash_author_noreply_verified": true,
+    "cli_output": "",
+    "issue_3_state": "closed",
+    "issue_2_state": "open",
+    "issue_4_state": "open"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "observed_at": "2026-11-07T05:23:09.691534+00:00",
+  "repository": "Navigata1/aura",
+  "visibility": "private",
+  "main_unchanged": "79cd9aff1ee239bd0422e684b4e8d58b73bb7c0f",
+  "kind": "implementation-checkpoint-not-store-evidence",
+  "integration_runs": [
+    {
+      "pr": 6,
+      "head_sha": "e421699890e80c5fffcc3f36659b3ba4e1587db2",
+      "run_id": 42341504038,
+      "url": "https://github.com/Navigata1/aura/actions/runs/42341504038",
+      "event": "push",
+      "jobs": {
+        "ubuntu-latest": "success",
+        "macos-latest": "success",
+        "windows-latest": "success"
+      }
+    },
+    {
+      "pr": 5,
+      "head_sha": "ab53ab794bfa71a4efc3ab5394df58f485347e59",
+      "run_id": 42341780817,
+      "url": "https://github.com/Navigata1/aura/actions/runs/42341780817",
+      "event": "push",
+      "jobs": {
+        "ubuntu-latest": "success",
+        "macos-latest": "success",
+        "windows-latest": "success"
+      }
+    },
+    {
+      "pr": 8,
+      "head_sha": "cc846da282744b807ac2f2f7cfb4e845161eb881",
+      "run_id": 42342305602,
+      "url": "https://github.com/Navigata1/aura/actions/runs/42342305602",
+      "event": "push",
+      "jobs": {
+        "ubuntu-latest": "success",
+        "macos-latest": "success",
+        "windows-latest": "success"
+      }
+    }
+  ],
+  "limits": [
+    "Software-only hosted checks",
+    "No actual scheduled-nightly observation",
+    "No real generation, playback or owner listening",
+    "Full T02 and C02 not complete"
+  ]
+}

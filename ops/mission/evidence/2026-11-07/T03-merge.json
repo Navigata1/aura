@@ -1,0 +1,78 @@
+{
+ "ticket": "T03",
+ "pr": 129,
+ "checked_at": "2026-11-08T02:29:07.565865+00:00",
+ "before": {
+  "head": "abb682610056653bda9ae7932f021ada1437346d",
+  "integration_tip": "7cb7bbdfb7dc041832301f015bd25543ce6835f3",
+  "reviewed_head": "abb682610056653bda9ae7932f021ada1437346d",
+  "reviewed_patch_id": "e5d4c258c451e9507ca254ed45e72a457cd1e0d3",
+  "merged_patch_id": "e5d4c258c451e9507ca254ed45e72a457cd1e0d3",
+  "base_refresh": null,
+  "checks": {
+   "checks / foundation (ubuntu-latest)": {
+    "conclusion": "success",
+    "name": "checks / foundation (ubuntu-latest)",
+    "status": "completed"
+   },
+   "checks / foundation (macos-latest)": {
+    "conclusion": "success",
+    "name": "checks / foundation (macos-latest)",
+    "status": "completed"
+   },
+   "checks / foundation (windows-latest)": {
+    "conclusion": "success",
+    "name": "checks / foundation (windows-latest)",
+    "status": "completed"
+   }
+  },
+  "review_file": "/Volumes/STUDIO/evidence/T03/T03-review.json",
+  "review_files": [
+   "/Volumes/STUDIO/evidence/T03/T03-standards-review.md",
+   "/Volumes/STUDIO/evidence/T03/T03-spec-review.md",
+   "/Volumes/STUDIO/evidence/T03/T03-review.json",
+   "/Volumes/STUDIO/evidence/T03/T03-review-SHA256SUMS",
+   "/Volumes/STUDIO/evidence/T03/T03-review-ci-checks.log",
+   "/Volumes/STUDIO/evidence/T03/T03-review-consistency-base.txt",
+   "/Volumes/STUDIO/evidence/T03/T03-review-consistency-head.txt",
+   "/Volumes/STUDIO/evidence/T03/T03-review-contract-checks-head.log",
+   "/Volumes/STUDIO/evidence/T03/T03-review-final-refs.log",
+   "/Volumes/STUDIO/evidence/T03/T03-review-fixture-bytes.log",
+   "/Volumes/STUDIO/evidence/T03/T03-review-install.log",
+   "/Volumes/STUDIO/evidence/T03/T03-review-local-gate.log",
+   "/Volumes/STUDIO/evidence/T03/T03-review-pr-comment.log",
+   "/Volumes/STUDIO/evidence/T03/T03-review-pr-comment.md",
+   "/Volumes/STUDIO/evidence/T03/T03-review-probe-F1-fixture-provenance.log",
+   "/Volumes/STUDIO/evidence/T03/T03-review-probe-G1-regenerate.log",
+   "/Volumes/STUDIO/evidence/T03/T03-review-probe-P1-readiness-missing-yue2.log",
+   "/Volumes/STUDIO/evidence/T03/T03-review-probe-P2-new-blocker-unlisted.log",
+   "/Volumes/STUDIO/evidence/T03/T03-review-probe-P3-open-row-label-drift.log",
+   "/Volumes/STUDIO/evidence/T03/T03-review-probe-P4-confirmed-without-source.log",
+   "/Volumes/STUDIO/evidence/T03/T03-review-probe-P5-open-row-widened.log",
+   "/Volumes/STUDIO/evidence/T03/T03-review-probe-P6-status-flip-old-url.log",
+   "/Volumes/STUDIO/evidence/T03/T03-review-probe-P7-gpl-without-class.log",
+   "/Volumes/STUDIO/evidence/T03/T03-review-probe-P8-product-name-in-label.log",
+   "/Volumes/STUDIO/evidence/T03/T03-review-probe-R0-red-before.log",
+   "/Volumes/STUDIO/evidence/T03/T03-review-probes-run.log",
+   "/Volumes/STUDIO/evidence/T03/T03-review-rowdiff.txt",
+   "/Volumes/STUDIO/evidence/T03/T03-review-spotcheck-fetch.log",
+   "/Volumes/STUDIO/evidence/T03/T03-review-spotcheck-readings.log",
+   "/Volumes/STUDIO/evidence/T03/T03-review-spotcheck-results.json",
+   "/Volumes/STUDIO/evidence/T03/T03-review-tools/consistency.py",
+   "/Volumes/STUDIO/evidence/T03/T03-review-tools/fixture_bytes.py",
+   "/Volumes/STUDIO/evidence/T03/T03-review-tools/probes.py",
+   "/Volumes/STUDIO/evidence/T03/T03-review-tools/readings.py",
+   "/Volumes/STUDIO/evidence/T03/T03-review-tools/rowdiff.py",
+   "/Volumes/STUDIO/evidence/T03/T03-review-tools/spotcheck.py"
+  ]
+ },
+ "after": {
+  "state": "MERGED",
+  "merge_commit": "dee28e2fd2b7a79ca2773e639a4a714af5c356b8",
+  "merged_at": "2026-11-08T02:29:09Z",
+  "squash_author_noreply": true,
+  "issues_closed": [
+   16
+  ]
+ }
+}

@@ -1,0 +1,8 @@
+{
+  "observed_at": "2026-11-07T05:10:29.336287+00:00",
+  "account": "Navigata1",
+  "source": "Read-only Chrome settings/emails UI after owner sign-in",
+  "keep_email_private": true,
+  "block_email_exposing_pushes": true,
+  "agent_changed_settings": false
+}

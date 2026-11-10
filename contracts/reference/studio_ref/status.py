@@ -5,8 +5,13 @@
     installed -> smoke-passed  a smoke pass aimed at the profile's smoke gate whose checks list every check the gate
                                declares, each passing, with owner_not_garbled answered by a verdict id; synthetic only
                                where the gate allows
-    smoke-passed -> benchmarked  a benchmark pass aimed at the benchmark gate, with a preregistration hash, never synthetic
-    any failing install/conformance/smoke/benchmark record once at installed or above -> disabled (terminal)
+    benchmarked                 unavailable until concluded benchmark results have a binding contract (C01)
+    any failing install/conformance/smoke record once at installed or above -> disabled (terminal)
+
+Benchmark and hum-benchmark records are currently unsupported as conclusions. The admission rule rejects their
+pass/fail results, and this fold ignores both kinds entirely: an unsupported conclusion neither promotes nor disables.
+A preregistration hash (even one in known_preregs) and a verdict id do not prove quotas, thresholds or result binding.
+See contracts/README.md and docs/spec/contract-fixes/C01-benchmark-conclusions.md before enabling either transition.
 
 A failing attempt while still declared changes nothing. listening-unregistered records never change status. A pin
 change is a new revision: with no records at that revision it computes to declared, and it reaches installed only after
@@ -18,7 +23,7 @@ revision's smoke candidates is the evidence.gates rule's job, since this fold se
 from __future__ import annotations
 
 ORDER = ["declared", "installed", "smoke-passed", "benchmarked"]
-GATED_CHECKS = {"install", "conformance", "smoke", "benchmark"}
+GATED_CHECKS = {"install", "conformance", "smoke"}
 VERDICT_CHECKS = {"owner_not_garbled", "preregistered_listening"}
 
 
@@ -36,9 +41,11 @@ def gate_checks_met(record: dict, gate: dict) -> bool:
 
 def compute_status(subject: dict, evidence: list[dict], revision: str | None, host_class: str,
                    known_preregs: set[str] | None = None) -> str:
-    """subject is an engine profile (gates.smoke / gates.benchmark) or a capability (gate)."""
+    """subject is an engine profile (gates.smoke) or capability (gate).
+
+    known_preregs is retained for call compatibility; it confers no authority to conclude a benchmark.
+    """
     smoke_gate = subject["gates"]["smoke"] if "gates" in subject else subject["gate"]
-    bench_gate = subject["gates"]["benchmark"] if "gates" in subject else None
     test_only = subject.get("test_only", False)
     records = [e for e in evidence
                if e["subject"]["subject_id"] == subject["id"] and e["host_class"] == host_class
@@ -62,10 +69,6 @@ def compute_status(subject: dict, evidence: list[dict], revision: str | None, ho
                 and gate_checks_met(e, smoke_gate):
             if not e["synthetic"] or smoke_gate["synthetic_allowed"] or test_only:
                 state = "smoke-passed"
-        elif check == "benchmark" and state == "smoke-passed" and bench_gate is not None \
-                and e["gate_id"] == bench_gate["gate_id"] and not e["synthetic"] and e["prereg_sha256"] \
-                and (known_preregs is None or e["prereg_sha256"] in known_preregs):
-            state = "benchmarked"
         if state == "declared" and install_ok and conformance_ok:
             state = "installed"
     return state

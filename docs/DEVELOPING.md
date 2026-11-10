@@ -1,8 +1,54 @@
 # Developing AURA
 
-Nothing in the application is built yet. A command marked **(planned)** lands with the ticket that builds it, and that
-ticket updates this file in the same PR. Facts marked MEASURED-LOCAL were measured on the build Mac on 2026-10-09.
+T01 now provides the package skeleton, CLI discovery, external-volume helpers and foundation checks. The web page is
+explicitly a foundation placeholder; generation, the Studio API and playback are not implemented. A command marked
+**(planned)** still belongs to a later ticket. Facts marked MEASURED-LOCAL were measured on the build Mac on 2026-10-09.
 Everything else follows `docs/spec/architecture.md` and the ADRs it cites.
+
+## Foundation commands available now
+
+Work only in the external ticket worktree. The canonical checkout remains docs-only.
+
+```sh
+source ~/.config/studio/env.sh
+export PATH="/Volumes/STUDIO/envs/node/22.22.3/bin:$PATH"
+cd /Volumes/STUDIO/worktrees/01-foundation
+source scripts/dev/studio-env.sh
+python3 scripts/dev/preflight.py --estimate-gib 3
+uv sync --frozen
+pnpm install --frozen-lockfile
+uv run --frozen studioctl --version
+uv run --frozen studioctl doctor
+uv run --frozen python scripts/ci/run.py --files-only
+```
+
+Use `--files-only` only while preparing uncommitted work. CI omits it and checks commit identities and the PR diff
+using `--base <base-sha>`. `scripts/ci/clean_contracts.py` runs the contract, ticket and registry gates from a fresh
+tracked-file copy, so an ignored local fixture cannot make a broken checkout pass. Stage new files before that
+local gate; CI's checkout contains exactly the committed files.
+
+Pinned toolchain: uv **0.11.8**, managed Python **3.12.13**, Node **22.22.3**, pnpm **11.1.2**. Exact dependency
+versions and hashes live in `uv.lock` and `pnpm-lock.yaml`. These supersede the October 9 observations below.
+`uv sync` installs all six workspace packages; `studio-control` currently has no third-party runtime dependencies.
+The development license inventory is separate from the shipped control/web runtime inventory.
+
+The Bash/Zsh helper refuses before exporting anything if STUDIO is absent, lacks ownership, is hosted internally,
+is nested inside another disk image, or a cache/temp path resolves outside STUDIO through a symlink. On macOS
+STUDIO_ROOT defaults to `/Volumes/STUDIO`; on Linux/Windows set it to the intended existing storage directory.
+`STUDIO_PYTHON` may name the interpreter for sourcing the helper, useful with Git Bash on Windows.
+`python3 scripts/dev/worktree.py <NN>-<slug>` uses the single external bare clone under `$STUDIO_ROOT/git` and creates
+only under `$STUDIO_ROOT/worktrees`. It never clones or fetches automatically.
+
+GitHub-hosted CI uses an explicitly disposable runner directory through `scripts/ci/bootstrap.py`; it does not use
+the personal Mac volume adapter or claim physical storage qualification. CI tests the macOS adapter using synthetic
+OS mount responses at the subprocess/filesystem boundary. Actual storage probes, playback, listening and paid runs
+remain separate gates. Windows symlink privilege is not assumed; the escape test runs on the Unix runners.
+
+T01 declared Linux PR checks plus macOS/Windows integration and nightly checks; since PR #12 (2026-11-06) every PR runs
+on Linux, macOS and Windows, and the `integration` ruleset requires all three. A workflow definition is not an
+executed check. Scheduled and manual workflows become available only when their definition reaches the default
+branch; only Jon release-merges `integration` to `main`. Branch protection and owner prerequisites remain tracked
+separately and must be satisfied before T01 closes.
 
 ## Toolchain
 
@@ -33,7 +79,8 @@ Everything else follows `docs/spec/architecture.md` and the ADRs it cites.
 
 ## The studio volume (ADR-0015, ADR-0034)
 
-Everything heavy lives in an APFS sparse bundle on the external Backup Plus drive, mounted as `/Volumes/STUDIO`:
+Per the October 29 owner amendment, everything heavy lives in a dedicated APFS sparse bundle on **Extreme SSD**,
+mounted as `/Volumes/STUDIO`:
 models, the Hugging Face, uv, pnpm, pip, torch and Playwright caches, Python interpreters, engine environments,
 worktrees, scratch, logs, evidence captures and, by default, the project store. The internal disk holds only the OS,
 the browser, the canonical docs checkout at `~/Music Gen/aura` (nothing installed), `~/.config/studio/` and keychain
@@ -64,8 +111,8 @@ run them by hand.
    ```sh
    BAND_SECTORS=16384   # replace with the measured choice; 16384 sectors = 8 MiB, hdiutil's default
    hdiutil create -type SPARSEBUNDLE -fs APFS -volname STUDIO -size 900g \
-     -imagekey sparse-band-size="$BAND_SECTORS" "/Volumes/Backup Plus/STUDIO.sparsebundle"
-   hdiutil attach -nobrowse -owners on -mountpoint /Volumes/STUDIO "/Volumes/Backup Plus/STUDIO.sparsebundle"
+     -imagekey sparse-band-size="$BAND_SECTORS" "/Volumes/Extreme SSD/STUDIO.sparsebundle"
+   hdiutil attach -nobrowse -owners on -mountpoint /Volumes/STUDIO "/Volumes/Extreme SSD/STUDIO.sparsebundle"
    mount | grep ' on /Volumes/STUDIO '            # expect: apfs, local, nobrowse
    diskutil info /Volumes/STUDIO | grep Owners    # expect: Enabled
    ```
@@ -94,7 +141,7 @@ run them by hand.
    ```sh
    sudo mdutil -i off /Volumes/STUDIO                              # Spotlight off; .metadata_never_index alone is UNVERIFIED
    tmutil isexcluded /Volumes/STUDIO                               # expect [Excluded]
-   tmutil addexclusion "/Volumes/Backup Plus/STUDIO.sparsebundle"  # sticky exclusion on the image itself
+   tmutil addexclusion "/Volumes/Extreme SSD/STUDIO.sparsebundle"  # sticky exclusion on the image itself
    ```
 
 What has been checked, and where (MEASURED-LOCAL, 2026-10-09T17:29Z, macOS 26.6.2, on a 1 GiB probe image hosted on
@@ -124,7 +171,7 @@ in, for example). Save it as `~/Library/LaunchAgents/local.studio.attach.plist`:
   <array>
     <string>/bin/sh</string>
     <string>-c</string>
-    <string>B="/Volumes/Backup Plus/STUDIO.sparsebundle"; [ -d "$B" ] &amp;&amp; ! /sbin/mount | /usr/bin/grep -q ' on /Volumes/STUDIO ' &amp;&amp; /usr/bin/hdiutil attach -nobrowse -owners on -mountpoint /Volumes/STUDIO "$B"; exit 0</string>
+    <string>B="/Volumes/Extreme SSD/STUDIO.sparsebundle"; [ -d "$B" ] &amp;&amp; ! /sbin/mount | /usr/bin/grep -q ' on /Volumes/STUDIO ' &amp;&amp; /usr/bin/hdiutil attach -nobrowse -owners on -mountpoint /Volumes/STUDIO "$B"; exit 0</string>
   </array>
   <key>RunAtLoad</key>
   <true/>
@@ -150,7 +197,7 @@ Mac yet.
 ```sh
 hdiutil detach /Volumes/STUDIO                                  # stop `studioctl serve` and every worker first
 diskutil verifyVolume /Volumes/STUDIO                           # after an unclean eject (drive pulled, sleep mid-write)
-hdiutil compact "/Volumes/Backup Plus/STUDIO.sparsebundle"      # offline only; deletes free no host space until this runs
+hdiutil compact "/Volumes/Extreme SSD/STUDIO.sparsebundle"      # offline only; deletes free no host space until this runs
 ```
 
 `studioctl store detach` stops the service and workers before detaching, and an unclean-detach marker makes the next
@@ -163,42 +210,16 @@ a directory squatting on the mount point.
 
 ## Environment (ADR-0034)
 
-`studioctl env` writes one env file under `~/.config/studio/`, and every `studioctl` command and worker spawn sources
-it (planned). Until it lands, keep this block in a file outside the repo (the foundation ticket adds it as
-`scripts/dev/studio-env.sh`) and `source` it in every terminal and agent session on the Mac. It exports nothing and
-returns 1 when STUDIO is not mounted, so a missing volume can never send `TMPDIR` or a cache to `/tmp` on the internal
-disk. There is no `AURA_*` variable: the product name stays in `contracts/product.json` (ADR-0035).
+`scripts/dev/studio-env.sh` is implemented. Source it in Bash/Zsh from an external worktree. It delegates to
+`environment.py` and `preflight.py`, validates the actual studio volume/backing device, and exports the HF, uv,
+Python/tool, pip, torch, XDG, npm, Corepack, pnpm and Playwright paths plus TMPDIR/TMP/TEMP under STUDIO.
+It emits no exports on failure. It refuses a globally inherited UV_PROJECT_ENVIRONMENT and refuses symlink escapes.
+`studioctl env` and supervisor per-spawn environment setup remain planned.
 
 ```sh
-if ! mount | grep -q ' on /Volumes/STUDIO '; then
-  echo "STUDIO is not mounted: attach it first; nothing was exported" >&2
-  return 1 2>/dev/null || exit 1
-fi
-export STUDIO_ROOT=/Volumes/STUDIO                    # the studio volume; a plain directory on Windows and Linux
-export STUDIO_STORE_ROOT="$STUDIO_ROOT/projects"      # the project store (O-03 default; configurable)
-export STUDIO_ENV=dev                                 # dev or test enables the fake-* profiles; unset for real use
-export HF_HOME="$STUDIO_ROOT/models/hf"
-export HF_HUB_CACHE="$HF_HOME/hub"                    # explicit, so a stray profile value cannot redirect downloads
-export HF_XET_CACHE="$HF_HOME/xet"
-export UV_CACHE_DIR="$STUDIO_ROOT/envs/uv-cache"      # same volume as the envs, so uv clones instead of copying
-export UV_PYTHON_INSTALL_DIR="$STUDIO_ROOT/envs/python"
-export UV_PYTHON_INSTALL_BIN=0                        # no interpreter links in ~/.local/bin
-export PIP_CACHE_DIR="$STUDIO_ROOT/caches/pip"
-export TORCH_HOME="$STUDIO_ROOT/caches/torch"
-export XDG_CACHE_HOME="$STUDIO_ROOT/caches/xdg"
-export XDG_DATA_HOME="$STUDIO_ROOT/caches/xdg-data"   # uv tools and other XDG data (~/.local/share/uv already held 189 MiB)
-export XDG_STATE_HOME="$STUDIO_ROOT/caches/xdg-state"
-export UV_TOOL_DIR="$STUDIO_ROOT/envs/uv-tools"
-export UV_TOOL_BIN_DIR="$STUDIO_ROOT/envs/uv-tools/bin"
-export npm_config_cache="$STUDIO_ROOT/caches/npm"
-export COREPACK_HOME="$STUDIO_ROOT/caches/corepack"   # corepack fetches the packageManager-pinned pnpm here
-export PLAYWRIGHT_BROWSERS_PATH="$STUDIO_ROOT/caches/ms-playwright"
-export TMPDIR="$STUDIO_ROOT/scratch/tmp/"
-mkdir -p "$TMPDIR"
+source scripts/dev/studio-env.sh
+python3 scripts/dev/preflight.py --estimate-gib 3
 ```
-
-The control service also sets these per spawn, with `TMPDIR` pointing at `scratch/<job_id>/` and an MLX cache limit
-for demucs-mlx (planned).
 
 **`UV_PROJECT_ENVIRONMENT` is never exported in the shell.** If it were, every `uv sync` would share one environment.
 
@@ -239,7 +260,7 @@ environment variable.)
 
 Every download, install, environment build, job and export declares its estimated bytes per volume before it starts.
 
-- **The studio volume.** Effective free = min(APFS free inside the bundle, exFAT free on Backup Plus) minus band
+- **The studio volume.** Effective free = min(APFS free inside the bundle, exFAT free on Extreme SSD) minus band
   overhead. Refuse if effective free minus the estimate is under **10 GiB** (configurable). The APFS volume reports
   its 900 GiB logical cap, not what the drive can hold, so always read the host too.
 - **The internal disk.** No planned writes at all. Heavy jobs are blocked while it is under **2 GiB** free, because swap
@@ -258,15 +279,17 @@ report:
 
 ```sh
 studio_free_gib() { df -k "$1" | awk 'NR==2 { printf "%.1f", $4 / 1048576 }'; }
-for v in /System/Volumes/Data /Volumes/STUDIO "/Volumes/Backup Plus"; do
+for v in /System/Volumes/Data /Volumes/STUDIO "/Volumes/Extreme SSD"; do
   [ -d "$v" ] && printf '%-22s %8s GiB free\n' "$v" "$(studio_free_gib "$v")"
 done
 ```
 
-Go ahead only if the smaller of the `/Volumes/STUDIO` and `/Volumes/Backup Plus` figures, minus the estimate, leaves at
+Go ahead only if the smaller of the `/Volumes/STUDIO` and `/Volumes/Extreme SSD` figures, minus the estimate, leaves at
 least 10 GiB, and nothing you are about to do writes to `/System/Volumes/Data`.
 
 ## Repository workflow
+
+The November 6 owner amendment requires green current-head CI and independent review against the current integration base before a ticket merge. The November 7 decision (`docs/research/OWNER-DECISIONS-2026-11-07.md`) makes the repository public during the build, so `CLAUDE.md` hard rule 10 governs everything posted. Rulesets now enforce PR-only, squash-only merges into `integration`, the three `checks / foundation (…)` jobs and an up-to-date branch. The independent review stays procedural and is bound to the PR's patch (`git diff <merge-base>...<head> | git patch-id --stable`), and `main` takes only Jon's release merge. See also `docs/research/OWNER-DECISIONS-2026-11-06.md`.
 
 Ticket worktrees come from a bare clone on the volume, so their commits, indexes and fetched packs never land in the
 canonical checkout's `.git` on the internal disk (`~/Music Gen/aura` stays the docs checkout only).
@@ -299,7 +322,7 @@ git -C "$STUDIO_ROOT/git/aura.git" worktree remove "$STUDIO_ROOT/worktrees/<NN>-
 
 Worker environments under `envs/workers/` stay: other worktrees with the same lock share them.
 
-## Commands (planned)
+## Commands
 
 Run from a worktree with the env file sourced.
 
@@ -333,7 +356,7 @@ worktree:
 |---|---|
 | `python3 scripts/spec/validate.py` | The contract gate (below). |
 | `python3 contracts/reference/generate_fixtures.py` | Regenerates the golden fixtures deterministically. Contract tickets only. |
-| `python3 scripts/registry/sync.py` | Regenerates `contracts/registry/components.v1.json`. |
+| `python3 scripts/registry/sync.py` | Regenerates `contracts/registry/components.v1.json` and the open-source-readiness register in `docs/research/licenses/`; `--check` also fails when a release blocker is missing from that register. |
 | `python3 scripts/spec/tickets.py --check` | The ticket DAG: shape, edges, reduction, story and inventory traceability, owner gates, path conflicts and slot ancestry. |
 
 The rest are planned and land with the tickets that build them:
@@ -342,7 +365,7 @@ The rest are planned and land with the tickets that build them:
 |---|---|
 | `uv run python scripts/spec/validate.py` | The contract gate: schemas use only keywords the bundled checker implements, every fixture and registry file validates, the stdlib reference re-run matches exactly, seeded-bad fixtures fail, `components.v1.json` regenerates byte-identically, every `legacy/` fixture loads, and `claims_published` holds no MEASURED-LOCAL. |
 | `uv run python contracts/reference/generate_fixtures.py` | Regenerates the golden fixtures deterministically. Contract tickets only. |
-| `uv run python scripts/registry/sync.py` | Regenerates `contracts/registry/components.v1.json` from `docs/research/evidence-register.json`. |
+| `uv run python scripts/registry/sync.py` | Regenerates `contracts/registry/components.v1.json` from `docs/research/evidence-register.json` and the register overlay, and the open-source-readiness register from the same rows. |
 | `uv run pytest services/control` | StudioHarness: the real app on an ephemeral port, a temp store (a 2 GB temp sparse bundle on macOS for the preflight and mount cases), FakeEngine and the analysis worker as real subprocesses, FakeBurstProvider, recorded hardware probes and an injectable clock. Ten minutes or less on a PR. |
 | `uv run pytest workers/conformance --worker <url> --token <token>` | Worker-protocol conformance. Each of the eight mutants in `workers/conformance/mutants/` must fail it. The `--paid` marker goes through the real quote, Jon's UI approval and the reservation; an agent never starts it. |
 | `pnpm --dir apps/web test` | vitest, including the TimeModel twin against `contracts/fixtures/tempo`. |
@@ -352,9 +375,9 @@ The rest are planned and land with the tickets that build them:
 Run the stdlib scripts with `uv run python`, so they use the workspace's 3.12 rather than whichever `python3` is first
 on `PATH`.
 
-CI (planned): `pr.yml` runs on Linux for every PR (contracts, control, fake and analysis conformance with the mutants,
-headless Playwright, the lints). `integration.yml` and the nightly add macOS and Windows, with Playwright on macOS
-Chromium and screenshots attached. A self-hosted Mac runner produces hardware evidence and never runs paid jobs.
+CI: since PR #12, `pr.yml`, `integration.yml` and the nightly all run the foundation checks on Linux, macOS and Windows.
+Planned additions join as their tickets land: fake and analysis conformance with the mutants, headless Playwright on
+every PR, and Playwright on macOS Chromium with screenshots attached in the nightly. A self-hosted Mac runner produces hardware evidence and never runs paid jobs.
 
 ## Per-OS notes
 

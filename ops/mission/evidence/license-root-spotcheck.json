@@ -1,0 +1,20 @@
+[
+  {
+    "id": "react",
+    "url": "https://raw.githubusercontent.com/react/react/v19.3.1/LICENSE",
+    "sha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
+    "expected_license_marker": true
+  },
+  {
+    "id": "typescript",
+    "url": "https://raw.githubusercontent.com/microsoft/TypeScript/v7.0.2/LICENSE.txt",
+    "sha256": "a7d00bfd54525bc694b6e32f64c7ebcf5e6b7ae3657be5cc12767bce74654a47",
+    "expected_license_marker": true
+  },
+  {
+    "id": "libsndfile",
+    "url": "https://raw.githubusercontent.com/libsndfile/libsndfile/1.2.2/COPYING",
+    "sha256": "ad01ea5cd2755f6048383c8d54c88459cd6fcb17757c5c8892f8c5ea060f6140",
+    "expected_license_marker": true
+  }
+]

@@ -1,0 +1,187 @@
+{
+  "description": "A source melody carrying an assembled form.",
+  "error_contains": "$.spec_kind",
+  "id": "IR-MELODY-FORM-ON-SOURCE",
+  "kind": "fixture.invalid-record",
+  "record": {
+    "base_rev": 1,
+    "content_sha256": "0750f3d10e5b0e5da43a29c31e6ef51780256fa1a56c8e652619dba04f20064e",
+    "created_at": "2026-10-09T10:05:00Z",
+    "form": {
+      "end_tick": 92160,
+      "sections": [
+        {
+          "end_tick": 30720,
+          "name": "verse",
+          "phrases": [
+            {
+              "end_tick": 3840,
+              "phrase_id": "ph1",
+              "start_tick": 0
+            }
+          ],
+          "repeat": 1,
+          "section_id": "s1",
+          "section_kind": "vocal",
+          "start_tick": 0
+        },
+        {
+          "end_tick": 61440,
+          "name": "chorus",
+          "phrases": [
+            {
+              "end_tick": 34560,
+              "phrase_id": "ph2",
+              "start_tick": 30720
+            }
+          ],
+          "repeat": 1,
+          "section_id": "s2",
+          "section_kind": "vocal",
+          "start_tick": 30720
+        },
+        {
+          "end_tick": 92160,
+          "name": "chorus",
+          "phrases": [
+            {
+              "end_tick": 65280,
+              "phrase_id": "ph2",
+              "start_tick": 61440
+            }
+          ],
+          "repeat": 2,
+          "section_id": "s2",
+          "section_kind": "vocal",
+          "start_tick": 61440
+        }
+      ]
+    },
+    "key": {
+      "mode": "major",
+      "tonic": "C"
+    },
+    "kind": "melody-spec",
+    "melody_id": "mel_hymn",
+    "notes": [
+      {
+        "confidence": "0.91",
+        "duration_ticks": 960,
+        "id": "n1",
+        "origin": "transcribed",
+        "pitch": 60,
+        "start_tick": 0,
+        "velocity": 90
+      },
+      {
+        "confidence": null,
+        "duration_ticks": 960,
+        "id": "n2",
+        "origin": "corrected",
+        "pitch": 63,
+        "start_tick": 960,
+        "velocity": 90
+      },
+      {
+        "confidence": "0.88",
+        "duration_ticks": 1920,
+        "id": "n3",
+        "origin": "transcribed",
+        "pitch": 64,
+        "start_tick": 1920,
+        "velocity": 90
+      },
+      {
+        "confidence": "0.79",
+        "duration_ticks": 1920,
+        "id": "n4",
+        "origin": "transcribed",
+        "pitch": 65,
+        "start_tick": 3840,
+        "velocity": 90
+      },
+      {
+        "confidence": "0.83",
+        "duration_ticks": 1920,
+        "id": "n5",
+        "origin": "transcribed",
+        "pitch": 67,
+        "start_tick": 5760,
+        "velocity": 90
+      }
+    ],
+    "phrases": [
+      {
+        "end_tick": 3840,
+        "id": "ph1",
+        "name": "opening line",
+        "start_tick": 0
+      },
+      {
+        "end_tick": 7680,
+        "id": "ph2",
+        "name": "answer line",
+        "start_tick": 3840
+      }
+    ],
+    "ppq": 960,
+    "project_id": "prj_hymn",
+    "quantize": null,
+    "rev": 2,
+    "schemaVersion": "1.1.0",
+    "source": {
+      "assembled_from": null,
+      "capture_sha256": "dc777e3766c902a35936fea39ee9ceecee87a562e63e9fb42a090dc80205d7e7",
+      "seed_kind": "hum",
+      "transcription": {
+        "eligible_lanes": [
+          "individual",
+          "llc",
+          "research"
+        ],
+        "job_id": "job_tr1",
+        "license_chain": [
+          {
+            "code_license": "ISC",
+            "component_id": "librosa-pyin",
+            "obligations": [],
+            "weights_license": "n/a (no weights)"
+          },
+          {
+            "code_license": "Own code (all rights reserved until Q5)",
+            "component_id": "studio-own-code",
+            "obligations": [],
+            "weights_license": "n/a (no weights)"
+          }
+        ],
+        "method": "pyin-hmm",
+        "note": "unverified on real hums",
+        "profile_id": "analysis-transcribe-pyin-hmm"
+      }
+    },
+    "spec_kind": "melody",
+    "tempo_map": {
+      "meter": [
+        {
+          "denominator": 4,
+          "numerator": 4,
+          "tick": 0
+        }
+      ],
+      "rev": 2,
+      "tempo": [
+        {
+          "tick": 0,
+          "us_per_quarter": 500000
+        },
+        {
+          "tick": 3840,
+          "us_per_quarter": 600000
+        }
+      ]
+    }
+  },
+  "record_kind": "melody-spec",
+  "rule": "Only an assembled MelodySpec carries a form",
+  "schemaVersion": "1.0.0"
+}

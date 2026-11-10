@@ -45,7 +45,7 @@ python3 scripts/spec/validate.py                  # the gate; -v for detail, --r
    attested, a risk acceptance that would make a Suno import an audition arm, a YuE2 license acceptance without its
    GitHub permission document, and so on).
 7. **Vectors**: tick<->frame (960 PPQ, integer tempo, one half-up rounding), the status fold, `recommend()`, ledger
-   arithmetic and audition gains and commitments match hand-derived values exactly.
+   arithmetic, audition gains and commitments, and the evidence-binding input findings match hand-derived values exactly.
 8. `docs/evidence/` (a hash-checked export of the store: evidence plus the verdicts and preregistrations it cites)
    validates by kind and breaks no reference rule, so a hand-committed passing record cannot become a status; then the
    computed status of the shipped registry from it (none yet: every profile and capability is `declared`), plus the
@@ -60,8 +60,8 @@ inside scenarios, and vector inputs are hypothetical inputs to pure functions. N
 1. **Status is computed, never stored** (ADR-0001, ADR-0027, GLOSSARY "Profile status"): profiles carry no status
    field, and the schema rejects one. "Published" figures live in `claims_published`. With no evidence recorded,
    every seed profile computes to `declared`; nothing is smoke-passed.
-2. **Status fold**: a failing record while still `declared` changes nothing; a failing install, conformance, smoke or
-   benchmark record once at `installed` or above gives `disabled`, which is terminal for that revision and host class.
+2. **Status fold**: a failing record while still `declared` changes nothing; a failing install, conformance or smoke
+   record once at `installed` or above gives `disabled`, which is terminal for that revision and host class.
    A smoke record promotes only when its `checks` list every check the gate declares, each passing, with
    `owner_not_garbled` answered by a verdict id (the rule `evidence.gates` checks that the verdict is an owner-ui act on
    that revision's own candidates). A pin change is a new revision at `declared`.
@@ -77,7 +77,15 @@ inside scenarios, and vector inputs are hypothetical inputs to pure functions. N
    non-commercial scorers to individual and research (O-06), and made every row with an UNVERIFIED license
    research-only (individual and llc now forbid `unverified`). An `analyzed_by` edge is recorded on the analysis
    artifact, pointing at the audio it read. An import's lanes are bounded by its attested terms, and a transcribed
-   MelodySpec carries its transcriber's lanes.
+   MelodySpec carries its transcriber's lanes and license chain (`lane.record_eligible`, C07). The transcriber is the
+   profile its transcription job ran, which the transcription must name; the job records the profile revision, and
+   every revision of a profile shares its declared components. The `license_chain` must **equal** the chain derived
+   from that profile (the register's terms for exactly its components, in any order), not merely contain it: a
+   transcription has no other source of components (its capture is a human recording, whose chain is empty), so an
+   extra entry could only claim terms its transcriber never carried. Every revision that carries a transcription is
+   checked (the first, each correction and each 1.1 assembled copy, which must also equal its source's exactly), so a
+   wrong chain set at the source cannot travel by exact inheritance; a 1.0 assembled record that leaves the
+   transcription null inherits its source's by reference, and the source is checked.
 7. **Lyric languages**: ACE profiles declare `en` only until a smoke run per language (Q6 default); HeartMuLa and
    MiniMax leave languages undeclared, so vocal requests are refused until their smoke runs.
 8. **Register text** copied from the research register uses neutral wording for the product name (ADR-0035), and nine
@@ -93,10 +101,320 @@ inside scenarios, and vector inputs are hypothetical inputs to pure functions. N
    each check is measured, live MIDI is proven by an event-list hash and a played reference phrase, and
    `adherence.real-separator.darwin` gates adherence on real candidates; quotes never carry a lane refusal.
 
+## C01 containment, 2026-10-29
+
+The intended benchmark transition in ADR-0027 is **not implemented**. Its previous reference fold accepted a hash
+without proving a concluded result. C01 therefore fails closed: `evidence.gates` refuses **pass and fail** conclusions
+for both `benchmark` and `hum-benchmark` with `benchmark conclusion unsupported`, and the pure status fold ignores
+both kinds. Neither can promote nor disable a profile. Inconclusive records remain non-promoting; existing
+install/conformance/smoke semantics are unchanged. Generation requests retain `unbenchmarked routes` even when an
+unsupported benchmark record is present. A preregistration hash now resolves only to a `prereg` record, never to a
+MelodySpec or SongSpec hash.
+
+This is containment, **not completion of the benchmark feature**. Mixed-profile listening is still valid; C01 does not
+reuse the smoke rule that every candidate must belong to one profile. Existing schemas remain load-compatible and
+unsupported conclusions are refused by reference admission. The former status golden claiming that a bare hash
+benchmarked an engine was corrected; no frozen legacy fixture changed. See
+[the follow-on binding criteria](../docs/spec/contract-fixes/C01-benchmark-conclusions.md), required before T08 relies on
+benchmark conclusions and coordinated with T02's route-standing work.
+
 ## Not covered yet (needs vectors before code relies on it)
 
-SongForm assembly, MelodySpec -> YuE2 ABC emission, the MIDI round trip, `render_mode` stitching, route standing and
+SongForm assembly beyond its bounded T02c semantics (below), YuE2 ABC emission beyond its bounded T02e semantics
+(below), the MIDI round trip, `render_mode` stitching, route standing and
 the plan-rules order, the remaining job kinds and tasks (isolate, dsp-finish, dsp-edit, offline-render, preservation,
 per, align, diagnostics, stem-to-midi, a reserved tts), `price-snapshots/`, frozen `legacy/`
 fixtures (they freeze at the first release), the TypeScript twin of the tempo vectors and the Pydantic/TS codegen
 drift check.
+
+
+## Golden-vector discovery (T02a)
+
+Each non-underscore Python module under `reference/studio_ref/vector_cases/` declares one `KIND` (`fixture.<slug>`),
+`build(profiles)` returning its complete JSON vector record, and `evaluate(case, world)` returning `(actual, expected)`.
+Builders contain hand-derived expected values; they never call the implementation under test to construct an oracle.
+The generator discovers modules in sorted filename order and writes `fixtures/vectors/<slug>.json`; it rejects
+missing callables, duplicate/invalid kinds, mismatched producer kinds and empty cases before writing any fixtures.
+The validator discovers schemas by their existing `kind` const/enum and executes the matching evaluator; unknown
+vector kinds fail explicitly. Frozen legacy vectors still execute against current reference functions.
+
+A new family needs its module, schema and an entry in `contracts/consumers.json`, with no shared dispatch-list edit.
+Its `consumers` map covers vector kinds: every discovered family has a nonempty unique list of real consuming tickets
+(a `docs/spec/tickets.json` slug or a registered contract-fix id, see T02b below), and no orphan manifest entry is
+allowed. These name the consuming contract or feature ticket; they do not claim that the future feature is implemented.
+Vector kinds have no pending allow-list: missing consumers fail closed. T02b adds `records` and `pending` for record
+kinds and T02c adds `fields` for schema locations a minor version adds (see "Minor versions" below), so the manifest's
+scope reads "vector-kinds, record fields and added fields". The rest of the field/enum/declaration consumer inventory
+remains T02 work.
+
+`tests/contracts/test_vector_discovery.py` exercises the public generator and validator in disposable tracked-file
+copies: new-family discovery, unchanged existing bytes, corrupt expectations, duplicate kinds, missing evaluator,
+missing/unknown consumer, removed handler, producer-kind mismatch and legacy expectation execution. The production
+schemas and existing fixture bytes are unchanged. MIDI and route-standing implementation remain open
+(SongForm: T02c below; ABC emission: T02e below);
+C01 benchmark containment remains in force until C02 establishes result binding.
+
+## Evidence-binding inputs (T02b)
+
+C02 (#4) needs exact inputs to bind concluded benchmark evidence to, not the existence of a hash. Three closed record
+kinds hold them. None of them concludes, promotes or demotes anything, and none is read by `evidence.gates` or the status
+fold: C01's refusal of concluded `benchmark` and `hum-benchmark` records and its inert fold are unchanged.
+
+- `benchmark-prereg/1`, the typed preregistration. `set` is the benchmark gate's set (`benchmark-48` or
+  `hum-benchmark`). It holds every part of a preregistration (GLOSSARY): the cases (each brief pinned by
+  `brief_sha256`, the sha256 of its canonical JSON, inside the benchmark set named by `eval_set_id`; or each hum with
+  its MIDI ground truth), `asset_hashes`, the subjects under test (profile revision and host class), `budgets`
+  (candidates per arm, compute cap and listening minutes) with `burst_run_ceiling_usd`, `listening_quota`, `coverage`,
+  exactly one threshold per protocol metric, and for the hum benchmark a `decision` rule in which manual entry wins
+  when no subject passes. `asset_hashes`, `budgets`, `listening_quota` and `thresholds` reuse `prereg/1`'s shapes.
+  `prereg_sha256` is the record's own canonical hash, and `committed_at` must precede every job it governs. `prereg/1`
+  stays the preregistration of smoke-set eval auditions.
+- `benchmark-membership/1`: per case, each arm's subject with its jobs and candidates, or the MelodySpecs those jobs
+  transcribed, whose correction logs hold Jon's blind correction; the owner verdict ids each engine case expects.
+- `evidence-binding/1`: one evidence record, its subject, its typed preregistration and the membership. It carries no
+  validated flag (`IR-EVIDENCE-BINDING-VALIDATED-FLAG`).
+
+`studio_ref/binding.py` is the reference. `resolve_prereg` is typed: only one `benchmark-prereg` of the same set whose
+own hash matches resolves, so a MelodySpec, a `prereg/1` or the other set's preregistration never does.
+`prereg_findings` reports, for a preregistration on its own: a hash mismatch, duplicate case ids, a protocol metric
+without a threshold or with two, a decision ranked by an undeclared metric, a hum or ground truth missing from the asset
+hashes, a burst-run ceiling above the compute cap, coverage beyond the case count, a subject without a gate of that set
+and a forbidden case lane (ADR-0029 point 6). `binding_findings` adds: an unresolved preregistration or membership, a
+record present twice, an unregistered subject or case, a missing or edited brief or one outside the benchmark set, an
+unlisted seed, an arm off the candidate budget, a job that does not resolve to its arm's subject and host class or was
+queued at or before the commit, and an expected verdict or correction that does not resolve or was given over
+synthetic test output. The `fixture.binding` vectors hold hand-derived findings for valid mixed-profile engine and hum
+preregistrations and bindings, a seedless brief that binds, and one negative for each condition the reference checks,
+profile revision and host class separately. The one exception is the eval-mode guard: no schema-valid record reaches it
+alone, because `audition/1` lets only eval auditions carry a preregistration hash, so no vector can tell it apart.
+
+`contracts/consumers.json` (version 2) maps every top-level field of these kinds to real consuming tickets in
+`records`. A ticket is a `docs/spec/tickets.json` slug or a contract-fix id registered by a
+`docs/spec/contract-fixes/Cnn-*.md` file, which is how C02 is named. Each record kind that predates T02b sits on the
+`pending` allow-list, which code freezes so that it never holds a kind outside those 44; a new kind must be mapped field
+by field. `fields` maps schema locations marked `$comment: "added in 1.x.y"` to their consumers and must match them
+exactly (T02c, "Minor versions" below). The scope string is "vector-kinds, record fields and added fields". An orphan
+kind or field entry, an unmapped field, an unknown ticket, a new kind on
+neither list and a new kind parked on `pending` fail both the generator and the validator. Nested fields and enum values
+are not yet inventoried; that remains T02 work (T02h).
+
+Still open, for C02: everything in [its to-do](../docs/spec/contract-fixes/C02-concluded-benchmark-binding.md), from
+wiring typed resolution into `evidence.gates` and registry admission and resolving `evidence_id`, to the full 48-brief
+set, quota, coverage and threshold evaluation and the conclusion itself. Fields of the pending kinds, nested fields, enum
+values and route standing remain T02 work.
+
+## SongForm assembly (T02c)
+
+`reference/studio_ref/songform.py` is the language-neutral reference for `Score.assemble` (ADR-0032, architecture
+§4.6). `assemble(melody, song, output)` lays the phrases of the MelodySpec revision a SongSpec names along its
+SongForm and returns `{"assembled": <melody-spec 1.1.0>}` or `{"refused": {code, section_id, phrase_id, note_id}}`;
+`output` names the new record's `melody_id`, `rev`, `base_rev`, `tempo_map_rev` and `created_at`, and its project is
+the source's. The vectors (`fixtures/vectors/songform.json`, hand-derived in `vector_cases/songform.py`) fix the
+semantics below. The runtime Score module and every consumer (the guide, ABC emission, MIDI export, the timeline,
+R2-raw's `assemble-audio`) must honour them and their refusals: refuse, never truncate, stretch, retime or pick.
+
+- **Time.** Integer ticks at 960 PPQ, in the TimeModel's bars and beats (**Meter**, below). A bar of n/d lasts n x
+  3840 / d ticks, exact for every allowed denominator, so assembly never rounds; ADR-0033's one half-up rounding
+  applies only when a consumer converts ticks to frames (each vector also states its form's end frame at 48 kHz).
+- **Sections and repeats.** Sections play in form order from tick 0, each `repeats` times. One repeat lasts `bars`
+  bars of the section's meter whether or not its phrases fill it; the bars after its last phrase are rest.
+- **Phrases.** A placed phrase occupies every bar its span touches, counted from the bar line at or before its start
+  in the source meter and rounded up to whole bars, and moves by a whole number of bars, so every note keeps its place
+  in the bar. A phrase that starts mid-bar (a pickup) keeps its offset: its first bar is rest until the pickup, its
+  downbeat lands on the next bar line, and it stays inside its own section. The phrases of one repeat take consecutive
+  bar slots in `phrase_ids` order; two phrases never share a bar, so a phrase that starts in the bar where the
+  previous one ended moves to the next bar line (a vector pins this; T28's default form of one section per phrase
+  behaves the same way). A note belongs to a phrase when it lies inside the phrase's span; it keeps its duration,
+  pitch and velocity, with `origin` `assembled` and `confidence` null (the confidence stays on the source revision).
+  Notes outside every placed phrase are left out with their phrase, as the SongForm chose.
+- **Tempo and meter.** Each placed phrase has one tempo and one meter over every bar it occupies in the source, its
+  leading and trailing rest included: a change anywhere in those bars, even after its last note, is refused, never
+  dropped, because dropping it would retime that bar. A section takes its phrases' tempo and meter; a section that
+  places no phrase continues the previous section's, and leading ones take the first phrase-bearing section's (the
+  source's tick-0 values if none places a phrase). The assembled tempo map starts a tempo or meter segment at a
+  section's first tick only when the value changes, so a reordered or repeated phrase carries its tempo and meter with
+  it.
+- **Explicit form** (melody-spec 1.1.0, `form`, assembled records only, and required on them from 1.1.0). `end_tick`
+  is the full-form duration and `sections` lists every repeat of every section in order (`section_id`, `name`,
+  `section_kind`, `repeat`, `start_tick`, `end_tick`, and the phrases it places at their assembled spans). Repeats
+  tile [0, `end_tick`); instrumental intros and outros keep their bars; section names survive for the timeline and
+  MIDI markers. Consumers read duration and boundaries here and never infer them from the last note; a 1.0 assembled
+  record has no form, so a consumer refuses it instead of inferring one. The phrase marks (`phrases`) of an assembled
+  record are empty.
+- **Lineage.** The assembled record copies its source revision's `capture_sha256`, `transcription` (the transcriber's
+  eligible lanes and license chain), `key` and `quantize`; `assembled_from` names the melody and song revisions. Rule
+  `lane.record_eligible` requires a 1.1 assembled record to carry its source's capture and transcription exactly, and
+  still computes every assembled record's lanes through `assembled_from`, so a 1.0 record whose lineage is by
+  reference only cannot widen a lane (scenarios `lane-record-assembled-*`,
+  `lane-record-legacy-assembled-read-in-llc`).
+
+**Refusals**, reported in this scan order: `source_not_melody` (the source is itself assembled);
+`song_melody_mismatch` (the SongSpec names another revision or tempo-map revision, or lives in another project);
+`duplicate_section`; `duplicate_phrase` (the source marks one id twice); then for each section in form order
+`section_kind_mismatch` (an instrumental section places a phrase, or a vocal one places none), then for each of its
+phrases `missing_phrase`, `empty_phrase` (it ends at or before its start), `meter_conflict` and `tempo_conflict` (a
+change inside the bars it occupies, from its first bar line to the end of its last bar), `note_crosses_phrase_edge` (a
+note overlaps its span without lying inside it), then `meter_conflict` and `tempo_conflict` (the section's phrases
+disagree) and `phrase_overflow` (they need more bars than the section has); finally, per section,
+`chord_symbol_misplaced`. A source the time model cannot measure breaks `melody.wellformed` and is an input error, not
+a refusal: the reference raises `TimeModelError` with `tempo_segments_invalid` (the tempo map does not start at tick 0
+or strictly increase), `meter_segments_invalid` or `meter_change_inside_bar`, and the vectors pin each code
+(`{"invalid": code}`). An all-instrumental form takes the source's tick-0 tempo and meter, also pinned.
+
+**Meter** (`timemodel.bar_segments`, `position`, `tick_at`; vectors `fixtures/vectors/meter.json`, hand-derived in
+`vector_cases/meter.py`, consumed by the TypeScript TimeModel twin, song intent, the piano roll, ABC emission, the
+timeline and MIDI in and out). Bars and beats count from 1 across every meter change, and a beat is one denominator
+note (3840 / d ticks), so 6/8 counts six 480-tick beats; a felt dotted-quarter pulse is not modelled. Meter segments
+start at tick 0, strictly increase and change only on a bar line of the meter before them (rule `melody.wellformed`,
+scenario `melody-meter-inside-bar`); the last meter runs on past the form. `position(tick)` gives `{bar, beat,
+offset}` and `tick_at(bar, beat)` the first tick of that beat. An unrepresentable map or beat raises `TimeModelError`
+with `meter_segments_invalid`, `meter_change_inside_bar` or `beat_outside_bar` (and `tempo_segments`, behind
+tick-to-frame conversion, raises `tempo_segments_invalid`); the twin must reproduce these codes. Arguments outside the
+vectors' domain (a negative tick or frame, a bar or beat below 1) are input errors that raise a plain `ValueError`.
+The vectors walk the bar and beat boundaries of two maps: the assembled meter map of the SongForm case whose sections
+run 4/4, 3/4, 6/8, and 2/2, 1/1, 7/16, 5/32 for the remaining denominators.
+
+**Chord symbols** (song-spec 1.1.0, spec interpretation 2): an optional, non-empty `chord_symbols` list on a SongForm
+section, each `{offset_ticks, symbol}` measured from the start of every repeat, strictly increasing and inside one
+repeat. Assembly checks their placement but does not copy them; ABC emission reads them from the SongSpec by
+`section_id`, keeping them for `cot='full'` and stripping them for `cot='melody'`.
+
+**Minor versions.** A schema location a minor version adds carries `"$comment": "added in 1.x.y"` and is accepted only
+on records that claim that minor or later, so every 1.0.0 record still validates and a 1.0.0 record carrying a 1.1
+field fails (`fixtures/invalid/*-before-1-1.json`). `consumers.json` `fields` maps every such location to its
+consuming tickets; discovery fails on a location without consumers, an orphan entry, an unknown ticket slug or a
+`$comment` that starts with "added in" without matching exactly (T02b).
+
+**Still open.** Tempo or meter changes inside the bars a phrase occupies, an instrumental section that places a phrase
+and re-assembling an assembled melody are refused, not supported. A pickup always stays inside its own section (it
+never reaches back into the previous one), and two phrases that share a source bar take separate bars; supporting
+either otherwise is a later minor version. The world's two 1.0 assembled records predate these semantics (their bytes
+are frozen), so no rule yet requires a stored assembled record to equal `assemble()` of its sources; the runtime Score
+module, its API refusal type and that consistency check belong to the song-intent ticket, which also reconciles
+architecture §4.6's `assemble(melody, form) -> melody` with this reference's `assemble(melody, song, output)` (the
+SongSpec supplies the form and names the source revision; `output` names the new record). Fixtures are synthetic:
+nothing was rendered or listened to.
+
+
+## YuE2 ABC emission (T02e)
+
+`reference/studio_ref/abc.py` is the language-neutral reference for `Score.to_abc` (ADR-0004, RECONCILIATION D-04 and
+GAP-02, architecture §4.6). `to_abc(melody, song, cot=None)` writes an assembled melody-spec 1.1 record, with the
+SongSpec revision it was assembled from, as YuE2's native two-voice ABC. It returns `{"abc": {text, cot, lyrics,
+syllable_plan}}` or `{"ineligible": {"reasons": [...]}}`. The vectors (`fixtures/vectors/abc.json`, hand-derived in
+`vector_cases/abc.py`) fix the rules below. A consumer never truncates, retimes or respells what the dialect cannot
+hold: the song is ineligible and the reason says why.
+
+**Grammar targeted.** YuE's own validator for the bounded native dialect: `skills/yue2-music/scripts/abc_tools.py` at
+`multimodal-art-projection/YuE` commit `1647252d68b70cbead046ffd3f7caf036dde47ee`, the S01 pin (git blob `88b66e5b`,
+sha256 `ea04b922dacebec7ad257a2f8d83bdb5dfecb7a23110c1a3121c5c41c313930e`). Its notes are
+`skills/yue2-music/references/abc-editing.md` (blob `9fbdfb0a`) and `docs/generation.md` (blob `65d3c407`) at the same
+commit. All three are byte-identical at `72272f90` (`yue2-music-v1.2.0`), the revision of T03's `yue-abc-tools` license
+row. A pin move re-reads them and re-derives these vectors. Validating the goldens with `abc_tools.py` itself is the
+abc-emission ticket's (T56).
+
+**Header and layout.** The header is `X:1`, a blank `T:`, `M:` (the tick-0 meter), `L:1/32`, `Q:1/4=<BPM>`, the two
+native voice lines (`Vocal`, `Ins`) and `K:`. Then each repeat of each section, in form order, gets a `% <section name>`
+comment and groups of at most four bars. A group is a `V: Vocal` block, then a `V: Ins` block. A meter change starts a
+new group with the same `M:` field in both blocks. Every bar is full. A bar with no note and no chord onset is a
+whole-bar rest, and a run of them in one group is `Z`, `Z2`, `Z3` or `Z4`. The melody is the `Vocal` voice. `Ins` is
+whole-bar rests throughout: a MelodySpec has no instrumental line.
+
+**Time.**
+- One integer tempo. A stored `us_per_quarter` is written as `Q:1/4=b` when it is the Standard MIDI File encoding of a
+  whole BPM `b` from 20 to 300: `us_per_quarter == round_half_up(60000000 / b)`. So 88 BPM (681818 us), 90 BPM (666667
+  us) and 130 BPM (461538 us) are eligible. Any other value, including one a microsecond off an encoding or a whole BPM
+  outside 20-300, is `tempo_not_integer_bpm`: refused, never snapped or retimed. In 20-300 the encodings are at least
+  669 us apart, so no two whole BPMs share one and `b` is unique; were the range widened until two did, the lowest `b`
+  would be written. A second tempo segment is `tempo_change`: refused, never retimed. Rendering such a form per section
+  is `render_mode` work.
+- Re-quantization. Every note's start and end move to the 1/32-note grid (120 ticks) by the one rounding function,
+  `round_half_up(tick / 120) x 120` (ADR-0033). A note on the grid does not move; a triplet does. A half-note triplet's
+  1280-tick notes become 1320, 1200 and 1320.
+- Re-quantization is monotone, so it never makes notes overlap. A note whose start and end land on one grid line would
+  vanish: `note_requantize_collapse`. The MelodySpec's `quantize` layer is not read; as for MIDI, emission starts from
+  the notes' own ticks.
+- Lengths use the dialect's multipliers (1, 2, 3, 4, 6, 8, 12, 16, 24, 32, 48), largest first. A note is written as tied
+  pieces (`B8-B3`), a rest as consecutive pieces (`z4z`), and both split at every bar line and chord onset. A one-unit
+  piece has no number.
+- Pickups. The ABC starts at tick 0 on a bar line and the dialect has no anacrusis. A pickup is the end of a bar whose
+  start is rest (`z24G4G4`), exactly as assembly lays it out.
+
+**Pitch.**
+- `K:` is the MelodySpec key when the native table holds it: the 15 major keys from Cb to C# and the 15 minor keys from
+  Abm to A#m. A modal key, or another spelling (D#, G# or A# major; Db or Gb minor), is `key_unrepresentable` and is
+  never respelled.
+- Each note's spelling is the first that fits, in this order:
+  1. the key's own letter;
+  2. in a minor key, the raised seventh, written as the seventh degree raised (F# in G minor, F double sharp in G#
+     minor);
+  3. a natural sign on a letter the key alters;
+  4. a sharp on the letter below in a sharp key (and in C major or A minor), a flat on the letter above in a flat key.
+- An accidental is written only when the bar's state for that letter differs. In the native convention that state is by
+  letter, across octaves, and resets at each bar line. A tied continuation repeats its letter without a sign and leaves
+  the state alone.
+- Two notes sounding at once are `notes_overlap`: both voices are monophonic.
+
+**Chord symbols and `cot`.**
+- `cot` defaults to `full` when any SongSpec section carries chord symbols, otherwise `melody`. An explicit `melody`
+  strips them. An explicit `full` with no chord symbols is `chords_missing`.
+- Under `full`, each section's symbols sound at their offsets in every repeat, quoted in `Vocal` before the token at
+  that onset. A held note is split there with a tie, a rest is split, and that bar is never `Z`.
+- The native vocabulary is a root and optional slash bass (`A`-`G` with `#`, `b`, `##` or `bb`) and one of these
+  qualities: none, `m`, `dim`, `aug`, `7`, `maj7`, `m7`, `dim7`, `m7b5`, `sus4`, `sus2`, `6`, `m6`, `7sus4`, `m(maj7)`.
+  A symbol outside it is `chord_unrepresentable`.
+- An onset off the 1/32 grid is `chord_off_grid`: chord symbols are not re-quantized.
+- Under `melody`, symbols are not read at all.
+
+**Lyrics.**
+- Approved lyrics are required. An instrumental SongSpec is `lyrics_missing`. Their BCP-47 primary subtag must be `en`
+  or `zh`, else `lyrics_language`; `zh-Hans` and `en-US` are eligible.
+- A line that is only `[tag]` starts a block. The tag names the section whose name is the tag lowercased, with
+  whitespace runs as `-`: `[Verse 1]` names `verse-1`. A block with no syllable is a placeholder and binds nothing.
+- The remaining blocks bind the vocal sections in form order, one to one. Each block is sung on every repeat of its
+  section, as the world's hymn writes its twice-repeated chorus once.
+- `lyrics_unbound` covers a block whose tag names another section, a vocal section with no block left, and a block left
+  over.
+- The `lyrics` YuE2 receives has one block per section repeat, in form order: `[name]` and its lines, or the tag alone
+  for an instrumental section, separated by blank lines. Its tags and the ABC's `%` comments correspond in order.
+
+**Syllable plan.** The plan is a sidecar, never inside the ABC (no `w:` fields).
+- A syllable is one CJK ideograph (U+3400-U+4DBF, U+4E00-U+9FFF), or a run of other word characters and apostrophes. A
+  hyphen or a space ends a syllable, so `mor-ning` is two.
+- In each vocal repeat, the block's syllables take the repeat's notes in onset order, one each. A row is `{section_id,
+  repeat, line, syllable, note_id, pitch, start_tick, end_tick}`, with the note's re-quantized ticks.
+- A note beyond the last syllable has `line` and `syllable` null; a syllable beyond the last note has the note fields
+  null. Nothing is dropped.
+- The plan is a designed symbolic fit. It is not a forced alignment and does not claim the engine sings it.
+
+**Length.** The limit is 360 s: ADR-0004's and the abc-emission ticket's "about 6 minutes", as exact seconds. It agrees
+with YuE2's default semantic budget at the pin (INFERRED). `protocol.py` sets `max_tokens=9000`, one codec token is one
+latent frame (`nar.py`), and there are 25 frames a second (48000 / 1920 in `modeling_vae.py`): 9000 / 25 = 360 s. The
+form's duration is exact (`seconds_at_tick(form.end_tick)`, with no rounding). Over 360 s is `length_over_limit`;
+exactly 360 s is eligible.
+
+**Ineligible** lists every reason, each code once at its first occurrence, in this scan order:
+1. `lyrics_missing` or `lyrics_language`, then `lyrics_unbound`;
+2. `length_over_limit`;
+3. `tempo_change`, then `tempo_not_integer_bpm`;
+4. `key_unrepresentable`;
+5. `chords_missing`, `chord_unrepresentable`, `chord_off_grid`;
+6. `notes_overlap`, then `note_requantize_collapse`.
+
+A reason is `{code, section_id, note_id, tick}`. A tick-located reason names the tick and the section repeat that holds
+it, and a note reason also names the note; the other fields are null.
+
+**Input errors** raise `AbcInputError`, never an Ineligible, in this order:
+- `cot_invalid`: a `cot` other than `melody`, `full` or none, checked before either record is read.
+- `melody_not_assembled`.
+- `form_missing`: a 1.0 assembled record. A consumer refuses it rather than infer a form.
+- `song_mismatch`: another SongSpec revision or project, a form whose sections and repeats differ from the SongSpec's,
+  or chord symbols that assembly would refuse.
+- `form_inconsistent`: repeats that do not tile `[0, end_tick)` on bar lines with their sections' bars, or a note
+  that does not lie inside one vocal repeat (outside the form, across a repeat's edge, or in an instrumental repeat),
+  as assembly never lays one.
+
+**Still open.** These belong to T56: validating the goldens with `abc_tools.py` in CI, the runtime `Score.to_abc`, the
+API route, the S07 eligibility slot and the syllable viewer. Chord symbols from a MIDI chord track belong to T57. Also
+open: a per-section render for a form with a tempo change, enharmonic spelling beyond the raised seventh, and an `Ins`
+line. Fixtures are synthetic: nothing was rendered, sent to an engine or listened to.

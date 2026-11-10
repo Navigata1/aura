@@ -48,6 +48,8 @@ cannot reproduce it.
 
 **Amended in the 2026-10-09 design review** (architecture.md, "Design review log"). Every profile installs on its own (preflight, license acceptance, verified selective download, conformance, smoke), one at a time. YuE2's license acceptance archives two documents, the Hugging Face LICENSE (CC BY-NC 4.0) and the GitHub MODEL_LICENSE that carries the individual-creator permission; both are hashed again at install and at quote time, and a change voids the acceptance and refuses R1 until Jon accepts again, which is how a narrowing of that permission (this ADR's reverse condition) is detected. YuE2 earns smoke-passed on its burst host class in its own ticket before any product R1 run.
 
+**Note (2026-11-07, `docs/research/OWNER-DECISIONS-2026-11-07.md`).** YuE2's license acceptance now archives four documents, each at its pinned revision: the code LICENSE and the MODEL_LICENSE (the individual-creator permission) at the exact source commit, and the Hugging Face LICENSE of the YuE2-3B and YuE2-Vae weights. A version label never identifies the code license: 0.1.6 is Apache-2.0 code on main and CC BY-NC 4.0 code at the yue2-v0.1.6 tag. `license-acceptance/1` already supports this, and the decision above is otherwise unchanged.
+
 **Reverse if:**
 
 - YuE2 fails smoke on its host class.

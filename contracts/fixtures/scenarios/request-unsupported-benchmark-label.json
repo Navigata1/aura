@@ -1,0 +1,102 @@
+{
+  "description": "Unsupported benchmark records cannot remove the unbenchmarked route label, including records without a gate.",
+  "expect_rules": [
+    "evidence.gates",
+    "request.plan_consistent"
+  ],
+  "id": "SC-REQUEST-UNSUPPORTED-BENCHMARK-LABEL",
+  "kind": "fixture.scenario",
+  "overlay": [
+    {
+      "candidate_ids": [
+        "cand_a",
+        "cand_b"
+      ],
+      "compute_profile_id": "cp_tier4",
+      "created_at": "2026-10-09T10:10:00Z",
+      "declined": [],
+      "id": "gr_hymn",
+      "job_ids": [
+        "job_ca",
+        "job_cb"
+      ],
+      "kind": "generation-request",
+      "labels": [
+        "Synthetic test output"
+      ],
+      "mode": "explicit",
+      "plan": [
+        {
+          "ordinal": 1,
+          "placement": "local",
+          "profile_id": "fake-route-a",
+          "reason": "Mac route: cover of the NeutralVoice guide",
+          "route": "R2-synth",
+          "seed": 11
+        },
+        {
+          "ordinal": 2,
+          "placement": "burst",
+          "profile_id": "fake-burst",
+          "reason": "score route on an approved burst (individual lane)",
+          "route": "R1",
+          "seed": 7
+        }
+      ],
+      "project_id": "prj_hymn",
+      "quote_ids": [
+        "q_hymn"
+      ],
+      "schemaVersion": "1.0.0",
+      "session_id": "ses_1",
+      "song": {
+        "rev": 1,
+        "song_id": "song_hymn"
+      }
+    },
+    {
+      "attachments": [],
+      "check": "benchmark",
+      "checks": [],
+      "gate_id": null,
+      "host_class": "mlx/m5pro",
+      "id": "ev_claim_fake-route-a",
+      "kind": "evidence",
+      "measured": [],
+      "prereg_sha256": "324cb399c8c57f9e9e690dc9efc3eaceffa03643fd7a1115b4acf6de6d1f58e7",
+      "profile_revision": "f1a45b61325bc9f8d89598ae620e16d601aeb44188758ff87dfa8a237f114185",
+      "recorded_at": "2026-10-09T12:00:00Z",
+      "result": "pass",
+      "schemaVersion": "1.0.0",
+      "subject": {
+        "subject_id": "fake-route-a",
+        "subject_type": "profile"
+      },
+      "synthetic": false,
+      "verdict_ids": []
+    },
+    {
+      "attachments": [],
+      "check": "benchmark",
+      "checks": [],
+      "gate_id": null,
+      "host_class": "mlx/m5pro",
+      "id": "ev_claim_fake-burst",
+      "kind": "evidence",
+      "measured": [],
+      "prereg_sha256": "324cb399c8c57f9e9e690dc9efc3eaceffa03643fd7a1115b4acf6de6d1f58e7",
+      "profile_revision": "05a94a98a2f35c694d4fdf383290120d74fb6dd572fa20cc95847ea54a0017ef",
+      "recorded_at": "2026-10-09T12:00:00Z",
+      "result": "pass",
+      "schemaVersion": "1.0.0",
+      "subject": {
+        "subject_id": "fake-burst",
+        "subject_type": "profile"
+      },
+      "synthetic": false,
+      "verdict_ids": []
+    }
+  ],
+  "remove": [],
+  "schemaVersion": "1.0.0"
+}

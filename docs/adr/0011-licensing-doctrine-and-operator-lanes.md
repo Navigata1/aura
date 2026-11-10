@@ -5,6 +5,8 @@ venture are `llc`). From D-11. AURA's own code license is **proposed** and owner
 until Jon chooses MIT or Apache-2.0 before the repo goes public. Release plans are owner-pending (Q4); the default is
 personal, with an AI-disclosure-ready manifest on every export.
 
+**Status note (2026-11-07, `docs/research/OWNER-DECISIONS-2026-11-07.md`).** On Jon's instruction the repository became public for the build on 2026-11-07, before a code license was chosen. No license was granted, so AURA's code stays all rights reserved and Q5 stays owner-pending. Every component must still pass the open-source-readiness register. The decision below is unchanged.
+
 A permissive code license does not clear the weights (dozens of cases in §4). YuE2's individual-creator permission
 excludes company use. Demucs weights are research and personal only by their author's statement. SwiftF0 and CREPE are
 permissive labels over non-commercial training data. MiniMax and Stability carry obligations.

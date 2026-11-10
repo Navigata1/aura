@@ -1,0 +1,50 @@
+{
+ "ticket": "S01",
+ "pr": 127,
+ "checked_at": "2026-11-08T03:03:51.214056+00:00",
+ "before": {
+  "head": "4773eb58ac94232cebb36b454bec1ba08dcdd101",
+  "integration_tip": "dee28e2fd2b7a79ca2773e639a4a714af5c356b8",
+  "reviewed_head": "4773eb58ac94232cebb36b454bec1ba08dcdd101",
+  "reviewed_patch_id": "2ebf2204099a60e345c91805051c3c3dfa7ce1a5",
+  "merged_patch_id": "2ebf2204099a60e345c91805051c3c3dfa7ce1a5",
+  "base_refresh": null,
+  "checks": {
+   "checks / foundation (ubuntu-latest)": {
+    "conclusion": "success",
+    "name": "checks / foundation (ubuntu-latest)",
+    "status": "completed"
+   },
+   "checks / foundation (macos-latest)": {
+    "conclusion": "success",
+    "name": "checks / foundation (macos-latest)",
+    "status": "completed"
+   },
+   "checks / foundation (windows-latest)": {
+    "conclusion": "success",
+    "name": "checks / foundation (windows-latest)",
+    "status": "completed"
+   }
+  },
+  "review_file": "/Volumes/STUDIO/evidence/S01/S01-review-2.json",
+  "review_files": [
+   "/Volumes/STUDIO/evidence/S01/S01-standards-review-2.md",
+   "/Volumes/STUDIO/evidence/S01/S01-spec-review-2.md",
+   "/Volumes/STUDIO/evidence/S01/S01-review-2.json",
+   "/Volumes/STUDIO/evidence/S01/S01-review-2-probes/",
+   "/Volumes/STUDIO/evidence/S01/S01-review-2-probes/SHA256SUMS",
+   "/Volumes/STUDIO/evidence/S01/S01-review-2-sources/",
+   "/Volumes/STUDIO/evidence/S01/S01-review-2-sources/SHA256SUMS",
+   "/Volumes/STUDIO/evidence/S01/S01-review-2-SHA256SUMS"
+  ]
+ },
+ "after": {
+  "state": "MERGED",
+  "merge_commit": "0e02d7290bf29979ece63da5952ffc11157186d9",
+  "merged_at": "2026-11-08T03:03:53Z",
+  "squash_author_noreply": true,
+  "issues_closed": [
+   126
+  ]
+ }
+}

@@ -1,0 +1,9 @@
+{
+  "observed": "2026-10-29",
+  "source": "Read-only browser view of https://github.com/settings/emails",
+  "account": "Navigata1",
+  "keep_email_addresses_private": true,
+  "block_command_line_pushes_exposing_email": false,
+  "changed_by_agent": false,
+  "personal_addresses_retained": false
+}

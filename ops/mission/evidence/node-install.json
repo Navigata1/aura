@@ -1,0 +1,9 @@
+{
+  "url": "https://nodejs.org/dist/v22.22.3/node-v22.22.3-darwin-arm64.tar.xz",
+  "archive_sha256": "753c1629e168cc788ccc46ab61e0b35549fce08c07f82fcd3bb0d41f7fb01e7b",
+  "checksums_url": "https://nodejs.org/dist/v22.22.3/SHASUMS256.txt",
+  "version": "v22.22.3",
+  "binary_sha256": "5d9d3872911e2340a43b707962e68143de8a4e8d54628845c0c4f2de1fb7cd5c",
+  "destination": "/Volumes/STUDIO/envs/node/22.22.3/bin/node",
+  "source": "Official Node distribution; HTTPS checksum match, no separate signature verification claimed"
+}

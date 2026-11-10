@@ -11,9 +11,10 @@ from __future__ import annotations
 import re
 from datetime import datetime, timedelta
 from decimal import Decimal
+from operator import itemgetter
 from typing import Callable
 
-from . import audition, ledger
+from . import audition, ledger, timemodel
 from .canonical import ceil_cents, float_paths, self_hash, sha256_hex, sha_of, usd_text
 from .world import CANDIDATE_ORIGINS, GENERATIVE_ORIGINS, LANES, PROPAGATING, World, identity
 
@@ -241,17 +242,22 @@ def _results_cite(w: World) -> list[Finding]:
     return out
 
 
-@rule("evidence.gates", "Evidence aims only at its subject's gates; synthetic evidence never meets a benchmark gate or a smoke gate that forbids it; preregistration hashes and verdicts resolve; a passing smoke record lists every check its gate declares, passing, and a listening check cites an owner-ui verdict on this revision's own candidates.")
+@rule("evidence.gates", "Evidence aims only at its subject's gates; synthetic evidence never meets a benchmark gate or a smoke gate that forbids it; preregistration hashes resolve only to prereg records and verdicts resolve; concluded benchmark/hum-benchmark results are unsupported until result binding exists; a passing smoke record lists every check its gate declares, passing, and a listening check cites an owner-ui verdict on this revision's own candidates.")
 def _evidence_gates(w: World) -> list[Finding]:
     out = []
+    prereg_hashes = {p["prereg_sha256"] for p in w.by_kind.get("prereg", [])}
     for e in w.by_kind.get("evidence", []):
         sid = e["subject"]["subject_id"]
         subject = w.profiles.get(sid) if e["subject"]["subject_type"] == "profile" else w.capabilities.get(sid)
-        if e["prereg_sha256"] is not None and e["prereg_sha256"] not in w.record_hashes:
+        if e["prereg_sha256"] is not None and e["prereg_sha256"] not in prereg_hashes:
             out.append((at(e), "unknown preregistration hash"))
         for vid in e["verdict_ids"]:
             if vid not in w.ids["verdict"]:
                 out.append((at(e), f"unknown verdict {vid}"))
+        # A hash and verdict ids cannot bind the set, quotas, thresholds, pins and host to a conclusion.
+        # Check before gate routing so a missing/wrong gate cannot bypass this admission refusal.
+        if e["check"] in ("benchmark", "hum-benchmark") and e["result"] != "inconclusive":
+            out.append((at(e), "benchmark conclusion unsupported: a bound concluded-result contract is required"))
         if e["gate_id"] is None:
             continue
         if subject is None:
@@ -679,10 +685,9 @@ def _candidate_origin(w: World) -> list[Finding]:
     return out
 
 
-@rule("request.plan_consistent", "A plan has candidate_count entries whose profiles do their route's task; candidates, jobs and labels match the plan; 'unbenchmarked routes' stays until a benchmark record exists.")
+@rule("request.plan_consistent", "A plan has candidate_count entries whose profiles do their route's task; candidates, jobs and labels match the plan; 'unbenchmarked routes' stays while benchmark conclusions are unsupported.")
 def _plan(w: World) -> list[Finding]:
     out = []
-    benchmarked = {e["subject"]["subject_id"] for e in w.by_kind.get("evidence", []) if e["check"] == "benchmark" and e["result"] == "pass"}
     for r in w.by_kind.get("generation-request", []):
         song = w.songs.get((r["song"]["song_id"], r["song"]["rev"]))
         if song is not None and len(r["plan"]) != song["candidate_count"]:
@@ -705,8 +710,8 @@ def _plan(w: World) -> list[Finding]:
             out.append((at(r), "job_ids differ from the candidates' jobs"))
         if any(c["synthetic_test"] for c in cands) != ("Synthetic test output" in r["labels"]):
             out.append((at(r), "'Synthetic test output' label does not match the candidates"))
-        if not all(p["profile_id"] in benchmarked for p in r["plan"]) and "unbenchmarked routes" not in r["labels"]:
-            out.append((at(r), "plan without benchmark records must be labelled 'unbenchmarked routes'"))
+        if "unbenchmarked routes" not in r["labels"]:
+            out.append((at(r), "plan without supported benchmark conclusions must be labelled 'unbenchmarked routes'"))
     return out
 
 
@@ -889,7 +894,32 @@ def _release_blockers(w: World) -> list[Finding]:
     return out
 
 
-@rule("lane.record_eligible", "A transcribed MelodySpec carries its transcriber's lanes, and every revision built on it (corrections, assembly) inherits them; no project holds, and no job reads, a melody revision outside its lanes.")
+def _transcription_findings(w: World, m: dict) -> list[Finding]:
+    """A revision's transcription names the profile its transcription job ran (that job records the profile revision)
+    and carries that transcriber's lanes and license chain: the register's terms for exactly its components, in any
+    order, with nothing missing, altered or extra (C07)."""
+    tr = m["source"]["transcription"]
+    if tr is None:
+        return []
+    out = []
+    job = w.ids["job"].get(tr["job_id"])
+    if job is not None and job["profile_id"] != tr["profile_id"]:
+        out.append((at(m), f"transcription names {tr['profile_id']}, but its job {job['id']} ran {job['profile_id']}"))
+    profile = w.profiles.get(tr["profile_id"])
+    if profile is None:
+        return out
+    declared = w.component_lanes(profile["components"])
+    if set(tr["eligible_lanes"]) != declared:
+        out.append((at(m), f"transcription lanes {sorted(tr['eligible_lanes'])} != its transcriber's {sorted(declared)}"))
+    derived = [w.register_entry(c) for c in profile["components"] if c in w.components]
+    by_component = itemgetter("component_id")
+    if sorted(tr["license_chain"], key=by_component) != sorted(derived, key=by_component):
+        out.append((at(m), f"transcription license chain {sorted(map(by_component, tr['license_chain']))} != its transcriber "
+                           f"{profile['id']}'s {sorted(map(by_component, derived))} with the register's terms"))
+    return out
+
+
+@rule("lane.record_eligible", "A transcribed MelodySpec carries its transcriber's lanes and license chain: its transcription names the profile its transcription job ran, with that profile's lanes and the register's terms for exactly its components, nothing extra; every revision built on it (corrections, assembly) inherits them; an assembled revision carries its source revision's capture and transcription exactly (a 1.0 record may leave them null, inheriting by reference); no project holds, and no job reads, a melody revision outside its lanes.")
 def _record_eligible(w: World) -> list[Finding]:
     out = []
     memo: dict[tuple, set] = {}
@@ -912,11 +942,14 @@ def _record_eligible(w: World) -> list[Finding]:
 
     by_sha: dict[str, tuple[dict, set]] = {}
     for m in w.by_kind.get("melody-spec", []):
-        tr = m["source"]["transcription"]
-        if tr is not None and tr["profile_id"] in w.profiles:
-            declared = w.component_lanes(w.profiles[tr["profile_id"]]["components"])
-            if set(tr["eligible_lanes"]) != declared:
-                out.append((at(m), f"transcription lanes {sorted(tr['eligible_lanes'])} != its transcriber's {sorted(declared)}"))
+        out += _transcription_findings(w, m)
+        af = m["source"]["assembled_from"]
+        origin = w.melodies.get((af["melody"]["melody_id"], af["melody"]["rev"])) if af is not None else None
+        legacy = m["schemaVersion"].startswith("1.0.")
+        for field in ("capture_sha256", "transcription"):
+            mine = m["source"][field]
+            if origin is not None and mine != origin["source"][field] and not (legacy and mine is None):
+                out.append((at(m), f"{field} is not inherited from {af['melody']['melody_id']} rev {af['melody']['rev']}"))
         lanes = lanes_of_rev(m)
         by_sha[m["content_sha256"]] = (m, lanes)
         project = w.ids["project"].get(m["project_id"])
@@ -1028,7 +1061,7 @@ def _revision_chain(w: World) -> list[Finding]:
     return out
 
 
-@rule("melody.wellformed", "Tempo and meter start at tick 0 and strictly increase; phrases have positive length; note ids are unique; the seed capture and transcription job exist.")
+@rule("melody.wellformed", "Tempo and meter start at tick 0 and strictly increase, and the meter changes only on a bar line; phrases have positive length; note ids are unique; the seed capture and transcription job exist.")
 def _melody_wellformed(w: World) -> list[Finding]:
     out = []
     for m in w.by_kind.get("melody-spec", []):
@@ -1036,6 +1069,9 @@ def _melody_wellformed(w: World) -> list[Finding]:
             ticks = [s["tick"] for s in m["tempo_map"][name]]
             if ticks[0] != 0 or any(b <= a for a, b in zip(ticks, ticks[1:])):
                 out.append((at(m), f"{name} segments must start at 0 and strictly increase"))
+        meter = m["tempo_map"]["meter"]
+        if any((b["tick"] - a["tick"]) % timemodel.bar_ticks(a["numerator"], a["denominator"]) for a, b in zip(meter, meter[1:])):
+            out.append((at(m), "a meter change lands inside a bar of the meter before it"))
         if any(p["end_tick"] <= p["start_tick"] for p in m["phrases"]):
             out.append((at(m), "a phrase ends before it starts"))
         ids = [n["id"] for n in m["notes"]] + [p["id"] for p in m["phrases"]]
@@ -1048,7 +1084,9 @@ def _melody_wellformed(w: World) -> list[Finding]:
                 out.append((at(m), "the seed capture is not a stored human recording"))
         if src["transcription"] is not None:
             job = w.ids["job"].get(src["transcription"]["job_id"])
-            first = w.melodies.get((m["melody_id"], 1))
+            # An assembled revision carries its source's transcription, which output revision 1 of the source melody.
+            source_melody_id = src["assembled_from"]["melody"]["melody_id"] if src["assembled_from"] else m["melody_id"]
+            first = w.melodies.get((source_melody_id, 1))
             if job is None or job["job_kind"] != "transcribe" or first is None \
                     or first["content_sha256"] not in {o["sha256"] for o in job["outputs"]}:
                 out.append((at(m), "the transcription job is missing or did not output revision 1 of this melody"))

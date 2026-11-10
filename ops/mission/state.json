@@ -1,0 +1,1677 @@
+{
+  "version": 1,
+  "mission": {
+    "name": "Studio implementation",
+    "tagline": "Prove the contracts, establish the build volume, then deliver the first complete song flow.",
+    "repo": "Navigata1/aura",
+    "repoPath": "/Volumes/STUDIO/git/aura.git",
+    "defaultBranch": "integration",
+    "planDoc": "docs/spec/aura-v1-spec.md",
+    "northStar": "Owned melody to an editable song, judged by the owner in blind audition.",
+    "status": "active",
+    "started": "2026-10-29",
+    "updated": "2026-11-08T03:33:12.741690+00:00",
+    "sessionCount": 4
+  },
+  "policies": {
+    "merge": "review",
+    "branchPrefix": "ticket/",
+    "maxPrLines": 400,
+    "notes": "Ticket PRs target integration and require independent review plus fresh CI. Only Jon release-merges integration into main. Review policy holds unreviewed PRs; an independent agent review is not an owner listening or license act. T01 is the pre-specified broad foundation ticket; package scaffolding, gates and generated registry/mission files are reviewed together. Later feature changes retain small ticket boundaries. November 6 owner amendment authorizes integration squash merges after green current-head CI and independent current-base review. November 7 owner decision (docs/research/OWNER-DECISIONS-2026-11-07.md): the repository is public for the build so hosted CI stays free, and returns to private at production level (Jon's call). Server-side rulesets now enforce PR-only changes, the three foundation checks, an up-to-date branch and squash merging on integration, and PR-only changes with the same checks on main. Independent review, owner-only release of main and no auto-merge stay procedural. A review is bound to the PR's patch (git patch-id --stable): a clean integration-only update keeps it, any other change needs a fresh review; this is the lead's addendum and awaits Jon's confirmation. Main remains owner-release-only. Merged code is distinct from pending full acceptance."
+  },
+  "phases": [
+    {
+      "id": "P0",
+      "title": "Restore implementation prerequisites",
+      "goal": "Approved external studio volume and verified evidence contracts",
+      "status": "in_progress",
+      "sessionsEstimate": "Owner-dependent",
+      "gates": [
+        {
+          "id": "contract-baseline",
+          "title": "Existing contract fixture suite",
+          "command": "python3 -B scripts/spec/validate.py",
+          "status": "passed",
+          "evidence": "ops/mission/evidence/2026-11-07/integration-batch.json",
+          "lastRun": "2026-11-08T03:33:12.741690+00:00",
+          "notes": "Executed within the full software gate on every 2026-11-07 integration push (dee28e2, 0e02d72, 910910a, a30bbad; runs 42438742621, 42441114008, 42441652777, 42442475484), all three hosted OS successful. No nightly, real-device playback or musical-quality proof."
+        },
+        {
+          "id": "ticket-baseline",
+          "title": "Draft ticket graph",
+          "command": "python3 -B scripts/spec/tickets.py --check",
+          "status": "passed",
+          "evidence": "ops/mission/evidence/2026-11-07/integration-batch.json",
+          "lastRun": "2026-11-08T03:33:12.741690+00:00",
+          "notes": "Executed within the full software gate on every 2026-11-07 integration push (dee28e2, 0e02d72, 910910a, a30bbad; runs 42438742621, 42441114008, 42441652777, 42442475484), all three hosted OS successful. No nightly, real-device playback or musical-quality proof."
+        }
+      ],
+      "tasks": [
+        {
+          "id": "P01",
+          "title": "Owner storage choice, dedicated STUDIO setup and privacy settings",
+          "status": "done",
+          "dependsOn": [],
+          "pr": null,
+          "notes": "Approved interim STUDIO setup complete. November 6 read-only Chrome verification confirms both email privacy settings enabled for Navigata1; no account change by agent."
+        },
+        {
+          "id": "C01",
+          "title": "Repair typed preregistration and benchmark listening validation",
+          "status": "done",
+          "dependsOn": [
+            "T01"
+          ],
+          "pr": {
+            "number": 5,
+            "url": "https://github.com/Navigata1/aura/pull/5",
+            "mergedAt": "2026-11-07T05:13:04Z"
+          },
+          "notes": "Merged PR #5 at ab53ab794bfa71a4efc3ab5394df58f485347e59 after independent Standards/Spec reviews and green current-head PR run42341645052. Full result binding remains C02; issue #3 closed. Integration push42341780817 passed Linux/macOS/Windows."
+        },
+        {
+          "id": "C02",
+          "title": "Bind concluded benchmark results before enabling promotion",
+          "status": "pending",
+          "dependsOn": [
+            "C01",
+            "T02b"
+          ],
+          "pr": null,
+          "notes": "Issue #4 remains open. Requires C01 plus T02b (issue #77, PR #130 still in its review loop), not all T02 acceptance; concluded route standing (T02f, issue #89) follows C02 to avoid circular sequencing. Exact set, revision/host, preregistration, quota, thresholds and verdict binding required."
+        }
+      ]
+    },
+    {
+      "id": "BUILD",
+      "title": "Implementation graph",
+      "goal": "Execute the 108-ticket graph (the original 105 plus T106-T108 from S01) with independent gates",
+      "status": "in_progress",
+      "sessionsEstimate": "Not re-estimated; no completion-date promise",
+      "gates": [
+        {
+          "id": "foundation-software",
+          "title": "Foundation software tests, builds and policy gates",
+          "command": "uv run --frozen python scripts/ci/run.py --base a30bbad18b5d58a8f68afddc0abf6867e8c15102",
+          "status": "passed",
+          "evidence": "ops/mission/evidence/2026-11-07/integration-batch.json",
+          "lastRun": "2026-11-08T03:33:12.741690+00:00",
+          "notes": "Executed within the full software gate on every 2026-11-07 integration push (dee28e2, 0e02d72, 910910a, a30bbad; runs 42438742621, 42441114008, 42441652777, 42442475484), all three hosted OS successful. No nightly, real-device playback or musical-quality proof."
+        },
+        {
+          "id": "latest-integration-software",
+          "title": "Latest actual integration push across Linux, macOS and Windows",
+          "command": "gh run view 42442475484 --repo Navigata1/aura",
+          "status": "passed",
+          "evidence": "ops/mission/evidence/2026-11-07/integration-batch.json",
+          "lastRun": "2026-11-08T03:33:12.741690+00:00",
+          "notes": "Integration push at a30bbad (C04, PR #136) passed Linux/macOS/Windows, as did the three earlier pushes of 2026-11-07. This does not establish scheduled-nightly or playback evidence."
+        }
+      ],
+      "tasks": [
+        {
+          "id": "T01",
+          "title": "Foundation: repository skeleton, the product-name constant, three-OS CI, and the Rule-07, secret, license and weights lints",
+          "status": "in_progress",
+          "dependsOn": [
+            "P01"
+          ],
+          "pr": {
+            "number": 6,
+            "url": "https://github.com/Navigata1/aura/pull/6",
+            "mergedAt": "2026-11-07T05:09:18Z"
+          },
+          "notes": "Code merged via PR #6 at e421699890e80c5fffcc3f36659b3ba4e1587db2 after independent Standards/Spec review and hosted three-OS PR run42341326235. First actual integration run42341504038 passed all three OS. P01 cleared. Full acceptance retains scheduled-nightly evidence pending owner main release."
+        },
+        {
+          "id": "T02",
+          "title": "Contract completion: SongForm, ABC and MIDI vectors, every missing v1 field, pre-seeded declarations, price snapshots and the legacy freeze plumbing",
+          "status": "in_progress",
+          "dependsOn": [
+            "T01-code"
+          ],
+          "pr": null,
+          "notes": "Issue #15. Delivered as slices: T02a done (PR #8), T02c done (PR #131); T02b (PR #130) and T02d (PR #128) in their review loops; T02e started; T02f, T02g and T02h not started. Close the parent only when every slice and T02's own acceptance pass (docs/spec/T02-continuation-sequencing.md)."
+        },
+        {
+          "id": "T03",
+          "title": "License verification of the v1-core plumbing (P0-9): close every adoptable row, or leave it explicitly open with its gate",
+          "status": "done",
+          "dependsOn": [
+            "T01-code"
+          ],
+          "pr": {
+            "number": 129,
+            "url": "https://github.com/Navigata1/aura/pull/129",
+            "mergedAt": "2026-11-08T02:29:09Z"
+          },
+          "notes": "Issue #16 closed by reviewed PR #129 at dee28e2fd2b7a79ca2773e639a4a714af5c356b8: Standards and Spec pass, 14 non-blocking findings, the register-sync ones carried by C06 (#134). 308 of 310 fixtures byte-identical; the two generated fixtures that embed the register overlay hash moved one line each. Found that waveform-playlist depends on LGPL-3.0 waveform-data (recorded on T77, #97). Software and licensing records only."
+        },
+        {
+          "id": "T04",
+          "title": "Contracts in code: generated Pydantic and TypeScript types, canonical JSON twins, the TimeModel TypeScript twin and the drift check",
+          "status": "pending",
+          "dependsOn": [
+            "T02"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T05",
+          "title": "ProjectStore and StudioHarness: content-addressed blobs and records, provenance sidecars, units of work, SQLite of record, the store lock, events over SSE and /system",
+          "status": "pending",
+          "dependsOn": [
+            "T04"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T06",
+          "title": "Disk preflight on every volume, and the StoreVolume adapters: a plain directory and the macOS sparse bundle",
+          "status": "pending",
+          "dependsOn": [
+            "T05"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T07",
+          "title": "Local hardening and owner acts: loopback binding, Host and Origin checks, the launch token, owner-ui and automation scopes, and keychain secrets",
+          "status": "pending",
+          "dependsOn": [
+            "T05"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T08",
+          "title": "Registry: declarations, status computed from evidence per profile revision and host class, the evidence endpoint, admission, and the product and lab views",
+          "status": "pending",
+          "dependsOn": [
+            "T05"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified. Benchmark admission/promotion additionally waits for C02 #4; unrelated registry scaffolding is separable."
+        },
+        {
+          "id": "T09",
+          "title": "Store durability: retention classes, reindex, backup to a second location, restore, fsck, snapshots and the weekly reminder",
+          "status": "pending",
+          "dependsOn": [
+            "T05"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T10",
+          "title": "Worker SDK and worker protocol v1, with the conformance suite and its eight mutant workers",
+          "status": "pending",
+          "dependsOn": [
+            "T02"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T11",
+          "title": "Web app shell: every route and shared surface as placeholders, Manuscript tokens in both themes, masthead chips, the footer contact, the store-unavailable takeover and the accessibility harness",
+          "status": "pending",
+          "dependsOn": [
+            "T05"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T12",
+          "title": "S00 Unlock: the launch token from the URL fragment to the owner-ui cookie, and the e2e session helper",
+          "status": "pending",
+          "dependsOn": [
+            "T07",
+            "T11"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T13",
+          "title": "NeutralVoice and the analysis worker: the guide task, test-time ground-truth hums and the fake-microphone file",
+          "status": "pending",
+          "dependsOn": [
+            "T03",
+            "T10"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T14",
+          "title": "Compute detection, the tier recommendation, placement resolution and the session record",
+          "status": "pending",
+          "dependsOn": [
+            "T08"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T15",
+          "title": "FakeEngine: test-only profiles on the real protocol, deterministic NeutralVoice output, fault knobs and the synthetic label",
+          "status": "pending",
+          "dependsOn": [
+            "T13"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T16",
+          "title": "Conductor and worker supervisor: durable jobs with honest states, dispatch by hash, residency, cancel and restart reconciliation",
+          "status": "pending",
+          "dependsOn": [
+            "T06",
+            "T14",
+            "T15"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T17",
+          "title": "Studio volume lifecycle: studioctl setup, env and store create, attach, detach and compact, with the setup probes",
+          "status": "pending",
+          "dependsOn": [
+            "T06",
+            "T14"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T18",
+          "title": "Doctor's store facts, the band-size measurement, the mount watch and the idle-sleep assertion",
+          "status": "pending",
+          "dependsOn": [
+            "T17"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T19",
+          "title": "Studio volume on Backup Plus: measure the band size, create or adopt the real volume with studioctl setup, and register the self-hosted Mac runner (needs Jon)",
+          "status": "pending",
+          "dependsOn": [
+            "T18"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T20",
+          "title": "Measurement: decode, duration, silence, clipping, integrated loudness, true peak and the common-rate preview as measure jobs, plus the Metal probe",
+          "status": "pending",
+          "dependsOn": [
+            "T16"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T21",
+          "title": "Integration skeleton: a fake generate job end to end through admission, dispatch, measurement and closure, before any screen",
+          "status": "pending",
+          "dependsOn": [
+            "T20"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T22",
+          "title": "Projects, the Library and the New song sheet",
+          "status": "pending",
+          "dependsOn": [
+            "T12"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T23",
+          "title": "The Song page container, the next useful action and NeedsYou",
+          "status": "pending",
+          "dependsOn": [
+            "T22"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T24",
+          "title": "The PlayerBar and range-served artifact audio",
+          "status": "pending",
+          "dependsOn": [
+            "T22"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T25",
+          "title": "MIDI in and out: a MIDI file or a live Web MIDI performance becomes a MelodySpec, and the melody comes back as MIDI with its tempo map",
+          "status": "pending",
+          "dependsOn": [
+            "T23"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T26",
+          "title": "Melody revisions and corrections: ops on a named base, the timestamped correction log, history, hand entry and the note list editor",
+          "status": "pending",
+          "dependsOn": [
+            "T25"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T27",
+          "title": "Piano roll: the 2-D editor with instant drags on the TimeModel twin, phrase marks, confidence outlines and oscillator playback",
+          "status": "pending",
+          "dependsOn": [
+            "T26"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T28",
+          "title": "Song intent: SongSpec revisions, approved lyrics and language, style and exclusions, vocal mode, the SongForm editor and inline validation",
+          "status": "pending",
+          "dependsOn": [
+            "T08",
+            "T26"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T29",
+          "title": "The guide: NeutralVoice sings the assembled melody along the whole SongForm, cached by hash",
+          "status": "pending",
+          "dependsOn": [
+            "T16",
+            "T28",
+            "T24"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T30",
+          "title": "Generation requests on FakeEngine: the plan with reasons, explicit mode, two measured candidates, the Generation screen and the jobs drawer",
+          "status": "pending",
+          "dependsOn": [
+            "T21",
+            "T28"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T31",
+          "title": "Blind audition: open only when every arm is ready, sealed labels, level-matched previews, keyboard listening, the verdict as an owner act and a checked reveal",
+          "status": "pending",
+          "dependsOn": [
+            "T30"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T32",
+          "title": "Keepers: reveal details, keeping a candidate, keeper revisions, 'kept n of m' and keeper cost",
+          "status": "pending",
+          "dependsOn": [
+            "T09",
+            "T31"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T33",
+          "title": "Export bundle: the native copy, a deterministic 48 kHz deliverable, MIDI, the specs and a computed ExportManifest, verified before download",
+          "status": "pending",
+          "dependsOn": [
+            "T32"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T34",
+          "title": "Provenance drawer and closure view: how any artifact was made, its eligible lanes and its release blockers",
+          "status": "pending",
+          "dependsOn": [
+            "T32"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T35",
+          "title": "Mic capture: the AudioWorklet recorder with processing off, verified hashes, named captures, count-in, recording import and the microphone capability",
+          "status": "pending",
+          "dependsOn": [
+            "T13",
+            "T25"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T36",
+          "title": "Transcriber v0 (pYIN with AURA's HMM note segmentation) and its preregistered synthetic floor",
+          "status": "pending",
+          "dependsOn": [
+            "T08",
+            "T13"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T37",
+          "title": "From hum to piano roll: transcription starts on ingest and arrives as a MelodySpec draft with its pitch curve and confidence marks",
+          "status": "pending",
+          "dependsOn": [
+            "T16",
+            "T27",
+            "T35",
+            "T36"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T38",
+          "title": "Session start and first run in the browser: the compute switcher with per-tier evidence, what changed, and the first-run steps",
+          "status": "pending",
+          "dependsOn": [
+            "T12",
+            "T17"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T39",
+          "title": "Settings and storage: free space per volume, space per retention class, reclaimable bands, stray caches, reminders, the tailnet opt-in and secret presence",
+          "status": "pending",
+          "dependsOn": [
+            "T09",
+            "T12",
+            "T18"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T40",
+          "title": "Paid-run gate on FakeBurstProvider: quote, cap check, owner approval with a nonce, reservation before provisioning, settlement, reconciliation, the reaper and the overrun block",
+          "status": "pending",
+          "dependsOn": [
+            "T30"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T41",
+          "title": "O2 Paid-run approval dialog, the 'burst declined' plan label and `studioctl quote`",
+          "status": "pending",
+          "dependsOn": [
+            "T40"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T42",
+          "title": "Burst and monthly cap screen: month-to-date, reservations, settlements, fixed lines, the overrun acknowledgement and the cap as an owner act",
+          "status": "pending",
+          "dependsOn": [
+            "T40",
+            "T39"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T43",
+          "title": "Engines & licenses screen: product and lab views, published versus measured columns, capabilities, worker health and the component register",
+          "status": "pending",
+          "dependsOn": [
+            "T12",
+            "T16"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T44",
+          "title": "Engine install pipeline: lazy environments, license acceptance as an owner act, selective verified downloads, and conformance and smoke recorded as evidence",
+          "status": "pending",
+          "dependsOn": [
+            "T20",
+            "T43",
+            "T38"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified. Amended in place by S01 (PR #127): the environment step checks every lock against the recorded advisories (Diffusers GHSA-4prv-5hj7-c2xr, floor 0.42.1) before anything is created or fetched, and names YuE2's four pinned documents."
+        },
+        {
+          "id": "T45",
+          "title": "Analysis worker on the Mac: install, conformance and smoke for every analysis profile on cpu/m5pro, and the transcriber floor re-run there",
+          "status": "pending",
+          "dependsOn": [
+            "T19",
+            "T36",
+            "T44"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T46",
+          "title": "ACE worker: a standalone pinned environment and an adapter for cover and text to song, with turbo and SFT profiles",
+          "status": "pending",
+          "dependsOn": [
+            "T10"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified. Amended in place by S01 (PR #127): its lock constrains diffusers to 0.42.1 or later."
+        },
+        {
+          "id": "T47",
+          "title": "ACE on the Mac: license acceptance, a verified download to the studio volume, conformance on mlx/m5pro and the smoke gate (needs Jon)",
+          "status": "pending",
+          "dependsOn": [
+            "T19",
+            "T44",
+            "T46"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T48",
+          "title": "Routes R2-synth, R2-raw and text: assembled hum slices, the guide cover sweep and songs from the SongSpec alone",
+          "status": "pending",
+          "dependsOn": [
+            "T29",
+            "T30",
+            "T35"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T49",
+          "title": "Separator worker: Demucs and demucs-mlx for internal separation, individual and research lanes only",
+          "status": "pending",
+          "dependsOn": [
+            "T10"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T50",
+          "title": "Melody adherence: separated vocal to SwiftF0 and DTW metrics, validated on NeutralVoice under a bed, with honest badges",
+          "status": "pending",
+          "dependsOn": [
+            "T30"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T51",
+          "title": "Separator and SwiftF0 on the Mac: license acceptance, download, the demucs-mlx versus MPS smoke, and adherence validated on mlx/m5pro (needs Jon)",
+          "status": "pending",
+          "dependsOn": [
+            "T47",
+            "T49",
+            "T50"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T52",
+          "title": "First real pair: Jon hums on the Mac and auditions R2-synth against R2-raw ACE candidates with adherence, then keeps and exports one (needs Jon)",
+          "status": "pending",
+          "dependsOn": [
+            "T33",
+            "T37",
+            "T48",
+            "T51",
+            "T45"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T53",
+          "title": "Hum benchmark harness: Basic Pitch and SwiftF0 transcribers beside pYIN, a preregistered scoring run with mir_eval, and blind correction effort",
+          "status": "pending",
+          "dependsOn": [
+            "T37",
+            "T50"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T54",
+          "title": "Training-data provenance review: SwiftF0 and Basic Pitch against primary sources, and their llc eligibility",
+          "status": "in_progress",
+          "dependsOn": [
+            "T03"
+          ],
+          "pr": {
+            "number": 137,
+            "url": "https://github.com/Navigata1/aura/pull/137"
+          },
+          "notes": "Issue #67. PR #137 is under review: SwiftF0 0.3.0 and Basic Pitch 0.4.0 both train on non-commercial data, so neither is llc-eligible, and llc transcription stays on pYIN + HMM or manual entry as the spec plans. Not final until its review passes and it merges."
+        },
+        {
+          "id": "T55",
+          "title": "Hum fixtures and the benchmark on Jon's own hums, his real melody first (needs Jon)",
+          "status": "pending",
+          "dependsOn": [
+            "T19",
+            "T44",
+            "T53"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T56",
+          "title": "Route R1's score: MelodySpec to YuE2's two-voice ABC with the syllable plan, typed ineligibility, and early eligibility on the Song screen",
+          "status": "pending",
+          "dependsOn": [
+            "T28"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T57",
+          "title": "Chord symbols: an editor on SongForm sections and a chord track from a MIDI file, so R1 can use cot='full'",
+          "status": "pending",
+          "dependsOn": [
+            "T56"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T58",
+          "title": "YuE2 worker image: a pinned CUDA image with no weights, the score-to-song adapter, refusal of llc before load, and the in-image deadline",
+          "status": "pending",
+          "dependsOn": [
+            "T10",
+            "T03"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified. Amended in place by S01 (PR #127): pins YuE2's exact commit, its four license documents and both weights repositories, and now also waits for T03."
+        },
+        {
+          "id": "T59",
+          "title": "RunPod burst provider behind the BurstProvider port, tested against a double of the documented API",
+          "status": "pending",
+          "dependsOn": [
+            "T40"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T60",
+          "title": "RunPod account and spikes: the API key in the keychain and five recorded pass-or-fail spikes, each a quoted run Jon approves (needs Jon)",
+          "status": "pending",
+          "dependsOn": [
+            "T58",
+            "T59",
+            "T41",
+            "T19"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T61",
+          "title": "YuE2 smoke on its burst host class: quote, approval, in-image weight verification, conformance and Jon's 'not garbled' check (needs Jon)",
+          "status": "pending",
+          "dependsOn": [
+            "T60",
+            "T44"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified. Amended in place by S01 (PR #127): archives the four documents and now also waits for T44."
+        },
+        {
+          "id": "T62",
+          "title": "Not ACE-only: R1 on an approved burst beside an R2 candidate, from quote to a settled, reconciled ledger (needs Jon)",
+          "status": "pending",
+          "dependsOn": [
+            "T42",
+            "T52",
+            "T56",
+            "T61"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T63",
+          "title": "Preregistered route comparison: R1, R2-raw and R2-synth at equal candidate count on Jon's hum fixtures (needs Jon)",
+          "status": "pending",
+          "dependsOn": [
+            "T55",
+            "T62"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T64",
+          "title": "Imported mixes and the Suno boundary: owner-attested imports, uses fixed by source, DAW-bounce lanes and risk acceptance as an owner act",
+          "status": "pending",
+          "dependsOn": [
+            "T31"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T65",
+          "title": "The walking skeleton on three operating systems: MIDI and fake-microphone hum to a verified export on Linux, macOS and Windows CI",
+          "status": "pending",
+          "dependsOn": [
+            "T33",
+            "T37",
+            "T64"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T66",
+          "title": "References with permission records as an owner act, attached to a song, and reference standards as evaluation anchors only",
+          "status": "pending",
+          "dependsOn": [
+            "T64"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T67",
+          "title": "The ACE reference-timbre module: a style reference offered only as a 'global timbre/style reference'",
+          "status": "pending",
+          "dependsOn": [
+            "T46",
+            "T66"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T68",
+          "title": "ACE base on the Mac and the global style reference: ace-2b-base-mlx installed, smoke-passed, and reference timbre on a style reference (needs Jon)",
+          "status": "pending",
+          "dependsOn": [
+            "T47",
+            "T67"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T69",
+          "title": "Jon's four reference standards imported as listening-only with permission records (needs Jon)",
+          "status": "pending",
+          "dependsOn": [
+            "T19",
+            "T66"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T70",
+          "title": "Evaluation harness and preregistration: the smoke-12 and benchmark-48 briefs, hashed preregistrations committed first, a lane per brief and the Evaluation screen",
+          "status": "pending",
+          "dependsOn": [
+            "T40",
+            "T64",
+            "T36"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T71",
+          "title": "Eval auditions and evidence: reference anchors, hidden repeat pairs, quotas, brief-clustered uncertainty and promotion only through records",
+          "status": "pending",
+          "dependsOn": [
+            "T66",
+            "T70"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T72",
+          "title": "Lyric error rate: an ASR adapter, a license-verified G2P and phoneme error rate as a hard constraint that never touches approved lyrics",
+          "status": "pending",
+          "dependsOn": [
+            "T50"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T73",
+          "title": "Lyric error rate validated on the Mac with Jon's license acceptance for the ASR model (needs Jon)",
+          "status": "pending",
+          "dependsOn": [
+            "T51",
+            "T72"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T74",
+          "title": "Smoke-12 eval auditions on real engines: Jon listens to the preregistered smoke set (needs Jon)",
+          "status": "pending",
+          "dependsOn": [
+            "T55",
+            "T62",
+            "T69",
+            "T71",
+            "T73",
+            "T57"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T75",
+          "title": "BS.1770-4 against BS.1770-5 integrated loudness on stereo programme, recorded as evidence",
+          "status": "pending",
+          "dependsOn": [
+            "T20"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T76",
+          "title": "StudioEngine: AudioWorklet playback on SharedArrayBuffer rings fed by a decoding worker, with the latency readout and the Chromium requirement",
+          "status": "pending",
+          "dependsOn": [
+            "T13",
+            "T24"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T77",
+          "title": "Studio timeline: tracks, clips, markers and the shared tempo map, transport, mixer, clip gain and fades, saved as revisions",
+          "status": "pending",
+          "dependsOn": [
+            "T27",
+            "T32",
+            "T76"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified. T03 found that waveform-playlist depends on LGPL-3.0 waveform-data, which hard rule 5 bars from the web bundle, so the Studio timeline will be AURA's own (ADR-0013's other option; comment on #97)."
+        },
+        {
+          "id": "T78",
+          "title": "The Mac playback gate: 8 tracks for 30 minutes with no underruns and a responsive UI during a generation, plus the 16-track stretch gate",
+          "status": "pending",
+          "dependsOn": [
+            "T47",
+            "T77"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T79",
+          "title": "Section replace: an edit operation proposes two ACE repaint candidates, an audition decides, and the preservation check guards the keeper",
+          "status": "pending",
+          "dependsOn": [
+            "T46",
+            "T77"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T80",
+          "title": "Section replace on the Mac: the composite preservation check and ACE's raw chunk-mask deviation on the pinned commit",
+          "status": "pending",
+          "dependsOn": [
+            "T47",
+            "T79"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T81",
+          "title": "Replacement tracks and Copy to Main Track: candidates in context on their own tracks, and a rebuild of the mix from retained sources",
+          "status": "pending",
+          "dependsOn": [
+            "T79"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T82",
+          "title": "Extend, deterministic DSP edits and restyle: repaint at the start or end, crop, remove, reverse and fades, a restyle labelled a new performance, and speed held behind a stretch evaluation",
+          "status": "pending",
+          "dependsOn": [
+            "T50",
+            "T79"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T83",
+          "title": "Time-stretch listening: Jon's blind verdict on stretched against unstretched clips (needs Jon)",
+          "status": "pending",
+          "dependsOn": [
+            "T82"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T84",
+          "title": "Lyric word alignment and line or word replace: an alignment evaluation on singing, a correction UI kept apart from approved lyrics, and scoped replace only after both checks pass (needs Jon)",
+          "status": "pending",
+          "dependsOn": [
+            "T72",
+            "T79"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T85",
+          "title": "Isolate original: stems with their residual, sum-to-mixture and bleed checks, honest labels, lane-aware separators and stems onto tracks",
+          "status": "pending",
+          "dependsOn": [
+            "T36",
+            "T49",
+            "T77"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T86",
+          "title": "Isolate original on Jon's keeper: a real separation, its thresholds, and Jon's listening verdict on stems, residual and rebuilt mix (needs Jon)",
+          "status": "pending",
+          "dependsOn": [
+            "T52",
+            "T85"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T87",
+          "title": "Aligned stem and track export: a common rate, zero start and equal frame counts, checked automatically",
+          "status": "pending",
+          "dependsOn": [
+            "T33",
+            "T81",
+            "T85"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T88",
+          "title": "DSP finishing: gain, fades, EQ, trimming and conversion as jobs, a numeric loudness meter, explicit loudness targets with the dry export kept, and finishing an imported mix",
+          "status": "pending",
+          "dependsOn": [
+            "T33",
+            "T64",
+            "T77"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T89",
+          "title": "Operator lanes end to end: the lane change as an owner act, branching a song from a keeper, and one negative test per enforcement point",
+          "status": "pending",
+          "dependsOn": [
+            "T70"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T90",
+          "title": "Worker hosts on the tailnet: pairing, admission per profile on its own host class, remote placement and re-query on restart",
+          "status": "pending",
+          "dependsOn": [
+            "T16"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T91",
+          "title": "A real CUDA worker host: Jon's Linux or WSL2 box joins the tailnet, passes conformance on its host class and earns its own recommendation (needs Jon)",
+          "status": "pending",
+          "dependsOn": [
+            "T44",
+            "T46",
+            "T58",
+            "T90",
+            "T19"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T92",
+          "title": "Windows and Linux as studio hosts: StudioHarness, the playback gate, the DAW round trip and the recovery test on real machines (needs Jon)",
+          "status": "pending",
+          "dependsOn": [
+            "T65",
+            "T78",
+            "T87"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T93",
+          "title": "LLC challengers: HeartMuLa and MiniMax worker adapters with their license chains, and MiniMax's disclosure carried into manifests",
+          "status": "pending",
+          "dependsOn": [
+            "T33"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified. Amended in place by S01 (PR #127): the challenger locks constrain diffusers to 0.42.1 or later, with a floor test."
+        },
+        {
+          "id": "T94",
+          "title": "LLC engine smoke: HeartMuLa or MiniMax earns smoke-passed on an approved burst or a CUDA host (needs Jon)",
+          "status": "pending",
+          "dependsOn": [
+            "T44",
+            "T60",
+            "T93"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T95",
+          "title": "LLC-clean separator: the training-data check on Kim Mel-Band-RoFormer, allow-listing, and LLC adherence turned on (needs Jon)",
+          "status": "pending",
+          "dependsOn": [
+            "T19",
+            "T44",
+            "T50",
+            "T85"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T96",
+          "title": "Narration not precluded: a tts_render artifact flows through the store, jobs and export manifest with no schema change",
+          "status": "pending",
+          "dependsOn": [
+            "T33"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T97",
+          "title": "ACE XL SFT on the Mac after its loader check and its own smoke (needs Jon)",
+          "status": "pending",
+          "dependsOn": [
+            "T47"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T98",
+          "title": "Optional instrumental profile: Stable Audio 3 Medium on the Mac after its gated download, Jon's license registration and smoke (needs Jon)",
+          "status": "pending",
+          "dependsOn": [
+            "T19",
+            "T44",
+            "T48"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T99",
+          "title": "Diagnostic scores after the reveal: information only, never selecting, ranking or filtering",
+          "status": "pending",
+          "dependsOn": [
+            "T32"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T100",
+          "title": "More than two candidates as an explicit, priced choice with its budget logged",
+          "status": "pending",
+          "dependsOn": [
+            "T42"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T101",
+          "title": "MIDI synth and soundfont evaluation for hearing a melody as an instrument",
+          "status": "pending",
+          "dependsOn": [
+            "T29",
+            "T77"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T102",
+          "title": "Codec license checks: an m4a/AAC decoder for imported recordings and an MP3 encoder for exports",
+          "status": "pending",
+          "dependsOn": [
+            "T33",
+            "T35"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T103",
+          "title": "Accessibility pass across every screen: keyboard-only, 200% text, contrast in both themes, reduced motion, target sizes, announcements and error messages",
+          "status": "pending",
+          "dependsOn": [
+            "T29",
+            "T34",
+            "T38",
+            "T71",
+            "T82",
+            "T87",
+            "T88",
+            "T89",
+            "T99",
+            "T100",
+            "T53",
+            "T41",
+            "T57"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T104",
+          "title": "Jon's first song: his melody to a finished, exported song, with a DAW import and his own Suno download finished (needs Jon)",
+          "status": "pending",
+          "dependsOn": [
+            "T78",
+            "T80",
+            "T86",
+            "T87",
+            "T88"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T105",
+          "title": "Final QA: evidence aggregation, the UNVERIFIED register, capability and component reports, the offline sweep and the legacy freeze",
+          "status": "pending",
+          "dependsOn": [
+            "T65",
+            "T74",
+            "T75",
+            "T84",
+            "T90",
+            "T93",
+            "T96",
+            "T101",
+            "T102",
+            "T103",
+            "T104",
+            "T54"
+          ],
+          "pr": null,
+          "notes": "Authorized implementation direction on 2026-10-29; not implemented or verified."
+        },
+        {
+          "id": "T106",
+          "title": "Research-lane transcription trial: four hard hum kinds, and GAME and SheetSage2 pinned as research-only transcribers (needs Jon)",
+          "status": "pending",
+          "dependsOn": [
+            "T45",
+            "T53"
+          ],
+          "pr": null,
+          "notes": "Issue #138. Added by S01 (PR #127); research-lane trial, not implemented or verified."
+        },
+        {
+          "id": "T107",
+          "title": "Alternate-decoder fidelity trial: the same saved ACE latents through the official decoder and ScragVAE, auditioned as two blind, level-matched candidates (needs Jon)",
+          "status": "pending",
+          "dependsOn": [
+            "T32",
+            "T36",
+            "T47"
+          ],
+          "pr": null,
+          "notes": "Issue #139. Added by S01 (PR #127); research-lane trial, not implemented or verified."
+        },
+        {
+          "id": "T108",
+          "title": "Magenta RealTime 2 trial on the Mac: a research-lane playable instrument worker on the official Python MLX runtime, its terms, and a latency smoke gate on mlx/m5pro (needs Jon)",
+          "status": "pending",
+          "dependsOn": [
+            "T52"
+          ],
+          "pr": null,
+          "notes": "Issue #140. Added by S01 (PR #127); research-lane trial, not implemented or verified."
+        },
+        {
+          "id": "T02a",
+          "title": "Convention-discovered golden-vector cases and scoped consumer checks",
+          "status": "done",
+          "dependsOn": [
+            "C01"
+          ],
+          "pr": {
+            "number": 8,
+            "url": "https://github.com/Navigata1/aura/pull/8",
+            "mergedAt": "2026-11-07T05:20:22Z"
+          },
+          "notes": "Merged at cc846da282744b807ac2f2f7cfb4e845161eb881 after exact-head Standards/Spec review and PR CI42342181627. Eight public CLI regressions; 310 pre-existing fixtures preserved. Full T02 remains open."
+        },
+        {
+          "id": "T01-code",
+          "title": "Reviewed foundation code integrated with three-OS push proof",
+          "status": "done",
+          "dependsOn": [
+            "P01"
+          ],
+          "pr": {
+            "number": 6,
+            "url": "https://github.com/Navigata1/aura/pull/6",
+            "mergedAt": "2026-11-07T05:09:18Z"
+          },
+          "notes": "Code-availability prerequisite under the owner November 6 merge amendment. This does not close T01 full acceptance: actual scheduled-nightly evidence remains pending."
+        },
+        {
+          "id": "T02b",
+          "title": "Evidence-binding inputs: typed preregistration, evaluation-set and result-binding records",
+          "status": "in_progress",
+          "dependsOn": [
+            "T02a"
+          ],
+          "pr": {
+            "number": 130,
+            "url": "https://github.com/Navigata1/aura/pull/130"
+          },
+          "notes": "Issue #77, PR #130; explicit prerequisite slice for C02, no conclusion effects enabled. Round 1 (dd300ff) blocked: the pending allow-list could hide a new record kind, benchmark-prereg/1 could not hold asset hashes or budgets, and two thresholds for one metric validated. Round 2 (8361db1) blocked on Standards: 5 of 31 condition mutants survived the shipped vectors. Fix round in progress."
+        },
+        {
+          "id": "T02c",
+          "title": "SongForm assembly: stdlib reference, explicit form duration and hand-derived vectors",
+          "status": "done",
+          "dependsOn": [
+            "T01-code"
+          ],
+          "pr": {
+            "number": 131,
+            "url": "https://github.com/Navigata1/aura/pull/131",
+            "mergedAt": "2026-11-08T03:11:20Z"
+          },
+          "notes": "Issue #80 closed by reviewed PR #131 at 910910a594f131a8082c355412aefed2b9348e41 after the second review round (round 1 found a tempo change inside a phrase's last bar silently dropped). Base refreshed by merging integration with patch-id 09e0de2b unchanged. Full T02 remains open."
+        },
+        {
+          "id": "T02d",
+          "title": "MIDI round trip: MelodySpec to Standard MIDI File and back, with hand-derived byte vectors",
+          "status": "in_progress",
+          "dependsOn": [
+            "T01-code"
+          ],
+          "pr": {
+            "number": 128,
+            "url": "https://github.com/Navigata1/aura/pull/128"
+          },
+          "notes": "Issue #83, PR #128. Round 1 (19985b8) blocked on both lenses: reading a file discarded the End of Track position, so a trailing section such as an outro was silently lost. Fixed; round 2 passed at 9742d88, but the PR now conflicts with integration, so its integration-updated patch needs a fresh review before merge."
+        },
+        {
+          "id": "T02e",
+          "title": "YuE2 ABC emission: two-voice ABC vectors with typed ineligibility",
+          "status": "in_progress",
+          "dependsOn": [
+            "T02c"
+          ],
+          "pr": null,
+          "notes": "Issue #86. Implementation started on STUDIO; no PR at this checkpoint."
+        },
+        {
+          "id": "T02f",
+          "title": "Route standing and plan rules from validated results only",
+          "status": "pending",
+          "dependsOn": [
+            "C02"
+          ],
+          "pr": null,
+          "notes": "Issue #89. Follows C02; route standing only from validated results."
+        },
+        {
+          "id": "T02g",
+          "title": "Remaining optional v1 fields, declared enums and pre-seeded registry declarations",
+          "status": "pending",
+          "dependsOn": [
+            "T01-code"
+          ],
+          "pr": null,
+          "notes": "Issue #92."
+        },
+        {
+          "id": "T02h",
+          "title": "T02 completeness: worker transcripts, price and gate snapshots, legacy freeze plumbing, full consumer inventory",
+          "status": "pending",
+          "dependsOn": [
+            "T02b",
+            "T02c",
+            "T02d",
+            "T02e",
+            "T02f",
+            "T02g"
+          ],
+          "pr": null,
+          "notes": "Issue #95. The last slice: closes T02's remaining acceptance."
+        },
+        {
+          "id": "C03",
+          "title": "Decode Git policy inputs independent of host locale",
+          "status": "done",
+          "dependsOn": [
+            "T01-code"
+          ],
+          "pr": {
+            "number": 12,
+            "url": "https://github.com/Navigata1/aura/pull/12",
+            "mergedAt": "2026-11-07T05:39:57Z"
+          },
+          "notes": "Issue #11 closed by reviewed PR #12 at fdd588cd2288f193d945e32f31c481b0eeee1607. Exact-head PR run42343511152 and post-merge integration run42343689947 passed all three hosted operating systems. Original failed run42342742232 retained as historical evidence. Software scope only."
+        },
+        {
+          "id": "C04",
+          "title": "Anchor JSON Schema 'pattern' matching so '^\u2026$' cannot accept a trailing newline",
+          "status": "done",
+          "dependsOn": [
+            "T01-code"
+          ],
+          "pr": {
+            "number": 136,
+            "url": "https://github.com/Navigata1/aura/pull/136",
+            "mergedAt": "2026-11-08T03:22:50Z"
+          },
+          "notes": "Issue #132 closed by reviewed PR #136 at a30bbad18b5d58a8f68afddc0abf6867e8c15102 (Standards and Spec pass, 9 non-blocking). Base refreshed by merging integration with patch-id 33288056 unchanged."
+        },
+        {
+          "id": "C05",
+          "title": "Policy scan: refuse absolute home and private paths in tracked files",
+          "status": "in_progress",
+          "dependsOn": [
+            "T01-code"
+          ],
+          "pr": {
+            "number": 142,
+            "url": "https://github.com/Navigata1/aura/pull/142"
+          },
+          "notes": "Issue #133, PR #142 in review. Until it lands, private paths are checked by procedure; R03 applied its rule to the records it copied."
+        },
+        {
+          "id": "C06",
+          "title": "Harden the component-register sync: sources tied to pins, classes consistent with licenses, labels on every rewritten row",
+          "status": "pending",
+          "dependsOn": [
+            "T54"
+          ],
+          "pr": null,
+          "notes": "Issue #134. Carries T03's review follow-ups NB-1, NB-4, NB-5, NB-6, NB-7, NB-8 and NB-11; after T54 merges."
+        },
+        {
+          "id": "C07",
+          "title": "lane.record_eligible must check a transcription's license chain against its transcriber, not only its lanes",
+          "status": "in_progress",
+          "dependsOn": [
+            "T02c"
+          ],
+          "pr": null,
+          "notes": "Issue #135. Implementing on STUDIO; no PR at this checkpoint."
+        },
+        {
+          "id": "C08",
+          "title": "Policy scan and schema checker: close the remaining dialect and encoding gaps",
+          "status": "pending",
+          "dependsOn": [
+            "C05"
+          ],
+          "pr": null,
+          "notes": "Issue #143."
+        },
+        {
+          "id": "S01",
+          "title": "Record the public-build decision and fold the continuation report's expansion trials into the plan",
+          "status": "done",
+          "dependsOn": [],
+          "pr": {
+            "number": 127,
+            "url": "https://github.com/Navigata1/aura/pull/127",
+            "mergedAt": "2026-11-08T03:03:53Z"
+          },
+          "notes": "Issue #126 closed by reviewed PR #127 at 0e02d7290bf29979ece63da5952ffc11157186d9 after the second review round (round 1 found the GAME ONNX pin predating the fixes it cited). Records the public-build decision and folds the expansion trials into the plan: T106-T108, and T44, T46, T58, T61 and T93 amended in place."
+        },
+        {
+          "id": "S02",
+          "title": "Close S01's review residues: review-binding wording, stale per-OS prose, glossary terms, T108 and ruleset facts",
+          "status": "pending",
+          "dependsOn": [
+            "S01"
+          ],
+          "pr": null,
+          "notes": "Issue #141."
+        }
+      ]
+    }
+  ],
+  "metrics": [
+    {
+      "label": "Dedicated studio volume mounted",
+      "baseline": "0",
+      "current": "1",
+      "target": "1",
+      "direction": "up"
+    },
+    {
+      "label": "Implementation tickets completed",
+      "baseline": "0",
+      "current": "1",
+      "target": "108",
+      "direction": "up"
+    },
+    {
+      "label": "Plan tickets tracked as GitHub issues",
+      "baseline": "0",
+      "current": "108",
+      "target": "108",
+      "direction": "up"
+    },
+    {
+      "label": "Real engine profiles verified",
+      "baseline": "0",
+      "current": "0",
+      "target": "Owner-selected profiles",
+      "direction": "up"
+    }
+  ],
+  "risks": [
+    {
+      "title": "STUDIO must be mounted before work",
+      "severity": "high",
+      "note": "Remounted November 6 from the approved Extreme SSD sparse bundle; preflight passed. Every heavy operation still requires a fresh preflight."
+    },
+    {
+      "title": "Public build: every public surface is in scope",
+      "severity": "high",
+      "note": "The repository is public during the build (November 7 decision). Hard rule 10 covers tracked files, commit messages, issues, PRs, comments, reviews, records committed under ops/ and CI logs. The policy scan has no private-path rule until C05 (#133, PR #142) lands, and issue, PR, comment and log text is checked by procedure only. Checkpoints copy review and merge records only and withhold any that name a home path."
+    },
+    {
+      "title": "Review and issue closure remain procedural",
+      "severity": "medium",
+      "note": "Rulesets require no approving review: the merger checks the review files, the reviewed patch-id and green current-head checks. Two merge-gate bugs were found and fixed on 2026-11-07, and issue #80 was closed in error before a refused merge, then reopened with a correction. Close an issue only after the merge is confirmed. The patch-bound review rule awaits Jon's confirmation."
+    },
+    {
+      "title": "Nightly evidence follows the first owner release",
+      "severity": "medium",
+      "note": "GitHub schedules execute from default main; ticket workflows target integration and main remains owner-release-only. Configured schedules and manual equivalents are not an observed scheduled run. Preserve pending evidence until the first owner release; do not change default branch to bypass."
+    },
+    {
+      "title": "Benchmark conclusions remain unavailable",
+      "severity": "medium",
+      "note": "C01 blocks unsupported conclusions. T02b (PR #130, still in its review loop) and then C02 binding (#4) are required before route standing (T02f) or any benchmark promotion or demotion."
+    },
+    {
+      "title": "License findings narrow the stack",
+      "severity": "medium",
+      "note": "T03: waveform-playlist depends on LGPL-3.0 waveform-data, barred from the web bundle, so the Studio timeline (T77) will be AURA's own. T54 (PR #137, under review): SwiftF0 and Basic Pitch both train on non-commercial data, so neither is llc-eligible; llc transcription stays on pYIN + HMM or manual entry."
+    }
+  ],
+  "prLog": [
+    {
+      "number": 6,
+      "title": "Studio foundation and private integration merge policy",
+      "url": "https://github.com/Navigata1/aura/pull/6",
+      "phase": "BUILD",
+      "mergedAt": "2026-11-07T05:09:18Z"
+    },
+    {
+      "number": 5,
+      "title": "Typed preregistration and benchmark conclusion containment",
+      "url": "https://github.com/Navigata1/aura/pull/5",
+      "phase": "P0",
+      "mergedAt": "2026-11-07T05:13:04Z"
+    },
+    {
+      "number": 8,
+      "title": "Convention-discovered golden vectors and consuming-ticket checks",
+      "url": "https://github.com/Navigata1/aura/pull/8",
+      "phase": "BUILD",
+      "mergedAt": "2026-11-07T05:20:22Z"
+    },
+    {
+      "number": 12,
+      "title": "Locale-independent Git policy scans and three-OS PR gates",
+      "url": "https://github.com/Navigata1/aura/pull/12",
+      "phase": "BUILD",
+      "mergedAt": "2026-11-07T05:39:57Z"
+    },
+    {
+      "number": 129,
+      "title": "License verification of the v1-core plumbing and the open-source-readiness register (T03)",
+      "url": "https://github.com/Navigata1/aura/pull/129",
+      "phase": "BUILD",
+      "mergedAt": "2026-11-08T02:29:09Z"
+    },
+    {
+      "number": 127,
+      "title": "Public-build decision and expansion trials folded into the plan (S01)",
+      "url": "https://github.com/Navigata1/aura/pull/127",
+      "phase": "BUILD",
+      "mergedAt": "2026-11-08T03:03:53Z"
+    },
+    {
+      "number": 131,
+      "title": "SongForm assembly into explicit full-form MelodySpecs with hand-derived vectors (T02c)",
+      "url": "https://github.com/Navigata1/aura/pull/131",
+      "phase": "BUILD",
+      "mergedAt": "2026-11-08T03:11:20Z"
+    },
+    {
+      "number": 136,
+      "title": "JSON Schema patterns matched with ECMA-262 end anchors (C04)",
+      "url": "https://github.com/Navigata1/aura/pull/136",
+      "phase": "BUILD",
+      "mergedAt": "2026-11-08T03:22:50Z"
+    }
+  ],
+  "resume": {
+    "activePhase": "BUILD",
+    "nextActions": [
+      "Resume from the bare clone /Volumes/STUDIO/git/aura.git: refresh integration (a30bbad or later) with git -C /Volumes/STUDIO/git/aura.git fetch origin +refs/heads/integration:refs/heads/integration, then follow /Volumes/STUDIO/evidence/protocol/AGENT-PROTOCOL.md and docs/research/OWNER-DECISIONS-2026-11-07.md. One ticket, one worktree under /Volumes/STUDIO/worktrees/, one PR into integration.",
+      "Finish the open review loops: T02b PR #130 (round 2 blocked: 5 of 31 condition mutants survived; fix round under way), T02d PR #128 (round 2 passed at 9742d88, but the branch now conflicts with integration, so its updated patch needs a fresh review), C05 PR #142 and T54 PR #137 (in review, both behind integration). Merge only under the patch-bound review rule, with green three-OS checks on the merged head.",
+      "Then C02 (#4) binds concluded results on top of T02b, and T02f (#89) derives route standing from validated results only. Continue T02e (#86, started), T02g (#92) and T02h (#95) in the order of docs/spec/T02-continuation-sequencing.md; close T02 (#15) only when every slice and its own acceptance pass.",
+      "Contract and spec fixes: C07 (#135, implementing), C06 (#134, T03's register-sync follow-ups, after T54), C08 (#143, after C05) and S02 (#141, S01's review residues).",
+      "After T02: T04 generated types, then T05 ProjectStore/StudioHarness. No runtime feature may bypass missing contracts. T106-T108 are research-lane trials whose blockers sit far down the graph.",
+      "Owner-pending, never done for Jon: his first release merge of integration into main (then observe an actual scheduled-nightly run and finish T01, #2), and his confirmation of the patch-bound review rule.",
+      "The next checkpoint (R04) copies only the review and merge records of later merges into ops/mission/evidence/<date>/, never raw fetched license, NOTICE or registry text or probe dumps, and withholds any record that names a home path, journaling its SHA-256."
+    ],
+    "blockers": [
+      "T18/T19 storage qualification blocks irreplaceable songs, references, owner acts and evidence records.",
+      "Scheduled-nightly acceptance awaits the owner main release; PR and integration runs do not count as a nightly run."
+    ],
+    "conventions": [
+      "Mission state lives in the external implementation worktree; inspect remote integration before relying on task status.",
+      "No model inference or owner listening performed.",
+      "Tier 2: independent implementer and verifier agents; canonical checkout read-only.",
+      "This checkpoint records implementation merges through PR #136 (integration a30bbad). Its documentation-only publication is identified by git history, not a recursively embedded self-merge hash.",
+      "Mission dependencies distinguish T01-code availability from T01 full acceptance and explicitly route C02 through T02b. The plan is now 108 tickets (the original 105 plus T106-T108 from S01); amended dependencies, such as T58 on T03 and T61 on T44, mirror docs/spec/tickets.json. T02 slices and contract fixes are mission tasks with their issue numbers in the notes.",
+      "The local repository is the bare clone /Volumes/STUDIO/git/aura.git (git log there needs a ref, such as integration). The integration-review worktree is a stale detached snapshot at 7cb7bbd; do not commit in it.",
+      "Public build: hard rule 10 governs every committed file, ops/ records included. Merges into integration never auto-close issues; the merger closes the issue only after confirming the merge."
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+packages:
+  - apps/web
+  - packages/contracts-ts
+storeDir: ${STUDIO_ROOT}/caches/pnpm-store
+cacheDir: ${STUDIO_ROOT}/caches/pnpm-cache
+engineStrict: true
+managePackageManagerVersions: false
+strictPeerDependencies: true
